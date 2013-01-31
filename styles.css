@@ -5,19 +5,14 @@
 }
 @font-face {
     font-family: "Extra";
-    src: local(" "),
-         url(HANNOMMoEExtra-Regular.otf) format("truetype"),
+    src: url(HANNOMMoEExtra-Regular.otf) format("truetype"),
          url(HANNOMMoEExtra-Regular.woff) format("woff");
 }
 body {
-    font-family: "HAN NOM A", "HAN NOM B", "Subset", "Extra";
+    font-family: "Extra", "Subset", "HAN NOM A", "HAN NOM B", sans-serif;
 }
-h1 { font-size: 200%; }
+h1 { font-size: 140%; }
 h3 { font-size: 100%; }
-.bopomofo {
-    font-size: 50%;
-    color: #333;
-}
 center {
     padding: 15px;
 }
@@ -40,13 +35,12 @@ center {
     height: 40px;
     font-size: 18px;
 }
-.rt {
-    display: inline-block;
-    margin-right: 6px;
-    -webkit-writing-mode: vertical-rl;
-    writing-mode: vertical-rl;
-    font-size: 35%;
-    color: gray;
+.bopomofo {
+    display: block;
+    margin-top: -14px;
+    margin-bottom: 16px;
+    color: #444;
+    font-size: 80%;
 }
 span .tone {
     position: relative;
