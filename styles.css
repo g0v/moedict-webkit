@@ -1,15 +1,18 @@
-@font-face {
-    font-family: "Subset";
-    src: url(HannomMoeSubset.ttf) format("truetype"),
-         url(HannomMoeSubset.woff) format("woff");
-}
+@charset 'UTF-8';
 @font-face {
     font-family: "Extra";
     src: url(HANNOMMoEExtra-Regular.otf) format("truetype"),
          url(HANNOMMoEExtra-Regular.woff) format("woff");
 }
+@font-face {
+    font-family: "Subset";
+    src: url(HannomMoeSubset.ttf) format("truetype"),
+         url(HannomMoeSubset.woff) format("woff");
+}
 body {
     font-family: "Extra", "Subset", "HAN NOM A", "HAN NOM B", sans-serif;
+    font-size: 14pt;
+    line-height: 130%;
 }
 h1 { font-size: 140%; }
 h3 { font-size: 100%; }
@@ -18,16 +21,16 @@ center {
 }
 #result {
     margin-bottom: 40px;
-    padding: 5px;
+    padding: 5px 10px;
     margin-left: 1%;
-    width: 98%;
+    margin-right: 1%;
     height: auto;
     background: #eee;
     border-radius: 10px;
 }
 #query {
     position: fixed;
-    bottom: 0;
+    bottom: 5px;
     left: 10px;
     right: 1%;
     width: 98%;
@@ -41,7 +44,7 @@ center {
     margin-bottom: 16px;
     color: #444;
     font-size: 80%;
-    font-family: "Courier New", BiaoKai, sans-serif;
+    font-family: "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
 }
 span .tone {
     position: relative;
