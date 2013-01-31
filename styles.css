@@ -35,8 +35,9 @@ center {
     right: 1%;
     width: 98%;
     padding: 5px;
-    height: 40px;
-    font-size: 18px;
+    height: 36pt;
+    font-size: 16pt;
+    border-radius: 5px;
 }
 .bopomofo {
     display: block;

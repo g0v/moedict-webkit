@@ -1,13 +1,14 @@
 <html lang="zh-TW">
   <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="styles.css" rel="stylesheet"></link>
 <script src="zepto.min.js"></script>
 <script>
 function doLoad () {
     var prevId, prevVal, titleToId;
     setTimeout(function() {
-        if ($.browser.webkit) {
+        if ($.browser.webkit && !/Android/.test(navigator.userAgent) && /Chrome/.test(navigator.userAgent)) {
             $('#toc').load("options.html", function(){
                 init();
             });
