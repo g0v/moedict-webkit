@@ -7,6 +7,7 @@
 function doLoad () {
     var prevId, prevVal;
     setTimeout(function() {
+        if (!$.browser.webkit) { $('#query').attr('list', null); }
         $('#toc').load("options.html", function(){
             $('#result').load("data/79/18979.html");
             $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -38,6 +39,6 @@ function doLoad () {
 </div>
 <datalist id="toc">
 </datalist>
-<input id="query" style="display: none" autofocus speech x-webkit-speech list="toc" autocomplete />
+<input id="query" style="display: none" autofocus speech x-webkit-speech list="toc" autocomplete="off" />
 </body>
 </html>
