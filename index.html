@@ -27,7 +27,20 @@ function doLoad () {
         }
     }, 1);
     function init () {
-        $('#result').load("data/79/18979.html");
+        if (/^#./.test(location.hash)) {
+            try {
+                $('#query').val(decodeURIComponent(location.hash.substr(1)));
+                $('#query').show().focus();
+                $('#query').get(0).select();
+                lookup();
+            }
+            catch (e) {
+                $('#result').load("data/79/18979.html");
+            }
+        }
+        else {
+            $('#result').load("data/79/18979.html");
+        }
         $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
         $('#query').show().focus();
     }
@@ -39,6 +52,7 @@ function doLoad () {
         if (prevId == id) { return true }
         if (id) {
             prevId = id;
+            try { history.pushState(null, null, '#' + val ) } catch (e) {};
             $('#result').load("data/" + (id % 100) + "/" + id + ".html")
         }
         return true;
