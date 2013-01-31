@@ -10,6 +10,7 @@
          url(HannomMoeSubset.woff) format("woff");
 }
 body {
+    background: #eee;
     font-family: "Extra", "Subset", "HAN NOM A", "HAN NOM B", sans-serif;
     font-size: 14pt;
     line-height: 130%;
@@ -20,12 +21,14 @@ center {
     padding: 15px;
 }
 #result {
-    margin-bottom: 42pt;
+    box-shadow: 1px 1px 3px 0px #999;
+    border: 1px solid #ddd;
+    margin-bottom: 50pt;
     padding: 5px 10px;
     margin-left: 1%;
     margin-right: 1%;
     height: auto;
-    background: #eee;
+    background: #fff;
     border-radius: 10px;
 }
 #query {
@@ -43,7 +46,7 @@ center {
     display: block;
     margin-top: -14px;
     margin-bottom: 16px;
-    color: #444;
+    color: gray;
     font-size: 80%;
     font-family: "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
 }
