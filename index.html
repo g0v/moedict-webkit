@@ -5,20 +5,36 @@
 <script src="zepto.min.js"></script>
 <script>
 function doLoad () {
-    var prevId, prevVal;
+    var prevId, prevVal, titleToId;
     setTimeout(function() {
-        if (!$.browser.webkit) { $('#query').attr('list', null); }
-        $('#toc').load("options.html", function(){
-            $('#result').load("data/79/18979.html");
-            $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
-            $('#query').show().focus();
-        });
+        if ($.browser.webkit) {
+            $('#toc').load("options.html", function(){
+                init();
+            });
+        }
+        else {
+            $.get("options.html", function(data) {
+                titleToId = JSON.parse(data.replace(
+                    /<option value=/g, ','
+                ).replace(
+                    / id=/g, ':'
+                ).replace(
+                    / \/>/g, ''
+                ).replace(/,/, '{') + '}')
+                init();
+            });
+        }
     }, 1);
+    function init () {
+        $('#result').load("data/79/18979.html");
+        $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
+        $('#query').show().focus();
+    }
     function lookup (){
         var val = $('#query').val();
         if (prevVal == val) { return true }
         prevVal = val;
-        var id = $('option[value="' + val + '"]').attr('id');
+        var id = titleToId ? titleToId[val] : $('option[value="' + val + '"]').attr('id');
         if (prevId == id) { return true }
         if (id) {
             prevId = id;
