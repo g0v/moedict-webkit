@@ -1,0 +1,64 @@
+@font-face {
+    font-family: "Subset";
+    src: url(HannomMoeSubset.ttf) format("truetype"),
+         url(HannomMoeSubset.woff) format("woff");
+}
+@font-face {
+    font-family: "Extra";
+    src: local(" "),
+         url(HANNOMMoEExtra-Regular.otf) format("truetype"),
+         url(HANNOMMoEExtra-Regular.woff) format("woff");
+}
+body {
+    font-family: "HAN NOM A", "HAN NOM B", "Subset", "Extra";
+}
+h1 { font-size: 200%; }
+h3 { font-size: 100%; }
+.bopomofo {
+    font-size: 50%;
+    color: #333;
+}
+center {
+    padding: 15px;
+}
+#result {
+    margin-bottom: 40px;
+    padding: 5px;
+    margin-left: 1%;
+    width: 98%;
+    height: auto;
+    background: #eee;
+    border-radius: 10px;
+}
+#query {
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+    right: 1%;
+    padding: 5px;
+    height: 40px;
+    font-size: 18px;
+}
+.rt {
+    display: inline-block;
+    margin-right: 6px;
+    -webkit-writing-mode: vertical-rl;
+    writing-mode: vertical-rl;
+    font-size: 35%;
+    color: gray;
+}
+span .tone {
+    position: relative;
+    float: right;
+    left: 10px;
+    top: -6px;
+    font-size: 120%;
+}
+.part-of-speech {
+    color: white;
+    background-color: #555;
+    border-radius: 3px;
+    padding: 1px 2px 1px 2px;
+    /*border: 1px solid black;*/
+    font-size: 100%;
+}
