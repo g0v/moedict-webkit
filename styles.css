@@ -38,6 +38,7 @@ center {
     height: auto;
     background: #fff;
     border-radius: 10px;
+    word-break: break-all;
 }
 #query {
     position: fixed;
