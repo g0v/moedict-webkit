@@ -6,7 +6,7 @@
 }
 @font-face {
     font-family: "Subset";
-    src: url(HannomMoeSubset.ttf) format("truetype"),
+    src: url(HannomMoeSubset.otf) format("truetype"),
          url(HannomMoeSubset.woff) format("woff");
 }
 body {
