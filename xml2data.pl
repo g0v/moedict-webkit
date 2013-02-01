@@ -2,6 +2,7 @@
 use utf8;
 use strict;
 die "Usage: perl xml2data.pl moedict-mac/moedict_templates/MoeDictionary.xml" unless @ARGV and -e $ARGV[0];
+mkdir 'data';
 
 my %titleToId;
 my $curId;
@@ -12,9 +13,8 @@ while (<$XML>) {
     if (/<d:entry id="(\d+)" d:title="([^"]+)">/) {
         $count++;
         print "$count\n" unless $count % 100;
-        $titleToId{$2} = $1;
+        $titleToId{$2} = $1 unless $titleToId{$2} and $titleToId{$2} < $1;
         my $dir = $1 % 100; 
-        # $dir = "0$dir" unless $dir > 9;
         mkdir "data/$dir" unless -d "data/$dir";
         open FH, '>:utf8', "data/$dir/$1.html";
     }
@@ -37,6 +37,6 @@ close $XML;
 open my $OPTIONS, '>:utf8', "options.html";
 for my $title (sort keys %titleToId) {
     my $id = $titleToId{$title};
-    print $OPTIONS qq[<option value="$title" id="$id" />\n];
+    print $OPTIONS qq[<option value="$title" data-id="$id" />\n];
 }
 close $OPTIONS;
