@@ -10,6 +10,9 @@
         fetch(18979);
       }
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
+      $('#query').on('focus', function(){
+        return this.select();
+      });
       $('#query').show().focus();
       return $('a').live('click', function(){
         fillQuery($(this).text());
@@ -17,19 +20,28 @@
       });
     };
     grokHash = function(){
+      var val;
       if (!/^#./.test(location.hash)) {
         return false;
       }
-      if (fillQuery(decodeURIComponent(location.hash.substr(1)))) {
+      try {
+        val = decodeURIComponent(location.hash.substr(1));
+        if (val === prevVal) {
+          return true;
+        }
+        $('#query').show().focus();
+        fillQuery(val);
         return true;
-      }
+      } catch (e$) {}
       return false;
     };
     fillQuery = function(it){
       try {
         $('#query').val(it);
-        $('#query').show().focus();
-        $('#query').get(0).select();
+        if (!/Android|iPhone|iPad|Mobile/.test(navigator.userAgent)) {
+          $('#query').focus();
+          $('#query').get(0).select();
+        }
         lookup();
         return true;
       } catch (e$) {}
@@ -61,7 +73,7 @@
         var chunk;
         return $('#result').html((function(){
           var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = html.split(/<div>/)).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = html.split(/(<\/?div>)/)).length; i$ < len$; ++i$) {
             chunk = ref$[i$];
             results$.push(chunk.replace(/<h1/.exec(chunk) ? charRegex : titleRegex, fn$));
           }
@@ -69,7 +81,7 @@
           function fn$(it){
             return "<a href=\"#" + it + "\">" + it + "</a>";
           }
-        }()).join("<div>"));
+        }()).join(""));
       });
     };
     return setTimeout(function(){

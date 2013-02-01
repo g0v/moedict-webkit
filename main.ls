@@ -4,6 +4,7 @@
   init = ->
     fetch 18979 unless grok-hash!
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
+    $ \#query .on \focus -> @select!
     $ \#query .show!.focus!
     $ \a .live \click ->
       fill-query $(@).text!
@@ -11,14 +12,20 @@
 
   grok-hash = ->
     return false unless location.hash is /^#./
-    return true if fill-query decodeURIComponent location.hash.substr 1
+    try
+      val = decodeURIComponent location.hash.substr 1
+      return true if val is prevVal
+      $ \#query .show!.focus!
+      fill-query val
+      return true
     return false
 
   fill-query = ->
     try
       $ \#query .val it
-      $ \#query .show!.focus!
-      $ \#query .get 0 .select!
+      unless navigator.userAgent is /Android|iPhone|iPad|Mobile/
+        $ \#query .focus!
+        $ \#query .get 0 .select!
       lookup!
       return true
     return false
@@ -38,11 +45,11 @@
 
   fetch = ->
     html <- $.get "data/#{ it % 100 }/#it.html"
-    $ \#result .html (for chunk in html.split(//<div>//)
+    $ \#result .html (for chunk in html.split(//(</?div>)//)
       chunk.replace do
         if chunk is /<h1/ then charRegex else titleRegex
         -> """<a href="##it">#it</a>"""
-    ) * "<div>"
+    ) * ""
 
   <- setTimeout _, 1ms
 
