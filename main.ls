@@ -23,7 +23,7 @@
       return true
     return false
 
-  prevId = prevVal = titleToId = titleRegex = null
+  prevId = prevVal = titleToId = titleRegex = charRegex = null
 
   lookup = ->
     val = $ \#query .val!
@@ -38,9 +38,11 @@
 
   fetch = ->
     html <- $.get "data/#{ it % 100 }/#it.html"
-    $ \#result .html html.replace titleRegex, -> """
-      <a href="#">#it</a>
-    """
+    $ \#result .html (for chunk in html.split(//<div>//)
+      chunk.replace do
+        if chunk is /<h1/ then charRegex else titleRegex
+        -> """<a href="##it">#it</a>"""
+    ) * "<div>"
 
   <- setTimeout _, 1ms
 
@@ -53,9 +55,12 @@
         .replace(/,/               \{)
   }}"
 
-  titleRegex := [k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") for k of titleToId]
-  titleRegex.sort (a, b) -> b.length - a.length
-  titleRegex := new RegExp((titleRegex * \|), \g)
+  titles = [k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") for k of titleToId]
+  titles.sort (a, b) -> b.length - a.length
+  titleRegex := new RegExp((titles * \|), \g)
+
+  chars = [ re for re in titles | re.length is 1 ]
+  charRegex := new RegExp((chars * \|), \g)
 
   if navigator.userAgent is /Chrome/ and navigator.userAgent isnt /Android/
     $ \#toc .html data
