@@ -71,7 +71,7 @@
     fetch = function(it){
       return $.get("data/" + it % 100 + "/" + it + ".html", function(html){
         var chunk;
-        return $('#result').html((function(){
+        $('#result').html((function(){
           var i$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = html.split(/(<\/?div>)/)).length; i$ < len$; ++i$) {
             chunk = ref$[i$];
@@ -82,6 +82,7 @@
             return "<a href=\"#" + it + "\">" + it + "</a>";
           }
         }()).join(""));
+        return window.scrollTo(0, 0);
       });
     };
     return setTimeout(function(){
