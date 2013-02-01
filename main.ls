@@ -17,7 +17,7 @@
       return true if val is prevVal
       $ \#query .show!.focus!
       fill-query val
-      return true
+      return true if val is prevVal
     return false
 
   fill-query = ->
@@ -35,10 +35,10 @@
   lookup = ->
     val = $ \#query .val!
     return true if prevVal is val
-    prevVal := val
     id = titleToId[val]
     return true if prevId is id or not id
     prevId := id
+    prevVal := val
     try history.pushState null, null, "##val" unless "#{location.hash}" is "##val"
     fetch id
     return true
