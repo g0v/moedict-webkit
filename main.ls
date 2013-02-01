@@ -50,6 +50,7 @@
         if chunk is /<h1/ then charRegex else titleRegex
         -> """<a href="##it">#it</a>"""
     ) * ""
+    window.scroll-to 0 0
 
   <- setTimeout _, 1ms
 
