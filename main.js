@@ -1,7 +1,7 @@
 (function(){
   var join$ = [].join;
   this.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, lookup, fetch;
+    var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, charRegex, lookup, fetch;
     $(window).on('hashchange', function(){
       return grokHash();
     });
@@ -35,7 +35,7 @@
       } catch (e$) {}
       return false;
     };
-    prevId = prevVal = titleToId = titleRegex = null;
+    prevId = prevVal = titleToId = titleRegex = charRegex = null;
     lookup = function(){
       var val, id;
       val = $('#query').val();
@@ -58,24 +58,42 @@
     };
     fetch = function(it){
       return $.get("data/" + it % 100 + "/" + it + ".html", function(html){
-        return $('#result').html(html.replace(titleRegex, function(it){
-          return "<a href=\"#\">" + it + "</a>";
-        }));
+        var chunk;
+        return $('#result').html((function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = html.split(/<div>/)).length; i$ < len$; ++i$) {
+            chunk = ref$[i$];
+            results$.push(chunk.replace(/<h1/.exec(chunk) ? charRegex : titleRegex, fn$));
+          }
+          return results$;
+          function fn$(it){
+            return "<a href=\"#" + it + "\">" + it + "</a>";
+          }
+        }()).join("<div>"));
       });
     };
     return setTimeout(function(){
       return $.get('options.html', function(data){
-        var res$, k;
+        var titles, res$, k, chars, i$, len$, re;
         titleToId = JSON.parse(data.replace(/<option value=/g, ',').replace(/ (?:data-)?id=/g, ':').replace(/ \/>/g, '').replace(/,/, '{') + "}");
         res$ = [];
         for (k in titleToId) {
           res$.push(k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"));
         }
-        titleRegex = res$;
-        titleRegex.sort(function(a, b){
+        titles = res$;
+        titles.sort(function(a, b){
           return b.length - a.length;
         });
-        titleRegex = new RegExp(join$.call(titleRegex, '|'), 'g');
+        titleRegex = new RegExp(join$.call(titles, '|'), 'g');
+        res$ = [];
+        for (i$ = 0, len$ = titles.length; i$ < len$; ++i$) {
+          re = titles[i$];
+          if (re.length === 1) {
+            res$.push(re);
+          }
+        }
+        chars = res$;
+        charRegex = new RegExp(join$.call(chars, '|'), 'g');
         if (/Chrome/.exec(navigator.userAgent) && !/Android/.test(navigator.userAgent)) {
           $('#toc').html(data);
         }
