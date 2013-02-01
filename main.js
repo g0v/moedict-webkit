@@ -31,7 +31,9 @@
         }
         $('#query').show().focus();
         fillQuery(val);
-        return true;
+        if (val === prevVal) {
+          return true;
+        }
       } catch (e$) {}
       return false;
     };
@@ -54,12 +56,12 @@
       if (prevVal === val) {
         return true;
       }
-      prevVal = val;
       id = titleToId[val];
       if (prevId === id || !id) {
         return true;
       }
       prevId = id;
+      prevVal = val;
       try {
         if (location.hash + "" !== "#" + val) {
           history.pushState(null, null, "#" + val);
