@@ -17,6 +17,14 @@ body {
 }
 h1 { font-size: 140%; }
 h3 { font-size: 100%; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    color: #009;
+    text-decoration: underline;
+}
 center {
     padding: 15px;
 }
