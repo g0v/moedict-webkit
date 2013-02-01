@@ -11,7 +11,7 @@
 }
 body {
     background: #eee;
-    font-family: "Extra", "Subset", "HAN NOM A", "HAN NOM B", sans-serif;
+    font-family: sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
     font-size: 14pt;
     line-height: 130%;
 }
@@ -57,7 +57,7 @@ center {
     margin-bottom: 16px;
     color: gray;
     font-size: 80%;
-    font-family: "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
+    font-family: "Subset", "Extra", "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
 }
 span .tone {
     position: relative;
