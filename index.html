@@ -4,61 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="styles.css" rel="stylesheet"></link>
 <script src="zepto.min.js"></script>
-<script>
-function doLoad () {
-    var prevId, prevVal, titleToId;
-    setTimeout(function() {
-        if ($.browser.webkit && !/Android/.test(navigator.userAgent) && /Chrome/.test(navigator.userAgent)) {
-            $('#toc').load("options.html", function(){
-                init();
-            });
-        }
-        else {
-            $.get("options.html", function(data) {
-                titleToId = JSON.parse(data.replace(
-                    /<option value=/g, ','
-                ).replace(
-                    / id=/g, ':'
-                ).replace(
-                    / \/>/g, ''
-                ).replace(/,/, '{') + '}')
-                init();
-            });
-        }
-    }, 1);
-    function init () {
-        if (/^#./.test(location.hash)) {
-            try {
-                $('#query').val(decodeURIComponent(location.hash.substr(1)));
-                $('#query').show().focus();
-                $('#query').get(0).select();
-                lookup();
-            }
-            catch (e) {
-                $('#result').load("data/79/18979.html");
-            }
-        }
-        else {
-            $('#result').load("data/79/18979.html");
-        }
-        $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
-        $('#query').show().focus();
-    }
-    function lookup (){
-        var val = $('#query').val();
-        if (prevVal == val) { return true }
-        prevVal = val;
-        var id = titleToId ? titleToId[val] : $('option[value="' + val + '"]').attr('id');
-        if (prevId == id) { return true }
-        if (id) {
-            prevId = id;
-            try { history.pushState(null, null, '#' + val ) } catch (e) {};
-            $('#result').load("data/" + (id % 100) + "/" + id + ".html")
-        }
-        return true;
-    }
-}
-</script>
+<script src="main.js"></script>
 </head>
 <body onload="doLoad()">
 <div id="result">
