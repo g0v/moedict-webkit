@@ -58,11 +58,11 @@ window.do-load = ->
     $.get "data/#{ it % 100 }/#it.html" fill-html
 
   fill-html = (html) ->
-    $ \#result .html (for chunk in html.split(//(</?div>)//)
+    $ \#result .html ((for chunk in html.replace(/(.)\u20DE/g, "<span class='part-of-speech'>$1</span>").split(//(</?div>)//)
       chunk.replace do
         if chunk is /<h1/ then charRegex else titleRegex
         -> """<a href="##it">#it</a>"""
-    ) * ""
+    ) * "")
     window.scroll-to 0 0
 
   if isCordova => fetch = (id) ->
@@ -84,8 +84,8 @@ window.do-load = ->
       bz2[j++] = chr3 unless enc4 is 64
       chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = ''
     json = bzip2.simple bzip2.array bz2
-    if json.match(//("#id":"[^"]+")//)
-      fill-html JSON.parse("{#{RegExp.$1}}")[id]
+    if json.match(//"#id":("[^"]+")//)
+      fill-html JSON.parse(RegExp.$1)
 
   <- setTimeout _, 1ms
 
