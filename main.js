@@ -158,7 +158,12 @@
         });
       };
     }
-    return setTimeout(function(){
+    return $.ajax({
+      type: 'GET',
+      url: 'trie.js',
+      dataType: 'script',
+      cache: true
+    }).then(function(){
       var walk, chars, k, ref$, v, titles, res$, check, prefixEntries;
       titleToId = {};
       walk = function(prefix, obj){
@@ -262,7 +267,7 @@
         }
       });
       return init();
-    }, 1);
+    });
   };
   MOE = "<h1 class='title'>萌</h1><span class='bopomofo'>ㄇㄥˊ</span><div>\n    <div><span class='part-of-speech'>名</span>\n        <ol><li>\n              <p class='definition'>草木初生的芽。說文解字：「萌，艸芽也。」唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」</p>\n               \n            </li><li>\n              <p class='definition'>事物發生的開端或徵兆。韓非子．說林上：「聖人見微以知萌，見端以知末。」漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」</p>\n               \n            </li><li>\n              <p class='definition'>人民。通「氓」。如：「萌黎」､「萌隸」。</p>\n               \n            </li><li>\n              <p class='definition'>姓。如五代時蜀有萌慮。</p>\n               \n            </li></ol>\n        </div><div><span class='part-of-speech'>動</span>\n        <ol><li>\n              <p class='definition'>發芽。如：「萌芽」。楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」</p>\n               \n            </li><li>\n              <p class='definition'>發生。如：「故態復萌」。管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」三國演義．第一回：「若萌異心，必獲惡報。」</p>\n               \n            </li></ol>\n        </div>";
 }).call(this);
