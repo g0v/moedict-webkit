@@ -89,7 +89,7 @@ window.do-load = ->
   if isCordova or DEBUGGING => fetch = (id) ->
     return fill-json MOE if id is MOE-ID
     bucket = bucket-of id
-    return fill-json id, bucketCache[bucket][id] if bucketCache[bucket]
+    return fill-json bucketCache[bucket][id] if bucketCache[bucket]?[id]
     txt <- $.get "pack/#bucket.json.bz2.txt"
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
     bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))

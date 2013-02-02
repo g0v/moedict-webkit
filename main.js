@@ -143,13 +143,13 @@
     bucketCache = {};
     if (isCordova || DEBUGGING) {
       fetch = function(id){
-        var bucket;
+        var bucket, ref$;
         if (id === MOEID) {
           return fillJson(MOE);
         }
         bucket = bucketOf(id);
-        if (bucketCache[bucket]) {
-          return fillJson(id, bucketCache[bucket][id]);
+        if ((ref$ = bucketCache[bucket]) != null && ref$[id]) {
+          return fillJson(bucketCache[bucket][id]);
         }
         return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
           var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;

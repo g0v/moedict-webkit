@@ -95,7 +95,8 @@ img.quit {
     max-height: 60%;
     overflow: auto;
     position: fixed !important;
+    bottom: 42px !important;
 }
 .cordova .ui-autocomplete {
-    max-height: 100%;
+    max-height: 80% !important;
 }
