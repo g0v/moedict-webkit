@@ -94,4 +94,5 @@ img.quit {
 .ui-autocomplete {
     max-height: 80%;
     overflow: auto;
+    position: fixed !important;
 }
