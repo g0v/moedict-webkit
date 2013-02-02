@@ -36,6 +36,9 @@
     $(window).on('hashchange', function(){
       return grokHash();
     });
+    if (isCordova) {
+      $('body').addClass('cordova');
+    }
     init = function(){
       if (!grokHash()) {
         fetch(MOEID);
