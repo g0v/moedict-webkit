@@ -1,5 +1,14 @@
 const DEBUGGING = no
 const MOE-ID = "萌"
+const VERSION = "1"
+
+fallbackStore = {}
+localStorage = window.localStorage || {
+  get-item: (key) -> fallbackStore[key]
+  set-item: (key, val) -> fallbackStore[key] = val
+  clear: ->
+}
+
 isCordova = location.href is /^file:...android_asset/
 isDeviceReady = not isCordova
 document.addEventListener \deviceready (->
@@ -19,6 +28,11 @@ window.show-info = ->
 
 window.do-load = ->
   return unless isDeviceReady
+
+  unless parseInt(localStorage.getItem \version) is parseInt(VERSION)
+    localStorage.clear!
+    localStorage.setItem \version VERSION
+
   $(window).on \hashchange -> grok-hash!
   $('body').addClass \cordova if isCordova
 
@@ -71,10 +85,10 @@ window.do-load = ->
     fetch id
     return true
 
-  htmlCache = {}
   fetch = ->
     return fill-json MOE if it is MOE-ID
-    return fill-html htmlCache[it] if htmlCache[it]
+    html = localStorage.getItem "html-#it"
+    return fill-html html if html
     $('#result div, #result span, #result h1').css \visibility \hidden
     $('#result h1:first').text(it).css \visibility \visible
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
@@ -89,13 +103,12 @@ window.do-load = ->
 
   fill-json = (struct) ->
     html = render(prevId || MOE-ID, struct)
-    htmlCache[prevId || MOE-ID] = html
+    if window.localStorage
+      localStorage.set
+    localStorage.setItem "html-#{ prevId || MOE-ID }" html
     fill-html html
 
-  bucketCache = {}
-
-  fill-bucket = (id, bucket) ->
-    raw = bucketCache[bucket]
+  fill-bucket = (id, raw) ->
     key = escape id
     idx = raw.indexOf "\"#key\""
     part = raw.slice(idx + key.length + 4)
@@ -103,10 +116,12 @@ window.do-load = ->
     fill-json JSON.parse unescape part
 
   if isCordova or DEBUGGING => fetch = (id) ->
-    return fill-html htmlCache[id] if htmlCache[id]
+    html = localStorage.getItem "html-#id"
+    return fill-html html if html
     return fill-json MOE if id is MOE-ID
     bucket = bucket-of id
-    return fill-bucket id, bucket if bucketCache[bucket]
+    pack = localStorage.getItem "pack-#bucket"
+    return fill-bucket id, pack if pack
     $('#result div, #result span, #result h1').css \visibility \hidden
     $('#result h1:first').text(id).css \visibility \visible
     txt <- $.get "pack/#bucket.json.bz2.txt"
@@ -126,8 +141,8 @@ window.do-load = ->
       bz2[j++] = chr3 unless enc4 is 64
       chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = ''
     json = bzip2.simple bzip2.array bz2
-    bucketCache[bucket] = json
-    return fill-bucket id, bucket
+    localStorage.setItem "pack-#bucket" json
+    return fill-bucket id, json
 
   trie <- $.getJSON \prefix.json
 
