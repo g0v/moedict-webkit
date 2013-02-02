@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, fetch, fillHtml, fillJson, bucketCache;
+    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, fetch, fillHtml, fillJson, jsonCache, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -140,16 +140,30 @@
     fillJson = function(struct){
       return fillHtml(render(prevId || MOEID, struct));
     };
+    jsonCache = {};
     bucketCache = {};
+    fillBucket = function(id, bucket){
+      var raw, key, idx, part;
+      raw = bucketCache[bucket];
+      key = escape(id);
+      idx = raw.indexOf("\"" + key + "\"");
+      part = raw.slice(idx + key.length + 4);
+      part = part.slice(0, part.indexOf('"'));
+      jsonCache[id] = JSON.parse(unescape(part));
+      return fillJson(jsonCache[id]);
+    };
     if (isCordova || DEBUGGING) {
       fetch = function(id){
-        var bucket, ref$;
+        var bucket;
         if (id === MOEID) {
           return fillJson(MOE);
         }
+        if (jsonCache[id]) {
+          return fillJson(jsonCache[id]);
+        }
         bucket = bucketOf(id);
-        if ((ref$ = bucketCache[bucket]) != null && ref$[id]) {
-          return fillJson(bucketCache[bucket][id]);
+        if (bucketCache[bucket]) {
+          return fillBucket(id, bucket);
         }
         return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
           var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
@@ -174,8 +188,8 @@
             chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
           }
           json = bzip2.simple(bzip2.array(bz2));
-          bucketCache[bucket] = JSON.parse(decodeURIComponent(escape(json)));
-          return fillJson(bucketCache[bucket][id]);
+          bucketCache[bucket] = json;
+          return fillBucket(id, bucket);
         });
       };
     }
@@ -324,7 +338,7 @@
       return results$;
       function fn$(){
         var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = groupBy('pos', definitions)).length; i$ < len$; ++i$) {
+        for (i$ = 0, len$ = (ref$ = groupBy('pos', definitions.slice())).length; i$ < len$; ++i$) {
           defs = ref$[i$];
           results$.push("<div>\n" + (defs[0].pos ? "<span class='part-of-speech'>" + defs[0].pos + "</span>" : '') + "\n<ol>\n" + ls((fn$())) + "</ol></div>");
         }
