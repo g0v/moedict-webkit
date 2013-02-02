@@ -13,7 +13,7 @@ body {
     background: #eee;
     font-family: sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
     font-size: 14pt;
-    line-height: 130%;
+    line-height: 140%;
 }
 h1 { font-size: 140%; }
 h3 { font-size: 100%; }
@@ -99,4 +99,16 @@ img.quit {
 }
 .cordova .ui-autocomplete {
     max-height: 80% !important;
+}
+.example {
+    font-size: 13pt;
+}
+.quote {
+    clear: both;
+    display: block;
+    font-size: 13pt;
+}
+.link {
+    clear: both;
+    display: block;
 }
