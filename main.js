@@ -1,7 +1,7 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, join$ = [].join;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
-  MOEID = 18979;
+  MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   document.addEventListener('deviceready', function(){
@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, charRegex, lookup, doLookup, fetch, fillHtml;
+    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, fetch, fillHtml, fillJson, bucketCache;
     if (!isDeviceReady) {
       return;
     }
@@ -83,16 +83,26 @@
       } catch (e$) {}
       return false;
     };
-    prevId = prevVal = titleToId = titleRegex = charRegex = null;
+    prevId = prevVal = titleRegex = titleRegexExact = charRegex = null;
     lookup = function(){
       return doLookup($('#query').val());
+    };
+    bucketOf = function(it){
+      var code;
+      code = it.charCodeAt(0);
+      if (0xD800 <= code && code <= 0xDBFF) {
+        code = it.charCodeAt(1) - 0xDC00;
+      }
+      return code % 1024;
     };
     doLookup = function(val){
       var id;
       if (prevVal === val) {
         return true;
       }
-      id = titleToId[val];
+      if (titleRegexExact.test(val)) {
+        id = val;
+      }
       if (prevId === id || !id) {
         return true;
       }
@@ -108,9 +118,9 @@
     };
     fetch = function(it){
       if (it === MOEID) {
-        return fillHtml(MOE);
+        return fillJson(MOE);
       }
-      return $.get("data/" + it % 100 + "/" + it + ".html", fillHtml);
+      return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
     };
     fillHtml = function(html){
       var chunk;
@@ -127,12 +137,21 @@
       }()).join(""));
       return window.scrollTo(0, 0);
     };
-    if (isCordova) {
+    fillJson = function(struct){
+      return fillHtml(render(prevId || MOEID, struct));
+    };
+    bucketCache = {};
+    if (isCordova || DEBUGGING) {
       fetch = function(id){
+        var bucket;
         if (id === MOEID) {
-          return fillHtml(MOE);
+          return fillJson(MOE);
         }
-        return $.get("pack/" + id % 1000 + ".txt", function(txt){
+        bucket = bucketOf(id);
+        if (bucketCache[bucket]) {
+          return fillJson(id, bucketCache[bucket][id]);
+        }
+        return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
           var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
           keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
           bz2 = new Uint8Array(new ArrayBuffer(Math.ceil(txt.length * 0.75)));
@@ -155,100 +174,80 @@
             chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
           }
           json = bzip2.simple(bzip2.array(bz2));
-          if (json.match(RegExp('"' + id + '":("[^"]+")'))) {
-            return fillHtml(JSON.parse(RegExp.$1));
-          }
+          bucketCache[bucket] = JSON.parse(decodeURIComponent(escape(json)));
+          return fillJson(bucketCache[bucket][id]);
         });
       };
     }
-    return $.ajax({
-      type: 'GET',
-      url: 'trie.js',
-      dataType: 'script',
-      cache: true
-    }).then(function(){
-      var walk, chars, k, ref$, v, titles, res$, check, prefixEntries;
-      titleToId = {};
-      walk = function(prefix, obj){
-        var k, v, results$ = [];
-        for (k in obj) {
-          v = obj[k];
-          if (k === '$') {
-            results$.push(titleToId[prefix] = v);
-          } else if (v instanceof Object) {
-            results$.push(walk(prefix + k, v));
-          } else {
-            results$.push(titleToId[prefix + k] = v);
-          }
-        }
-        return results$;
-      };
+    return $.getJSON('prefix.json', function(trie){
+      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, prefixEntries, prefixRegexes;
       chars = '';
-      for (k in ref$ = window.trie) {
-        v = ref$[k];
+      titles = [];
+      for (k in trie) {
+        v = trie[k];
         chars += "|" + k;
-        walk(k, v);
+        for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
+          suffix = ref$[i$];
+          titles.push(k + "" + suffix);
+        }
       }
-      res$ = [];
-      for (k in titleToId) {
-        res$.push(k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"));
-      }
-      titles = res$;
       titles.sort(function(a, b){
         return b.length - a.length;
       });
-      titleRegex = new RegExp(join$.call(titles, '|'), 'g');
+      titleJoined = (join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&");
+      titleRegex = new RegExp(titleJoined, 'g');
+      titleRegexExact = new RegExp("^(?:" + titleJoined + ")$");
       charRegex = new RegExp(chars.substring(1), 'g');
-      check = function(prefix, obj, entries){
-        var k, v, results$ = [];
-        for (k in obj) {
-          v = obj[k];
-          if (k === '$') {
-            results$.push(entries.push(prefix));
-          } else if (v instanceof Object) {
-            results$.push(check(prefix + k, v, entries));
-          } else {
-            results$.push(entries.push(prefix + k));
-          }
-        }
-        return results$;
-      };
+      titles = null;
       prefixEntries = {};
+      prefixRegexes = {};
       $('#query').autocomplete({
         position: {
           my: "left bottom",
           at: "left top"
         },
         select: function(e, arg$){
-          var value;
-          value = arg$.item.value;
-          fillQuery(value);
+          var item;
+          item = arg$.item;
+          if ((item != null ? item.value : void 8) != null) {
+            fillQuery(item.value);
+          }
           return true;
         },
         change: function(e, arg$){
           var item;
           item = arg$.item;
-          fillQuery(value);
+          if ((item != null ? item.value : void 8) != null) {
+            fillQuery(item.value);
+          }
           return true;
         },
         source: function(arg$, cb){
-          var term, first, titles, entries, results, res$, i$, len$, e;
+          var term, pre, ref$, regex, entries, post, results, res$, i$, len$, e;
           term = arg$.term;
           if (!term.length) {
             return cb([]);
           }
-          first = term.slice(0, 1);
-          titles = trie[first];
-          if (!titles) {
+          pre = term.slice(0, 1);
+          if (0xD800 <= (ref$ = pre.charCodeAt(0)) && ref$ <= 0xDBFF) {
+            pre = term.slice(0, 2);
+          }
+          if (!trie[pre]) {
             return cb([]);
           }
-          entries = prefixEntries[first];
-          if (!entries) {
-            entries = [];
-            check(first, titles, entries);
-            prefixEntries[first] = entries;
-          }
+          regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
+          entries = prefixEntries[pre] || (prefixEntries[pre] = (function(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = split$.call(trie[pre], '|')).length; i$ < len$; ++i$) {
+              post = ref$[i$];
+              results$.push(pre + "" + post);
+            }
+            return results$;
+          }()));
           while (term.length) {
+            if (!regex.test(term)) {
+              continue;
+            }
             res$ = [];
             for (i$ = 0, len$ = entries.length; i$ < len$; ++i$) {
               e = entries[i$];
@@ -264,7 +263,10 @@
             if (results.length) {
               return cb(results);
             }
-            term = term.slice(0, term.length - 1);
+            post = term.slice(-1);
+            term = term.slice(0, 0xDC00 <= (ref$ = post.charCodeAt(0)) && ref$ <= 0xDFFF
+              ? -2
+              : -1);
           }
           return cb([]);
         }
@@ -272,5 +274,131 @@
       return init();
     });
   };
-  MOE = "<h1 class='title'>萌</h1><span class='bopomofo'>ㄇㄥˊ</span><div>\n    <div><span class='part-of-speech'>名</span>\n        <ol><li>\n              <p class='definition'>草木初生的芽。說文解字：「萌，艸芽也。」唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」</p>\n               \n            </li><li>\n              <p class='definition'>事物發生的開端或徵兆。韓非子．說林上：「聖人見微以知萌，見端以知末。」漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」</p>\n               \n            </li><li>\n              <p class='definition'>人民。通「氓」。如：「萌黎」､「萌隸」。</p>\n               \n            </li><li>\n              <p class='definition'>姓。如五代時蜀有萌慮。</p>\n               \n            </li></ol>\n        </div><div><span class='part-of-speech'>動</span>\n        <ol><li>\n              <p class='definition'>發芽。如：「萌芽」。楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」</p>\n               \n            </li><li>\n              <p class='definition'>發生。如：「故態復萌」。管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」三國演義．第一回：「若萌異心，必獲惡報。」</p>\n               \n            </li></ol>\n        </div>";
+  MOE = [{
+    "bopomofo": "ㄇㄥˊ",
+    "bopomofo2": "méng",
+    "definitions": [
+      {
+        "definition": "草木初生的芽。",
+        "pos": "名",
+        "quote": ["說文解字：「萌，艸芽也。」", "唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"]
+      }, {
+        "definition": "事物發生的開端或徵兆。",
+        "pos": "名",
+        "quote": ["韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"]
+      }, {
+        "definition": "人民。通「氓」。如：「萌黎」､「萌隸」。",
+        "pos": "名"
+      }, {
+        "definition": "姓。如五代時蜀有萌慮。",
+        "pos": "名"
+      }, {
+        "definition": "發芽。",
+        "example": ["如：「萌芽」。"],
+        "pos": "動",
+        "quote": ["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"]
+      }, {
+        "definition": "發生。",
+        "example": ["如：「故態復萌」。"],
+        "pos": "動",
+        "quote": ["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」"]
+      }
+    ],
+    "hanyu_pinyin": "méng"
+  }];
+  function render(title, struct){
+    var bopomofo, definitions, defs, pos, def, quote, example, link, x;
+    return ls((function(){
+      var i$, ref$, len$, ref1$, ref2$, results$ = [];
+      for (i$ = 0, len$ = (ref$ = struct).length; i$ < len$; ++i$) {
+        ref1$ = ref$[i$], bopomofo = ref1$.bopomofo, definitions = (ref2$ = ref1$.definitions) != null
+          ? ref2$
+          : [];
+        results$.push("<h1 class='title'>" + h(title) + "</h1><span class='bopomofo'>" + bopomofo + "</span><div>\n" + ls((fn$())) + "</div>");
+      }
+      return results$;
+      function fn$(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = groupBy('pos', definitions)).length; i$ < len$; ++i$) {
+          defs = ref$[i$];
+          results$.push("<div>\n" + (defs[0].pos ? "<span class='part-of-speech'>" + defs[0].pos + "</span>" : '') + "\n<ol>\n" + ls((fn$())) + "</ol></div>");
+        }
+        return results$;
+        function fn$(){
+          var i$, ref$, len$, ref1$, ref2$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = defs).length; i$ < len$; ++i$) {
+            ref1$ = ref$[i$], pos = ref1$.pos, def = ref1$.definition, quote = (ref2$ = ref1$.quote) != null
+              ? ref2$
+              : [], example = (ref2$ = ref1$.example) != null
+              ? ref2$
+              : [], link = (ref2$ = ref1$.link) != null
+              ? ref2$
+              : [];
+            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)) + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
+          }
+          return results$;
+          function fn$(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = example).length; i$ < len$; ++i$) {
+              x = ref$[i$];
+              results$.push("<span class='example'>" + h(x) + "</span>");
+            }
+            return results$;
+          }
+          function fn1$(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = quote).length; i$ < len$; ++i$) {
+              x = ref$[i$];
+              results$.push("<span class='quote'>" + h(x) + "</span>");
+            }
+            return results$;
+          }
+          function fn2$(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = link).length; i$ < len$; ++i$) {
+              x = ref$[i$];
+              results$.push("<span class='link'>" + h(x) + "</span>");
+            }
+            return results$;
+          }
+        }
+      }
+    }()));
+    function expandDef(def){
+      return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
+        return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
+      }).replace(/<(\d)>/g, function(_, num){
+        return String.fromCharCode(0x327F + parseInt(num));
+      }).replace(/\((\d)\)/g, function(_, num){
+        return String.fromCharCode(0x2789 + parseInt(num));
+      });
+    }
+    function ls(lines){
+      return lines.join("");
+    }
+    function h(text){
+      text == null && (text = '');
+      return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function groupBy(prop, xs){
+      var x, pre, y;
+      if (xs.length <= 1) {
+        return [xs];
+      }
+      x = xs.shift();
+      pre = [x];
+      while (xs.length) {
+        y = xs.shift();
+        if (x[prop] !== y[prop]) {
+          break;
+        }
+        pre.push(y);
+      }
+      if (!xs.length) {
+        return [pre];
+      }
+      return [pre].concat(slice$.call(groupBy(prop, xs)));
+    }
+    return groupBy;
+  }
 }).call(this);
