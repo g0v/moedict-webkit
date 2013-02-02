@@ -20,6 +20,7 @@ window.show-info = ->
 window.do-load = ->
   return unless isDeviceReady
   $(window).on \hashchange -> grok-hash!
+  $('body').addClass \cordova if isCordova
 
   init = ->
     fetch MOE-ID unless grok-hash!
