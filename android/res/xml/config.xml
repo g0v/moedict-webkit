@@ -30,7 +30,7 @@
     <access origin=".*"/>
 
     <log level="DEBUG"/>
-    <preference name="useBrowserHistory" value="false" />
+    <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
 <plugins>
     <plugin name="App" value="org.apache.cordova.App"/>
@@ -40,6 +40,7 @@
     <plugin name="Storage" value="org.apache.cordova.Storage"/>
     <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer"/>
     <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
+    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
     <plugin name="Echo" value="org.apache.cordova.Echo" />
 </plugins>
 </cordova>

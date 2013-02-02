@@ -7,6 +7,16 @@ document.addEventListener \deviceready (->
   isDeviceReady := yes
   window.do-load!
 ), false
+
+window.show-info = ->
+  ref = window.open \Android.html \_blank \location=no
+  on-stop = ({url}) -> ref.close! if url is /quit\.html/
+  on-exit = ->
+    ref.removeEventListener \loadstop on-stop
+    ref.removeEventListener \exit     on-exit
+  ref.addEventListener \loadstop on-stop
+  ref.addEventListener \exit     on-exit
+
 window.do-load = ->
   return unless isDeviceReady
   $(window).on \hashchange -> grok-hash!

@@ -20,6 +20,7 @@
 package org.audreyt.dict.moe;
 
 import android.os.Bundle;
+import android.view.*;
 import org.apache.cordova.*;
 
 public class MoeActivity extends DroidGap
@@ -30,7 +31,26 @@ public class MoeActivity extends DroidGap
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.splash);
         this.setIntegerProperty("loadUrlTimeoutValue", 120000);
-        super.loadUrl("file:///android_asset/www/index.html", 3000);
+        super.loadUrl("file:///android_asset/www/index.html", 10000);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.example, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.info:
+                this.appView.sendJavascript("window.showInfo()");
+                return true;
+            case R.id.quit:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
-

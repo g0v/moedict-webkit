@@ -80,3 +80,14 @@ span .tone {
     /*border: 1px solid black;*/
     font-size: 100%;
 }
+img.logo {
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 0px #999;
+    max-height: 100px;
+    max-width: 100px;
+}
+img.quit {
+    position: fixed;
+    top: 10pt;
+    right: 10pt;
+}
