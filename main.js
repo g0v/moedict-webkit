@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
+    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, charRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -83,7 +83,7 @@
       } catch (e$) {}
       return false;
     };
-    prevId = prevVal = titleRegex = titleRegexExact = charRegex = null;
+    prevId = prevVal = titleRegex = charRegex = null;
     lookup = function(){
       return doLookup($('#query').val());
     };
@@ -96,18 +96,20 @@
       return code % 1024;
     };
     doLookup = function(val){
-      var id;
+      var matched, id;
       if (prevVal === val) {
         return true;
       }
-      if (titleRegexExact.test(val)) {
-        id = val;
+      prevVal = val;
+      matched = titleRegex.exec(val);
+      if (!matched) {
+        return true;
       }
-      if (prevId === id || !id) {
+      id = matched[0];
+      if (prevId === id || id !== val) {
         return true;
       }
       prevId = id;
-      prevVal = val;
       try {
         if (location.hash + "" !== "#" + val) {
           history.pushState(null, null, "#" + val);
@@ -203,7 +205,7 @@
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, titleExactJoined, t, prefixEntries, prefixRegexes;
+      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, prefixEntries, prefixRegexes;
       chars = '';
       titles = [];
       for (k in trie) {
@@ -219,15 +221,6 @@
       });
       titleJoined = (join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&");
       titleRegex = new RegExp(titleJoined, 'g');
-      titleExactJoined = ((function(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = titles).length; i$ < len$; ++i$) {
-          t = ref$[i$];
-          results$.push("^" + t + "$");
-        }
-        return results$;
-      }()).join('|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&");
-      titleRegexExact = new RegExp(titleExactJoined);
       charRegex = new RegExp(chars.substring(1), 'g');
       titles = null;
       prefixEntries = {};
