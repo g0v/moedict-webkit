@@ -83,13 +83,26 @@ window.do-load = ->
     ) * "")
     window.scroll-to 0 0
 
-  fill-json = (struct) -> fill-html render(prevId || MOE-ID, struct)
+  fill-json = (struct) ->
+    fill-html render(prevId || MOE-ID, struct)
 
+  jsonCache = {}
   bucketCache = {}
+
+  fill-bucket = (id, bucket) ->
+    raw = bucketCache[bucket]
+    key = escape id
+    idx = raw.indexOf "\"#key\""
+    part = raw.slice(idx + key.length + 4)
+    part = part.slice(0, part.indexOf '"')
+    jsonCache[id] = JSON.parse unescape part
+    fill-json jsonCache[id]
+
   if isCordova or DEBUGGING => fetch = (id) ->
     return fill-json MOE if id is MOE-ID
+    return fill-json jsonCache[id] if jsonCache[id]
     bucket = bucket-of id
-    return fill-json bucketCache[bucket][id] if bucketCache[bucket]?[id]
+    return fill-bucket id, bucket if bucketCache[bucket]
     txt <- $.get "pack/#bucket.json.bz2.txt"
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
     bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
@@ -107,8 +120,8 @@ window.do-load = ->
       bz2[j++] = chr3 unless enc4 is 64
       chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = ''
     json = bzip2.simple bzip2.array bz2
-    bucketCache[bucket] = JSON.parse decodeURIComponent escape json
-    return fill-json bucketCache[bucket][id]
+    bucketCache[bucket] = json
+    return fill-bucket id, bucket
 
   trie <- $.getJSON \prefix.json
 
@@ -167,7 +180,7 @@ function render (title, struct)
   return ls(for {bopomofo, definitions=[]} in struct
     """
       <h1 class='title'>#{ h title }</h1><span class='bopomofo'>#bopomofo</span><div>
-      #{ls(for defs in groupBy \pos definitions
+      #{ls(for defs in groupBy \pos definitions.slice!
         """<div>
         #{ if defs.0.pos then "<span class='part-of-speech'>#{
           defs.0.pos
