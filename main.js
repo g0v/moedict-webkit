@@ -11,6 +11,23 @@
     isDeviceReady = true;
     return window.doLoad();
   }, false);
+  window.showInfo = function(){
+    var ref, onStop, onExit;
+    ref = window.open('Android.html', '_blank', 'location=no');
+    onStop = function(arg$){
+      var url;
+      url = arg$.url;
+      if (/quit\.html/.exec(url)) {
+        return ref.close();
+      }
+    };
+    onExit = function(){
+      ref.removeEventListener('loadstop', onStop);
+      return ref.removeEventListener('exit', onExit);
+    };
+    ref.addEventListener('loadstop', onStop);
+    return ref.addEventListener('exit', onExit);
+  };
   window.doLoad = function(){
     var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, charRegex, lookup, fetch, fillHtml;
     if (!isDeviceReady) {
