@@ -124,6 +124,8 @@
       if (htmlCache[it]) {
         return fillHtml(htmlCache[it]);
       }
+      $('#result div, #result span, #result h1').css('visibility', 'hidden');
+      $('#result h1:first').text(it).css('visibility', 'visible');
       return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
     };
     fillHtml = function(html){
@@ -170,6 +172,8 @@
         if (bucketCache[bucket]) {
           return fillBucket(id, bucket);
         }
+        $('#result div, #result span, #result h1').css('visibility', 'hidden');
+        $('#result h1:first').text(id).css('visibility', 'visible');
         return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
           var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
           keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -358,7 +362,7 @@
               : [], link = (ref2$ = ref1$.link) != null
               ? ref2$
               : [];
-            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)) + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
+            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)).replace(/([：。])([\u278A-\u2793\u24eb-\u24f4])/g, '$1<br/>$2') + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
           }
           return results$;
           function fn$(){
@@ -393,9 +397,9 @@
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
       }).replace(/<(\d)>/g, function(_, num){
         return String.fromCharCode(0x327F + parseInt(num));
-      }).replace(/\((\d)\)/g, function(_, num){
+      }).replace(/[（(](\d)[)）]/g, function(_, num){
         return String.fromCharCode(0x2789 + parseInt(num));
-      });
+      }).replace(/\(/g, '（').replace(/\)/g, '）');
     }
     function ls(lines){
       return lines.join("");

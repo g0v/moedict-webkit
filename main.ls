@@ -75,6 +75,8 @@ window.do-load = ->
   fetch = ->
     return fill-json MOE if it is MOE-ID
     return fill-html htmlCache[it] if htmlCache[it]
+    $('#result div, #result span, #result h1').css \visibility \hidden
+    $('#result h1:first').text(it).css \visibility \visible
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
 
   fill-html = (html) ->
@@ -105,6 +107,8 @@ window.do-load = ->
     return fill-json MOE if id is MOE-ID
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
+    $('#result div, #result span, #result h1').css \visibility \hidden
+    $('#result h1:first').text(id).css \visibility \visible
     txt <- $.get "pack/#bucket.json.bz2.txt"
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
     bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
@@ -194,7 +198,7 @@ function render (title, struct)
         <ol>
         #{ls(for { pos, definition: def, quote=[], example=[], link=[] } in defs
           """<li><p class='definition'>
-            #{ h expand-def def }
+            #{ (h expand-def def).replace(/([：。])([\u278A-\u2793\u24eb-\u24f4])/g '$1<br/>$2') }
             #{ ls ["<span class='example'>#{ h x }</span>" for x in example] }
             #{ ls ["<span class='quote'>#{ h x }</span>" for x in quote] }
             #{ ls ["<span class='link'>#{ h x }</span>" for x in link] }
@@ -209,8 +213,8 @@ function render (title, struct)
     ).replace(
       /<(\d)>/g (_, num) -> String.fromCharCode(0x327F + parseInt num)
     ).replace(
-      /\((\d)\)/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
-    )
+      /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
+    ).replace(/\(/g, '（').replace(/\)/g, '）')
   function ls (lines)
     lines.join ""
   function h (text='')
