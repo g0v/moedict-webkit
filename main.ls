@@ -108,13 +108,15 @@ window.do-load = ->
     else
       titleToId[prefix + k] = v
 
+  chars = ''
   for k, v of window.trie
-    charRegex += "|#k"
+    chars += "|#k"
     walk k, v
 
   titles = [k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") for k of titleToId]
   titles.sort (a, b) -> b.length - a.length
   titleRegex := new RegExp((titles * \|), \g)
+  charRegex := new RegExp(chars.substring(1), \g)
 
   if navigator.userAgent is /Chrome/ and navigator.userAgent isnt /Android/ and not (isCordova or DEBUGGING)
     opts = ''

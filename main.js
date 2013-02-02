@@ -157,7 +157,7 @@
       };
     }
     return setTimeout(function(){
-      var walk, k, ref$, v, titles, res$, opts, title;
+      var walk, chars, k, ref$, v, titles, res$, opts, title;
       titleToId = {};
       walk = function(prefix, obj){
         var k, v, results$ = [];
@@ -173,9 +173,10 @@
         }
         return results$;
       };
+      chars = '';
       for (k in ref$ = window.trie) {
         v = ref$[k];
-        charRegex += "|" + k;
+        chars += "|" + k;
         walk(k, v);
       }
       res$ = [];
@@ -187,6 +188,7 @@
         return b.length - a.length;
       });
       titleRegex = new RegExp(join$.call(titles, '|'), 'g');
+      charRegex = new RegExp(chars.substring(1), 'g');
       if (/Chrome/.exec(navigator.userAgent) && !/Android/.test(navigator.userAgent) && !(isCordova || DEBUGGING)) {
         opts = '';
         for (title in titleToId) {
