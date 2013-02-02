@@ -51,7 +51,7 @@ window.do-load = ->
       return true
     return false
 
-  prevId = prevVal = titleRegex = titleRegexExact = charRegex = null
+  prevId = prevVal = titleRegex = charRegex = null
 
   lookup = -> do-lookup $(\#query).val!
 
@@ -63,10 +63,12 @@ window.do-load = ->
 
   do-lookup = (val) ->
     return true if prevVal is val
-    id = val if titleRegexExact.test(val)
-    return true if prevId is id or not id
-    prevId := id
     prevVal := val
+    matched = titleRegex.exec val
+    return true unless matched
+    id = matched.0
+    return true if prevId is id or id isnt val
+    prevId := id
     try history.pushState null, null, "##val" unless "#{location.hash}" is "##val"
     fetch id
     return true
@@ -142,8 +144,6 @@ window.do-load = ->
   titles.sort (a, b) -> b.length - a.length
   titleJoined = (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&")
   titleRegex := new RegExp(titleJoined, \g)
-  titleExactJoined = ([ "^#t\$" for t in titles ] * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&")
-  titleRegexExact := new RegExp(titleExactJoined)
   charRegex := new RegExp(chars.substring(1), \g)
   titles = null
 
