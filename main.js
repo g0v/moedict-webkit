@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, charRegex, lookup, fetch, fillHtml;
+    var init, grokHash, fillQuery, prevId, prevVal, titleToId, titleRegex, charRegex, lookup, doLookup, fetch, fillHtml;
     if (!isDeviceReady) {
       return;
     }
@@ -45,7 +45,7 @@
         return this.select();
       });
       $('#query').show().focus();
-      return $('a').live('click', function(){
+      return $('a').on('click', function(){
         fillQuery($(this).text());
         return false;
       });
@@ -82,8 +82,10 @@
     };
     prevId = prevVal = titleToId = titleRegex = charRegex = null;
     lookup = function(){
-      var val, id;
-      val = $('#query').val();
+      return doLookup($('#query').val());
+    };
+    doLookup = function(val){
+      var id;
       if (prevVal === val) {
         return true;
       }
@@ -157,7 +159,7 @@
       };
     }
     return setTimeout(function(){
-      var walk, chars, k, ref$, v, titles, res$, opts, title;
+      var walk, chars, k, ref$, v, titles, res$, check, prefixEntries;
       titleToId = {};
       walk = function(prefix, obj){
         var k, v, results$ = [];
@@ -189,13 +191,76 @@
       });
       titleRegex = new RegExp(join$.call(titles, '|'), 'g');
       charRegex = new RegExp(chars.substring(1), 'g');
-      if (/Chrome/.exec(navigator.userAgent) && !/Android/.test(navigator.userAgent) && !(isCordova || DEBUGGING)) {
-        opts = '';
-        for (title in titleToId) {
-          opts += "<option value='" + title + "' />";
+      check = function(prefix, obj, entries){
+        var k, v, results$ = [];
+        for (k in obj) {
+          v = obj[k];
+          if (k === '$') {
+            results$.push(entries.push(prefix));
+          } else if (v instanceof Object) {
+            results$.push(check(prefix + k, v, entries));
+          } else {
+            results$.push(entries.push(prefix + k));
+          }
         }
-        $('#toc').html(opts);
-      }
+        return results$;
+      };
+      prefixEntries = {};
+      $('#query').autocomplete({
+        position: {
+          my: "left bottom",
+          at: "left top"
+        },
+        select: function(e, arg$){
+          var value;
+          value = arg$.item.value;
+          fillQuery(value);
+          return true;
+        },
+        change: function(e, arg$){
+          var item;
+          item = arg$.item;
+          fillQuery(value);
+          return true;
+        },
+        source: function(arg$, cb){
+          var term, first, titles, entries, results, res$, i$, len$, e;
+          term = arg$.term;
+          if (!term.length) {
+            return cb([]);
+          }
+          first = term.slice(0, 1);
+          titles = trie[first];
+          if (!titles) {
+            return cb([]);
+          }
+          entries = prefixEntries[first];
+          if (!entries) {
+            entries = [];
+            check(first, titles, entries);
+            prefixEntries[first] = entries;
+          }
+          while (term.length) {
+            res$ = [];
+            for (i$ = 0, len$ = entries.length; i$ < len$; ++i$) {
+              e = entries[i$];
+              if (e.indexOf(term) === 0) {
+                res$.push(e);
+              }
+            }
+            results = res$;
+            if (results.length === 1) {
+              doLookup(results[0]);
+              return cb([]);
+            }
+            if (results.length) {
+              return cb(results);
+            }
+            term = term.slice(0, term.length - 1);
+          }
+          return cb([]);
+        }
+      });
       return init();
     }, 1);
   };
