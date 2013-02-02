@@ -333,7 +333,7 @@
         ref1$ = ref$[i$], bopomofo = ref1$.bopomofo, definitions = (ref2$ = ref1$.definitions) != null
           ? ref2$
           : [];
-        results$.push("<h1 class='title'>" + h(title) + "</h1><span class='bopomofo'>" + bopomofo + "</span><div>\n" + ls((fn$())) + "</div>");
+        results$.push("<h1 class='title'>" + h(title) + "</h1><span class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span><div>\n" + ls((fn$())) + "</div>");
       }
       return results$;
       function fn$(){

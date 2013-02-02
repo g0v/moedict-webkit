@@ -179,7 +179,11 @@ const MOE = [{"bopomofo":"ㄇㄥˊ", "bopomofo2":"méng", "definitions":[ {"defi
 function render (title, struct)
   return ls(for {bopomofo, definitions=[]} in struct
     """
-      <h1 class='title'>#{ h title }</h1><span class='bopomofo'>#bopomofo</span><div>
+      <h1 class='title'>#{ h title }</h1><span class='bopomofo'>#{
+        h bopomofo
+          .replace(/ /g, '\u3000')
+          .replace(/([ˇˊˋ])\u3000/g, '$1 ')
+      }</span><div>
       #{ls(for defs in groupBy \pos definitions.slice!
         """<div>
         #{ if defs.0.pos then "<span class='part-of-speech'>#{
