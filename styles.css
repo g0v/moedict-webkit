@@ -25,6 +25,12 @@ a:hover {
     color: #009;
     text-decoration: underline;
 }
+.part-of-speech a:hover {
+    color: white;
+    background: #aaf;
+    text-decoration: none;
+    border-radius: 5px;
+}
 center {
     padding: 15px;
 }

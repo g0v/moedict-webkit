@@ -94,7 +94,7 @@
       var chunk;
       $('#result').html((function(){
         var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = html.split(/(<\/?div>)/)).length; i$ < len$; ++i$) {
+        for (i$ = 0, len$ = (ref$ = html.replace(/(.)\u20DE/g, "<span class='part-of-speech'>$1</span>").split(/(<\/?div>)/)).length; i$ < len$; ++i$) {
           chunk = ref$[i$];
           results$.push(chunk.replace(/<h1/.exec(chunk) ? charRegex : titleRegex, fn$));
         }
@@ -133,8 +133,8 @@
             chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
           }
           json = bzip2.simple(bzip2.array(bz2));
-          if (json.match(RegExp('("' + id + '":"[^"]+")'))) {
-            return fillHtml(JSON.parse("{" + RegExp.$1 + "}")[id]);
+          if (json.match(RegExp('"' + id + '":("[^"]+")'))) {
+            return fillHtml(JSON.parse(RegExp.$1));
           }
         });
       };
