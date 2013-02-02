@@ -99,24 +99,28 @@ window.do-load = ->
 
   <- setTimeout _, 1ms
 
-  data <- $.get \options.html
+  titleToId := {}
+  walk = (prefix, obj) -> for k, v of obj
+    if k is \$
+      titleToId[prefix] = v
+    else if v instanceof Object
+      walk prefix + k, v
+    else
+      titleToId[prefix + k] = v
 
-  titleToId := JSON.parse "#{
-    data.replace(/<option value=/g \,)
-        .replace(/ (?:data-)?id=/g \:)
-        .replace(/ \/>/g           '')
-        .replace(/,/               \{)
-  }}"
+  for k, v of window.trie
+    charRegex += "|#k"
+    walk k, v
 
   titles = [k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") for k of titleToId]
   titles.sort (a, b) -> b.length - a.length
   titleRegex := new RegExp((titles * \|), \g)
 
-  chars = [ re for re in titles | re.length is 1 ]
-  charRegex := new RegExp((chars * \|), \g)
-
   if navigator.userAgent is /Chrome/ and navigator.userAgent isnt /Android/ and not (isCordova or DEBUGGING)
-    $ \#toc .html data
+    opts = ''
+    for title of titleToId
+      opts += "<option value='#title' />"
+    $ \#toc .html opts
 
   init!
 
