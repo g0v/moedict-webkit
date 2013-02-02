@@ -1,18 +1,7 @@
 (function(){
-  var DEBUGGING, MOEID, VERSION, fallbackStore, localStorage, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  VERSION = "1";
-  fallbackStore = {};
-  localStorage = window.localStorage || {
-    getItem: function(key){
-      return fallbackStore[key];
-    },
-    setItem: function(key, val){
-      return fallbackStore[key] = val;
-    },
-    clear: function(){}
-  };
   isCordova = /^file:...android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   document.addEventListener('deviceready', function(){
@@ -40,13 +29,9 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, fetch, fillHtml, fillJson, fillBucket;
+    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
-    }
-    if (parseInt(localStorage.getItem('version')) !== parseInt(VERSION)) {
-      localStorage.clear();
-      localStorage.setItem('version', VERSION);
     }
     $(window).on('hashchange', function(){
       return grokHash();
@@ -131,14 +116,13 @@
       fetch(id);
       return true;
     };
+    htmlCache = {};
     fetch = function(it){
-      var html;
       if (it === MOEID) {
         return fillJson(MOE);
       }
-      html = localStorage.getItem("html-" + it);
-      if (html) {
-        return fillHtml(html);
+      if (htmlCache[it]) {
+        return fillHtml(htmlCache[it]);
       }
       $('#result div, #result span, #result h1').css('visibility', 'hidden');
       $('#result h1:first').text(it).css('visibility', 'visible');
@@ -162,14 +146,13 @@
     fillJson = function(struct){
       var html;
       html = render(prevId || MOEID, struct);
-      if (window.localStorage) {
-        localStorage.set;
-      }
-      localStorage.setItem("html-" + (prevId || MOEID), html);
+      htmlCache[prevId || MOEID] = html;
       return fillHtml(html);
     };
-    fillBucket = function(id, raw){
-      var key, idx, part;
+    bucketCache = {};
+    fillBucket = function(id, bucket){
+      var raw, key, idx, part;
+      raw = bucketCache[bucket];
       key = escape(id);
       idx = raw.indexOf("\"" + key + "\"");
       part = raw.slice(idx + key.length + 4);
@@ -178,18 +161,16 @@
     };
     if (isCordova || DEBUGGING) {
       fetch = function(id){
-        var html, bucket, pack;
-        html = localStorage.getItem("html-" + id);
-        if (html) {
-          return fillHtml(html);
+        var bucket;
+        if (htmlCache[id]) {
+          return fillHtml(htmlCache[id]);
         }
         if (id === MOEID) {
           return fillJson(MOE);
         }
         bucket = bucketOf(id);
-        pack = localStorage.getItem("pack-" + bucket);
-        if (pack) {
-          return fillBucket(id, pack);
+        if (bucketCache[bucket]) {
+          return fillBucket(id, bucket);
         }
         $('#result div, #result span, #result h1').css('visibility', 'hidden');
         $('#result h1:first').text(id).css('visibility', 'visible');
@@ -216,8 +197,8 @@
             chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
           }
           json = bzip2.simple(bzip2.array(bz2));
-          localStorage.setItem("pack-" + bucket, json);
-          return fillBucket(id, json);
+          bucketCache[bucket] = json;
+          return fillBucket(id, bucket);
         });
       };
     }
