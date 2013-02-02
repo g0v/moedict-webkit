@@ -71,8 +71,10 @@ window.do-load = ->
     fetch id
     return true
 
+  htmlCache = {}
   fetch = ->
     return fill-json MOE if it is MOE-ID
+    return fill-html htmlCache[it] if htmlCache[it]
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
 
   fill-html = (html) ->
@@ -84,9 +86,10 @@ window.do-load = ->
     window.scroll-to 0 0
 
   fill-json = (struct) ->
-    fill-html render(prevId || MOE-ID, struct)
+    html = render(prevId || MOE-ID, struct)
+    htmlCache[prevId || MOE-ID] = html
+    fill-html html
 
-  jsonCache = {}
   bucketCache = {}
 
   fill-bucket = (id, bucket) ->
@@ -95,12 +98,11 @@ window.do-load = ->
     idx = raw.indexOf "\"#key\""
     part = raw.slice(idx + key.length + 4)
     part = part.slice(0, part.indexOf '"')
-    jsonCache[id] = JSON.parse unescape part
-    fill-json jsonCache[id]
+    fill-json JSON.parse unescape part
 
   if isCordova or DEBUGGING => fetch = (id) ->
+    return fill-html htmlCache[id] if htmlCache[id]
     return fill-json MOE if id is MOE-ID
-    return fill-json jsonCache[id] if jsonCache[id]
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
     txt <- $.get "pack/#bucket.json.bz2.txt"

@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, fetch, fillHtml, fillJson, jsonCache, bucketCache, fillBucket;
+    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, titleRegexExact, charRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -116,9 +116,13 @@
       fetch(id);
       return true;
     };
+    htmlCache = {};
     fetch = function(it){
       if (it === MOEID) {
         return fillJson(MOE);
+      }
+      if (htmlCache[it]) {
+        return fillHtml(htmlCache[it]);
       }
       return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
     };
@@ -138,9 +142,11 @@
       return window.scrollTo(0, 0);
     };
     fillJson = function(struct){
-      return fillHtml(render(prevId || MOEID, struct));
+      var html;
+      html = render(prevId || MOEID, struct);
+      htmlCache[prevId || MOEID] = html;
+      return fillHtml(html);
     };
-    jsonCache = {};
     bucketCache = {};
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
@@ -149,17 +155,16 @@
       idx = raw.indexOf("\"" + key + "\"");
       part = raw.slice(idx + key.length + 4);
       part = part.slice(0, part.indexOf('"'));
-      jsonCache[id] = JSON.parse(unescape(part));
-      return fillJson(jsonCache[id]);
+      return fillJson(JSON.parse(unescape(part)));
     };
     if (isCordova || DEBUGGING) {
       fetch = function(id){
         var bucket;
+        if (htmlCache[id]) {
+          return fillHtml(htmlCache[id]);
+        }
         if (id === MOEID) {
           return fillJson(MOE);
-        }
-        if (jsonCache[id]) {
-          return fillJson(jsonCache[id]);
         }
         bucket = bucketOf(id);
         if (bucketCache[bucket]) {
