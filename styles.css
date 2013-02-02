@@ -91,3 +91,7 @@ img.quit {
     top: 10pt;
     right: 10pt;
 }
+.ui-autocomplete {
+    max-height: 80%;
+    overflow: auto;
+}

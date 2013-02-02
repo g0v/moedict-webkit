@@ -1,5 +1,4 @@
-這是 http://3du.tw/ 線上查詢界面的雛形，目前「自動完成」
-功能僅支援於 Chrome 瀏覽器上。
+這是 http://3du.tw/ 線上查詢界面的雛形。
 
 `data` 目錄需由 `xml2data.pl` 程式產生，來源 XML
 檔的產生方式詳見 https://github.com/yllan/moedict-mac 說明。

@@ -26,7 +26,7 @@ window.do-load = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
     $ \#query .show!.focus!
-    $ \a .live \click ->
+    $ \a .on \click ->
       fill-query $(@).text!
       return false
 
@@ -52,8 +52,9 @@ window.do-load = ->
 
   prevId = prevVal = titleToId = titleRegex = charRegex = null
 
-  lookup = ->
-    val = $ \#query .val!
+  lookup = -> do-lookup $(\#query).val!
+
+  do-lookup = (val) ->
     return true if prevVal is val
     id = titleToId[val]
     return true if prevId is id or not id
@@ -100,13 +101,14 @@ window.do-load = ->
   <- setTimeout _, 1ms
 
   titleToId := {}
-  walk = (prefix, obj) -> for k, v of obj
-    if k is \$
-      titleToId[prefix] = v
-    else if v instanceof Object
-      walk prefix + k, v
-    else
-      titleToId[prefix + k] = v
+  walk = (prefix, obj) ->
+    for k, v of obj
+      if k is \$
+        titleToId[prefix] = v
+      else if v instanceof Object
+        walk prefix + k, v
+      else
+        titleToId[prefix + k] = v
 
   chars = ''
   for k, v of window.trie
@@ -118,11 +120,46 @@ window.do-load = ->
   titleRegex := new RegExp((titles * \|), \g)
   charRegex := new RegExp(chars.substring(1), \g)
 
-  if navigator.userAgent is /Chrome/ and navigator.userAgent isnt /Android/ and not (isCordova or DEBUGGING)
-    opts = ''
-    for title of titleToId
-      opts += "<option value='#title' />"
-    $ \#toc .html opts
+  check = (prefix, obj, entries) ->
+    for k, v of obj
+      if k is \$
+        entries.push prefix
+      else if v instanceof Object
+        check prefix + k, v, entries
+      else
+        entries.push(prefix + k)
+
+  prefixEntries = {}
+
+  $(\#query).autocomplete do
+    position:
+      my: "left bottom"
+      at: "left top"
+    select: (e, {item: {value}}) ->
+      fill-query value
+      return true
+    change: (e, {item}) ->
+      fill-query value
+      return true
+    source: ({term}, cb) ->
+      # first, find the minimal suffix
+      return cb [] unless term.length
+      first = term.slice(0, 1)
+      titles = trie[first]
+      return cb [] unless titles
+      entries = prefixEntries[first]
+      unless entries
+        entries = []
+        check first, titles, entries
+        prefixEntries[first] = entries
+      while term.length
+        results = [ e for e in entries | e.index-of(term) is 0 ]
+        if results.length is 1
+          do-lookup results.0
+          return cb []
+        return cb results if results.length
+        term = term.slice(0, term.length-1)
+      cb []
 
   init!
 
