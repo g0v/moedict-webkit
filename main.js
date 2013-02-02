@@ -180,7 +180,7 @@
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, prefixEntries, prefixRegexes;
+      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, titleExactJoined, t, prefixEntries, prefixRegexes;
       chars = '';
       titles = [];
       for (k in trie) {
@@ -194,9 +194,17 @@
       titles.sort(function(a, b){
         return b.length - a.length;
       });
-      titleJoined = (join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&");
+      titleJoined = (join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&");
       titleRegex = new RegExp(titleJoined, 'g');
-      titleRegexExact = new RegExp("^(?:" + titleJoined + ")$");
+      titleExactJoined = ((function(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = titles).length; i$ < len$; ++i$) {
+          t = ref$[i$];
+          results$.push("^" + t + "$");
+        }
+        return results$;
+      }()).join('|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&");
+      titleRegexExact = new RegExp(titleExactJoined);
       charRegex = new RegExp(chars.substring(1), 'g');
       titles = null;
       prefixEntries = {};
@@ -209,7 +217,7 @@
         select: function(e, arg$){
           var item;
           item = arg$.item;
-          if ((item != null ? item.value : void 8) != null) {
+          if (item != null && item.value) {
             fillQuery(item.value);
           }
           return true;
@@ -217,7 +225,7 @@
         change: function(e, arg$){
           var item;
           item = arg$.item;
-          if ((item != null ? item.value : void 8) != null) {
+          if (item != null && item.value) {
             fillQuery(item.value);
           }
           return true;
@@ -263,10 +271,7 @@
             if (results.length) {
               return cb(results);
             }
-            post = term.slice(-1);
-            term = term.slice(0, 0xDC00 <= (ref$ = post.charCodeAt(0)) && ref$ <= 0xDFFF
-              ? -2
-              : -1);
+            term = term.slice(0, -1);
           }
           return cb([]);
         }
@@ -386,9 +391,11 @@
         return [xs];
       }
       x = xs.shift();
+      x[prop] == null && (x[prop] = '');
       pre = [x];
       while (xs.length) {
         y = xs.shift();
+        y[prop] == null && (y[prop] = '');
         if (x[prop] !== y[prop]) {
           break;
         }

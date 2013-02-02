@@ -121,9 +121,10 @@ window.do-load = ->
       titles.push "#k#suffix"
 
   titles.sort (a, b) -> b.length - a.length
-  titleJoined = (titles * \|).replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")
+  titleJoined = (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&")
   titleRegex := new RegExp(titleJoined, \g)
-  titleRegexExact := new RegExp("^(?:#titleJoined)$")
+  titleExactJoined = ([ "^#t\$" for t in titles ] * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&")
+  titleRegexExact := new RegExp(titleExactJoined)
   charRegex := new RegExp(chars.substring(1), \g)
   titles = null
 
@@ -135,13 +136,12 @@ window.do-load = ->
       my: "left bottom"
       at: "left top"
     select: (e, {item}) ->
-      fill-query item.value if item?value?
+      fill-query item.value if item?value
       return true
     change: (e, {item}) ->
-      fill-query item.value if item?value?
+      fill-query item.value if item?value
       return true
     source: ({term}, cb) ->
-      # first, find the minimal suffix
       return cb [] unless term.length
       pre = term.slice(0, 1)
       pre = term.slice(0, 2) if 0xD800 <= pre.charCodeAt(0) <= 0xDBFF
@@ -157,11 +157,9 @@ window.do-load = ->
           do-lookup results.0
           return cb []
         return cb results if results.length
-        post = term.slice(-1)
-        term.=slice 0, if 0xDC00 <= post.charCodeAt(0) <= 0xDFFF then -2 else -1
-      cb []
-
-  init!
+        term = term.slice 0, -1
+      return cb []
+  return init!
 
 const MOE = [{"bopomofo":"ㄇㄥˊ", "bopomofo2":"méng", "definitions":[ {"definition":"草木初生的芽。","pos":"名","quote":["說文解字：「萌，艸芽也。」","唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"]},{"definition":"事物發生的開端或徵兆。","pos":"名","quote":["韓非子．說林上：「聖人見微以知萌，見端以知末。」","漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"]},{"definition":"人民。通「氓」。如：「萌黎」､「萌隸」。","pos":"名"},{"definition":"姓。如五代時蜀有萌慮。","pos":"名"},{"definition":"發芽。","example":["如：「萌芽」。"],"pos":"動","quote":["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"]},{"definition":"發生。","example":["如：「故態復萌」。"],"pos":"動","quote":["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」","三國演義．第一回：「若萌異心，必獲惡報。」"]}],"hanyu_pinyin":"méng"} ]
 
@@ -201,9 +199,11 @@ function render (title, struct)
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!
+    x[prop] ?= ''
     pre = [x]
     while xs.length
       y = xs.shift!
+      y[prop] ?= ''
       break unless x[prop] is y[prop]
       pre.push y
     return [pre] unless xs.length
