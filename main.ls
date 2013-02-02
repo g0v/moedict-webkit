@@ -98,7 +98,7 @@ window.do-load = ->
     if json.match(//"#id":("[^"]+")//)
       fill-html JSON.parse(RegExp.$1)
 
-  <- setTimeout _, 1ms
+  <- $.ajax { type: \GET, url: \trie.js, dataType: \script, +cache } .then
 
   titleToId := {}
   walk = (prefix, obj) ->
