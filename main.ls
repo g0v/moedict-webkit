@@ -1,4 +1,5 @@
-const DEBUGGING = no
+const DEBUGGING = off
+
 const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
 isDeviceReady = not isCordova
@@ -128,27 +129,8 @@ window.do-load = ->
     return fill-bucket id, bucket if bucketCache[bucket]
     $('#result div, #result span, #result h1').css \visibility \hidden
     $('#result h1:first').text(id).css \visibility \visible
-    json <- $.get "pack/#bucket.json.txt"
-    bucketCache[bucket] = json
-    return fill-bucket id, bucket
-    txt <- $.get "pack/#bucket.json.bz2.txt"
-    const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
-    bz2 = []
-    try bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
-    i = j = 0
-    while i < txt.length
-      enc1 = keyStr.indexOf txt.charAt i++
-      enc2 = keyStr.indexOf txt.charAt i++
-      enc3 = keyStr.indexOf txt.charAt i++
-      enc4 = keyStr.indexOf txt.charAt i++
-      chr1 = enc1 .<<. 2 .|. enc2 .>>. 4
-      chr2 = (enc2 .&. 15) .<<. 4 .|. enc3 .>>. 2
-      chr3 = (enc3 .&. 3) .<<. 6 .|. enc4
-      bz2[j++] = chr1
-      bz2[j++] = chr2 unless enc3 is 64
-      bz2[j++] = chr3 unless enc4 is 64
-      chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = ''
-    json = bzip2.simple bzip2.array bz2
+    txt <- $.get "pack/#bucket.json.gz.txt"
+    json = ungzip txt
     bucketCache[bucket] = json
     return fill-bucket id, bucket
 
