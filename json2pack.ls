@@ -5,7 +5,6 @@ defs = {}
 buckets = {}
 for {title, heteronyms} in entries
   continue if title is /\{\[[0-9a-f]{4}\]\}/
-  continue unless heteronyms.0.bopomofo
   pre = title.slice(0, 1)
   code = pre.charCodeAt(0)
   if 0xD800 <= code <= 0xDBFF
@@ -16,6 +15,9 @@ for {title, heteronyms} in entries
     post = title.slice(1)
   prefix[pre] ?= ''
   prefix[pre] += "|#post" if post.length
+  if defs[title]
+    continue unless heteronyms.0.bopomofo
+    defs[title] = [] unless defs[title].0.bopomofo
   defs[title] ?= []
   defs[title].=concat heteronyms
   idx = code % 1024
