@@ -166,10 +166,10 @@ window.do-load = ->
       at: "left top"
     select: (e, {item}) ->
       fill-query item.value if item?value
-      return true
+      return not(isCordova or DEBUGGING)
     change: (e, {item}) ->
       fill-query item.value if item?value
-      return true
+      return not(isCordova or DEBUGGING)
     source: ({term}, cb) ->
       return cb [] unless term.length
       pre = term.slice(0, 1)

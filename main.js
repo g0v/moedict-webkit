@@ -252,7 +252,7 @@
           if (item != null && item.value) {
             fillQuery(item.value);
           }
-          return true;
+          return !(isCordova || DEBUGGING);
         },
         change: function(e, arg$){
           var item;
@@ -260,7 +260,7 @@
           if (item != null && item.value) {
             fillQuery(item.value);
           }
-          return true;
+          return !(isCordova || DEBUGGING);
         },
         source: function(arg$, cb){
           var term, pre, ref$, entries, post, regex, results, res$, i$, len$, e;
