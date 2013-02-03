@@ -1,0 +1,128 @@
+@charset 'UTF-8';
+@font-face {
+    font-family: "Extra";
+    src: url(HANNOMMoEExtra-Regular.otf) format("truetype"),
+         url(HANNOMMoEExtra-Regular.woff) format("woff");
+}
+@font-face {
+    font-family: "Subset";
+    src: url(HannomMoeSubset.otf) format("truetype"),
+         url(HannomMoeSubset.woff) format("woff");
+}
+body {
+    background: #eee url('background.jpg');
+    font-family: sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+    font-size: 14pt;
+    line-height: 140%;
+}
+h1 { font-size: 140%; }
+h3 { font-size: 100%; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    color: #009;
+    text-decoration: underline;
+}
+.part-of-speech a:hover {
+    color: white;
+    background: #aaf;
+    text-decoration: none;
+    border-radius: 5px;
+}
+center {
+    padding: 15px;
+}
+#result {
+    box-shadow: 1px 1px 3px 0px #999;
+    border: 1px solid #ddd;
+    margin-top: 45pt;
+    padding: 5px 10px;
+    margin-left: 1%;
+    margin-right: 1%;
+    height: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    word-break: break-all;
+}
+#query {
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    right: 80px;
+    padding: 5px;
+    height: 36pt;
+    font-size: 16pt;
+    border-radius: 5px;
+}
+.title {
+}
+.bopomofo {
+    display: block;
+    margin-top: -14px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    color: gray;
+    font-size: 80%;
+    font-family: "Subset", "Extra", "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
+    border-bottom: 1px dotted #eee;
+}
+span .tone {
+    position: relative;
+    float: right;
+    left: 10px;
+    top: -6px;
+    font-size: 120%;
+}
+.part-of-speech {
+    color: white;
+    background-color: #555;
+    border-radius: 3px;
+    padding: 1px 2px 1px 2px;
+    /*border: 1px solid black;*/
+    font-size: 100%;
+}
+img.logo {
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 0px #999;
+    max-height: 100px;
+    max-width: 100px;
+}
+img.info, img.quit {
+    position: fixed;
+    top: -6px;
+    right: 10px;
+}
+.ui-autocomplete {
+    max-height: 60%;
+    overflow: auto;
+    top: auto !important;
+    height: auto !important;
+    position: fixed !important;
+    top: 52px !important;
+}
+.cordova .ui-autocomplete {
+    max-height: 80% !important;
+}
+.example {
+    font-size: 13pt;
+}
+.quote {
+    clear: both;
+    display: block;
+    font-size: 13pt;
+}
+.link, .def {
+    clear: both;
+    display: block;
+}
+span a {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.entry {
+    padding-bottom: 5px;
+    border-bottom: 1px ridge #ddd;
+}
