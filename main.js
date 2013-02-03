@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, titleRegex, charRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
+    var init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -88,13 +88,16 @@
         } catch (e$) {}
       }
       if (isCordova || DEBUGGING) {
-        input.focus();
-        input.selectionStart = input.selectionEnd = it.length;
+        try {
+          input.selectionStart = input.selectionEnd = it.length;
+        } catch (e$) {}
       }
       doLookup(it);
       return true;
     };
-    prevId = prevVal = titleRegex = charRegex = null;
+    prevId = prevVal = null;
+    LTMRegexes = [];
+    lenToRegex = {};
     lookup = function(){
       return doLookup($('#query').val());
     };
@@ -112,7 +115,7 @@
         return true;
       }
       prevVal = val;
-      matched = val.match(titleRegex);
+      matched = val.match(lenToRegex[val.length]);
       if (!matched) {
         return true;
       }
@@ -142,19 +145,36 @@
       return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
     };
     fillHtml = function(html){
-      var chunk;
-      $('#result').html((function(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = html.replace(/(.)\u20DE/g, "<span class='part-of-speech'>$1</span>").split(/(<\/?div>)/)).length; i$ < len$; ++i$) {
-          chunk = ref$[i$];
-          results$.push(chunk.replace(/<h1/.exec(chunk) ? charRegex : titleRegex, fn$));
-        }
-        return results$;
-        function fn$(it){
+      var spans, doStep;
+      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      $('#result').html(html);
+      $('#result h1').html(function(_, chunk){
+        return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
           return "<a href=\"#" + it + "\">" + it + "</a>";
+        });
+      });
+      window.scrollTo(0, 0);
+      spans = $('#result span').get();
+      doStep = function(){
+        var $span;
+        if (!spans.length) {
+          return;
         }
-      }()).join(""));
-      return window.scrollTo(0, 0);
+        $span = $(spans.shift());
+        $span.html(function(_, chunk){
+          var i$, ref$, len$, re;
+          for (i$ = 0, len$ = (ref$ = LTMRegexes).length; i$ < len$; ++i$) {
+            re = ref$[i$];
+            chunk = chunk.replace(re, fn$);
+          }
+          return unescape(chunk);
+          function fn$(it){
+            return escape("<a href=\"#" + it + "\">" + it + "</a>");
+          }
+        });
+        return setTimeout(doStep, 1);
+      };
+      return setTimeout(doStep, 1);
     };
     fillJson = function(struct){
       var html;
@@ -187,58 +207,67 @@
         }
         $('#result div, #result span, #result h1').css('visibility', 'hidden');
         $('#result h1:first').text(id).css('visibility', 'visible');
-        return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
-          var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
-          keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-          bz2 = [];
-          window.Uint8Array || (window.Uint8Array = Array);
-          window.Uint32Array || (window.Uint32Array = Array);
-          try {
-            bz2 = new Uint8Array(new ArrayBuffer(Math.ceil(txt.length * 0.75)));
-          } catch (e$) {}
-          i = j = 0;
-          while (i < txt.length) {
-            enc1 = keyStr.indexOf(txt.charAt(i++));
-            enc2 = keyStr.indexOf(txt.charAt(i++));
-            enc3 = keyStr.indexOf(txt.charAt(i++));
-            enc4 = keyStr.indexOf(txt.charAt(i++));
-            chr1 = enc1 << 2 | enc2 >> 4;
-            chr2 = (enc2 & 15) << 4 | enc3 >> 2;
-            chr3 = (enc3 & 3) << 6 | enc4;
-            bz2[j++] = chr1;
-            if (enc3 !== 64) {
-              bz2[j++] = chr2;
-            }
-            if (enc4 !== 64) {
-              bz2[j++] = chr3;
-            }
-            chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
-          }
-          json = bzip2.simple(bzip2.array(bz2));
+        return $.get("pack/" + bucket + ".json.txt", function(json){
           bucketCache[bucket] = json;
           return fillBucket(id, bucket);
+          return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
+            var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
+            keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+            bz2 = [];
+            try {
+              bz2 = new Uint8Array(new ArrayBuffer(Math.ceil(txt.length * 0.75)));
+            } catch (e$) {}
+            i = j = 0;
+            while (i < txt.length) {
+              enc1 = keyStr.indexOf(txt.charAt(i++));
+              enc2 = keyStr.indexOf(txt.charAt(i++));
+              enc3 = keyStr.indexOf(txt.charAt(i++));
+              enc4 = keyStr.indexOf(txt.charAt(i++));
+              chr1 = enc1 << 2 | enc2 >> 4;
+              chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+              chr3 = (enc3 & 3) << 6 | enc4;
+              bz2[j++] = chr1;
+              if (enc3 !== 64) {
+                bz2[j++] = chr2;
+              }
+              if (enc4 !== 64) {
+                bz2[j++] = chr3;
+              }
+              chr1 = chr2 = chr3 = enc1 = enc2 = enc3 = enc4 = '';
+            }
+            json = bzip2.simple(bzip2.array(bz2));
+            bucketCache[bucket] = json;
+            return fillBucket(id, bucket);
+          });
         });
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var chars, titles, k, v, i$, ref$, len$, suffix, titleJoined, prefixEntries, prefixRegexes;
-      chars = '';
-      titles = [];
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, key$, ref1$, lens, len, titles, prefixEntries, prefixRegexes;
+      lenToTitles = {};
       for (k in trie) {
         v = trie[k];
-        chars += "|" + k;
+        prefixLength = k.length;
         for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
           suffix = ref$[i$];
-          titles.push(k + "" + suffix);
+          ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
+            ? ref1$
+            : lenToTitles[key$] = []).push(k + "" + suffix);
         }
       }
-      titles.sort(function(a, b){
-        return b.length - a.length;
+      lens = [];
+      for (len in lenToTitles) {
+        titles = lenToTitles[len];
+        lens.push(len);
+        lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+      }
+      lens.sort(function(a, b){
+        return b - a;
       });
-      titleJoined = (join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&");
-      titleRegex = new RegExp(titleJoined, 'g');
-      charRegex = new RegExp(chars.substring(1), 'g');
-      titles = null;
+      for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
+        len = lens[i$];
+        LTMRegexes.push(lenToRegex[len]);
+      }
       prefixEntries = {};
       prefixRegexes = {};
       $('#query').autocomplete({
@@ -357,7 +386,7 @@
         ref1$ = ref$[i$], bopomofo = (ref2$ = ref1$.bopomofo) != null ? ref2$ : '', definitions = (ref2$ = ref1$.definitions) != null
           ? ref2$
           : [];
-        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<span class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span>" : '') + "<div>\n" + ls((fn$())) + "</div>");
+        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div>\n" + ls((fn$())) + "</div>");
       }
       return results$;
       function fn$(){
@@ -377,7 +406,7 @@
               : [], link = (ref2$ = ref1$.link) != null
               ? ref2$
               : [];
-            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1<br/>$2') + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
+            results$.push("<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
           }
           return results$;
           function fn$(){
