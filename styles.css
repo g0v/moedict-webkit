@@ -110,7 +110,7 @@ img.quit {
     display: block;
     font-size: 13pt;
 }
-.link {
+.link, .def {
     clear: both;
     display: block;
 }

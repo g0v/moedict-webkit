@@ -3,6 +3,7 @@ entries = JSON.parse fs.read-file-sync \output.unicode.json
 prefix = {}
 defs = {}
 buckets = {}
+i = 0
 for {title, heteronyms} in entries
   continue if title is /\{\[[0-9a-f]{4}\]\}/
   pre = title.slice(0, 1)
@@ -24,6 +25,7 @@ for {title, heteronyms} in entries
   buckets[idx] ?= {}
   buckets[idx][title] = defs[title]
   fs.write-file-sync "api/data/#idx/#title.json" JSON.stringify defs[title]
+  console.log i unless i++ % 1000
 
 fs.write-file-sync \prefix.json JSON.stringify prefix
 

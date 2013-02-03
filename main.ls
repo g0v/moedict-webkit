@@ -53,12 +53,13 @@ window.do-load = ->
       input.focus!
       try input.select!
     if isCordova or DEBUGGING
-      input.focus!
-      input.selectionStart = input.selectionEnd = it.length
+      try input.selectionStart = input.selectionEnd = it.length
     do-lookup it
     return true
 
-  prevId = prevVal = titleRegex = charRegex = null
+  prevId = prevVal = null
+  LTM-regexes = []
+  lenToRegex = {}
 
   lookup = -> do-lookup $(\#query).val!
 
@@ -71,7 +72,7 @@ window.do-load = ->
   do-lookup = (val) ->
     return true if prevVal is val
     prevVal := val
-    matched = val.match titleRegex
+    matched = val.match lenToRegex[val.length]
     return true unless matched
     id = matched.0
     return true if prevId is id or id isnt val
@@ -89,12 +90,23 @@ window.do-load = ->
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
 
   fill-html = (html) ->
-    $ \#result .html ((for chunk in html.replace(/(.)\u20DE/g, "<span class='part-of-speech'>$1</span>").split(//(</?div>)//)
-      chunk.replace do
-        if chunk is /<h1/ then charRegex else titleRegex
-        -> """<a href="##it">#it</a>"""
-    ) * "")
+    html.=replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>")
+    $ \#result .html html
+    $('#result h1').html (_, chunk) -> chunk.replace(
+      LTM-regexes[*-1]
+      -> """<a href="##it">#it</a>"""
+    )
     window.scroll-to 0 0
+    spans = $('#result span').get!
+    do-step = ->
+      return unless spans.length
+      $span = $(spans.shift!)
+      $span.html (_, chunk) ->
+        for re in LTM-regexes
+          chunk.=replace(re, -> escape """<a href="##it">#it</a>""")
+        unescape chunk
+      setTimeout do-step, 1ms
+    setTimeout do-step, 1ms
 
   fill-json = (struct) ->
     html = render(prevId || MOE-ID, struct)
@@ -118,11 +130,12 @@ window.do-load = ->
     return fill-bucket id, bucket if bucketCache[bucket]
     $('#result div, #result span, #result h1').css \visibility \hidden
     $('#result h1:first').text(id).css \visibility \visible
+    json <- $.get "pack/#bucket.json.txt"
+    bucketCache[bucket] = json
+    return fill-bucket id, bucket
     txt <- $.get "pack/#bucket.json.bz2.txt"
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
     bz2 = []
-    window.Uint8Array ||= Array
-    window.Uint32Array ||= Array
     try bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
     i = j = 0
     while i < txt.length
@@ -143,19 +156,20 @@ window.do-load = ->
 
   trie <- $.getJSON \prefix.json
 
-  chars = ''
-  titles = []
+  lenToTitles = {}
 
   for k, v of trie
-    chars += "|#k"
+    prefix-length = k.length
     for suffix in v / '|'
-      titles.push "#k#suffix"
+      (lenToTitles[prefix-length + suffix.length] ?= []).push "#k#suffix"
 
-  titles.sort (a, b) -> b.length - a.length
-  titleJoined = (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&")
-  titleRegex := new RegExp(titleJoined, \g)
-  charRegex := new RegExp(chars.substring(1), \g)
-  titles = null
+  lens = []
+  for len, titles of lenToTitles
+    lens.push len
+    lenToRegex[len] = new RegExp (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), \g
+
+  lens.sort (a, b) -> b - a
+  for len in lens => LTM-regexes.push lenToRegex[len]
 
   prefixEntries = {}
   prefixRegexes = {}
@@ -198,11 +212,11 @@ function render (title, struct)
   return ls(for {bopomofo='', definitions=[]} in struct
     """
       <h1 class='title'>#{ h title }</h1>#{
-        if bopomofo then "<span class='bopomofo'>#{
+        if bopomofo then "<div class='bopomofo'>#{
           h bopomofo
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
-      }</span>" else ''
+      }</div>" else ''
       }<div>
       #{ls(for defs in groupBy \pos definitions.slice!
         """<div>
@@ -212,7 +226,12 @@ function render (title, struct)
         <ol>
         #{ls(for { pos, definition: def, quote=[], example=[], link=[] } in defs
           """<li><p class='definition'>
-            #{ (h expand-def def).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g '$1<br/>$2') }
+            <span class="def">#{
+              (h expand-def def).replace(
+                /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
+                '$1</span><span class="def">$2'
+              )
+            }</span>
             #{ ls ["<span class='example'>#{ h x }</span>" for x in example] }
             #{ ls ["<span class='quote'>#{ h x }</span>" for x in quote] }
             #{ ls ["<span class='link'>#{ h x }</span>" for x in link] }
