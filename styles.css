@@ -10,7 +10,7 @@
          url(HannomMoeSubset.woff) format("woff");
 }
 body {
-    background: #eee;
+    background: #eee url('background.jpg');
     font-family: sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
     font-size: 14pt;
     line-height: 140%;
@@ -42,7 +42,7 @@ center {
     margin-left: 1%;
     margin-right: 1%;
     height: auto;
-    background: #fff;
+    background: #ffffff;
     border-radius: 10px;
     word-break: break-all;
 }
