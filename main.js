@@ -156,7 +156,7 @@
       return true;
     };
     fillHtml = function(html){
-      var spans, doStep;
+      var entries, doStep;
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       $('#result').html(html);
       $('#result h1').html(function(_, chunk){
@@ -164,16 +164,16 @@
           return "<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>";
         });
       });
+      entries = $('#result .entry').get();
       window.scrollTo(0, 0);
-      spans = $('#result span').get();
       doStep = function(){
-        var $span;
-        if (!spans.length) {
+        var $entry;
+        if (!entries.length) {
           htmlCache[prevId || MOEID] = $('#result').html();
           return;
         }
-        $span = $(spans.shift());
-        $span.html(function(_, chunk){
+        $entry = $(entries.shift());
+        $entry.html(function(_, chunk){
           var i$, ref$, len$, re;
           for (i$ = 0, len$ = (ref$ = LTMRegexes).length; i$ < len$; ++i$) {
             re = ref$[i$];
@@ -184,9 +184,9 @@
             return escape("<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>");
           }
         });
-        return setTimeout(doStep, 1);
+        return setTimeout(doStep, 10);
       };
-      return setTimeout(doStep, 1);
+      return setTimeout(doStep, 10);
     };
     fillJson = function(struct){
       var html;
@@ -376,7 +376,7 @@
         ref1$ = ref$[i$], bopomofo = (ref2$ = ref1$.bopomofo) != null ? ref2$ : '', definitions = (ref2$ = ref1$.definitions) != null
           ? ref2$
           : [];
-        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div>\n" + ls((fn$())) + "</div>");
+        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls((fn$())) + "</div>");
       }
       return results$;
       function fn$(){
