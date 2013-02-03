@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
@@ -29,7 +29,7 @@
     return ref.addEventListener('exit', onExit);
   };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, lookup, bucketOf, doLookup, htmlCache, fetch, fillHtml, fillJson, bucketCache, fillBucket;
+    var init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, lookup, bucketOf, doLookup, htmlCache, fetch, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -93,6 +93,7 @@
     prevId = prevVal = null;
     LTMRegexes = [];
     lenToRegex = {};
+    abbrevToTitle = {};
     lookup = function(){
       return doLookup($('#query').val());
     };
@@ -105,16 +106,18 @@
       return code % 1024;
     };
     doLookup = function(val){
-      var matched, id;
+      var title, matched, id;
       if (prevVal === val) {
         return true;
       }
       prevVal = val;
-      matched = val.match(lenToRegex[val.length]);
+      title = replace$.call(val, /\(.*/, '');
+      matched = title.match(lenToRegex[title.length]);
       if (!matched) {
         return true;
       }
       id = matched[0];
+      id = abbrevToTitle[id] || id;
       if (prevId === id || id !== val) {
         return true;
       }
@@ -129,15 +132,28 @@
     };
     htmlCache = {};
     fetch = function(it){
+      if (!it) {
+        return;
+      }
       if (it === MOEID) {
         return fillJson(MOE);
       }
-      if (htmlCache[it]) {
-        return fillHtml(htmlCache[it]);
+      if (loadCacheHtml(it)) {
+        return;
       }
       $('#result div, #result span, #result h1').css('visibility', 'hidden');
       $('#result h1:first').text(it).css('visibility', 'visible');
       return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
+    };
+    loadCacheHtml = function(it){
+      var html;
+      html = htmlCache[it];
+      if (!html) {
+        return false;
+      }
+      $('#result').html(html);
+      window.scrollTo(0, 0);
+      return true;
     };
     fillHtml = function(html){
       var spans, doStep;
@@ -145,7 +161,7 @@
       $('#result').html(html);
       $('#result h1').html(function(_, chunk){
         return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
-          return "<a href=\"#" + it + "\">" + it + "</a>";
+          return "<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>";
         });
       });
       window.scrollTo(0, 0);
@@ -153,6 +169,7 @@
       doStep = function(){
         var $span;
         if (!spans.length) {
+          htmlCache[prevId || MOEID] = $('#result').html();
           return;
         }
         $span = $(spans.shift());
@@ -164,7 +181,7 @@
           }
           return unescape(chunk);
           function fn$(it){
-            return escape("<a href=\"#" + it + "\">" + it + "</a>");
+            return escape("<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>");
           }
         });
         return setTimeout(doStep, 1);
@@ -174,7 +191,6 @@
     fillJson = function(struct){
       var html;
       html = render(prevId || MOEID, struct);
-      htmlCache[prevId || MOEID] = html;
       return fillHtml(html);
     };
     bucketCache = {};
@@ -190,8 +206,8 @@
     if (isCordova || DEBUGGING) {
       fetch = function(id){
         var bucket;
-        if (htmlCache[id]) {
-          return fillHtml(htmlCache[id]);
+        if (loadCacheHtml(id)) {
+          return;
         }
         if (id === MOEID) {
           return fillJson(MOE);
@@ -211,13 +227,19 @@
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, key$, ref1$, lens, len, titles, prefixEntries, prefixRegexes;
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, prefixEntries, prefixRegexes;
       lenToTitles = {};
       for (k in trie) {
         v = trie[k];
         prefixLength = k.length;
         for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
           suffix = ref$[i$];
+          abbrevIndex = suffix.indexOf('(');
+          if (abbrevIndex >= 0) {
+            orig = suffix;
+            suffix = suffix.slice(0, abbrevIndex);
+            abbrevToTitle[k + "" + suffix] = k + "" + orig;
+          }
           ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
             ? ref1$
             : lenToTitles[key$] = []).push(k + "" + suffix);
