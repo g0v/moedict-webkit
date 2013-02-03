@@ -1,6 +1,6 @@
 (function(){
   var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = true;
+  DEBUGGING = false;
   MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
@@ -40,18 +40,24 @@
       $('body').addClass('cordova');
     }
     init = function(){
-      if (!grokHash()) {
-        fetch(MOEID);
-      }
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
       $('#query').on('focus', function(){
         return this.select();
       });
       $('#query').show().focus();
-      return $('a').on('click', function(){
+      $('a').on('click', function(){
         fillQuery($(this).text());
         return false;
       });
+      if (grokHash()) {
+        return;
+      }
+      if (isCordova || DEBUGGING) {
+        fillQuery(MOEID);
+        return $('#query').val('');
+      } else {
+        return fetch(MOEID);
+      }
     };
     grokHash = function(){
       var val;
@@ -72,12 +78,18 @@
       return false;
     };
     fillQuery = function(it){
+      var input;
       $('#query').val(it);
-      if (!/Android|iPhone|iPad|Mobile/.test(navigator.userAgent)) {
-        $('#query').focus();
+      input = $('#query').get(0);
+      if (!(DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent))) {
+        input.focus();
         try {
-          $('#query').get(0).select();
+          input.select();
         } catch (e$) {}
+      }
+      if (isCordova || DEBUGGING) {
+        input.focus();
+        input.selectionStart = input.selectionEnd = it.length;
       }
       doLookup(it);
       return true;

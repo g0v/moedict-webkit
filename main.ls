@@ -1,4 +1,4 @@
-const DEBUGGING = yes
+const DEBUGGING = no
 const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
 isDeviceReady = not isCordova
@@ -23,13 +23,18 @@ window.do-load = ->
   $('body').addClass \cordova if isCordova
 
   init = ->
-    fetch MOE-ID unless grok-hash!
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
     $ \#query .show!.focus!
     $ \a .on \click ->
       fill-query $(@).text!
       return false
+    return if grok-hash!
+    if isCordova or DEBUGGING
+      fill-query MOE-ID
+      $ \#query .val ''
+    else
+      fetch MOE-ID
 
   grok-hash = ->
     return false unless location.hash is /^#./
@@ -43,9 +48,13 @@ window.do-load = ->
 
   fill-query = ->
     $ \#query .val it
-    unless navigator.userAgent is /Android|iPhone|iPad|Mobile/
-      $ \#query .focus!
-      try $ \#query .get 0 .select!
+    input = $ \#query .get 0
+    unless DEBUGGING or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+      input.focus!
+      try input.select!
+    if isCordova or DEBUGGING
+      input.focus!
+      input.selectionStart = input.selectionEnd = it.length
     do-lookup it
     return true
 
