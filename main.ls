@@ -106,19 +106,19 @@ window.do-load = ->
       LTM-regexes[*-1]
       -> """<a href="##{ abbrevToTitle[it] || it }">#it</a>"""
     )
+    entries = $('#result .entry').get!
     window.scroll-to 0 0
-    spans = $('#result span').get!
     do-step = ->
-      unless spans.length
+      unless entries.length
         htmlCache[prevId || MOE-ID] = $('#result').html!
         return
-      $span = $(spans.shift!)
-      $span.html (_, chunk) ->
+      $entry = $(entries.shift!)
+      $entry.html (_, chunk) ->
         for re in LTM-regexes
           chunk.=replace(re, -> escape """<a href="##{ abbrevToTitle[it] || it }">#it</a>""")
         unescape chunk
-      setTimeout do-step, 1ms
-    setTimeout do-step, 1ms
+      setTimeout do-step, 10ms
+    setTimeout do-step, 10ms
 
   fill-json = (struct) ->
     html = render(prevId || MOE-ID, struct)
@@ -214,7 +214,7 @@ function render (title, struct)
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
       }</div>" else ''
-      }<div>
+      }<div class="entry">
       #{ls(for defs in groupBy \pos definitions.slice!
         """<div>
         #{ if defs.0.pos then "<span class='part-of-speech'>#{

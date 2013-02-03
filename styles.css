@@ -57,13 +57,17 @@ center {
     font-size: 16pt;
     border-radius: 5px;
 }
+.title {
+}
 .bopomofo {
     display: block;
     margin-top: -14px;
-    margin-bottom: 16px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
     color: gray;
     font-size: 80%;
     font-family: "Subset", "Extra", "Courier New", "教育部標準楷書", "標楷體", BiaoKai, sans-serif;
+    border-bottom: 1px dotted #eee;
 }
 span .tone {
     position: relative;
@@ -113,4 +117,13 @@ img.quit {
 .link, .def {
     clear: both;
     display: block;
+}
+span a {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.entry {
+    padding-bottom: 5px;
+    border-bottom: 1px ridge #ddd;
 }
