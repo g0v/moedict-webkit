@@ -59,6 +59,7 @@ window.do-load = ->
   prevId = prevVal = null
   LTM-regexes = []
   lenToRegex = {}
+  abbrevToTitle = {}
 
   lookup = -> do-lookup $(\#query).val!
 
@@ -71,9 +72,11 @@ window.do-load = ->
   do-lookup = (val) ->
     return true if prevVal is val
     prevVal := val
-    matched = val.match lenToRegex[val.length]
+    title = val - /\(.*/
+    matched = title.match lenToRegex[title.length]
     return true unless matched
     id = matched.0
+    id = abbrevToTitle[id] || id
     return true if prevId is id or id isnt val
     prevId := id
     try history.pushState null, null, "##val" unless "#{location.hash}" is "##val"
@@ -82,34 +85,43 @@ window.do-load = ->
 
   htmlCache = {}
   fetch = ->
+    return unless it
     return fill-json MOE if it is MOE-ID
-    return fill-html htmlCache[it] if htmlCache[it]
+    return if load-cache-html it
     $('#result div, #result span, #result h1').css \visibility \hidden
     $('#result h1:first').text(it).css \visibility \visible
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
+
+  load-cache-html = ->
+    html = htmlCache[it]
+    return false unless html
+    $ \#result .html html
+    window.scroll-to 0 0
+    return true
 
   fill-html = (html) ->
     html.=replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>")
     $ \#result .html html
     $('#result h1').html (_, chunk) -> chunk.replace(
       LTM-regexes[*-1]
-      -> """<a href="##it">#it</a>"""
+      -> """<a href="##{ abbrevToTitle[it] || it }">#it</a>"""
     )
     window.scroll-to 0 0
     spans = $('#result span').get!
     do-step = ->
-      return unless spans.length
+      unless spans.length
+        htmlCache[prevId || MOE-ID] = $('#result').html!
+        return
       $span = $(spans.shift!)
       $span.html (_, chunk) ->
         for re in LTM-regexes
-          chunk.=replace(re, -> escape """<a href="##it">#it</a>""")
+          chunk.=replace(re, -> escape """<a href="##{ abbrevToTitle[it] || it }">#it</a>""")
         unescape chunk
       setTimeout do-step, 1ms
     setTimeout do-step, 1ms
 
   fill-json = (struct) ->
     html = render(prevId || MOE-ID, struct)
-    htmlCache[prevId || MOE-ID] = html
     fill-html html
 
   bucketCache = {}
@@ -123,7 +135,7 @@ window.do-load = ->
     fill-json JSON.parse unescape part
 
   if isCordova or DEBUGGING => fetch = (id) ->
-    return fill-html htmlCache[id] if htmlCache[id]
+    return if load-cache-html id
     return fill-json MOE if id is MOE-ID
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
@@ -141,6 +153,11 @@ window.do-load = ->
   for k, v of trie
     prefix-length = k.length
     for suffix in v / '|'
+      abbrevIndex = suffix.indexOf '('
+      if abbrevIndex >= 0
+        orig = suffix
+        suffix.=slice(0, abbrevIndex)
+        abbrevToTitle["#k#suffix"] = "#k#orig"
       (lenToTitles[prefix-length + suffix.length] ?= []).push "#k#suffix"
 
   lens = []
