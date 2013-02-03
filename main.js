@@ -179,7 +179,12 @@
         return $.get("pack/" + bucket + ".json.bz2.txt", function(txt){
           var keyStr, bz2, i, j, enc1, enc2, enc3, enc4, chr1, chr2, chr3, json;
           keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-          bz2 = new Uint8Array(new ArrayBuffer(Math.ceil(txt.length * 0.75)));
+          bz2 = [];
+          window.Uint8Array || (window.Uint8Array = Array);
+          window.Uint32Array || (window.Uint32Array = Array);
+          try {
+            bz2 = new Uint8Array(new ArrayBuffer(Math.ceil(txt.length * 0.75)));
+          } catch (e$) {}
           i = j = 0;
           while (i < txt.length) {
             enc1 = keyStr.indexOf(txt.charAt(i++));
@@ -247,7 +252,7 @@
           return true;
         },
         source: function(arg$, cb){
-          var term, pre, ref$, regex, entries, post, results, res$, i$, len$, e;
+          var term, pre, ref$, entries, post, regex, results, res$, i$, len$, e;
           term = arg$.term;
           if (!term.length) {
             return cb([]);
@@ -259,7 +264,6 @@
           if (!trie[pre]) {
             return cb([]);
           }
-          regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
           entries = prefixEntries[pre] || (prefixEntries[pre] = (function(){
             var i$, ref$, len$, results$ = [];
             for (i$ = 0, len$ = (ref$ = split$.call(trie[pre], '|')).length; i$ < len$; ++i$) {
@@ -268,7 +272,14 @@
             }
             return results$;
           }()));
+          if (term === pre) {
+            return cb(entries);
+          }
+          regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
           while (term.length) {
+            if (term === pre) {
+              return cb(entries);
+            }
             if (!regex.test(term)) {
               continue;
             }
@@ -355,7 +366,7 @@
               : [], link = (ref2$ = ref1$.link) != null
               ? ref2$
               : [];
-            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)).replace(/([：。])([\u278A-\u2793\u24eb-\u24f4])/g, '$1<br/>$2') + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
+            results$.push("<li><p class='definition'>\n    " + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1<br/>$2') + "\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
           }
           return results$;
           function fn$(){

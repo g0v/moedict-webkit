@@ -113,7 +113,10 @@ window.do-load = ->
     $('#result h1:first').text(id).css \visibility \visible
     txt <- $.get "pack/#bucket.json.bz2.txt"
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
-    bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
+    bz2 = []
+    window.Uint8Array ||= Array
+    window.Uint32Array ||= Array
+    try bz2 = new Uint8Array(new ArrayBuffer Math.ceil(txt.length * 0.75))
     i = j = 0
     while i < txt.length
       enc1 = keyStr.indexOf txt.charAt i++
@@ -165,11 +168,13 @@ window.do-load = ->
       pre = term.slice(0, 1)
       pre = term.slice(0, 2) if 0xD800 <= pre.charCodeAt(0) <= 0xDBFF
       return cb [] unless trie[pre]
+      entries = prefixEntries[pre] ||= ["#pre#post" for post in trie[pre] / '|']
+      return cb entries if term is pre
       regex = prefixRegexes[pre] ||= new RegExp "^#{
         trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")
       }"
-      entries = prefixEntries[pre] ||= ["#pre#post" for post in trie[pre] / '|']
       while term.length
+        return cb entries if term is pre
         continue unless regex.test term
         results = [ e for e in entries | e.index-of(term) is 0 ]
         if results.length is 1
@@ -198,7 +203,7 @@ function render (title, struct)
         <ol>
         #{ls(for { pos, definition: def, quote=[], example=[], link=[] } in defs
           """<li><p class='definition'>
-            #{ (h expand-def def).replace(/([：。])([\u278A-\u2793\u24eb-\u24f4])/g '$1<br/>$2') }
+            #{ (h expand-def def).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g '$1<br/>$2') }
             #{ ls ["<span class='example'>#{ h x }</span>" for x in example] }
             #{ ls ["<span class='quote'>#{ h x }</span>" for x in quote] }
             #{ ls ["<span class='link'>#{ h x }</span>" for x in link] }
