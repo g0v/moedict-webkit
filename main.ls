@@ -49,11 +49,9 @@ window.do-load = ->
   fill-query = ->
     $ \#query .val it
     input = $ \#query .get 0
-    unless DEBUGGING or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+    unless DEBUGGING or isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
       input.focus!
       try input.select!
-    if isCordova or DEBUGGING
-      try input.selectionStart = input.selectionEnd = it.length
     do-lookup it
     return true
 

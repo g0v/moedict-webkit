@@ -81,15 +81,10 @@
       var input;
       $('#query').val(it);
       input = $('#query').get(0);
-      if (!(DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent))) {
+      if (!(DEBUGGING || isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent))) {
         input.focus();
         try {
           input.select();
-        } catch (e$) {}
-      }
-      if (isCordova || DEBUGGING) {
-        try {
-          input.selectionStart = input.selectionEnd = it.length;
         } catch (e$) {}
       }
       doLookup(it);
