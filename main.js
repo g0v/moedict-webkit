@@ -1,6 +1,6 @@
 (function(){
   var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, split$ = ''.split, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = false;
+  DEBUGGING = true;
   MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
@@ -72,16 +72,15 @@
       return false;
     };
     fillQuery = function(it){
-      try {
-        $('#query').val(it);
-        if (!/Android|iPhone|iPad|Mobile/.test(navigator.userAgent)) {
-          $('#query').focus();
+      $('#query').val(it);
+      if (!/Android|iPhone|iPad|Mobile/.test(navigator.userAgent)) {
+        $('#query').focus();
+        try {
           $('#query').get(0).select();
-        }
-        lookup();
-        return true;
-      } catch (e$) {}
-      return false;
+        } catch (e$) {}
+      }
+      doLookup(it);
+      return true;
     };
     prevId = prevVal = titleRegex = charRegex = null;
     lookup = function(){
@@ -101,7 +100,7 @@
         return true;
       }
       prevVal = val;
-      matched = titleRegex.exec(val);
+      matched = val.match(titleRegex);
       if (!matched) {
         return true;
       }
@@ -343,10 +342,10 @@
     return ls((function(){
       var i$, ref$, len$, ref1$, ref2$, results$ = [];
       for (i$ = 0, len$ = (ref$ = struct).length; i$ < len$; ++i$) {
-        ref1$ = ref$[i$], bopomofo = ref1$.bopomofo, definitions = (ref2$ = ref1$.definitions) != null
+        ref1$ = ref$[i$], bopomofo = (ref2$ = ref1$.bopomofo) != null ? ref2$ : '', definitions = (ref2$ = ref1$.definitions) != null
           ? ref2$
           : [];
-        results$.push("<h1 class='title'>" + h(title) + "</h1><span class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span><div>\n" + ls((fn$())) + "</div>");
+        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<span class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span>" : '') + "<div>\n" + ls((fn$())) + "</div>");
       }
       return results$;
       function fn$(){

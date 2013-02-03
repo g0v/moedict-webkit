@@ -1,4 +1,4 @@
-const DEBUGGING = no
+const DEBUGGING = yes
 const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
 isDeviceReady = not isCordova
@@ -42,14 +42,12 @@ window.do-load = ->
     return false
 
   fill-query = ->
-    try
-      $ \#query .val it
-      unless navigator.userAgent is /Android|iPhone|iPad|Mobile/
-        $ \#query .focus!
-        $ \#query .get 0 .select!
-      lookup!
-      return true
-    return false
+    $ \#query .val it
+    unless navigator.userAgent is /Android|iPhone|iPad|Mobile/
+      $ \#query .focus!
+      try $ \#query .get 0 .select!
+    do-lookup it
+    return true
 
   prevId = prevVal = titleRegex = charRegex = null
 
@@ -64,7 +62,7 @@ window.do-load = ->
   do-lookup = (val) ->
     return true if prevVal is val
     prevVal := val
-    matched = titleRegex.exec val
+    matched = val.match titleRegex
     return true unless matched
     id = matched.0
     return true if prevId is id or id isnt val
@@ -188,13 +186,15 @@ window.do-load = ->
 const MOE = [{"bopomofo":"ㄇㄥˊ", "bopomofo2":"méng", "definitions":[ {"definition":"草木初生的芽。","pos":"名","quote":["說文解字：「萌，艸芽也。」","唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"]},{"definition":"事物發生的開端或徵兆。","pos":"名","quote":["韓非子．說林上：「聖人見微以知萌，見端以知末。」","漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"]},{"definition":"人民。通「氓」。如：「萌黎」､「萌隸」。","pos":"名"},{"definition":"姓。如五代時蜀有萌慮。","pos":"名"},{"definition":"發芽。","example":["如：「萌芽」。"],"pos":"動","quote":["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"]},{"definition":"發生。","example":["如：「故態復萌」。"],"pos":"動","quote":["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」","三國演義．第一回：「若萌異心，必獲惡報。」"]}],"hanyu_pinyin":"méng"} ]
 
 function render (title, struct)
-  return ls(for {bopomofo, definitions=[]} in struct
+  return ls(for {bopomofo='', definitions=[]} in struct
     """
-      <h1 class='title'>#{ h title }</h1><span class='bopomofo'>#{
-        h bopomofo
-          .replace(/ /g, '\u3000')
-          .replace(/([ˇˊˋ])\u3000/g, '$1 ')
-      }</span><div>
+      <h1 class='title'>#{ h title }</h1>#{
+        if bopomofo then "<span class='bopomofo'>#{
+          h bopomofo
+            .replace(/ /g, '\u3000')
+            .replace(/([ˇˊˋ])\u3000/g, '$1 ')
+      }</span>" else ''
+      }<div>
       #{ls(for defs in groupBy \pos definitions.slice!
         """<div>
         #{ if defs.0.pos then "<span class='part-of-speech'>#{
