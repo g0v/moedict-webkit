@@ -1,9 +1,11 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isDeviceReady, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isMobile, isDeviceReady, entryHistory, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
+  isMobile = isCordova || DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   isDeviceReady = !isCordova;
+  entryHistory = [MOEID];
   document.addEventListener('deviceready', function(){
     try {
       navigator.splashscreen.hide();
@@ -33,22 +35,29 @@
     if (!isDeviceReady) {
       return;
     }
-    $(window).on('hashchange', function(){
-      return grokHash();
-    });
     if (isCordova) {
       $('body').addClass('cordova');
     }
+    document.addEventListener('backbutton', function(){
+      entryHistory.pop();
+      if (!entryHistory.length) {
+        return;
+      }
+      fetch(entryHistory[entryHistory.length - 1]);
+      return false;
+    }, false);
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
       $('#query').on('focus', function(){
         return this.select();
       });
       $('#query').show().focus();
-      $('a').on('click', function(){
-        fillQuery($(this).text());
-        return false;
-      });
+      if (!in$(onhashchange, window)) {
+        $('a').on('click', function(){
+          fillQuery($(this).text());
+          return false;
+        });
+      }
       if (grokHash()) {
         return;
       }
@@ -59,7 +68,7 @@
         return fetch(MOEID);
       }
     };
-    grokHash = function(){
+    window.grokHash = grokHash = function(){
       var val;
       if (!/^#./.test(location.hash)) {
         return false;
@@ -69,7 +78,10 @@
         if (val === prevVal) {
           return true;
         }
-        $('#query').show().focus();
+        $('#query').show();
+        if (!isMobile) {
+          $('#query').focus();
+        }
         fillQuery(val);
         if (val === prevVal) {
           return true;
@@ -81,7 +93,7 @@
       var input;
       $('#query').val(it);
       input = $('#query').get(0);
-      if (!(DEBUGGING || isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent))) {
+      if (!isMobile) {
         input.focus();
         try {
           input.select();
@@ -127,6 +139,7 @@
           history.pushState(null, null, "#" + val);
         }
       } catch (e$) {}
+      entryHistory.push(val);
       fetch(id);
       return true;
     };
@@ -464,5 +477,10 @@
       return [pre].concat(slice$.call(groupBy(prop, xs)));
     }
     return groupBy;
+  }
+  function in$(x, arr){
+    var i = -1, l = arr.length >>> 0;
+    while (++i < l) if (x === arr[i] && i in arr) return true;
+    return false;
   }
 }).call(this);

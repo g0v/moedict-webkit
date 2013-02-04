@@ -2,7 +2,10 @@ const DEBUGGING = off
 
 const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
+isMobile = isCordova or DEBUGGING or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isDeviceReady = not isCordova
+entryHistory = [MOE-ID]
+
 document.addEventListener \deviceready (->
   try navigator.splashscreen.hide!
   isDeviceReady := yes
@@ -20,16 +23,24 @@ window.show-info = ->
 
 window.do-load = ->
   return unless isDeviceReady
-  $(window).on \hashchange -> grok-hash!
   $('body').addClass \cordova if isCordova
+
+  document.addEventListener \backbutton (->
+    entryHistory.pop!
+    return unless entryHistory.length
+    fetch entryHistory[*-1]
+    return false
+  ), false
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
     $ \#query .show!.focus!
-    $ \a .on \click ->
-      fill-query $(@).text!
-      return false
+
+    if onhashchange not in window
+      $ \a .on \click ->
+        fill-query $(@).text!
+        return false
     return if grok-hash!
     if isCordova or DEBUGGING
       fill-query MOE-ID
@@ -37,12 +48,14 @@ window.do-load = ->
     else
       fetch MOE-ID
 
-  grok-hash = ->
+  window.grok-hash = grok-hash = ->
     return false unless location.hash is /^#./
     try
       val = decodeURIComponent location.hash.substr 1
       return true if val is prevVal
-      $ \#query .show!.focus!
+      $ \#query .show!
+      unless isMobile
+        $ \#query .focus!
       fill-query val
       return true if val is prevVal
     return false
@@ -50,7 +63,7 @@ window.do-load = ->
   fill-query = ->
     $ \#query .val it
     input = $ \#query .get 0
-    unless DEBUGGING or isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+    unless isMobile
       input.focus!
       try input.select!
     do-lookup it
@@ -80,6 +93,7 @@ window.do-load = ->
     return true if prevId is id or id isnt val
     prevId := id
     try history.pushState null, null, "##val" unless "#{location.hash}" is "##val"
+    entryHistory.push val
     fetch id
     return true
 
