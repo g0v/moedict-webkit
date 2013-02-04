@@ -1,11 +1,11 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isMobile, isDeviceReady, entryHistory, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isMobile, isDeviceReady, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
   isCordova = /^file:...android_asset/.exec(location.href);
   isMobile = isCordova || DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   isDeviceReady = !isCordova;
-  entryHistory = [MOEID];
+  entryHistory = [];
   document.addEventListener('deviceready', function(){
     try {
       navigator.splashscreen.hide();
@@ -30,20 +30,37 @@
     ref.addEventListener('loadstop', onStop);
     return ref.addEventListener('exit', onExit);
   };
+  callLater = function(it){
+    return setTimeout(it, isMobile ? 10 : 1);
+  };
   window.doLoad = function(){
-    var init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, lookup, bucketOf, doLookup, htmlCache, fetch, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
+    var cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, lookup, bucketOf, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
     if (isCordova) {
       $('body').addClass('cordova');
     }
+    cacheLoading = false;
     document.addEventListener('backbutton', function(){
-      entryHistory.pop();
-      if (!entryHistory.length) {
+      var token;
+      if (cacheLoading) {
         return;
       }
-      fetch(entryHistory[entryHistory.length - 1]);
+      entryHistory.pop();
+      token = Math.random();
+      cacheLoading = token;
+      setTimeout(function(){
+        if (cacheLoading === token) {
+          return cacheLoading = false;
+        }
+      }, 10000);
+      callLater(function(){
+        var id;
+        id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
+        $('#query').val(id);
+        return fetch(id);
+      });
       return false;
     }, false);
     init = function(){
@@ -133,12 +150,6 @@
       if (prevId === id || id !== val) {
         return true;
       }
-      prevId = id;
-      try {
-        if (location.hash + "" !== "#" + val) {
-          history.pushState(null, null, "#" + val);
-        }
-      } catch (e$) {}
       entryHistory.push(val);
       fetch(id);
       return true;
@@ -148,14 +159,30 @@
       if (!it) {
         return;
       }
-      if (it === MOEID) {
-        return fillJson(MOE);
+      prevId = it;
+      prevVal = it;
+      try {
+        if (location.hash + "" !== "#" + it) {
+          history.pushState(null, null, "#" + it);
+        }
+      } catch (e$) {}
+      if (isMobile) {
+        $('#result div, #result span, #result h1:not(:first)').hide();
+        $('#result h1:first').text(it).show();
+      } else {
+        $('#result div, #result span, #result h1:not(:first)').css('visibility', 'hidden');
+        $('#result h1:first').text(it).css('visibility', 'visible');
+        window.scrollTo(0, 0);
       }
       if (loadCacheHtml(it)) {
         return;
       }
-      $('#result div, #result span, #result h1').css('visibility', 'hidden');
-      $('#result h1:first').text(it).css('visibility', 'visible');
+      if (it === MOEID) {
+        return fillJson(MOE);
+      }
+      return loadJson(it);
+    };
+    loadJson = function(it){
       return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
     };
     loadCacheHtml = function(it){
@@ -164,12 +191,14 @@
       if (!html) {
         return false;
       }
-      $('#result').html(html);
-      window.scrollTo(0, 0);
+      callLater(function(){
+        $('#result').html(html);
+        return cacheLoading = false;
+      });
       return true;
     };
     fillHtml = function(html){
-      var entries, doStep;
+      var entries, id, doStep;
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       $('#result').html(html);
       $('#result h1').html(function(_, chunk){
@@ -178,11 +207,14 @@
         });
       });
       entries = $('#result .entry').get();
-      window.scrollTo(0, 0);
+      id = prevId || MOEID;
       doStep = function(){
         var $entry;
         if (!entries.length) {
-          htmlCache[prevId || MOEID] = $('#result').html();
+          if (prevId === id) {
+            htmlCache[id] = $('#result').html();
+          }
+          cacheLoading = false;
           return;
         }
         $entry = $(entries.shift());
@@ -197,9 +229,9 @@
             return escape("<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>");
           }
         });
-        return setTimeout(doStep, 10);
+        return callLater(doStep);
       };
-      return setTimeout(doStep, 10);
+      return callLater(doStep);
     };
     fillJson = function(struct){
       var html;
@@ -217,20 +249,12 @@
       return fillJson(JSON.parse(unescape(part)));
     };
     if (isCordova || DEBUGGING) {
-      fetch = function(id){
+      loadJson = function(id){
         var bucket;
-        if (loadCacheHtml(id)) {
-          return;
-        }
-        if (id === MOEID) {
-          return fillJson(MOE);
-        }
         bucket = bucketOf(id);
         if (bucketCache[bucket]) {
           return fillBucket(id, bucket);
         }
-        $('#result div, #result span, #result h1').css('visibility', 'hidden');
-        $('#result h1:first').text(id).css('visibility', 'visible');
         return $.get("pack/" + bucket + ".json.gz.txt", function(txt){
           var json;
           json = ungzip(txt);
