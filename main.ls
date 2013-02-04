@@ -4,7 +4,7 @@ const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
 isMobile = isCordova or DEBUGGING or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isDeviceReady = not isCordova
-entryHistory = [MOE-ID]
+entryHistory = []
 
 document.addEventListener \deviceready (->
   try navigator.splashscreen.hide!
@@ -21,14 +21,23 @@ window.show-info = ->
   ref.addEventListener \loadstop on-stop
   ref.addEventListener \exit     on-exit
 
+callLater = -> setTimeout it, if isMobile then 10ms else 1ms
+
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
 
+  cache-loading = no
   document.addEventListener \backbutton (->
+    return if cache-loading
     entryHistory.pop!
-    return unless entryHistory.length
-    fetch entryHistory[*-1]
+    token = Math.random!
+    cache-loading := token
+    setTimeout (-> cache-loading := no if cache-loading is token), 10000ms
+    callLater ->
+      id = if entryHistory.length then entryHistory[*-1] else MOE-ID
+      $ \#query .val id
+      fetch id
     return false
   ), false
 
@@ -91,8 +100,6 @@ window.do-load = ->
     id = matched.0
     id = abbrevToTitle[id] || id
     return true if prevId is id or id isnt val
-    prevId := id
-    try history.pushState null, null, "##val" unless "#{location.hash}" is "##val"
     entryHistory.push val
     fetch id
     return true
@@ -100,17 +107,29 @@ window.do-load = ->
   htmlCache = {}
   fetch = ->
     return unless it
-    return fill-json MOE if it is MOE-ID
+    prevId := it
+    prevVal := it
+    try history.pushState null, null, "##it" unless "#{location.hash}" is "##it"
+    if isMobile
+      $('#result div, #result span, #result h1:not(:first)').hide!
+      $('#result h1:first').text(it).show!
+    else
+      $('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
+      $('#result h1:first').text(it).css \visibility \visible
+      window.scroll-to 0 0
     return if load-cache-html it
-    $('#result div, #result span, #result h1').css \visibility \hidden
-    $('#result h1:first').text(it).css \visibility \visible
+    return fill-json MOE if it is MOE-ID
+    load-json it
+
+  load-json = ->
     $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
 
   load-cache-html = ->
     html = htmlCache[it]
     return false unless html
-    $ \#result .html html
-    window.scroll-to 0 0
+    callLater ->
+      $ \#result .html html
+      cache-loading := no
     return true
 
   fill-html = (html) ->
@@ -121,18 +140,19 @@ window.do-load = ->
       -> """<a href="##{ abbrevToTitle[it] || it }">#it</a>"""
     )
     entries = $('#result .entry').get!
-    window.scroll-to 0 0
+    id = prevId || MOE-ID
     do-step = ->
       unless entries.length
-        htmlCache[prevId || MOE-ID] = $('#result').html!
+        htmlCache[id] = $('#result').html! if prevId is id
+        cache-loading := no
         return
       $entry = $(entries.shift!)
       $entry.html (_, chunk) ->
         for re in LTM-regexes
           chunk.=replace(re, -> escape """<a href="##{ abbrevToTitle[it] || it }">#it</a>""")
         unescape chunk
-      setTimeout do-step, 10ms
-    setTimeout do-step, 10ms
+      callLater do-step
+    callLater do-step
 
   fill-json = (struct) ->
     html = render(prevId || MOE-ID, struct)
@@ -148,13 +168,9 @@ window.do-load = ->
     part = part.slice(0, part.indexOf '"')
     fill-json JSON.parse unescape part
 
-  if isCordova or DEBUGGING => fetch = (id) ->
-    return if load-cache-html id
-    return fill-json MOE if id is MOE-ID
+  if isCordova or DEBUGGING => load-json = (id) ->
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
-    $('#result div, #result span, #result h1').css \visibility \hidden
-    $('#result h1:first').text(id).css \visibility \visible
     txt <- $.get "pack/#bucket.json.gz.txt"
     json = ungzip txt
     bucketCache[bucket] = json
