@@ -201,17 +201,27 @@ window.do-load = ->
     try
       lenToRegex[len] = new RegExp (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), \g
     catch
+      $.ajax {
+          type: \GET
+          url: "lenToRegex.#len.json"
+          async: false
+          dataType: \json
+          success: (data) -> lenToRegex[len] = new RegExp data[len], \g
+      }
+    /*
+    if len in [2 4]
       cur = ''
       re = ''
       for t in titles
         one = t.slice(0, 1)
         two = t.slice(1)
         if one is cur
-          re += two
+          re += "|#two"
         else
-          re += "]|#one[#two"
+          re += ")|#one(#two"
         cur = one
-      lenToRegex[len] = new RegExp re.slice(2, -4).replace(/[-{}()*+?.,\\#\s]/g, "\\$&"), \g
+      $('body').append('<textarea>' + re.slice(2, -1) + '</textarea>');
+    */
 
   lens.sort (a, b) -> b - a
   for len in lens => LTM-regexes.push lenToRegex[len]
