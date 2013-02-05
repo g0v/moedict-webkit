@@ -273,7 +273,7 @@
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e, cur, re, t, one, two, prefixEntries, prefixRegexes;
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e, prefixEntries, prefixRegexes;
       lenToTitles = {};
       for (k in trie) {
         v = trie[k];
@@ -300,21 +300,28 @@
           lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
         } catch (e$) {
           e = e$;
-          cur = '';
-          re = '';
-          for (i$ = 0, len$ = titles.length; i$ < len$; ++i$) {
-            t = titles[i$];
-            one = t.slice(0, 1);
-            two = t.slice(1);
-            if (one === cur) {
-              re += two;
-            } else {
-              re += "]|" + one + "[" + two;
-            }
-            cur = one;
-          }
-          lenToRegex[len] = new RegExp(re.slice(2, -4).replace(/[-{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+          $.ajax({
+            type: 'GET',
+            url: "lenToRegex." + len + ".json",
+            async: false,
+            dataType: 'json',
+            success: fn$
+          });
         }
+        /*
+        if len in [2 4]
+          cur = ''
+          re = ''
+          for t in titles
+            one = t.slice(0, 1)
+            two = t.slice(1)
+            if one is cur
+              re += "|#two"
+            else
+              re += ")|#one(#two"
+            cur = one
+          $('body').append('<textarea>' + re.slice(2, -1) + '</textarea>');
+        */
       }
       lens.sort(function(a, b){
         return b - a;
@@ -399,6 +406,9 @@
         }
       });
       return init();
+      function fn$(data){
+        return lenToRegex[len] = new RegExp(data[len], 'g');
+      }
     });
   };
   MOE = [{
