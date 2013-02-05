@@ -6,7 +6,7 @@ isMobile = isCordova or DEBUGGING or navigator.userAgent is /Android|iPhone|iPad
 isDeviceReady = not isCordova
 entryHistory = []
 
-document.addEventListener \deviceready (->
+try document.addEventListener \deviceready (->
   try navigator.splashscreen.hide!
   isDeviceReady := yes
   window.do-load!
@@ -28,7 +28,7 @@ window.do-load = ->
   $('body').addClass \cordova if isCordova
 
   cache-loading = no
-  document.addEventListener \backbutton (->
+  try document.addEventListener \backbutton (->
     return if cache-loading
     entryHistory.pop!
     token = Math.random!
@@ -46,8 +46,8 @@ window.do-load = ->
     $ \#query .on \focus -> @select!
     $ \#query .show!.focus!
 
-    if onhashchange not in window
-      $ \a .on \click ->
+    if \onhashchange not in window
+      $ \body .on \click \a ->
         fill-query $(@).text!
         return false
     return if grok-hash!
@@ -95,7 +95,11 @@ window.do-load = ->
     return true if prevVal is val
     prevVal := val
     title = val - /\(.*/
-    matched = title.match lenToRegex[title.length]
+    regex = lenToRegex[title.length]
+    if regex instanceof Function
+      matched = regex title
+    else
+      matched = title.match regex
     return true unless matched
     id = matched.0
     id = abbrevToTitle[id] || id
@@ -122,7 +126,7 @@ window.do-load = ->
     load-json it
 
   load-json = ->
-    $.getJSON "api/data/#{ bucket-of it }/#it.json" fill-json
+    $.getJSON "api/data/#{ bucket-of it }/#{ encodeURIComponent it }.json" fill-json
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -193,7 +197,21 @@ window.do-load = ->
   lens = []
   for len, titles of lenToTitles
     lens.push len
-    lenToRegex[len] = new RegExp (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), \g
+    titles.sort!
+    try
+      lenToRegex[len] = new RegExp (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), \g
+    catch
+      cur = ''
+      re = ''
+      for t in titles
+        one = t.slice(0, 1)
+        two = t.slice(1)
+        if one is cur
+          re += two
+        else
+          re += "]|#one[#two"
+        cur = one
+      lenToRegex[len] = new RegExp re.slice(2, -4).replace(/[-{}()*+?.,\\#\s]/g, "\\$&"), \g
 
   lens.sort (a, b) -> b - a
   for len in lens => LTM-regexes.push lenToRegex[len]
