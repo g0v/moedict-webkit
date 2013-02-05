@@ -6,13 +6,15 @@
   isMobile = isCordova || DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   isDeviceReady = !isCordova;
   entryHistory = [];
-  document.addEventListener('deviceready', function(){
-    try {
-      navigator.splashscreen.hide();
-    } catch (e$) {}
-    isDeviceReady = true;
-    return window.doLoad();
-  }, false);
+  try {
+    document.addEventListener('deviceready', function(){
+      try {
+        navigator.splashscreen.hide();
+      } catch (e$) {}
+      isDeviceReady = true;
+      return window.doLoad();
+    }, false);
+  } catch (e$) {}
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
@@ -42,35 +44,37 @@
       $('body').addClass('cordova');
     }
     cacheLoading = false;
-    document.addEventListener('backbutton', function(){
-      var token;
-      if (cacheLoading) {
-        return;
-      }
-      entryHistory.pop();
-      token = Math.random();
-      cacheLoading = token;
-      setTimeout(function(){
-        if (cacheLoading === token) {
-          return cacheLoading = false;
+    try {
+      document.addEventListener('backbutton', function(){
+        var token;
+        if (cacheLoading) {
+          return;
         }
-      }, 10000);
-      callLater(function(){
-        var id;
-        id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
-        $('#query').val(id);
-        return fetch(id);
-      });
-      return false;
-    }, false);
+        entryHistory.pop();
+        token = Math.random();
+        cacheLoading = token;
+        setTimeout(function(){
+          if (cacheLoading === token) {
+            return cacheLoading = false;
+          }
+        }, 10000);
+        callLater(function(){
+          var id;
+          id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
+          $('#query').val(id);
+          return fetch(id);
+        });
+        return false;
+      }, false);
+    } catch (e$) {}
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
       $('#query').on('focus', function(){
         return this.select();
       });
       $('#query').show().focus();
-      if (!in$(onhashchange, window)) {
-        $('a').on('click', function(){
+      if (!in$('onhashchange', window)) {
+        $('body').on('click', 'a', function(){
           fillQuery($(this).text());
           return false;
         });
@@ -135,13 +139,18 @@
       return code % 1024;
     };
     doLookup = function(val){
-      var title, matched, id;
+      var title, regex, matched, id;
       if (prevVal === val) {
         return true;
       }
       prevVal = val;
       title = replace$.call(val, /\(.*/, '');
-      matched = title.match(lenToRegex[title.length]);
+      regex = lenToRegex[title.length];
+      if (regex instanceof Function) {
+        matched = regex(title);
+      } else {
+        matched = title.match(regex);
+      }
       if (!matched) {
         return true;
       }
@@ -183,7 +192,7 @@
       return loadJson(it);
     };
     loadJson = function(it){
-      return $.getJSON("api/data/" + bucketOf(it) + "/" + it + ".json", fillJson);
+      return $.getJSON("api/data/" + bucketOf(it) + "/" + encodeURIComponent(it) + ".json", fillJson);
     };
     loadCacheHtml = function(it){
       var html;
@@ -264,7 +273,7 @@
       };
     }
     return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, prefixEntries, prefixRegexes;
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e, cur, re, t, one, two, prefixEntries, prefixRegexes;
       lenToTitles = {};
       for (k in trie) {
         v = trie[k];
@@ -286,7 +295,26 @@
       for (len in lenToTitles) {
         titles = lenToTitles[len];
         lens.push(len);
-        lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+        titles.sort();
+        try {
+          lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+        } catch (e$) {
+          e = e$;
+          cur = '';
+          re = '';
+          for (i$ = 0, len$ = titles.length; i$ < len$; ++i$) {
+            t = titles[i$];
+            one = t.slice(0, 1);
+            two = t.slice(1);
+            if (one === cur) {
+              re += two;
+            } else {
+              re += "]|" + one + "[" + two;
+            }
+            cur = one;
+          }
+          lenToRegex[len] = new RegExp(re.slice(2, -4).replace(/[-{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+        }
       }
       lens.sort(function(a, b){
         return b - a;
