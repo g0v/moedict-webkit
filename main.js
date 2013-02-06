@@ -193,12 +193,6 @@
     };
     loadJson = function(it){
       return $.getJSON("pua/" + encodeURIComponent(it) + ".json", function(data){
-        if (data.dict) {
-          data = data.dict;
-        }
-        if (data.heteronyms) {
-          data = data.heteronyms;
-        }
         return fillJson(data);
       });
     };
@@ -250,9 +244,15 @@
       };
       return callLater(doStep);
     };
-    fillJson = function(struct){
+    fillJson = function(data){
       var html;
-      html = render(prevId || MOEID, struct);
+      if (data.dict) {
+        data = data.dict;
+      }
+      if (data.heteronyms) {
+        data = data.heteronyms;
+      }
+      html = render(prevId || MOEID, data);
       return fillHtml(html);
     };
     bucketCache = {};
@@ -405,38 +405,44 @@
       }
     });
   };
-  MOE = [{
-    "bopomofo": "ㄇㄥˊ",
-    "bopomofo2": "méng",
-    "definitions": [
-      {
-        "definition": "草木初生的芽。",
-        "pos": "名",
-        "quote": ["說文解字：「萌，艸芽也。」", "唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"]
-      }, {
-        "definition": "事物發生的開端或徵兆。",
-        "pos": "名",
-        "quote": ["韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"]
-      }, {
-        "definition": "人民。通「氓」。如：「萌黎」､「萌隸」。",
-        "pos": "名"
-      }, {
-        "definition": "姓。如五代時蜀有萌慮。",
-        "pos": "名"
-      }, {
-        "definition": "發芽。",
-        "example": ["如：「萌芽」。"],
-        "pos": "動",
-        "quote": ["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"]
-      }, {
-        "definition": "發生。",
-        "example": ["如：「故態復萌」。"],
-        "pos": "動",
-        "quote": ["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」"]
-      }
-    ],
-    "hanyu_pinyin": "méng"
-  }];
+  MOE = {
+    "heteronyms": [{
+      "bopomofo": "ㄇㄥˊ",
+      "bopomofo2": "méng",
+      "definitions": [
+        {
+          "def": "草木初生的芽。",
+          "quote": ["說文解字：「萌，艸芽也。」", "唐．韓愈､劉師服､侯喜､軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"],
+          "type": "名"
+        }, {
+          "def": "事物發生的開端或徵兆。",
+          "quote": ["韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"],
+          "type": "名"
+        }, {
+          "def": "人民。通「氓」。如：「萌黎」､「萌隸」。",
+          "type": "名"
+        }, {
+          "def": "姓。如五代時蜀有萌慮。",
+          "type": "名"
+        }, {
+          "def": "發芽。",
+          "example": ["如：「萌芽」。"],
+          "quote": ["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"],
+          "type": "動"
+        }, {
+          "def": "發生。",
+          "example": ["如：「故態復萌」。"],
+          "quote": ["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」"],
+          "type": "動"
+        }
+      ],
+      "pinyin": "méng"
+    }],
+    "non_radical_stroke_count": "8",
+    "radical": "艸",
+    "stroke_count": "12",
+    "title": "萌"
+  };
   function render(title, struct){
     var bopomofo, definitions, defs, pos, def, quote, example, link, x;
     return ls((function(){
