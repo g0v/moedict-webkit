@@ -192,7 +192,15 @@
       return loadJson(it);
     };
     loadJson = function(it){
-      return $.getJSON("api/data/" + bucketOf(it) + "/" + encodeURIComponent(it) + ".json", fillJson);
+      return $.getJSON("pua/" + encodeURIComponent(it) + ".json", function(data){
+        if (data.dict) {
+          data = data.dict;
+        }
+        if (data.heteronyms) {
+          data = data.heteronyms;
+        }
+        return fillJson(data);
+      });
     };
     loadCacheHtml = function(it){
       var html;
@@ -308,20 +316,6 @@
             success: fn$
           });
         }
-        /*
-        if len in [2 4]
-          cur = ''
-          re = ''
-          for t in titles
-            one = t.slice(0, 1)
-            two = t.slice(1)
-            if one is cur
-              re += "|#two"
-            else
-              re += ")|#one(#two"
-            cur = one
-          $('body').append('<textarea>' + re.slice(2, -1) + '</textarea>');
-        */
       }
       lens.sort(function(a, b){
         return b - a;
@@ -464,7 +458,7 @@
         function fn$(){
           var i$, ref$, len$, ref1$, ref2$, results$ = [];
           for (i$ = 0, len$ = (ref$ = defs).length; i$ < len$; ++i$) {
-            ref1$ = ref$[i$], pos = ref1$.pos, def = ref1$.definition, quote = (ref2$ = ref1$.quote) != null
+            ref1$ = ref$[i$], pos = ref1$.pos, def = ref1$.def, quote = (ref2$ = ref1$.quote) != null
               ? ref2$
               : [], example = (ref2$ = ref1$.example) != null
               ? ref2$
