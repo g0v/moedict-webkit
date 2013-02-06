@@ -38,7 +38,7 @@ a {
 }
 a:hover {
     color: #009;
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 .part-of-speech a {
     color: white !important;
