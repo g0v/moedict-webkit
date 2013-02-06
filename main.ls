@@ -126,7 +126,10 @@ window.do-load = ->
     load-json it
 
   load-json = ->
-    $.getJSON "api/data/#{ bucket-of it }/#{ encodeURIComponent it }.json" fill-json
+    data <- $.getJSON "pua/#{ encodeURIComponent it }.json"
+    data = data.dict if data.dict
+    data = data.heteronyms if data.heteronyms
+    fill-json data
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -208,20 +211,6 @@ window.do-load = ->
           dataType: \json
           success: (data) -> lenToRegex[len] = new RegExp data[len], \g
       }
-    /*
-    if len in [2 4]
-      cur = ''
-      re = ''
-      for t in titles
-        one = t.slice(0, 1)
-        two = t.slice(1)
-        if one is cur
-          re += "|#two"
-        else
-          re += ")|#one(#two"
-        cur = one
-      $('body').append('<textarea>' + re.slice(2, -1) + '</textarea>');
-    */
 
   lens.sort (a, b) -> b - a
   for len in lens => LTM-regexes.push lenToRegex[len]
@@ -279,7 +268,7 @@ function render (title, struct)
           defs.0.pos
         }</span>" else ''}
         <ol>
-        #{ls(for { pos, definition: def, quote=[], example=[], link=[] } in defs
+        #{ls(for { pos, def, quote=[], example=[], link=[] } in defs
           """<li><p class='definition'>
             <span class="def">#{
               (h expand-def def).replace(
