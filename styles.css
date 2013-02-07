@@ -410,7 +410,8 @@ a {
 }
 a:hover {
   color: #009;
-  text-decoration: underline !important;
+  background: #ddf;
+  border-radius: 5px;
 }
 
 .part-of-speech a {
