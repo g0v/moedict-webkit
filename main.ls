@@ -265,13 +265,13 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
           }</div>" else ''
       }<div class="entry">
-      #{ls groupBy(\pos definitions.slice!), (defs) ->
+      #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div>
-        #{ if defs.0.pos then "<span class='part-of-speech'>#{
-          defs.0.pos
+        #{ if defs.0.type then "<span class='part-of-speech'>#{
+          defs.0.type
         }</span>" else ''}
         <ol>
-        #{ls defs, ({ pos, def, quote=[], example=[], link=[] }) ->
+        #{ls defs, ({ type, def, quote=[], example=[], link=[] }) ->
           """<li><p class='definition'>
             <span class="def">#{
               (h expand-def def).replace(
