@@ -449,7 +449,7 @@
       bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [];
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('pos', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('pos', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].pos ? "<span class='part-of-speech'>" + defs[0].pos + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var pos, def, quote, ref$, example, link;
           pos = arg$.pos, def = arg$.def, quote = (ref$ = arg$.quote) != null
