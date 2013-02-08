@@ -395,7 +395,7 @@ body {
   font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
-.bopomofo {
+.bopomofo, .radical {
   font-weight: 501;
   font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
@@ -415,6 +415,15 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
+.radical {
+  position: absolute;
+  text-align: right;
+  right: 24px;
+  top: 36px;
+}
+.radical .count {
+  font-family: 'Ubuntu Mono', Menlo, Monaco, Consolas, Courier New, monospace;
+}
 .part-of-speech a {
   color: white !important;
 }
@@ -477,7 +486,17 @@ center {
   margin-bottom: 10px;
   color: gray;
   font-size: 80%;
+  width: 50%;
   border-bottom: 1px dotted #eeeeee;
+  word-break: normal !important;
+}
+.bopomofo .pinyin {
+  position: absolute;
+  right: 24px;
+  text-align: right;
+  word-break: normal !important;
+  left: 65%;
+  font-family: 'Ubuntu Mono', Menlo, Monaco, Consolas, Courier New, monospace;
 }
 
 span .tone {
@@ -488,7 +507,14 @@ span .tone {
   font-size: 120%;
 }
 
-.part-of-speech {
+.radical .glyph {
+  margin-right: 3pt;
+}
+.radical .sym {
+  margin-left: 3pt;
+  padding-right: 3pt;
+}
+.part-of-speech, .glyph {
   color: white;
   background-color: #555;
   border-radius: 3px;
