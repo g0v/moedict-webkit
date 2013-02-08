@@ -408,16 +408,18 @@ a {
   color: black !important;
   text-decoration: none !important;
 }
-a:hover {
-  color: #009;
-  background: #ddf;
-  border-radius: 5px;
+a:hover, a:focus {
+  background: url("css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png") repeat-x scroll 50% 50% #E4F1FB;
+  color: #0070A3;
+  outline: 1px solid #74B2E2 !important;
+  border-radius: 6px;
 }
 
 .part-of-speech a {
   color: white !important;
 }
-.part-of-speech a:hover {
+.part-of-speech a:hover,
+.part-of-speech a:focus {
   color: white;
   background: #aaf;
   text-decoration: none;
