@@ -257,7 +257,9 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
-            if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
+            if pinyin then "<span class='pinyin'>#{ h pinyin
+              .replace(/（.*）/, '')
+            }</span>" else ''
           }#{ h bopomofo
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
