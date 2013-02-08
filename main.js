@@ -247,10 +247,7 @@
       if (struct.dict) {
         struct = struct.dict;
       }
-      if (struct.heteronyms) {
-        struct = struct.heteronyms;
-      }
-      html = render(prevId || MOEID, struct);
+      html = render(struct);
       return fillHtml(html);
     };
     bucketCache = {};
@@ -443,64 +440,35 @@
     "stroke_count": "12",
     "title": "萌"
   };
-  function render(title, struct){
-    var bopomofo, definitions, defs, pos, def, quote, example, link, x;
-    return ls((function(){
-      var i$, ref$, len$, ref1$, ref2$, results$ = [];
-      for (i$ = 0, len$ = (ref$ = struct).length; i$ < len$; ++i$) {
-        ref1$ = ref$[i$], bopomofo = (ref2$ = ref1$.bopomofo) != null ? ref2$ : '', definitions = (ref2$ = ref1$.definitions) != null
-          ? ref2$
-          : [];
-        results$.push("<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls((fn$())) + "</div>");
-      }
-      return results$;
-      function fn$(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = groupBy('pos', definitions.slice())).length; i$ < len$; ++i$) {
-          defs = ref$[i$];
-          results$.push("<div>\n" + (defs[0].pos ? "<span class='part-of-speech'>" + defs[0].pos + "</span>" : '') + "\n<ol>\n" + ls((fn$())) + "</ol></div>");
-        }
-        return results$;
-        function fn$(){
-          var i$, ref$, len$, ref1$, ref2$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = defs).length; i$ < len$; ++i$) {
-            ref1$ = ref$[i$], pos = ref1$.pos, def = ref1$.def, quote = (ref2$ = ref1$.quote) != null
-              ? ref2$
-              : [], example = (ref2$ = ref1$.example) != null
-              ? ref2$
-              : [], link = (ref2$ = ref1$.link) != null
-              ? ref2$
-              : [];
-            results$.push("<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls((fn$())) + "\n    " + ls((fn1$())) + "\n    " + ls((fn2$())) + "\n</p></li>");
-          }
-          return results$;
-          function fn$(){
-            var i$, ref$, len$, results$ = [];
-            for (i$ = 0, len$ = (ref$ = example).length; i$ < len$; ++i$) {
-              x = ref$[i$];
-              results$.push("<span class='example'>" + h(x) + "</span>");
-            }
-            return results$;
-          }
-          function fn1$(){
-            var i$, ref$, len$, results$ = [];
-            for (i$ = 0, len$ = (ref$ = quote).length; i$ < len$; ++i$) {
-              x = ref$[i$];
-              results$.push("<span class='quote'>" + h(x) + "</span>");
-            }
-            return results$;
-          }
-          function fn2$(){
-            var i$, ref$, len$, results$ = [];
-            for (i$ = 0, len$ = (ref$ = link).length; i$ < len$; ++i$) {
-              x = ref$[i$];
-              results$.push("<span class='link'>" + h(x) + "</span>");
-            }
-            return results$;
-          }
-        }
-      }
-    }()));
+  function render(arg$){
+    var title, heteronyms, radical, nrsCount, sCount, charHtml;
+    title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
+    charHtml = radical ? "<div class='radical'><span class='glyph'>" + radical + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
+    return ls(heteronyms, function(arg$){
+      var bopomofo, pinyin, definitions, ref$;
+      bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
+        ? ref$
+        : [];
+      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('pos', definitions.slice()), function(defs){
+        return "<div>\n" + (defs[0].pos ? "<span class='part-of-speech'>" + defs[0].pos + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
+          var pos, def, quote, ref$, example, link;
+          pos = arg$.pos, def = arg$.def, quote = (ref$ = arg$.quote) != null
+            ? ref$
+            : [], example = (ref$ = arg$.example) != null
+            ? ref$
+            : [], link = (ref$ = arg$.link) != null
+            ? ref$
+            : [];
+          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
+            return "<span class='example'>" + h(it) + "</span>";
+          }) + "\n    " + ls(quote, function(it){
+            return "<span class='quote'>" + h(it) + "</span>";
+          }) + "\n    " + ls(link, function(it){
+            return "<span class='link'>" + h(it) + "</span>";
+          }) + "\n</p></li>";
+        }) + "</ol></div>";
+      }) + "</div>";
+    });
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
@@ -510,8 +478,16 @@
         return String.fromCharCode(0x2789 + parseInt(num));
       }).replace(/\(/g, '（').replace(/\)/g, '）');
     }
-    function ls(lines){
-      return lines.join("");
+    function ls(entries, cb){
+      var x;
+      return (function(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = entries).length; i$ < len$; ++i$) {
+          x = ref$[i$];
+          results$.push(cb(x));
+        }
+        return results$;
+      }()).join("");
     }
     function h(text){
       text == null && (text = '');

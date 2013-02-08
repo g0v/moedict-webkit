@@ -159,8 +159,7 @@ window.do-load = ->
 
   fill-json = (struct) ->
     struct = struct.dict if struct.dict
-    struct = struct.heteronyms if struct.heteronyms
-    html = render(prevId || MOE-ID, struct)
+    html = render struct
     fill-html html
 
   bucketCache = {}
@@ -250,23 +249,27 @@ window.do-load = ->
 
 const MOE = { "heteronyms": [ { "bopomofo": "ㄇㄥˊ", "bopomofo2": "méng", "definitions": [ { "def": "草木初生的芽。", "quote": [ "說文解字：「萌，艸芽也。」", "唐．韓愈、劉師服、侯喜、軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」" ], "type": "名" }, { "def": "事物發生的開端或徵兆。", "quote": [ "韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」" ], "type": "名" }, { "def": "人民。", "example": [ "如：「萌黎」、「萌隸」。" ], "link": [ "通「氓」。" ], "type": "名" }, { "def": "姓。如五代時蜀有萌慮。", "type": "名" }, { "def": "發芽。", "example": [ "如：「萌芽」。" ], "quote": [ "楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」" ], "type": "動" }, { "def": "發生。", "example": [ "如：「故態復萌」。" ], "quote": [ "管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」" ], "type": "動" } ], "pinyin": "méng" } ], "non_radical_stroke_count": "8", "radical": "艸", "stroke_count": "12", "title": "萌" }
 
-function render (title, struct)
-  return ls(for {bopomofo='', definitions=[]} in struct
-    """
+function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
+  char-html = if radical then "<div class='radical'><span class='glyph'>#{
+    radical
+  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
+  return ls heteronyms, ({bopomofo, pinyin, definitions=[]}) ->
+    """#char-html
       <h1 class='title'>#{ h title }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
-          h bopomofo
+            if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
+          }#{ h bopomofo
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
-      }</div>" else ''
+          }</div>" else ''
       }<div class="entry">
-      #{ls(for defs in groupBy \pos definitions.slice!
+      #{ls groupBy(\pos definitions.slice!), (defs) ->
         """<div>
         #{ if defs.0.pos then "<span class='part-of-speech'>#{
           defs.0.pos
         }</span>" else ''}
         <ol>
-        #{ls(for { pos, def, quote=[], example=[], link=[] } in defs
+        #{ls defs, ({ pos, def, quote=[], example=[], link=[] }) ->
           """<li><p class='definition'>
             <span class="def">#{
               (h expand-def def).replace(
@@ -274,12 +277,12 @@ function render (title, struct)
                 '$1</span><span class="def">$2'
               )
             }</span>
-            #{ ls ["<span class='example'>#{ h x }</span>" for x in example] }
-            #{ ls ["<span class='quote'>#{ h x }</span>" for x in quote] }
-            #{ ls ["<span class='link'>#{ h x }</span>" for x in link] }
-        </p></li>""")}</ol></div>
-      """)}</div>
-    """)
+            #{ ls example, -> "<span class='example'>#{ h it }</span>" }
+            #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
+            #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
+        </p></li>"""}</ol></div>
+      """}</div>
+    """
   function expand-def (def)
     def.replace(
       /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
@@ -290,8 +293,8 @@ function render (title, struct)
     ).replace(
       /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
     ).replace(/\(/g, '（').replace(/\)/g, '）')
-  function ls (lines)
-    lines.join ""
+  function ls (entries, cb)
+    [cb x for x in entries].join ""
   function h (text='')
     text.replace(/</g '&lt;').replace(/>/g '&gt;')
   function groupBy (prop, xs)
