@@ -2,15 +2,6 @@
 <title>3du.tw 萌典測試版</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="styles.css" rel="stylesheet"></link>
-<script src="zepto.min.js"></script>
-<script>
-$(function(){
-   $('a:not(.quit)').live('click', function() {
-       window.open($(this).attr('href'), '_system');
-       return false;
-   });
-});
-</script>
 </head>
 <body><a class="quit" href="#" onclick="history.go(-1); return false;"><img class="quit" src="quit.png"></a><center><img class="logo" src="icon.png" width="30%"></center><div id="result" style="margin-top: 0px">
 <p>本詞典共收錄十六萬筆中文條目，在輸入框按空白鍵可啟動「自動完成」功能。</p>
