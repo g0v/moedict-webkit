@@ -557,7 +557,7 @@ img.quit {
 }
 
 .cordova .ui-autocomplete {
-  max-height: 80% !important;
+  max-height: 75% !important;
 }
 
 .example {

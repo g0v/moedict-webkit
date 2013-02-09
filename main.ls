@@ -1,4 +1,4 @@
-const DEBUGGING = off
+const DEBUGGING = no
 
 const MOE-ID = "萌"
 isCordova = location.href is /^file:...android_asset/
@@ -72,7 +72,9 @@ window.do-load = ->
   fill-query = ->
     $ \#query .val it
     input = $ \#query .get 0
-    unless isMobile
+    if isMobile
+      try $(\#query).autocomplete \close
+    else
       input.focus!
       try input.select!
     do-lookup it
@@ -159,6 +161,7 @@ window.do-load = ->
 
   fill-json = (struct) ->
     struct = struct.dict if struct.dict
+    struct = struct.0 if struct.0
     html = render struct
     fill-html html
 
@@ -172,13 +175,28 @@ window.do-load = ->
     part = part.slice(0, part.indexOf '"')
     fill-json JSON.parse unescape part
 
-  if isCordova or DEBUGGING => load-json = (id) ->
-    bucket = bucket-of id
-    return fill-bucket id, bucket if bucketCache[bucket]
-    txt <- $.get "pack/#bucket.json.gz.txt"
-    json = ungzip txt
-    bucketCache[bucket] = json
-    return fill-bucket id, bucket
+  if isCordova or DEBUGGING
+    load-json = (id) ->
+      bucket = bucket-of id
+      return fill-bucket id, bucket if bucketCache[bucket]
+      txt <- $.get "pack/#bucket.json.gz.txt"
+      json = ungzip txt
+      bucketCache[bucket] = json
+      return fill-bucket id, bucket
+
+    $.getJSON \precomputed.json (blob) ->
+      $.getJSON \prefix.json (trie) ->
+        setup-autocomplete trie
+        return init!
+      lenToRegex := blob.lenToRegex
+      abbrevToTitle := blob.abbrevToTitle
+      lens = []
+      for len of lenToRegex
+        lens.push len
+        lenToRegex[len] = new RegExp lenToRegex[len], \g
+      lens.sort (a, b) -> b - a
+      for len in lens => LTM-regexes.push lenToRegex[len]
+    return
 
   trie <- $.getJSON \prefix.json
 
@@ -212,19 +230,25 @@ window.do-load = ->
   lens.sort (a, b) -> b - a
   for len in lens => LTM-regexes.push lenToRegex[len]
 
+  setup-autocomplete trie
+
+  return init!
+
+const MOE = { "heteronyms": [ { "bopomofo": "ㄇㄥˊ", "bopomofo2": "méng", "definitions": [ { "def": "草木初生的芽。", "quote": [ "說文解字：「萌，艸芽也。」", "唐．韓愈、劉師服、侯喜、軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」" ], "type": "名" }, { "def": "事物發生的開端或徵兆。", "quote": [ "韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」" ], "type": "名" }, { "def": "人民。", "example": [ "如：「萌黎」、「萌隸」。" ], "link": [ "通「氓」。" ], "type": "名" }, { "def": "姓。如五代時蜀有萌慮。", "type": "名" }, { "def": "發芽。", "example": [ "如：「萌芽」。" ], "quote": [ "楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」" ], "type": "動" }, { "def": "發生。", "example": [ "如：「故態復萌」。" ], "quote": [ "管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」" ], "type": "動" } ], "pinyin": "méng" } ], "non_radical_stroke_count": "8", "radical": "艸", "stroke_count": "12", "title": "萌" }
+
+function setup-autocomplete (trie)
   prefixEntries = {}
   prefixRegexes = {}
-
   $(\#query).autocomplete do
     position:
       my: "left bottom"
       at: "left top"
     select: (e, {item}) ->
       fill-query item.value if item?value
-      return not(isCordova or DEBUGGING)
+      return true
     change: (e, {item}) ->
       fill-query item.value if item?value
-      return not(isCordova or DEBUGGING)
+      return true
     source: ({term}, cb) ->
       return cb [] unless term.length
       pre = term.slice(0, 1)
@@ -245,9 +269,6 @@ window.do-load = ->
         return cb results if results.length
         term = term.slice 0, -1
       return cb []
-  return init!
-
-const MOE = { "heteronyms": [ { "bopomofo": "ㄇㄥˊ", "bopomofo2": "méng", "definitions": [ { "def": "草木初生的芽。", "quote": [ "說文解字：「萌，艸芽也。」", "唐．韓愈、劉師服、侯喜、軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」" ], "type": "名" }, { "def": "事物發生的開端或徵兆。", "quote": [ "韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」" ], "type": "名" }, { "def": "人民。", "example": [ "如：「萌黎」、「萌隸」。" ], "link": [ "通「氓」。" ], "type": "名" }, { "def": "姓。如五代時蜀有萌慮。", "type": "名" }, { "def": "發芽。", "example": [ "如：「萌芽」。" ], "quote": [ "楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」" ], "type": "動" }, { "def": "發生。", "example": [ "如：「故態復萌」。" ], "quote": [ "管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」" ], "type": "動" } ], "pinyin": "méng" } ], "non_radical_stroke_count": "8", "radical": "艸", "stroke_count": "12", "title": "萌" }
 
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
@@ -295,7 +316,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     ).replace(
       /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
     ).replace(/\(/g, '（').replace(/\)/g, '）')
-  function ls (entries, cb)
+  function ls (entries=[], cb)
     [cb x for x in entries].join ""
   function h (text='')
     text.replace(/</g '&lt;').replace(/>/g '&gt;')

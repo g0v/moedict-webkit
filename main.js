@@ -114,7 +114,11 @@
       var input;
       $('#query').val(it);
       input = $('#query').get(0);
-      if (!isMobile) {
+      if (isMobile) {
+        try {
+          $('#query').autocomplete('close');
+        } catch (e$) {}
+      } else {
         input.focus();
         try {
           input.select();
@@ -247,6 +251,9 @@
       if (struct.dict) {
         struct = struct.dict;
       }
+      if (struct[0]) {
+        struct = struct[0];
+      }
       html = render(struct);
       return fillHtml(html);
     };
@@ -274,9 +281,32 @@
           return fillBucket(id, bucket);
         });
       };
+      $.getJSON('precomputed.json', function(blob){
+        var lens, len, i$, len$, results$ = [];
+        $.getJSON('prefix.json', function(trie){
+          setupAutocomplete(trie);
+          return init();
+        });
+        lenToRegex = blob.lenToRegex;
+        abbrevToTitle = blob.abbrevToTitle;
+        lens = [];
+        for (len in lenToRegex) {
+          lens.push(len);
+          lenToRegex[len] = new RegExp(lenToRegex[len], 'g');
+        }
+        lens.sort(function(a, b){
+          return b - a;
+        });
+        for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
+          len = lens[i$];
+          results$.push(LTMRegexes.push(lenToRegex[len]));
+        }
+        return results$;
+      });
+      return;
     }
     return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e, prefixEntries, prefixRegexes;
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
       lenToTitles = {};
       for (k in trie) {
         v = trie[k];
@@ -319,81 +349,7 @@
         len = lens[i$];
         LTMRegexes.push(lenToRegex[len]);
       }
-      prefixEntries = {};
-      prefixRegexes = {};
-      $('#query').autocomplete({
-        position: {
-          my: "left bottom",
-          at: "left top"
-        },
-        select: function(e, arg$){
-          var item;
-          item = arg$.item;
-          if (item != null && item.value) {
-            fillQuery(item.value);
-          }
-          return !(isCordova || DEBUGGING);
-        },
-        change: function(e, arg$){
-          var item;
-          item = arg$.item;
-          if (item != null && item.value) {
-            fillQuery(item.value);
-          }
-          return !(isCordova || DEBUGGING);
-        },
-        source: function(arg$, cb){
-          var term, pre, ref$, entries, post, regex, results, res$, i$, len$, e;
-          term = arg$.term;
-          if (!term.length) {
-            return cb([]);
-          }
-          pre = term.slice(0, 1);
-          if (0xD800 <= (ref$ = pre.charCodeAt(0)) && ref$ <= 0xDBFF) {
-            pre = term.slice(0, 2);
-          }
-          if (!trie[pre]) {
-            return cb([]);
-          }
-          entries = prefixEntries[pre] || (prefixEntries[pre] = (function(){
-            var i$, ref$, len$, results$ = [];
-            for (i$ = 0, len$ = (ref$ = split$.call(trie[pre], '|')).length; i$ < len$; ++i$) {
-              post = ref$[i$];
-              results$.push(pre + "" + post);
-            }
-            return results$;
-          }()));
-          if (term === pre) {
-            return cb(entries);
-          }
-          regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
-          while (term.length) {
-            if (term === pre) {
-              return cb(entries);
-            }
-            if (!regex.test(term)) {
-              continue;
-            }
-            res$ = [];
-            for (i$ = 0, len$ = entries.length; i$ < len$; ++i$) {
-              e = entries[i$];
-              if (e.indexOf(term) === 0) {
-                res$.push(e);
-              }
-            }
-            results = res$;
-            if (results.length === 1) {
-              doLookup(results[0]);
-              return cb([]);
-            }
-            if (results.length) {
-              return cb(results);
-            }
-            term = term.slice(0, -1);
-          }
-          return cb([]);
-        }
-      });
+      setupAutocomplete(trie);
       return init();
       function fn$(data){
         return lenToRegex[len] = new RegExp(data[len], 'g');
@@ -440,6 +396,84 @@
     "stroke_count": "12",
     "title": "萌"
   };
+  function setupAutocomplete(trie){
+    var prefixEntries, prefixRegexes;
+    prefixEntries = {};
+    prefixRegexes = {};
+    return $('#query').autocomplete({
+      position: {
+        my: "left bottom",
+        at: "left top"
+      },
+      select: function(e, arg$){
+        var item;
+        item = arg$.item;
+        if (item != null && item.value) {
+          fillQuery(item.value);
+        }
+        return true;
+      },
+      change: function(e, arg$){
+        var item;
+        item = arg$.item;
+        if (item != null && item.value) {
+          fillQuery(item.value);
+        }
+        return true;
+      },
+      source: function(arg$, cb){
+        var term, pre, ref$, entries, post, regex, results, res$, i$, len$, e;
+        term = arg$.term;
+        if (!term.length) {
+          return cb([]);
+        }
+        pre = term.slice(0, 1);
+        if (0xD800 <= (ref$ = pre.charCodeAt(0)) && ref$ <= 0xDBFF) {
+          pre = term.slice(0, 2);
+        }
+        if (!trie[pre]) {
+          return cb([]);
+        }
+        entries = prefixEntries[pre] || (prefixEntries[pre] = (function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = split$.call(trie[pre], '|')).length; i$ < len$; ++i$) {
+            post = ref$[i$];
+            results$.push(pre + "" + post);
+          }
+          return results$;
+        }()));
+        if (term === pre) {
+          return cb(entries);
+        }
+        regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
+        while (term.length) {
+          if (term === pre) {
+            return cb(entries);
+          }
+          if (!regex.test(term)) {
+            continue;
+          }
+          res$ = [];
+          for (i$ = 0, len$ = entries.length; i$ < len$; ++i$) {
+            e = entries[i$];
+            if (e.indexOf(term) === 0) {
+              res$.push(e);
+            }
+          }
+          results = res$;
+          if (results.length === 1) {
+            doLookup(results[0]);
+            return cb([]);
+          }
+          if (results.length) {
+            return cb(results);
+          }
+          term = term.slice(0, -1);
+        }
+        return cb([]);
+      }
+    });
+  }
   function render(arg$){
     var title, heteronyms, radical, nrsCount, sCount, charHtml;
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
@@ -480,6 +514,7 @@
     }
     function ls(entries, cb){
       var x;
+      entries == null && (entries = []);
       return (function(){
         var i$, ref$, len$, results$ = [];
         for (i$ = 0, len$ = (ref$ = entries).length; i$ < len$; ++i$) {
