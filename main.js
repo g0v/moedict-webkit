@@ -50,8 +50,7 @@
       $('body').addClass('ios');
     }
     cacheLoading = false;
-    try {
-      document.addEventListener('backbutton', function(){
+    window.pressBack = function(){
         var token;
         if (cacheLoading) {
           return;
@@ -71,7 +70,9 @@
           return fetch(id);
         });
         return false;
-      }, false);
+    };
+    try {
+    document.addEventListener('backbutton', window.pressBack, false);
     } catch (e$) {}
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -194,6 +195,9 @@
         return true;
       }
       entryHistory.push(val);
+      if (isCordova) {
+        $('.back').show();
+      }
       fetch(id);
       return true;
     };

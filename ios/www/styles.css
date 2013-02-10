@@ -469,12 +469,35 @@ center {
   position: fixed;
   bottom: 5px;
   left: 10px;
-  right: 10px;
+  right: 60px;
 }
 .ios #query-box {
   top: 5px;
   bottom: auto;
 }
+@media only screen and (max-width: 767px) {
+  .ios #query-box {
+    left: 60px;
+  }
+  .ios img.info {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+  }
+  .ios img.back {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    left: 0px;
+    width: 60px;
+    height: 60px;
+    display: none;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   #query-box {
     top: 10px;
@@ -548,6 +571,21 @@ img.quit {
   top: 10pt;
   right: 10pt;
 }
+img.info {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 60px;
+  height: 60px;
+}
+img.back {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+  display: none;
+}
 
 .ui-autocomplete {
   max-height: 60%;
@@ -571,7 +609,18 @@ img.quit {
     bottom: auto !important;
     left: 10px !important;
     width: 220px !important;
+    overflow: scroll !important;
   }
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 .cordova .ui-autocomplete {

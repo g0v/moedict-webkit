@@ -121,6 +121,7 @@ window.do-load = ->
       id = abbrevToTitle[id] || id
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     entryHistory.push val
+    $(\.back).show! if isCordova
     fetch id
     return true
 
