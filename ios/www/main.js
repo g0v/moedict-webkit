@@ -179,6 +179,7 @@
         return true;
       }
       entryHistory.push(val);
+      if (isCordova) { $(".back").show(); }
       fetch(id);
       return true;
     };
