@@ -50,7 +50,8 @@
       $('body').addClass('ios');
     }
     cacheLoading = false;
-    window.pressBack = function(){
+    try {
+      document.addEventListener('backbutton', function(){
         var token;
         if (cacheLoading) {
           return;
@@ -70,9 +71,7 @@
           return fetch(id);
         });
         return false;
-    };
-    try {
-    document.addEventListener('backbutton', window.pressBack, false);
+      }, false);
     } catch (e$) {}
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
