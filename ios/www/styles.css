@@ -415,6 +415,17 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
+.ios .ui-state-hover,
+.ios .ui-widget-content .ui-state-hover,
+.ios .ui-widget-header .ui-state-hover,
+.ios .ui-state-focus,
+.ios .ui-widget-content .ui-state-focus,
+.ios .ui-widget-header .ui-state-focus {
+	border: none !important;
+	background: none !important;
+	font-weight: normal !important;
+	color: auto !important;
+}
 .radical {
   position: absolute;
   text-align: right;
