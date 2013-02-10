@@ -1,9 +1,10 @@
 const DEBUGGING = no
 
 const MOE-ID = "萌"
-isCordova = location.href is /^file:...android_asset/
-isMobile = isCordova or DEBUGGING or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+isCordova = navigator?notification?alert?
 isDeviceReady = not isCordova
+isCordova = true if DEBUGGING
+isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 entryHistory = []
 
 try document.addEventListener \deviceready (->
@@ -26,6 +27,7 @@ callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
+  $('body').addClass \ios if isCordova and window.device?platform? is /iOS|iPhone/
 
   cache-loading = no
   try document.addEventListener \backbutton (->
@@ -48,10 +50,15 @@ window.do-load = ->
 
     if \onhashchange not in window
       $ \body .on \click \a ->
-        fill-query $(@).text!
+        val = $(@).attr(\href)
+        val.=slice(1) if val
+        val ||= $(@).text!
+        return if val is $ \#query .val!
+        $ \#query .val val
+        fill-query val
         return false
     return if grok-hash!
-    if isCordova or DEBUGGING
+    if isCordova
       fill-query MOE-ID
       $ \#query .val ''
     else
@@ -69,15 +76,16 @@ window.do-load = ->
       return true if val is prevVal
     return false
 
-  fill-query = ->
-    $ \#query .val it
+  window.fill-query = fill-query = ->
+    title = decodeURIComponent(it) - /[（(].*/
+    $ \#query .val title
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
     else
       input.focus!
       try input.select!
-    do-lookup it
+    lookup title
     return true
 
   prevId = prevVal = null
@@ -85,27 +93,33 @@ window.do-load = ->
   lenToRegex = {}
   abbrevToTitle = {}
 
-  lookup = -> do-lookup $(\#query).val!
-
   bucket-of = ->
     code = it.charCodeAt(0)
     if 0xD800 <= code <= 0xDBFF
       code = it.charCodeAt(1) - 0xDC00
     return code % 1024
 
-  do-lookup = (val) ->
-    return true if prevVal is val
-    prevVal := val
-    title = val - /\(.*/
-    regex = lenToRegex[title.length]
-    if regex instanceof Function
-      matched = regex title
+  lookup = -> do-lookup $(\#query).val!
+
+  window.do-lookup = do-lookup = (val) ->
+    title = val - /[（(].*/
+    if isCordova
+      return if title is /object/
+      id = title
     else
-      matched = title.match regex
-    return true unless matched
-    id = matched.0
-    id = abbrevToTitle[id] || id
-    return true if prevId is id or id isnt val
+      return true if prevVal is val
+      prevVal := val
+      regex = lenToRegex[title.length]
+      switch typeof regex
+      | \function => matched = regex title
+      | \string   =>
+        lenToRegex[title.length] = new RegExp regex, \g
+        matched = lenToRegex[title.length].match regex
+      | _         => matched = title.match regex
+      return true unless matched
+      id = matched?0
+      id = abbrevToTitle[id] || id
+    return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     entryHistory.push val
     fetch id
     return true
@@ -138,14 +152,23 @@ window.do-load = ->
     return true
 
   fill-html = (html) ->
-    html.=replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>")
-    $ \#result .html html
-    $('#result h1').html (_, chunk) -> chunk.replace(
-      LTM-regexes[*-1]
-      -> """<a href="##{ abbrevToTitle[it] || it }">#it</a>"""
-    )
-    entries = $('#result .entry').get!
+    html.=replace /(.)\u20DE/g        "</span><span class='part-of-speech'>$1</span><span>"
+    html.=replace //<a>([^<]+)</a>//g "<a href='\#$1'>$1</a>"
+
     id = prevId || MOE-ID
+    if html is /<\/a>/
+      htmlCache[id] = html
+      callLater ->
+        $ \#result .html html
+        cache-loading := no
+      return
+
+    $ \#result .html html
+    $('#result h1').html (_, chunk) -> if chunk.length > 1 then chunk.replace(
+      LTM-regexes[*-1]
+      -> """<a href="##{ encodeURIComponent( abbrevToTitle[it] || it) }">#it</a>"""
+    ) else chunk
+    entries = $('#result .entry').get!
     do-step = ->
       unless entries.length
         htmlCache[id] = $('#result').html! if prevId is id
@@ -154,7 +177,7 @@ window.do-load = ->
       $entry = $(entries.shift!)
       $entry.html (_, chunk) ->
         for re in LTM-regexes
-          chunk.=replace(re, -> escape """<a href="##{ abbrevToTitle[it] || it }">#it</a>""")
+          chunk.=replace(re, -> escape """<a href="##{ encodeURIComponent(abbrevToTitle[it] || it) }">#it</a>""")
         unescape chunk
       callLater do-step
     callLater do-step
@@ -169,13 +192,16 @@ window.do-load = ->
 
   fill-bucket = (id, bucket) ->
     raw = bucketCache[bucket]
-    key = escape id
-    idx = raw.indexOf "\"#key\""
-    part = raw.slice(idx + key.length + 4)
-    part = part.slice(0, part.indexOf '"')
+    key = escape(abbrevToTitle[id] || id)
+    idx = raw.indexOf("%22" + key + "%22");
+    return if idx is -1
+    part = raw.slice(idx + key.length + 9);
+    idx = part.indexOf('%2C%0A')
+    idx = part.indexOf('%0A') if idx is -1
+    part = part.slice(0, idx)
     fill-json JSON.parse unescape part
 
-  if isCordova or DEBUGGING
+  if isCordova
     load-json = (id) ->
       bucket = bucket-of id
       return fill-bucket id, bucket if bucketCache[bucket]
@@ -185,17 +211,10 @@ window.do-load = ->
       return fill-bucket id, bucket
 
     $.getJSON \precomputed.json (blob) ->
+      abbrevToTitle := blob.abbrevToTitle
       $.getJSON \prefix.json (trie) ->
         setup-autocomplete trie
         return init!
-      lenToRegex := blob.lenToRegex
-      abbrevToTitle := blob.abbrevToTitle
-      lens = []
-      for len of lenToRegex
-        lens.push len
-        lenToRegex[len] = new RegExp lenToRegex[len], \g
-      lens.sort (a, b) -> b - a
-      for len in lens => LTM-regexes.push lenToRegex[len]
     return
 
   trie <- $.getJSON \prefix.json
@@ -234,7 +253,7 @@ window.do-load = ->
 
   return init!
 
-const MOE = { "heteronyms": [ { "bopomofo": "ㄇㄥˊ", "bopomofo2": "méng", "definitions": [ { "def": "草木初生的芽。", "quote": [ "說文解字：「萌，艸芽也。」", "唐．韓愈、劉師服、侯喜、軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」" ], "type": "名" }, { "def": "事物發生的開端或徵兆。", "quote": [ "韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」" ], "type": "名" }, { "def": "人民。", "example": [ "如：「萌黎」、「萌隸」。" ], "link": [ "通「氓」。" ], "type": "名" }, { "def": "姓。如五代時蜀有萌慮。", "type": "名" }, { "def": "發芽。", "example": [ "如：「萌芽」。" ], "quote": [ "楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」" ], "type": "動" }, { "def": "發生。", "example": [ "如：「故態復萌」。" ], "quote": [ "管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」" ], "type": "動" } ], "pinyin": "méng" } ], "non_radical_stroke_count": "8", "radical": "艸", "stroke_count": "12", "title": "萌" }
+const MOE = {"heteronyms":[{"bopomofo":"ㄇㄥˊ","bopomofo2":"méng","definitions":[{"def":"<a>草木</a><a>初</a><a>生</a><a>的</a><a>芽</a>。","quote":["<a>說文解字</a>：「<a>萌</a>，<a>艸</a><a>芽</a><a>也</a>。」","<a>唐</a>．<a>韓愈</a>、<a>劉</a><a>師</a><a>服</a>、<a>侯</a><a>喜</a>、<a>軒轅</a><a>彌</a><a>明</a>．<a>石</a><a>鼎</a><a>聯句</a>：「<a>秋</a><a>瓜</a><a>未</a><a>落</a><a>蒂</a>，<a>凍</a><a>芋</a><a>強</a><a>抽</a><a>萌</a>。」"],"type":"<a>名</a>"},{"def":"<a>事物</a><a>發生</a><a>的</a><a>開端</a><a>或</a><a>徵兆</a>。","quote":["<a>韓非子</a>．<a>說</a><a>林</a><a>上</a>：「<a>聖人</a><a>見</a><a>微</a><a>以</a><a>知</a><a>萌</a>，<a>見</a><a>端</a><a>以</a><a>知</a><a>末</a>。」","<a>漢</a>．<a>蔡邕</a>．<a>對</a><a>詔</a><a>問</a><a>灾</a><a>異</a><a>八</a><a>事</a>：「<a>以</a><a>杜漸防萌</a>，<a>則</a><a>其</a><a>救</a><a>也</a>。」"],"type":"<a>名</a>"},{"def":"<a>人民</a>。","example":["<a>如</a>：「<a>萌黎</a>」、「<a>萌隸</a>」。"],"link":["<a>通</a>「<a>氓</a>」。"],"type":"<a>名</a>"},{"def":"<a>姓</a>。<a>如</a><a>五代</a><a>時</a><a>蜀</a><a>有</a><a>萌</a><a>慮</a>。","type":"<a>名</a>"},{"def":"<a>發芽</a>。","example":["<a>如</a>：「<a>萌芽</a>」。"],"quote":["<a>楚辭</a>．<a>王</a><a>逸</a>．<a>九思</a>．<a>傷</a><a>時</a>：「<a>明</a><a>風</a><a>習習</a><a>兮</a><a>龢</a><a>暖</a>，<a>百草</a><a>萌</a><a>兮</a><a>華</a><a>榮</a>。」"],"type":"<a>動</a>"},{"def":"<a>發生</a>。","example":["<a>如</a>：「<a>故態復萌</a>」。"],"quote":["<a>管子</a>．<a>牧民</a>：「<a>惟</a><a>有道</a><a>者</a>，<a>能</a><a>備</a><a>患</a><a>於</a><a>未</a><a>形</a><a>也</a>，<a>故</a><a>禍</a><a>不</a><a>萌</a>。」","<a>三國演義</a>．<a>第一</a><a>回</a>：「<a>若</a><a>萌</a><a>異心</a>，<a>必</a><a>獲</a><a>惡報</a>。」"],"type":"<a>動</a>"}],"pinyin":"méng"}],"non_radical_stroke_count":"8","radical":"<a>艸</a>","stroke_count":"12","title":"萌"}
 
 function setup-autocomplete (trie)
   prefixEntries = {}
@@ -272,7 +291,7 @@ function setup-autocomplete (trie)
 
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
-    radical
+    radical - /<\/?a[^>]*>/g
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
   return ls heteronyms, ({bopomofo, pinyin, definitions=[]}) ->
     """#char-html
@@ -319,7 +338,8 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   function ls (entries=[], cb)
     [cb x for x in entries].join ""
   function h (text='')
-    text.replace(/</g '&lt;').replace(/>/g '&gt;')
+    # text.replace(/</g '&lt;').replace(/>/g '&gt;')
+    text
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!

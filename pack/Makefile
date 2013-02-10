@@ -6,3 +6,6 @@ bz2 ::
 
 lz4 ::
 	perl -e 'for (0..1023) { system("lz4demo.exe -c1 $$_.json | base64 > $$_.json.lz4.txt") }'
+
+escape ::
+	lsc -e 'require! fs; for x from 0 til 1024 => fs.writeFileSync "#x.json", escape(fs.readFileSync "#x.json")'
