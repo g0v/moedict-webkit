@@ -419,7 +419,10 @@ a:hover, a:focus {
   position: absolute;
   text-align: right;
   right: 24px;
-  top: 98px;
+  top: 36px;
+}
+.ios .radical {
+  top: 96px;
 }
 .radical .count {
   font-family: 'Ubuntu Mono', Menlo, Monaco, Consolas, Courier New, monospace;
@@ -442,25 +445,35 @@ center {
 #result {
   box-shadow: 1px 1px 3px 0px #999999;
   border: 1px solid #dddddd;
-  margin-top: 62px;
+  margin-bottom: 50pt;
   padding: 5px 10px;
   height: auto;
   background: #ffffff;
   border-radius: 10px;
   word-break: break-all;
 }
+.ios #result {
+  margin-bottom: 0pt;
+  margin-top: 62px;
+}
 @media only screen and (min-width: 768px) {
   #result {
-    margin-top: 0px;
     margin-left: 240px;
+  }
+  .ios #result {
+    margin-top: 0px;
   }
 }
 
 #query-box {
   position: fixed;
-  top: 5px;
+  bottom: 5px;
   left: 10px;
   right: 10px;
+}
+.ios #query-box {
+  top: 5px;
+  bottom: auto;
 }
 @media only screen and (min-width: 768px) {
   #query-box {
@@ -542,10 +555,14 @@ img.quit {
   top: auto !important;
   height: auto !important;
   position: fixed !important;
-  top: 52px !important;
+  bottom: 52px !important;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.ios .ui-autocomplete {
+  top: 54px !important;
+  bottom: auto !important;
 }
 @media only screen and (min-width: 768px) {
   .ui-autocomplete {

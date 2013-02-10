@@ -1,10 +1,13 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isMobile, isDeviceReady, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  isCordova = /^file:...android_asset/.exec(location.href);
-  isMobile = isCordova || DEBUGGING || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
+  isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
   isDeviceReady = !isCordova;
+  if (DEBUGGING) {
+    isCordova = true;
+  }
+  isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   entryHistory = [];
   try {
     document.addEventListener('deviceready', function(){
@@ -36,12 +39,15 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, lookup, bucketOf, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
+    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
     if (isCordova) {
       $('body').addClass('cordova');
+    }
+    if (isCordova && /iOS|iPhone/.exec(((ref$ = window.device) != null ? ref$.platform : void 8) != null)) {
+      $('body').addClass('ios');
     }
     cacheLoading = false;
     try {
@@ -75,14 +81,24 @@
       $('#query').show().focus();
       if (!in$('onhashchange', window)) {
         $('body').on('click', 'a', function(){
-          fillQuery($(this).text());
+          var val;
+          val = $(this).attr('href');
+          if (val) {
+            val = val.slice(1);
+          }
+          val || (val = $(this).text());
+          if (val === $('#query').val()) {
+            return;
+          }
+          $('#query').val(val);
+          fillQuery(val);
           return false;
         });
       }
       if (grokHash()) {
         return;
       }
-      if (isCordova || DEBUGGING) {
+      if (isCordova) {
         fillQuery(MOEID);
         return $('#query').val('');
       } else {
@@ -110,9 +126,10 @@
       } catch (e$) {}
       return false;
     };
-    fillQuery = function(it){
-      var input;
-      $('#query').val(it);
+    window.fillQuery = fillQuery = function(it){
+      var title, input;
+      title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
+      $('#query').val(title);
       input = $('#query').get(0);
       if (isMobile) {
         try {
@@ -124,16 +141,13 @@
           input.select();
         } catch (e$) {}
       }
-      doLookup(it);
+      lookup(title);
       return true;
     };
     prevId = prevVal = null;
     LTMRegexes = [];
     lenToRegex = {};
     abbrevToTitle = {};
-    lookup = function(){
-      return doLookup($('#query').val());
-    };
     bucketOf = function(it){
       var code;
       code = it.charCodeAt(0);
@@ -142,25 +156,41 @@
       }
       return code % 1024;
     };
-    doLookup = function(val){
-      var title, regex, matched, id;
-      if (prevVal === val) {
-        return true;
-      }
-      prevVal = val;
-      title = replace$.call(val, /\(.*/, '');
-      regex = lenToRegex[title.length];
-      if (regex instanceof Function) {
-        matched = regex(title);
+    lookup = function(){
+      return doLookup($('#query').val());
+    };
+    window.doLookup = doLookup = function(val){
+      var title, id, regex, matched;
+      title = replace$.call(val, /[（(].*/, '');
+      if (isCordova) {
+        if (/object/.exec(title)) {
+          return;
+        }
+        id = title;
       } else {
-        matched = title.match(regex);
+        if (prevVal === val) {
+          return true;
+        }
+        prevVal = val;
+        regex = lenToRegex[title.length];
+        switch (typeof regex) {
+        case 'function':
+          matched = regex(title);
+          break;
+        case 'string':
+          lenToRegex[title.length] = new RegExp(regex, 'g');
+          matched = lenToRegex[title.length].match(regex);
+          break;
+        default:
+          matched = title.match(regex);
+        }
+        if (!matched) {
+          return true;
+        }
+        id = matched != null ? matched[0] : void 8;
+        id = abbrevToTitle[id] || id;
       }
-      if (!matched) {
-        return true;
-      }
-      id = matched[0];
-      id = abbrevToTitle[id] || id;
-      if (prevId === id || id !== val) {
+      if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
       entryHistory.push(val);
@@ -211,16 +241,29 @@
       return true;
     };
     fillHtml = function(html){
-      var entries, id, doStep;
+      var id, entries, doStep;
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
+      id = prevId || MOEID;
+      if (/<\/a>/.exec(html)) {
+        htmlCache[id] = html;
+        callLater(function(){
+          $('#result').html(html);
+          return cacheLoading = false;
+        });
+        return;
+      }
       $('#result').html(html);
       $('#result h1').html(function(_, chunk){
-        return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
-          return "<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>";
-        });
+        if (chunk.length > 1) {
+          return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
+            return "<a href=\"#" + encodeURIComponent(abbrevToTitle[it] || it) + "\">" + it + "</a>";
+          });
+        } else {
+          return chunk;
+        }
       });
       entries = $('#result .entry').get();
-      id = prevId || MOEID;
       doStep = function(){
         var $entry;
         if (!entries.length) {
@@ -239,7 +282,7 @@
           }
           return unescape(chunk);
           function fn$(it){
-            return escape("<a href=\"#" + (abbrevToTitle[it] || it) + "\">" + it + "</a>");
+            return escape("<a href=\"#" + encodeURIComponent(abbrevToTitle[it] || it) + "\">" + it + "</a>");
           }
         });
         return callLater(doStep);
@@ -261,13 +304,20 @@
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
       raw = bucketCache[bucket];
-      key = escape(id);
-      idx = raw.indexOf("\"" + key + "\"");
-      part = raw.slice(idx + key.length + 4);
-      part = part.slice(0, part.indexOf('"'));
+      key = escape(abbrevToTitle[id] || id);
+      idx = raw.indexOf("%22" + key + "%22");
+      if (idx === -1) {
+        return;
+      }
+      part = raw.slice(idx + key.length + 9);
+      idx = part.indexOf('%2C%0A');
+      if (idx === -1) {
+        idx = part.indexOf('%0A');
+      }
+      part = part.slice(0, idx);
       return fillJson(JSON.parse(unescape(part)));
     };
-    if (isCordova || DEBUGGING) {
+    if (isCordova) {
       loadJson = function(id){
         var bucket;
         bucket = bucketOf(id);
@@ -282,26 +332,11 @@
         });
       };
       $.getJSON('precomputed.json', function(blob){
-        var lens, len, i$, len$, results$ = [];
-        $.getJSON('prefix.json', function(trie){
+        abbrevToTitle = blob.abbrevToTitle;
+        return $.getJSON('prefix.json', function(trie){
           setupAutocomplete(trie);
           return init();
         });
-        lenToRegex = blob.lenToRegex;
-        abbrevToTitle = blob.abbrevToTitle;
-        lens = [];
-        for (len in lenToRegex) {
-          lens.push(len);
-          lenToRegex[len] = new RegExp(lenToRegex[len], 'g');
-        }
-        lens.sort(function(a, b){
-          return b - a;
-        });
-        for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
-          len = lens[i$];
-          results$.push(LTMRegexes.push(lenToRegex[len]));
-        }
-        return results$;
       });
       return;
     }
@@ -362,37 +397,37 @@
       "bopomofo2": "méng",
       "definitions": [
         {
-          "def": "草木初生的芽。",
-          "quote": ["說文解字：「萌，艸芽也。」", "唐．韓愈、劉師服、侯喜、軒轅彌明．石鼎聯句：「秋瓜未落蒂，凍芋強抽萌。」"],
-          "type": "名"
+          "def": "<a>草木</a><a>初</a><a>生</a><a>的</a><a>芽</a>。",
+          "quote": ["<a>說文解字</a>：「<a>萌</a>，<a>艸</a><a>芽</a><a>也</a>。」", "<a>唐</a>．<a>韓愈</a>、<a>劉</a><a>師</a><a>服</a>、<a>侯</a><a>喜</a>、<a>軒轅</a><a>彌</a><a>明</a>．<a>石</a><a>鼎</a><a>聯句</a>：「<a>秋</a><a>瓜</a><a>未</a><a>落</a><a>蒂</a>，<a>凍</a><a>芋</a><a>強</a><a>抽</a><a>萌</a>。」"],
+          "type": "<a>名</a>"
         }, {
-          "def": "事物發生的開端或徵兆。",
-          "quote": ["韓非子．說林上：「聖人見微以知萌，見端以知末。」", "漢．蔡邕．對詔問灾異八事：「以杜漸防萌，則其救也。」"],
-          "type": "名"
+          "def": "<a>事物</a><a>發生</a><a>的</a><a>開端</a><a>或</a><a>徵兆</a>。",
+          "quote": ["<a>韓非子</a>．<a>說</a><a>林</a><a>上</a>：「<a>聖人</a><a>見</a><a>微</a><a>以</a><a>知</a><a>萌</a>，<a>見</a><a>端</a><a>以</a><a>知</a><a>末</a>。」", "<a>漢</a>．<a>蔡邕</a>．<a>對</a><a>詔</a><a>問</a><a>灾</a><a>異</a><a>八</a><a>事</a>：「<a>以</a><a>杜漸防萌</a>，<a>則</a><a>其</a><a>救</a><a>也</a>。」"],
+          "type": "<a>名</a>"
         }, {
-          "def": "人民。",
-          "example": ["如：「萌黎」、「萌隸」。"],
-          "link": ["通「氓」。"],
-          "type": "名"
+          "def": "<a>人民</a>。",
+          "example": ["<a>如</a>：「<a>萌黎</a>」、「<a>萌隸</a>」。"],
+          "link": ["<a>通</a>「<a>氓</a>」。"],
+          "type": "<a>名</a>"
         }, {
-          "def": "姓。如五代時蜀有萌慮。",
-          "type": "名"
+          "def": "<a>姓</a>。<a>如</a><a>五代</a><a>時</a><a>蜀</a><a>有</a><a>萌</a><a>慮</a>。",
+          "type": "<a>名</a>"
         }, {
-          "def": "發芽。",
-          "example": ["如：「萌芽」。"],
-          "quote": ["楚辭．王逸．九思．傷時：「明風習習兮龢暖，百草萌兮華榮。」"],
-          "type": "動"
+          "def": "<a>發芽</a>。",
+          "example": ["<a>如</a>：「<a>萌芽</a>」。"],
+          "quote": ["<a>楚辭</a>．<a>王</a><a>逸</a>．<a>九思</a>．<a>傷</a><a>時</a>：「<a>明</a><a>風</a><a>習習</a><a>兮</a><a>龢</a><a>暖</a>，<a>百草</a><a>萌</a><a>兮</a><a>華</a><a>榮</a>。」"],
+          "type": "<a>動</a>"
         }, {
-          "def": "發生。",
-          "example": ["如：「故態復萌」。"],
-          "quote": ["管子．牧民：「惟有道者，能備患於未形也，故禍不萌。」", "三國演義．第一回：「若萌異心，必獲惡報。」"],
-          "type": "動"
+          "def": "<a>發生</a>。",
+          "example": ["<a>如</a>：「<a>故態復萌</a>」。"],
+          "quote": ["<a>管子</a>．<a>牧民</a>：「<a>惟</a><a>有道</a><a>者</a>，<a>能</a><a>備</a><a>患</a><a>於</a><a>未</a><a>形</a><a>也</a>，<a>故</a><a>禍</a><a>不</a><a>萌</a>。」", "<a>三國演義</a>．<a>第一</a><a>回</a>：「<a>若</a><a>萌</a><a>異心</a>，<a>必</a><a>獲</a><a>惡報</a>。」"],
+          "type": "<a>動</a>"
         }
       ],
       "pinyin": "méng"
     }],
     "non_radical_stroke_count": "8",
-    "radical": "艸",
+    "radical": "<a>艸</a>",
     "stroke_count": "12",
     "title": "萌"
   };
@@ -477,7 +512,7 @@
   function render(arg$){
     var title, heteronyms, radical, nrsCount, sCount, charHtml;
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
-    charHtml = radical ? "<div class='radical'><span class='glyph'>" + radical + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
+    charHtml = radical ? "<div class='radical'><span class='glyph'>" + (replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     return ls(heteronyms, function(arg$){
       var bopomofo, pinyin, definitions, ref$;
       bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
@@ -526,7 +561,7 @@
     }
     function h(text){
       text == null && (text = '');
-      return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return text;
     }
     function groupBy(prop, xs){
       var x, pre, y;
