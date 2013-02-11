@@ -84,7 +84,7 @@
           var val;
           val = $(this).attr('href');
           if (val) {
-            val = val.slice(1);
+            val = replace$.call(val, /.*\#/, '');
           }
           val || (val = $(this).text());
           if (val === $('#query').val()) {
