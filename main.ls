@@ -51,7 +51,7 @@ window.do-load = ->
     if \onhashchange not in window
       $ \body .on \click \a ->
         val = $(@).attr(\href)
-        val.=slice(1) if val
+        val -= /.*\#/ if val
         val ||= $(@).text!
         return if val is $ \#query .val!
         $ \#query .val val
