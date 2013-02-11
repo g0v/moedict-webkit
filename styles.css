@@ -646,6 +646,10 @@ span a {
   padding: 0 !important;
 }
 
+.about a {
+  border-bottom: 1px ridge #0070a3;
+}
+
 .entry {
   padding-bottom: 5px;
   border-bottom: 1px ridge #dddddd;
