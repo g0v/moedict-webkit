@@ -123,6 +123,7 @@ window.do-load = ->
       id = matched?0
       id = abbrevToTitle[id] || id
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
+    $ \#cond .val "^#{val}$"
     entryHistory.push val
     $(\.back).show! if isCordova
     fetch id
@@ -350,9 +351,9 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     x[prop] ?= ''
     pre = [x]
     while xs.length
-      y = xs.shift!
+      y = xs.0
       y[prop] ?= ''
       break unless x[prop] is y[prop]
-      pre.push y
+      pre.push xs.shift!
     return [pre] unless xs.length
     return [pre, ...groupBy(prop, xs)]

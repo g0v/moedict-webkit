@@ -196,6 +196,7 @@
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
+      $('#cond').val("^" + val + "$");
       entryHistory.push(val);
       if (isCordova) {
         $('.back').show();
@@ -578,12 +579,12 @@
       x[prop] == null && (x[prop] = '');
       pre = [x];
       while (xs.length) {
-        y = xs.shift();
+        y = xs[0];
         y[prop] == null && (y[prop] = '');
         if (x[prop] !== y[prop]) {
           break;
         }
-        pre.push(y);
+        pre.push(xs.shift());
       }
       if (!xs.length) {
         return [pre];
