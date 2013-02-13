@@ -39,6 +39,7 @@ window.do-load = ->
     callLater ->
       id = if entryHistory.length then entryHistory[*-1] else MOE-ID
       $ \#query .val id
+      $ \#cond .val "^#{id}$"
       fetch id
     return false
   ), false
@@ -55,6 +56,7 @@ window.do-load = ->
         val ||= $(@).text!
         return if val is $ \#query .val!
         $ \#query .val val
+        $ \#cond .val "^#{val}$"
         fill-query val
         return false
     return if grok-hash!
@@ -79,6 +81,7 @@ window.do-load = ->
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
     $ \#query .val title
+    $ \#cond .val "^#{title}$"
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
