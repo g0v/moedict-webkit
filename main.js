@@ -68,6 +68,7 @@
           var id;
           id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
           $('#query').val(id);
+          $('#cond').val("^" + id + "$");
           return fetch(id);
         });
         return false;
@@ -91,6 +92,7 @@
             return;
           }
           $('#query').val(val);
+          $('#cond').val("^" + val + "$");
           fillQuery(val);
           return false;
         });
@@ -130,6 +132,7 @@
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
       $('#query').val(title);
+      $('#cond').val("^" + title + "$");
       input = $('#query').get(0);
       if (isMobile) {
         try {

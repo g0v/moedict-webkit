@@ -585,6 +585,15 @@ img.back {
   display: none;
 }
 
+input.back {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+}
+
+
 .ui-autocomplete {
   max-height: 60%;
   overflow: auto;
