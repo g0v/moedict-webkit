@@ -165,6 +165,7 @@ window.do-load = ->
       htmlCache[id] = html
       callLater ->
         $ \#result .html html
+        $('#result .part-of-speech a').attr \href, null
         cache-loading := no
       return
 
@@ -176,6 +177,7 @@ window.do-load = ->
     entries = $('#result .entry').get!
     do-step = ->
       unless entries.length
+        $('#result .part-of-speech a').attr \href, null
         htmlCache[id] = $('#result').html! if prevId is id
         cache-loading := no
         return
@@ -316,7 +318,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
           defs.0.type
         }</span>" else ''}
         <ol>
-        #{ls defs, ({ type, def, quote=[], example=[], link=[] }) ->
+        #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
           """<li><p class='definition'>
             <span class="def">#{
               (h expand-def def).replace(
@@ -327,6 +329,12 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
             #{ ls example, -> "<span class='example'>#{ h it }</span>" }
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
             #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
+            #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
+              h(synonyms.replace(/,/g '、'))
+            }</span>" else '' }
+            #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
+              h(antonyms.replace(/,/g '、'))
+            }</span>" else '' }
         </p></li>"""}</ol></div>
       """}</div>
     """
