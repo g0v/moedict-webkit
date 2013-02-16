@@ -256,6 +256,7 @@
         htmlCache[id] = html;
         callLater(function(){
           $('#result').html(html);
+          $('#result .part-of-speech a').attr('href', null);
           return cacheLoading = false;
         });
         return;
@@ -274,6 +275,7 @@
       doStep = function(){
         var $entry;
         if (!entries.length) {
+          $('#result .part-of-speech a').attr('href', null);
           if (prevId === id) {
             htmlCache[id] = $('#result').html();
           }
@@ -527,21 +529,21 @@
         : [];
       return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
-          var type, def, quote, ref$, example, link;
+          var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
             ? ref$
             : [], example = (ref$ = arg$.example) != null
             ? ref$
             : [], link = (ref$ = arg$.link) != null
             ? ref$
-            : [];
+            : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
           return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
           }) + "\n    " + ls(link, function(it){
             return "<span class='link'>" + h(it) + "</span>";
-          }) + "\n</p></li>";
+          }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
       }) + "</div>";
     });

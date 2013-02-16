@@ -415,6 +415,12 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
+.part-of-speech a:hover, .part-of-speech a:focus {
+  background: none !important;
+  color: inherit;
+  outline: none !important;
+}
+
 .radical {
   position: absolute;
   text-align: right;
@@ -642,6 +648,13 @@ input.back {
   clear: both;
   display: block;
   font-size: 13pt;
+}
+
+.antonyms, .synonyms {
+  clear: both;
+  display: block;
+  font-size: 12pt;
+  margin-top: 2px;
 }
 
 .link, .def {
