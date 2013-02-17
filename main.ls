@@ -72,8 +72,6 @@ window.do-load = ->
       val = decodeURIComponent location.hash.substr 1
       return true if val is prevVal
       $ \#query .show!
-      unless isMobile
-        $ \#query .focus!
       fill-query val
       return true if val is prevVal
     return false
@@ -106,7 +104,7 @@ window.do-load = ->
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
-    if isCordova
+    if isCordova or LTM-regexes.length is 0
       return if title is /object/
       id = title
     else
@@ -170,6 +168,10 @@ window.do-load = ->
       return
 
     $ \#result .html html
+    fill-autolink!
+
+  fill-autolink = ->
+    return call-later fill-autolink unless LTM-regexes.length
     $('#result h1').html (_, chunk) -> if chunk.length > 1 then chunk.replace(
       LTM-regexes[*-1]
       -> """<a href="##{ encodeURIComponent( abbrevToTitle[it] || it) }">#it</a>"""
@@ -224,6 +226,7 @@ window.do-load = ->
         return init!
     return
 
+  init!
   trie <- $.getJSON \prefix.json
 
   lenToTitles = {}
@@ -257,8 +260,6 @@ window.do-load = ->
   for len in lens => LTM-regexes.push lenToRegex[len]
 
   setup-autocomplete trie
-
-  return init!
 
 const MOE = {"heteronyms":[{"bopomofo":"ㄇㄥˊ","bopomofo2":"méng","definitions":[{"def":"<a>草木</a><a>初</a><a>生</a><a>的</a><a>芽</a>。","quote":["<a>說文解字</a>：「<a>萌</a>，<a>艸</a><a>芽</a><a>也</a>。」","<a>唐</a>．<a>韓愈</a>、<a>劉</a><a>師</a><a>服</a>、<a>侯</a><a>喜</a>、<a>軒轅</a><a>彌</a><a>明</a>．<a>石</a><a>鼎</a><a>聯句</a>：「<a>秋</a><a>瓜</a><a>未</a><a>落</a><a>蒂</a>，<a>凍</a><a>芋</a><a>強</a><a>抽</a><a>萌</a>。」"],"type":"<a>名</a>"},{"def":"<a>事物</a><a>發生</a><a>的</a><a>開端</a><a>或</a><a>徵兆</a>。","quote":["<a>韓非子</a>．<a>說</a><a>林</a><a>上</a>：「<a>聖人</a><a>見</a><a>微</a><a>以</a><a>知</a><a>萌</a>，<a>見</a><a>端</a><a>以</a><a>知</a><a>末</a>。」","<a>漢</a>．<a>蔡邕</a>．<a>對</a><a>詔</a><a>問</a><a>灾</a><a>異</a><a>八</a><a>事</a>：「<a>以</a><a>杜漸防萌</a>，<a>則</a><a>其</a><a>救</a><a>也</a>。」"],"type":"<a>名</a>"},{"def":"<a>人民</a>。","example":["<a>如</a>：「<a>萌黎</a>」、「<a>萌隸</a>」。"],"link":["<a>通</a>「<a>氓</a>」。"],"type":"<a>名</a>"},{"def":"<a>姓</a>。<a>如</a><a>五代</a><a>時</a><a>蜀</a><a>有</a><a>萌</a><a>慮</a>。","type":"<a>名</a>"},{"def":"<a>發芽</a>。","example":["<a>如</a>：「<a>萌芽</a>」。"],"quote":["<a>楚辭</a>．<a>王</a><a>逸</a>．<a>九思</a>．<a>傷</a><a>時</a>：「<a>明</a><a>風</a><a>習習</a><a>兮</a><a>龢</a><a>暖</a>，<a>百草</a><a>萌</a><a>兮</a><a>華</a><a>榮</a>。」"],"type":"<a>動</a>"},{"def":"<a>發生</a>。","example":["<a>如</a>：「<a>故態復萌</a>」。"],"quote":["<a>管子</a>．<a>牧民</a>：「<a>惟</a><a>有道</a><a>者</a>，<a>能</a><a>備</a><a>患</a><a>於</a><a>未</a><a>形</a><a>也</a>，<a>故</a><a>禍</a><a>不</a><a>萌</a>。」","<a>三國演義</a>．<a>第一</a><a>回</a>：「<a>若</a><a>萌</a><a>異心</a>，<a>必</a><a>獲</a><a>惡報</a>。」"],"type":"<a>動</a>"}],"pinyin":"méng"}],"non_radical_stroke_count":"8","radical":"<a>艸</a>","stroke_count":"12","title":"萌"}
 
