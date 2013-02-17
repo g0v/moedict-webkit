@@ -593,6 +593,7 @@ img.back {
 
 input.back {
   position: fixed;
+  display: none;
   bottom: 0px;
   left: 0px;
   width: 60px;
@@ -623,6 +624,12 @@ input.back {
     left: 10px !important;
     width: 220px !important;
     overflow: scroll !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  input.back {
+    display: block;
   }
 }
 
