@@ -229,8 +229,12 @@
       }
       return loadJson(it);
     };
-    loadJson = function(it){
-      return $.getJSON("pua/" + encodeURIComponent(it) + ".json", fillJson);
+    loadJson = function(char){
+      return $.getJSON("pua/" + encodeURIComponent(char) + ".json", fillJson).fail(function(){
+        return $.getJSON("raw/" + encodeURIComponent(char) + ".json", fillJson).fail(function(){
+          return alert("錯誤：找不到詞「" + char + "」");
+        });
+      });
     };
     loadCacheHtml = function(it){
       var html;
@@ -347,11 +351,10 @@
       $.getJSON('precomputed.json', function(blob){
         abbrevToTitle = blob.abbrevToTitle;
         return $.getJSON('prefix.json', function(trie){
-          setupAutocomplete(trie);
-          return init();
+          return setupAutocomplete(trie);
         });
       });
-      return;
+      return init();
     }
     init();
     return $.getJSON('prefix.json', function(trie){
