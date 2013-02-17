@@ -144,7 +144,10 @@ window.do-load = ->
     return fill-json MOE if it is MOE-ID
     load-json it
 
-  load-json = -> $.getJSON "pua/#{ encodeURIComponent it }.json" fill-json
+  load-json = (char) ->
+    <- $.getJSON("pua/#{ encodeURIComponent char }.json" fill-json).fail
+    <- $.getJSON("raw/#{ encodeURIComponent char }.json" fill-json).fail
+    alert "錯誤：找不到詞「#{char}」"
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -218,13 +221,11 @@ window.do-load = ->
       json = ungzip txt
       bucketCache[bucket] = json
       return fill-bucket id, bucket
-
     $.getJSON \precomputed.json (blob) ->
       abbrevToTitle := blob.abbrevToTitle
       $.getJSON \prefix.json (trie) ->
         setup-autocomplete trie
-        return init!
-    return
+    return init!
 
   init!
   trie <- $.getJSON \prefix.json
