@@ -39,7 +39,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
+    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillAutolink, fillJson, bucketCache, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -118,9 +118,6 @@
           return true;
         }
         $('#query').show();
-        if (!isMobile) {
-          $('#query').focus();
-        }
         fillQuery(val);
         if (val === prevVal) {
           return true;
@@ -165,7 +162,7 @@
     window.doLookup = doLookup = function(val){
       var title, id, regex, matched;
       title = replace$.call(val, /[（(].*/, '');
-      if (isCordova) {
+      if (isCordova || LTMRegexes.length === 0) {
         if (/object/.exec(title)) {
           return;
         }
@@ -248,7 +245,7 @@
       return true;
     };
     fillHtml = function(html){
-      var id, entries, doStep;
+      var id;
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       id = prevId || MOEID;
@@ -262,6 +259,13 @@
         return;
       }
       $('#result').html(html);
+      return fillAutolink();
+    };
+    fillAutolink = function(){
+      var entries, doStep;
+      if (!LTMRegexes.length) {
+        return callLater(fillAutolink);
+      }
       $('#result h1').html(function(_, chunk){
         if (chunk.length > 1) {
           return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
@@ -349,6 +353,7 @@
       });
       return;
     }
+    init();
     return $.getJSON('prefix.json', function(trie){
       var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
       lenToTitles = {};
@@ -393,8 +398,7 @@
         len = lens[i$];
         LTMRegexes.push(lenToRegex[len]);
       }
-      setupAutocomplete(trie);
-      return init();
+      return setupAutocomplete(trie);
       function fn$(data){
         return lenToRegex[len] = new RegExp(data[len], 'g');
       }
