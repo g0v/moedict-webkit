@@ -1,6 +1,6 @@
 (function(){
   var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = false;
+  DEBUGGING = true;
   MOEID = "萌";
   isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
   isDeviceReady = !isCordova;
@@ -39,7 +39,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillAutolink, fillJson, bucketCache, fillBucket;
+    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillAutolink, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -318,21 +318,40 @@
       return fillHtml(html);
     };
     bucketCache = {};
+    keyMap = {
+      h: '"heteronyms"',
+      b: '"bopomofo"',
+      p: '"pinyin"',
+      d: '"definitions"',
+      c: '"stroke_count"',
+      n: '"non_radical_stroke_count"',
+      f: '"def"',
+      t: '"title"',
+      r: '"radical"',
+      e: '"example"',
+      l: '"link"',
+      s: '"synonyms"',
+      a: '"antonyms"',
+      q: '"quote"'
+    };
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
       raw = bucketCache[bucket];
       key = escape(abbrevToTitle[id] || id);
-      idx = raw.indexOf("%22" + key + "%22");
+      idx = raw.indexOf('"' + key + '"');
       if (idx === -1) {
         return;
       }
-      part = raw.slice(idx + key.length + 9);
-      idx = part.indexOf('%2C%0A');
-      if (idx === -1) {
-        idx = part.indexOf('%0A');
-      }
+      part = raw.slice(idx + key.length + 3);
+      idx = part.indexOf('\n');
       part = part.slice(0, idx);
-      return fillJson(JSON.parse(unescape(part)));
+      part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
+        return keyMap[k];
+      });
+      part = part.replace(/`([^~]+)~/g, function(arg$, word){
+        return "<a href='#" + (abbrevToTitle[word] || word) + "'>" + word + "</a>";
+      });
+      return fillJson(JSON.parse(part));
     };
     if (isCordova) {
       loadJson = function(id){
@@ -341,20 +360,18 @@
         if (bucketCache[bucket]) {
           return fillBucket(id, bucket);
         }
-        return $.get("pack/" + bucket + ".json.gz.txt", function(txt){
-          var json;
-          json = ungzip(txt);
+        return $.get("pack/" + bucket + ".txt", function(json){
           bucketCache[bucket] = json;
           return fillBucket(id, bucket);
         });
       };
       $.getJSON('precomputed.json', function(blob){
         abbrevToTitle = blob.abbrevToTitle;
-        return $.getJSON('prefix.json', function(trie){
+        $.getJSON('prefix.json', function(trie){
           return setupAutocomplete(trie);
         });
+        return init();
       });
-      return init();
     }
     init();
     return $.getJSON('prefix.json', function(trie){
