@@ -202,30 +202,37 @@ window.do-load = ->
 
   bucketCache = {}
 
+  keyMap = {
+    h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
+    c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
+    t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
+    a: \"antonyms" q: \"quote"
+  }
+
   fill-bucket = (id, bucket) ->
     raw = bucketCache[bucket]
     key = escape(abbrevToTitle[id] || id)
-    idx = raw.indexOf("%22" + key + "%22");
+    idx = raw.indexOf('"' + key + '"');
     return if idx is -1
-    part = raw.slice(idx + key.length + 9);
-    idx = part.indexOf('%2C%0A')
-    idx = part.indexOf('%0A') if idx is -1
+    part = raw.slice(idx + key.length + 3);
+    idx = part.indexOf('\n')
     part = part.slice(0, idx)
-    fill-json JSON.parse unescape part
+    part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
+    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##{ abbrevToTitle[word] || word }'>#word</a>"
+    fill-json JSON.parse part
 
   if isCordova
     load-json = (id) ->
       bucket = bucket-of id
       return fill-bucket id, bucket if bucketCache[bucket]
-      txt <- $.get "pack/#bucket.json.gz.txt"
-      json = ungzip txt
+      json <- $.get "pack/#bucket.txt"
       bucketCache[bucket] = json
       return fill-bucket id, bucket
     $.getJSON \precomputed.json (blob) ->
       abbrevToTitle := blob.abbrevToTitle
       $.getJSON \prefix.json (trie) ->
         setup-autocomplete trie
-    return init!
+      return init!
 
   init!
   trie <- $.getJSON \prefix.json

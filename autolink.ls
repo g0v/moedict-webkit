@@ -23,8 +23,8 @@ function proc (struct, title, idx)
     #-> """<a href='##{ abbrevToTitle[it] || it}'>#it</a>"""
     -> "`#it~"
   ) unless title.length is 1
-  return "#idx #esc " + unescape(chunk).replace(/"title":""/, """
-    "title":"#title"
+  return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
+    "t":"#title"
   """)
 
 function init ()
@@ -54,6 +54,7 @@ entries = JSON.parse(
     .replace(/"link"/g                      \"l")
     .replace(/"synonyms"/g                  \"s")
     .replace(/"antonyms"/g                  \"a")
+    .replace(/"quote"/g                     \"q")
 )
 prefix = {}
 i = 0
@@ -70,7 +71,7 @@ for {t:title, h:heteronyms}:entry in entries
     post = title.slice(1)
   prefix[pre] ?= ''
   prefix[pre] += "|#post" if post.length
-  entry.title = ""
+  entry.t = ""
   title.=replace(
     LTM-regexes[*-1]
     #-> """<a href='##{ ( abbrevToTitle[it] || it) }'>#it</a>"""
