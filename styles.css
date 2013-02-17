@@ -380,7 +380,7 @@ table {
 
 body {
   background: #eeeeee url('background.jpg');
-  font-family: sans-serif, "Subset", "Extra", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體UN", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: sans-serif, "Subset", "Extra", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
   margin: 10px;
@@ -392,12 +392,12 @@ body {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
-  font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體UN", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
 .bopomofo, .radical {
   font-weight: 501;
-  font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體UN", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
 h3 {
@@ -626,6 +626,9 @@ input.back {
   }
 }
 
+.ui-autocomplete li {
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+}
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -675,4 +678,18 @@ span a {
 .entry {
   padding-bottom: 5px;
   border-bottom: 1px ridge #dddddd;
+}
+
+#gcfbar {
+  padding: 0 !important;
+  position: fixed !important;
+}
+#gcfbar a {
+  color: #00a !important;
+}
+#gcfupdate {
+  margin: 5px;
+}
+#gcfclose {
+  margin: 3px;
 }
