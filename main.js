@@ -193,7 +193,7 @@
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
-      $('#cond').val("^" + id + "$");
+      $('#cond').val("^" + title + "$");
       entryHistory.push(title);
       if (isCordova) {
         $('.back').show();
