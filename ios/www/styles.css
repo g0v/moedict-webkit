@@ -380,7 +380,7 @@ table {
 
 body {
   background: #eeeeee url('background.jpg');
-  font-family: sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: sans-serif, "Subset", "Extra", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
   margin: 10px;
@@ -392,12 +392,12 @@ body {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
-  font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
 .bopomofo, .radical {
   font-weight: 501;
-  font-family: "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
 h3 {
@@ -415,17 +415,12 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
-.ios .ui-state-hover,
-.ios .ui-widget-content .ui-state-hover,
-.ios .ui-widget-header .ui-state-hover,
-.ios .ui-state-focus,
-.ios .ui-widget-content .ui-state-focus,
-.ios .ui-widget-header .ui-state-focus {
-	border: none !important;
-	background: none !important;
-	font-weight: normal !important;
-	color: auto !important;
+.part-of-speech a:hover, .part-of-speech a:focus {
+  background: none !important;
+  color: inherit;
+  outline: none !important;
 }
+
 .radical {
   position: absolute;
   text-align: right;
@@ -484,20 +479,10 @@ center {
 }
 .ios #query-box {
   top: 5px;
+  left: 60px;
   bottom: auto;
 }
 @media only screen and (max-width: 767px) {
-  .ios #query-box {
-    left: 60px;
-  }
-  .ios img.info {
-    position: fixed;
-    bottom: auto;
-    top: 0px;
-    right: 0px;
-    width: 60px;
-    height: 60px;
-  }
   .ios img.back {
     position: fixed;
     bottom: auto;
@@ -509,12 +494,39 @@ center {
   }
 }
 
+@media only screen and (max-width: 767px) {
+  .ios img.info {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+  }
+}
 @media only screen and (min-width: 768px) {
   #query-box {
     top: 10px;
     left: 10px;
     right: auto;
     width: 220px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ios #query-box {
+    top: 10px !important
+    left: 0px !important;
+    right: auto;
+    width: 220px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ios #query-box {
+    top: 5px;
+    left: 5px;
+    bottom: auto;
   }
 }
 
@@ -532,8 +544,8 @@ center {
   margin-top: -14px;
   padding-bottom: 5px;
   margin-bottom: 10px;
-  color: gray;
-  font-size: 80%;
+  color: #666;
+  font-size: 90%;
   width: 50%;
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
@@ -598,6 +610,16 @@ img.back {
   display: none;
 }
 
+input.back {
+  position: fixed;
+  display: none;
+  bottom: 0px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+}
+
+
 .ui-autocomplete {
   max-height: 60%;
   overflow: auto;
@@ -624,6 +646,15 @@ img.back {
   }
 }
 
+@media only screen and (min-width: 768px) {
+  input.back {
+    display: block;
+  }
+}
+
+.ui-autocomplete li {
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
+}
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -648,6 +679,13 @@ img.back {
   font-size: 13pt;
 }
 
+.antonyms, .synonyms {
+  clear: both;
+  display: block;
+  font-size: 12pt;
+  margin-top: 2px;
+}
+
 .link, .def {
   clear: both;
   display: block;
@@ -659,7 +697,25 @@ span a {
   padding: 0 !important;
 }
 
+.about a {
+  border-bottom: 1px ridge #0070a3;
+}
+
 .entry {
   padding-bottom: 5px;
   border-bottom: 1px ridge #dddddd;
+}
+
+#gcfbar {
+  padding: 0 !important;
+  position: fixed !important;
+}
+#gcfbar a {
+  color: #00a !important;
+}
+#gcfupdate {
+  margin: 5px;
+}
+#gcfclose {
+  margin: 3px;
 }
