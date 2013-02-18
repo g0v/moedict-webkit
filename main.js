@@ -1,6 +1,6 @@
 (function(){
   var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = true;
+  DEBUGGING = false;
   MOEID = "萌";
   isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
   isDeviceReady = !isCordova;
@@ -266,7 +266,7 @@
       return fillAutolink();
     };
     fillAutolink = function(){
-      var entries, doStep;
+      var entries, id, doStep;
       if (!LTMRegexes.length) {
         return callLater(fillAutolink);
       }
@@ -280,6 +280,7 @@
         }
       });
       entries = $('#result .entry').get();
+      id = prevId || MOEID;
       doStep = function(){
         var $entry;
         if (!entries.length) {
@@ -373,55 +374,57 @@
         return init();
       });
     }
-    init();
-    return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
-      lenToTitles = {};
-      for (k in trie) {
-        v = trie[k];
-        prefixLength = k.length;
-        for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
-          suffix = ref$[i$];
-          abbrevIndex = suffix.indexOf('(');
-          if (abbrevIndex >= 0) {
-            orig = suffix;
-            suffix = suffix.slice(0, abbrevIndex);
-            abbrevToTitle[k + "" + suffix] = k + "" + orig;
+    return $.getJSON('precomputed.json', function(blob){
+      abbrevToTitle = blob.abbrevToTitle;
+      init();
+      return $.getJSON('prefix.json', function(trie){
+        var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
+        lenToTitles = {};
+        for (k in trie) {
+          v = trie[k];
+          prefixLength = k.length;
+          for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
+            suffix = ref$[i$];
+            abbrevIndex = suffix.indexOf('(');
+            if (abbrevIndex >= 0) {
+              orig = suffix;
+              suffix = suffix.slice(0, abbrevIndex);
+            }
+            ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
+              ? ref1$
+              : lenToTitles[key$] = []).push(k + "" + suffix);
           }
-          ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
-            ? ref1$
-            : lenToTitles[key$] = []).push(k + "" + suffix);
         }
-      }
-      lens = [];
-      for (len in lenToTitles) {
-        titles = lenToTitles[len];
-        lens.push(len);
-        titles.sort();
-        try {
-          lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
-        } catch (e$) {
-          e = e$;
-          $.ajax({
-            type: 'GET',
-            url: "lenToRegex." + len + ".json",
-            async: false,
-            dataType: 'json',
-            success: fn$
-          });
+        lens = [];
+        for (len in lenToTitles) {
+          titles = lenToTitles[len];
+          lens.push(len);
+          titles.sort();
+          try {
+            lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+          } catch (e$) {
+            e = e$;
+            $.ajax({
+              type: 'GET',
+              url: "lenToRegex." + len + ".json",
+              async: false,
+              dataType: 'json',
+              success: fn$
+            });
+          }
         }
-      }
-      lens.sort(function(a, b){
-        return b - a;
+        lens.sort(function(a, b){
+          return b - a;
+        });
+        for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
+          len = lens[i$];
+          LTMRegexes.push(lenToRegex[len]);
+        }
+        return setupAutocomplete(trie);
+        function fn$(data){
+          return lenToRegex[len] = new RegExp(data[len], 'g');
+        }
       });
-      for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
-        len = lens[i$];
-        LTMRegexes.push(lenToRegex[len]);
-      }
-      return setupAutocomplete(trie);
-      function fn$(data){
-        return lenToRegex[len] = new RegExp(data[len], 'g');
-      }
     });
   };
   MOE = {

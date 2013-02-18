@@ -144,10 +144,10 @@ window.do-load = ->
     return fill-json MOE if it is MOE-ID
     load-json it
 
-  load-json = (char) ->
-    <- $.getJSON("pua/#{ encodeURIComponent char }.json" fill-json).fail
-    <- $.getJSON("raw/#{ encodeURIComponent char }.json" fill-json).fail
-    alert "錯誤：找不到詞「#{char}」"
+  load-json = (word) ->
+    <- $.getJSON("pua/#{ encodeURIComponent(word - /\(.*/)}.json" fill-json).fail
+    <- $.getJSON("raw/#{ encodeURIComponent(word - /\(.*/)}.json" fill-json).fail
+    alert "錯誤：找不到詞「#{word}」"
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -180,6 +180,7 @@ window.do-load = ->
       -> """<a href="##{ encodeURIComponent( abbrevToTitle[it] || it) }">#it</a>"""
     ) else chunk
     entries = $('#result .entry').get!
+    id = prevId || MOE-ID
     do-step = ->
       unless entries.length
         $('#result .part-of-speech a').attr \href, null
