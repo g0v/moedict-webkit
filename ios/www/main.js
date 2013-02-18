@@ -1,10 +1,11 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, iOS, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  isCordova = true;
+  iOS = true;
+  isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
   isDeviceReady = !isCordova;
-  if (DEBUGGING) {
+  if (DEBUGGING || iOS) {
     isCordova = true;
   }
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
@@ -20,18 +21,36 @@
   } catch (e$) {}
   window.showInfo = function(){
     var ref, onStop, onExit;
-    ref = window.open('Android.html');
+    if (iOS) {
+      return window.open('Android.html');
+    }
+    ref = window.open('Android.html', '_blank', 'location=no');
+    onStop = function(arg$){
+      var url;
+      url = arg$.url;
+      if (/quit\.html/.exec(url)) {
+        return ref.close();
+      }
+    };
+    onExit = function(){
+      ref.removeEventListener('loadstop', onStop);
+      return ref.removeEventListener('exit', onExit);
+    };
+    ref.addEventListener('loadstop', onStop);
+    return ref.addEventListener('exit', onExit);
   };
   callLater = function(it){
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, fillBucket;
+    var cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillAutolink, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
     if (isCordova) {
       $('body').addClass('cordova');
+    }
+    if (iOS) {
       $('body').addClass('ios');
     }
     cacheLoading = false;
@@ -53,6 +72,7 @@
           var id;
           id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
           $('#query').val(id);
+          $('#cond').val("^" + id + "$");
           return fetch(id);
         });
         return false;
@@ -69,13 +89,14 @@
           var val;
           val = $(this).attr('href');
           if (val) {
-            val = val.slice(1);
+            val = replace$.call(val, /.*\#/, '');
           }
           val || (val = $(this).text());
           if (val === $('#query').val()) {
             return;
           }
           $('#query').val(val);
+          $('#cond').val("^" + val + "$");
           fillQuery(val);
           return false;
         });
@@ -101,9 +122,6 @@
           return true;
         }
         $('#query').show();
-        if (!isMobile) {
-          $('#query').focus();
-        }
         fillQuery(val);
         if (val === prevVal) {
           return true;
@@ -115,6 +133,7 @@
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
       $('#query').val(title);
+      $('#cond').val("^" + title + "$");
       input = $('#query').get(0);
       if (isMobile) {
         try {
@@ -147,7 +166,7 @@
     window.doLookup = doLookup = function(val){
       var title, id, regex, matched;
       title = replace$.call(val, /[（(].*/, '');
-      if (isCordova) {
+      if (isCordova || LTMRegexes.length === 0) {
         if (/object/.exec(title)) {
           return;
         }
@@ -178,9 +197,12 @@
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
-      entryHistory.push(val);
-      if (isCordova) { $(".back").show(); }
-      fetch(id);
+      $('#cond').val("^" + title + "$");
+      entryHistory.push(title);
+      if (isCordova) {
+        $('.back').show();
+      }
+      fetch(title);
       return true;
     };
     htmlCache = {};
@@ -211,8 +233,12 @@
       }
       return loadJson(it);
     };
-    loadJson = function(it){
-      return $.getJSON("pua/" + encodeURIComponent(it) + ".json", fillJson);
+    loadJson = function(word){
+      return $.getJSON("pua/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
+        return $.getJSON("raw/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
+          return alert("錯誤：找不到詞「" + word + "」");
+        });
+      });
     };
     loadCacheHtml = function(it){
       var html;
@@ -227,7 +253,7 @@
       return true;
     };
     fillHtml = function(html){
-      var id, entries, doStep;
+      var id;
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       id = prevId || MOEID;
@@ -235,11 +261,19 @@
         htmlCache[id] = html;
         callLater(function(){
           $('#result').html(html);
+          $('#result .part-of-speech a').attr('href', null);
           return cacheLoading = false;
         });
         return;
       }
       $('#result').html(html);
+      return fillAutolink();
+    };
+    fillAutolink = function(){
+      var entries, id, doStep;
+      if (!LTMRegexes.length) {
+        return callLater(fillAutolink);
+      }
       $('#result h1').html(function(_, chunk){
         if (chunk.length > 1) {
           return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
@@ -250,9 +284,11 @@
         }
       });
       entries = $('#result .entry').get();
+      id = prevId || MOEID;
       doStep = function(){
         var $entry;
         if (!entries.length) {
+          $('#result .part-of-speech a').attr('href', null);
           if (prevId === id) {
             htmlCache[id] = $('#result').html();
           }
@@ -287,21 +323,40 @@
       return fillHtml(html);
     };
     bucketCache = {};
+    keyMap = {
+      h: '"heteronyms"',
+      b: '"bopomofo"',
+      p: '"pinyin"',
+      d: '"definitions"',
+      c: '"stroke_count"',
+      n: '"non_radical_stroke_count"',
+      f: '"def"',
+      t: '"title"',
+      r: '"radical"',
+      e: '"example"',
+      l: '"link"',
+      s: '"synonyms"',
+      a: '"antonyms"',
+      q: '"quote"'
+    };
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
       raw = bucketCache[bucket];
       key = escape(abbrevToTitle[id] || id);
-      idx = raw.indexOf("%22" + key + "%22");
+      idx = raw.indexOf('"' + key + '"');
       if (idx === -1) {
         return;
       }
-      part = raw.slice(idx + key.length + 9);
-      idx = part.indexOf('%2C%0A');
-      if (idx === -1) {
-        idx = part.indexOf('%0A');
-      }
+      part = raw.slice(idx + key.length + 3);
+      idx = part.indexOf('\n');
       part = part.slice(0, idx);
-      return fillJson(JSON.parse(unescape(part)));
+      part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
+        return keyMap[k];
+      });
+      part = part.replace(/`([^~]+)~/g, function(arg$, word){
+        return "<a href='#" + (abbrevToTitle[word] || word) + "'>" + word + "</a>";
+      });
+      return fillJson(JSON.parse(part));
     };
     if (isCordova) {
       loadJson = function(id){
@@ -310,22 +365,20 @@
         if (bucketCache[bucket]) {
           return fillBucket(id, bucket);
         }
-        return $.get("pack/" + bucket + ".json.gz.txt", function(txt){
-          var json;
-          json = ungzip(txt);
+        return $.get("pack/" + bucket + ".txt", function(json){
           bucketCache[bucket] = json;
           return fillBucket(id, bucket);
         });
       };
       $.getJSON('precomputed.json', function(blob){
         abbrevToTitle = blob.abbrevToTitle;
-        return $.getJSON('prefix.json', function(trie){
-          setupAutocomplete(trie);
-          return init();
+        $.getJSON('prefix.json', function(trie){
+          return setupAutocomplete(trie);
         });
+        return init();
       });
-      return;
     }
+    init();
     return $.getJSON('prefix.json', function(trie){
       var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
       lenToTitles = {};
@@ -370,8 +423,7 @@
         len = lens[i$];
         LTMRegexes.push(lenToRegex[len]);
       }
-      setupAutocomplete(trie);
-      return init();
+      return setupAutocomplete(trie);
       function fn$(data){
         return lenToRegex[len] = new RegExp(data[len], 'g');
       }
@@ -506,21 +558,21 @@
         : [];
       return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
-          var type, def, quote, ref$, example, link;
+          var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
             ? ref$
             : [], example = (ref$ = arg$.example) != null
             ? ref$
             : [], link = (ref$ = arg$.link) != null
             ? ref$
-            : [];
+            : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
           return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
           }) + "\n    " + ls(link, function(it){
             return "<span class='link'>" + h(it) + "</span>";
-          }) + "\n</p></li>";
+          }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
       }) + "</div>";
     });
@@ -558,12 +610,12 @@
       x[prop] == null && (x[prop] = '');
       pre = [x];
       while (xs.length) {
-        y = xs.shift();
+        y = xs[0];
         y[prop] == null && (y[prop] = '');
         if (x[prop] !== y[prop]) {
           break;
         }
-        pre.push(y);
+        pre.push(xs.shift());
       }
       if (!xs.length) {
         return [pre];
