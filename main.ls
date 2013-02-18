@@ -121,10 +121,10 @@ window.do-load = ->
       id = matched?0
       id = abbrevToTitle[id] || id
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
-    $ \#cond .val "^#{val}$"
-    entryHistory.push val
+    $ \#cond .val "^#{id}$"
+    entryHistory.push title
     $(\.back).show! if isCordova
-    fetch id
+    fetch title
     return true
 
   htmlCache = {}

@@ -193,12 +193,12 @@
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
-      $('#cond').val("^" + val + "$");
-      entryHistory.push(val);
+      $('#cond').val("^" + id + "$");
+      entryHistory.push(title);
       if (isCordova) {
         $('.back').show();
       }
-      fetch(id);
+      fetch(title);
       return true;
     };
     htmlCache = {};
@@ -229,10 +229,10 @@
       }
       return loadJson(it);
     };
-    loadJson = function(char){
-      return $.getJSON("pua/" + encodeURIComponent(char) + ".json", fillJson).fail(function(){
-        return $.getJSON("raw/" + encodeURIComponent(char) + ".json", fillJson).fail(function(){
-          return alert("錯誤：找不到詞「" + char + "」");
+    loadJson = function(word){
+      return $.getJSON("pua/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
+        return $.getJSON("raw/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
+          return alert("錯誤：找不到詞「" + word + "」");
         });
       });
     };
@@ -374,57 +374,55 @@
         return init();
       });
     }
-    return $.getJSON('precomputed.json', function(blob){
-      abbrevToTitle = blob.abbrevToTitle;
-      init();
-      return $.getJSON('prefix.json', function(trie){
-        var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
-        lenToTitles = {};
-        for (k in trie) {
-          v = trie[k];
-          prefixLength = k.length;
-          for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
-            suffix = ref$[i$];
-            abbrevIndex = suffix.indexOf('(');
-            if (abbrevIndex >= 0) {
-              orig = suffix;
-              suffix = suffix.slice(0, abbrevIndex);
-            }
-            ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
-              ? ref1$
-              : lenToTitles[key$] = []).push(k + "" + suffix);
+    init();
+    return $.getJSON('prefix.json', function(trie){
+      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
+      lenToTitles = {};
+      for (k in trie) {
+        v = trie[k];
+        prefixLength = k.length;
+        for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
+          suffix = ref$[i$];
+          abbrevIndex = suffix.indexOf('(');
+          if (abbrevIndex >= 0) {
+            orig = suffix;
+            suffix = suffix.slice(0, abbrevIndex);
+            abbrevToTitle[k + "" + suffix] = k + "" + orig;
           }
+          ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
+            ? ref1$
+            : lenToTitles[key$] = []).push(k + "" + suffix);
         }
-        lens = [];
-        for (len in lenToTitles) {
-          titles = lenToTitles[len];
-          lens.push(len);
-          titles.sort();
-          try {
-            lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
-          } catch (e$) {
-            e = e$;
-            $.ajax({
-              type: 'GET',
-              url: "lenToRegex." + len + ".json",
-              async: false,
-              dataType: 'json',
-              success: fn$
-            });
-          }
+      }
+      lens = [];
+      for (len in lenToTitles) {
+        titles = lenToTitles[len];
+        lens.push(len);
+        titles.sort();
+        try {
+          lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
+        } catch (e$) {
+          e = e$;
+          $.ajax({
+            type: 'GET',
+            url: "lenToRegex." + len + ".json",
+            async: false,
+            dataType: 'json',
+            success: fn$
+          });
         }
-        lens.sort(function(a, b){
-          return b - a;
-        });
-        for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
-          len = lens[i$];
-          LTMRegexes.push(lenToRegex[len]);
-        }
-        return setupAutocomplete(trie);
-        function fn$(data){
-          return lenToRegex[len] = new RegExp(data[len], 'g');
-        }
+      }
+      lens.sort(function(a, b){
+        return b - a;
       });
+      for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
+        len = lens[i$];
+        LTMRegexes.push(lenToRegex[len]);
+      }
+      return setupAutocomplete(trie);
+      function fn$(data){
+        return lenToRegex[len] = new RegExp(data[len], 'g');
+      }
     });
   };
   MOE = {
