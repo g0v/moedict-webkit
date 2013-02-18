@@ -121,7 +121,7 @@ window.do-load = ->
       id = matched?0
       id = abbrevToTitle[id] || id
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
-    $ \#cond .val "^#{id}$"
+    $ \#cond .val "^#{title}$"
     entryHistory.push title
     $(\.back).show! if isCordova
     fetch title
