@@ -7,21 +7,26 @@
 <link href="css/cupertino/jquery-ui-1.10.0.custom.css" rel="stylesheet"></link>
 <!--[if !IE]>-->
 <script src="cordova.js"></script>
-<script src="inflate.js"></script>
-<script src="js-gzip.js"></script>
 <!--<![endif]-->
 <script src="js/jquery-1.9.0.min.js"></script>
 <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
-<script src="main.js?ca3b8e9b608f634462a1e5be51b027ed" charset="utf-8"></script>
+<script src="main.js?c34a82c8ba84563243e8388642528e33" charset="utf-8"></script>
 </head>
-<body onload="doLoad()" onhashchange="grokHash()">
+<body onhashchange="grokHash()">
 <div id="result">
     <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px">
-        載入中，請稍候…
+        <span id="loading">
+        </span>
         <br /><br />
         <img class="logo" src="icon.png" width="100">
         <br /><br />
-        <span style="font-family: 'Extra'; margin-botom: 40px">&#xF9868;</span>
+        <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
+        </span>
+    <ul style="font-size: 22px; text-align: left; margin-top: 50px">
+        <li>本詞典共收錄十六萬筆中文條目，在輸入框按空白鍵可啟動「自動完成」功能。</p>
+        <li>定義裡的每個字詞都可以點擊連到其說明。</p>
+        <li>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw">重編國語辭典修訂本</a>」，辭典本文的著作權仍為教育部所有。</p>
+    </ul>
     </center>
 </div>
 <div id="query-box">

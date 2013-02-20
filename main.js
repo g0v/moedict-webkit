@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, e, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
   isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
@@ -10,6 +10,9 @@
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   entryHistory = [];
   try {
+    if (!isCordova) {
+      throw null;
+    }
     document.addEventListener('deviceready', function(){
       try {
         navigator.splashscreen.hide();
@@ -17,7 +20,14 @@
       isDeviceReady = true;
       return window.doLoad();
     }, false);
-  } catch (e$) {}
+  } catch (e$) {
+    e = e$;
+    $(function(){
+      $('#F9868').html('&#xF9868;');
+      $('#loading').text('載入中，請稍候…');
+      return window.doLoad();
+    });
+  }
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
