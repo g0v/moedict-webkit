@@ -1,5 +1,4 @@
 const DEBUGGING = no
-
 const MOE-ID = "萌"
 isCordova = navigator?notification?alert?
 isDeviceReady = not isCordova
@@ -7,11 +6,18 @@ isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 entryHistory = []
 
-try document.addEventListener \deviceready (->
-  try navigator.splashscreen.hide!
-  isDeviceReady := yes
+try
+  throw unless isCordova
+  document.addEventListener \deviceready (->
+    try navigator.splashscreen.hide!
+    isDeviceReady := yes
+    window.do-load!
+  ), false
+catch
+  <- $
+  $ \#F9868 .html '&#xF9868;'
+  $ \#loading .text \載入中，請稍候…
   window.do-load!
-), false
 
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
