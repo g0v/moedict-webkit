@@ -1,8 +1,8 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, ref$, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, replace$ = ''.replace, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
+  isCordova = window.cordova != null;
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
     isCordova = true;
@@ -11,7 +11,7 @@
   entryHistory = [];
   Index = null;
   try {
-    if (!isCordova) {
+    if (!(isCordova && !DEBUGGING)) {
       throw null;
     }
     document.addEventListener('deviceready', function(){
@@ -50,12 +50,15 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
     if (isCordova) {
       $('body').addClass('cordova');
+    }
+    if (!isCordova) {
+      $('body').addClass('web');
     }
     if (isCordova && /iOS|iPhone/.exec(((ref$ = window.device) != null ? ref$.platform : void 8) != null)) {
       $('body').addClass('ios');
@@ -157,7 +160,6 @@
     };
     prevId = prevVal = null;
     lenToRegex = {};
-    abbrevToTitle = {};
     bucketOf = function(it){
       var code;
       code = it.charCodeAt(0);
@@ -175,6 +177,9 @@
       if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
+        }
+        if (Index && Index.indexOf("\"" + title + "\"") === -1) {
+          return true;
         }
         id = title;
       } else {
@@ -226,8 +231,19 @@
       }
       return loadJson(it);
     };
-    loadJson = function(word){
-      return $.get("a/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", null, fillJson, 'text').fail(function(){});
+    loadJson = function(id){
+      var bucket;
+      if (!isCordova) {
+        return $.get("a/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, fillJson, 'text');
+      }
+      bucket = bucketOf(id);
+      if (bucketCache[bucket]) {
+        return fillBucket(id, bucket);
+      }
+      return $.get("pack/" + bucket + ".txt", function(json){
+        bucketCache[bucket] = json;
+        return fillBucket(id, bucket);
+      });
     };
     loadCacheHtml = function(it){
       var html;
@@ -259,12 +275,12 @@
         return keyMap[k];
       });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href='#" + (abbrevToTitle[word] || word) + "'>" + word + "</a>";
+        return "<a href='#" + word + "'>" + word + "</a>";
       });
-      if (typeof JSON === 'undefined') {
-        html = eval("render(" + part + ")");
-      } else {
+      if ((typeof JSON != 'undefined' && JSON !== null ? JSON.parse : void 8) != null) {
         html = render(JSON.parse(part));
+      } else {
+        html = eval("render(" + part + ")");
       }
       return fillHtml(html);
     };
@@ -288,7 +304,7 @@
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
       raw = bucketCache[bucket];
-      key = escape(abbrevToTitle[id] || id);
+      key = escape(id);
       idx = raw.indexOf('"' + key + '"');
       if (idx === -1) {
         return;
@@ -298,19 +314,6 @@
       part = part.slice(0, idx);
       return fillJson(part);
     };
-    if (isCordova) {
-      loadJson = function(id){
-        var bucket;
-        bucket = bucketOf(id);
-        if (bucketCache[bucket]) {
-          return fillBucket(id, bucket);
-        }
-        return $.get("pack/" + bucket + ".txt", function(json){
-          bucketCache[bucket] = json;
-          return fillBucket(id, bucket);
-        });
-      };
-    }
     $.get("a/index.json", null, initAutocomplete, 'text');
     return init();
   };

@@ -1,6 +1,6 @@
 const DEBUGGING = no
 const MOE-ID = "萌"
-isCordova = navigator?notification?alert?
+isCordova = window.cordova?
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
@@ -8,7 +8,7 @@ entryHistory = []
 Index = null
 
 try
-  throw unless isCordova
+  throw unless isCordova and not DEBUGGING
   document.addEventListener \deviceready (->
     try navigator.splashscreen.hide!
     isDeviceReady := yes
@@ -34,6 +34,7 @@ callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
+  $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and window.device?platform? is /iOS|iPhone/
 
   cache-loading = no
@@ -98,7 +99,6 @@ window.do-load = ->
 
   prevId = prevVal = null
   lenToRegex = {}
-  abbrevToTitle = {}
 
   bucket-of = ->
     code = it.charCodeAt(0)
@@ -112,6 +112,7 @@ window.do-load = ->
     title = val - /[（(].*/
     if isCordova or not Index
       return if title is /object/
+      return true if Index and Index.indexOf("\"#title\"") is -1
       id = title
     else
       return true if prevVal is val
@@ -140,11 +141,17 @@ window.do-load = ->
       window.scroll-to 0 0
     return if load-cache-html it
     return fill-json MOE if it is MOE-ID
-    load-json it
+    return load-json it
 
-  load-json = (word) ->
-    <- $.get("a/#{ encodeURIComponent(word - /\(.*/)}.json", null, fill-json, \text).fail
-    # alert "錯誤：找不到詞「#{word}」"
+  load-json = (id) ->
+    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, fill-json, \text) unless isCordova
+    # Cordova
+    bucket = bucket-of id
+    return fill-bucket id, bucket if bucketCache[bucket]
+    json <- $.get "pack/#bucket.txt"
+    bucketCache[bucket] = json
+    return fill-bucket id, bucket
+
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -167,11 +174,11 @@ window.do-load = ->
 
   fill-json = (part) ->
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
-    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##{ abbrevToTitle[word] || word }'>#word</a>"
-    if typeof JSON is \undefined
-      html = eval "render(#part)"
-    else
+    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
+    if JSON?parse?
       html = render JSON.parse part
+    else
+      html = eval "render(#part)"
     fill-html html
 
   bucketCache = {}
@@ -185,21 +192,13 @@ window.do-load = ->
 
   fill-bucket = (id, bucket) ->
     raw = bucketCache[bucket]
-    key = escape(abbrevToTitle[id] || id)
+    key = escape id
     idx = raw.indexOf('"' + key + '"');
     return if idx is -1
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
     part = part.slice(0, idx)
     fill-json part
-
-  if isCordova
-    load-json = (id) ->
-      bucket = bucket-of id
-      return fill-bucket id, bucket if bucketCache[bucket]
-      json <- $.get "pack/#bucket.txt"
-      bucketCache[bucket] = json
-      return fill-bucket id, bucket
 
   $.get "a/index.json", null, init-autocomplete, \text
   return init!
