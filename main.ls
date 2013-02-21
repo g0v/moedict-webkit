@@ -1,6 +1,6 @@
 const DEBUGGING = no
 const MOE-ID = "萌"
-isCordova = window.cordova?
+isCordova = document.URL isnt /^https?:/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
@@ -67,7 +67,7 @@ window.do-load = ->
         $ \#cond .val "^#{val}$"
         fill-query val
         return false
-    return if grok-hash!
+    return if window.grok-hash!
     if isCordova
       fill-query MOE-ID
       $ \#query .val ''
@@ -173,6 +173,7 @@ window.do-load = ->
     return
 
   fill-json = (part) ->
+    part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"辨\u20DE 似\u20DE $1"'
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
     part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
     if JSON?parse?

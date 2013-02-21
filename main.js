@@ -2,7 +2,7 @@
   var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  isCordova = window.cordova != null;
+  isCordova = !/^https?:/.test(document.URL);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
     isCordova = true;
@@ -111,7 +111,7 @@
           return false;
         });
       }
-      if (grokHash()) {
+      if (window.grokHash()) {
         return;
       }
       if (isCordova) {
@@ -271,6 +271,7 @@
     };
     fillJson = function(part){
       var html;
+      part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
       part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
         return keyMap[k];
       });
