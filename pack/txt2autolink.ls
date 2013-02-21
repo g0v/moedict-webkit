@@ -10,4 +10,4 @@ i+=2
 foo = unescape fn
 foo -= /\(.*/
 console.log "\"#foo\","
-#fs.writeFileSync "autolink/#foo.json" buf.slice(i)
+fs.writeFileSync "../a/#foo.json" buf.slice(i)
