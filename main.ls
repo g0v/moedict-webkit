@@ -5,6 +5,7 @@ isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 entryHistory = []
+Index = null
 
 try
   throw unless isCordova
@@ -96,7 +97,6 @@ window.do-load = ->
     return true
 
   prevId = prevVal = null
-  LTM-regexes = []
   lenToRegex = {}
   abbrevToTitle = {}
 
@@ -110,22 +110,14 @@ window.do-load = ->
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
-    if isCordova or LTM-regexes.length is 0
+    if isCordova or not Index
       return if title is /object/
       id = title
     else
       return true if prevVal is val
       prevVal := val
-      regex = lenToRegex[title.length]
-      switch typeof regex
-      | \function => matched = regex title
-      | \string   =>
-        lenToRegex[title.length] = new RegExp regex, \g
-        matched = lenToRegex[title.length].match regex
-      | _         => matched = title.match regex
-      return true unless matched
-      id = matched?0
-      id = abbrevToTitle[id] || id
+      return true unless Index.indexOf("\"#title\"") >= 0
+      id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     $ \#cond .val "^#{title}$"
     entryHistory.push title
@@ -151,9 +143,8 @@ window.do-load = ->
     load-json it
 
   load-json = (word) ->
-    <- $.getJSON("pua/#{ encodeURIComponent(word - /\(.*/)}.json" fill-json).fail
-    <- $.getJSON("raw/#{ encodeURIComponent(word - /\(.*/)}.json" fill-json).fail
-    alert "錯誤：找不到詞「#{word}」"
+    <- $.get("a/#{ encodeURIComponent(word - /\(.*/)}.json", null, fill-json, \text).fail
+    # alert "錯誤：找不到詞「#{word}」"
 
   load-cache-html = ->
     html = htmlCache[it]
@@ -166,45 +157,21 @@ window.do-load = ->
   fill-html = (html) ->
     html.=replace /(.)\u20DE/g        "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace //<a>([^<]+)</a>//g "<a href='\#$1'>$1</a>"
-
     id = prevId || MOE-ID
-    if html is /<\/a>/
-      htmlCache[id] = html
-      callLater ->
-        $ \#result .html html
-        $('#result .part-of-speech a').attr \href, null
-        cache-loading := no
-      return
+    htmlCache[id] = html
+    callLater ->
+      $ \#result .html html
+      $('#result .part-of-speech a').attr \href, null
+      cache-loading := no
+    return
 
-    $ \#result .html html
-    fill-autolink!
-
-  fill-autolink = ->
-    return call-later fill-autolink unless LTM-regexes.length
-    $('#result h1').html (_, chunk) -> if chunk.length > 1 then chunk.replace(
-      LTM-regexes[*-1]
-      -> """<a href="##{ encodeURIComponent( abbrevToTitle[it] || it) }">#it</a>"""
-    ) else chunk
-    entries = $('#result .entry').get!
-    id = prevId || MOE-ID
-    do-step = ->
-      unless entries.length
-        $('#result .part-of-speech a').attr \href, null
-        htmlCache[id] = $('#result').html! if prevId is id
-        cache-loading := no
-        return
-      $entry = $(entries.shift!)
-      $entry.html (_, chunk) ->
-        for re in LTM-regexes
-          chunk.=replace(re, -> escape """<a href="##{ encodeURIComponent(abbrevToTitle[it] || it) }">#it</a>""")
-        unescape chunk
-      callLater do-step
-    callLater do-step
-
-  fill-json = (struct) ->
-    struct = struct.dict if struct.dict
-    struct = struct.0 if struct.0
-    html = render struct
+  fill-json = (part) ->
+    part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
+    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##{ abbrevToTitle[word] || word }'>#word</a>"
+    if typeof JSON is \undefined
+      html = eval "render(#part)"
+    else
+      html = render JSON.parse part
     fill-html html
 
   bucketCache = {}
@@ -224,9 +191,7 @@ window.do-load = ->
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
     part = part.slice(0, idx)
-    part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
-    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##{ abbrevToTitle[word] || word }'>#word</a>"
-    fill-json JSON.parse part
+    fill-json part
 
   if isCordova
     load-json = (id) ->
@@ -235,52 +200,14 @@ window.do-load = ->
       json <- $.get "pack/#bucket.txt"
       bucketCache[bucket] = json
       return fill-bucket id, bucket
-    $.getJSON \precomputed.json (blob) ->
-      abbrevToTitle := blob.abbrevToTitle
-      $.getJSON \prefix.json (trie) ->
-        setup-autocomplete trie
-      return init!
 
-  init!
-  trie <- $.getJSON \prefix.json
+  $.get "a/index.json", null, init-autocomplete, \text
+  return init!
 
-  lenToTitles = {}
+const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'
 
-  for k, v of trie
-    prefix-length = k.length
-    for suffix in v / '|'
-      abbrevIndex = suffix.indexOf '('
-      if abbrevIndex >= 0
-        orig = suffix
-        suffix.=slice(0, abbrevIndex)
-        abbrevToTitle["#k#suffix"] = "#k#orig"
-      (lenToTitles[prefix-length + suffix.length] ?= []).push "#k#suffix"
-
-  lens = []
-  for len, titles of lenToTitles
-    lens.push len
-    titles.sort!
-    try
-      lenToRegex[len] = new RegExp (titles * \|).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), \g
-    catch
-      $.ajax {
-          type: \GET
-          url: "lenToRegex.#len.json"
-          async: false
-          dataType: \json
-          success: (data) -> lenToRegex[len] = new RegExp data[len], \g
-      }
-
-  lens.sort (a, b) -> b - a
-  for len in lens => LTM-regexes.push lenToRegex[len]
-
-  setup-autocomplete trie
-
-const MOE = {"heteronyms":[{"bopomofo":"ㄇㄥˊ","bopomofo2":"méng","definitions":[{"def":"<a>草木</a><a>初</a><a>生</a><a>的</a><a>芽</a>。","quote":["<a>說文解字</a>：「<a>萌</a>，<a>艸</a><a>芽</a><a>也</a>。」","<a>唐</a>．<a>韓愈</a>、<a>劉</a><a>師</a><a>服</a>、<a>侯</a><a>喜</a>、<a>軒轅</a><a>彌</a><a>明</a>．<a>石</a><a>鼎</a><a>聯句</a>：「<a>秋</a><a>瓜</a><a>未</a><a>落</a><a>蒂</a>，<a>凍</a><a>芋</a><a>強</a><a>抽</a><a>萌</a>。」"],"type":"<a>名</a>"},{"def":"<a>事物</a><a>發生</a><a>的</a><a>開端</a><a>或</a><a>徵兆</a>。","quote":["<a>韓非子</a>．<a>說</a><a>林</a><a>上</a>：「<a>聖人</a><a>見</a><a>微</a><a>以</a><a>知</a><a>萌</a>，<a>見</a><a>端</a><a>以</a><a>知</a><a>末</a>。」","<a>漢</a>．<a>蔡邕</a>．<a>對</a><a>詔</a><a>問</a><a>灾</a><a>異</a><a>八</a><a>事</a>：「<a>以</a><a>杜漸防萌</a>，<a>則</a><a>其</a><a>救</a><a>也</a>。」"],"type":"<a>名</a>"},{"def":"<a>人民</a>。","example":["<a>如</a>：「<a>萌黎</a>」、「<a>萌隸</a>」。"],"link":["<a>通</a>「<a>氓</a>」。"],"type":"<a>名</a>"},{"def":"<a>姓</a>。<a>如</a><a>五代</a><a>時</a><a>蜀</a><a>有</a><a>萌</a><a>慮</a>。","type":"<a>名</a>"},{"def":"<a>發芽</a>。","example":["<a>如</a>：「<a>萌芽</a>」。"],"quote":["<a>楚辭</a>．<a>王</a><a>逸</a>．<a>九思</a>．<a>傷</a><a>時</a>：「<a>明</a><a>風</a><a>習習</a><a>兮</a><a>龢</a><a>暖</a>，<a>百草</a><a>萌</a><a>兮</a><a>華</a><a>榮</a>。」"],"type":"<a>動</a>"},{"def":"<a>發生</a>。","example":["<a>如</a>：「<a>故態復萌</a>」。"],"quote":["<a>管子</a>．<a>牧民</a>：「<a>惟</a><a>有道</a><a>者</a>，<a>能</a><a>備</a><a>患</a><a>於</a><a>未</a><a>形</a><a>也</a>，<a>故</a><a>禍</a><a>不</a><a>萌</a>。」","<a>三國演義</a>．<a>第一</a><a>回</a>：「<a>若</a><a>萌</a><a>異心</a>，<a>必</a><a>獲</a><a>惡報</a>。」"],"type":"<a>動</a>"}],"pinyin":"méng"}],"non_radical_stroke_count":"8","radical":"<a>艸</a>","stroke_count":"12","title":"萌"}
-
-function setup-autocomplete (trie)
-  prefixEntries = {}
-  prefixRegexes = {}
+function init-autocomplete (text)
+  Index := text
   $(\#query).autocomplete do
     position:
       my: "left bottom"
@@ -293,24 +220,30 @@ function setup-autocomplete (trie)
       return true
     source: ({term}, cb) ->
       return cb [] unless term.length
-      pre = term.slice(0, 1)
-      pre = term.slice(0, 2) if 0xD800 <= pre.charCodeAt(0) <= 0xDBFF
-      return cb [] unless trie[pre]
-      entries = prefixEntries[pre] ||= ["#pre#post" for post in trie[pre] / '|']
-      return cb entries if term is pre
-      regex = prefixRegexes[pre] ||= new RegExp "^#{
-        trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")
-      }"
-      while term.length
-        return cb entries if term is pre
-        continue unless regex.test term
-        results = [ e for e in entries | e.index-of(term) is 0 ]
-        if results.length is 1
-          do-lookup results.0
-          return cb []
-        return cb results if results.length
-        term = term.slice 0, -1
-      return cb []
+      term.=replace(/\*/g '%')
+      regex = term
+      if term is /\s$/ or term is /\^/
+        regex -= /\^/g
+        regex -= /\s*$/g
+        regex = '"' + regex
+      else
+        regex = '[^"]*' + regex unless term is /[?._%]/
+      if term is /^\s/ or term is /\$/
+        regex -= /\$/g
+        regex -= /\s*/g
+        regex += '"'
+      else
+        regex = regex + '[^"]*' unless term is /[?._%]/
+      regex -= /\s/g
+      if term is /[%?._]/
+        regex.=replace(/[?._]/g, '[^"]')
+        regex.=replace(/%/g '[^"]*')
+        regex = "\"#regex\""
+      regex.=replace(/\(\)/g '')
+      results = Index.match(//#regex//g)
+      return cb [''] unless results
+      do-lookup(results.0 - /"/g) if results.length is 1
+      return cb [r - /"/g for r in results]
 
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
