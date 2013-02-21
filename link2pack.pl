@@ -5,8 +5,7 @@ while (<FH>) {
     s/^(\d+) (\S+) // or die $_;
     my $bucket = $1;
     my $title = $2;
-#    s/"title":"(.+)"/'"title":"'.quote($1).'"'/e or die $_;
-#    s!<a href='#([^']+)'>\1</a>!<a>$1</a>!g;
+    $title =~ s/%28.*%29//;
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>
     }

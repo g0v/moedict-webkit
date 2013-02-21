@@ -581,6 +581,9 @@ img.quit {
   top: 10pt;
   right: 10pt;
 }
+.cordova .info, .cordova .back, .cordova #opening {
+  display: none !important;
+}
 img.info {
   position: fixed;
   bottom: 0px;
@@ -642,11 +645,12 @@ input.back {
 .ui-autocomplete li {
   font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
-::-webkit-scrollbar {
+
+.web ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
 }
-::-webkit-scrollbar-thumb {
+.web ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
