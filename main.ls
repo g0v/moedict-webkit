@@ -220,6 +220,7 @@ function init-autocomplete (text)
       return true
     source: ({term}, cb) ->
       return cb [] unless term.length
+      return cb [] unless term is /[^\u0000-\u00FF]/
       term.=replace(/\*/g '%')
       regex = term
       if term is /\s$/ or term is /\^/
