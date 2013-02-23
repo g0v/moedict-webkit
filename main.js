@@ -329,6 +329,9 @@
       select: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^\(/.exec(item != null ? item.value : void 8)) {
+          return false;
+        }
         if (item != null && item.value) {
           fillQuery(item.value);
         }
@@ -337,13 +340,16 @@
       change: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^\(/.exec(item != null ? item.value : void 8)) {
+          return false;
+        }
         if (item != null && item.value) {
           fillQuery(item.value);
         }
         return true;
       },
       source: function(arg$, cb){
-        var term, regex, results;
+        var term, regex, results, MaxResults, more;
         term = arg$.term;
         if (!term.length) {
           return cb([]);
@@ -389,8 +395,11 @@
         if (results.length === 1) {
           doLookup(replace$.call(results[0], /"/g, ''));
         }
-        if (results.length > 100) {
-          results = results.slice(0, 100);
+        MaxResults = 255;
+        if (results.length > MaxResults) {
+          more = "( 僅示前 " + MaxResults + " 筆 )";
+          results = results.slice(0, MaxResults);
+          results.push(more);
         }
         return cb((replace$.call(results.join(','), /"/g, '')).split(','));
       }
