@@ -1,16 +1,19 @@
 (function(){
-  var DEBUGGING, MOEID, iOS, isCordova, ref$, isDeviceReady, isMobile, entryHistory, callLater, MOE, replace$ = ''.replace, split$ = ''.split, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
-  iOS = true;
-  isCordova = (typeof navigator != 'undefined' && navigator !== null ? (ref$ = navigator.notification) != null ? ref$.alert : void 8 : void 8) != null;
+  isCordova = !/^https?:/.test(document.URL);
   isDeviceReady = !isCordova;
-  if (DEBUGGING || iOS) {
+  if (DEBUGGING) {
     isCordova = true;
   }
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   entryHistory = [];
+  Index = null;
   try {
+    if (!(isCordova && !DEBUGGING)) {
+      throw null;
+    }
     document.addEventListener('deviceready', function(){
       try {
         navigator.splashscreen.hide();
@@ -18,12 +21,16 @@
       isDeviceReady = true;
       return window.doLoad();
     }, false);
-  } catch (e$) {}
+  } catch (e$) {
+    e = e$;
+    $(function(){
+      $('#F9868').html('&#xF9868;');
+      $('#loading').text('載入中，請稍候…');
+      return window.doLoad();
+    });
+  }
   window.showInfo = function(){
     var ref, onStop, onExit;
-    if (iOS) {
-      return window.open('Android.html');
-    }
     ref = window.open('Android.html', '_blank', 'location=no');
     onStop = function(arg$){
       var url;
@@ -43,14 +50,17 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, init, grokHash, fillQuery, prevId, prevVal, LTMRegexes, lenToRegex, abbrevToTitle, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillAutolink, fillJson, bucketCache, keyMap, fillBucket;
+    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
     if (isCordova) {
       $('body').addClass('cordova');
     }
-    if (iOS) {
+    if (!isCordova) {
+      $('body').addClass('web');
+    }
+    if (isCordova && /iOS|iPhone/.exec(((ref$ = window.device) != null ? ref$.platform : void 8) != null)) {
       $('body').addClass('ios');
     }
     cacheLoading = false;
@@ -101,7 +111,7 @@
           return false;
         });
       }
-      if (grokHash()) {
+      if (window.grokHash()) {
         return;
       }
       if (isCordova) {
@@ -149,9 +159,7 @@
       return true;
     };
     prevId = prevVal = null;
-    LTMRegexes = [];
     lenToRegex = {};
-    abbrevToTitle = {};
     bucketOf = function(it){
       var code;
       code = it.charCodeAt(0);
@@ -164,11 +172,14 @@
       return doLookup($('#query').val());
     };
     window.doLookup = doLookup = function(val){
-      var title, id, regex, matched;
+      var title, id;
       title = replace$.call(val, /[（(].*/, '');
-      if (isCordova || LTMRegexes.length === 0) {
+      if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
+        }
+        if (Index && Index.indexOf("\"" + title + "\"") === -1) {
+          return true;
         }
         id = title;
       } else {
@@ -176,23 +187,10 @@
           return true;
         }
         prevVal = val;
-        regex = lenToRegex[title.length];
-        switch (typeof regex) {
-        case 'function':
-          matched = regex(title);
-          break;
-        case 'string':
-          lenToRegex[title.length] = new RegExp(regex, 'g');
-          matched = lenToRegex[title.length].match(regex);
-          break;
-        default:
-          matched = title.match(regex);
-        }
-        if (!matched) {
+        if (!(Index.indexOf("\"" + title + "\"") >= 0)) {
           return true;
         }
-        id = matched != null ? matched[0] : void 8;
-        id = abbrevToTitle[id] || id;
+        id = title;
       }
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
@@ -233,11 +231,18 @@
       }
       return loadJson(it);
     };
-    loadJson = function(word){
-      return $.getJSON("pua/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
-        return $.getJSON("raw/" + encodeURIComponent(replace$.call(word, /\(.*/, '')) + ".json", fillJson).fail(function(){
-          return alert("錯誤：找不到詞「" + word + "」");
-        });
+    loadJson = function(id){
+      var bucket;
+      if (!isCordova) {
+        return $.get("a/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, fillJson, 'text');
+      }
+      bucket = bucketOf(id);
+      if (bucketCache[bucket]) {
+        return fillBucket(id, bucket);
+      }
+      return $.get("pack/" + bucket + ".txt", function(json){
+        bucketCache[bucket] = json;
+        return fillBucket(id, bucket);
       });
     };
     loadCacheHtml = function(it){
@@ -257,69 +262,27 @@
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       id = prevId || MOEID;
-      if (/<\/a>/.exec(html)) {
-        htmlCache[id] = html;
-        callLater(function(){
-          $('#result').html(html);
-          $('#result .part-of-speech a').attr('href', null);
-          return cacheLoading = false;
-        });
-        return;
-      }
-      $('#result').html(html);
-      return fillAutolink();
-    };
-    fillAutolink = function(){
-      var entries, id, doStep;
-      if (!LTMRegexes.length) {
-        return callLater(fillAutolink);
-      }
-      $('#result h1').html(function(_, chunk){
-        if (chunk.length > 1) {
-          return chunk.replace(LTMRegexes[LTMRegexes.length - 1], function(it){
-            return "<a href=\"#" + encodeURIComponent(abbrevToTitle[it] || it) + "\">" + it + "</a>";
-          });
-        } else {
-          return chunk;
-        }
+      htmlCache[id] = html;
+      callLater(function(){
+        $('#result').html(html);
+        $('#result .part-of-speech a').attr('href', null);
+        return cacheLoading = false;
       });
-      entries = $('#result .entry').get();
-      id = prevId || MOEID;
-      doStep = function(){
-        var $entry;
-        if (!entries.length) {
-          $('#result .part-of-speech a').attr('href', null);
-          if (prevId === id) {
-            htmlCache[id] = $('#result').html();
-          }
-          cacheLoading = false;
-          return;
-        }
-        $entry = $(entries.shift());
-        $entry.html(function(_, chunk){
-          var i$, ref$, len$, re;
-          for (i$ = 0, len$ = (ref$ = LTMRegexes).length; i$ < len$; ++i$) {
-            re = ref$[i$];
-            chunk = chunk.replace(re, fn$);
-          }
-          return unescape(chunk);
-          function fn$(it){
-            return escape("<a href=\"#" + encodeURIComponent(abbrevToTitle[it] || it) + "\">" + it + "</a>");
-          }
-        });
-        return callLater(doStep);
-      };
-      return callLater(doStep);
     };
-    fillJson = function(struct){
+    fillJson = function(part){
       var html;
-      if (struct.dict) {
-        struct = struct.dict;
+      part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
+      part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
+        return keyMap[k];
+      });
+      part = part.replace(/`([^~]+)~/g, function(arg$, word){
+        return "<a href='#" + word + "'>" + word + "</a>";
+      });
+      if ((typeof JSON != 'undefined' && JSON !== null ? JSON.parse : void 8) != null) {
+        html = render(JSON.parse(part));
+      } else {
+        html = eval("render(" + part + ")");
       }
-      if (struct[0]) {
-        struct = struct[0];
-      }
-      html = render(struct);
       return fillHtml(html);
     };
     bucketCache = {};
@@ -342,7 +305,7 @@
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
       raw = bucketCache[bucket];
-      key = escape(abbrevToTitle[id] || id);
+      key = escape(id);
       idx = raw.indexOf('"' + key + '"');
       if (idx === -1) {
         return;
@@ -350,129 +313,14 @@
       part = raw.slice(idx + key.length + 3);
       idx = part.indexOf('\n');
       part = part.slice(0, idx);
-      part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
-        return keyMap[k];
-      });
-      part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href='#" + (abbrevToTitle[word] || word) + "'>" + word + "</a>";
-      });
-      return fillJson(JSON.parse(part));
+      return fillJson(part);
     };
-    if (isCordova) {
-      loadJson = function(id){
-        var bucket;
-        bucket = bucketOf(id);
-        if (bucketCache[bucket]) {
-          return fillBucket(id, bucket);
-        }
-        return $.get("pack/" + bucket + ".txt", function(json){
-          bucketCache[bucket] = json;
-          return fillBucket(id, bucket);
-        });
-      };
-      $.getJSON('precomputed.json', function(blob){
-        abbrevToTitle = blob.abbrevToTitle;
-        $.getJSON('prefix.json', function(trie){
-          return setupAutocomplete(trie);
-        });
-        return init();
-      });
-    }
-    init();
-    return $.getJSON('prefix.json', function(trie){
-      var lenToTitles, k, v, prefixLength, i$, ref$, len$, suffix, abbrevIndex, orig, key$, ref1$, lens, len, titles, e;
-      lenToTitles = {};
-      for (k in trie) {
-        v = trie[k];
-        prefixLength = k.length;
-        for (i$ = 0, len$ = (ref$ = split$.call(v, '|')).length; i$ < len$; ++i$) {
-          suffix = ref$[i$];
-          abbrevIndex = suffix.indexOf('(');
-          if (abbrevIndex >= 0) {
-            orig = suffix;
-            suffix = suffix.slice(0, abbrevIndex);
-            abbrevToTitle[k + "" + suffix] = k + "" + orig;
-          }
-          ((ref1$ = lenToTitles[key$ = prefixLength + suffix.length]) != null
-            ? ref1$
-            : lenToTitles[key$] = []).push(k + "" + suffix);
-        }
-      }
-      lens = [];
-      for (len in lenToTitles) {
-        titles = lenToTitles[len];
-        lens.push(len);
-        titles.sort();
-        try {
-          lenToRegex[len] = new RegExp((join$.call(titles, '|')).replace(/[-[\]{}()*+?.,\\#\s]/g, "\\$&"), 'g');
-        } catch (e$) {
-          e = e$;
-          $.ajax({
-            type: 'GET',
-            url: "lenToRegex." + len + ".json",
-            async: false,
-            dataType: 'json',
-            success: fn$
-          });
-        }
-      }
-      lens.sort(function(a, b){
-        return b - a;
-      });
-      for (i$ = 0, len$ = lens.length; i$ < len$; ++i$) {
-        len = lens[i$];
-        LTMRegexes.push(lenToRegex[len]);
-      }
-      return setupAutocomplete(trie);
-      function fn$(data){
-        return lenToRegex[len] = new RegExp(data[len], 'g');
-      }
-    });
+    $.get("a/index.json", null, initAutocomplete, 'text');
+    return init();
   };
-  MOE = {
-    "heteronyms": [{
-      "bopomofo": "ㄇㄥˊ",
-      "bopomofo2": "méng",
-      "definitions": [
-        {
-          "def": "<a>草木</a><a>初</a><a>生</a><a>的</a><a>芽</a>。",
-          "quote": ["<a>說文解字</a>：「<a>萌</a>，<a>艸</a><a>芽</a><a>也</a>。」", "<a>唐</a>．<a>韓愈</a>、<a>劉</a><a>師</a><a>服</a>、<a>侯</a><a>喜</a>、<a>軒轅</a><a>彌</a><a>明</a>．<a>石</a><a>鼎</a><a>聯句</a>：「<a>秋</a><a>瓜</a><a>未</a><a>落</a><a>蒂</a>，<a>凍</a><a>芋</a><a>強</a><a>抽</a><a>萌</a>。」"],
-          "type": "<a>名</a>"
-        }, {
-          "def": "<a>事物</a><a>發生</a><a>的</a><a>開端</a><a>或</a><a>徵兆</a>。",
-          "quote": ["<a>韓非子</a>．<a>說</a><a>林</a><a>上</a>：「<a>聖人</a><a>見</a><a>微</a><a>以</a><a>知</a><a>萌</a>，<a>見</a><a>端</a><a>以</a><a>知</a><a>末</a>。」", "<a>漢</a>．<a>蔡邕</a>．<a>對</a><a>詔</a><a>問</a><a>灾</a><a>異</a><a>八</a><a>事</a>：「<a>以</a><a>杜漸防萌</a>，<a>則</a><a>其</a><a>救</a><a>也</a>。」"],
-          "type": "<a>名</a>"
-        }, {
-          "def": "<a>人民</a>。",
-          "example": ["<a>如</a>：「<a>萌黎</a>」、「<a>萌隸</a>」。"],
-          "link": ["<a>通</a>「<a>氓</a>」。"],
-          "type": "<a>名</a>"
-        }, {
-          "def": "<a>姓</a>。<a>如</a><a>五代</a><a>時</a><a>蜀</a><a>有</a><a>萌</a><a>慮</a>。",
-          "type": "<a>名</a>"
-        }, {
-          "def": "<a>發芽</a>。",
-          "example": ["<a>如</a>：「<a>萌芽</a>」。"],
-          "quote": ["<a>楚辭</a>．<a>王</a><a>逸</a>．<a>九思</a>．<a>傷</a><a>時</a>：「<a>明</a><a>風</a><a>習習</a><a>兮</a><a>龢</a><a>暖</a>，<a>百草</a><a>萌</a><a>兮</a><a>華</a><a>榮</a>。」"],
-          "type": "<a>動</a>"
-        }, {
-          "def": "<a>發生</a>。",
-          "example": ["<a>如</a>：「<a>故態復萌</a>」。"],
-          "quote": ["<a>管子</a>．<a>牧民</a>：「<a>惟</a><a>有道</a><a>者</a>，<a>能</a><a>備</a><a>患</a><a>於</a><a>未</a><a>形</a><a>也</a>，<a>故</a><a>禍</a><a>不</a><a>萌</a>。」", "<a>三國演義</a>．<a>第一</a><a>回</a>：「<a>若</a><a>萌</a><a>異心</a>，<a>必</a><a>獲</a><a>惡報</a>。」"],
-          "type": "<a>動</a>"
-        }
-      ],
-      "pinyin": "méng"
-    }],
-    "non_radical_stroke_count": "8",
-    "radical": "<a>艸</a>",
-    "stroke_count": "12",
-    "title": "萌"
-  };
-  function setupAutocomplete(trie){
-    var prefixEntries, prefixRegexes;
-    prefixEntries = {};
-    prefixRegexes = {};
+  MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
+  function initAutocomplete(text){
+    Index = text;
     return $('#query').autocomplete({
       position: {
         my: "left bottom",
@@ -495,55 +343,56 @@
         return true;
       },
       source: function(arg$, cb){
-        var term, pre, ref$, entries, post, regex, results, res$, i$, len$, e;
+        var term, regex, results, r;
         term = arg$.term;
         if (!term.length) {
           return cb([]);
         }
-        pre = term.slice(0, 1);
-        if (0xD800 <= (ref$ = pre.charCodeAt(0)) && ref$ <= 0xDBFF) {
-          pre = term.slice(0, 2);
-        }
-        if (!trie[pre]) {
+        if (!/[^\u0000-\u00FF]/.test(term)) {
           return cb([]);
         }
-        entries = prefixEntries[pre] || (prefixEntries[pre] = (function(){
+        term = term.replace(/\*/g, '%');
+        regex = term;
+        if (/\s$/.exec(term) || /\^/.exec(term)) {
+          regex = replace$.call(regex, /\^/g, '');
+          regex = replace$.call(regex, /\s*$/g, '');
+          regex = '"' + regex;
+        } else {
+          if (!/[?._%]/.test(term)) {
+            regex = '[^"]*' + regex;
+          }
+        }
+        if (/^\s/.exec(term) || /\$/.exec(term)) {
+          regex = replace$.call(regex, /\$/g, '');
+          regex = replace$.call(regex, /\s*/g, '');
+          regex += '"';
+        } else {
+          if (!/[?._%]/.test(term)) {
+            regex = regex + '[^"]*';
+          }
+        }
+        regex = replace$.call(regex, /\s/g, '');
+        if (/[%?._]/.exec(term)) {
+          regex = regex.replace(/[?._]/g, '[^"]');
+          regex = regex.replace(/%/g, '[^"]*');
+          regex = "\"" + regex + "\"";
+        }
+        regex = regex.replace(/\(\)/g, '');
+        results = Index.match(RegExp(regex + '', 'g'));
+        if (!results) {
+          return cb(['']);
+        }
+        if (results.length === 1) {
+          doLookup(replace$.call(results[0], /"/g, ''));
+        }
+        return cb((function(){
           var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = split$.call(trie[pre], '|')).length; i$ < len$; ++i$) {
-            post = ref$[i$];
-            results$.push(pre + "" + post);
+          for (i$ = 0, len$ = (ref$ = results).length; i$ < len$; ++i$) {
+            r = ref$[i$];
+            results$.push(replace$.call(r, /"/g, ''));
           }
           return results$;
         }()));
-        if (term === pre) {
-          return cb(entries);
-        }
-        regex = prefixRegexes[pre] || (prefixRegexes[pre] = new RegExp("^" + trie[pre].replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&")));
-        while (term.length) {
-          if (term === pre) {
-            return cb(entries);
-          }
-          if (!regex.test(term)) {
-            continue;
-          }
-          res$ = [];
-          for (i$ = 0, len$ = entries.length; i$ < len$; ++i$) {
-            e = entries[i$];
-            if (e.indexOf(term) === 0) {
-              res$.push(e);
-            }
-          }
-          results = res$;
-          if (results.length === 1) {
-            doLookup(results[0]);
-            return cb([]);
-          }
-          if (results.length) {
-            return cb(results);
-          }
-          term = term.slice(0, -1);
-        }
-        return cb([]);
       }
     });
   }
