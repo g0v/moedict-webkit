@@ -343,7 +343,7 @@
         return true;
       },
       source: function(arg$, cb){
-        var term, regex, results, r;
+        var term, regex, results;
         term = arg$.term;
         if (!term.length) {
           return cb([]);
@@ -378,21 +378,21 @@
           regex = "\"" + regex + "\"";
         }
         regex = regex.replace(/\(\)/g, '');
-        results = Index.match(RegExp(regex + '', 'g'));
+        results = (function(){
+          try {
+            return Index.match(RegExp(regex + '', 'g'));
+          } catch (e$) {}
+        }());
         if (!results) {
           return cb(['']);
         }
         if (results.length === 1) {
           doLookup(replace$.call(results[0], /"/g, ''));
         }
-        return cb((function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = results).length; i$ < len$; ++i$) {
-            r = ref$[i$];
-            results$.push(replace$.call(r, /"/g, ''));
-          }
-          return results$;
-        }()));
+        if (results.length > 100) {
+          results = results.slice(0, 100);
+        }
+        return cb((replace$.call(results.join(','), /"/g, '')).split(','));
       }
     });
   }

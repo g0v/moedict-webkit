@@ -241,10 +241,11 @@ function init-autocomplete (text)
         regex.=replace(/%/g '[^"]*')
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
-      results = Index.match(//#regex//g)
+      results = try Index.match(//#regex//g)
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
-      return cb [r - /"/g for r in results]
+      results.=slice(0, 100) if results.length > 100
+      return cb ((results.join(',') - /"/g) / ',')
 
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
