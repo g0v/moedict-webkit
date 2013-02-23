@@ -1,34 +1,64 @@
+<!DOCTYPE html>
 <html lang="zh-Hant" xml:lang="zh-Hant"><head><meta charset="utf-8" />
-<title>3du.tw 萌典測試版</title>
+<title>萌典 — 3du.tw 國語辭典</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible"/>
+<link rel="apple-touch-icon" href="icon.png" />
 <link href="styles.css" rel="stylesheet"></link>
-<link href="css/cupertino/jquery-ui-1.10.0.custom.css" rel="stylesheet">
+<link href="css/cupertino/jquery-ui-1.10.0.custom.css" rel="stylesheet"></link>
 <!--[if !IE]>-->
 <script src="cordova.js"></script>
-<script src="inflate.js"></script>
-<script src="js-gzip.js"></script>
 <!--<![endif]-->
 <script src="js/jquery-1.9.0.min.js"></script>
 <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
-<script src="main.js?7a9076d6d94e62c13d641aa71f19ae8e"></script>
+<script src="main.js" charset="utf-8"></script>
 </head>
-<body onload="doLoad()" onhashchange="grokHash()">
+<body onhashchange="grokHash()">
 <div id="result">
-    <center style="font-size: 30px; font-family: sans-serif; margin-top: 40px; margin-bottom: 40px">
-        載入中，請稍候…
+    <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px">
+        <span id="loading">
+        </span>
         <br /><br />
         <img class="logo" src="icon.png" width="100">
         <br /><br />
-        <span style="font-family: 'Extra'; margin-botom: 40px">&#xF9868;</span>
+        <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
+        </span>
+    <ul id="opening" style="font-size: 22px; text-align: left; margin-top: 50px">
+        <li>本詞典共收錄十六萬筆中文條目。<br/><br/></li>
+        <li>輸入框支援「自動完成」功能及「%_ *? ^.$」等萬用字元。<br/><br/></li>
+        <li>定義裡的每個字詞都可以點擊連到其說明。<br/><br/></li>
+        <li>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw">重編國語辭典修訂本</a>」，辭典本文的著作權仍為教育部所有。</li>
+    </ul>
     </center>
 </div>
 <div id="query-box">
-<input id="query" style="display: none" autofocus speech x-webkit-speech autocomplete="off" placeholder="請輸入欲查詢的字詞，例如：萌" />
+<input id="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞，例如：萌" />
 </div>
-<a class="back" href="#" onclick="history.go(-1); return false"><img class="back" src="back.png" /></a>
-<a class="info" href="#" onclick="location.href = 'about.html'; return false"><img class="info" src="info.png" /></a>
+<a class="back" href="#" onclick="pressBack(); return false"><img class="back" src="back.png" /></a>
+<a class="info" href="#" onclick="location.href = 'about.html'; return false"><img title="關於本站" class="info" src="info.png" /></a>
+<!--[if !IE]>-->
+<form target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh">
+    <input type="hidden" name="idx" value="dict.idx">
+    <input type="hidden" name="fld" value="1">
+    <input type="hidden" name="imgFont" value="1">
+    <input type="hidden" name="cat" value="">
+    <input type="hidden" id="cond" name="cond" value="^萌$">
+    <input type="image" src="back.png" class="back" title="反查來源（教育部國語詞典）">
+</form>
+<!--<![endif]-->
 <div id="moe" style="display: none">
 </div>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+window.gcfnConfig = {
+    imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/',
+    msgPre: '',
+    msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。',
+    msgAfter: ''
+        };
+    </script>
+<script type="text/javascript" src="https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js"></script>
+<!--<![endif]-->
 </body>
 </html>
