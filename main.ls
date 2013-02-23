@@ -213,9 +213,11 @@ function init-autocomplete (text)
       my: "left bottom"
       at: "left top"
     select: (e, {item}) ->
+      return false if item?value is /^\(/
       fill-query item.value if item?value
       return true
     change: (e, {item}) ->
+      return false if item?value is /^\(/
       fill-query item.value if item?value
       return true
     source: ({term}, cb) ->
@@ -244,7 +246,11 @@ function init-autocomplete (text)
       results = try Index.match(//#regex//g)
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
-      results.=slice(0, 100) if results.length > 100
+      MaxResults = 255 # (if isCordova then 100 else 1000)
+      if results.length > MaxResults
+        more = "( 僅示前 #MaxResults 筆 )"
+        results.=slice(0, MaxResults)
+        results.push more
       return cb ((results.join(',') - /"/g) / ',')
 
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
