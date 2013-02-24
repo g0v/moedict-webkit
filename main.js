@@ -259,9 +259,11 @@
     };
     fillHtml = function(html){
       var id;
-      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
-      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       id = prevId || MOEID;
+      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
+      html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
       htmlCache[id] = html;
       callLater(function(){
         $('#result').html(html);

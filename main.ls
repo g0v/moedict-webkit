@@ -162,9 +162,11 @@ window.do-load = ->
     return true
 
   fill-html = (html) ->
-    html.=replace /(.)\u20DE/g        "</span><span class='part-of-speech'>$1</span><span>"
-    html.=replace //<a>([^<]+)</a>//g "<a href='\#$1'>$1</a>"
     id = prevId || MOE-ID
+    html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
+    html.=replace //<a[^<]+>#id<\/a>//g "#id"
+    html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
+    html.=replace //(>[^<]*)#id//g              "$1<b>#id</b>"
     htmlCache[id] = html
     callLater ->
       $ \#result .html html

@@ -682,6 +682,21 @@ input.back {
   display: block;
 }
 
+.def {
+  margin-bottom: 2pt;
+}
+
+span b {
+  font-weight: normal;
+  background: #fffff0;
+  border-bottom: 1px solid #ddd !important;
+}
+
+span a:hover b,
+span b:hover {
+  background: #f0f0f0;
+}
+
 span a {
   border: 0 !important;
   margin: 0 !important;
