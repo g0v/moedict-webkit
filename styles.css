@@ -688,8 +688,7 @@ input.back {
 
 span b {
   font-weight: normal;
-  background: #fffff0;
-  border-bottom: 1px solid #ddd !important;
+  border-bottom: 1px solid #eed !important;
 }
 
 span a:hover b,
