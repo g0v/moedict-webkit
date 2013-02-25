@@ -332,7 +332,6 @@ input[type="search"] {
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
-input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -489,14 +488,6 @@ center {
   bottom: auto;
 }
 @media only screen and (max-width: 767px) {
-  .ios img.info {
-    position: fixed;
-    bottom: auto;
-    top: 0px;
-    right: 0px;
-    width: 60px;
-    height: 60px;
-  }
   .ios img.back {
     position: fixed;
     bottom: auto;
@@ -508,12 +499,39 @@ center {
   }
 }
 
+@media only screen and (max-width: 767px) {
+  .ios img.info {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+  }
+}
 @media only screen and (min-width: 768px) {
   #query-box {
     top: 10px;
     left: 10px;
     right: auto;
     width: 220px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ios #query-box {
+    top: 10px !important
+    left: 0px !important;
+    right: auto;
+    width: 220px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ios #query-box {
+    top: 5px;
+    left: 5px;
+    bottom: auto;
   }
 }
 
@@ -581,7 +599,10 @@ img.quit {
   top: 10pt;
   right: 10pt;
 }
-.cordova .info, .cordova .back, .cordova #opening {
+.android .info, .android .back {
+  display: none !important;
+}
+.cordova #opening {
   display: none !important;
 }
 img.info {
@@ -646,10 +667,12 @@ input.back {
   font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
 
+.ios ::-webkit-scrollbar,
 .web ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
 }
+.ios ::-webkit-scrollbar-thumb,
 .web ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xml:lang="zh-Hant"><head><meta charset="utf-8" />
-<title>萌典 — 3du.tw 國語辭典</title>
+<title>萌典 — 教育部國語詞典（民間線上版）</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible"/>
 <link rel="apple-touch-icon" href="icon.png" />
@@ -23,21 +23,15 @@
         <br /><br />
         <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
         </span>
-    <ul id="opening" style="font-size: 22px; text-align: left; margin-top: 50px">
-        <li>本詞典共收錄十六萬筆中文條目。<br/><br/></li>
-        <li>輸入框支援「自動完成」功能及「%_ *? ^.$」等萬用字元。<br/><br/></li>
-        <li>定義裡的每個字詞都可以點擊連到其說明。<br/><br/></li>
-        <li>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw">重編國語辭典修訂本</a>」，辭典本文的著作權仍為教育部所有。</li>
-    </ul>
     </center>
 </div>
 <div id="query-box">
-<input id="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞，例如：萌" />
+<input id="query" type="search" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞，例如：萌" />
 </div>
 <a class="back" href="#" onclick="pressBack(); return false"><img class="back" src="back.png" /></a>
 <a class="info" href="#" onclick="location.href = 'about.html'; return false"><img title="關於本站" class="info" src="info.png" /></a>
 <!--[if !IE]>-->
-<form target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh">
+<form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none">
     <input type="hidden" name="idx" value="dict.idx">
     <input type="hidden" name="fld" value="1">
     <input type="hidden" name="imgFont" value="1">

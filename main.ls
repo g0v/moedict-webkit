@@ -35,10 +35,10 @@ window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
   $('body').addClass \web unless isCordova
-  $('body').addClass \ios if isCordova and window.device?platform? is /iOS|iPhone/
+  $('body').addClass \ios
 
   cache-loading = no
-  try document.addEventListener \backbutton (->
+  window.press-back = press-back = ->
     return if cache-loading
     entryHistory.pop!
     token = Math.random!
@@ -50,7 +50,8 @@ window.do-load = ->
       $ \#cond .val "^#{id}$"
       fetch id
     return false
-  ), false
+
+  try document.addEventListener \backbutton, press-back, false
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
@@ -166,7 +167,7 @@ window.do-load = ->
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
-    html.=replace //(>[^<]*)#id//g              "$1<b>#id</b>"
+    html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
     htmlCache[id] = html
     callLater ->
       $ \#result .html html
@@ -250,7 +251,7 @@ function init-autocomplete (text)
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 255 # (if isCordova then 100 else 1000)
       if results.length > MaxResults
-        more = "( 僅示前 #MaxResults 筆 )"
+        more = "(僅顯示前 #MaxResults 筆)"
         results.=slice(0, MaxResults)
         results.push more
       return cb ((results.join(',') - /"/g) / ',')
