@@ -50,7 +50,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var cacheLoading, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -60,33 +60,32 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    if (isCordova && /iOS|iPhone/.exec(((ref$ = window.device) != null ? ref$.platform : void 8) != null)) {
-      $('body').addClass('ios');
-    }
+    $('body').addClass('ios');
     cacheLoading = false;
-    try {
-      document.addEventListener('backbutton', function(){
-        var token;
-        if (cacheLoading) {
-          return;
+    window.pressBack = pressBack = function(){
+      var token;
+      if (cacheLoading) {
+        return;
+      }
+      entryHistory.pop();
+      token = Math.random();
+      cacheLoading = token;
+      setTimeout(function(){
+        if (cacheLoading === token) {
+          return cacheLoading = false;
         }
-        entryHistory.pop();
-        token = Math.random();
-        cacheLoading = token;
-        setTimeout(function(){
-          if (cacheLoading === token) {
-            return cacheLoading = false;
-          }
-        }, 10000);
-        callLater(function(){
-          var id;
-          id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
-          $('#query').val(id);
-          $('#cond').val("^" + id + "$");
-          return fetch(id);
-        });
-        return false;
-      }, false);
+      }, 10000);
+      callLater(function(){
+        var id;
+        id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
+        $('#query').val(id);
+        $('#cond').val("^" + id + "$");
+        return fetch(id);
+      });
+      return false;
+    };
+    try {
+      document.addEventListener('backbutton', pressBack, false);
     } catch (e$) {}
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -259,9 +258,11 @@
     };
     fillHtml = function(html){
       var id;
-      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
-      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       id = prevId || MOEID;
+      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
+      html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
       htmlCache[id] = html;
       callLater(function(){
         $('#result').html(html);
@@ -329,6 +330,9 @@
       select: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^\(/.exec(item != null ? item.value : void 8)) {
+          return false;
+        }
         if (item != null && item.value) {
           fillQuery(item.value);
         }
@@ -337,13 +341,16 @@
       change: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^\(/.exec(item != null ? item.value : void 8)) {
+          return false;
+        }
         if (item != null && item.value) {
           fillQuery(item.value);
         }
         return true;
       },
       source: function(arg$, cb){
-        var term, regex, results, r;
+        var term, regex, results, MaxResults, more;
         term = arg$.term;
         if (!term.length) {
           return cb([]);
@@ -378,21 +385,24 @@
           regex = "\"" + regex + "\"";
         }
         regex = regex.replace(/\(\)/g, '');
-        results = Index.match(RegExp(regex + '', 'g'));
+        results = (function(){
+          try {
+            return Index.match(RegExp(regex + '', 'g'));
+          } catch (e$) {}
+        }());
         if (!results) {
           return cb(['']);
         }
         if (results.length === 1) {
           doLookup(replace$.call(results[0], /"/g, ''));
         }
-        return cb((function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = results).length; i$ < len$; ++i$) {
-            r = ref$[i$];
-            results$.push(replace$.call(r, /"/g, ''));
-          }
-          return results$;
-        }()));
+        MaxResults = 255;
+        if (results.length > MaxResults) {
+          more = "(僅顯示前 " + MaxResults + " 筆)";
+          results = results.slice(0, MaxResults);
+          results.push(more);
+        }
+        return cb((replace$.call(results.join(','), /"/g, '')).split(','));
       }
     });
   }

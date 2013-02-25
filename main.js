@@ -50,7 +50,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var ref$, cacheLoading, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var cacheLoading, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -60,33 +60,32 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    if (isCordova && /iOS|iPhone/.exec(((ref$ = window.device) != null ? ref$.platform : void 8) != null)) {
-      $('body').addClass('ios');
-    }
+    $('body').addClass('ios');
     cacheLoading = false;
-    try {
-      document.addEventListener('backbutton', function(){
-        var token;
-        if (cacheLoading) {
-          return;
+    window.pressBack = pressBack = function(){
+      var token;
+      if (cacheLoading) {
+        return;
+      }
+      entryHistory.pop();
+      token = Math.random();
+      cacheLoading = token;
+      setTimeout(function(){
+        if (cacheLoading === token) {
+          return cacheLoading = false;
         }
-        entryHistory.pop();
-        token = Math.random();
-        cacheLoading = token;
-        setTimeout(function(){
-          if (cacheLoading === token) {
-            return cacheLoading = false;
-          }
-        }, 10000);
-        callLater(function(){
-          var id;
-          id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
-          $('#query').val(id);
-          $('#cond').val("^" + id + "$");
-          return fetch(id);
-        });
-        return false;
-      }, false);
+      }, 10000);
+      callLater(function(){
+        var id;
+        id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
+        $('#query').val(id);
+        $('#cond').val("^" + id + "$");
+        return fetch(id);
+      });
+      return false;
+    };
+    try {
+      document.addEventListener('backbutton', pressBack, false);
     } catch (e$) {}
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -399,7 +398,7 @@
         }
         MaxResults = 255;
         if (results.length > MaxResults) {
-          more = "( 僅示前 " + MaxResults + " 筆 )";
+          more = "(僅顯示前 " + MaxResults + " 筆)";
           results = results.slice(0, MaxResults);
           results.push(more);
         }

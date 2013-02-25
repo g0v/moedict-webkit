@@ -370,16 +370,22 @@ table {
 
 @font-face {
   font-family: "Extra";
-  src: url('HANNOMMoEExtra-Regular.otf') format("truetype"), url('HANNOMMoEExtra-Regular.woff') format("woff");
+  src: url("HANNOMMoEExtra-Regular.otf")
+           format("truetype"),
+       url("HANNOMMoEExtra-Regular.woff")
+           format("woff");
 }
 
 @font-face {
   font-family: "Subset";
-  src: url('HannomMoeSubset.otf') format("truetype"), url('HannomMoeSubset.woff') format("woff");
+  src: url("HannomMoeSubset.otf")
+           format("truetype"),
+       url("HannomMoeSubset.woff")
+           format("woff");
 }
 
 body {
-  background: #eeeeee url('background.jpg');
+  background: #eeeeee url("background.jpg");
   font-family: sans-serif, "Subset", "Extra", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
@@ -431,7 +437,7 @@ a:hover, a:focus {
   top: 96px;
 }
 .radical .count {
-  font-family: 'Ubuntu Mono', Menlo, Monaco, Consolas, Courier New, monospace;
+  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
 .part-of-speech a {
   color: white !important;
@@ -556,7 +562,7 @@ center {
   text-align: right;
   word-break: normal !important;
   left: 65%;
-  font-family: 'Ubuntu Mono', Menlo, Monaco, Consolas, Courier New, monospace;
+  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
 
 span .tone {
@@ -593,6 +599,12 @@ img.quit {
   position: fixed;
   top: 10pt;
   right: 10pt;
+}
+.android .info, .android .back {
+  display: none !important;
+}
+.cordova #opening {
+  display: none !important;
 }
 img.info {
   position: fixed;
@@ -655,11 +667,18 @@ input.back {
 .ui-autocomplete li {
   font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "Subset", "Extra", "HAN NOM A", "HAN NOM B";
 }
-::-webkit-scrollbar {
+
+.web #lookback {
+    display: block !important;
+}
+
+.ios ::-webkit-scrollbar,
+.web ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
 }
-::-webkit-scrollbar-thumb {
+.ios ::-webkit-scrollbar-thumb,
+.web ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
@@ -689,6 +708,20 @@ input.back {
 .link, .def {
   clear: both;
   display: block;
+}
+
+.def {
+  margin-bottom: 2pt;
+}
+
+span b {
+  font-weight: normal;
+  border-bottom: 1px solid #eed !important;
+}
+
+span a:hover b,
+span b:hover {
+  background: #f0f0f0;
 }
 
 span a {
