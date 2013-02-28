@@ -177,6 +177,7 @@ window.do-load = ->
 
   fill-json = (part) ->
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"辨\u20DE 似\u20DE $1"'
+    part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
     part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
     if JSON?parse?

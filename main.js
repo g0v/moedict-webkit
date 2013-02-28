@@ -273,6 +273,7 @@
     fillJson = function(part){
       var html;
       part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
+      part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
       part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
         return keyMap[k];
       });
