@@ -24,9 +24,18 @@
   } catch (e$) {
     e = e$;
     $(function(){
+      var url;
       $('#F9868').html('&#xF9868;');
       $('#loading').text('載入中，請稍候…');
-      return window.doLoad();
+      if (/http:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
+        url = "https://www.moedict.tw/";
+        if (/^#./.exec(location.hash)) {
+          url += location.hash;
+        }
+        return location.replace(url);
+      } else {
+        return window.doLoad();
+      }
     });
   }
   window.showInfo = function(){

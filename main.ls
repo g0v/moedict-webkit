@@ -18,7 +18,12 @@ catch
   <- $
   $ \#F9868 .html '&#xF9868;'
   $ \#loading .text \載入中，請稍候…
-  window.do-load!
+  if document.URL is /http:\/\/(?:www.)?moedict.tw/i
+    url = "https://www.moedict.tw/"
+    url += location.hash if location.hash is /^#./
+    location.replace url
+  else
+    window.do-load!
 
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
