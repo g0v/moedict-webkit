@@ -35,7 +35,7 @@ window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
   $('body').addClass \web unless isCordova
-  $('body').addClass \ios
+  $('body').addClass \ios if isCordova and location.href isnt /android_asset/
 
   cache-loading = no
   window.press-back = press-back = ->

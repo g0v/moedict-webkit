@@ -60,7 +60,9 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    $('body').addClass('ios');
+    if (isCordova && !/android_asset/.test(location.href)) {
+      $('body').addClass('ios');
+    }
     cacheLoading = false;
     window.pressBack = pressBack = function(){
       var token;
@@ -273,6 +275,7 @@
     fillJson = function(part){
       var html;
       part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
+      part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
       part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
         return keyMap[k];
       });
