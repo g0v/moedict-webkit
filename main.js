@@ -60,7 +60,9 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    $('body').addClass('ios');
+    if (isCordova && !/android_asset/.test(location.href)) {
+      $('body').addClass('ios');
+    }
     cacheLoading = false;
     window.pressBack = pressBack = function(){
       var token;
