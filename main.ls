@@ -24,6 +24,14 @@ catch
     location.replace url
   else
     window.do-load!
+    if navigator.user-agent is /MSIE\s+[678]/
+      <- $.getScript \https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
+      window.gcfnConfig = do
+        imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/'
+        msgPre: ''
+        msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。'
+        msgAfter: ''
+      <- $.getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
 
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no

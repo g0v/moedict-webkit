@@ -34,7 +34,18 @@
         }
         return location.replace(url);
       } else {
-        return window.doLoad();
+        window.doLoad();
+        if (/MSIE\s+[678]/.exec(navigator.userAgent)) {
+          return $.getScript('https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js', function(){
+            window.gcfnConfig = {
+              imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/',
+              msgPre: '',
+              msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。',
+              msgAfter: ''
+            };
+            return $.getScript('https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js', function(){});
+          });
+        }
       }
     });
   }
