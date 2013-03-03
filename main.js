@@ -232,8 +232,8 @@
       prevId = it;
       prevVal = it;
       try {
-        if (location.hash + "" !== "#" + it) {
-          history.pushState(null, null, "#" + it);
+        if (!(location.pathname + "" === "/" + it || location.pathname + "" === "/" + encodeURIComponent(it))) {
+          history.pushState(null, null, it);
         }
       } catch (e$) {}
       if (isMobile) {
