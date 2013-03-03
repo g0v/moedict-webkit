@@ -158,7 +158,7 @@ window.do-load = ->
     return load-json it
 
   load-json = (id) ->
-    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, fill-json, \text) unless isCordova
+    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
@@ -175,8 +175,7 @@ window.do-load = ->
       cache-loading := no
     return true
 
-  fill-html = (html) ->
-    id = prevId || MOE-ID
+  fill-html = (html, id = prevId || MOE-ID) ->
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
@@ -188,7 +187,7 @@ window.do-load = ->
       cache-loading := no
     return
 
-  fill-json = (part) ->
+  fill-json = (part, id) ->
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
@@ -197,7 +196,7 @@ window.do-load = ->
       html = render JSON.parse part
     else
       html = eval "render(#part)"
-    fill-html html
+    fill-html html, id
 
   bucketCache = {}
 
@@ -225,6 +224,19 @@ const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","
 
 function init-autocomplete (text)
   Index := text
+  $.widget "ui.autocomplete", $.ui.autocomplete, {
+    _close: -> @menu.element.addClass \invisible
+    _resizeMenu: ->
+      ul = @menu.element;
+      ul.outerWidth Math.max(
+        ul.width( "" ).outerWidth() + 1
+        this.element.outerWidth()
+      )
+      ul.removeClass \invisible
+    _value: ->
+      fill-query it if it
+      @valueMethod.apply @element, arguments
+  }
   $(\#query).autocomplete do
     position:
       my: "left bottom"
