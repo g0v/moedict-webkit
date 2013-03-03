@@ -145,7 +145,7 @@ window.do-load = ->
     return unless it
     prevId := it
     prevVal := it
-    try history.pushState null, null, it unless "#{location.pathname}" is "/#it" or "#{location.pathname}" is "/#{ encodeURIComponent it }"
+    try history.pushState null, null, "##it" unless "#{location.hash}" is "##it"
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it).show!
