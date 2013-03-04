@@ -24,9 +24,29 @@
   } catch (e$) {
     e = e$;
     $(function(){
+      var url;
       $('#F9868').html('&#xF9868;');
       $('#loading').text('載入中，請稍候…');
-      return window.doLoad();
+      if (/http:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
+        url = "https://www.moedict.tw/";
+        if (/^#./.exec(location.hash)) {
+          url += location.hash;
+        }
+        return location.replace(url);
+      } else {
+        window.doLoad();
+        if (/MSIE\s+[678]/.exec(navigator.userAgent)) {
+          return $.getScript('https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js', function(){
+            window.gcfnConfig = {
+              imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/',
+              msgPre: '',
+              msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。',
+              msgAfter: ''
+            };
+            return $.getScript('https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js', function(){});
+          });
+        }
+      }
     });
   }
   window.showInfo = function(){
@@ -235,7 +255,9 @@
     loadJson = function(id){
       var bucket;
       if (!isCordova) {
-        return $.get("a/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, fillJson, 'text');
+        return $.get("a/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
+          return fillJson(it, id);
+        }, 'text');
       }
       bucket = bucketOf(id);
       if (bucketCache[bucket]) {
@@ -258,9 +280,8 @@
       });
       return true;
     };
-    fillHtml = function(html){
-      var id;
-      id = prevId || MOEID;
+    fillHtml = function(html, id){
+      id == null && (id = prevId || MOEID);
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
@@ -272,7 +293,7 @@
         return cacheLoading = false;
       });
     };
-    fillJson = function(part){
+    fillJson = function(part, id){
       var html;
       part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
@@ -287,7 +308,7 @@
       } else {
         html = eval("render(" + part + ")");
       }
-      return fillHtml(html);
+      return fillHtml(html, id);
     };
     bucketCache = {};
     keyMap = {
@@ -325,6 +346,23 @@
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
   function initAutocomplete(text){
     Index = text;
+    $.widget("ui.autocomplete", $.ui.autocomplete, {
+      _close: function(){
+        return this.menu.element.addClass('invisible');
+      },
+      _resizeMenu: function(){
+        var ul;
+        ul = this.menu.element;
+        ul.outerWidth(Math.max(ul.width("").outerWidth() + 1, this.element.outerWidth()));
+        return ul.removeClass('invisible');
+      },
+      _value: function(it){
+        if (it) {
+          fillQuery(it);
+        }
+        return this.valueMethod.apply(this.element, arguments);
+      }
+    });
     return $('#query').autocomplete({
       position: {
         my: "left bottom",
