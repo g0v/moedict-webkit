@@ -1,1 +1,1 @@
-../../../cordova.js
+cordova-2.5.0.js
