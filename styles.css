@@ -432,9 +432,6 @@ a:hover, a:focus {
   right: 24px;
   top: 36px;
 }
-.ios .radical {
-  top: 96px;
-}
 .radical .count {
   font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
@@ -471,6 +468,8 @@ center {
   #result {
     margin-left: 240px;
   }
+}
+@media only screen and (min-width: 768px) {
   .ios #result {
     margin-top: 0px;
   }
@@ -486,6 +485,11 @@ center {
   top: 5px;
   left: 60px;
   bottom: auto;
+}
+@media only screen and (max-width: 767px) {
+  .ios .radical {
+    top: 96px;
+  }
 }
 @media only screen and (max-width: 767px) {
   .ios img.back {
