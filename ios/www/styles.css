@@ -332,7 +332,6 @@ input[type="search"] {
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
-input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -632,6 +631,9 @@ input.back {
 }
 
 
+.ui-autocomplete.invisible {
+    display: none !important;
+}
 .ui-autocomplete {
   max-height: 60%;
   overflow: auto;
@@ -646,6 +648,11 @@ input.back {
 .ios .ui-autocomplete {
   top: 54px !important;
   bottom: auto !important;
+}
+@media only screen and (min-width: 768px) {
+  .ui-autocomplete.invisible {
+    display: block !important;
+  }
 }
 @media only screen and (min-width: 768px) {
   .ui-autocomplete {
