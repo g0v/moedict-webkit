@@ -185,7 +185,8 @@ window.do-load = ->
     return true
 
   fill-json = (part, id, cb=set-html) ->
-    part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"辨\u20DE 似\u20DE $1"'
+    while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
+      part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
     part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
