@@ -174,9 +174,7 @@ window.do-load = ->
         $('.ui-tooltip').remove!
         id = $(@).text!
         return htmlCache[id] if htmlCache[id]
-        callLater ->
-          $('.ui-tooltip').remove!
-          load-json id, -> cb it
+        callLater -> load-json id, -> cb it
         return ' '
     }
 
