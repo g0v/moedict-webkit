@@ -283,7 +283,6 @@
               return htmlCache[id];
             }
             callLater(function(){
-              $('.ui-tooltip').remove();
               return loadJson(id, function(it){
                 return cb(it);
               });
