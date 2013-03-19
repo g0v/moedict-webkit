@@ -304,7 +304,9 @@
     fillJson = function(part, id, cb){
       var html;
       cb == null && (cb = setHtml);
-      part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
+      while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
+        part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
+      }
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
       part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
         return keyMap[k];
