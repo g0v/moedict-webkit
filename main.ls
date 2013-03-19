@@ -157,8 +157,8 @@ window.do-load = ->
     return fill-json MOE if it is MOE-ID
     return load-json it
 
-  load-json = (id) ->
-    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id), \text) unless isCordova
+  load-json = (id, cb) ->
+    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
@@ -166,28 +166,27 @@ window.do-load = ->
     bucketCache[bucket] = json
     return fill-bucket id, bucket
 
+  set-html = (html) -> callLater ->
+    $ \#result .html html
+    $('#result .part-of-speech a').attr \href, null
+    $('#result a[href]')attr \title yes .tooltip {
+      -show, -hide, content: (cb) ->
+        $('.ui-tooltip').remove!
+        id = $(@).text!
+        return htmlCache[id] if htmlCache[id]
+        callLater ->
+          $('.ui-tooltip').remove!
+          load-json id, -> cb it
+        return ' '
+    }
 
   load-cache-html = ->
     html = htmlCache[it]
     return false unless html
-    callLater ->
-      $ \#result .html html
-      cache-loading := no
+    set-html html
     return true
 
-  fill-html = (html, id = prevId || MOE-ID) ->
-    html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
-    html.=replace //<a[^<]+>#id<\/a>//g "#id"
-    html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
-    html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
-    htmlCache[id] = html
-    callLater ->
-      $ \#result .html html
-      $('#result .part-of-speech a').attr \href, null
-      cache-loading := no
-    return
-
-  fill-json = (part, id) ->
+  fill-json = (part, id, cb=set-html) ->
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
@@ -196,7 +195,12 @@ window.do-load = ->
       html = render JSON.parse part
     else
       html = eval "render(#part)"
-    fill-html html, id
+    html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
+    html.=replace //<a[^<]+>#id<\/a>//g "#id"
+    html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
+    html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
+    cb(htmlCache[id] = html)
+    return
 
   bucketCache = {}
 

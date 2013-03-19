@@ -70,7 +70,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, loadCacheHtml, fillHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var cacheLoading, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -252,11 +252,11 @@
       }
       return loadJson(it);
     };
-    loadJson = function(id){
+    loadJson = function(id, cb){
       var bucket;
       if (!isCordova) {
         return $.get("a/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
-          return fillJson(it, id);
+          return fillJson(it, id, cb);
         }, 'text');
       }
       bucket = bucketOf(id);
@@ -268,33 +268,43 @@
         return fillBucket(id, bucket);
       });
     };
+    setHtml = function(html){
+      return callLater(function(){
+        $('#result').html(html);
+        $('#result .part-of-speech a').attr('href', null);
+        return $('#result a[href]').attr('title', true).tooltip({
+          show: false,
+          hide: false,
+          content: function(cb){
+            var id;
+            $('.ui-tooltip').remove();
+            id = $(this).text();
+            if (htmlCache[id]) {
+              return htmlCache[id];
+            }
+            callLater(function(){
+              $('.ui-tooltip').remove();
+              return loadJson(id, function(it){
+                return cb(it);
+              });
+            });
+            return ' ';
+          }
+        });
+      });
+    };
     loadCacheHtml = function(it){
       var html;
       html = htmlCache[it];
       if (!html) {
         return false;
       }
-      callLater(function(){
-        $('#result').html(html);
-        return cacheLoading = false;
-      });
+      setHtml(html);
       return true;
     };
-    fillHtml = function(html, id){
-      id == null && (id = prevId || MOEID);
-      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
-      html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
-      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
-      html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
-      htmlCache[id] = html;
-      callLater(function(){
-        $('#result').html(html);
-        $('#result .part-of-speech a').attr('href', null);
-        return cacheLoading = false;
-      });
-    };
-    fillJson = function(part, id){
+    fillJson = function(part, id, cb){
       var html;
+      cb == null && (cb = setHtml);
       part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"辨\u20DE 似\u20DE $1"');
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
       part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
@@ -308,7 +318,11 @@
       } else {
         html = eval("render(" + part + ")");
       }
-      return fillHtml(html, id);
+      html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
+      html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
+      cb(htmlCache[id] = html);
     };
     bucketCache = {};
     keyMap = {
