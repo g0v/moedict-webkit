@@ -169,13 +169,14 @@ window.do-load = ->
   set-html = (html) -> callLater ->
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
+    return if isCordova
     $('#result a[href]')attr \title yes .tooltip {
       -show, -hide, content: (cb) ->
         $('.ui-tooltip').remove!
         id = $(@).text!
         return htmlCache[id] if htmlCache[id]
         callLater -> load-json id, -> cb it
-        return ' '
+        return
     }
 
   load-cache-html = ->
