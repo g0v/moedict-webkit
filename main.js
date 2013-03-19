@@ -275,7 +275,7 @@
         if (isCordova) {
           return;
         }
-        return $('#result a[href]').attr('title', true).tooltip({
+        return $('#result a[href]').attr('title', '\u00A0').tooltip({
           show: false,
           hide: false,
           content: function(cb){
