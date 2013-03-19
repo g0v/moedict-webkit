@@ -752,6 +752,45 @@ span a {
   border-bottom: 1px ridge #dddddd;
 }
 
+.ui-tooltip .part-of-speech {
+  position: absolute;
+  left: 20px;
+}
+.ui-tooltip li .part-of-speech {
+  position: relative;
+  left: 0px;
+}
+.ui-tooltip li,
+.ui-tooltip .ol,
+.ui-tooltip .definition {
+  margin: 0;
+  padding: 0;
+}
+.ui-tooltip .entry {
+  border-bottom: none;
+  font-size: 80%;
+}
+
+.ui-tooltip {
+  min-width: 300px;
+  width: 300px;
+  word-break: break-all;
+}
+.ui-tooltip .bopomofo {
+  margin: 0px;
+  padding: 0px;
+  font-size: 75%;
+}
+
+.ui-tooltip .title,
+.ui-tooltip .example,
+.ui-tooltip .quote,
+.ui-tooltip .antonyms,
+.ui-tooltip .synonyms,
+.ui-tooltip .radical {
+    display: none;
+}
+
 #gcfbar {
   padding: 0 !important;
   position: fixed !important;
