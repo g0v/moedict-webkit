@@ -272,6 +272,9 @@
       return callLater(function(){
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
+        if (isCordova) {
+          return;
+        }
         return $('#result a[href]').attr('title', true).tooltip({
           show: false,
           hide: false,
@@ -287,7 +290,6 @@
                 return cb(it);
               });
             });
-            return ' ';
           }
         });
       });
