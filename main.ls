@@ -170,7 +170,7 @@ window.do-load = ->
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     return if isCordova
-    $('#result a[href]')attr \title yes .tooltip {
+    $('#result a[href]')attr \title '\u00A0' .tooltip {
       -show, -hide, content: (cb) ->
         $('.ui-tooltip').remove!
         id = $(@).text!
