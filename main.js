@@ -275,9 +275,10 @@
         if (isCordova) {
           return;
         }
-        return $('#result a[href]').attr('title', '\u00A0').tooltip({
+        return $('#result a[href]').tooltip({
           show: false,
           hide: false,
+          items: 'a',
           content: function(cb){
             var id;
             id = $(this).text();

@@ -170,8 +170,8 @@ window.do-load = ->
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     return if isCordova
-    $('#result a[href]')attr \title '\u00A0' .tooltip {
-      -show, -hide, content: (cb) ->
+    $('#result a[href]').tooltip {
+      -show, -hide, items: \a, content: (cb) ->
         id = $(@).text!
         callLater ->
           if htmlCache[id]
