@@ -280,13 +280,15 @@
           hide: false,
           content: function(cb){
             var id;
-            $('.ui-tooltip').remove();
             id = $(this).text();
-            if (htmlCache[id]) {
-              return htmlCache[id];
-            }
             callLater(function(){
+              if (htmlCache[id]) {
+                $('.ui-tooltip').remove();
+                cb(htmlCache[id]);
+                return;
+              }
               return loadJson(id, function(it){
+                $('.ui-tooltip').remove();
                 return cb(it);
               });
             });
