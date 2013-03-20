@@ -172,10 +172,13 @@ window.do-load = ->
     return if isCordova
     $('#result a[href]')attr \title '\u00A0' .tooltip {
       -show, -hide, content: (cb) ->
-        $('.ui-tooltip').remove!
         id = $(@).text!
-        return htmlCache[id] if htmlCache[id]
-        callLater -> load-json id, -> cb it
+        callLater ->
+          if htmlCache[id]
+            $('.ui-tooltip').remove!
+            cb htmlCache[id]
+            return
+          load-json id, -> $('.ui-tooltip').remove! ; cb it
         return
     }
 
