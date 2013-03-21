@@ -774,6 +774,8 @@ span a {
 .ui-tooltip {
   min-width: 300px;
   width: 300px;
+  max-height: 300px;
+  overflow: hidden;
   word-break: break-all;
 }
 .ui-tooltip .bopomofo {
