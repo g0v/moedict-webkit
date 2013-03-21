@@ -171,16 +171,20 @@ window.do-load = ->
     $('#result .part-of-speech a').attr \href, null
     return if isCordova
     $('#result a[href]').tooltip {
-      -show, -hide, items: \a, content: (cb) ->
+      +disabled, show: 100ms, hide: 100ms, items: \a, content: (cb) ->
         id = $(@).text!
         callLater ->
           if htmlCache[id]
-            $('.ui-tooltip').remove!
             cb htmlCache[id]
             return
-          load-json id, -> $('.ui-tooltip').remove! ; cb it
+          load-json id, -> cb it
         return
     }
+
+    $('#result a[href]').hoverIntent do
+        timeout: 250ms
+        over: -> $(@).tooltip \open
+        out: -> $(@).tooltip \close
 
   load-cache-html = ->
     html = htmlCache[it]

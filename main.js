@@ -275,24 +275,32 @@
         if (isCordova) {
           return;
         }
-        return $('#result a[href]').tooltip({
-          show: false,
-          hide: false,
+        $('#result a[href]').tooltip({
+          disabled: true,
+          show: 100,
+          hide: 100,
           items: 'a',
           content: function(cb){
             var id;
             id = $(this).text();
             callLater(function(){
               if (htmlCache[id]) {
-                $('.ui-tooltip').remove();
                 cb(htmlCache[id]);
                 return;
               }
               return loadJson(id, function(it){
-                $('.ui-tooltip').remove();
                 return cb(it);
               });
             });
+          }
+        });
+        return $('#result a[href]').hoverIntent({
+          timeout: 250,
+          over: function(){
+            return $(this).tooltip('open');
+          },
+          out: function(){
+            return $(this).tooltip('close');
           }
         });
       });
