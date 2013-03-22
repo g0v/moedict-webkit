@@ -393,6 +393,10 @@ body {
   margin: 10px;
 }
 
+body.android {
+  font-family: "HANNOMmoesubset-Regular", "HANNOMMoEExtra-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
+
 .title {
   font-size: 26pt;
   line-height: 100%;
@@ -607,6 +611,8 @@ img.quit {
 }
 .android .info, .android .back {
   display: none !important;
+  right: -999px !important;
+  bottom: -999px !important;
 }
 .cordova #opening {
   display: none !important;
