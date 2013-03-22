@@ -49,6 +49,7 @@ window.do-load = ->
   $('body').addClass \cordova if isCordova
   $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and location.href isnt /android_asset/
+  $('body').addClass \android if isCordova and location.href is /android_asset/
 
   cache-loading = no
   window.press-back = press-back = ->
@@ -169,6 +170,7 @@ window.do-load = ->
   set-html = (html) -> callLater ->
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
+    cache-loading := no
     return if isCordova
     $('#result a[href]').tooltip {
       +disabled, show: 100ms, hide: 100ms, items: \a, content: (cb) ->

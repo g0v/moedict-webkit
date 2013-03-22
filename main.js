@@ -272,6 +272,7 @@
       return callLater(function(){
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
+        cacheLoading = false;
         if (isCordova) {
           return;
         }
