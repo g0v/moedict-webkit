@@ -83,6 +83,9 @@
     if (isCordova && !/android_asset/.test(location.href)) {
       $('body').addClass('ios');
     }
+    if (isCordova && /android_asset/.exec(location.href)) {
+      $('body').addClass('android');
+    }
     cacheLoading = false;
     window.pressBack = pressBack = function(){
       var token;
@@ -295,6 +298,13 @@
             });
           }
         });
+        $('#result a[name]').tooltip({
+          content: function(cb){
+            var title;
+            title = $(this).attr('title');
+            return cb(title.replace(/\n/g, '<br/>'));
+          }
+        });
         return $('#result a[href]').hoverIntent({
           timeout: 250,
           over: function(){
@@ -485,7 +495,7 @@
       bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [];
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n      <h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n      " + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
@@ -503,7 +513,7 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "</div>";
+      }) + "</div>\n      <div class=\"lang\">\n    <span class='part-of-speech'>臺</span>\n     <a name=\"#\" title=\"thàu-tiong-tàu\n正午。日正當中的時候。\n例：阿仁透中晝毋食飯，咧趕穡頭。A-jîn thàu-tiong-tàu m̄ tsia̍h-pn̄g, teh kuánn sit-thâu. (阿仁中午不吃飯，在趕工作。)\">透中晝</a>、<a name=\"#\" title=\"tiong-tàu\n㊀ 中午、午時。\n㊁ 指午餐。\n例：十二點欲食中晝矣！Tsa̍p jī tiám beh tsia̍h tiong-tàu--ah! (十二點要吃午餐了！)\n     \">中晝</a>、<a name=\"#\" title=\"tiong-tàu-sî\n中午。\">中晝時</a>、<a name=\"#\" title=\"tsia̍h-tàu\n㊀ 吃中飯、吃午飯。\n例：阿英，好來食晝矣。A-ing, hó lâi tsia̍h-tàu--ah.  (阿英，可以來吃中飯了。)　\n㊁ 中午。用吃午飯來表示中午時分。\n例：食晝才來共伊看。Tsia̍h-tàu tsiah lâi kā i khuànn. (中午的時候再去探望他。)　\n     \">食晝</a>\n       </div>\n      <div class=\"lang\">\n    <span class='part-of-speech'>客</span>\n     <a name=\"#\" title=\"dong²⁴ zu⁵⁵\n指中午的時候。\n例：冷天﹝寒天﹞个當晝，日頭毋會當烈，常常做得看著貓仔在圍牆頂晒日頭。\n（冬天的正午時分，太陽不會很大，常常可以看到貓咪在圍牆上晒太陽。）\">當晝</a>、<a name=\"#\" title=\"dong²⁴ zu⁵⁵ teu¹¹\n指中午十二點的那個時間。\n例：當晝頭，日頭當烈，晒到&#x2028e;頭那暈暈。\n（正午時分，太陽很大，晒得我頭昏昏的。）\">當晝頭</a>\n       </div>";
     });
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){

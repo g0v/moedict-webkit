@@ -758,6 +758,7 @@ span a {
   border-bottom: 1px ridge #dddddd;
 }
 
+.ui-tooltip .lang { display: none }
 .ui-tooltip .part-of-speech {
   position: absolute;
   left: 20px;
@@ -811,4 +812,21 @@ span a {
 }
 #gcfclose {
   margin: 3px;
+}
+
+.lang {
+    clear: both;
+    display: block;
+    margin-bottom: 2px;
+    padding-top: 5px;
+    padding-bottom: 1px;
+    font-family: 'Source Sans Pro';
+}
+.ui-autocomplete .lang {
+    font-family: 'Source Sans Pro';
+    font-size: 70% !important;
+}
+
+a[name] {
+    cursor: pointer;
 }
