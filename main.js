@@ -305,7 +305,7 @@
             return cb(title.replace(/\n/g, '<br/>'));
           }
         });
-        return $('#result a[href]').hoverIntent({
+        $('#result a[href]').hoverIntent({
           timeout: 250,
           over: function(){
             return $(this).tooltip('open');
@@ -314,6 +314,7 @@
             return $(this).tooltip('close');
           }
         });
+        return $('.ui-autocomplete').remove();
       });
     };
     loadCacheHtml = function(it){
