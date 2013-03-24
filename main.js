@@ -83,6 +83,9 @@
     if (isCordova && !/android_asset/.test(location.href)) {
       $('body').addClass('ios');
     }
+    if (isCordova && /android_asset/.exec(location.href)) {
+      $('body').addClass('android');
+    }
     cacheLoading = false;
     window.pressBack = pressBack = function(){
       var token;
@@ -295,7 +298,7 @@
             });
           }
         });
-        return $('#result a[href]').hoverIntent({
+        $('#result a[href]').hoverIntent({
           timeout: 250,
           over: function(){
             return $(this).tooltip('open');
@@ -303,6 +306,9 @@
           out: function(){
             return $(this).tooltip('close');
           }
+        });
+        return callLater(function(){
+          return $('.ui-tooltip').remove();
         });
       });
     };
