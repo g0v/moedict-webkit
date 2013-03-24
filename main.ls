@@ -184,8 +184,8 @@ window.do-load = ->
     }
     $('#result a[href]').hoverIntent do
         timeout: 250ms
-        over: -> $(@).tooltip \open
-        out: -> $(@).tooltip \close
+        over: -> try $(@).tooltip \open
+        out: -> try $(@).tooltip \close
     <- setTimeout _, 250ms
     $('.ui-tooltip').remove!
     <- setTimeout _, 250ms

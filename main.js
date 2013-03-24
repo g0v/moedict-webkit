@@ -301,10 +301,14 @@
         $('#result a[href]').hoverIntent({
           timeout: 250,
           over: function(){
-            return $(this).tooltip('open');
+            try {
+              return $(this).tooltip('open');
+            } catch (e$) {}
           },
           out: function(){
-            return $(this).tooltip('close');
+            try {
+              return $(this).tooltip('close');
+            } catch (e$) {}
           }
         });
         return setTimeout(function(){
