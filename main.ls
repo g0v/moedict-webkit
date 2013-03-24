@@ -187,8 +187,8 @@ window.do-load = ->
       cb title.replace(/\n/g, '<br/>')
     $('#result a[href]').hoverIntent do
         timeout: 250ms
-        over: -> $(@).tooltip \open
-        out: -> $(@).tooltip \close
+        over: -> try $(@).tooltip \open
+        out: -> try $(@).tooltip \close
     $('.ui-autocomplete').remove!
 
   load-cache-html = ->
