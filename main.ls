@@ -182,11 +182,11 @@ window.do-load = ->
           load-json id, -> cb it
         return
     }
-
     $('#result a[href]').hoverIntent do
         timeout: 250ms
         over: -> $(@).tooltip \open
         out: -> $(@).tooltip \close
+    callLater -> $('.ui-tooltip').remove!
 
   load-cache-html = ->
     html = htmlCache[it]
