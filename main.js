@@ -307,9 +307,12 @@
             return $(this).tooltip('close');
           }
         });
-        return callLater(function(){
-          return $('.ui-tooltip').remove();
-        });
+        return setTimeout(function(){
+          $('.ui-tooltip').remove();
+          return setTimeout(function(){
+            return $('.ui-tooltip').remove();
+          }, 250);
+        }, 250);
       });
     };
     loadCacheHtml = function(it){

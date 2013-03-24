@@ -186,7 +186,10 @@ window.do-load = ->
         timeout: 250ms
         over: -> $(@).tooltip \open
         out: -> $(@).tooltip \close
-    callLater -> $('.ui-tooltip').remove!
+    <- setTimeout _, 250ms
+    $('.ui-tooltip').remove!
+    <- setTimeout _, 250ms
+    $('.ui-tooltip').remove!
 
   load-cache-html = ->
     html = htmlCache[it]
