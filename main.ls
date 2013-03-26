@@ -52,6 +52,9 @@ window.do-load = ->
   $('body').addClass \android if isCordova and location.href is /android_asset/
 
   cache-loading = no
+  window.press-about = press-about = ->
+    location.href = \about.html unless location.href is /android_asset/
+
   window.press-back = press-back = ->
     return if cache-loading
     entryHistory.pop!
