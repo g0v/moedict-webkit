@@ -70,7 +70,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -87,6 +87,11 @@
       $('body').addClass('android');
     }
     cacheLoading = false;
+    window.pressAbout = pressAbout = function(){
+      if (!/android_asset/.test(location.href)) {
+        return location.href = 'about.html';
+      }
+    };
     window.pressBack = pressBack = function(){
       var token;
       if (cacheLoading) {
