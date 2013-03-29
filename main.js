@@ -475,14 +475,7 @@
         regex = regex.replace(/\(\)/g, '');
         results = (function(){
           try {
-            return Index.match(RegExp(regex + '', 'g'));
-          } catch (e$) {}
-        }());
-        results = (function(){
-          try {
-            if (!results) {
-              return Index.match(RegExp(b2g(regex) + '', 'g'));
-            }
+            return Index.match(RegExp(b2g(regex) + '', 'g'));
           } catch (e$) {}
         }());
         if (!results) {

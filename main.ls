@@ -291,8 +291,7 @@ function init-autocomplete (text)
         regex.=replace(/%/g '[^"]*')
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
-      results = try Index.match(//#regex//g)
-      results = try Index.match(//#{ b2g regex }//g) unless results
+      results = try Index.match(//#{ b2g regex }//g)
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 255 # (if isCordova then 100 else 1000)
