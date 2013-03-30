@@ -73,7 +73,8 @@ window.do-load = ->
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
-    $ \#query .show!.focus!
+    $ \#query .show!
+    $ \#query .focus! unless isCordova
 
     if \onhashchange not in window
       $ \body .on \click \a ->
