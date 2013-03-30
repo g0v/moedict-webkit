@@ -122,7 +122,10 @@
       $('#query').on('focus', function(){
         return this.select();
       });
-      $('#query').show().focus();
+      $('#query').show();
+      if (!isCordova) {
+        $('#query').focus();
+      }
       if (!in$('onhashchange', window)) {
         $('body').on('click', 'a', function(){
           var val;
