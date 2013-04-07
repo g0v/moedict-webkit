@@ -546,13 +546,14 @@ center {
 }
 
 .bopomofo {
-  display: block;
+  display: table;
   margin-top: -14px;
   padding-bottom: 5px;
+  margin-right: 24px;
   margin-bottom: 10px;
   color: #666;
   font-size: 90%;
-  width: 50%;
+  width: 100%;
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
 }
@@ -560,14 +561,22 @@ center {
   word-break: normal !important;
   font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
+.prefer-pinyin-false .bopomofo .bpmf,
+.prefer-pinyin-true .bopomofo .pinyin {
+  text-align: left;
+  vertical-align: top;
+}
+
 .prefer-pinyin-true .bopomofo .bpmf,
 .prefer-pinyin-false .bopomofo .pinyin {
-  position: absolute;
-  right: 24px;
   text-align: right;
-  left: 65%;
+  vertical-align: top;
   cursor: w-resize;
 }
+.bopomofo .bpmf { width: 65%; display: inline-block; }
+.bopomofo .pinyin { width: 35%; display: inline-block; }
+.prefer-pinyin-true .bopomofo .pinyin { float: left; }
+.prefer-pinyin-false .bopomofo .pinyin { float: right; }
 .prefer-pinyin-true .bopomofo .bpmf:hover,
 .prefer-pinyin-false .bopomofo .pinyin:hover {
     background: #ffe;

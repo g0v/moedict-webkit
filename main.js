@@ -50,10 +50,15 @@
     });
   }
   function setPref(k, v){
-    return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
+    try {
+      return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
+    } catch (e$) {}
   }
   function getPref(k){
-    return typeof JSON != 'undefined' && JSON !== null ? JSON.parse(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) : void 8;
+    var ref$;
+    try {
+      return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
+    } catch (e$) {}
   }
   window.showInfo = function(){
     var ref, onStop, onExit;
