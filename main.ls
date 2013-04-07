@@ -55,6 +55,16 @@ window.do-load = ->
   $('body').addClass \android if isCordova and location.href is /android_asset/
   $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
 
+  fontSize = 14
+  $('body').bind \pinch (, {scale}) ->
+    $('body').css('font-size', Math.max(14, Math.min(22, (scale * fontSize))) + 'pt')
+  $('body').bind \pinchclose (, {scale}) ->
+    fontSize := Math.max(14, Math.min(22, (scale * fontSize)))
+    $('body').css('font-size', fontSize + 'pt')
+  $('body').bind \pinchopen (, {scale}) ->
+    fontSize := Math.max(14, Math.min(22, (scale * fontSize)))
+    $('body').css('font-size', fontSize + 'pt')
+
   cache-loading = no
   window.press-about = press-about = ->
     location.href = \about.html unless location.href is /android_asset/

@@ -81,7 +81,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -98,6 +98,24 @@
       $('body').addClass('android');
     }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
+    fontSize = 14;
+    $('body').bind('pinch', function(arg$, arg1$){
+      var scale;
+      scale = arg1$.scale;
+      return $('body').css('font-size', Math.max(14, Math.min(22, scale * fontSize)) + 'pt');
+    });
+    $('body').bind('pinchclose', function(arg$, arg1$){
+      var scale;
+      scale = arg1$.scale;
+      fontSize = Math.max(14, Math.min(22, scale * fontSize));
+      return $('body').css('font-size', fontSize + 'pt');
+    });
+    $('body').bind('pinchopen', function(arg$, arg1$){
+      var scale;
+      scale = arg1$.scale;
+      fontSize = Math.max(14, Math.min(22, scale * fontSize));
+      return $('body').css('font-size', fontSize + 'pt');
+    });
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!/android_asset/.test(location.href)) {
