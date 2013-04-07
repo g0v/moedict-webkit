@@ -33,8 +33,8 @@ catch
         msgAfter: ''
       <- $.getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
 
-function setPref (k, v) => localStorage?setItem k, JSON?stringify v
-function getPref (k) => JSON?parse localStorage?getItem k
+function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
+function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
