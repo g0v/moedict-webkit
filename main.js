@@ -76,7 +76,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -93,12 +93,6 @@
       $('body').addClass('android');
     }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
-    $('body').on('click', '#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin', function(){
-      var val;
-      val = !getPref('prefer-pinyin');
-      setPref('prefer-pinyin', val);
-      return $('#result').removeClass("prefer-pinyin-" + !val).addClass("prefer-pinyin-" + val);
-    });
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!/android_asset/.test(location.href)) {
@@ -293,10 +287,20 @@
         return fillBucket(id, bucket);
       });
     };
+    setPinyinBindings = function(){
+      return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
+        var val;
+        val = !getPref('prefer-pinyin');
+        setPref('prefer-pinyin', val);
+        $('#result').removeClass("prefer-pinyin-" + !val).addClass("prefer-pinyin-" + val);
+        return callLater(setPinyinBindings);
+      });
+    };
     setHtml = function(html){
       return callLater(function(){
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
+        setPinyinBindings();
         cacheLoading = false;
         if (isCordova) {
           return;
