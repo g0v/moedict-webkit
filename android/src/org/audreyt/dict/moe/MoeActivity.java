@@ -21,11 +21,14 @@ package org.audreyt.dict.moe;
 
 import android.os.Bundle;
 import android.view.*;
+
 import org.apache.cordova.*;
 
 public class MoeActivity extends DroidGap
 {
-    @Override
+    private KeyEvent event;
+
+	@Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,18 @@ public class MoeActivity extends DroidGap
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent ke) {
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            this.appView.sendJavascript("window.adjustFontSize(-1)");
+            return true;
+        } else if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            this.appView.sendJavascript("window.adjustFontSize(+1)");
+            return true;
+        }
+		return super.onKeyDown(keyCode, ke); 
+    }
+   
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.example, menu);
         return true;
@@ -43,6 +58,12 @@ public class MoeActivity extends DroidGap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+	        case R.id.small:
+	            this.appView.sendJavascript("window.adjustFontSize(-1)");
+	            return true;
+	        case R.id.large:
+	            this.appView.sendJavascript("window.adjustFontSize(+1)");
+	            return true;
             case R.id.info:
                 this.appView.sendJavascript("window.showInfo()");
                 return true;

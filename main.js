@@ -81,7 +81,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -112,11 +112,19 @@
     };
     $('body').bind('pinchclose', saveFontSize);
     $('body').bind('pinchopen', saveFontSize);
+    window.adjustFontSize = function(offset){
+      setPref('font-size', fontSize = Math.max(14, Math.min(22, fontSize + offset)));
+      return $('body').css('font-size', fontSize + 'pt');
+    };
+    window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!/android_asset/.test(location.href)) {
         return location.href = 'about.html';
       }
+    };
+    window.pressErase = pressErase = function(){
+      return $('#query').val('').focus();
     };
     window.pressBack = pressBack = function(){
       var token;
