@@ -303,6 +303,7 @@
         }
         $('#result a[href]').tooltip({
           disabled: true,
+          tooltipClass: "prefer-pinyin-" + !!getPref('prefer-pinyin'),
           show: 100,
           hide: 100,
           items: 'a',
