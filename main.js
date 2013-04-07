@@ -1,7 +1,7 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, setPref, getPref, callLater, MOE, CJKRADICALS, SIMPTRAD, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
-  MOEID = "萌";
+  MOEID = getPref('prev-id') || "萌";
   isCordova = !/^https?:/.test(document.URL);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
@@ -49,12 +49,12 @@
       }
     });
   }
-  setPref = function(k, v){
+  function setPref(k, v){
     return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
-  };
-  getPref = function(k){
+  }
+  function getPref(k){
     return typeof JSON != 'undefined' && JSON !== null ? JSON.parse(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) : void 8;
-  };
+  }
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
@@ -255,6 +255,7 @@
       }
       prevId = it;
       prevVal = it;
+      setPref('prev-id', prevId);
       try {
         if (location.hash + "" !== "#" + it) {
           history.pushState(null, null, "#" + it);
@@ -271,7 +272,7 @@
       if (loadCacheHtml(it)) {
         return;
       }
-      if (it === MOEID) {
+      if (it === '萌') {
         return fillJson(MOE);
       }
       return loadJson(it);

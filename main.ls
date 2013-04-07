@@ -1,5 +1,5 @@
 const DEBUGGING = no
-const MOE-ID = "萌"
+const MOE-ID = getPref(\prev-id) || "萌"
 isCordova = document.URL isnt /^https?:/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
@@ -33,8 +33,8 @@ catch
         msgAfter: ''
       <- $.getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
 
-setPref = (k, v) -> localStorage?setItem k, JSON?stringify v
-getPref = (k) -> JSON?parse localStorage?getItem k
+function setPref (k, v) => localStorage?setItem k, JSON?stringify v
+function getPref (k) => JSON?parse localStorage?getItem k
 
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
@@ -159,6 +159,7 @@ window.do-load = ->
     return unless it
     prevId := it
     prevVal := it
+    setPref \prev-id prevId
     try history.pushState null, null, "##it" unless "#{location.hash}" is "##it"
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
@@ -168,7 +169,7 @@ window.do-load = ->
       $('#result h1:first').text(it).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
-    return fill-json MOE if it is MOE-ID
+    return fill-json MOE if it is \萌
     return load-json it
 
   load-json = (id, cb) ->
