@@ -55,11 +55,6 @@ window.do-load = ->
   $('body').addClass \android if isCordova and location.href is /android_asset/
   $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
 
-  $ \body .on \click '#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin' ->
-    val = !getPref \prefer-pinyin
-    setPref \prefer-pinyin val
-    $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
-
   cache-loading = no
   window.press-about = press-about = ->
     location.href = \about.html unless location.href is /android_asset/
@@ -181,9 +176,18 @@ window.do-load = ->
     bucketCache[bucket] = json
     return fill-bucket id, bucket
 
+  set-pinyin-bindings = ->
+    $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
+      val = !getPref \prefer-pinyin
+      setPref \prefer-pinyin val
+      $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
+      callLater set-pinyin-bindings
+
   set-html = (html) -> callLater ->
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
+    set-pinyin-bindings!
+
     cache-loading := no
     return if isCordova
     $('#result a[href]').tooltip {
