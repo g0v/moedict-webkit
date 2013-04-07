@@ -389,7 +389,7 @@ body.cordova {
 }
 
 .title {
-  font-size: 26pt;
+  font-size: 185%;
   line-height: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -450,7 +450,7 @@ center {
 #result {
   box-shadow: 1px 1px 3px 0px #999999;
   border: 1px solid #dddddd;
-  margin-bottom: 50pt;
+  margin-bottom: 4em;
   padding: 5px 10px;
   height: auto;
   background: #ffffff;
@@ -458,7 +458,7 @@ center {
   word-break: break-all;
 }
 .ios #result {
-  margin-bottom: 0pt;
+  margin-bottom: 0;
   margin-top: 62px;
 }
 @media only screen and (min-width: 768px) {
@@ -537,8 +537,8 @@ center {
 }
 
 #query {
-  height: 36pt;
-  font-size: 16pt;
+  height: 2.2em;
+  font-size: 1.2em;
   padding: 5px;
   border-radius: 5px;
   box-sizing: border-box;
@@ -591,13 +591,13 @@ span .tone {
 }
 
 .radical .glyph {
-  margin-right: 3pt;
+  margin-right: 0.2em;
   font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   padding-bottom: 4px;
 }
 .radical .sym {
-  margin-left: 3pt;
-  padding-right: 3pt;
+  margin-left: 0.2em;
+  padding-right: 0.2em;
 }
 .part-of-speech, .glyph {
   color: white;
@@ -718,19 +718,19 @@ input.back {
 }
 
 .example {
-  font-size: 13pt;
+  font-size: 92%;
 }
 
 .quote {
   clear: both;
   display: block;
-  font-size: 13pt;
+  font-size: 92%;
 }
 
 .antonyms, .synonyms {
   clear: both;
   display: block;
-  font-size: 12pt;
+  font-size: 85%;
   margin-top: 2px;
 }
 
