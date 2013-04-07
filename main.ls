@@ -187,7 +187,7 @@ window.do-load = ->
     cache-loading := no
     return if isCordova
     $('#result a[href]').tooltip {
-      +disabled, show: 100ms, hide: 100ms, items: \a, content: (cb) ->
+      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
         id = $(@).text!
         callLater ->
           if htmlCache[id]

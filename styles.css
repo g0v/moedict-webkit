@@ -560,16 +560,16 @@ center {
   word-break: normal !important;
   font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
-#result.prefer-pinyin-true .bopomofo .bpmf,
-#result.prefer-pinyin-false .bopomofo .pinyin {
+.prefer-pinyin-true .bopomofo .bpmf,
+.prefer-pinyin-false .bopomofo .pinyin {
   position: absolute;
   right: 24px;
   text-align: right;
   left: 65%;
   cursor: w-resize;
 }
-#result.prefer-pinyin-true .bopomofo .bpmf:hover,
-#result.prefer-pinyin-false .bopomofo .pinyin:hover {
+.prefer-pinyin-true .bopomofo .bpmf:hover,
+.prefer-pinyin-false .bopomofo .pinyin:hover {
     background: #ffe;
 }
 
