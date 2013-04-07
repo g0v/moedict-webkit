@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, setPref, getPref, callLater, MOE, CJKRADICALS, SIMPTRAD, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   MOEID = "萌";
   isCordova = !/^https?:/.test(document.URL);
@@ -49,6 +49,12 @@
       }
     });
   }
+  setPref = function(k, v){
+    return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
+  };
+  getPref = function(k){
+    return typeof JSON != 'undefined' && JSON !== null ? JSON.parse(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) : void 8;
+  };
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
@@ -86,6 +92,13 @@
     if (isCordova && /android_asset/.exec(location.href)) {
       $('body').addClass('android');
     }
+    $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
+    $('body').on('click', '#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin', function(){
+      var val;
+      val = !getPref('prefer-pinyin');
+      setPref('prefer-pinyin', val);
+      return $('#result').removeClass("prefer-pinyin-" + !val).addClass("prefer-pinyin-" + val);
+    });
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!/android_asset/.test(location.href)) {
@@ -528,7 +541,7 @@
       bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [];
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null

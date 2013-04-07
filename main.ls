@@ -33,6 +33,9 @@ catch
         msgAfter: ''
       <- $.getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
 
+setPref = (k, v) -> localStorage?setItem k, JSON?stringify v
+getPref = (k) -> JSON?parse localStorage?getItem k
+
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
   on-stop = ({url}) -> ref.close! if url is /quit\.html/
@@ -50,6 +53,12 @@ window.do-load = ->
   $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and location.href isnt /android_asset/
   $('body').addClass \android if isCordova and location.href is /android_asset/
+  $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
+
+  $ \body .on \click '#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin' ->
+    val = !getPref \prefer-pinyin
+    setPref \prefer-pinyin val
+    $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
 
   cache-loading = no
   window.press-about = press-about = ->
@@ -331,10 +340,10 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
             if pinyin then "<span class='pinyin'>#{ h pinyin
               .replace(/（.*）/, '')
             }</span>" else ''
-          }#{ h bopomofo
+          }<span class='bpmf'>#{ h bopomofo
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
-          }</div>" else ''
+          }</span></div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div>
