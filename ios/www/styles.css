@@ -389,7 +389,7 @@ body.cordova {
 }
 
 .title {
-  font-size: 26pt;
+  font-size: 185%;
   line-height: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -450,7 +450,7 @@ center {
 #result {
   box-shadow: 1px 1px 3px 0px #999999;
   border: 1px solid #dddddd;
-  margin-bottom: 50pt;
+  margin-bottom: 4em;
   padding: 5px 10px;
   height: auto;
   background: #ffffff;
@@ -458,7 +458,7 @@ center {
   word-break: break-all;
 }
 .ios #result {
-  margin-bottom: 0pt;
+  margin-bottom: 0;
   margin-top: 62px;
 }
 @media only screen and (min-width: 768px) {
@@ -538,7 +538,7 @@ center {
 
 #query {
   height: 36pt;
-  font-size: 16pt;
+  font-size: 1.2em;
   padding: 5px;
   border-radius: 5px;
   box-sizing: border-box;
@@ -546,13 +546,14 @@ center {
 }
 
 .bopomofo {
-  display: block;
+  display: table;
   margin-top: -14px;
   padding-bottom: 5px;
+  margin-right: 24px;
   margin-bottom: 10px;
   color: #666;
   font-size: 90%;
-  width: 50%;
+  width: 100%;
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
 }
@@ -560,14 +561,22 @@ center {
   word-break: normal !important;
   font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
+.prefer-pinyin-false .bopomofo .bpmf,
+.prefer-pinyin-true .bopomofo .pinyin {
+  text-align: left;
+  vertical-align: top;
+}
+
 .prefer-pinyin-true .bopomofo .bpmf,
 .prefer-pinyin-false .bopomofo .pinyin {
-  position: absolute;
-  right: 24px;
   text-align: right;
-  left: 65%;
+  vertical-align: top;
   cursor: w-resize;
 }
+.bopomofo .bpmf { width: 65%; display: inline-block; }
+.bopomofo .pinyin { width: 35%; display: inline-block; }
+.prefer-pinyin-true .bopomofo .pinyin { float: left; }
+.prefer-pinyin-false .bopomofo .pinyin { float: right; }
 .prefer-pinyin-true .bopomofo .bpmf:hover,
 .prefer-pinyin-false .bopomofo .pinyin:hover {
     background: #ffe;
@@ -582,13 +591,13 @@ span .tone {
 }
 
 .radical .glyph {
-  margin-right: 3pt;
+  margin-right: 0.2em;
   font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   padding-bottom: 4px;
 }
 .radical .sym {
-  margin-left: 3pt;
-  padding-right: 3pt;
+  margin-left: 0.2em;
+  padding-right: 0.2em;
 }
 .part-of-speech, .glyph {
   color: white;
@@ -709,19 +718,19 @@ input.back {
 }
 
 .example {
-  font-size: 13pt;
+  font-size: 92%;
 }
 
 .quote {
   clear: both;
   display: block;
-  font-size: 13pt;
+  font-size: 92%;
 }
 
 .antonyms, .synonyms {
   clear: both;
   display: block;
-  font-size: 12pt;
+  font-size: 85%;
   margin-top: 2px;
 }
 
