@@ -63,11 +63,16 @@ window.do-load = ->
     $('body').css('font-size', fontSize + 'pt')
   $('body').bind \pinchclose saveFontSize
   $('body').bind \pinchopen saveFontSize
+  window.adjust-font-size = (offset) ->
+    setPref \font-size fontSize := Math.max(14, Math.min(22, (fontSize + offset)))
+    $('body').css('font-size', fontSize + 'pt')
+  window.adjust-font-size 0
 
   cache-loading = no
   window.press-about = press-about = ->
     location.href = \about.html unless location.href is /android_asset/
-
+  window.press-erase = press-erase = ->
+    $ \#query .val '' .focus!
   window.press-back = press-back = ->
     return if cache-loading
     entryHistory.pop!

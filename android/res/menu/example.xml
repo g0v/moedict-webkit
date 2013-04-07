@@ -6,4 +6,10 @@
     <item android:id="@+id/info"
           android:icon="@drawable/info"
           android:title="@string/info" />
+    <item android:id="@+id/small"
+          android:icon="@drawable/small"
+          android:title="@string/small" />
+    <item android:id="@+id/large"
+          android:icon="@drawable/large"
+          android:title="@string/large" />
 </menu>

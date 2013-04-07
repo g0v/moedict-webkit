@@ -510,6 +510,19 @@ center {
     height: 60px;
   }
 }
+
+@media only screen and (max-width: 767px) {
+  .android .erase {
+    display: block;
+    position: fixed;
+    bottom: auto;
+    bottom: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   #query-box {
     top: 10px;
@@ -618,6 +631,9 @@ img.quit {
   position: fixed;
   top: 10pt;
   right: 10pt;
+}
+.erase {
+  display: none;
 }
 .android .info, .android .back {
   display: none !important;
