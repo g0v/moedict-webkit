@@ -50,10 +50,15 @@
     });
   }
   function setPref(k, v){
-    return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
+    try {
+      return typeof localStorage != 'undefined' && localStorage !== null ? localStorage.setItem(k, typeof JSON != 'undefined' && JSON !== null ? JSON.stringify(v) : void 8) : void 8;
+    } catch (e$) {}
   }
   function getPref(k){
-    return typeof JSON != 'undefined' && JSON !== null ? JSON.parse(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) : void 8;
+    var ref$;
+    try {
+      return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
+    } catch (e$) {}
   }
   window.showInfo = function(){
     var ref, onStop, onExit;
@@ -76,7 +81,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -93,6 +98,20 @@
       $('body').addClass('android');
     }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
+    fontSize = getPref('font-size') || 14;
+    $('body').bind('pinch', function(arg$, arg1$){
+      var scale;
+      scale = arg1$.scale;
+      return $('body').css('font-size', Math.max(14, Math.min(22, scale * fontSize)) + 'pt');
+    });
+    saveFontSize = function(arg$, arg1$){
+      var scale;
+      scale = arg1$.scale;
+      setPref('font-size', fontSize = Math.max(14, Math.min(22, scale * fontSize)));
+      return $('body').css('font-size', fontSize + 'pt');
+    };
+    $('body').bind('pinchclose', saveFontSize);
+    $('body').bind('pinchopen', saveFontSize);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!/android_asset/.test(location.href)) {
