@@ -64,6 +64,7 @@ window.do-load = ->
   $('body').addClass \android if isCordova and location.href is /android_asset/
   if navigator.user-agent is /Android\s*[12]\./
     $('body').addClass \overflow-scrolling-false
+    $('body').addClass "prefer-down-false"
   else
     $('body').addClass "prefer-down-#{ !!getPref \prefer-down }"
   $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
