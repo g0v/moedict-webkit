@@ -525,11 +525,17 @@ center {
   .android .erase {
     display: block;
     position: fixed;
-    bottom: auto;
     bottom: 0px;
     right: 0px;
     width: 60px;
     height: 60px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .android.prefer-down-false .erase {
+    top: 0px;
+    bottom: auto;
   }
 }
 
