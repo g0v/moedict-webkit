@@ -5,4 +5,5 @@
     <string name="small">縮小</string>
     <string name="info">說明</string>
     <string name="quit">離開</string>
+    <string name="down">切換佈局</string>
 </resources>

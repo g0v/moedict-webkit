@@ -64,6 +64,9 @@ public class MoeActivity extends DroidGap
 	        case R.id.large:
 	            this.appView.sendJavascript("window.adjustFontSize(+1)");
 	            return true;
+            case R.id.down:
+                this.appView.sendJavascript("window.pressDown()");
+                return true;
             case R.id.info:
                 this.appView.sendJavascript("window.showInfo()");
                 return true;
