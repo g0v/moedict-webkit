@@ -48,6 +48,9 @@ window.show-info = ->
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 
 window.press-down = ->
+  if navigator.user-agent is /Android\s*[12]\./
+    alert "抱歉，Android 2.x 版僅能於上方顯示搜尋框。"
+    return
   $('body').removeClass "prefer-down-#{ !!getPref \prefer-down }"
   val = !getPref \prefer-down
   setPref \prefer-down val
@@ -59,7 +62,10 @@ window.do-load = ->
   $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and location.href isnt /android_asset/
   $('body').addClass \android if isCordova and location.href is /android_asset/
-  $('body').addClass "prefer-down-#{ !!getPref \prefer-down }"
+  if navigator.user-agent is /Android\s*[12]\./
+    $('body').addClass \overflow-scrolling-false
+  else
+    $('body').addClass "prefer-down-#{ !!getPref \prefer-down }"
   $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
 
   fontSize = getPref(\font-size) || 14
