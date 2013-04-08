@@ -457,7 +457,7 @@ center {
   border-radius: 10px;
   word-break: break-all;
 }
-.ios #result {
+.prefer-down-false #result {
   margin-bottom: 0;
   margin-top: 62px;
 }
@@ -467,7 +467,7 @@ center {
   }
 }
 @media only screen and (min-width: 768px) {
-  .ios #result {
+  .prefer-down-false #result {
     margin-top: 0px;
   }
 }
@@ -475,21 +475,20 @@ center {
 #query-box {
   position: fixed;
   bottom: 5px;
-  left: 10px;
   right: 60px;
+  left: 10px;
 }
-.ios #query-box {
+.prefer-down-false #query-box {
   top: 5px;
-  left: 60px;
   bottom: auto;
 }
 @media only screen and (max-width: 767px) {
-  .ios .radical {
+  .prefer-down-false .radical {
     top: 96px;
   }
 }
 @media only screen and (max-width: 767px) {
-  .ios img.back {
+  .prefer-down-false img.back {
     position: fixed;
     bottom: auto;
     top: 0px;
@@ -501,7 +500,18 @@ center {
 }
 
 @media only screen and (max-width: 767px) {
-  .ios img.info {
+  .prefer-down-false img.down {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    left: 0px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .prefer-down-false img.info {
     position: fixed;
     bottom: auto;
     top: 0px;
@@ -533,7 +543,7 @@ center {
 }
 
 @media only screen and (min-width: 768px) {
-  .ios #query-box {
+  .prefer-down-false #query-box {
     top: 10px !important
     left: 0px !important;
     right: auto;
@@ -542,7 +552,7 @@ center {
 }
 
 @media only screen and (min-width: 768px) {
-  .ios #query-box {
+  .prefer-down-false #query-box {
     top: 5px;
     left: 5px;
     bottom: auto;
@@ -650,12 +660,17 @@ img.info {
   width: 60px;
   height: 60px;
 }
-img.back {
+img.back, img.down {
   position: fixed;
   bottom: 0px;
   left: 0px;
   width: 60px;
   height: 60px;
+}
+img.back {
+  display: none;
+}
+.cordova img.down {
   display: none;
 }
 
@@ -683,7 +698,7 @@ input.back {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.ios .ui-autocomplete {
+.prefer-down-false .ui-autocomplete {
   top: 54px !important;
   bottom: auto !important;
 }

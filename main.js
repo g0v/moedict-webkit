@@ -80,6 +80,13 @@
   callLater = function(it){
     return setTimeout(it, isMobile ? 10 : 1);
   };
+  window.pressDown = function(){
+    var val;
+    $('body').removeClass("prefer-down-" + !!getPref('prefer-down'));
+    val = !getPref('prefer-down');
+    setPref('prefer-down', val);
+    return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
+  };
   window.doLoad = function(){
     var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
@@ -97,6 +104,7 @@
     if (isCordova && /android_asset/.exec(location.href)) {
       $('body').addClass('android');
     }
+    $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
     fontSize = getPref('font-size') || 14;
     $('body').bind('pinch', function(arg$, arg1$){
