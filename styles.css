@@ -683,6 +683,11 @@ input.back {
   height: 60px;
 }
 
+body.overflow-scrolling-false .ui-autocomplete {
+  max-height: 10000px !important;
+  bottom: auto !important;
+  position: absolute !important;
+}
 
 .ui-autocomplete.invisible {
     display: none !important;

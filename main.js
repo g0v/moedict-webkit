@@ -82,6 +82,10 @@
   };
   window.pressDown = function(){
     var val;
+    if (/Android\s*[12]\./.exec(navigator.userAgent)) {
+      alert("抱歉，Android 2.x 版僅能於上方顯示搜尋框。");
+      return;
+    }
     $('body').removeClass("prefer-down-" + !!getPref('prefer-down'));
     val = !getPref('prefer-down');
     setPref('prefer-down', val);
@@ -104,7 +108,11 @@
     if (isCordova && /android_asset/.exec(location.href)) {
       $('body').addClass('android');
     }
-    $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
+    if (/Android\s*[12]\./.exec(navigator.userAgent)) {
+      $('body').addClass('overflow-scrolling-false');
+    } else {
+      $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
+    }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
     fontSize = getPref('font-size') || 14;
     $('body').bind('pinch', function(arg$, arg1$){
