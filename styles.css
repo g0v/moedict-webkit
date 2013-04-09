@@ -472,6 +472,10 @@ center {
   }
 }
 
+body.overflow-scrolling-false #query-box,
+body.overflow-scrolling-false img.info {
+    position: absolute;
+}
 #query-box {
   position: fixed;
   bottom: 5px;
