@@ -100,7 +100,11 @@ window.do-load = ->
       fetch id
     return false
 
-  try document.addEventListener \backbutton, press-back, false
+  try document.addEventListener \backbutton, (!->
+    if entryHistory.length <= 1 then window.press-quit! else window.press-back!
+  ), false
+
+  window.press-quit = -> callLater -> navigator.app.exit-app!
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup

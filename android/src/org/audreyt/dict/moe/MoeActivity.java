@@ -71,7 +71,7 @@ public class MoeActivity extends DroidGap
                 this.appView.sendJavascript("window.showInfo()");
                 return true;
             case R.id.quit:
-                finish();
+                this.appView.sendJavascript("window.pressQuit()");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
