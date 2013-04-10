@@ -166,8 +166,19 @@
       return false;
     };
     try {
-      document.addEventListener('backbutton', pressBack, false);
+      document.addEventListener('backbutton', function(){
+        if (entryHistory.length <= 1) {
+          window.pressQuit();
+        } else {
+          window.pressBack();
+        }
+      }, false);
     } catch (e$) {}
+    window.pressQuit = function(){
+      return callLater(function(){
+        return navigator.app.exitApp();
+      });
+    };
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
       $('#query').on('focus', function(){
