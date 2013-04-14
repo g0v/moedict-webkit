@@ -273,6 +273,8 @@ window.do-load = ->
     c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
     t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
     a: \"antonyms" q: \"quote"
+
+    T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   }
 
   fill-bucket = (id, bucket) ->
