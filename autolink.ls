@@ -55,6 +55,11 @@ entries = JSON.parse(
     .replace(/"synonyms"/g                  \"s")
     .replace(/"antonyms"/g                  \"a")
     .replace(/"quote"/g                     \"q")
+    .replace(/"trs"/g                       \"T")
+    .replace(/"alt"/g                       \"A")
+    .replace(/"vernacular"/g                \"V")
+    .replace(/"combined"/g                  \"C")
+    .replace(/"dialects"/g                  \"D")
 )
 prefix = {}
 i = 0
