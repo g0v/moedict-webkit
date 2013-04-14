@@ -463,7 +463,7 @@ center {
 }
 @media only screen and (min-width: 768px) {
   #result {
-    margin-left: 240px;
+    margin-left: 340px;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -548,7 +548,7 @@ body.overflow-scrolling-false img.info {
     top: 10px;
     left: 10px;
     right: auto;
-    width: 220px;
+    width: 320px;
   }
 }
 
@@ -557,7 +557,7 @@ body.overflow-scrolling-false img.info {
     top: 10px !important
     left: 0px !important;
     right: auto;
-    width: 220px;
+    width: 320px;
   }
 }
 
@@ -606,7 +606,7 @@ body.overflow-scrolling-false img.info {
   vertical-align: top;
   cursor: w-resize;
 }
-.bopomofo .bpmf { width: 65%; display: inline-block; }
+.bopomofo .bpmf { width: 65%; display: inline-block; font-family: 'Arial Unicode Ms' }
 .bopomofo .pinyin { width: 35%; display: inline-block; }
 .prefer-pinyin-true .bopomofo .pinyin { float: left; }
 .prefer-pinyin-false .bopomofo .pinyin { float: right; }
@@ -728,7 +728,7 @@ body.overflow-scrolling-false .ui-autocomplete {
     top: 62px !important;
     bottom: auto !important;
     left: 10px !important;
-    width: 220px !important;
+    width: 320px !important;
     overflow: scroll !important;
   }
 }
@@ -763,8 +763,37 @@ body.overflow-scrolling-false .ui-autocomplete {
   max-height: 75% !important;
 }
 
+.example ruby .mandarin:before {
+ content: '（'
+}
+.example ruby ruby rb {
+}
+.example ruby rt {
+    font-family: 'Arial Unicode MS';
+    font-size: 70%;
+
+}
+.example ruby .mandarin:after{
+ content: '）'
+}
+.example ruby .mandarin {
+    font-size: 90%;
+}
+.example ruby {
+        display: inline-block;
+    }
+
 .example {
-  font-size: 92%;
+  font-size: 100%;
+  display: inline-block;
+  clear: both;
+  border: 1px solid #eee;
+  padding: 3px;
+  background: #eee;
+  border-radius: 10px;
+  margin-right: 10px;
+  vertical-align: top;
+  box-shadow: 1px 1px 3px 0px #aaa;
 }
 
 .quote {

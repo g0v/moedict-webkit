@@ -39,7 +39,7 @@ function init ()
 
 ##############
 entries = JSON.parse(
-  "#{fs.read-file-sync \dict-revised.pua.json}"
+  "#{fs.read-file-sync \dict-twblg.json}"
     .replace(/"bopomofo2": "[^"]*",/g '')
     .replace(/"heteronyms"/g                \"h")
     .replace(/"bopomofo"/g                  \"b")
