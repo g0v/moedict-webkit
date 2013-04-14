@@ -781,6 +781,7 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 .example ruby {
         display: inline-block;
+        white-space: nowrap;
     }
 
 .example {
