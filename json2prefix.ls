@@ -1,5 +1,5 @@
 require! fs
-entries = JSON.parse fs.read-file-sync \dict-revised.pua.json
+entries = JSON.parse fs.read-file-sync \dict-twblg.json
 prefix = {}
 defs = {}
 buckets = {}
@@ -7,6 +7,7 @@ i = 0
 for {title, heteronyms}:entry in entries
   continue if title is /\{\[[0-9a-f]{4}\]\}/ # Unsubstituted
   continue if title is /\uDB40[\uDD00-\uDD0F]/ # Variant
+  continue if title is /[⿰⿸]/
   pre = title.slice(0, 1)
   code = pre.charCodeAt(0)
   if 0xD800 <= code <= 0xDBFF
@@ -17,7 +18,7 @@ for {title, heteronyms}:entry in entries
     post = title.slice(1)
   prefix[pre] ?= ''
   prefix[pre] += "|#post" if post.length
-  throw "Impossible: #title" if defs[title]
+  # throw "Impossible: #title" if defs[title]
   defs[title] = entry
 
 fs.write-file-sync \prefix.json JSON.stringify prefix

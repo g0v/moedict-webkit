@@ -348,7 +348,7 @@
       });
     };
     setPinyinBindings = function(){
-      return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
+      return $('#result.prefer-pinyin-true .bopomofo .trs, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
         var val;
         val = !getPref('prefer-pinyin');
         setPref('prefer-pinyin', val);
@@ -422,7 +422,7 @@
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
-      part = part.replace(/"([hbpdcnftrelsaq])"/g, function(arg$, k){
+      part = part.replace(/"([hbpdcnftrelsaqTAVCD])"/g, function(arg$, k){
         return keyMap[k];
       });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
@@ -437,6 +437,7 @@
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
+      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rt>').replace(/\uFFFB/g, '</rt></ruby></rb><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
       cb(htmlCache[id] = html);
     };
     bucketCache = {};
@@ -454,7 +455,12 @@
       l: '"link"',
       s: '"synonyms"',
       a: '"antonyms"',
-      q: '"quote"'
+      q: '"quote"',
+      T: '"trs"',
+      A: '"alt"',
+      V: '"vernacular"',
+      C: '"combined"',
+      D: '"dialects"'
     };
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
@@ -603,11 +609,11 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     return ls(heteronyms, function(arg$){
-      var bopomofo, pinyin, definitions, ref$;
-      bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
+      var trs, pinyin, definitions, ref$;
+      trs = arg$.trs, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [];
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (trs ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(trs).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null

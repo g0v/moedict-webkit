@@ -211,7 +211,7 @@ window.do-load = ->
     return fill-bucket id, bucket
 
   set-pinyin-bindings = ->
-    $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
+    $('#result.prefer-pinyin-true .bopomofo .trs, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
       val = !getPref \prefer-pinyin
       setPref \prefer-pinyin val
       $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
@@ -253,7 +253,7 @@ window.do-load = ->
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
+    part.=replace /"([hbpdcnftrelsaqTAVCD])"/g (, k) -> keyMap[k]
     part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
     if JSON?parse?
       html = render JSON.parse part
@@ -263,6 +263,7 @@ window.do-load = ->
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
+    html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rt>').replace(/\uFFFB/g '</rt></ruby></rb><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
     cb(htmlCache[id] = html)
     return
 
@@ -374,14 +375,14 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  return ls heteronyms, ({bopomofo, pinyin, definitions=[]}) ->
+  return ls heteronyms, ({trs, pinyin, definitions=[]}) ->
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
-        if bopomofo then "<div class='bopomofo'>#{
+        if trs then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin
               .replace(/（.*）/, '')
             }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo
+          }<span class='bpmf'>#{ h trs
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
           }</span></div>" else ''

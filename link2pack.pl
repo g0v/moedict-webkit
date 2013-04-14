@@ -1,11 +1,20 @@
+#!/usr/bin/perl
+use 5.14.0;
+use utf8;
+use Encode;
+use File::Slurp;
 open FH, '<:raw', 'autolinked.txt';
 my %prepack;
 while (<FH>) {
     chomp;
     s/^(\d+) (\S+) // or die $_;
+    # s/\x{fffb}\K([^"]*)/$1 =~ s![`~]!!gr/eg;
     my $bucket = $1;
     my $title = $2;
-    $title =~ s/%28.*%29//;
+    /"t":"([^"]+)"/ or die;
+    my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
+    next if $file =~ /[⿰⿸]/;
+    File::Slurp::write_file("t/$file.json", $_);
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>
     }
@@ -13,7 +22,6 @@ while (<FH>) {
         $prepack{$bucket} = qq<{"$title":$_>;
     }
 }
-require File::Slurp;
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
     File::Slurp::write_file("pack/$k.txt", $v);
