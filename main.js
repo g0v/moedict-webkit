@@ -437,7 +437,7 @@
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
-      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rt>').replace(/\uFFFB/g, '</rt></ruby></rb><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
+      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rp><br></rp><rt>').replace(/\uFFFB/g, '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
       cb(htmlCache[id] = html);
     };
     bucketCache = {};
