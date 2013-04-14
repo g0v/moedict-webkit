@@ -360,6 +360,7 @@ const SIMP-TRAD = """
 """
 
 function b2g (str)
+  return str
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
