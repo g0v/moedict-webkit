@@ -5,6 +5,7 @@ use Encode;
 use File::Slurp;
 open FH, '<:raw', 'autolinked.txt';
 my %prepack;
+my %seen;
 while (<FH>) {
     chomp;
     s/^(\d+) (\S+) // or die $_;
@@ -14,6 +15,7 @@ while (<FH>) {
     /"t":"([^"]+)"/ or die;
     my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
     next if $file =~ /[⿰⿸]/;
+    next if $seen{$file}++;
     File::Slurp::write_file("t/$file.json", $_);
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>

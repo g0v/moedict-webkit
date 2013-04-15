@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = 't';
   MOEID = getPref('prev-id') || {
@@ -348,7 +348,7 @@
       });
     };
     setPinyinBindings = function(){
-      return $('#result.prefer-pinyin-true .bopomofo .trs, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
+      return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
         var val;
         val = !getPref('prefer-pinyin');
         setPref('prefer-pinyin', val);
@@ -437,7 +437,7 @@
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
-      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rp><br></rp><rt>').replace(/\uFFFB/g, '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
+      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g, '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
       cb(htmlCache[id] = html);
     };
     bucketCache = {};
@@ -610,11 +610,12 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     return ls(heteronyms, function(arg$){
-      var trs, pinyin, definitions, ref$;
-      trs = arg$.trs, pinyin = arg$.pinyin, definitions = (ref$ = arg$.definitions) != null
+      var pinyin, definitions, ref$, bopomofo;
+      pinyin = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [];
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (trs ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(trs).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      bopomofo = trs2bpmf(pinyin + "");
+      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
@@ -681,6 +682,100 @@
       return [pre].concat(slice$.call(groupBy(prop, xs)));
     }
     return groupBy;
+  }
+  Consonants = {
+    p: 'ㄅ',
+    b: 'ㆠ',
+    ph: 'ㄆ',
+    m: 'ㄇ',
+    t: 'ㄉ',
+    th: 'ㄊ',
+    n: 'ㄋ',
+    l: 'ㄌ',
+    k: 'ㄍ',
+    g: 'ㆣ',
+    kh: 'ㄎ',
+    ng: 'ㄫ',
+    h: 'ㄏ',
+    tsi: 'ㄐ',
+    ji: 'ㆢ',
+    tshi: 'ㄑ',
+    si: 'ㄒ',
+    ts: 'ㄗ',
+    j: 'ㆡ',
+    tsh: 'ㄘ',
+    s: 'ㄙ'
+  };
+  Vowels = {
+    a: 'ㄚ',
+    an: 'ㄢ',
+    ang: 'ㄤ',
+    ann: 'ㆩ',
+    oo: 'ㆦ',
+    onn: 'ㆧ',
+    o: 'ㄜ',
+    e: 'ㆤ',
+    enn: 'ㆥ',
+    ai: 'ㄞ',
+    ainn: 'ㆮ',
+    au: 'ㄠ',
+    aunn: 'ㆯ',
+    am: 'ㆰ',
+    om: 'ㆱ',
+    m: 'ㆬ',
+    ong: 'ㆲ',
+    ng: 'ㆭ',
+    i: 'ㄧ',
+    inn: 'ㆪ',
+    u: 'ㄨ',
+    unn: 'ㆫ',
+    ing: 'ㄧㄥ',
+    'in': 'ㄧㄣ',
+    un: 'ㄨㄣ'
+  };
+  Tones = {
+    p: 'ㆴ',
+    t: 'ㆵ',
+    k: 'ㆶ',
+    h: 'ㆷ',
+    p$: "ㆴ\u0358",
+    t$: "ㆵ\u0358",
+    k$: "ㆶ\u0358",
+    h$: "ㆷ\u0358",
+    "\u0300": '˪',
+    "\u0301": 'ˋ',
+    "\u0302": 'ˊ',
+    "\u0304": '˫',
+    "\u030d": '$'
+  };
+  re = function(it){
+    return Object.keys(it).sort(function(){
+      return arguments[1].length - arguments[0].length;
+    }).join('|');
+  };
+  C = re(Consonants);
+  V = re(Vowels);
+  function trs2bpmf(trs){
+    return trs.replace(/[A-Za-z\u0300-\u030d]+/g, function(it){
+      var tone;
+      tone = '';
+      it = it.toLowerCase();
+      it = it.replace(/([\u0300-\u0302\u0304\u030d])/, function(it){
+        tone = Tones[it];
+        return '';
+      });
+      it = it.replace(RegExp('^(' + C + ')((?:' + V + ')+[ptkh]?)$'), function(){
+        return Consonants[arguments[1]] + arguments[2];
+      });
+      it = it.replace(/[ptkh]$/, function(it){
+        tone = Tones[it + tone];
+        return '';
+      });
+      it = it.replace(RegExp('(' + V + ')', 'g'), function(it){
+        return Vowels[it];
+      });
+      return it + (tone || '\uFFFD');
+    }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\//g, '⧸');
   }
   function in$(x, arr){
     var i = -1, l = arr.length >>> 0;

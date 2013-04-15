@@ -368,24 +368,24 @@ table {
 }
 
 @font-face {
-    font-family: 'HANNOMmoesubset-Regular';
-    src: url('HannomMoeSubset.eot?#iefix')                  format('embedded-opentype'),
-         url('HannomMoeSubset.woff')                        format('woff'),
-         url('HannomMoeSubset.otf')                         format('truetype'),
-         url('HannomMoeSubset.ttf')                         format('truetype'),
-         url('HannomMoeSubset.svg#HANNOMmoesubset-Regular') format('svg');
+    font-family: 'TWBLG';
+    src: url('TWBLG.eot?#iefix')                  format('embedded-opentype'),
+         url('TWBLG.woff')                        format('woff'),
+         url('TWBLG.otf')                         format('truetype'),
+         url('TWBLG.ttf')                         format('truetype'),
+         url('TWBLG.svg#TWBLG')                   format ('svg');
 }
 
 body {
   background: #eeeeee url("background.jpg");
-  font-family: sans-serif, "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: sans-serif, "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
   margin: 10px;
 }
 
 body.cordova {
-  font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 
 .title {
@@ -394,12 +394,12 @@ body.cordova {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
 }
 
 .bopomofo, .radical {
   font-weight: 501;
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
 }
 
 h3 {
@@ -592,7 +592,8 @@ body.overflow-scrolling-false img.info {
 }
 .pinyin {
   word-break: normal !important;
-  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
+  /*font-family: "Arial Unicode MS", "Arial", "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace; */
+  font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
 }
 .prefer-pinyin-false .bopomofo .bpmf,
 .prefer-pinyin-true .bopomofo .pinyin {
@@ -606,7 +607,7 @@ body.overflow-scrolling-false img.info {
   vertical-align: top;
   cursor: w-resize;
 }
-.bopomofo .bpmf { width: 65%; display: inline-block; font-family: 'Arial Unicode Ms' }
+.bopomofo .bpmf { width: 65%; display: inline-block }
 .bopomofo .pinyin { width: 35%; display: inline-block; }
 .prefer-pinyin-true .bopomofo .pinyin { float: left; }
 .prefer-pinyin-false .bopomofo .pinyin { float: right; }
@@ -625,7 +626,7 @@ span .tone {
 
 .radical .glyph {
   margin-right: 0.2em;
-  font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   padding-bottom: 4px;
 }
 .radical .sym {
@@ -740,7 +741,7 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 .ui-autocomplete li {
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
 }
 
 .web #lookback {
@@ -769,7 +770,7 @@ body.overflow-scrolling-false .ui-autocomplete {
 .example ruby ruby rb {
 }
 .example ruby rt {
-    font-family: 'Arial Unicode MS';
+    font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
     font-size: 70%;
 
 }
@@ -819,6 +820,10 @@ body.overflow-scrolling-false .ui-autocomplete {
   margin-bottom: 2pt;
 }
 
+.example b {
+    background: #ffd;
+    border-radius: 5px;
+}
 span b {
   font-weight: normal;
   border-bottom: 1px solid #eed !important;
