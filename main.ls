@@ -211,7 +211,7 @@ window.do-load = ->
     return fill-bucket id, bucket
 
   set-pinyin-bindings = ->
-    $('#result.prefer-pinyin-true .bopomofo .trs, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
+    $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
       val = !getPref \prefer-pinyin
       setPref \prefer-pinyin val
       $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
@@ -263,7 +263,7 @@ window.do-load = ->
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
-    html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rp><br></rp><rt>').replace(/\uFFFB/g '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
+    html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
     cb(htmlCache[id] = html)
     return
 
@@ -376,14 +376,15 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  return ls heteronyms, ({trs, pinyin, definitions=[]}) ->
+  return ls heteronyms, ({trs: pinyin, definitions=[]}) ->
+    bopomofo = trs2bpmf "#pinyin"
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
-        if trs then "<div class='bopomofo'>#{
+        if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin
               .replace(/（.*）/, '')
             }</span>" else ''
-          }<span class='bpmf'>#{ h trs
+          }<span class='bpmf'>#{ h bopomofo
             .replace(/ /g, '\u3000')
             .replace(/([ˇˊˋ])\u3000/g, '$1 ')
           }</span></div>" else ''
@@ -441,3 +442,22 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
       pre.push xs.shift!
     return [pre] unless xs.length
     return [pre, ...groupBy(prop, xs)]
+
+
+const Consonants = { p:\ㄅ b:\ㆠ ph:\ㄆ m:\ㄇ t:\ㄉ th:\ㄊ n:\ㄋ l:\ㄌ k:\ㄍ g:\ㆣ kh:\ㄎ ng:\ㄫ h:\ㄏ tsi:\ㄐ ji:\ㆢ tshi:\ㄑ si:\ㄒ ts:\ㄗ j:\ㆡ tsh:\ㄘ s:\ㄙ }
+const Vowels = { a:\ㄚ an: \ㄢ ang: \ㄤ ann:\ㆩ oo:\ㆦ onn:\ㆧ o:\ㄜ e:\ㆤ enn:\ㆥ ai:\ㄞ ainn:\ㆮ au:\ㄠ aunn:\ㆯ am:\ㆰ om:\ㆱ m:\ㆬ ong:\ㆲ ng:\ㆭ i:\ㄧ inn:\ㆪ u:\ㄨ unn:\ㆫ ing:\ㄧㄥ in:\ㄧㄣ un:\ㄨㄣ }
+const Tones = { p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" "\u0300":\˪ "\u0301":\ˋ "\u0302":\ˊ "\u0304":\˫ "\u030d":\$ }
+re = -> Object.keys(it).sort(-> &1.length - &0.length).join \|
+const C = re Consonants
+const V = re Vowels
+function trs2bpmf (trs)
+  trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
+    tone = ''
+    it.=toLowerCase!
+    it.=replace //([\u0300-\u0302\u0304\u030d])// -> tone := Tones[it]; ''
+    it.=replace //^(#C)((?:#V)+[ptkh]?)$// -> Consonants[&1] + &2
+    it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''
+    it.=replace //(#V)//g -> Vowels[it]
+    it + (tone || '\uFFFD')
+  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(// / //g, '⧸')
+

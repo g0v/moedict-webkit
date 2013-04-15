@@ -1,5 +1,5 @@
 require! fs
-entries = JSON.parse fs.read-file-sync \dict-twblg.json
+entries = JSON.parse(fs.read-file-sync \dict-twblg.json) ++ JSON.parse(fs.read-file-sync \dict-twblg-ext.json)
 prefix = {}
 defs = {}
 buckets = {}
