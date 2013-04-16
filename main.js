@@ -775,7 +775,7 @@
         return Vowels[it];
       });
       return it + (tone || '\uFFFD');
-    }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\//g, '⧸');
+    }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ');
   }
   function in$(x, arr){
     var i = -1, l = arr.length >>> 0;
