@@ -378,14 +378,27 @@ table {
 
 body {
   background: #eeeeee url("background.jpg");
-  font-family: sans-serif, "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: sans-serif, "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
   margin: 10px;
 }
 
+body.lang-t {
+  background: #eed;
+  font-family: sans-serif, "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
+
 body.cordova {
+  font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
+
+body.cordova.lang-t {
   font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
+
+body.lang-t .title {
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
 }
 
 .title {
@@ -394,11 +407,15 @@ body.cordova {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
 }
 
 .bopomofo, .radical {
   font-weight: 501;
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+}
+
+body.lang-t .bopomofo, body.lang-t .radical {
   font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
 }
 
@@ -465,17 +482,18 @@ center {
   word-break: break-all;
 }
 
-body.lang-t {
-  background: #eed;
-}
-
 .prefer-down-false #result {
   margin-bottom: 0;
   margin-top: 62px;
 }
 @media only screen and (min-width: 768px) {
-  #result {
+  body.lang-t #result {
     margin-left: 340px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #result {
+    margin-left: 240px;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -559,13 +577,25 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (min-width: 768px) {
+  body.lang-t .erase, body.lang-t .lang {
+    left: 280px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
   .erase, .lang {
     display: block;
     position: fixed;
     top: 0px;
-    left: 280px;
+    left: 180px;
     width: 60px;
     height: 60px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body.lang-t #query-box {
+    width: 270px;
   }
 }
 
@@ -574,7 +604,7 @@ body.overflow-scrolling-false img.info {
     top: 10px;
     left: 10px;
     right: auto;
-    width: 270px;
+    width: 170px;
   }
 }
 
@@ -599,10 +629,12 @@ body.overflow-scrolling-false img.info {
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
 }
+body.lang-t .pinyin {
+  font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+}
 .pinyin {
   word-break: normal !important;
-  /*font-family: "Arial Unicode MS", "Arial", "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace; */
-  font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
 }
 .prefer-pinyin-false .bopomofo .bpmf,
 .prefer-pinyin-true .bopomofo .pinyin {
@@ -633,9 +665,12 @@ span .tone {
   font-size: 120%;
 }
 
+body.lang-t .radical .glyph {
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
 .radical .glyph {
   margin-right: 0.2em;
-  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   padding-bottom: 4px;
 }
 .radical .sym {
@@ -729,13 +764,19 @@ body.overflow-scrolling-false .ui-autocomplete {
     display: block !important;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  body.lang-t .ui-autocomplete {
+    width: 320px !important;
+  }
+}
 @media only screen and (min-width: 768px) {
   .ui-autocomplete {
     display: block !important;
     top: 62px !important;
     bottom: auto !important;
     left: 10px !important;
-    width: 320px !important;
+    width: 220px !important;
     overflow: scroll !important;
   }
 }
