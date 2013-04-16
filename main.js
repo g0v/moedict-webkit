@@ -342,7 +342,7 @@
       if (bucketCache[bucket]) {
         return fillBucket(id, bucket);
       }
-      return $.get("pack/" + bucket + ".txt", function(json){
+      return $.get("p" + LANG + "ck/" + bucket + ".txt", function(json){
         bucketCache[bucket] = json;
         return fillBucket(id, bucket);
       });
@@ -610,10 +610,10 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     return ls(heteronyms, function(arg$){
-      var pinyin, definitions, ref$, bopomofo;
+      var pinyin, definitions, ref$, antonyms, synonyms, bopomofo;
       pinyin = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
-        : [];
+        : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       bopomofo = trs2bpmf(pinyin + "");
       return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
@@ -633,7 +633,7 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "</div>";
+      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){

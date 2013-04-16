@@ -206,7 +206,7 @@ window.do-load = ->
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
-    json <- $.get "pack/#bucket.txt"
+    json <- $.get "p#{LANG}ck/#bucket.txt"
     bucketCache[bucket] = json
     return fill-bucket id, bucket
 
@@ -376,7 +376,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  return ls heteronyms, ({trs: pinyin, definitions=[]}) ->
+  return ls heteronyms, ({trs: pinyin, definitions=[], antonyms, synonyms}) ->
     bopomofo = trs2bpmf "#pinyin"
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
@@ -413,7 +413,14 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
               h(antonyms.replace(/,/g '、'))
             }</span>" else '' }
         </p></li>"""}</ol></div>
-      """}</div>
+      """}
+      #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
+        h(synonyms.replace(/,/g '、'))
+      }</span>" else '' }
+      #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
+        h(antonyms.replace(/,/g '、'))
+      }</span>" else '' }
+      </div>
     """
   function expand-def (def)
     def.replace(
