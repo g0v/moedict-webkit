@@ -417,6 +417,13 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
+a.erase:hover {
+  background: #ddd;
+  outline: none !important;
+  border: none;
+  border-radius: 30px;
+}
+
 .part-of-speech a:hover, .part-of-speech a:focus {
   background: none !important;
   color: inherit;
@@ -487,6 +494,9 @@ body.overflow-scrolling-false img.info {
   bottom: auto;
 }
 @media only screen and (max-width: 767px) {
+  .info { display: none; }
+}
+@media only screen and (max-width: 767px) {
   .prefer-down-false .radical {
     top: 96px;
   }
@@ -526,7 +536,7 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (max-width: 767px) {
-  .android .erase {
+  .erase {
     display: block;
     position: fixed;
     bottom: 0px;
@@ -537,9 +547,20 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (max-width: 767px) {
-  .android.prefer-down-false .erase {
+  .prefer-down-false .erase {
     top: 0px;
     bottom: auto;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .erase {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 180px;
+    width: 60px;
+    height: 60px;
   }
 }
 
@@ -548,24 +569,7 @@ body.overflow-scrolling-false img.info {
     top: 10px;
     left: 10px;
     right: auto;
-    width: 220px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .prefer-down-false #query-box {
-    top: 10px !important
-    left: 0px !important;
-    right: auto;
-    width: 220px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .prefer-down-false #query-box {
-    top: 5px;
-    left: 5px;
-    bottom: auto;
+    width: 170px;
   }
 }
 
@@ -651,9 +655,6 @@ img.quit {
   position: fixed;
   top: 10pt;
   right: 10pt;
-}
-.erase {
-  display: none;
 }
 .android .info, .android .back {
   display: none !important;
