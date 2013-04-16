@@ -1,6 +1,6 @@
 const DEBUGGING = no
 
-LANG = getPref(\lang) || \a
+LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
 $ -> $('body').addClass("lang-#LANG")
 
