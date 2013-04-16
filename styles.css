@@ -793,7 +793,7 @@ body.overflow-scrolling-false .ui-autocomplete {
   max-height: 75% !important;
 }
 
-.example .ruby .mandarin:before {
+.example .mandarin:before {
  content: '（'
 }
 .example .ruby .ruby .rb {
@@ -808,10 +808,10 @@ body.overflow-scrolling-false .ui-autocomplete {
     white-space: nowrap;
 
 }
-.example .ruby .mandarin:after{
+.example .mandarin:after{
  content: '）';
 }
-.example .ruby .mandarin {
+.example .mandarin {
     font-size: 90%;
     text-align: left;
     width: auto;
