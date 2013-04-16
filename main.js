@@ -274,6 +274,7 @@
     window.fillQuery = fillQuery = function(it){
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
+      title = replace$.call(title, /^!/, '');
       $('#query').val(title);
       $('#cond').val("^" + title + "$");
       input = $('#query').get(0);
@@ -461,7 +462,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var html;
+      var h, html;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -470,8 +471,9 @@
       part = part.replace(/"([hbpdcnftrelsaqTAVCD])"/g, function(arg$, k){
         return keyMap[k];
       });
+      h = (LANG === 'a' ? '#' : '#!') + "";
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href='#" + word + "'>" + word + "</a>";
+        return "<a href='" + h + word + "'>" + word + "</a>";
       });
       if ((typeof JSON != 'undefined' && JSON !== null ? JSON.parse : void 8) != null) {
         html = render(JSON.parse(part));
@@ -480,7 +482,7 @@
       }
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
-      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='#$1'>$1</a>");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
       html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g, '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
       cb(htmlCache[LANG][id] = html);

@@ -167,6 +167,7 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
+    title -= /^!/
     $ \#query .val title
     $ \#cond .val "^#{title}$"
     input = $ \#query .get 0
@@ -285,14 +286,15 @@ window.do-load = ->
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaqTAVCD])"/g (, k) -> keyMap[k]
-    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
+    h = "#{ if LANG is \a then \# else \#! }"
+    part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if JSON?parse?
       html = render JSON.parse part
     else
       html = eval "render(#part)"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
-    html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
+    html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
     html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
     cb(htmlCache[LANG][id] = html)

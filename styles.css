@@ -369,11 +369,12 @@ table {
 
 @font-face {
     font-family: 'TWBLG';
-    src: url('TWBLG.eot?#iefix')                  format('embedded-opentype'),
-         url('TWBLG.woff')                        format('woff'),
-         url('TWBLG.otf')                         format('truetype'),
-         url('TWBLG.ttf')                         format('truetype'),
-         url('TWBLG.svg#TWBLG')                   format ('svg');
+    src: url('TWBLG.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'HANNOMmoesubset-Regular';
+    src: url('HannomMoeSubset.ttf') format('truetype');
 }
 
 body {
@@ -665,7 +666,7 @@ span .tone {
   font-size: 120%;
 }
 
-body.lang-t .radical .glyph {
+body.lang-t .radical .glyph, body.lang-t .bpmf {
   font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 .radical .glyph {
@@ -846,6 +847,7 @@ body.lang-t .example {
   background: #eee;
   border-radius: 10px;
   margin-right: 10px;
+  margin-bottom: 2px;
   vertical-align: top;
   box-shadow: 1px 1px 3px 0px #aaa;
 }
