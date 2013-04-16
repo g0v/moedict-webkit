@@ -1,6 +1,8 @@
 const DEBUGGING = no
-const LANG = \t
-const MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
+
+LANG = getPref(\lang) || \a
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
+$ -> $('body').addClass("lang-#LANG")
 
 isCordova = document.URL isnt /^https?:/
 isDeviceReady = not isCordova
@@ -49,6 +51,18 @@ window.show-info = ->
 
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 
+window.press-lang = (lang='', id='') ->
+  $('body').removeClass("lang-t")
+  $('.ui-autocomplete li').remove!
+  LANG := lang || (if LANG is \a then \t else \a)
+  $.get "#LANG/index.json", null, (->
+    init-autocomplete it
+    $('body').addClass("lang-#LANG")
+    $ \#query .val id
+    window.do-lookup(id || {a: \萌 t: \發穎 h: \發芽}[LANG])
+    setPref \lang LANG
+  ), \text
+
 window.press-down = ->
   if navigator.user-agent is /Android\s*[12]\./
     alert "抱歉，Android 2.x 版僅能於上方顯示搜尋框。"
@@ -89,6 +103,8 @@ window.do-load = ->
     location.href = \about.html unless location.href is /android_asset/
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
+    $ \.lang .show!
+    $ \.erase .hide!
   window.press-back = press-back = ->
     return if cache-loading
     entryHistory.pop!
@@ -135,6 +151,14 @@ window.do-load = ->
     return false unless location.hash is /^#./
     try
       val = decodeURIComponent location.hash.substr 1
+      lang = \a
+      if val.0 is \!
+        lang = \t
+        val.=substr 1
+      if lang isnt LANG
+        LANG := LANG
+        prevVal = ''
+        return window.press-lang lang, val
       return true if val is prevVal
       $ \#query .show!
       fill-query val
@@ -163,7 +187,13 @@ window.do-load = ->
       code = it.charCodeAt(1) - 0xDC00
     return code % 1024
 
-  lookup = -> do-lookup b2g($(\#query).val!)
+  lookup = ->
+    if $(\#query).val!
+      $(\.erase).show!
+      $(\.lang).hide!
+      return do-lookup b2g that
+    $(\.lang).show!
+    $(\.erase).hide!
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
@@ -183,13 +213,14 @@ window.do-load = ->
     fetch title
     return true
 
-  htmlCache = {}
+  htmlCache = {t:[], a:[]}
   fetch = ->
     return unless it
     prevId := it
     prevVal := it
     setPref \prev-id prevId
-    try history.pushState null, null, "##it" unless "#{location.hash}" is "##it"
+    hash = "#{ if LANG is \a then \# else \#! }#it"
+    try history.pushState null, null, hash unless "#{location.hash}" is hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it).show!
@@ -228,8 +259,8 @@ window.do-load = ->
       +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
         id = $(@).text!
         callLater ->
-          if htmlCache[id]
-            cb htmlCache[id]
+          if htmlCache[LANG][id]
+            cb htmlCache[LANG][id]
             return
           load-json id, -> cb it
         return
@@ -244,7 +275,7 @@ window.do-load = ->
     $('.ui-tooltip').remove!
 
   load-cache-html = ->
-    html = htmlCache[it]
+    html = htmlCache[LANG][it]
     return false unless html
     set-html html
     return true
@@ -264,7 +295,7 @@ window.do-load = ->
     html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
     html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
-    cb(htmlCache[id] = html)
+    cb(htmlCache[LANG][id] = html)
     return
 
   bucketCache = {}
@@ -360,7 +391,7 @@ const SIMP-TRAD = """
 """
 
 function b2g (str)
-  return str
+  return str if LANG is \t
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
@@ -376,8 +407,9 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  return ls heteronyms, ({trs: pinyin, definitions=[], antonyms, synonyms}) ->
-    bopomofo = trs2bpmf "#pinyin"
+  return ls heteronyms, ({bopomofo, pinyin, trs, definitions=[], antonyms, synonyms}) ->
+    pinyin ?= trs
+    bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
@@ -458,6 +490,7 @@ re = -> Object.keys(it).sort(-> &1.length - &0.length).join \|
 const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
+  return trs if LANG is \a
   trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
     tone = ''
     it.=toLowerCase!

@@ -417,7 +417,7 @@ a:hover, a:focus {
   border-radius: 6px;
 }
 
-a.erase:hover {
+a.erase:hover, a.lang:hover {
   background: #ddd;
   outline: none !important;
   border: none;
@@ -464,6 +464,11 @@ center {
   border-radius: 10px;
   word-break: break-all;
 }
+
+body.lang-t {
+  background: #eed;
+}
+
 .prefer-down-false #result {
   margin-bottom: 0;
   margin-top: 62px;
@@ -536,7 +541,7 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (max-width: 767px) {
-  .erase {
+  .erase, .lang {
     display: block;
     position: fixed;
     bottom: 0px;
@@ -547,14 +552,14 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (max-width: 767px) {
-  .prefer-down-false .erase {
+  .prefer-down-false .erase, .prefer-down-false .lang {
     top: 0px;
     bottom: auto;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .erase {
+  .erase, .lang {
     display: block;
     position: fixed;
     top: 0px;
@@ -786,7 +791,12 @@ body.overflow-scrolling-false .ui-autocomplete {
         white-space: nowrap;
     }
 
+
 .example {
+      font-size: 92%;
+}
+
+body.lang-t .example {
   font-size: 100%;
   display: inline-block;
   clear: both;
@@ -884,6 +894,7 @@ span a {
 
 .ui-tooltip .title,
 .ui-tooltip .example,
+body.lang-t .ui-tooltip .example,
 .ui-tooltip .quote,
 .ui-tooltip .antonyms,
 .ui-tooltip .synonyms,
