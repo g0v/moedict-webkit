@@ -297,7 +297,7 @@ window.do-load = ->
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
-    html.=replace(/\uFFF9/g '<ruby><rb><ruby><rb>').replace(/\uFFFA/g '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g '</')
+    html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
     cb(htmlCache[LANG][id] = html)
     return
 
@@ -438,7 +438,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
                 '$1</span><span class="def">$2'
               )
             }</span>
-            #{ ls example, -> "<span class='example'>#{ h it }</span>" }
+            #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
             #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
             #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
@@ -471,7 +471,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     [cb x for x in entries].join ""
   function h (text='')
     # text.replace(/</g '&lt;').replace(/>/g '&gt;')
-    text
+    if isCordova then text.replace(/\u030d/g '\u0358') else text
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!

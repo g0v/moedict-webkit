@@ -487,7 +487,7 @@
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
-      html = html.replace(/\uFFF9/g, '<ruby><rb><ruby><rb>').replace(/\uFFFA/g, '</rb><rp><br></rp><rt class="trs">').replace(/\uFFFB/g, '</rt></ruby></rb><rp><br></rp><rt class="mandarin">').replace(/<rt class="mandarin">\s*<\//g, '</');
+      html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
       cb(htmlCache[LANG][id] = html);
     };
     bucketCache = {};
@@ -679,7 +679,7 @@
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
           return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
-            return "<span class='example'>" + h(it) + "</span>";
+            return "<span class='example'>" + h(it) + "</span></span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
           }) + "\n    " + ls(link, function(it){
@@ -711,7 +711,11 @@
     }
     function h(text){
       text == null && (text = '');
-      return text;
+      if (isCordova) {
+        return text.replace(/\u030d/g, '\u0358');
+      } else {
+        return text;
+      }
     }
     function groupBy(prop, xs){
       var x, pre, y;

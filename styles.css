@@ -387,7 +387,7 @@ body {
 
 body.lang-t {
   background: #eed;
-  font-family: sans-serif, "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 
 body.cordova {
@@ -398,8 +398,8 @@ body.cordova.lang-t {
   font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 
-body.lang-t .title {
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
+body.lang-t .title, body.lang-t.cordova .title {
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 
 .title {
@@ -488,13 +488,8 @@ center {
   margin-top: 62px;
 }
 @media only screen and (min-width: 768px) {
-  body.lang-t #result {
-    margin-left: 340px;
-  }
-}
-@media only screen and (min-width: 768px) {
   #result {
-    margin-left: 240px;
+    margin-left: 340px;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -578,25 +573,13 @@ body.overflow-scrolling-false img.info {
 }
 
 @media only screen and (min-width: 768px) {
-  body.lang-t .erase, body.lang-t .lang {
-    left: 280px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
   .erase, .lang {
     display: block;
     position: fixed;
     top: 0px;
-    left: 180px;
+    left: 280px;
     width: 60px;
     height: 60px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  body.lang-t #query-box {
-    width: 270px;
   }
 }
 
@@ -605,7 +588,7 @@ body.overflow-scrolling-false img.info {
     top: 10px;
     left: 10px;
     right: auto;
-    width: 170px;
+    width: 270px;
   }
 }
 
@@ -630,8 +613,11 @@ body.overflow-scrolling-false img.info {
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
 }
+body.android.overflow-scrolling-false.lang-t .pinyin {
+    font-family: 'TWBLG', sans-serif;
+}
 body.lang-t .pinyin {
-  font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+    font-family: 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
 }
 .pinyin {
   word-break: normal !important;
@@ -767,17 +753,12 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 @media only screen and (min-width: 768px) {
-  body.lang-t .ui-autocomplete {
-    width: 320px !important;
-  }
-}
-@media only screen and (min-width: 768px) {
   .ui-autocomplete {
     display: block !important;
     top: 62px !important;
     bottom: auto !important;
     left: 10px !important;
-    width: 220px !important;
+    width: 320px !important;
     overflow: scroll !important;
   }
 }
@@ -812,28 +793,33 @@ body.overflow-scrolling-false .ui-autocomplete {
   max-height: 75% !important;
 }
 
-.example ruby .mandarin:before {
+.example .ruby .mandarin:before {
  content: '（'
 }
-.example ruby ruby rb {
+.example .ruby .ruby .rb {
     text-align: left;
+    display: inline-block;
 }
-.example ruby rt {
-    font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+.example .ruby .rt {
     font-size: 70%;
+    clear: both;
+    width: auto;
     text-align: left;
+    white-space: nowrap;
 
 }
-.example ruby .mandarin:after{
- content: '）'
+.example .ruby .mandarin:after{
+ content: '）';
 }
-.example ruby .mandarin {
+.example .ruby .mandarin {
     font-size: 90%;
     text-align: left;
+    width: auto;
 }
-.example ruby {
+.example .ruby {
     text-align: left;
         display: inline-block;
+    width: auto;
 
   -ms-word-break: break-all;
   word-break: break-all;
@@ -852,6 +838,7 @@ body.lang-t .example {
   font-size: 100%;
   display: inline-block;
   clear: both;
+  width: auto;
   border: 1px solid #eee;
   padding: 3px;
   background: #eee;
@@ -884,7 +871,7 @@ body.lang-t .example {
   margin-bottom: 2pt;
 }
 
-.example b {
+.lang-t .example b {
     background: #ffd;
     border-radius: 5px;
 }
