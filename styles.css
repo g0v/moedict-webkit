@@ -816,10 +816,12 @@ body.overflow-scrolling-false .ui-autocomplete {
  content: '（'
 }
 .example ruby ruby rb {
+    text-align: left;
 }
 .example ruby rt {
     font-family: 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
     font-size: 70%;
+    text-align: left;
 
 }
 .example ruby .mandarin:after{
@@ -827,10 +829,18 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 .example ruby .mandarin {
     font-size: 90%;
+    text-align: left;
 }
 .example ruby {
+    text-align: left;
         display: inline-block;
-        white-space: nowrap;
+
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
     }
 
 
