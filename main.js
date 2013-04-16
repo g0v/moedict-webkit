@@ -275,6 +275,9 @@
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
       title = replace$.call(title, /^!/, '');
+      if (/^</.exec(title)) {
+        return;
+      }
       $('#query').val(title);
       $('#cond').val("^" + title + "$");
       input = $('#query').get(0);

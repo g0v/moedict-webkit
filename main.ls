@@ -168,6 +168,7 @@ window.do-load = ->
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
     title -= /^!/
+    return if title is /^</
     $ \#query .val title
     $ \#cond .val "^#{title}$"
     input = $ \#query .get 0
