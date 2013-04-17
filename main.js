@@ -417,7 +417,7 @@
         $('#result .trs.pinyin').each(function(){
           return $(this).attr('title', trs2bpmf($(this).text()));
         }).tooltip({
-          tooltipClass: 'pinyin'
+          tooltipClass: 'bpmf'
         });
         $('#result a[href]').tooltip({
           disabled: true,
