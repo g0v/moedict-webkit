@@ -1,5 +1,9 @@
 const DEBUGGING = no
-const MOE-ID = getPref(\prev-id) || "萌"
+
+LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
+$ -> $('body').addClass("lang-#LANG")
+
 isCordova = document.URL isnt /^https?:/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
@@ -47,6 +51,18 @@ window.show-info = ->
 
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 
+window.press-lang = (lang='', id='') ->
+  $('body').removeClass("lang-t")
+  $('.ui-autocomplete li').remove!
+  LANG := lang || (if LANG is \a then \t else \a)
+  $.get "#LANG/index.json", null, (->
+    init-autocomplete it
+    $('body').addClass("lang-#LANG")
+    $ \#query .val id
+    window.do-lookup(id || {a: \萌 t: \發穎 h: \發芽}[LANG])
+    setPref \lang LANG
+  ), \text
+
 window.press-down = ->
   if navigator.user-agent is /Android\s*[12]\./
     alert "抱歉，Android 2.x 版僅能於上方顯示搜尋框。"
@@ -87,6 +103,8 @@ window.do-load = ->
     location.href = \about.html unless location.href is /android_asset/
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
+    $ \.lang .show!
+    $ \.erase .hide!
   window.press-back = press-back = ->
     return if cache-loading
     entryHistory.pop!
@@ -133,6 +151,14 @@ window.do-load = ->
     return false unless location.hash is /^#./
     try
       val = decodeURIComponent location.hash.substr 1
+      lang = \a
+      if val.0 is \!
+        lang = \t
+        val.=substr 1
+      if lang isnt LANG
+        LANG := LANG
+        prevVal = ''
+        return window.press-lang lang, val
       return true if val is prevVal
       $ \#query .show!
       fill-query val
@@ -141,6 +167,8 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
+    title -= /^!/
+    return if title is /^</
     $ \#query .val title
     $ \#cond .val "^#{title}$"
     input = $ \#query .get 0
@@ -161,7 +189,13 @@ window.do-load = ->
       code = it.charCodeAt(1) - 0xDC00
     return code % 1024
 
-  lookup = -> do-lookup b2g($(\#query).val!)
+  lookup = ->
+    if $(\#query).val!
+      $(\.erase).show!
+      $(\.lang).hide!
+      return do-lookup b2g that
+    $(\.lang).show!
+    $(\.erase).hide!
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
@@ -181,13 +215,14 @@ window.do-load = ->
     fetch title
     return true
 
-  htmlCache = {}
+  htmlCache = {t:[], a:[]}
   fetch = ->
     return unless it
     prevId := it
     prevVal := it
     setPref \prev-id prevId
-    try history.pushState null, null, "##it" unless "#{location.hash}" is "##it"
+    hash = "#{ if LANG is \a then \# else \#! }#it"
+    try history.pushState null, null, hash unless "#{location.hash}" is hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it).show!
@@ -200,11 +235,11 @@ window.do-load = ->
     return load-json it
 
   load-json = (id, cb) ->
-    return $.get("a/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
+    return $.get("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket if bucketCache[bucket]
-    json <- $.get "pack/#bucket.txt"
+    json <- $.get "p#{LANG}ck/#bucket.txt"
     bucketCache[bucket] = json
     return fill-bucket id, bucket
 
@@ -222,12 +257,14 @@ window.do-load = ->
 
     cache-loading := no
     return if isCordova
+    $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \pinyin
+
     $('#result a[href]').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
         id = $(@).text!
         callLater ->
-          if htmlCache[id]
-            cb htmlCache[id]
+          if htmlCache[LANG][id]
+            cb htmlCache[LANG][id]
             return
           load-json id, -> cb it
         return
@@ -242,7 +279,7 @@ window.do-load = ->
     $('.ui-tooltip').remove!
 
   load-cache-html = ->
-    html = htmlCache[it]
+    html = htmlCache[LANG][it]
     return false unless html
     set-html html
     return true
@@ -251,17 +288,19 @@ window.do-load = ->
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaq])"/g (, k) -> keyMap[k]
-    part.=replace /`([^~]+)~/g (, word) -> "<a href='\##word'>#word</a>"
+    part.=replace /"([hbpdcnftrelsaqTAVCD])"/g (, k) -> keyMap[k]
+    h = "#{ if LANG is \a then \# else \#! }"
+    part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if JSON?parse?
       html = render JSON.parse part
     else
       html = eval "render(#part)"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
-    html.=replace //<a>([^<]+)</a>//g   "<a href='\#$1'>$1</a>"
+    html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
-    cb(htmlCache[id] = html)
+    html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
+    cb(htmlCache[LANG][id] = html)
     return
 
   bucketCache = {}
@@ -271,6 +310,8 @@ window.do-load = ->
     c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
     t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
     a: \"antonyms" q: \"quote"
+
+    T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   }
 
   fill-bucket = (id, bucket) ->
@@ -283,7 +324,7 @@ window.do-load = ->
     part = part.slice(0, idx)
     fill-json part
 
-  $.get "a/index.json", null, init-autocomplete, \text
+  $.get "#LANG/index.json", null, init-autocomplete, \text
   return init!
 
 const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'
@@ -355,6 +396,7 @@ const SIMP-TRAD = """
 """
 
 function b2g (str)
+  return str if LANG is \t
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
@@ -370,7 +412,9 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  return ls heteronyms, ({bopomofo, pinyin, definitions=[]}) ->
+  return ls heteronyms, ({bopomofo, pinyin, trs, definitions=[], antonyms, synonyms}) ->
+    pinyin ?= trs
+    bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
       <h1 class='title'>#{ h title }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
@@ -396,7 +440,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
                 '$1</span><span class="def">$2'
               )
             }</span>
-            #{ ls example, -> "<span class='example'>#{ h it }</span>" }
+            #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
             #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
             #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
@@ -406,7 +450,14 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
               h(antonyms.replace(/,/g '、'))
             }</span>" else '' }
         </p></li>"""}</ol></div>
-      """}</div>
+      """}
+      #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
+        h(synonyms.replace(/,/g '、'))
+      }</span>" else '' }
+      #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
+        h(antonyms.replace(/,/g '、'))
+      }</span>" else '' }
+      </div>
     """
   function expand-def (def)
     def.replace(
@@ -422,7 +473,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     [cb x for x in entries].join ""
   function h (text='')
     # text.replace(/</g '&lt;').replace(/>/g '&gt;')
-    text
+    if isCordova then text.replace(/\u030d/g '\u0358') else text
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!
@@ -435,3 +486,24 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
       pre.push xs.shift!
     return [pre] unless xs.length
     return [pre, ...groupBy(prop, xs)]
+
+
+const Consonants = { p:\ㄅ b:\ㆠ ph:\ㄆ m:\ㄇ t:\ㄉ th:\ㄊ n:\ㄋ l:\ㄌ k:\ㄍ g:\ㆣ kh:\ㄎ ng:\ㄫ h:\ㄏ tsi:\ㄐ ji:\ㆢ tshi:\ㄑ si:\ㄒ ts:\ㄗ j:\ㆡ tsh:\ㄘ s:\ㄙ }
+const Vowels = { a:\ㄚ an: \ㄢ ang: \ㄤ ann:\ㆩ oo:\ㆦ onn:\ㆧ o:\ㄜ e:\ㆤ enn:\ㆥ ai:\ㄞ ainn:\ㆮ au:\ㄠ aunn:\ㆯ am:\ㆰ om:\ㆱ m:\ㆬ ong:\ㆲ ng:\ㆭ i:\ㄧ inn:\ㆪ u:\ㄨ unn:\ㆫ ing:\ㄧㄥ in:\ㄧㄣ un:\ㄨㄣ }
+const Tones = { p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" "\u0300":\˪ "\u0301":\ˋ "\u0302":\ˊ "\u0304":\˫ "\u030d":\$ }
+re = -> Object.keys(it).sort(-> &1.length - &0.length).join \|
+const C = re Consonants
+const V = re Vowels
+function trs2bpmf (trs)
+  return trs if LANG is \a
+  trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
+    tone = ''
+    it.=toLowerCase!
+    it.=replace //([\u0300-\u0302\u0304\u030d])// -> tone := Tones[it]; ''
+    it.=replace //^(tsh?|[sj])i// '$1ii'
+    it.=replace //^(#C)((?:#V)+[ptkh]?)$// -> Consonants[&1] + &2
+    it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''
+    it.=replace //(#V)//g -> Vowels[it]
+    it + (tone || '\uFFFD')
+  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
+

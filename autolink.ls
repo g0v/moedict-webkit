@@ -38,8 +38,8 @@ function init ()
   for len in lens => LTM-regexes.push lenToRegex[len]
 
 ##############
-entries = JSON.parse(
-  "#{fs.read-file-sync \dict-revised.pua.json}"
+grok = -> JSON.parse(
+  "#{fs.read-file-sync it}"
     .replace(/"bopomofo2": "[^"]*",/g '')
     .replace(/"heteronyms"/g                \"h")
     .replace(/"bopomofo"/g                  \"b")
@@ -55,7 +55,13 @@ entries = JSON.parse(
     .replace(/"synonyms"/g                  \"s")
     .replace(/"antonyms"/g                  \"a")
     .replace(/"quote"/g                     \"q")
+    .replace(/"trs"/g                       \"T")
+    .replace(/"alt"/g                       \"A")
+    .replace(/"vernacular"/g                \"V")
+    .replace(/"combined"/g                  \"C")
+    .replace(/"dialects"/g                  \"D")
 )
+entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
 prefix = {}
 i = 0
 for {t:title, h:heteronyms}:entry in entries
