@@ -257,6 +257,8 @@ window.do-load = ->
 
     cache-loading := no
     return if isCordova
+    $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \pinyin
+
     $('#result a[href]').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
         id = $(@).text!
@@ -503,5 +505,5 @@ function trs2bpmf (trs)
     it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''
     it.=replace //(#V)//g -> Vowels[it]
     it + (tone || '\uFFFD')
-  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ')
+  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
 
