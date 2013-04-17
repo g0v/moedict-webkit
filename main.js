@@ -414,6 +414,11 @@
         if (isCordova) {
           return;
         }
+        $('#result .trs.pinyin').each(function(){
+          return $(this).attr('title', trs2bpmf($(this).text()));
+        }).tooltip({
+          tooltipClass: 'pinyin'
+        });
         $('#result a[href]').tooltip({
           disabled: true,
           tooltipClass: "prefer-pinyin-" + !!getPref('prefer-pinyin'),
@@ -836,7 +841,7 @@
         return Vowels[it];
       });
       return it + (tone || '\uFFFD');
-    }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ');
+    }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\. ?/g, '。').replace(/\? ?/g, '？').replace(/\! ?/g, '！').replace(/\, ?/g, '，');
   }
   function in$(x, arr){
     var i = -1, l = arr.length >>> 0;

@@ -900,6 +900,13 @@ span a {
   border-bottom: 1px ridge #dddddd;
 }
 
+.ui-tooltip.pinyin {
+  font-size: 80%;
+  width: auto;
+  min-width: auto;
+  background: #f0f0f0;
+}
+
 .ui-tooltip .part-of-speech {
   position: absolute;
   left: 20px;
