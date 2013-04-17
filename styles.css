@@ -617,7 +617,7 @@ body.android.overflow-scrolling-false.lang-t .pinyin {
     font-family: 'TWBLG', sans-serif;
 }
 body.lang-t .pinyin {
-    font-family: 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Segoe UI', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+    font-family: 'Segoe UI', 'Charis SIL', 'Lucida Sans Unicode', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
 }
 .pinyin {
   word-break: normal !important;
