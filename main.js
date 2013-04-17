@@ -388,11 +388,11 @@
         }, 'text');
       }
       bucket = bucketOf(id);
-      if (bucketCache[bucket]) {
+      if (bucketCache[LANG][bucket]) {
         return fillBucket(id, bucket);
       }
       return $.get("p" + LANG + "ck/" + bucket + ".txt", function(json){
-        bucketCache[bucket] = json;
+        bucketCache[LANG][bucket] = json;
         return fillBucket(id, bucket);
       });
     };
@@ -495,7 +495,10 @@
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
       cb(htmlCache[LANG][id] = html);
     };
-    bucketCache = {};
+    bucketCache = {
+      t: {},
+      a: {}
+    };
     keyMap = {
       h: '"heteronyms"',
       b: '"bopomofo"',
@@ -519,7 +522,7 @@
     };
     fillBucket = function(id, bucket){
       var raw, key, idx, part;
-      raw = bucketCache[bucket];
+      raw = bucketCache[LANG][bucket];
       key = escape(id);
       idx = raw.indexOf('"' + key + '"');
       if (idx === -1) {
