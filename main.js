@@ -1,7 +1,7 @@
 (function(){
   var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
-  LANG = getPref('lang') || 'a';
+  LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
     a: '萌',
     t: '發穎',
@@ -824,6 +824,7 @@
         tone = Tones[it];
         return '';
       });
+      it = it.replace(/^(tsh?|[sj])i/, '$1ii');
       it = it.replace(RegExp('^(' + C + ')((?:' + V + ')+[ptkh]?)$'), function(){
         return Consonants[arguments[1]] + arguments[2];
       });
