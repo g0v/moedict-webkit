@@ -238,9 +238,9 @@ window.do-load = ->
     return $.get("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
-    return fill-bucket id, bucket if bucketCache[bucket]
+    return fill-bucket id, bucket if bucketCache[LANG][bucket]
     json <- $.get "p#{LANG}ck/#bucket.txt"
-    bucketCache[bucket] = json
+    bucketCache[LANG][bucket] = json
     return fill-bucket id, bucket
 
   set-pinyin-bindings = ->
@@ -303,7 +303,7 @@ window.do-load = ->
     cb(htmlCache[LANG][id] = html)
     return
 
-  bucketCache = {}
+  bucketCache = {t:{}, a:{}}
 
   keyMap = {
     h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
@@ -315,7 +315,7 @@ window.do-load = ->
   }
 
   fill-bucket = (id, bucket) ->
-    raw = bucketCache[bucket]
+    raw = bucketCache[LANG][bucket]
     key = escape id
     idx = raw.indexOf('"' + key + '"');
     return if idx is -1
