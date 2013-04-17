@@ -613,11 +613,11 @@ body.overflow-scrolling-false img.info {
   border-bottom: 1px dotted #eeeeee;
   word-break: normal !important;
 }
-body.android.overflow-scrolling-false.lang-t .pinyin {
-    font-family: 'TWBLG', sans-serif;
+body.overflow-scrolling-false.lang-t .pinyin {
+    font-family: 'TWBLG';
 }
 body.lang-t .pinyin {
-    font-family: 'Segoe UI', 'Charis SIL', 'Lucida Sans Unicode', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+    font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
 }
 .pinyin {
   word-break: normal !important;
@@ -900,7 +900,7 @@ span a {
   border-bottom: 1px ridge #dddddd;
 }
 
-.ui-tooltip.pinyin {
+.ui-tooltip.bpmf {
   font-size: 80%;
   width: auto;
   min-width: auto;
