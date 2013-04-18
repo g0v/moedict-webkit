@@ -144,7 +144,7 @@ window.do-load = ->
     if isCordova
       fill-query MOE-ID
       $ \#query .val ''
-    else
+    else if location.hash isnt /^#./
       fetch MOE-ID
 
   window.grok-hash = grok-hash = ->
@@ -162,6 +162,7 @@ window.do-load = ->
       return true if val is prevVal
       $ \#query .show!
       fill-query val
+      fetch val
       return true if val is prevVal
     return false
 

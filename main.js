@@ -239,7 +239,7 @@
       if (isCordova) {
         fillQuery(MOEID);
         return $('#query').val('');
-      } else {
+      } else if (!/^#./.test(location.hash)) {
         return fetch(MOEID);
       }
     };
@@ -265,6 +265,7 @@
         }
         $('#query').show();
         fillQuery(val);
+        fetch(val);
         if (val === prevVal) {
           return true;
         }
