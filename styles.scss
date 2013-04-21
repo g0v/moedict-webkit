@@ -1,0 +1,1051 @@
+@charset "UTF-8";
+
+/* normalize.css v2.1.0 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+
+audio, canvas, video {
+    display: inline-block;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+[hidden] {
+    display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+    font-family: sans-serif;
+    /* 1 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+    -ms-text-size-adjust: 100%;
+    /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+
+a {
+    &:focus {
+        outline: thin dotted;
+    }
+    &:active, &:hover {
+        outline: 0;
+    }
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+
+b, strong {
+    font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+
+dfn {
+    font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+
+code, kbd, pre, samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+
+pre {
+    white-space: pre-wrap;
+}
+
+/**
+ * Set consistent quote types.
+ */
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+    font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+
+img {
+    border: 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+
+figure {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+    border: 0;
+    /* 1 */
+    padding: 0;
+    /* 2 */
+}
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+
+button, input, select, textarea {
+    font-family: inherit;
+    /* 1 */
+    font-size: 100%;
+    /* 2 */
+    margin: 0;
+    /* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+button, input {
+    line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+
+button, select {
+    text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button, html input[type="button"] {
+    -webkit-appearance: button;
+    /* 2 */
+    cursor: pointer;
+    /* 3 */
+}
+
+input {
+    &[type="reset"], &[type="submit"] {
+        -webkit-appearance: button;
+        /* 2 */
+        cursor: pointer;
+        /* 3 */
+    }
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled], html input[disabled] {
+    cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ */
+
+input {
+    &[type="checkbox"], &[type="radio"] {
+        box-sizing: border-box;
+        /* 1 */
+        padding: 0;
+        /* 2 */
+    }
+    &[type="search"] {
+        -webkit-appearance: textfield;
+        /* 1 */
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        /* 2 */
+        box-sizing: content-box;
+        &::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+    }
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+
+textarea {
+    overflow: auto;
+    /* 1 */
+    vertical-align: top;
+    /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+@font-face {
+    font-family: 'TWBLG';
+    src: url('TWBLG.ttf') format("truetype");
+}
+
+
+@font-face {
+    font-family: 'HANNOMmoesubset-Regular';
+    src: url('HannomMoeSubset.ttf') format("truetype");
+}
+
+
+body {
+    background: #eeeeee url("background.jpg");
+    font-family: sans-serif, "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+    font-size: 14pt;
+    line-height: 140%;
+    margin: 10px;
+    &.lang-t {
+        background: #eed;
+        font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+    }
+    &.cordova {
+        font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        &.lang-t {
+            font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        }
+    }
+    &.lang-t {
+        .title, &.cordova .title {
+            font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        }
+    }
+}
+
+.title {
+    font-size: 185%;
+    line-height: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-weight: 501;
+    font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+}
+
+.bopomofo, .radical {
+    font-weight: 501;
+    font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
+}
+
+body.lang-t {
+    .bopomofo, .radical {
+        font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
+    }
+}
+
+h3 {
+    font-size: 100%;
+}
+
+a {
+    color: black !important;
+    text-decoration: none !important;
+    &:hover, &:focus {
+        background: url("css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png") repeat-x scroll 50% 50% #e4f1fb;
+        color: #0070A3;
+        outline: 1px solid #74B2E2 !important;
+        border-radius: 6px;
+    }
+    &.erase:hover, &.lang:hover {
+        background: #ddd;
+        outline: none !important;
+        border: none;
+        border-radius: 30px;
+    }
+}
+
+.part-of-speech a {
+    &:hover, &:focus {
+        background: none !important;
+        color: inherit;
+        outline: none !important;
+    }
+}
+
+.radical {
+    position: absolute;
+    text-align: right;
+    right: 24px;
+    top: 36px;
+    .count {
+        font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
+    }
+}
+
+.part-of-speech a {
+    color: white !important;
+    &:hover, &:focus {
+        color: white;
+        background: #aaf;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+}
+
+center {
+    padding: 15px;
+}
+
+#result {
+    box-shadow: 1px 1px 3px 0px #999999;
+    border: 1px solid #dddddd;
+    margin-bottom: 4em;
+    padding: 5px 10px;
+    height: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    word-break: break-all;
+}
+
+.prefer-down-false #result {
+    margin-bottom: 0;
+    margin-top: 62px;
+}
+
+@media only screen and (min-width: 768px) {
+    #result {
+        margin-left: 340px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .prefer-down-false #result {
+        margin-top: 0px;
+    }
+}
+
+body.overflow-scrolling-false {
+    #query-box, img.info {
+        position: absolute;
+    }
+}
+
+#query-box {
+    position: fixed;
+    bottom: 5px;
+    right: 60px;
+    left: 10px;
+}
+
+.prefer-down-false #query-box {
+    top: 5px;
+    bottom: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .info {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .prefer-down-false .radical {
+        top: 96px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .prefer-down-false img.back {
+        position: fixed;
+        bottom: auto;
+        top: 0px;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .prefer-down-false img.down {
+        position: fixed;
+        bottom: auto;
+        top: 0px;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .prefer-down-false img.info {
+        position: fixed;
+        bottom: auto;
+        top: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .erase, .lang {
+        display: block;
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .prefer-down-false {
+        .erase, .lang {
+            top: 0px;
+            bottom: auto;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .erase, .lang {
+        display: block;
+        position: fixed;
+        top: 0px;
+        left: 280px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #query-box {
+        top: 10px;
+        left: 10px;
+        right: auto;
+        width: 270px;
+    }
+}
+
+#query {
+    height: 36pt;
+    font-size: 1.2em;
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.bopomofo {
+    display: table;
+    margin-top: -14px;
+    padding-bottom: 5px;
+    margin-right: 24px;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 90%;
+    width: 100%;
+    border-bottom: 1px dotted #eeeeee;
+    word-break: normal !important;
+}
+
+body {
+    &.overflow-scrolling-false.lang-t .pinyin {
+        font-family: 'TWBLG';
+    }
+    &.lang-t .pinyin {
+        font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+    }
+}
+
+.pinyin {
+    word-break: normal !important;
+    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
+}
+
+.prefer-pinyin-false .bopomofo .bpmf {
+    text-align: left;
+    vertical-align: top;
+}
+
+.prefer-pinyin-true .bopomofo {
+    .pinyin {
+        text-align: left;
+        vertical-align: top;
+    }
+    .bpmf {
+        text-align: right;
+        vertical-align: top;
+        cursor: w-resize;
+    }
+}
+
+.prefer-pinyin-false .bopomofo .pinyin {
+    text-align: right;
+    vertical-align: top;
+    cursor: w-resize;
+}
+
+.bopomofo {
+    .bpmf {
+        width: 65%;
+        display: inline-block;
+    }
+    .pinyin {
+        width: 35%;
+        display: inline-block;
+    }
+}
+
+.prefer-pinyin-true .bopomofo .pinyin {
+    float: left;
+}
+
+.prefer-pinyin-false .bopomofo .pinyin {
+    float: right;
+}
+
+.prefer-pinyin-true .bopomofo .bpmf:hover, .prefer-pinyin-false .bopomofo .pinyin:hover {
+    background: #ffe;
+}
+
+span .tone {
+    position: relative;
+    float: right;
+    left: 10px;
+    top: -6px;
+    font-size: 120%;
+}
+
+body.lang-t {
+    .radical .glyph, .bpmf {
+        font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+    }
+}
+
+.radical {
+    .glyph {
+        margin-right: 0.2em;
+        font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        padding-bottom: 4px;
+    }
+    .sym {
+        margin-left: 0.2em;
+        padding-right: 0.2em;
+    }
+}
+
+.part-of-speech, .glyph {
+    color: white;
+    background-color: #555;
+    border-radius: 3px;
+    padding: 1px 2px 1px 2px;
+    /*border: 1px solid black;*/
+    font-size: 100%;
+}
+
+img {
+    &.logo {
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px 0px #999999;
+        max-height: 100px;
+        max-width: 100px;
+    }
+    &.quit {
+        position: fixed;
+        top: 10pt;
+        right: 10pt;
+    }
+}
+
+.android {
+    .info, .back {
+        display: none !important;
+        right: -999px !important;
+        bottom: -999px !important;
+    }
+}
+
+.cordova #opening {
+    display: none !important;
+}
+
+img {
+    &.info {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back, &.down {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back {
+        display: none;
+    }
+}
+
+.cordova img.down {
+    display: none;
+}
+
+input.back {
+    position: fixed;
+    display: none;
+    bottom: 0px;
+    left: 0px;
+    width: 60px;
+    height: 60px;
+}
+
+body.overflow-scrolling-false .ui-autocomplete {
+    max-height: 10000px !important;
+    bottom: auto !important;
+    position: absolute !important;
+}
+
+.ui-autocomplete {
+    &.invisible {
+        display: none !important;
+    }
+    max-height: 60%;
+    overflow: auto;
+    top: auto !important;
+    height: auto !important;
+    position: fixed !important;
+    bottom: 52px !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.prefer-down-false .ui-autocomplete {
+    top: 54px !important;
+    bottom: auto !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .ui-autocomplete.invisible {
+        display: block !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .ui-autocomplete {
+        display: block !important;
+        top: 62px !important;
+        bottom: auto !important;
+        left: 10px !important;
+        width: 320px !important;
+        overflow: scroll !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    input.back {
+        display: block;
+    }
+}
+
+.ui-autocomplete li {
+    font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
+}
+
+.web #lookback {
+    display: block !important;
+}
+
+.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.cordova .ui-autocomplete {
+    max-height: 75% !important;
+}
+
+.example {
+    .mandarin:before {
+        content: "（";
+    }
+    .ruby {
+        .ruby .rb {
+            text-align: left;
+            display: inline-block;
+        }
+        .rt {
+            font-size: 70%;
+            clear: both;
+            width: auto;
+            text-align: left;
+            white-space: nowrap;
+        }
+    }
+    .mandarin {
+        &:after {
+            content: '）';
+        }
+        font-size: 90%;
+        text-align: left;
+        width: auto;
+    }
+    .ruby {
+        text-align: left;
+        display: inline-block;
+        width: auto;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+    font-size: 92%;
+}
+
+body.lang-t .example {
+    font-size: 100%;
+    display: inline-block;
+    clear: both;
+    width: auto;
+    border: 1px solid #eee;
+    padding: 3px;
+    background: #eee;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+    box-shadow: 1px 1px 3px 0px #aaa;
+}
+
+.quote {
+    clear: both;
+    display: block;
+    font-size: 92%;
+}
+
+.antonyms, .synonyms {
+    clear: both;
+    display: block;
+    font-size: 85%;
+    margin-top: 2px;
+}
+
+.link {
+    clear: both;
+    display: block;
+}
+
+.def {
+    clear: both;
+    display: block;
+    margin-bottom: 2pt;
+}
+
+.lang-t .example b {
+    background: #ffd;
+    border-radius: 5px;
+}
+
+span {
+    b {
+        font-weight: normal;
+        border-bottom: 1px solid #eed !important;
+    }
+    a:hover b, b:hover {
+        background: #f0f0f0;
+    }
+    a {
+        border: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.about a {
+    border-bottom: 1px ridge #0070a3;
+}
+
+.entry {
+    padding-bottom: 5px;
+    border-bottom: 1px ridge #dddddd;
+}
+
+.ui-tooltip {
+    &.bpmf {
+        font-size: 80%;
+        width: auto;
+        min-width: auto;
+        background: #f0f0f0;
+    }
+    .part-of-speech {
+        position: absolute;
+        left: 20px;
+    }
+    li {
+        .part-of-speech {
+            position: relative;
+            left: 0px;
+        }
+        margin: 0;
+        padding: 0;
+    }
+    .ol, .definition {
+        margin: 0;
+        padding: 0;
+    }
+    .entry {
+        border-bottom: none;
+        font-size: 80%;
+    }
+    min-width: 300px;
+    width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    word-break: break-all;
+    .bopomofo {
+        margin: 0px;
+        padding: 0px;
+        font-size: 75%;
+    }
+    .title, .example {
+        display: none;
+    }
+}
+
+body.lang-t .ui-tooltip .example {
+    display: none;
+}
+
+.ui-tooltip {
+    .quote, .antonyms, .synonyms, .radical {
+        display: none;
+    }
+}
+
+#gcfbar {
+    padding: 0 !important;
+    position: fixed !important;
+    a {
+        color: #00a !important;
+    }
+}
+
+#gcfupdate {
+    margin: 5px;
+}
+
+#gcfclose {
+    margin: 3px;
+}
