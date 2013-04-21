@@ -571,6 +571,17 @@ body.lang-t .example {
     margin-top: 2px;
 }
 
+.xrefs {
+    border-top: 3px solid $border-color;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+}
+
+.xref-line {
+    padding: 10px;
+    border-bottom: 1px solid $border-color;
+}
+
 .link {
     clear: both;
     display: block;
