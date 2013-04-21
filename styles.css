@@ -6,36 +6,10 @@
  * Lisence: MIT Lisence
  * Last-Modified: 2011/12/22
  */
-/* 手動設定字體 */
-/* 漢字手寫體（cursive） */
-@font-face {
-  font-family: ff-cursive-han;
-  src: local(STFangsong), local(STKaiti), local(Kai), local("標楷體"), local(DFKaiShu-SB-Estd-BF); }
-
-@font-face {
-  /* 襯線西文斜體字型 */
-  font-family: ff-latin-serif-italic;
-  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT"), local("Times-Italic"); }
-
-@font-face {
-  /* 無襯線西文斜體字型 */
-  font-family: ff-latin-sans-italic;
-  src: local("Helvetica Oblique"), local("Helvetica-LightOblique"), local("Arial Italic"), local("Arial-ItalicMT"); }
-
-@font-face {
-  /* 出自教育部標準楷書之注音字符 */
-  font-family: ff-zhuyin;
-  src: url(../fonts/zhuyin.eot); }
-
-@font-face {
-  /* 出自教育部標準楷書之注音字符 */
-  font-family: ff-zhuyin;
-  src: url(../fonts/zhuyin.ttf); }
-
 /* ---------------------------------------
    目前已被廣泛使用的CSS reset
    修改自Nicolas Gallagher撰寫的normalize.css
-   --------------------------------------- 
+   ---------------------------------------
    normalize.css 2011-11-04T15:38 UTC - http://github.com/necolas/normalize.css */
 /* =============================================================================
    HTML5 display definitions
@@ -104,7 +78,7 @@ html {
 body {
   margin: 0; }
 
-/* 
+/*
  * Addresses font-family inconsistency between 'textarea' and other form elements.
  */
 body,
@@ -254,7 +228,7 @@ img {
   /* 2 */ }
 
 /*
- * Corrects overflow displayed oddly in IE9 
+ * Corrects overflow displayed oddly in IE9
  */
 svg:not(:root) {
   overflow: hidden; }
@@ -389,7 +363,7 @@ textarea {
 /* =============================================================================
    Tables
    ========================================================================== */
-/* 
+/*
  * Remove most spacing between table cells
  */
 table {
@@ -625,23 +599,6 @@ em:lang(ja) {
 .no-textemphasis em:lang(ja) span.cjk.punc:after {
   content: ""; }
 
-/* 文字變音標籤（i） */
-i:lang(zh) {
-  font-family: ff-latin-serif-italic, "Times New Roman", ff-cursive-han, cursive, "標楷體", serif;
-  font-style: inherit; }
-
-i:lang(zh-TW), i:lang(zh-HK) {
-  font-family: ff-latin-serif-italic, "Times New Roman", ff-cursive-han, cursive, "標楷體", serif; }
-
-i:lang(ja) {
-  font-family: ff-latin-serif-italic, "Times New Roman", cursive, serif;
-  font-style: inherit; }
-
-article blockquote i:lang(zh),
-article blockquote i:lang(ja) {
-  font-family: ff-latin-sans-italic, Helvetica, Arial, "Hiragino Sans GB", sans-serif;
-  font-style: inherit; }
-
 .msie i:lang(zh) span.latin,
 .msie i:lang(ja) span.latin {
   font-style: italic; }
@@ -689,11 +646,7 @@ q:after {
 :lang(zh) article blockquote,
 :lang(ja) article blockquote {
   margin: 1.5em 0 1.5em 2em;
-  font-family: Times, "Times New Roman", ff-cursive-han, cursive, "標楷體", serif;
   width: auto; }
-
-article blockquote:lang(ja) {
-  font-family: Times, "Times New Roman", cursive, serif; }
 
 /* 漢字註音（ruby） */
 ruby rp {
@@ -762,7 +715,6 @@ ruby {
 
 .han-js ruby.mps .rt {
   display: inline-block;
-  font-family: ff-zhuyin, "標楷體", DFKaiShu-SB-Estd-BF, cursive, serif;
   font-size: 1em;
   line-height: .9 !important;
   margin: -.5em -.2em 0 -.5em !important;
