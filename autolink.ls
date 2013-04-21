@@ -60,6 +60,7 @@ grok = -> JSON.parse(
     .replace(/"vernacular"/g                \"V")
     .replace(/"combined"/g                  \"C")
     .replace(/"dialects"/g                  \"D")
+    .replace(/"id"/g                        \"_")
 )
 entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
 prefix = {}
