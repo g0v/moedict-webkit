@@ -6,29 +6,14 @@
 /**
  * Correct `block` display not defined in IE 8/9.
  */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-  display: block;
-}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block; }
 
 /**
  * Correct `inline-block` display not defined in IE 8/9.
  */
-audio,
-canvas,
-video {
-  display: inline-block;
-}
+audio, canvas, video {
+  display: inline-block; }
 
 /**
  * Prevent modern browsers from displaying `audio` without controls.
@@ -36,15 +21,13 @@ video {
  */
 audio:not([controls]) {
   display: none;
-  height: 0;
-}
+  height: 0; }
 
 /**
  * Address styling not present in IE 8/9.
  */
 [hidden] {
-  display: none;
-}
+  display: none; }
 
 /* ==========================================================================
    Base
@@ -60,15 +43,13 @@ html {
   -webkit-text-size-adjust: 100%;
   /* 2 */
   -ms-text-size-adjust: 100%;
-  /* 2 */
-}
+  /* 2 */ }
 
 /**
  * Remove default margin.
  */
 body {
-  margin: 0;
-}
+  margin: 0; }
 
 /* ==========================================================================
    Links
@@ -77,17 +58,13 @@ body {
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 a:focus {
-  outline: thin dotted;
-}
+  outline: thin dotted; }
+a:active, a:hover {
+  outline: 0; }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
-a:active,
-a:hover {
-  outline: 0;
-}
-
 /* ==========================================================================
    Typography
    ========================================================================== */
@@ -97,30 +74,25 @@ a:hover {
  */
 h1 {
   font-size: 2em;
-  margin: 0.67em 0;
-}
+  margin: 0.67em 0; }
 
 /**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
  */
 abbr[title] {
-  border-bottom: 1px dotted;
-}
+  border-bottom: 1px dotted; }
 
 /**
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
-b,
-strong {
-  font-weight: bold;
-}
+b, strong {
+  font-weight: bold; }
 
 /**
  * Address styling not present in Safari 5 and Chrome.
  */
 dfn {
-  font-style: italic;
-}
+  font-style: italic; }
 
 /**
  * Address differences between Firefox and other browsers.
@@ -128,67 +100,58 @@ dfn {
 hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  height: 0;
-}
+  height: 0; }
 
 /**
  * Address styling not present in IE 8/9.
  */
 mark {
   background: #ff0;
-  color: #000;
-}
+  color: #000; }
 
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
  */
-code,
-kbd,
-pre,
-samp {
+code, kbd, pre, samp {
   font-family: monospace, serif;
-  font-size: 1em;
-}
+  font-size: 1em; }
 
 /**
  * Improve readability of pre-formatted text in all browsers.
  */
 pre {
-  white-space: pre-wrap;
-}
+  white-space: pre-wrap; }
 
 /**
  * Set consistent quote types.
  */
 q {
-  quotes: "\201C" "\201D" "\2018" "\2019";
-}
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
 
 /**
  * Address inconsistent and variable font size in all browsers.
  */
 small {
-  font-size: 80%;
-}
+  font-size: 80%; }
 
 /**
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
-sub,
+sub {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
 sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
-}
-
-sup {
-  top: -0.5em;
-}
+  top: -0.5em; }
 
 sub {
-  bottom: -0.25em;
-}
+  bottom: -0.25em; }
 
 /* ==========================================================================
    Embedded content
@@ -197,15 +160,13 @@ sub {
  * Remove border when inside `a` element in IE 8/9.
  */
 img {
-  border: 0;
-}
+  border: 0; }
 
 /**
  * Correct overflow displayed oddly in IE 9.
  */
 svg:not(:root) {
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 /* ==========================================================================
    Figures
@@ -214,8 +175,7 @@ svg:not(:root) {
  * Address margin not present in IE 8/9 and Safari 5.
  */
 figure {
-  margin: 0;
-}
+  margin: 0; }
 
 /* ==========================================================================
    Forms
@@ -226,8 +186,7 @@ figure {
 fieldset {
   border: 1px solid silver;
   margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em;
-}
+  padding: 0.35em 0.625em 0.75em; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -237,34 +196,27 @@ legend {
   border: 0;
   /* 1 */
   padding: 0;
-  /* 2 */
-}
+  /* 2 */ }
 
 /**
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  */
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
   font-family: inherit;
   /* 1 */
   font-size: 100%;
   /* 2 */
   margin: 0;
-  /* 3 */
-}
+  /* 3 */ }
 
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
-button,
-input {
-  line-height: normal;
-}
+button, input {
+  line-height: normal; }
 
 /**
  * Address inconsistent `text-transform` inheritance for `button` and `select`.
@@ -272,10 +224,8 @@ input {
  * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
  * Correct `select` style inheritance in Firefox 4+ and Opera.
  */
-button,
-select {
-  text-transform: none;
-}
+button, select {
+  text-transform: none; }
 
 /**
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
@@ -284,66 +234,58 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+button, html input[type="button"] {
   -webkit-appearance: button;
   /* 2 */
   cursor: pointer;
-  /* 3 */
-}
+  /* 3 */ }
+
+input[type="reset"], input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
 
 /**
  * Re-set default cursor for disabled elements.
  */
-button[disabled],
-html input[disabled] {
-  cursor: default;
-}
+button[disabled], html input[disabled] {
+  cursor: default; }
 
 /**
  * 1. Address box sizing set to `content-box` in IE 8/9.
  * 2. Remove excess padding in IE 8/9.
  */
-input[type="checkbox"],
-input[type="radio"] {
+input[type="checkbox"], input[type="radio"] {
   box-sizing: border-box;
   /* 1 */
   padding: 0;
-  /* 2 */
-}
-
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
- *    (include `-moz` to future-proof).
- */
+  /* 2 */ }
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
   /* 2 */
-  box-sizing: content-box;
-}
+  box-sizing: content-box; }
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none; }
 
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
 /**
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+button::-moz-focus-inner, input::-moz-focus-inner {
   border: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 /**
  * 1. Remove default vertical scrollbar in IE 8/9.
@@ -353,8 +295,7 @@ textarea {
   overflow: auto;
   /* 1 */
   vertical-align: top;
-  /* 2 */
-}
+  /* 2 */ }
 
 /* ==========================================================================
    Tables
@@ -364,43 +305,31 @@ textarea {
  */
 table {
   border-collapse: collapse;
-  border-spacing: 0;
-}
+  border-spacing: 0; }
 
 @font-face {
-    font-family: 'TWBLG';
-    src: url('TWBLG.ttf') format('truetype');
-}
+  font-family: 'TWBLG';
+  src: url("TWBLG.ttf") format("truetype"); }
 
 @font-face {
-    font-family: 'HANNOMmoesubset-Regular';
-    src: url('HannomMoeSubset.ttf') format('truetype');
-}
+  font-family: 'HANNOMmoesubset-Regular';
+  src: url("HannomMoeSubset.ttf") format("truetype"); }
 
 body {
   background: #eeeeee url("background.jpg");
   font-family: sans-serif, "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
-  margin: 10px;
-}
-
-body.lang-t {
-  background: #eed;
-  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-}
-
-body.cordova {
-  font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-}
-
-body.cordova.lang-t {
-  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-}
-
-body.lang-t .title, body.lang-t.cordova .title {
-  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-}
+  margin: 10px; }
+  body.lang-t {
+    background: #eed;
+    font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
+  body.cordova {
+    font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
+    body.cordova.lang-t {
+      font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
+  body.lang-t .title, body.lang-t.cordova .title {
+    font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
 
 .title {
   font-size: 185%;
@@ -408,69 +337,55 @@ body.lang-t .title, body.lang-t.cordova .title {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
-}
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B"; }
 
 .bopomofo, .radical {
   font-weight: 501;
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B";
-}
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HANNOMmoesubset-Regular", "HAN NOM A", "HAN NOM B"; }
 
 body.lang-t .bopomofo, body.lang-t .radical {
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
-}
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B"; }
 
 h3 {
-  font-size: 100%;
-}
+  font-size: 100%; }
 
 a {
   color: black !important;
-  text-decoration: none !important;
-}
-a:hover, a:focus {
-  background: url("css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png") repeat-x scroll 50% 50% #E4F1FB;
-  color: #0070A3;
-  outline: 1px solid #74B2E2 !important;
-  border-radius: 6px;
-}
-
-a.erase:hover, a.lang:hover {
-  background: #ddd;
-  outline: none !important;
-  border: none;
-  border-radius: 30px;
-}
+  text-decoration: none !important; }
+  a:hover, a:focus {
+    background: url("css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png") repeat-x scroll 50% 50% #e4f1fb;
+    color: #0070A3;
+    outline: 1px solid #74B2E2 !important;
+    border-radius: 6px; }
+  a.erase:hover, a.lang:hover {
+    background: #ddd;
+    outline: none !important;
+    border: none;
+    border-radius: 30px; }
 
 .part-of-speech a:hover, .part-of-speech a:focus {
   background: none !important;
   color: inherit;
-  outline: none !important;
-}
+  outline: none !important; }
 
 .radical {
   position: absolute;
   text-align: right;
   right: 24px;
-  top: 36px;
-}
-.radical .count {
-  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
-}
+  top: 36px; }
+  .radical .count {
+    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace; }
+
 .part-of-speech a {
-  color: white !important;
-}
-.part-of-speech a:hover,
-.part-of-speech a:focus {
-  color: white;
-  background: #aaf;
-  text-decoration: none;
-  border-radius: 5px;
-}
+  color: white !important; }
+  .part-of-speech a:hover, .part-of-speech a:focus {
+    color: white;
+    background: #aaf;
+    text-decoration: none;
+    border-radius: 5px; }
 
 center {
-  padding: 15px;
-}
+  padding: 15px; }
 
 #result {
   box-shadow: 1px 1px 3px 0px #999999;
@@ -480,46 +395,37 @@ center {
   height: auto;
   background: #ffffff;
   border-radius: 10px;
-  word-break: break-all;
-}
+  word-break: break-all; }
 
 .prefer-down-false #result {
   margin-bottom: 0;
-  margin-top: 62px;
-}
+  margin-top: 62px; }
+
 @media only screen and (min-width: 768px) {
   #result {
-    margin-left: 340px;
-  }
-}
+    margin-left: 340px; } }
 @media only screen and (min-width: 768px) {
   .prefer-down-false #result {
-    margin-top: 0px;
-  }
-}
+    margin-top: 0px; } }
+body.overflow-scrolling-false #query-box, body.overflow-scrolling-false img.info {
+  position: absolute; }
 
-body.overflow-scrolling-false #query-box,
-body.overflow-scrolling-false img.info {
-    position: absolute;
-}
 #query-box {
   position: fixed;
   bottom: 5px;
   right: 60px;
-  left: 10px;
-}
+  left: 10px; }
+
 .prefer-down-false #query-box {
   top: 5px;
-  bottom: auto;
-}
+  bottom: auto; }
+
 @media only screen and (max-width: 767px) {
-  .info { display: none; }
-}
+  .info {
+    display: none; } }
 @media only screen and (max-width: 767px) {
   .prefer-down-false .radical {
-    top: 96px;
-  }
-}
+    top: 96px; } }
 @media only screen and (max-width: 767px) {
   .prefer-down-false img.back {
     position: fixed;
@@ -528,10 +434,7 @@ body.overflow-scrolling-false img.info {
     left: 0px;
     width: 60px;
     height: 60px;
-    display: none;
-  }
-}
-
+    display: none; } }
 @media only screen and (max-width: 767px) {
   .prefer-down-false img.down {
     position: fixed;
@@ -539,10 +442,7 @@ body.overflow-scrolling-false img.info {
     top: 0px;
     left: 0px;
     width: 60px;
-    height: 60px;
-  }
-}
-
+    height: 60px; } }
 @media only screen and (max-width: 767px) {
   .prefer-down-false img.info {
     position: fixed;
@@ -550,10 +450,7 @@ body.overflow-scrolling-false img.info {
     top: 0px;
     right: 0px;
     width: 60px;
-    height: 60px;
-  }
-}
-
+    height: 60px; } }
 @media only screen and (max-width: 767px) {
   .erase, .lang {
     display: block;
@@ -561,17 +458,11 @@ body.overflow-scrolling-false img.info {
     bottom: 0px;
     right: 0px;
     width: 60px;
-    height: 60px;
-  }
-}
-
+    height: 60px; } }
 @media only screen and (max-width: 767px) {
   .prefer-down-false .erase, .prefer-down-false .lang {
     top: 0px;
-    bottom: auto;
-  }
-}
-
+    bottom: auto; } }
 @media only screen and (min-width: 768px) {
   .erase, .lang {
     display: block;
@@ -579,27 +470,20 @@ body.overflow-scrolling-false img.info {
     top: 0px;
     left: 280px;
     width: 60px;
-    height: 60px;
-  }
-}
-
+    height: 60px; } }
 @media only screen and (min-width: 768px) {
   #query-box {
     top: 10px;
     left: 10px;
     right: auto;
-    width: 270px;
-  }
-}
-
+    width: 270px; } }
 #query {
   height: 36pt;
   font-size: 1.2em;
   padding: 5px;
   border-radius: 5px;
   box-sizing: border-box;
-  width: 100%;
-}
+  width: 100%; }
 
 .bopomofo {
   display: table;
@@ -611,107 +495,111 @@ body.overflow-scrolling-false img.info {
   font-size: 90%;
   width: 100%;
   border-bottom: 1px dotted #eeeeee;
-  word-break: normal !important;
-}
+  word-break: normal !important; }
+
 body.overflow-scrolling-false.lang-t .pinyin {
-    font-family: 'TWBLG';
-}
+  font-family: 'TWBLG'; }
 body.lang-t .pinyin {
-    font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
-}
+  font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif; }
+
 .pinyin {
   word-break: normal !important;
-  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace;
-}
-.prefer-pinyin-false .bopomofo .bpmf,
+  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace; }
+
+.prefer-pinyin-false .bopomofo .bpmf {
+  text-align: left;
+  vertical-align: top; }
+
 .prefer-pinyin-true .bopomofo .pinyin {
   text-align: left;
+  vertical-align: top; }
+.prefer-pinyin-true .bopomofo .bpmf {
+  text-align: right;
   vertical-align: top;
-}
+  cursor: w-resize; }
 
-.prefer-pinyin-true .bopomofo .bpmf,
 .prefer-pinyin-false .bopomofo .pinyin {
   text-align: right;
   vertical-align: top;
-  cursor: w-resize;
-}
-.bopomofo .bpmf { width: 65%; display: inline-block }
-.bopomofo .pinyin { width: 35%; display: inline-block; }
-.prefer-pinyin-true .bopomofo .pinyin { float: left; }
-.prefer-pinyin-false .bopomofo .pinyin { float: right; }
-.prefer-pinyin-true .bopomofo .bpmf:hover,
-.prefer-pinyin-false .bopomofo .pinyin:hover {
-    background: #ffe;
-}
+  cursor: w-resize; }
+
+.bopomofo .bpmf {
+  width: 65%;
+  display: inline-block; }
+.bopomofo .pinyin {
+  width: 35%;
+  display: inline-block; }
+
+.prefer-pinyin-true .bopomofo .pinyin {
+  float: left; }
+
+.prefer-pinyin-false .bopomofo .pinyin {
+  float: right; }
+
+.prefer-pinyin-true .bopomofo .bpmf:hover, .prefer-pinyin-false .bopomofo .pinyin:hover {
+  background: #ffe; }
 
 span .tone {
   position: relative;
   float: right;
   left: 10px;
   top: -6px;
-  font-size: 120%;
-}
+  font-size: 120%; }
 
 body.lang-t .radical .glyph, body.lang-t .bpmf {
-  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-}
+  font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
+
 .radical .glyph {
   margin-right: 0.2em;
   font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-  padding-bottom: 4px;
-}
+  padding-bottom: 4px; }
 .radical .sym {
   margin-left: 0.2em;
-  padding-right: 0.2em;
-}
+  padding-right: 0.2em; }
+
 .part-of-speech, .glyph {
   color: white;
   background-color: #555;
   border-radius: 3px;
   padding: 1px 2px 1px 2px;
   /*border: 1px solid black;*/
-  font-size: 100%;
-}
+  font-size: 100%; }
 
 img.logo {
   border-radius: 5px;
   box-shadow: 1px 1px 3px 0px #999999;
   max-height: 100px;
-  max-width: 100px;
-}
+  max-width: 100px; }
 img.quit {
   position: fixed;
   top: 10pt;
-  right: 10pt;
-}
+  right: 10pt; }
+
 .android .info, .android .back {
   display: none !important;
   right: -999px !important;
-  bottom: -999px !important;
-}
+  bottom: -999px !important; }
+
 .cordova #opening {
-  display: none !important;
-}
+  display: none !important; }
+
 img.info {
   position: fixed;
   bottom: 0px;
   right: 0px;
   width: 60px;
-  height: 60px;
-}
+  height: 60px; }
 img.back, img.down {
   position: fixed;
   bottom: 0px;
   left: 0px;
   width: 60px;
-  height: 60px;
-}
+  height: 60px; }
 img.back {
-  display: none;
-}
+  display: none; }
+
 .cordova img.down {
-  display: none;
-}
+  display: none; }
 
 input.back {
   position: fixed;
@@ -719,18 +607,13 @@ input.back {
   bottom: 0px;
   left: 0px;
   width: 60px;
-  height: 60px;
-}
+  height: 60px; }
 
 body.overflow-scrolling-false .ui-autocomplete {
   max-height: 10000px !important;
   bottom: auto !important;
-  position: absolute !important;
-}
+  position: absolute !important; }
 
-.ui-autocomplete.invisible {
-    display: none !important;
-}
 .ui-autocomplete {
   max-height: 60%;
   overflow: auto;
@@ -740,18 +623,17 @@ body.overflow-scrolling-false .ui-autocomplete {
   bottom: 52px !important;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
+  .ui-autocomplete.invisible {
+    display: none !important; }
+
 .prefer-down-false .ui-autocomplete {
   top: 54px !important;
-  bottom: auto !important;
-}
+  bottom: auto !important; }
+
 @media only screen and (min-width: 768px) {
   .ui-autocomplete.invisible {
-    display: block !important;
-  }
-}
-
+    display: block !important; } }
 @media only screen and (min-width: 768px) {
   .ui-autocomplete {
     display: block !important;
@@ -759,80 +641,57 @@ body.overflow-scrolling-false .ui-autocomplete {
     bottom: auto !important;
     left: 10px !important;
     width: 320px !important;
-    overflow: scroll !important;
-  }
-}
-
+    overflow: scroll !important; } }
 @media only screen and (min-width: 768px) {
   input.back {
-    display: block;
-  }
-}
-
+    display: block; } }
 .ui-autocomplete li {
-  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B";
-}
+  font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B"; }
 
 .web #lookback {
-    display: block !important;
-}
+  display: block !important; }
 
-.ios ::-webkit-scrollbar,
-.web ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 7px;
-}
-.ios ::-webkit-scrollbar-thumb,
-.web ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-}
+.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px; }
+
+.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
 
 .cordova .ui-autocomplete {
-  max-height: 75% !important;
-}
+  max-height: 75% !important; }
 
-.example .mandarin:before {
- content: '（'
-}
-.example .ruby .ruby .rb {
+.example {
+  font-size: 92%; }
+  .example .mandarin:before {
+    content: "（"; }
+  .example .ruby .ruby .rb {
     text-align: left;
-    display: inline-block;
-}
-.example .ruby .rt {
+    display: inline-block; }
+  .example .ruby .rt {
     font-size: 70%;
     clear: both;
     width: auto;
     text-align: left;
-    white-space: nowrap;
-
-}
-.example .mandarin:after{
- content: '）';
-}
-.example .mandarin {
+    white-space: nowrap; }
+  .example .mandarin {
     font-size: 90%;
     text-align: left;
-    width: auto;
-}
-.example .ruby {
+    width: auto; }
+    .example .mandarin:after {
+      content: '）'; }
+  .example .ruby {
     text-align: left;
-        display: inline-block;
+    display: inline-block;
     width: auto;
-
-  -ms-word-break: break-all;
-  word-break: break-all;
-  word-break: break-word;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
-    }
-
-
-.example {
-      font-size: 92%;
-}
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto; }
 
 body.lang-t .example {
   font-size: 100%;
@@ -846,119 +705,96 @@ body.lang-t .example {
   margin-right: 10px;
   margin-bottom: 2px;
   vertical-align: top;
-  box-shadow: 1px 1px 3px 0px #aaa;
-}
+  box-shadow: 1px 1px 3px 0px #aaa; }
 
 .quote {
   clear: both;
   display: block;
-  font-size: 92%;
-}
+  font-size: 92%; }
 
 .antonyms, .synonyms {
   clear: both;
   display: block;
   font-size: 85%;
-  margin-top: 2px;
-}
+  margin-top: 2px; }
 
-.link, .def {
+.link {
   clear: both;
-  display: block;
-}
+  display: block; }
 
 .def {
-  margin-bottom: 2pt;
-}
+  clear: both;
+  display: block;
+  margin-bottom: 2pt; }
 
 .lang-t .example b {
-    background: #ffd;
-    border-radius: 5px;
-}
+  background: #ffd;
+  border-radius: 5px; }
+
 span b {
   font-weight: normal;
-  border-bottom: 1px solid #eed !important;
-}
-
-span a:hover b,
-span b:hover {
-  background: #f0f0f0;
-}
-
+  border-bottom: 1px solid #eed !important; }
+span a:hover b, span b:hover {
+  background: #f0f0f0; }
 span a {
   border: 0 !important;
   margin: 0 !important;
-  padding: 0 !important;
-}
+  padding: 0 !important; }
 
 .about a {
-  border-bottom: 1px ridge #0070a3;
-}
+  border-bottom: 1px ridge #0070a3; }
 
 .entry {
   padding-bottom: 5px;
-  border-bottom: 1px ridge #dddddd;
-}
-
-.ui-tooltip.bpmf {
-  font-size: 80%;
-  width: auto;
-  min-width: auto;
-  background: #f0f0f0;
-}
-
-.ui-tooltip .part-of-speech {
-  position: absolute;
-  left: 20px;
-}
-.ui-tooltip li .part-of-speech {
-  position: relative;
-  left: 0px;
-}
-.ui-tooltip li,
-.ui-tooltip .ol,
-.ui-tooltip .definition {
-  margin: 0;
-  padding: 0;
-}
-.ui-tooltip .entry {
-  border-bottom: none;
-  font-size: 80%;
-}
+  border-bottom: 1px ridge #dddddd; }
 
 .ui-tooltip {
   min-width: 300px;
   width: 300px;
   max-height: 300px;
   overflow: hidden;
-  word-break: break-all;
-}
-.ui-tooltip .bopomofo {
-  margin: 0px;
-  padding: 0px;
-  font-size: 75%;
-}
+  word-break: break-all; }
+  .ui-tooltip.bpmf {
+    font-size: 80%;
+    width: auto;
+    min-width: auto;
+    background: #f0f0f0; }
+  .ui-tooltip .part-of-speech {
+    position: absolute;
+    left: 20px; }
+  .ui-tooltip li {
+    margin: 0;
+    padding: 0; }
+    .ui-tooltip li .part-of-speech {
+      position: relative;
+      left: 0px; }
+  .ui-tooltip .ol, .ui-tooltip .definition {
+    margin: 0;
+    padding: 0; }
+  .ui-tooltip .entry {
+    border-bottom: none;
+    font-size: 80%; }
+  .ui-tooltip .bopomofo {
+    margin: 0px;
+    padding: 0px;
+    font-size: 75%; }
+  .ui-tooltip .title, .ui-tooltip .example {
+    display: none; }
 
-.ui-tooltip .title,
-.ui-tooltip .example,
-body.lang-t .ui-tooltip .example,
-.ui-tooltip .quote,
-.ui-tooltip .antonyms,
-.ui-tooltip .synonyms,
-.ui-tooltip .radical {
-    display: none;
-}
+body.lang-t .ui-tooltip .example {
+  display: none; }
+
+.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .radical {
+  display: none; }
 
 #gcfbar {
   padding: 0 !important;
-  position: fixed !important;
-}
-#gcfbar a {
-  color: #00a !important;
-}
+  position: fixed !important; }
+  #gcfbar a {
+    color: #00a !important; }
+
 #gcfupdate {
-  margin: 5px;
-}
+  margin: 5px; }
+
 #gcfclose {
-  margin: 3px;
-}
+  margin: 3px; }
