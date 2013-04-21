@@ -459,6 +459,16 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
         h(antonyms.replace(/,/g '、'))
       }</span>" else '' }
       </div>
+
+      <div class="xrefs">
+          <div class="xref-line">
+              <span class='xref'><span class='part-of-speech'>國</span> 測試測試</span>
+          </div>
+          <div class="xref-line">
+              <span class='xref'><span class='part-of-speech'>閩</span> 測試測試 測試</span>
+          </div>
+      </div>
+
     """
   function expand-def (def)
     def.replace(
