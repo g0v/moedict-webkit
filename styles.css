@@ -536,7 +536,7 @@ body.overflow-scrolling-false #query-box, body.overflow-scrolling-false img.info
   color: #666;
   font-size: 90%;
   width: 100%;
-  border-bottom: 1px dotted #eeeeee;
+  border-bottom: 1px dotted #dddddd;
   word-break: normal !important; }
 
 body.overflow-scrolling-false.lang-t .pinyin {
@@ -740,7 +740,7 @@ body.lang-t .example {
   display: inline-block;
   clear: both;
   width: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #dddddd;
   padding: 3px;
   background: #eee;
   margin-right: 10px;
@@ -773,7 +773,7 @@ body.lang-t .example {
 
 span b {
   font-weight: normal;
-  border-bottom: 1px solid #eed !important; }
+  border-bottom: 1px solid #dddddd !important; }
 span a:hover b, span b:hover {
   background: #f0f0f0; }
 span a {

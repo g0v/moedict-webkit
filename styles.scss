@@ -2,6 +2,10 @@
 
 @import "normalize";
 
+$grayLight:             #ddd;
+$grayLighter:           #eee;
+$border-color:          $grayLight;
+
 /* ==========================================================================
    Tables
    ========================================================================== */
@@ -124,7 +128,7 @@ center {
 
 #result {
     box-shadow: 1px 1px 3px 0px #999999;
-    border: 1px solid #dddddd;
+    border: 1px solid $border-color;
     margin-bottom: 4em;
     padding: 5px 10px;
     height: auto;
@@ -272,7 +276,7 @@ body.overflow-scrolling-false {
     color: #666;
     font-size: 90%;
     width: 100%;
-    border-bottom: 1px dotted #eeeeee;
+    border-bottom: 1px dotted $border-color;
     word-break: normal !important;
 }
 
@@ -546,7 +550,7 @@ body.lang-t .example {
     display: inline-block;
     clear: both;
     width: auto;
-    border: 1px solid #ccc;
+    border: 1px solid $border-color;
     padding: 3px;
     background: #eee;
     margin-right: 10px;
@@ -586,7 +590,7 @@ body.lang-t .example {
 span {
     b {
         font-weight: normal;
-        border-bottom: 1px solid #eed !important;
+        border-bottom: 1px solid $border-color !important;
     }
     a:hover b, b:hover {
         background: #f0f0f0;
