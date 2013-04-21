@@ -1,5 +1,6 @@
 run ::
-	lsc -cw main.ls &
+	sass --watch styles.scss:styles.css || true &
+	lsc -cw main.ls || true &
 	static-here
 
 upload ::
