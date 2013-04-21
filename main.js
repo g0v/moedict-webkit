@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, e, callLater, MOE, CJKRADICALS, SIMPTRAD, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -16,6 +16,7 @@
     isCordova = true;
   }
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
+  isWebKit = /WebKit/.exec(navigator.userAgent);
   entryHistory = [];
   Index = null;
   try {
@@ -477,7 +478,7 @@
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
-      part = part.replace(/"([hbpdcnftrelsaqTAVCD])"/g, function(arg$, k){
+      part = part.replace(/"([hbpdcnftrelsaqTAVCD_])"/g, function(arg$, k){
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
@@ -515,6 +516,7 @@
       s: '"synonyms"',
       a: '"antonyms"',
       q: '"quote"',
+      _: '"id"',
       T: '"trs"',
       A: '"alt"',
       V: '"vernacular"',
@@ -671,13 +673,13 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     return ls(heteronyms, function(arg$){
-      var bopomofo, pinyin, trs, definitions, ref$, antonyms, synonyms;
-      bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
+      var id, bopomofo, pinyin, trs, definitions, ref$, antonyms, synonyms;
+      id = arg$.id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && id ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
@@ -695,7 +697,7 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</div>\n\n<div class=\"xrefs\">\n    <div class=\"xref-line\">\n        <span class='xref'><span class='part-of-speech'>國</span> 測試測試</span>\n    </div>\n    <div class=\"xref-line\">\n        <span class='xref'><span class='part-of-speech'>閩</span> 測試測試 測試</span>\n    </div>\n</div>\n";
+      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
