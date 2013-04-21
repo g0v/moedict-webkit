@@ -1,18 +1,31 @@
 @charset "UTF-8";
-/* normalize.css v2.1.0 | MIT License | git.io/normalize */
+/* normalize.css v2.1.1 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
    ========================================================================== */
 /**
  * Correct `block` display not defined in IE 8/9.
  */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
   display: block; }
 
 /**
  * Correct `inline-block` display not defined in IE 8/9.
  */
-audio, canvas, video {
+audio,
+canvas,
+video {
   display: inline-block; }
 
 /**
@@ -33,17 +46,25 @@ audio:not([controls]) {
    Base
    ========================================================================== */
 /**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
+ * 1. Prevent system color scheme's background color being used in Firefox, IE,
+ *    and Opera.
+ * 2. Prevent system color scheme's text color being used in Firefox, IE, and
+ *    Opera.
+ * 3. Set default font family to sans-serif.
+ * 4. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
 html {
-  font-family: sans-serif;
+  background: #fff;
   /* 1 */
-  -webkit-text-size-adjust: 100%;
+  color: #000;
   /* 2 */
+  font-family: sans-serif;
+  /* 3 */
   -ms-text-size-adjust: 100%;
-  /* 2 */ }
+  /* 4 */
+  -webkit-text-size-adjust: 100%;
+  /* 4 */ }
 
 /**
  * Remove default margin.
@@ -59,12 +80,14 @@ body {
  */
 a:focus {
   outline: thin dotted; }
-a:active, a:hover {
-  outline: 0; }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
+a:active,
+a:hover {
+  outline: 0; }
+
 /* ==========================================================================
    Typography
    ========================================================================== */
@@ -85,7 +108,8 @@ abbr[title] {
 /**
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
-b, strong {
+b,
+strong {
   font-weight: bold; }
 
 /**
@@ -112,7 +136,10 @@ mark {
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
  */
-code, kbd, pre, samp {
+code,
+kbd,
+pre,
+samp {
   font-family: monospace, serif;
   font-size: 1em; }
 
@@ -137,17 +164,14 @@ small {
 /**
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
-sub {
+sub,
+sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline; }
 
 sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
   top: -0.5em; }
 
 sub {
@@ -184,7 +208,7 @@ figure {
  * Define consistent border, margin, and padding.
  */
 fieldset {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em; }
 
@@ -203,7 +227,10 @@ legend {
  * 2. Correct font size not being inherited in all browsers.
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  */
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   /* 1 */
   font-size: 100%;
@@ -215,7 +242,8 @@ button, input, select, textarea {
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
-button, input {
+button,
+input {
   line-height: normal; }
 
 /**
@@ -224,7 +252,8 @@ button, input {
  * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
  * Correct `select` style inheritance in Firefox 4+ and Opera.
  */
-button, select {
+button,
+select {
   text-transform: none; }
 
 /**
@@ -234,13 +263,10 @@ button, select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-button, html input[type="button"] {
-  -webkit-appearance: button;
-  /* 2 */
-  cursor: pointer;
-  /* 3 */ }
-
-input[type="reset"], input[type="submit"] {
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
   cursor: pointer;
@@ -249,18 +275,26 @@ input[type="reset"], input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
-button[disabled], html input[disabled] {
+button[disabled],
+html input[disabled] {
   cursor: default; }
 
 /**
  * 1. Address box sizing set to `content-box` in IE 8/9.
  * 2. Remove excess padding in IE 8/9.
  */
-input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
   box-sizing: border-box;
   /* 1 */
   padding: 0;
   /* 2 */ }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
@@ -268,22 +302,20 @@ input[type="search"] {
   -webkit-box-sizing: content-box;
   /* 2 */
   box-sizing: content-box; }
-  input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none; }
 
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
- *    (include `-moz` to future-proof).
- */
 /**
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-button::-moz-focus-inner, input::-moz-focus-inner {
+button::-moz-focus-inner,
+input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
@@ -296,6 +328,16 @@ textarea {
   /* 1 */
   vertical-align: top;
   /* 2 */ }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
 
 /* ==========================================================================
    Tables
