@@ -1,7 +1,5 @@
 run ::
-	(sass --watch styles.scss:styles.css || true) &
-	(lsc -cw main.ls || true) &
-	node ./static-here.js
+	(sass --watch styles.scss:styles.css || true) | (lsc -cw main.ls || true)  | node ./static-here.js 9999
 
 upload ::
 	rsync -avzP main.* styles.css index.html js moe0:code/
