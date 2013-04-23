@@ -99,7 +99,12 @@
     $('body').removeClass("lang-t");
     $('.ui-autocomplete li').remove();
     LANG = lang || (LANG === 'a' ? 't' : 'a');
-    $.get(LANG + "/index.json", null, function(it){
+    if (!XREF[LANG]) {
+      $.get(LANG + "/xref.json", null, function(it){
+        return XREF[LANG] = it;
+      }, 'text');
+    }
+    return $.get(LANG + "/index.json", null, function(it){
       initAutocomplete(it);
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
@@ -110,11 +115,6 @@
       }[LANG]);
       return setPref('lang', LANG);
     }, 'text');
-    if (!XREF[LANG]) {
-      return $.get(LANG + "/xref.json", null, function(it){
-        return XREF[LANG] = it;
-      }, 'text');
-    }
   };
   window.pressDown = function(){
     var val;
@@ -226,7 +226,7 @@
       if (!isCordova) {
         $('#query').focus();
       }
-      if (!in$('onhashchange', window)) {
+      if (!('onhashchange' in window)) {
         $('body').on('click', 'a', function(){
           var val;
           val = $(this).attr('href');
@@ -560,9 +560,9 @@
       part = part.slice(0, idx);
       return fillJson(part);
     };
-    $.get(LANG + "/index.json", null, initAutocomplete, 'text');
     $.get(LANG + "/xref.json", null, function(it){
-      return XREF[LANG] = it;
+      XREF[LANG] = it;
+      return $.get(LANG + "/index.json", null, initAutocomplete, 'text');
     }, 'text');
     return init();
   };
@@ -876,10 +876,5 @@
       });
       return it + (tone || '\uFFFD');
     }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\. ?/g, '。').replace(/\? ?/g, '？').replace(/\! ?/g, '！').replace(/\, ?/g, '，');
-  }
-  function in$(x, arr){
-    var i = -1, l = arr.length >>> 0;
-    while (++i < l) if (x === arr[i] && i in arr) return true;
-    return false;
   }
 }).call(this);

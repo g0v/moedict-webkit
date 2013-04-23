@@ -1203,6 +1203,9 @@ body.lang-t .example {
 .xref-line {
   padding: 10px;
   border-bottom: 1px solid #dddddd; }
+  .xref-line a.xref {
+    margin-left: 3px !important;
+    margin-right: 3px !important; }
 
 .link {
   clear: both;
@@ -1245,6 +1248,8 @@ span a {
     width: auto;
     min-width: auto;
     background: #f0f0f0; }
+  .ui-tooltip .xrefs {
+    display: none; }
   .ui-tooltip .part-of-speech {
     position: absolute;
     left: 20px; }

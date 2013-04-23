@@ -586,6 +586,10 @@ body.lang-t .example {
 .xref-line {
     padding: 10px;
     border-bottom: 1px solid $border-color;
+    a.xref {
+        margin-left: 3px !important;
+        margin-right: 3px !important;
+    }
 }
 
 .link {
@@ -634,6 +638,9 @@ span {
         width: auto;
         min-width: auto;
         background: #f0f0f0;
+    }
+    .xrefs {
+        display: none;
     }
     .part-of-speech {
         position: absolute;
