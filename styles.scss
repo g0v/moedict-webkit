@@ -586,9 +586,8 @@ body.lang-t .example {
 .xref-line {
     padding: 10px;
     border-bottom: 1px solid $border-color;
-    a.xref {
-        margin-left: 3px !important;
-        margin-right: 3px !important;
+    .part-of-speech {
+        margin-right: 5px;
     }
 }
 
