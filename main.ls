@@ -162,8 +162,11 @@ window.do-load = ->
     return if title is /^</
     $ \#query .val title
     unless isCordova
-      $ \#cond .val "^#{title}$"
-      $ \#lookback .show!
+      if LANG is \a
+        $ \#cond .val "^#{title}$"
+        $ \#lookback .show!
+      else
+        $ \#lookback .hide!
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
