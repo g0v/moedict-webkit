@@ -40,7 +40,16 @@
 <a class="info" href="#" onclick="pressAbout(); return false"><img title="關於本站" class="info" src="info.png" /></a>
 <a class="erase" href="#" onclick="pressErase(); return false"><img title="清除搜尋框" class="erase" src="erase.png" /></a>
 <a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="lang.png" /></a>
-<div id="moe" style="display: none">
-</div>
+<div id="moe" style="display: none"></div>
+<!--[if !IE]>-->
+<form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none">
+    <input type="hidden" name="idx" value="dict.idx">
+    <input type="hidden" name="fld" value="1">
+    <input type="hidden" name="imgFont" value="1">
+    <input type="hidden" name="cat" value="">
+    <input type="hidden" id="cond" name="cond" value="^萌$">
+    <input type="image" src="back.png" class="back" title="反查來源（教育部國語辭典）">
+</form>
+<!--<![endif]-->
 </body>
 </html>
