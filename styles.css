@@ -951,7 +951,7 @@ body.overflow-scrolling-false #query-box, body.overflow-scrolling-false img.info
     width: 60px;
     height: 60px; } }
 @media only screen and (max-width: 767px) {
-  .cordova #query-box {
+  .ios #query-box {
     left: 60px; } }
 @media only screen and (min-width: 768px) {
   #query-box {
