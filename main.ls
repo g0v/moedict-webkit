@@ -161,9 +161,7 @@ window.do-load = ->
     title -= /^!/
     return if title is /^</
     $ \#query .val title
-    unless isCordova
-      $ \#cond .val "^#{title}$"
-      $ \#lookback .show!
+    $ \#cond .val "^#{title}$" unless isCordova
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
@@ -185,6 +183,8 @@ window.do-load = ->
     $.get "#LANG/index.json", null, (->
       init-autocomplete it
       $('body').removeClass("lang-t")
+      $('body').removeClass("lang-a")
+      $('body').removeClass("lang-h")
       $('body').addClass("lang-#LANG")
       $ \#query .val id
       window.do-lookup id
