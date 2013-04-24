@@ -566,7 +566,7 @@
       part = raw.slice(idx + key.length + 3);
       idx = part.indexOf('\n');
       part = part.slice(0, idx);
-      return fillJson(part);
+      return fillJson(part, id);
     };
     if (!(XREF[LANG].length > 100)) {
       $.get(LANG + "/xref.json", null, function(it){
@@ -716,7 +716,7 @@
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && id ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && id && !(20000 < id && id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null

@@ -349,7 +349,7 @@ window.do-load = ->
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
     part = part.slice(0, idx)
-    fill-json part
+    fill-json part, id
 
   $.get "#LANG/xref.json", null, (-> XREF[LANG] = it), \text unless XREF[LANG].length > 100
   $.get "#LANG/index.json", null, init-autocomplete, \text
@@ -442,7 +442,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
-      <h1 class='title'>#{ h title }#{ if isWebKit and id then "<audio src='#{
+      <h1 class='title'>#{ h title }#{ if isWebKit and id and not (20000 < id < 50000) then "<audio src='#{
           "http://twblg.dict.edu.tw/holodict_new/audio/#{
             ((100000 + Number id) - /^1/)
           }.mp3"
