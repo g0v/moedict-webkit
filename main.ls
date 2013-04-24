@@ -11,7 +11,7 @@ isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
 entryHistory = []
 Index = null
-XREF = { t: "" a: "" }
+XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"' }
 
 try
   throw unless isCordova and not DEBUGGING
@@ -52,19 +52,6 @@ window.show-info = ->
   ref.addEventListener \exit     on-exit
 
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
-
-window.press-lang = (lang='', id='') ->
-  $('body').removeClass("lang-t")
-  $('.ui-autocomplete li').remove!
-  LANG := lang || (if LANG is \a then \t else \a)
-  $.get "#LANG/xref.json", null, (-> XREF[LANG] = it), \text unless XREF[LANG]
-  $.get "#LANG/index.json", null, (->
-    init-autocomplete it
-    $('body').addClass("lang-#LANG")
-    $ \#query .val id
-    window.do-lookup(id || {a: \萌 t: \發穎 h: \發芽}[LANG])
-    setPref \lang LANG
-  ), \text
 
 window.press-down = ->
   if navigator.user-agent is /Android\s*[12]\./
@@ -185,6 +172,23 @@ window.do-load = ->
     return true
 
   prevId = prevVal = null
+  window.press-lang = (lang='', id='') ->
+    $('.ui-autocomplete li').remove!
+    $ \#query .val ''
+    prevId := null
+    prevVal := null
+    LANG := lang || (if LANG is \a then \t else \a)
+    id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
+    $.get "#LANG/xref.json", null, (-> XREF[LANG] = it), \text unless XREF[LANG].length > 100
+    $.get "#LANG/index.json", null, (->
+      init-autocomplete it
+      $('body').removeClass("lang-t")
+      $('body').addClass("lang-#LANG")
+      $ \#query .val id
+      window.do-lookup id
+      setPref \lang LANG
+    ), \text
+
   lenToRegex = {}
 
   bucket-of = ->
@@ -235,7 +239,7 @@ window.do-load = ->
       $('#result h1:first').text(it).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
-    return fill-json MOE if it is \萌
+    return fill-json MOE, \萌 if it is \萌
     return load-json it
 
   load-json = (id, cb) ->
@@ -317,10 +321,11 @@ window.do-load = ->
                 if LANG is \t then \華 else \閩
               }</span>
       """
-      for word in part / \,
+      html += (for word in part / \,
         word ||= id
         h = "#{ if LANG is \t then \# else \#! }"
-        html += "<a class='xref' href='#h#word'>#word</a>"
+        "<a class='xref' href='#h#word'>#word</a>"
+      ) * \、
       html += '</span></div></div>'
     cb(htmlCache[LANG][id] = html)
     return
@@ -346,10 +351,8 @@ window.do-load = ->
     part = part.slice(0, idx)
     fill-json part
 
-  $.get "#LANG/xref.json", null, (->
-    XREF[LANG] = it
-    $.get "#LANG/index.json", null, init-autocomplete, \text
-  ), \text
+  $.get "#LANG/xref.json", null, (-> XREF[LANG] = it), \text unless XREF[LANG].length > 100
+  $.get "#LANG/index.json", null, init-autocomplete, \text
   return init!
 
 const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'

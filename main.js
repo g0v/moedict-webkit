@@ -20,8 +20,8 @@
   entryHistory = [];
   Index = null;
   XREF = {
-    t: "",
-    a: ""
+    t: '"發穎":"萌,抽芽,發芽,萌芽"',
+    a: '"萌":"發穎"'
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
@@ -92,29 +92,6 @@
   };
   callLater = function(it){
     return setTimeout(it, isMobile ? 10 : 1);
-  };
-  window.pressLang = function(lang, id){
-    lang == null && (lang = '');
-    id == null && (id = '');
-    $('body').removeClass("lang-t");
-    $('.ui-autocomplete li').remove();
-    LANG = lang || (LANG === 'a' ? 't' : 'a');
-    if (!XREF[LANG]) {
-      $.get(LANG + "/xref.json", null, function(it){
-        return XREF[LANG] = it;
-      }, 'text');
-    }
-    return $.get(LANG + "/index.json", null, function(it){
-      initAutocomplete(it);
-      $('body').addClass("lang-" + LANG);
-      $('#query').val(id);
-      window.doLookup(id || {
-        a: '萌',
-        t: '發穎',
-        h: '發芽'
-      }[LANG]);
-      return setPref('lang', LANG);
-    }, 'text');
   };
   window.pressDown = function(){
     var val;
@@ -306,6 +283,33 @@
       return true;
     };
     prevId = prevVal = null;
+    window.pressLang = function(lang, id){
+      lang == null && (lang = '');
+      id == null && (id = '');
+      $('.ui-autocomplete li').remove();
+      $('#query').val('');
+      prevId = null;
+      prevVal = null;
+      LANG = lang || (LANG === 'a' ? 't' : 'a');
+      id || (id = {
+        a: '萌',
+        t: '發穎',
+        h: '發芽'
+      }[LANG]);
+      if (!(XREF[LANG].length > 100)) {
+        $.get(LANG + "/xref.json", null, function(it){
+          return XREF[LANG] = it;
+        }, 'text');
+      }
+      return $.get(LANG + "/index.json", null, function(it){
+        initAutocomplete(it);
+        $('body').removeClass("lang-t");
+        $('body').addClass("lang-" + LANG);
+        $('#query').val(id);
+        window.doLookup(id);
+        return setPref('lang', LANG);
+      }, 'text');
+    };
     lenToRegex = {};
     bucketOf = function(it){
       var code;
@@ -387,7 +391,7 @@
         return;
       }
       if (it === '萌') {
-        return fillJson(MOE);
+        return fillJson(MOE, '萌');
       }
       return loadJson(it);
     };
@@ -481,7 +485,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, idx, i$, ref$, len$, word;
+      var h, html, idx, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -511,12 +515,16 @@
         part = part.slice(0, idx);
         html += '<div class="xrefs">';
         html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + (LANG === 't' ? '華' : '閩') + "</span>";
-        for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
-          word = ref$[i$];
-          word || (word = id);
-          h = (LANG === 't' ? '#' : '#!') + "";
-          html += "<a class='xref' href='" + h + word + "'>" + word + "</a>";
-        }
+        html += (function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
+            word = ref$[i$];
+            word || (word = id);
+            h = (LANG === 't' ? '#' : '#!') + "";
+            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+          }
+          return results$;
+        }()).join('、');
         html += '</span></div></div>';
       }
       cb(htmlCache[LANG][id] = html);
@@ -560,10 +568,12 @@
       part = part.slice(0, idx);
       return fillJson(part);
     };
-    $.get(LANG + "/xref.json", null, function(it){
-      XREF[LANG] = it;
-      return $.get(LANG + "/index.json", null, initAutocomplete, 'text');
-    }, 'text');
+    if (!(XREF[LANG].length > 100)) {
+      $.get(LANG + "/xref.json", null, function(it){
+        return XREF[LANG] = it;
+      }, 'text');
+    }
+    $.get(LANG + "/index.json", null, initAutocomplete, 'text');
     return init();
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
