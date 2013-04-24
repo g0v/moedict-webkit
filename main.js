@@ -269,7 +269,6 @@
       $('#query').val(title);
       if (!isCordova) {
         $('#cond').val("^" + title + "$");
-        $('#lookback').show();
       }
       input = $('#query').get(0);
       if (isMobile) {
@@ -307,6 +306,8 @@
       return $.get(LANG + "/index.json", null, function(it){
         initAutocomplete(it);
         $('body').removeClass("lang-t");
+        $('body').removeClass("lang-a");
+        $('body').removeClass("lang-h");
         $('body').addClass("lang-" + LANG);
         $('#query').val(id);
         window.doLookup(id);
