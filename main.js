@@ -268,12 +268,8 @@
       }
       $('#query').val(title);
       if (!isCordova) {
-        if (LANG === 'a') {
-          $('#cond').val("^" + title + "$");
-          $('#lookback').show();
-        } else {
-          $('#lookback').hide();
-        }
+        $('#cond').val("^" + title + "$");
+        $('#lookback').show();
       }
       input = $('#query').get(0);
       if (isMobile) {
