@@ -495,7 +495,7 @@
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
-      part = part.replace(/"([hbpdcnftrelsaqTAVCD_])"/g, function(arg$, k){
+      part = part.replace(/"([hbpdcnftrelsaqTAVCD_=])"/g, function(arg$, k){
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
@@ -553,6 +553,7 @@
       a: '"antonyms"',
       q: '"quote"',
       _: '"id"',
+      '=': '"audio_id"',
       T: '"trs"',
       A: '"alt"',
       V: '"vernacular"',
@@ -712,13 +713,13 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
-      var id, bopomofo, pinyin, trs, definitions, ref$, antonyms, synonyms;
-      id = arg$.id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms;
+      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && id && !(20000 < id && id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && audio_id && !(20000 < audio_id && audio_id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(audio_id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
