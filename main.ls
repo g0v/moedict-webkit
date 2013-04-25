@@ -103,9 +103,8 @@ window.do-load = ->
     setTimeout (-> cache-loading := no if cache-loading is token), 10000ms
     callLater ->
       id = if entryHistory.length then entryHistory[*-1] else MOE-ID
-      $ \#query .val id
-      $ \#cond .val "^#{id}$"
-      fetch id
+      location.hash = "##id"
+      window.grok-hash!
     return false
 
   try document.addEventListener \backbutton, (!->
@@ -220,7 +219,7 @@ window.do-load = ->
       id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     $ \#cond .val "^#{title}$"
-    entryHistory.push title
+    entryHistory.push "#{ if LANG is \a then '' else \! }#title"
     $(\.back).show! if isCordova
     fetch title
     return true

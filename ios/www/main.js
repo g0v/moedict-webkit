@@ -267,7 +267,9 @@
         return;
       }
       $('#query').val(title);
-      $('#cond').val("^" + title + "$");
+      if (!isCordova) {
+        $('#cond').val("^" + title + "$");
+      }
       input = $('#query').get(0);
       if (isMobile) {
         try {
@@ -304,6 +306,8 @@
       return $.get(LANG + "/index.json", null, function(it){
         initAutocomplete(it);
         $('body').removeClass("lang-t");
+        $('body').removeClass("lang-a");
+        $('body').removeClass("lang-h");
         $('body').addClass("lang-" + LANG);
         $('#query').val(id);
         window.doLookup(id);
@@ -491,7 +495,7 @@
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
       part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
-      part = part.replace(/"([hbpdcnftrelsaqTAVCD_])"/g, function(arg$, k){
+      part = part.replace(/"([hbpdcnftrelsaqTAVCD_=])"/g, function(arg$, k){
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
@@ -549,6 +553,7 @@
       a: '"antonyms"',
       q: '"quote"',
       _: '"id"',
+      '=': '"audio_id"',
       T: '"trs"',
       A: '"alt"',
       V: '"vernacular"',
@@ -568,13 +573,11 @@
       part = part.slice(0, idx);
       return fillJson(part, id);
     };
-    if (!(XREF[LANG].length > 100)) {
-      $.get(LANG + "/xref.json", null, function(it){
-        return XREF[LANG] = it;
-      }, 'text');
-    }
-    $.get(LANG + "/index.json", null, initAutocomplete, 'text');
-    return init();
+    $.get(LANG + "/xref.json", null, function(it){
+      XREF[LANG] = it;
+      return init();
+    }, 'text');
+    return $.get(LANG + "/index.json", null, initAutocomplete, 'text');
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
   function initAutocomplete(text){
@@ -710,13 +713,13 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
-      var id, bopomofo, pinyin, trs, definitions, ref$, antonyms, synonyms;
-      id = arg$.id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms;
+      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && id && !(20000 < id && id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && audio_id && !(20000 < audio_id && audio_id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(audio_id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
