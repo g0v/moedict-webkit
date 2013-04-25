@@ -298,7 +298,7 @@ window.do-load = ->
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaqTAVCD_])"/g (, k) -> keyMap[k]
+    part.=replace /"([hbpdcnftrelsaqTAVCD_=])"/g (, k) -> keyMap[k]
     h = "#{ if LANG is \a then \# else \#! }"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if JSON?parse?
@@ -338,7 +338,7 @@ window.do-load = ->
     h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
     c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
     t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
-    a: \"antonyms" q: \"quote" _: \"id"
+    a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id"
 
     T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   }
@@ -439,13 +439,13 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  result = ls heteronyms, ({id, bopomofo, pinyin, trs, definitions=[], antonyms, synonyms}) ->
+  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs, definitions=[], antonyms, synonyms}) ->
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
-      <h1 class='title'>#{ h title }#{ if isWebKit and id and not (20000 < id < 50000) then "<audio src='#{
+      <h1 class='title'>#{ h title }#{ if isWebKit and audio_id and not (20000 < audio_id < 50000) then "<audio src='#{
           "http://twblg.dict.edu.tw/holodict_new/audio/#{
-            ((100000 + Number id) - /^1/)
+            ((100000 + Number audio_id) - /^1/)
           }.mp3"
       }' controls></audio>" else ''}</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
