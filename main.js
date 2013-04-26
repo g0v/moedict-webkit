@@ -174,9 +174,8 @@
       callLater(function(){
         var id;
         id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
-        $('#query').val(id);
-        $('#cond').val("^" + id + "$");
-        return fetch(id);
+        location.hash = "#" + id;
+        return window.grokHash();
       });
       return false;
     };
@@ -358,7 +357,7 @@
         return true;
       }
       $('#cond').val("^" + title + "$");
-      entryHistory.push(title);
+      entryHistory.push((LANG === 'a' ? '' : '!') + "" + title);
       if (isCordova) {
         $('.back').show();
       }
