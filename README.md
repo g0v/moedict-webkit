@@ -19,6 +19,16 @@ gem install sass
 
 ## 建置
 
+## 建置離線檔案
+
+建置離線瀏覽所需要的檔案:
+
+```
+make offline
+```
+
+## 手動逐步建置
+
 來源 JSON 檔 `dict-revised.unicode.json` 及 `dict-revised.pua.json` 由
 <https://github.com/g0v/moedict-data> 提供， 再經由
 <https://github.com/g0v/moedict-epub> 造字轉換程式 `json2unicode.pl` 轉為
