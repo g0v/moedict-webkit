@@ -4,10 +4,14 @@
 再經由 https://github.com/g0v/moedict-epub/ 造字轉換程式
 `json2unicode.pl` 轉為 Unicode 編碼。
 
-離線版 `pack` 資料目錄由 `json2prefix.ls`、`autolinks.ls`
-程式產生。
+`pack`、`a` 及 `t` 資料目錄由 `json2prefix.ls`、
+`autolink.ls` 及 `link2pack.pl` 程式產生：
 
-線上版 `a` 資料目錄由 `pack/txt2autolink.ls` 程式產生。
+```
+lsc autolink.ls > autolinked.txt
+# Run until it's not writing anymore, then ^C it
+perl link2pack.pl
+```
 
 `styles.css` 用到的四個字形檔（不得為商業利用）可於此取得：
 https://github.com/g0v/moedict-epub/tree/master/fontforge
