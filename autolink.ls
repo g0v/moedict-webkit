@@ -7,7 +7,6 @@ pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 LTM-regexes = []
 Threads = require \webworker-threads
 pool = Threads.create-pool 8
-pool.all.eval("var precomputed = #precomputed;")
 pool.all.eval("var pre2 = #pre2;")
 pool.all.eval("var lenToRegex, LTMRegexes = [];")
 pool.all.eval(init);
@@ -27,6 +26,7 @@ function proc (struct, title, idx)
     "t":"#title"
   """)
 
+lenToRegex = {}
 function init ()
   lenToRegex := pre2.lenToRegex
   lens = []
