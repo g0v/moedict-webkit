@@ -32,6 +32,8 @@ while (<STDIN>) {
         $prepack{$bucket} = qq<{"$title":$_>;
     }
 }
+
+mkdir "ptck" unless -e "ptck";
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
     File::Slurp::write_file("p${lang}ck/$k.txt", $v);
