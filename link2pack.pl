@@ -35,7 +35,7 @@ while (<STDIN>) {
     }
 }
 
-mkdir "ptck" unless -e "ptck";
+mkdir "p${lang}ck" unless -e "p${lang}ck";
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
     File::Slurp::write_file("p${lang}ck/$k.txt", $v);
