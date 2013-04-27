@@ -9,7 +9,6 @@
 
 ```
 lsc autolink.ls > autolinked.txt
-# Run until it's not writing anymore, then ^C it
 perl link2pack.pl
 ```
 
