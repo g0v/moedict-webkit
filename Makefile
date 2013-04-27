@@ -13,9 +13,9 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
-moedict-data/dict-revised.json :: checkout
+moedict-data :: checkout
 
-offline :: moedict-data/dict-revised.json
+offline :: moedict-data
 	ln -fs ../moedict-data/dict-revised.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
@@ -23,9 +23,10 @@ offline :: moedict-data/dict-revised.json
 	ln -fs moedict-epub/dict-revised.pua.json              dict-revised.pua.json
 	ln -fs moedict-data-twblg/dict-twblg.json              dict-twblg.json 
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json 
-	lsc json2prefix.ls
+	lsc json2prefix.ls a
 	lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
+	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl a < t.txt
 
