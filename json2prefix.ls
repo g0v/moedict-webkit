@@ -1,5 +1,21 @@
 require! fs
-entries = JSON.parse(fs.read-file-sync \dict-twblg.json) ++ JSON.parse(fs.read-file-sync \dict-twblg-ext.json)
+lang = process.argv.2
+
+unless lang in <[ a t ]>
+  console.log "Please invoke this as 'json2prefix.ls a' or 'json2prefix.ls t'."
+  process.exit!
+
+fs.mkdir-sync lang unless fs.exists-sync lang
+grok = -> JSON.parse(fs.read-file-sync it)
+dump = (file, data) ->
+  console.log "Writing: #file"
+  fs.write-file-sync file, JSON.stringify data
+
+if lang is \t
+  entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
+else
+  entries = grok(\dict-revised.pua.json)
+
 prefix = {}
 defs = {}
 buckets = {}
@@ -71,8 +87,8 @@ for len in [2 3 4]
   re = re.slice(2).replace(/[-{}*+?.,\\#\s]/g, "\\$&")
   re += "]" if len is 2
   re += ")" if len isnt 2
-  fs.write-file-sync "lenToRegex.#len.json" JSON.stringify {"#len": re}
+  dump "#lang/lenToRegex.#len.json" {"#len": re}
   lenToRegex[len] = re
 
-fs.write-file-sync \precomputed.json JSON.stringify { abbrevToTitle }
-fs.write-file-sync \lenToRegex.json JSON.stringify { lenToRegex }
+dump "#lang/precomputed.json" { abbrevToTitle }
+dump "#lang/lenToRegex.json" { lenToRegex }
