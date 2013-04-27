@@ -66,9 +66,11 @@ grok = -> JSON.parse(
 entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
 prefix = {}
 i = 0
+todo = 0
 for {t:title, h:heteronyms}:entry in entries
   continue if title is /\{\[[0-9a-f]{4}\]\}/ # Unsubstituted
   continue if title is /\uDB40[\uDD00-\uDD0F]/ # Variant
+  ++todo
   pre = title.slice(0, 1)
   code = pre.charCodeAt(0)
   if 0xD800 <= code <= 0xDBFF
@@ -87,4 +89,6 @@ for {t:title, h:heteronyms}:entry in entries
   )
   idx = code % 1024
   chunk = JSON.stringify entry
-  pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) -> console.log x
+  pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
+    console.log x
+    process.exit! unless --todo
