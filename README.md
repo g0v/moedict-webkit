@@ -8,8 +8,11 @@
 `autolink.ls` 及 `link2pack.pl` 程式產生：
 
 ```
+lsc json2prefix.ls a
 lsc autolink.ls a > a.txt
 perl link2pack.pl a < a.txt
+
+lsc json2prefix.ls t
 lsc autolink.ls t > t.txt
 perl link2pack.pl a < t.txt
 ```
