@@ -8,8 +8,10 @@
 `autolink.ls` 及 `link2pack.pl` 程式產生：
 
 ```
-lsc autolink.ls > autolinked.txt
-perl link2pack.pl
+lsc autolink.ls a > a.txt
+perl link2pack.pl a < a.txt
+lsc autolink.ls t > t.txt
+perl link2pack.pl a < t.txt
 ```
 
 `styles.css` 用到的四個字形檔（不得為商業利用）可於此取得：

@@ -1,4 +1,8 @@
 require! <[ fs ]>
+lang = process.argv.2
+unless lang in <[ a t ]>
+  console.log "Please invoke this as 'autolink.ls a' or 'autolink t'."
+  process.exit!
 precomputed = fs.read-file-sync \precomputed.json
 pre2 = fs.read-file-sync \lenToRegex.json
 LTM-regexes = []
@@ -63,7 +67,12 @@ grok = -> JSON.parse(
     .replace(/"id"/g                        \"_")
     .replace(/"audio_id"/g                  \"=")
 )
-entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
+
+if lang is \t
+  entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
+else
+  entries = grok(\dict-revised.pua.json)
+
 prefix = {}
 i = 0
 todo = 0

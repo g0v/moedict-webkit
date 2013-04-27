@@ -1,12 +1,20 @@
 #!/usr/bin/perl
 use 5.14.0;
 use utf8;
+my $lang = shift;
+unless ($lang ~~ [qw[ t a ]] and not -t STDIN) {
+    die << '.';
+Please invoke this as one of:
+    perl link2pack.pl a < a.txt
+    perl link2pack.pl t < t.txt
+.
+}
 use Encode;
 use File::Slurp;
-open FH, '<:raw', 'autolinked.txt';
+binmode STDIN, ':raw';
 my %prepack;
 my %seen;
-while (<FH>) {
+while (<STDIN>) {
     chomp;
     s/^(\d+) (\S+) // or die $_;
     # s/\x{fffb}\K([^"]*)/$1 =~ s![`~]!!gr/eg;
@@ -16,7 +24,7 @@ while (<FH>) {
     my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
     next if $file =~ /[⿰⿸]/;
     next if $seen{$file}++;
-    File::Slurp::write_file("t/$file.json", $_);
+    File::Slurp::write_file("$lang/$file.json", $_);
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>
     }
@@ -26,8 +34,5 @@ while (<FH>) {
 }
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
-    File::Slurp::write_file("ptck/$k.txt", $v);
-}
-sub quote {
-    $_[0] =~ s!([\x00-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf4][\x80-\xbf]{3})!<a href='#$1'>$1</a>!gr;
+    File::Slurp::write_file("p${lang}ck/$k.txt", $v);
 }
