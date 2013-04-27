@@ -28,7 +28,7 @@ offline :: moedict-data
 	perl link2pack.pl a < a.txt
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
-	perl link2pack.pl a < t.txt
+	perl link2pack.pl t < t.txt
 
 all :: data/0/100.html
 	tar jxf data.tar.bz2
