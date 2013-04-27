@@ -14,6 +14,8 @@ use File::Slurp;
 binmode STDIN, ':raw';
 my %prepack;
 my %seen;
+mkdir $lang;
+mkdir "p${lang}ck";
 while (<STDIN>) {
     chomp;
     s/^(\d+) (\S+) // or die $_;
