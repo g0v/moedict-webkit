@@ -14,7 +14,7 @@ perl link2pack.pl a < a.txt
 
 lsc json2prefix.ls t
 lsc autolink.ls t > t.txt
-perl link2pack.pl a < t.txt
+perl link2pack.pl t < t.txt
 ```
 
 `styles.css` 用到的四個字形檔（不得為商業利用）可於此取得：
