@@ -4,7 +4,7 @@
 再經由 https://github.com/g0v/moedict-epub/ 造字轉換程式
 `json2unicode.pl` 轉為 Unicode 編碼。
 
-離線版 `pack` 資料目錄由 `json2prefix.ls`、`autolinks.ls`
+離線版 `pack` 資料目錄由 `json2prefix.ls`、`autolink.ls`
 程式產生。
 
 線上版 `a` 資料目錄由 `pack/txt2autolink.ls` 程式產生。
