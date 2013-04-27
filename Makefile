@@ -9,7 +9,7 @@ moedict-data/dict-revised.json :: checkout
 
 
 deps ::
-	npm install --dev
+	npm install webworker-threads
 
 checkout ::
 	-git clone https://github.com/g0v/moedict-data.git
