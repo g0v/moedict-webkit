@@ -1,4 +1,4 @@
-const DEBUGGING = no
+const DEBUGGING = off
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -103,8 +103,7 @@ window.do-load = ->
     setTimeout (-> cache-loading := no if cache-loading is token), 10000ms
     callLater ->
       id = if entryHistory.length then entryHistory[*-1] else MOE-ID
-      location.hash = "##id"
-      window.grok-hash!
+      window.grok-val id
     return false
 
   try document.addEventListener \backbutton, (!->
@@ -136,23 +135,26 @@ window.do-load = ->
     else if location.hash isnt /^#./
       fetch MOE-ID
 
+  window.grok-val = grok-val = (val) ->
+    lang = \a
+    if val.0 is \!
+      lang = \t
+      val.=substr 1
+    if lang isnt LANG
+      LANG := LANG
+      prevVal = ''
+      return window.press-lang lang, val
+    val = b2g val
+    return true if val is prevVal
+    $ \#query .show!
+    fill-query val
+    fetch val
+    return true if val is prevVal
+    return false
+
   window.grok-hash = grok-hash = ->
     return false unless location.hash is /^#./
-    try
-      val = decodeURIComponent location.hash.substr 1
-      lang = \a
-      if val.0 is \!
-        lang = \t
-        val.=substr 1
-      if lang isnt LANG
-        LANG := LANG
-        prevVal = ''
-        return window.press-lang lang, val
-      return true if val is prevVal
-      $ \#query .show!
-      fill-query val
-      fetch val
-      return true if val is prevVal
+    try grok-val decodeURIComponent location.hash.substr 1
     return false
 
   window.fill-query = fill-query = ->
@@ -219,7 +221,8 @@ window.do-load = ->
       id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     $ \#cond .val "^#{title}$"
-    entryHistory.push "#{ if LANG is \a then '' else \! }#title"
+    hist = "#{ if LANG is \a then '' else \! }#title"
+    entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
     $(\.back).show! if isCordova
     fetch title
     return true
