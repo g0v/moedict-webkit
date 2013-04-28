@@ -105,7 +105,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -174,8 +174,7 @@
       callLater(function(){
         var id;
         id = entryHistory.length ? entryHistory[entryHistory.length - 1] : MOEID;
-        location.hash = "#" + id;
-        return window.grokHash();
+        return window.grokVal(id);
       });
       return false;
     };
@@ -229,32 +228,36 @@
         return fetch(MOEID);
       }
     };
+    window.grokVal = grokVal = function(val){
+      var lang, prevVal;
+      lang = 'a';
+      if (val[0] === '!') {
+        lang = 't';
+        val = val.substr(1);
+      }
+      if (lang !== LANG) {
+        LANG = LANG;
+        prevVal = '';
+        return window.pressLang(lang, val);
+      }
+      val = b2g(val);
+      if (val === prevVal) {
+        return true;
+      }
+      $('#query').show();
+      fillQuery(val);
+      fetch(val);
+      if (val === prevVal) {
+        return true;
+      }
+      return false;
+    };
     window.grokHash = grokHash = function(){
-      var val, lang, prevVal;
       if (!/^#./.test(location.hash)) {
         return false;
       }
       try {
-        val = decodeURIComponent(location.hash.substr(1));
-        lang = 'a';
-        if (val[0] === '!') {
-          lang = 't';
-          val = val.substr(1);
-        }
-        if (lang !== LANG) {
-          LANG = LANG;
-          prevVal = '';
-          return window.pressLang(lang, val);
-        }
-        if (val === prevVal) {
-          return true;
-        }
-        $('#query').show();
-        fillQuery(val);
-        fetch(val);
-        if (val === prevVal) {
-          return true;
-        }
+        grokVal(decodeURIComponent(location.hash.substr(1)));
       } catch (e$) {}
       return false;
     };
@@ -333,7 +336,7 @@
       return $('.erase').hide();
     };
     window.doLookup = doLookup = function(val){
-      var title, id;
+      var title, id, hist;
       title = replace$.call(val, /[（(].*/, '');
       if (isCordova || !Index) {
         if (/object/.exec(title)) {
@@ -357,7 +360,10 @@
         return true;
       }
       $('#cond').val("^" + title + "$");
-      entryHistory.push((LANG === 'a' ? '' : '!') + "" + title);
+      hist = (LANG === 'a' ? '' : '!') + "" + title;
+      if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
+        entryHistory.push(hist);
+      }
       if (isCordova) {
         $('.back').show();
       }
