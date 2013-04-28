@@ -209,12 +209,7 @@
             val = replace$.call(val, /.*\#/, '');
           }
           val || (val = $(this).text());
-          if (val === $('#query').val()) {
-            return;
-          }
-          $('#query').val(val);
-          $('#cond').val("^" + val + "$");
-          fillQuery(val);
+          window.grokVal(val);
           return false;
         });
       }
@@ -230,8 +225,11 @@
     };
     window.grokVal = grokVal = function(val){
       var lang, prevVal;
+      if (/</.exec(val)) {
+        return;
+      }
       lang = 'a';
-      if (val[0] === '!') {
+      if (/^!/.exec(val + "")) {
         lang = 't';
         val = val.substr(1);
       }
@@ -863,8 +861,15 @@
     "\u030d": '$'
   };
   re = function(it){
-    return Object.keys(it).sort(function(){
-      return arguments[1].length - arguments[0].length;
+    var k;
+    return (function(){
+      var results$ = [];
+      for (k in it) {
+        results$.push(k);
+      }
+      return results$;
+    }()).sort(function(x, y){
+      return y.length - x.length;
     }).join('|');
   };
   C = re(Consonants);
