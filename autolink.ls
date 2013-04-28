@@ -3,36 +3,31 @@ lang = process.argv.2
 unless lang in <[ a t ]>
   console.log "Please invoke this as 'autolink.ls a' or 'autolink t'."
   process.exit!
-precomputed = fs.read-file-sync \precomputed.json
-pre2 = fs.read-file-sync \lenToRegex.json
+pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 LTM-regexes = []
 Threads = require \webworker-threads
 pool = Threads.create-pool 8
-pool.all.eval("var precomputed = #precomputed;")
 pool.all.eval("var pre2 = #pre2;")
-pool.all.eval("var abbrevToTitle, lenToRegex, LTMRegexes = [];")
+pool.all.eval("var lenToRegex, LTMRegexes = [];")
 pool.all.eval(init);
 pool.all.eval('init()');
 pool.all.eval(proc);
 
-{ abbrevToTitle, lenToRegex } = JSON.parse precomputed
 function proc (struct, title, idx)
   chunk = JSON.stringify(struct)
   for re in LTM-regexes
-    #chunk.=replace(re, -> escape """<a href='##{ (abbrevToTitle[it] || it) }'>#it</a>""")
     chunk.=replace(re, -> escape "`#it~")
   esc = escape title
   title .= replace(
     LTM-regexes[*-1]
-    #-> """<a href='##{ abbrevToTitle[it] || it}'>#it</a>"""
     -> "`#it~"
   ) unless title.length is 1
   return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
     "t":"#title"
   """)
 
+lenToRegex = {}
 function init ()
-  abbrevToTitle := precomputed.abbrevToTitle
   lenToRegex := pre2.lenToRegex
   lens = []
   for len of lenToRegex
@@ -93,7 +88,6 @@ for {t:title, h:heteronyms}:entry in entries
   entry.t = ""
   title.=replace(
     LTM-regexes[*-1]
-    #-> """<a href='##{ ( abbrevToTitle[it] || it) }'>#it</a>"""
     -> "`#it~"
   )
   idx = code % 1024
