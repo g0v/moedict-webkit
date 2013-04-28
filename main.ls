@@ -123,10 +123,7 @@ window.do-load = ->
         val = $(@).attr(\href)
         val -= /.*\#/ if val
         val ||= $(@).text!
-        return if val is $ \#query .val!
-        $ \#query .val val
-        $ \#cond .val "^#{val}$"
-        fill-query val
+        window.grok-val val
         return false
     return if window.grok-hash!
     if isCordova
@@ -136,8 +133,9 @@ window.do-load = ->
       fetch MOE-ID
 
   window.grok-val = grok-val = (val) ->
+    return if val is /</
     lang = \a
-    if val.0 is \!
+    if "#val" is /^!/
       lang = \t
       val.=substr 1
     if lang isnt LANG
@@ -525,7 +523,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
 const Consonants = { p:\ㄅ b:\ㆠ ph:\ㄆ m:\ㄇ t:\ㄉ th:\ㄊ n:\ㄋ l:\ㄌ k:\ㄍ g:\ㆣ kh:\ㄎ ng:\ㄫ h:\ㄏ tsi:\ㄐ ji:\ㆢ tshi:\ㄑ si:\ㄒ ts:\ㄗ j:\ㆡ tsh:\ㄘ s:\ㄙ }
 const Vowels = { a:\ㄚ an: \ㄢ ang: \ㄤ ann:\ㆩ oo:\ㆦ onn:\ㆧ o:\ㄜ e:\ㆤ enn:\ㆥ ai:\ㄞ ainn:\ㆮ au:\ㄠ aunn:\ㆯ am:\ㆰ om:\ㆱ m:\ㆬ ong:\ㆲ ng:\ㆭ i:\ㄧ inn:\ㆪ u:\ㄨ unn:\ㆫ ing:\ㄧㄥ in:\ㄧㄣ un:\ㄨㄣ }
 const Tones = { p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" "\u0300":\˪ "\u0301":\ˋ "\u0302":\ˊ "\u0304":\˫ "\u030d":\$ }
-re = -> Object.keys(it).sort(-> &1.length - &0.length).join \|
+re = -> [k for k of it].sort((x, y) -> y.length - x.length).join \|
 const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
