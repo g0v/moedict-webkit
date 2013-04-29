@@ -1121,7 +1121,8 @@ body.overflow-scrolling-false .ui-autocomplete {
     bottom: auto !important;
     left: 10px !important;
     width: 320px !important;
-    overflow: scroll !important; } }
+    overflow: scroll !important;
+    max-height: 80% !important; } }
 @media only screen and (min-width: 768px) {
   input.back {
     display: block; } }
