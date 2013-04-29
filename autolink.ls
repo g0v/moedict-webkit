@@ -8,7 +8,7 @@ LTM-regexes = []
 Threads = require \webworker-threads
 pool = Threads.create-pool 8
 pool.all.eval("var pre2 = #pre2;")
-pool.all.eval("var lenToRegex, LTMRegexes = [];")
+pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
 pool.all.eval(init);
 pool.all.eval('init()');
 pool.all.eval(proc);
@@ -18,18 +18,17 @@ function proc (struct, title, idx)
   for re in LTM-regexes
     chunk.=replace(re, -> escape "`#it~")
   esc = escape title
-  title .= replace(
-    LTM-regexes[*-1]
-    -> "`#it~"
-  ) unless title.length is 1
+  for len in lens | len < title.length
+    title.=replace(lenToRegex[len], -> escape "`#it~")
   return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
-    "t":"#title"
+    "t":"#{ unescape title }"
   """)
 
 lenToRegex = {}
+lens = []
 function init ()
   lenToRegex := pre2.lenToRegex
-  lens = []
+  lens := []
   for len of lenToRegex
     lens.push len
     lenToRegex[len] = new RegExp lenToRegex[len], \g
