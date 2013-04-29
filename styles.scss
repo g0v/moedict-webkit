@@ -484,6 +484,7 @@ body.overflow-scrolling-false .ui-autocomplete {
         left: 10px !important;
         width: 320px !important;
         overflow: scroll !important;
+        max-height: 80% !important;
     }
 }
 
