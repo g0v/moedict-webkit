@@ -13,6 +13,14 @@ entryHistory = []
 Index = null
 XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"' }
 
+CACHED = {}
+GET = (url, data, onSuccess, dataType) ->
+  if data instanceof Function
+    [data, dataType, onSuccess] = [null, onSuccess, data]
+  return onSuccess(CACHED[url]) if CACHED[url]
+  result <- $.get url, data, _, dataType
+  return onSuccess(CACHED[url] = result)
+
 try
   throw unless isCordova and not DEBUGGING
   document.addEventListener \deviceready (->
@@ -178,8 +186,8 @@ window.do-load = ->
     prevVal := null
     LANG := lang || (if LANG is \a then \t else \a)
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
-    $.get "#LANG/xref.json", null, (-> XREF[LANG] = it), \text unless XREF[LANG].length > 100
-    $.get "#LANG/index.json", null, (->
+    GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
+    GET "#LANG/index.json" (->
       init-autocomplete it
       $('body').removeClass("lang-t")
       $('body').removeClass("lang-a")
@@ -245,12 +253,9 @@ window.do-load = ->
     return load-json it
 
   load-json = (id, cb) ->
-    return $.get("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
+    return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
-    return fill-bucket id, bucket if bucketCache[LANG][bucket]
-    json <- $.get "p#{LANG}ck/#bucket.txt"
-    bucketCache[LANG][bucket] = json
     return fill-bucket id, bucket
 
   set-pinyin-bindings = ->
@@ -332,8 +337,6 @@ window.do-load = ->
     cb(htmlCache[LANG][id] = html)
     return
 
-  bucketCache = {t:{}, a:{}}
-
   keyMap = {
     h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
     c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
@@ -344,7 +347,7 @@ window.do-load = ->
   }
 
   fill-bucket = (id, bucket) ->
-    raw = bucketCache[LANG][bucket]
+    raw <- GET "p#{LANG}ck/#bucket.txt"
     key = escape id
     idx = raw.indexOf('"' + key + '"');
     return if idx is -1
@@ -353,8 +356,8 @@ window.do-load = ->
     part = part.slice(0, idx)
     fill-json part, id
 
-  $.get "#LANG/xref.json", null, (-> XREF[LANG] = it; init!), \text
-  $.get "#LANG/index.json", null, init-autocomplete, \text
+  GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
+  GET "#LANG/index.json", init-autocomplete, \text
 
 const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'
 
