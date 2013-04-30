@@ -97,10 +97,20 @@
         this.el.setAttribute('src', urls[0]);
         this.el.setAttribute('autoplay', true);
         this.el.setAttribute('controls', true);
-        this.el.addEventListener('error', onloaderror);
+        this.el.addEventListener('error', function(){
+          onloaderror;
+          try {
+            return this.el.remove();
+          } catch (e$) {}
+        });
         this.el.addEventListener('ended', onend);
-        this.el.play();
+        try {
+          this.el.remove();
+        } catch (e$) {}
       }
+      prototype.play = function(){
+        return this.el.play();
+      };
       return Howl;
     }());
   }

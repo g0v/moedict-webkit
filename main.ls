@@ -57,9 +57,9 @@ if isCordova or isMobile
       @el.set-attribute \src urls.0
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \error onloaderror
-      @el.add-event-listener \ended onend
-      @el.play!
+      @el.add-event-listener \error -> onloaderror; try @el.remove!
+      @el.add-event-listener \ended onend; try @el.remove!
+    play: -> @el.play!
 
 window.play-audio = (el, url) ->
   done = -> $(el).fadeIn \fast
