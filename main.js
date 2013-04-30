@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, e, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, CACHED, GET, e, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -22,6 +22,19 @@
   XREF = {
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
     a: '"萌":"發穎"'
+  };
+  CACHED = {};
+  GET = function(url, data, onSuccess, dataType){
+    var ref$;
+    if (data instanceof Function) {
+      ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
+    }
+    if (CACHED[url]) {
+      return onSuccess(CACHED[url]);
+    }
+    return $.get(url, data, function(result){
+      return onSuccess(CACHED[url] = result);
+    }, dataType);
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
@@ -105,7 +118,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket;
     if (!isDeviceReady) {
       return;
     }
@@ -298,12 +311,10 @@
         t: '發穎',
         h: '發芽'
       }[LANG]);
-      if (!(XREF[LANG].length > 100)) {
-        $.get(LANG + "/xref.json", null, function(it){
-          return XREF[LANG] = it;
-        }, 'text');
-      }
-      return $.get(LANG + "/index.json", null, function(it){
+      GET(LANG + "/xref.json", function(it){
+        return XREF[LANG] = it;
+      }, 'text');
+      return GET(LANG + "/index.json", function(it){
         initAutocomplete(it);
         $('body').removeClass("lang-t");
         $('body').removeClass("lang-a");
@@ -405,18 +416,12 @@
     loadJson = function(id, cb){
       var bucket;
       if (!isCordova) {
-        return $.get(LANG + "/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
+        return GET(LANG + "/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
           return fillJson(it, id, cb);
         }, 'text');
       }
       bucket = bucketOf(id);
-      if (bucketCache[LANG][bucket]) {
-        return fillBucket(id, bucket);
-      }
-      return $.get("p" + LANG + "ck/" + bucket + ".txt", function(json){
-        bucketCache[LANG][bucket] = json;
-        return fillBucket(id, bucket);
-      });
+      return fillBucket(id, bucket);
     };
     setPinyinBindings = function(){
       return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
@@ -536,10 +541,6 @@
       }
       cb(htmlCache[LANG][id] = html);
     };
-    bucketCache = {
-      t: {},
-      a: {}
-    };
     keyMap = {
       h: '"heteronyms"',
       b: '"bopomofo"',
@@ -564,23 +565,24 @@
       D: '"dialects"'
     };
     fillBucket = function(id, bucket){
-      var raw, key, idx, part;
-      raw = bucketCache[LANG][bucket];
-      key = escape(id);
-      idx = raw.indexOf('"' + key + '"');
-      if (idx === -1) {
-        return;
-      }
-      part = raw.slice(idx + key.length + 3);
-      idx = part.indexOf('\n');
-      part = part.slice(0, idx);
-      return fillJson(part, id);
+      return GET("p" + LANG + "ck/" + bucket + ".txt", function(raw){
+        var key, idx, part;
+        key = escape(id);
+        idx = raw.indexOf('"' + key + '"');
+        if (idx === -1) {
+          return;
+        }
+        part = raw.slice(idx + key.length + 3);
+        idx = part.indexOf('\n');
+        part = part.slice(0, idx);
+        return fillJson(part, id);
+      });
     };
-    $.get(LANG + "/xref.json", null, function(it){
+    GET(LANG + "/xref.json", function(it){
       XREF[LANG] = it;
       return init();
     }, 'text');
-    return $.get(LANG + "/index.json", null, initAutocomplete, 'text');
+    return GET(LANG + "/index.json", initAutocomplete, 'text');
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
   function initAutocomplete(text){
