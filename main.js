@@ -86,6 +86,29 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
+  window.playAudio = function(el, url){
+    var done, play;
+    done = function(){
+      return $(el).fadeIn();
+    };
+    play = function(){
+      var audio;
+      $(el).fadeOut();
+      audio = new Howl({
+        buffer: true,
+        urls: [url],
+        onend: done,
+        onloaderror: done
+      });
+      return audio.play();
+    };
+    if (window.Howl) {
+      return play();
+    }
+    return $.getScript('js/howler.min.js', function(){
+      return play();
+    });
+  };
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
@@ -713,18 +736,26 @@
     }
     return CJKRADICALS[idx + 1];
   }
+  function canPlayMp3(){
+    var a;
+    if (CACHED.canPlayMp3 != null) {
+      return CACHED.canPlayMp3;
+    }
+    a = document.createElement('audio');
+    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg;') : void 8, /no/, ''));
+  }
   function render(arg$){
     var title, heteronyms, radical, nrsCount, sCount, charHtml, result;
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
-      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms;
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && audio_id && !(20000 < audio_id && audio_id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(audio_id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && !(20000 < audio_id && audio_id < 50000) && canPlayMp3() ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/" + basename + ".mp3", "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>") : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
