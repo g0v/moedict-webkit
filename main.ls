@@ -50,6 +50,21 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
+#if isCordova
+#  class window.Howl
+#    ({ urls, onend, onloaderror }) ->
+#      return new Media urls.0, onend, onloaderror
+
+window.play-audio = (el, url) ->
+  done = -> $(el).fadeIn!
+  play = ->
+    $(el).fadeOut!
+    audio = new Howl { +buffer, urls: [url], onend: done, onloaderror: done }
+    audio.play!
+  return play! if window.Howl
+  <- $.getScript \js/howler.min.js
+  return play!
+
 window.show-info = ->
   ref = window.open \Android.html \_blank \location=no
   on-stop = ({url}) -> ref.close! if url is /quit\.html/
@@ -438,6 +453,11 @@ function render-radical (char)
   return char if idx % 2
   return CJK-RADICALS[idx + 1]
 
+function can-play-mp3
+  return CACHED.can-play-mp3 if CACHED.can-play-mp3?
+  a = document.createElement \audio
+  CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /no/)
+
 function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
@@ -446,11 +466,13 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
-      <h1 class='title'>#{ h title }#{ if isWebKit and audio_id and not (20000 < audio_id < 50000) then "<audio src='#{
-          "http://twblg.dict.edu.tw/holodict_new/audio/#{
-            ((100000 + Number audio_id) - /^1/)
-          }.mp3"
-      }' controls></audio>" else ''}</h1>#{
+      <h1 class='title'>#{ h title }#{
+        if audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
+          basename = (100000 + Number audio_id) - /^1/
+          mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
+          "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>"
+        else ''
+      }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin
               .replace(/（.*）/, '')
