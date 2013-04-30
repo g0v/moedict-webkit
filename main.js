@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, CACHED, GET, e, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -85,6 +85,24 @@
     try {
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
+  }
+  if (isCordova || isMobile) {
+    window.Howl = Howl = (function(){
+      Howl.displayName = 'Howl';
+      var prototype = Howl.prototype, constructor = Howl;
+      function Howl(arg$){
+        var urls, onend, onloaderror;
+        urls = arg$.urls, onend = arg$.onend, onloaderror = arg$.onloaderror;
+        this.el = document.createElement('audio');
+        this.el.setAttribute('src', urls[0]);
+        this.el.setAttribute('autoplay', true);
+        this.el.setAttribute('controls', true);
+        this.el.addEventListener('error', onloaderror);
+        this.el.addEventListener('ended', onend);
+        this.el.play();
+      }
+      return Howl;
+    }());
   }
   window.playAudio = function(el, url){
     var done, play;
