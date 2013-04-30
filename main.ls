@@ -50,10 +50,16 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
-#if isCordova
-#  class window.Howl
-#    ({ urls, onend, onloaderror }) ->
-#      return new Media urls.0, onend, onloaderror
+if isCordova or isMobile
+  class window.Howl
+    ({ urls, onend, onloaderror }) ->
+      @el = document.createElement \audio
+      @el.set-attribute \src urls.0
+      @el.set-attribute \autoplay true
+      @el.set-attribute \controls true
+      @el.add-event-listener \error onloaderror
+      @el.add-event-listener \ended onend
+      @el.play!
 
 window.play-audio = (el, url) ->
   done = -> $(el).fadeIn \fast
