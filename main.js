@@ -89,11 +89,11 @@
   window.playAudio = function(el, url){
     var done, play;
     done = function(){
-      return $(el).fadeIn();
+      return $(el).fadeIn('fast');
     };
     play = function(){
       var audio;
-      $(el).fadeOut();
+      $(el).fadeOut('fast');
       audio = new Howl({
         buffer: true,
         urls: [url],

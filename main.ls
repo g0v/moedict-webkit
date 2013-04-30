@@ -56,9 +56,9 @@ function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 #      return new Media urls.0, onend, onloaderror
 
 window.play-audio = (el, url) ->
-  done = -> $(el).fadeIn!
+  done = -> $(el).fadeIn \fast
   play = ->
-    $(el).fadeOut!
+    $(el).fadeOut \fast
     audio = new Howl { +buffer, urls: [url], onend: done, onloaderror: done }
     audio.play!
   return play! if window.Howl
