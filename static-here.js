@@ -42,7 +42,8 @@ try {
       'gif': 'image/gif',
       'txt': 'text/plain; charset=utf-8',
       'svg': 'image/svg+xml',
-      'ttf': 'application/x-font-ttf'
+      'ttf': 'application/x-font-ttf',
+      'apk': 'application/vnd.android.package-archive'
     };
     return {
       lookup: function (ext) {
