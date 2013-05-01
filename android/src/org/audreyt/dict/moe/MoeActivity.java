@@ -24,13 +24,9 @@ import android.view.*;
 
 import org.apache.cordova.*;
 
-public class MoeActivity extends DroidGap
-{
-    private KeyEvent event;
-
-	@Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+public class MoeActivity extends DroidGap {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.splash);
         this.setIntegerProperty("loadUrlTimeoutValue", 120000);

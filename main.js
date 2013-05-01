@@ -386,7 +386,7 @@
       if (0xD800 <= code && code <= 0xDBFF) {
         code = it.charCodeAt(1) - 0xDC00;
       }
-      return code % 1024;
+      return code % (LANG === 'a' ? 1024 : 128);
     };
     lookup = function(){
       var that;

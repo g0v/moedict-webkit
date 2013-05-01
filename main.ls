@@ -223,7 +223,7 @@ window.do-load = ->
     code = it.charCodeAt(0)
     if 0xD800 <= code <= 0xDBFF
       code = it.charCodeAt(1) - 0xDC00
-    return code % 1024
+    return code % (if LANG is \a then 1024 else 128)
 
   lookup = ->
     if $(\#query).val!
