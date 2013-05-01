@@ -89,7 +89,7 @@ for {t:title, h:heteronyms}:entry in entries
     LTM-regexes[*-1]
     -> "`#it~"
   )
-  idx = code % 1024
+  idx = code % (if lang is \a then 1024 else 128)
   chunk = JSON.stringify entry
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x
