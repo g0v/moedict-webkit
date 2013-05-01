@@ -19,8 +19,8 @@
   isWebKit = /WebKit/.exec(navigator.userAgent);
   entryHistory = [];
   INDEX = {
-    t: null,
-    a: null
+    t: '',
+    a: ''
   };
   XREF = {
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
@@ -35,9 +35,9 @@
     if (CACHED[url]) {
       return onSuccess(CACHED[url]);
     }
-    return $.get(url, data, function(result){
-      return onSuccess(CACHED[url] = result);
-    }, dataType);
+    return $.get(url, data, function(it){
+      return onSuccess(CACHED[url] = it);
+    }, dataType).fail(function(){});
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
@@ -172,7 +172,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -366,12 +366,14 @@
         t: '發穎',
         h: '發芽'
       }[LANG]);
-      GET(LANG + "/xref.json", function(it){
-        return XREF[LANG] = it;
-      }, 'text');
-      GET(LANG + "/index.json", function(it){
-        return INDEX[LANG] = it;
-      }, 'text');
+      if (!isCordova) {
+        GET(LANG + "/xref.json", function(it){
+          return XREF[LANG] = it;
+        }, 'text');
+        GET(LANG + "/index.json", function(it){
+          return INDEX[LANG] = it;
+        }, 'text');
+      }
       $('body').removeClass("lang-t");
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
@@ -633,14 +635,38 @@
         return fillJson(part, id);
       });
     };
-    GET(LANG + "/xref.json", function(it){
-      XREF[LANG] = it;
-      return init();
-    }, 'text');
-    return GET(LANG + "/index.json", function(it){
-      INDEX[LANG] = it;
-      return initAutocomplete();
-    }, 'text');
+    if (isCordova) {
+      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+        lang = ref$[i$];
+        results$.push((fn$.call(this, lang)));
+      }
+      return results$;
+    } else {
+      GET(LANG + "/xref.json", function(it){
+        XREF[LANG] = it;
+        return init();
+      }, 'text');
+      return GET(LANG + "/index.json", function(it){
+        INDEX[LANG] = it;
+        return initAutocomplete();
+      }, 'text');
+    }
+    function fn$(lang){
+      GET(lang + "/xref.json", function(it){
+        XREF[lang] = it;
+        if (lang === LANG) {
+          return init();
+        }
+      }, 'text');
+      return GET(lang + "/index.1.json", function(p1){
+        return GET(lang + "/index.2.json", function(p2){
+          INDEX[lang] = p1 + p2;
+          if (lang === LANG) {
+            return initAutocomplete();
+          }
+        }, 'text');
+      }, 'text');
+    }
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
   function initAutocomplete(){
@@ -724,11 +750,9 @@
           regex = "\"" + regex + "\"";
         }
         regex = regex.replace(/\(\)/g, '');
-        results = (function(){
-          try {
-            return INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
-          } catch (e$) {}
-        }());
+        try {
+          results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
+        } catch (e$) {}
         if (!results) {
           return cb(['']);
         }
