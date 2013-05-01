@@ -10,7 +10,7 @@ isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
 entryHistory = []
-Index = null
+INDEX = { t: null, a: null }
 XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"' }
 
 CACHED = {}
@@ -65,7 +65,7 @@ window.play-audio = (el, url) ->
   done = -> $(el).fadeIn \fast
   play = ->
     $(el).fadeOut \fast
-    audio = new Howl { +buffer, urls: [url], onend: done, onloaderror: done }
+    audio = new window.Howl { +buffer, urls: [url], onend: done, onloaderror: done }
     audio.play!
   return play! if window.Howl
   <- $.getScript \js/howler.min.js
@@ -206,18 +206,16 @@ window.do-load = ->
     prevId := null
     prevVal := null
     LANG := lang || (if LANG is \a then \t else \a)
+    setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
     GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
-    GET "#LANG/index.json" (->
-      init-autocomplete it
-      $('body').removeClass("lang-t")
-      $('body').removeClass("lang-a")
-      $('body').removeClass("lang-h")
-      $('body').addClass("lang-#LANG")
-      $ \#query .val id
-      window.do-lookup id
-      setPref \lang LANG
-    ), \text
+    GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
+    $('body').removeClass("lang-t")
+    $('body').removeClass("lang-a")
+    $('body').removeClass("lang-h")
+    $('body').addClass("lang-#LANG")
+    $ \#query .val id
+    window.do-lookup id
 
   lenToRegex = {}
 
@@ -237,6 +235,7 @@ window.do-load = ->
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
+    Index = INDEX[LANG]
     if isCordova or not Index
       return if title is /object/
       return true if Index and Index.indexOf("\"#title\"") is -1
@@ -378,12 +377,11 @@ window.do-load = ->
     fill-json part, id
 
   GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
-  GET "#LANG/index.json", init-autocomplete, \text
+  GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
 
 const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'
 
-function init-autocomplete (text)
-  Index := text
+function init-autocomplete
   $.widget "ui.autocomplete", $.ui.autocomplete, {
     _close: -> @menu.element.addClass \invisible
     _resizeMenu: ->
@@ -432,7 +430,7 @@ function init-autocomplete (text)
         regex.=replace(/%/g '[^"]*')
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
-      results = try Index.match(//#{ b2g regex }//g)
+      results = try INDEX[LANG].match(//#{ b2g regex }//g)
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 255 # (if isCordova then 100 else 1000)
