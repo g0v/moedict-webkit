@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -18,7 +18,10 @@
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   isWebKit = /WebKit/.exec(navigator.userAgent);
   entryHistory = [];
-  Index = null;
+  INDEX = {
+    t: null,
+    a: null
+  };
   XREF = {
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
     a: '"萌":"發穎"'
@@ -122,7 +125,7 @@
     play = function(){
       var audio;
       $(el).fadeOut('fast');
-      audio = new Howl({
+      audio = new window.Howl({
         buffer: true,
         urls: [url],
         onend: done,
@@ -357,6 +360,7 @@
       prevId = null;
       prevVal = null;
       LANG = lang || (LANG === 'a' ? 't' : 'a');
+      setPref('lang', LANG);
       id || (id = {
         a: '萌',
         t: '發穎',
@@ -365,16 +369,15 @@
       GET(LANG + "/xref.json", function(it){
         return XREF[LANG] = it;
       }, 'text');
-      return GET(LANG + "/index.json", function(it){
-        initAutocomplete(it);
-        $('body').removeClass("lang-t");
-        $('body').removeClass("lang-a");
-        $('body').removeClass("lang-h");
-        $('body').addClass("lang-" + LANG);
-        $('#query').val(id);
-        window.doLookup(id);
-        return setPref('lang', LANG);
+      GET(LANG + "/index.json", function(it){
+        return INDEX[LANG] = it;
       }, 'text');
+      $('body').removeClass("lang-t");
+      $('body').removeClass("lang-a");
+      $('body').removeClass("lang-h");
+      $('body').addClass("lang-" + LANG);
+      $('#query').val(id);
+      return window.doLookup(id);
     };
     lenToRegex = {};
     bucketOf = function(it){
@@ -396,8 +399,9 @@
       return $('.erase').hide();
     };
     window.doLookup = doLookup = function(val){
-      var title, id, hist;
+      var title, Index, id, hist;
       title = replace$.call(val, /[（(].*/, '');
+      Index = INDEX[LANG];
       if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
@@ -633,11 +637,13 @@
       XREF[LANG] = it;
       return init();
     }, 'text');
-    return GET(LANG + "/index.json", initAutocomplete, 'text');
+    return GET(LANG + "/index.json", function(it){
+      INDEX[LANG] = it;
+      return initAutocomplete();
+    }, 'text');
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
-  function initAutocomplete(text){
-    Index = text;
+  function initAutocomplete(){
     $.widget("ui.autocomplete", $.ui.autocomplete, {
       _close: function(){
         return this.menu.element.addClass('invisible');
@@ -720,7 +726,7 @@
         regex = regex.replace(/\(\)/g, '');
         results = (function(){
           try {
-            return Index.match(RegExp(b2g(regex) + '', 'g'));
+            return INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
           } catch (e$) {}
         }());
         if (!results) {
