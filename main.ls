@@ -10,7 +10,7 @@ isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
 entryHistory = []
-INDEX = { t: null, a: null }
+INDEX = { t: '', a: '' }
 XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"' }
 
 CACHED = {}
@@ -18,8 +18,9 @@ GET = (url, data, onSuccess, dataType) ->
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
   return onSuccess(CACHED[url]) if CACHED[url]
-  result <- $.get url, data, _, dataType
-  return onSuccess(CACHED[url] = result)
+  $.get(url, data, (->
+    onSuccess(CACHED[url] = it)
+  ), dataType).fail ->
 
 try
   throw unless isCordova and not DEBUGGING
@@ -208,8 +209,9 @@ window.do-load = ->
     LANG := lang || (if LANG is \a then \t else \a)
     setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
-    GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
-    GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
+    unless isCordova
+      GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
+      GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
     $('body').removeClass("lang-t")
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-h")
@@ -376,8 +378,16 @@ window.do-load = ->
     part = part.slice(0, idx)
     fill-json part, id
 
-  GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
-  GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
+  if isCordova
+    for lang in <[ a t ]> => let lang
+      GET "#lang/xref.json", (-> XREF[lang] = it; init! if lang is LANG), \text
+      p1 <- GET "#lang/index.1.json", _, \text
+      p2 <- GET "#lang/index.2.json", _, \text
+      INDEX[lang] = p1 + p2
+      init-autocomplete! if lang is LANG
+  else
+    GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
+    GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
 
 const MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}'
 
@@ -430,7 +440,7 @@ function init-autocomplete
         regex.=replace(/%/g '[^"]*')
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
-      results = try INDEX[LANG].match(//#{ b2g regex }//g)
+      try results = INDEX[LANG].match(//#{ b2g regex }//g)
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 255 # (if isCordova then 100 else 1000)
