@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, Index, XREF, e, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -18,10 +18,26 @@
   isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
   isWebKit = /WebKit/.exec(navigator.userAgent);
   entryHistory = [];
-  Index = null;
+  INDEX = {
+    t: '',
+    a: ''
+  };
   XREF = {
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
     a: '"萌":"發穎"'
+  };
+  CACHED = {};
+  GET = function(url, data, onSuccess, dataType){
+    var ref$;
+    if (data instanceof Function) {
+      ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
+    }
+    if (CACHED[url]) {
+      return onSuccess(CACHED[url]);
+    }
+    return $.get(url, data, function(it){
+      return onSuccess(CACHED[url] = it);
+    }, dataType).fail(function(){});
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
@@ -73,6 +89,57 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
+  if (isCordova || isMobile) {
+    window.Howl = Howl = (function(){
+      Howl.displayName = 'Howl';
+      var prototype = Howl.prototype, constructor = Howl;
+      function Howl(arg$){
+        var urls, onend, onloaderror;
+        urls = arg$.urls, onend = arg$.onend, onloaderror = arg$.onloaderror;
+        this.el = document.createElement('audio');
+        this.el.setAttribute('src', urls[0]);
+        this.el.setAttribute('autoplay', true);
+        this.el.setAttribute('controls', true);
+        this.el.addEventListener('error', function(){
+          onloaderror;
+          try {
+            return this.el.remove();
+          } catch (e$) {}
+        });
+        this.el.addEventListener('ended', onend);
+        try {
+          this.el.remove();
+        } catch (e$) {}
+      }
+      prototype.play = function(){
+        return this.el.play();
+      };
+      return Howl;
+    }());
+  }
+  window.playAudio = function(el, url){
+    var done, play;
+    done = function(){
+      return $(el).fadeIn('fast');
+    };
+    play = function(){
+      var audio;
+      $(el).fadeOut('fast');
+      audio = new window.Howl({
+        buffer: true,
+        urls: [url],
+        onend: done,
+        onloaderror: done
+      });
+      return audio.play();
+    };
+    if (window.Howl) {
+      return play();
+    }
+    return $.getScript('js/howler.min.js', function(){
+      return play();
+    });
+  };
   window.showInfo = function(){
     var ref, onStop, onExit;
     ref = window.open('Android.html', '_blank', 'location=no');
@@ -105,7 +172,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, bucketCache, keyMap, fillBucket;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -209,12 +276,7 @@
             val = replace$.call(val, /.*\#/, '');
           }
           val || (val = $(this).text());
-          if (val === $('#query').val()) {
-            return;
-          }
-          $('#query').val(val);
-          $('#cond').val("^" + val + "$");
-          fillQuery(val);
+          window.grokVal(val);
           return false;
         });
       }
@@ -230,8 +292,11 @@
     };
     window.grokVal = grokVal = function(val){
       var lang, prevVal;
+      if (/</.exec(val)) {
+        return;
+      }
       lang = 'a';
-      if (val[0] === '!') {
+      if (/^!/.exec(val + "")) {
         lang = 't';
         val = val.substr(1);
       }
@@ -295,26 +360,26 @@
       prevId = null;
       prevVal = null;
       LANG = lang || (LANG === 'a' ? 't' : 'a');
+      setPref('lang', LANG);
       id || (id = {
         a: '萌',
         t: '發穎',
         h: '發芽'
       }[LANG]);
-      if (!(XREF[LANG].length > 100)) {
-        $.get(LANG + "/xref.json", null, function(it){
+      if (!isCordova) {
+        GET(LANG + "/xref.json", function(it){
           return XREF[LANG] = it;
         }, 'text');
+        GET(LANG + "/index.json", function(it){
+          return INDEX[LANG] = it;
+        }, 'text');
       }
-      return $.get(LANG + "/index.json", null, function(it){
-        initAutocomplete(it);
-        $('body').removeClass("lang-t");
-        $('body').removeClass("lang-a");
-        $('body').removeClass("lang-h");
-        $('body').addClass("lang-" + LANG);
-        $('#query').val(id);
-        window.doLookup(id);
-        return setPref('lang', LANG);
-      }, 'text');
+      $('body').removeClass("lang-t");
+      $('body').removeClass("lang-a");
+      $('body').removeClass("lang-h");
+      $('body').addClass("lang-" + LANG);
+      $('#query').val(id);
+      return window.doLookup(id);
     };
     lenToRegex = {};
     bucketOf = function(it){
@@ -323,7 +388,7 @@
       if (0xD800 <= code && code <= 0xDBFF) {
         code = it.charCodeAt(1) - 0xDC00;
       }
-      return code % 1024;
+      return code % (LANG === 'a' ? 1024 : 128);
     };
     lookup = function(){
       var that;
@@ -336,8 +401,9 @@
       return $('.erase').hide();
     };
     window.doLookup = doLookup = function(val){
-      var title, id, hist;
+      var title, Index, id, hist;
       title = replace$.call(val, /[（(].*/, '');
+      Index = INDEX[LANG];
       if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
@@ -407,18 +473,12 @@
     loadJson = function(id, cb){
       var bucket;
       if (!isCordova) {
-        return $.get(LANG + "/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
+        return GET(LANG + "/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
           return fillJson(it, id, cb);
         }, 'text');
       }
       bucket = bucketOf(id);
-      if (bucketCache[LANG][bucket]) {
-        return fillBucket(id, bucket);
-      }
-      return $.get("p" + LANG + "ck/" + bucket + ".txt", function(json){
-        bucketCache[LANG][bucket] = json;
-        return fillBucket(id, bucket);
-      });
+      return fillBucket(id, bucket);
     };
     setPinyinBindings = function(){
       return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
@@ -538,10 +598,6 @@
       }
       cb(htmlCache[LANG][id] = html);
     };
-    bucketCache = {
-      t: {},
-      a: {}
-    };
     keyMap = {
       h: '"heteronyms"',
       b: '"bopomofo"',
@@ -566,27 +622,54 @@
       D: '"dialects"'
     };
     fillBucket = function(id, bucket){
-      var raw, key, idx, part;
-      raw = bucketCache[LANG][bucket];
-      key = escape(id);
-      idx = raw.indexOf('"' + key + '"');
-      if (idx === -1) {
-        return;
-      }
-      part = raw.slice(idx + key.length + 3);
-      idx = part.indexOf('\n');
-      part = part.slice(0, idx);
-      return fillJson(part, id);
+      return GET("p" + LANG + "ck/" + bucket + ".txt", function(raw){
+        var key, idx, part;
+        key = escape(id);
+        idx = raw.indexOf('"' + key + '"');
+        if (idx === -1) {
+          return;
+        }
+        part = raw.slice(idx + key.length + 3);
+        idx = part.indexOf('\n');
+        part = part.slice(0, idx);
+        return fillJson(part, id);
+      });
     };
-    $.get(LANG + "/xref.json", null, function(it){
-      XREF[LANG] = it;
-      return init();
-    }, 'text');
-    return $.get(LANG + "/index.json", null, initAutocomplete, 'text');
+    if (isCordova) {
+      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+        lang = ref$[i$];
+        results$.push((fn$.call(this, lang)));
+      }
+      return results$;
+    } else {
+      GET(LANG + "/xref.json", function(it){
+        XREF[LANG] = it;
+        return init();
+      }, 'text');
+      return GET(LANG + "/index.json", function(it){
+        INDEX[LANG] = it;
+        return initAutocomplete();
+      }, 'text');
+    }
+    function fn$(lang){
+      GET(lang + "/xref.json", function(it){
+        XREF[lang] = it;
+        if (lang === LANG) {
+          return init();
+        }
+      }, 'text');
+      return GET(lang + "/index.1.json", function(p1){
+        return GET(lang + "/index.2.json", function(p2){
+          INDEX[lang] = p1 + p2;
+          if (lang === LANG) {
+            return initAutocomplete();
+          }
+        }, 'text');
+      }, 'text');
+    }
   };
   MOE = '{"h":[{"b":"ㄇㄥˊ","d":[{"f":"`草木~`初~`生~`的~`芽~。","q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~"},{"f":"`事物~`發生~`的~`開端~`或~`徵兆~。","q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~"},{"f":"`人民~。","e":["`如~：「`萌黎~」、「`萌隸~」。"],"l":["`通~「`氓~」。"],"type":"`名~"},{"f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。","type":"`名~"},{"f":"`發芽~。","e":["`如~：「`萌芽~」。"],"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~"},{"f":"`發生~。","e":["`如~：「`故態復萌~」。"],"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~"}],"p":"méng"}],"n":8,"r":"`艸~","c":12,"t":"萌"}';
-  function initAutocomplete(text){
-    Index = text;
+  function initAutocomplete(){
     $.widget("ui.autocomplete", $.ui.autocomplete, {
       _close: function(){
         return this.menu.element.addClass('invisible');
@@ -667,11 +750,9 @@
           regex = "\"" + regex + "\"";
         }
         regex = regex.replace(/\(\)/g, '');
-        results = (function(){
-          try {
-            return Index.match(RegExp(b2g(regex) + '', 'g'));
-          } catch (e$) {}
-        }());
+        try {
+          results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
+        } catch (e$) {}
         if (!results) {
           return cb(['']);
         }
@@ -713,18 +794,26 @@
     }
     return CJKRADICALS[idx + 1];
   }
+  function canPlayMp3(){
+    var a;
+    if (CACHED.canPlayMp3 != null) {
+      return CACHED.canPlayMp3;
+    }
+    a = document.createElement('audio');
+    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg;') : void 8, /no/, ''));
+  }
   function render(arg$){
     var title, heteronyms, radical, nrsCount, sCount, charHtml, result;
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
-      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms;
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      return charHtml + "\n<h1 class='title'>" + h(title) + (isWebKit && audio_id && !(20000 < audio_id && audio_id < 50000) ? "<audio src='" + ("http://twblg.dict.edu.tw/holodict_new/audio/" + (replace$.call(100000 + Number(audio_id), /^1/, '')) + ".mp3") + "' controls></audio>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+      return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && !(20000 < audio_id && audio_id < 50000) && canPlayMp3() ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/" + basename + ".mp3", "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>") : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
@@ -769,10 +858,13 @@
     function h(text){
       text == null && (text = '');
       if (isCordova) {
-        return text.replace(/\u030d/g, '\u0358');
-      } else {
-        return text;
+        if (/android_asset/.exec(location.href)) {
+          return text.replace(/\u030d/g, '\u0358');
+        } else {
+          return text.replace(/\u0358/g, '\u030d');
+        }
       }
+      return text;
     }
     function groupBy(prop, xs){
       var x, pre, y;
@@ -863,8 +955,15 @@
     "\u030d": '$'
   };
   re = function(it){
-    return Object.keys(it).sort(function(){
-      return arguments[1].length - arguments[0].length;
+    var k;
+    return (function(){
+      var results$ = [];
+      for (k in it) {
+        results$.push(k);
+      }
+      return results$;
+    }()).sort(function(x, y){
+      return y.length - x.length;
     }).join('|');
   };
   C = re(Consonants);
