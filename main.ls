@@ -544,7 +544,12 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     [cb x for x in entries].join ""
   function h (text='')
     # text.replace(/</g '&lt;').replace(/>/g '&gt;')
-    if isCordova then text.replace(/\u030d/g '\u0358') else text
+    if isCordova
+      if location.href is /android_asset/
+        return text.replace(/\u030d/g '\u0358')
+      else
+        return text.replace(/\u0358/g '\u030d')
+    text
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!
