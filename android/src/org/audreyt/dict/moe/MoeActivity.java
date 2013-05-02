@@ -25,6 +25,8 @@ import android.view.*;
 import org.apache.cordova.*;
 
 public class MoeActivity extends DroidGap {
+	@SuppressWarnings("unused")
+	private KeyEvent event;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

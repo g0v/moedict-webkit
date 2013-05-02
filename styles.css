@@ -852,7 +852,7 @@ a {
   right: 24px;
   top: 36px; }
   .radical .count {
-    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, Courier New, monospace; }
+    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace; }
 
 .part-of-speech a {
   color: white !important; }

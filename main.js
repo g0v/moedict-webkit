@@ -858,10 +858,13 @@
     function h(text){
       text == null && (text = '');
       if (isCordova) {
-        return text.replace(/\u030d/g, '\u0358');
-      } else {
-        return text;
+        if (/android_asset/.exec(location.href)) {
+          return text.replace(/\u030d/g, '\u0358');
+        } else {
+          return text.replace(/\u0358/g, '\u030d');
+        }
       }
+      return text;
     }
     function groupBy(prop, xs){
       var x, pre, y;
