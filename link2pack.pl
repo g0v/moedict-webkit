@@ -17,6 +17,7 @@ my %seen;
 mkdir $lang;
 mkdir "p${lang}ck";
 while (<STDIN>) {
+    say STDERR $. unless $. % 10000;
     chomp;
     s/^(\d+) (\S+) // or die $_;
     # s/\x{fffb}\K([^"]*)/$1 =~ s![`~]!!gr/eg;
@@ -26,7 +27,9 @@ while (<STDIN>) {
     my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
     next if $file =~ /[⿰⿸]/;
     next if $seen{$file}++;
-    File::Slurp::write_file("$lang/$file.json", $_);
+    unless (-e "$lang/$file.json" and File::Slurp::read_file("$lang/$file.json") eq $_) {
+        File::Slurp::write_file("$lang/$file.json", $_);
+    }
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>
     }
