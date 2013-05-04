@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 @import "han";
+@import "han.fonts";
 
 $grayLight:             #ddd;
 $grayLighter:           #eee;
@@ -32,7 +33,7 @@ table {
 
 body {
     background: #eeeeee url("background.jpg");
-    font-family: sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+    font-family: "Biaodian Sans", sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
     font-size: 14pt;
     line-height: 140%;
     margin: 10px;
@@ -40,9 +41,9 @@ body {
         background: #744;
     }
     &.cordova {
-        font-family: "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        font-family: "Biaodian Sans", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
         &.lang-t {
-            font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+            font-family: "Biaodian Sans", "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
         }
     }
     &.lang-t {
@@ -705,4 +706,9 @@ body.lang-t .ui-tooltip .example {
 
 #gcfclose {
     margin: 3px;
+}
+
+.punct {
+    white-space: nowrap;
+    display: inline-block;
 }

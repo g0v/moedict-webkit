@@ -327,6 +327,7 @@ window.do-load = ->
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaqTAVCD_=])"/g (, k) -> keyMap[k]
     h = "#{ if LANG is \a then \# else \#! }"
+    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, punct) -> "<span class='punct'><a href='#h#word'>#word</a>#punct</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if JSON?parse?
       html = render JSON.parse part
