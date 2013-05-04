@@ -18,7 +18,9 @@ function proc (struct, title, idx)
   for re in LTM-regexes
     chunk.=replace(re, -> escape "`#it~")
   esc = escape title
-  for len in lens | len < title.length
+  codepoints-of = -> it.length - it.split( /[\uD800-\uDBFF][\uDC00-\uDFFF]/g ).length + 1
+  title-codes = codepoints-of title
+  for len in lens | len < title-codes
     title.=replace(lenToRegex[len], -> escape "`#it~")
   return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
     "t":"#{ unescape title }"
