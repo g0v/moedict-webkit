@@ -182,7 +182,11 @@ window.do-load = ->
 
   window.grok-hash = grok-hash = ->
     return false unless location.hash is /^#./
-    try grok-val decodeURIComponent location.hash.substr 1
+    decode = ->
+      it = decodeURIComponent it if it is /%/
+      it = decodeURIComponent escape it if escape(it) is /%[A-Fa-f]/
+      return it
+    try grok-val decode location.hash.substr 1
     return false
 
   window.fill-query = fill-query = ->
