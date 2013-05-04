@@ -327,7 +327,9 @@ window.do-load = ->
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaqTAVCD_=])"/g (, k) -> keyMap[k]
     h = "#{ if LANG is \a then \# else \#! }"
-    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, punct) -> "<span class='punct'><a href='#h#word'>#word</a>#punct</span>"
+    part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
+    part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
+    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if JSON?parse?
       html = render JSON.parse part
@@ -477,7 +479,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs, definitions=[], antonyms, synonyms}) ->
+  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms}) ->
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
