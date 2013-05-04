@@ -544,6 +544,8 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
     [cb x for x in entries].join ""
   function h (text='')
     # text.replace(/</g '&lt;').replace(/>/g '&gt;')
+    text.=replace(/\uFF0E/g '\u00B7')
+    text.=replace(/\u223C/g '\uFF0D')
     if isCordova
       if location.href is /android_asset/
         return text.replace(/\u030d/g '\u0358')

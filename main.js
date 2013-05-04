@@ -857,6 +857,8 @@
     }
     function h(text){
       text == null && (text = '');
+      text = text.replace(/\uFF0E/g, '\u00B7');
+      text = text.replace(/\u223C/g, '\uFF0D');
       if (isCordova) {
         if (/android_asset/.exec(location.href)) {
           return text.replace(/\u030d/g, '\u0358');
