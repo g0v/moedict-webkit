@@ -318,11 +318,21 @@
       return false;
     };
     window.grokHash = grokHash = function(){
+      var decode;
       if (!/^#./.test(location.hash)) {
         return false;
       }
+      decode = function(it){
+        if (/%/.exec(it)) {
+          it = decodeURIComponent(it);
+        }
+        if (/%[A-Fa-f]/.exec(escape(it))) {
+          it = decodeURIComponent(escape(it));
+        }
+        return it;
+      };
       try {
-        grokVal(decodeURIComponent(location.hash.substr(1)));
+        grokVal(decode(location.hash.substr(1)));
       } catch (e$) {}
       return false;
     };
