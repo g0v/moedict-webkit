@@ -564,8 +564,14 @@
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
-      part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, punct){
-        return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + punct + "</span>";
+      part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
+        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
+      });
+      part = part.replace(/([「【『（《])`([^~]+)~/g, function(arg$, pre, word){
+        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a></span>";
+      });
+      part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, post){
+        return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
       });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
@@ -811,7 +817,7 @@
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, basename, mp3;
-      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
+      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
