@@ -564,6 +564,9 @@
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
+      part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, punct){
+        return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + punct + "</span>";
+      });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
