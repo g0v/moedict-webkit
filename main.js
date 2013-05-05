@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -26,6 +26,25 @@
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
     a: '"萌":"發穎"'
   };
+  function xrefOf(id, lang){
+    var idx, part, x;
+    lang == null && (lang = LANG);
+    idx = XREF[lang].indexOf('"' + id + '":');
+    if (!(idx >= 0)) {
+      return [];
+    }
+    part = XREF[lang].slice(idx + id.length + 4);
+    idx = part.indexOf('"');
+    part = part.slice(0, idx);
+    return (function(){
+      var i$, ref$, len$, results$ = [];
+      for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
+        x = ref$[i$];
+        results$.push(x || id);
+      }
+      return results$;
+    }());
+  }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
     var ref$;
@@ -564,7 +583,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, idx, word;
+      var h, html, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -596,18 +615,14 @@
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
-      idx = XREF[LANG].indexOf('"' + id + '":');
-      if (idx >= 0) {
-        part = XREF[LANG].slice(idx + id.length + 4);
-        idx = part.indexOf('"');
-        part = part.slice(0, idx);
+      words = xrefOf(id);
+      if (words.length) {
         html += '<div class="xrefs">';
         html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + (LANG === 't' ? '華' : '閩') + "</span>";
         html += (function(){
           var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
             word = ref$[i$];
-            word || (word = id);
             h = (LANG === 't' ? '#' : '#!') + "";
             results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
           }
@@ -665,10 +680,17 @@
         XREF[LANG] = it;
         return init();
       }, 'text');
-      return GET(LANG + "/index.json", function(it){
+      GET(LANG + "/index.json", function(it){
         INDEX[LANG] = it;
         return initAutocomplete();
       }, 'text');
+      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+        lang = ref$[i$];
+        if (lang !== LANG) {
+          results$.push((fn1$.call(this, lang)));
+        }
+      }
+      return results$;
     }
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
@@ -684,6 +706,12 @@
             return initAutocomplete();
           }
         }, 'text');
+      }, 'text');
+    }
+    function fn1$(lang){
+      return GET(lang + "/xref.json", function(it){
+        XREF[lang] = it;
+        return init();
       }, 'text');
     }
   };
@@ -772,6 +800,7 @@
         try {
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
+        results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
         if (!results) {
           return cb(['']);
         }
