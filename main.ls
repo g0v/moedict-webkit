@@ -69,9 +69,14 @@ if isCordova or isMobile
       @el.add-event-listener \ended onend; try @el.remove!
     play: -> @el.play!
 
+var playing
 window.play-audio = (el, url) ->
-  done = -> $(el).fadeIn \fast
+  done = ->
+    playing := false
+    $(el).fadeIn \fast
   play = ->
+    return if playing
+    playing := true
     $(el).fadeOut \fast
     audio = new window.Howl { +buffer, urls: [url], onend: done, onloaderror: done }
     audio.play!
