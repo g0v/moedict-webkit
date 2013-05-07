@@ -5,6 +5,7 @@ MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
 $ -> $('body').addClass("lang-#LANG")
 
 isCordova = document.URL isnt /^https?:/
+isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
@@ -108,8 +109,8 @@ window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
   $('body').addClass \web unless isCordova
-  $('body').addClass \ios if isCordova and location.href isnt /android_asset/
-  $('body').addClass \android if isCordova and location.href is /android_asset/
+  $('body').addClass \ios if isCordova and not isDroidGap
+  $('body').addClass \android if isDroidGap
   if navigator.user-agent is /Android\s*[12]\./
     $('body').addClass \overflow-scrolling-false
     $('body').addClass "prefer-down-false"
@@ -132,12 +133,17 @@ window.do-load = ->
 
   cache-loading = no
   window.press-about = press-about = ->
-    location.href = \about.html unless location.href is /android_asset/
+    location.href = \about.html unless isDroidGap
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
     $ \.lang .show!
     $ \.erase .hide!
   window.press-back = press-back = ->
+    if isDroidGap and not(
+      $ \.ui-autocomplete .hasClass \invisible
+    ) and $ \body .width! < 768
+      try $(\#query).autocomplete \close
+      return
     return if cache-loading
     entryHistory.pop!
     token = Math.random!
@@ -561,15 +567,12 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   function ls (entries=[], cb)
     [cb x for x in entries].join ""
   function h (text='')
-    # text.replace(/</g '&lt;').replace(/>/g '&gt;')
     text.=replace(/\uFF0E/g '\u00B7') unless isCordova
     text.=replace(/\u223C/g '\uFF0D')
     if isCordova
-      if location.href is /android_asset/
-        return text.replace(/\u030d/g '\u0358')
-      else
-        return text.replace(/\u0358/g '\u030d')
-    text
+      return text.replace(/\u030d/g '\u0358') if isDroidGap
+      return text.replace(/\u0358/g '\u030d')
+    return text
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!
