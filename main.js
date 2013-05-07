@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -11,6 +11,7 @@
     return $('body').addClass("lang-" + LANG);
   });
   isCordova = !/^https?:/.test(document.URL);
+  isDroidGap = isCordova && /android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
     isCordova = true;
@@ -206,10 +207,10 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    if (isCordova && !/android_asset/.test(location.href)) {
+    if (isCordova && !isDroidGap) {
       $('body').addClass('ios');
     }
-    if (isCordova && /android_asset/.exec(location.href)) {
+    if (isDroidGap) {
       $('body').addClass('android');
     }
     if (/Android\s*[12]\./.exec(navigator.userAgent)) {
@@ -240,7 +241,7 @@
     window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
-      if (!/android_asset/.test(location.href)) {
+      if (!isDroidGap) {
         return location.href = 'about.html';
       }
     };
@@ -251,6 +252,12 @@
     };
     window.pressBack = pressBack = function(){
       var token;
+      if (isDroidGap && !$('.ui-autocomplete').hasClass('invisible') && $('body').width() < 768) {
+        try {
+          $('#query').autocomplete('close');
+        } catch (e$) {}
+        return;
+      }
       if (cacheLoading) {
         return;
       }
@@ -915,11 +922,10 @@
       }
       text = text.replace(/\u223C/g, '\uFF0D');
       if (isCordova) {
-        if (/android_asset/.exec(location.href)) {
+        if (isDroidGap) {
           return text.replace(/\u030d/g, '\u0358');
-        } else {
-          return text.replace(/\u0358/g, '\u030d');
         }
+        return text.replace(/\u0358/g, '\u030d');
       }
       return text;
     }
