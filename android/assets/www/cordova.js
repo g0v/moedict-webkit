@@ -1,1 +1,1 @@
-cordova-2.7.0.js
+cordova-2.5.0.js
