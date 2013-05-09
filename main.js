@@ -1044,6 +1044,7 @@
         return '';
       });
       it = it.replace(/^(tsh?|[sj])i/, '$1ii');
+      it = it.replace(/ok$/, 'ook');
       it = it.replace(RegExp('^(' + C + ')((?:' + V + ')+[ptkh]?)$'), function(){
         return Consonants[arguments[1]] + arguments[2];
       });
