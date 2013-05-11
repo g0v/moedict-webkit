@@ -467,7 +467,7 @@ function init-autocomplete
       results ||= xref-of term, if LANG is \t then \a else \t
       return cb [''] unless results
       do-lookup(results.0 - /"/g) if results.length is 1
-      MaxResults = 255 # (if isCordova then 100 else 1000)
+      MaxResults = 400
       if results.length > MaxResults
         more = "(僅顯示前 #MaxResults 筆)"
         results.=slice(0, MaxResults)
