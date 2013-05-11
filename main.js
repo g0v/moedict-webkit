@@ -537,6 +537,9 @@
         setPinyinBindings();
         cacheLoading = false;
         if (isCordova) {
+          $('#result .playAudio').on('tapone', function(){
+            return $(this).click();
+          });
           return;
         }
         $('#result .trs.pinyin').each(function(){

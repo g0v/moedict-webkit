@@ -315,7 +315,11 @@ window.do-load = ->
     set-pinyin-bindings!
 
     cache-loading := no
-    return if isCordova
+
+    if isCordova
+      $('#result .playAudio').on \tapone -> $(@).click!
+      return
+
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
