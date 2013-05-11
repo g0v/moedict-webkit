@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, replace$ = ''.replace, split$ = ''.split, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -11,6 +11,7 @@
     return $('body').addClass("lang-" + LANG);
   });
   isCordova = !/^https?:/.test(document.URL);
+  isDroidGap = isCordova && /android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
     isCordova = true;
@@ -26,6 +27,25 @@
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
     a: '"萌":"發穎"'
   };
+  function xrefOf(id, lang){
+    var idx, part, x;
+    lang == null && (lang = LANG);
+    idx = XREF[lang].indexOf('"' + id + '":');
+    if (!(idx >= 0)) {
+      return [];
+    }
+    part = XREF[lang].slice(idx + id.length + 4);
+    idx = part.indexOf('"');
+    part = part.slice(0, idx);
+    return (function(){
+      var i$, ref$, len$, results$ = [];
+      for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
+        x = ref$[i$];
+        results$.push(x || id);
+      }
+      return results$;
+    }());
+  }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
     var ref$;
@@ -120,10 +140,15 @@
   window.playAudio = function(el, url){
     var done, play;
     done = function(){
+      playing = false;
       return $(el).fadeIn('fast');
     };
     play = function(){
       var audio;
+      if (playing) {
+        return;
+      }
+      playing = true;
       $(el).fadeOut('fast');
       audio = new window.Howl({
         buffer: true,
@@ -182,10 +207,10 @@
     if (!isCordova) {
       $('body').addClass('web');
     }
-    if (isCordova && !/android_asset/.test(location.href)) {
+    if (isCordova && !isDroidGap) {
       $('body').addClass('ios');
     }
-    if (isCordova && /android_asset/.exec(location.href)) {
+    if (isDroidGap) {
       $('body').addClass('android');
     }
     if (/Android\s*[12]\./.exec(navigator.userAgent)) {
@@ -216,7 +241,7 @@
     window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
-      if (!/android_asset/.test(location.href)) {
+      if (!isDroidGap) {
         return location.href = 'about.html';
       }
     };
@@ -227,6 +252,12 @@
     };
     window.pressBack = pressBack = function(){
       var token;
+      if (isDroidGap && !$('.ui-autocomplete').hasClass('invisible') && $('body').width() < 768) {
+        try {
+          $('#query').autocomplete('close');
+        } catch (e$) {}
+        return;
+      }
       if (cacheLoading) {
         return;
       }
@@ -318,11 +349,21 @@
       return false;
     };
     window.grokHash = grokHash = function(){
+      var decode;
       if (!/^#./.test(location.hash)) {
         return false;
       }
+      decode = function(it){
+        if (/%/.exec(it)) {
+          it = decodeURIComponent(it);
+        }
+        if (/%[A-Fa-f]/.exec(escape(it))) {
+          it = decodeURIComponent(escape(it));
+        }
+        return it;
+      };
       try {
-        grokVal(decodeURIComponent(location.hash.substr(1)));
+        grokVal(decode(location.hash.substr(1)));
       } catch (e$) {}
       return false;
     };
@@ -554,7 +595,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, idx, word;
+      var h, html, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -564,6 +605,15 @@
         return keyMap[k];
       });
       h = (LANG === 'a' ? '#' : '#!') + "";
+      part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
+        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
+      });
+      part = part.replace(/([「【『（《])`([^~]+)~/g, function(arg$, pre, word){
+        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a></span>";
+      });
+      part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, post){
+        return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
+      });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
@@ -577,18 +627,14 @@
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
-      idx = XREF[LANG].indexOf('"' + id + '":');
-      if (idx >= 0) {
-        part = XREF[LANG].slice(idx + id.length + 4);
-        idx = part.indexOf('"');
-        part = part.slice(0, idx);
+      words = xrefOf(id);
+      if (words.length) {
         html += '<div class="xrefs">';
         html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + (LANG === 't' ? '華' : '閩') + "</span>";
         html += (function(){
           var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
             word = ref$[i$];
-            word || (word = id);
             h = (LANG === 't' ? '#' : '#!') + "";
             results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
           }
@@ -646,10 +692,17 @@
         XREF[LANG] = it;
         return init();
       }, 'text');
-      return GET(LANG + "/index.json", function(it){
+      GET(LANG + "/index.json", function(it){
         INDEX[LANG] = it;
         return initAutocomplete();
       }, 'text');
+      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+        lang = ref$[i$];
+        if (lang !== LANG) {
+          results$.push((fn1$.call(this, lang)));
+        }
+      }
+      return results$;
     }
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
@@ -665,6 +718,12 @@
             return initAutocomplete();
           }
         }, 'text');
+      }, 'text');
+    }
+    function fn1$(lang){
+      return GET(lang + "/xref.json", function(it){
+        XREF[lang] = it;
+        return init();
       }, 'text');
     }
   };
@@ -753,6 +812,7 @@
         try {
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
+        results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
         if (!results) {
           return cb(['']);
         }
@@ -808,7 +868,7 @@
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, basename, mp3;
-      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = arg$.trs, definitions = (ref$ = arg$.definitions) != null
+      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
       pinyin == null && (pinyin = trs);
@@ -857,12 +917,15 @@
     }
     function h(text){
       text == null && (text = '');
+      if (!isCordova) {
+        text = text.replace(/\uFF0E/g, '\u00B7');
+      }
+      text = text.replace(/\u223C/g, '\uFF0D');
       if (isCordova) {
-        if (/android_asset/.exec(location.href)) {
+        if (isDroidGap) {
           return text.replace(/\u030d/g, '\u0358');
-        } else {
-          return text.replace(/\u0358/g, '\u030d');
         }
+        return text.replace(/\u0358/g, '\u030d');
       }
       return text;
     }
@@ -981,6 +1044,7 @@
         return '';
       });
       it = it.replace(/^(tsh?|[sj])i/, '$1ii');
+      it = it.replace(/ok$/, 'ook');
       it = it.replace(RegExp('^(' + C + ')((?:' + V + ')+[ptkh]?)$'), function(){
         return Consonants[arguments[1]] + arguments[2];
       });
