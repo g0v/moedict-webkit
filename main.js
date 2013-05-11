@@ -25,14 +25,15 @@
   };
   XREF = {
     t: '"發穎":"萌,抽芽,發芽,萌芽"',
-    a: '"萌":"發穎"'
+    a: '"萌":"發穎"',
+    tv: ''
   };
   function xrefOf(id, lang){
     var idx, part, x;
     lang == null && (lang = LANG);
     idx = XREF[lang].indexOf('"' + id + '":');
     if (!(idx >= 0)) {
-      return [];
+      return;
     }
     part = XREF[lang].slice(idx + id.length + 4);
     idx = part.indexOf('"');
@@ -197,7 +198,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang;
     if (!isDeviceReady) {
       return;
     }
@@ -694,9 +695,8 @@
     if (isCordova) {
       for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
         lang = ref$[i$];
-        results$.push((fn$.call(this, lang)));
+        (fn$.call(this, lang));
       }
-      return results$;
     } else {
       GET(LANG + "/xref.json", function(it){
         XREF[LANG] = it;
@@ -709,11 +709,13 @@
       for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
         lang = ref$[i$];
         if (lang !== LANG) {
-          results$.push((fn1$.call(this, lang)));
+          (fn1$.call(this, lang));
         }
       }
-      return results$;
     }
+    return GET("t/variants.json", function(it){
+      return XREF.tv = it;
+    }, 'text');
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
         XREF[lang] = it;
@@ -721,7 +723,7 @@
           return init();
         }
       }, 'text');
-      return GET(lang + "/index.1.json", function(p1){
+      GET(lang + "/index.1.json", function(p1){
         return GET(lang + "/index.2.json", function(p2){
           INDEX[lang] = p1 + p2;
           if (lang === LANG) {
@@ -731,9 +733,8 @@
       }, 'text');
     }
     function fn1$(lang){
-      return GET(lang + "/xref.json", function(it){
-        XREF[lang] = it;
-        return init();
+      GET(lang + "/xref.json", function(it){
+        return XREF[lang] = it;
       }, 'text');
     }
   };
@@ -823,6 +824,9 @@
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
         results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
+        if (LANG === 't') {
+          results || (results = xrefOf(term, 'tv'));
+        }
         if (!results) {
           return cb(['']);
         }
