@@ -506,7 +506,7 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms}) ->
+  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
     """#char-html
@@ -556,6 +556,9 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
       }</span>" else '' }
       #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
         h(antonyms.replace(/,/g '、'))
+      }</span>" else '' }
+      #{ if variants then "<span class='variants'><span class='part-of-speech'>異</span> #{
+        h(variants.replace(/,/g '、'))
       }</span>" else '' }
       </div>
     """

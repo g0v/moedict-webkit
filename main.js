@@ -877,10 +877,10 @@
     title = arg$.title, heteronyms = arg$.heteronyms, radical = arg$.radical, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
-      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, basename, mp3;
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
-        : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
+        : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants;
       pinyin == null && (pinyin = trs);
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
       return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && !(20000 < audio_id && audio_id < 50000) && canPlayMp3() ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/" + basename + ".mp3", "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>") : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo).replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
@@ -901,7 +901,7 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
+      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
     return result;
     function expandDef(def){
