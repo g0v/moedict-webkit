@@ -580,7 +580,7 @@ body.lang-t .example {
     font-size: 92%;
 }
 
-.antonyms, .synonyms {
+.antonyms, .synonyms, .variants {
     clear: both;
     display: block;
     font-size: 85%;
@@ -691,7 +691,7 @@ body.lang-t .ui-tooltip .example {
 }
 
 .ui-tooltip {
-    .quote, .antonyms, .synonyms, .radical {
+    .quote, .antonyms, .synonyms, .variants, .radical {
         display: none;
     }
 }
