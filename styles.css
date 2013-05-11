@@ -1544,7 +1544,7 @@ body.lang-t .example {
   display: block;
   font-size: 92%; }
 
-.antonyms, .synonyms {
+.antonyms, .synonyms, .variants {
   clear: both;
   display: block;
   font-size: 85%;
@@ -1629,7 +1629,7 @@ span a {
 body.lang-t .ui-tooltip .example {
   display: none; }
 
-.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .radical {
+.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .variants, .ui-tooltip .radical {
   display: none; }
 
 #gcfbar {
