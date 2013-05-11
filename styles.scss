@@ -30,10 +30,13 @@ table {
     src: url('HannomMoeSubset.ttf') format("truetype");
 }
 
-
-body {
-    background: #eeeeee url("background.jpg");
+@mixin fonts {
     font-family: "Biaodian Pro Sans CNS", sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+}
+
+body#moedict {
+    background: #eeeeee url("background.jpg");
+    @include fonts;
     font-size: 14pt;
     line-height: 140%;
     margin: 10px;
@@ -271,6 +274,7 @@ body.overflow-scrolling-false {
 }
 
 #query {
+    @include fonts;
     height: 36pt;
     font-size: 1.2em;
     padding: 5px;
@@ -292,7 +296,7 @@ body.overflow-scrolling-false {
     word-break: normal !important;
 }
 
-body {
+body#moedict {
     &.overflow-scrolling-false.lang-t .pinyin {
         font-family: 'TWBLG';
     }
