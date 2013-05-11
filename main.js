@@ -825,10 +825,10 @@
         } catch (e$) {}
         results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
         if (LANG === 't') {
-          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv')).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];
             if (!in$(v, results)) {
-              results.push(v);
+              results.unshift(v);
             }
           }
         }
