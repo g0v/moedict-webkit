@@ -295,6 +295,13 @@
       $('#query').on('focus', function(){
         return this.select();
       });
+      $('#query').on('click', function(){
+        try {
+          if ($('#query').val()) {
+            return $('#query').autocomplete('search');
+          }
+        } catch (e$) {}
+      });
       $('#query').show();
       if (!isCordova) {
         $('#query').focus();
