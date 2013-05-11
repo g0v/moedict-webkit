@@ -473,8 +473,8 @@ function init-autocomplete
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
       results ||= xref-of term, if LANG is \t then \a else \t
-      if LANG is \t => for v in xref-of term, \tv
-        results.push v unless v in results
+      if LANG is \t => for v in xref-of(term, \tv).reverse!
+        results.unshift v unless v in results
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 400
