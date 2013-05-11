@@ -163,6 +163,8 @@ window.do-load = ->
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
+    $ \#query .on \click ->
+      try $(\#query).autocomplete \search if $(\#query).val!
     $ \#query .show!
     $ \#query .focus! unless isCordova
 
