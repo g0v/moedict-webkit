@@ -15,7 +15,7 @@ INDEX = { t: '', a: '' }
 XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"', tv: '' }
 function xref-of (id, lang=LANG)
   idx = XREF[lang].indexOf('"' + id + '":')
-  return unless idx >= 0
+  return [] unless idx >= 0
   part = XREF[lang].slice(idx + id.length + 4);
   idx = part.indexOf \"
   part.=slice 0 idx
@@ -473,8 +473,9 @@ function init-autocomplete
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
       results ||= xref-of term, if LANG is \t then \a else \t
-      results ||= xref-of term, \tv if LANG is \t
-      return cb [''] unless results
+      if LANG is \t => for v in xref-of term, \tv
+        results.push v unless v in results
+      return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = 400
       if results.length > MaxResults

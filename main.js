@@ -33,7 +33,7 @@
     lang == null && (lang = LANG);
     idx = XREF[lang].indexOf('"' + id + '":');
     if (!(idx >= 0)) {
-      return;
+      return [];
     }
     part = XREF[lang].slice(idx + id.length + 4);
     idx = part.indexOf('"');
@@ -785,7 +785,7 @@
         return true;
       },
       source: function(arg$, cb){
-        var term, regex, results, MaxResults, more;
+        var term, regex, results, i$, ref$, len$, v, MaxResults, more;
         term = arg$.term;
         if (!term.length) {
           return cb([]);
@@ -825,9 +825,14 @@
         } catch (e$) {}
         results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
         if (LANG === 't') {
-          results || (results = xrefOf(term, 'tv'));
+          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv')).length; i$ < len$; ++i$) {
+            v = ref$[i$];
+            if (!in$(v, results)) {
+              results.push(v);
+            }
+          }
         }
-        if (!results) {
+        if (!(results != null && results.length)) {
           return cb(['']);
         }
         if (results.length === 1) {
@@ -1071,5 +1076,10 @@
       });
       return it + (tone || '\uFFFD');
     }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\. ?/g, '。').replace(/\? ?/g, '？').replace(/\! ?/g, '！').replace(/\, ?/g, '，');
+  }
+  function in$(x, arr){
+    var i = -1, l = arr.length >>> 0;
+    while (++i < l) if (x === arr[i] && i in arr) return true;
+    return false;
   }
 }).call(this);
