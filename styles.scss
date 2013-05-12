@@ -305,6 +305,14 @@ body#moedict {
     }
 }
 
+.english {
+    word-break: normal !important;
+    font-family: "Georgia", "American Typewriter", sans-serif;
+    font-weight: normal;
+    font-size: 90%;
+    margin-left: 5px;
+}
+
 .pinyin {
     word-break: normal !important;
     font-family: "Georgia", "American Typewriter", sans-serif;
