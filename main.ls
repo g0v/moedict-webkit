@@ -351,7 +351,7 @@ window.do-load = ->
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaqTAVCD_=])"/g (, k) -> keyMap[k]
+    part.=replace /"([hbpdcnftrelsaqETAVCD_=])"/g (, k) -> keyMap[k]
     h = "#{ if LANG is \a then \# else \#! }"
     part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
@@ -388,8 +388,7 @@ window.do-load = ->
     h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
     c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
     t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
-    a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id"
-
+    a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id" E: \"english"
     T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   }
 
@@ -504,7 +503,7 @@ function can-play-mp3
   a = document.createElement \audio
   CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /no/)
 
-function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
+function render ({ title, english, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
@@ -518,6 +517,8 @@ function render ({ title, heteronyms, radical, non_radical_stroke_count: nrs-cou
           mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
           "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>"
         else ''
+      }#{
+        if english then "(#english)" else ''
       }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin
