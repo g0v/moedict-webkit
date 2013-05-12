@@ -15,7 +15,7 @@ checkout ::
 
 moedict-data :: checkout
 
-offline :: moedict-data
+offline :: moedict-data deps
 	ln -fs ../moedict-data/dict-revised.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json

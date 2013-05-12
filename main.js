@@ -198,7 +198,7 @@
     return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, lenToRegex, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang;
     if (!isDeviceReady) {
       return;
     }
@@ -430,7 +430,6 @@
       $('#query').val(id);
       return window.doLookup(id);
     };
-    lenToRegex = {};
     bucketOf = function(it){
       var code;
       code = it.charCodeAt(0);
