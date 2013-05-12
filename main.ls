@@ -243,8 +243,6 @@ window.do-load = ->
     $ \#query .val id
     window.do-lookup id
 
-  lenToRegex = {}
-
   bucket-of = ->
     code = it.charCodeAt(0)
     if 0xD800 <= code <= 0xDBFF
