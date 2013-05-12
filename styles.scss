@@ -311,11 +311,13 @@ body#moedict {
     font-weight: normal;
     font-size: 90%;
     margin-left: 5px;
+    display: inline-block;
 }
 
 .pinyin {
     word-break: normal !important;
     font-family: "Georgia", "American Typewriter", sans-serif;
+    display: inline-block;
 }
 
 .prefer-pinyin-false .bopomofo .bpmf {

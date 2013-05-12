@@ -1341,11 +1341,13 @@ body#moedict.lang-t .pinyin {
   font-family: "Georgia", "American Typewriter", sans-serif;
   font-weight: normal;
   font-size: 90%;
-  margin-left: 5px; }
+  margin-left: 5px;
+  display: inline-block; }
 
 .pinyin {
   word-break: normal !important;
-  font-family: "Georgia", "American Typewriter", sans-serif; }
+  font-family: "Georgia", "American Typewriter", sans-serif;
+  display: inline-block; }
 
 .prefer-pinyin-false .bopomofo .bpmf {
   text-align: left;
