@@ -1336,6 +1336,13 @@ body#moedict.overflow-scrolling-false.lang-t .pinyin {
 body#moedict.lang-t .pinyin {
   font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif; }
 
+.english {
+  word-break: normal !important;
+  font-family: "Georgia", "American Typewriter", sans-serif;
+  font-weight: normal;
+  font-size: 90%;
+  margin-left: 5px; }
+
 .pinyin {
   word-break: normal !important;
   font-family: "Georgia", "American Typewriter", sans-serif; }

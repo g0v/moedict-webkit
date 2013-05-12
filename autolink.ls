@@ -69,7 +69,6 @@ if lang is \t
 else
   entries = grok(\dict-revised.pua.json)
 
-prefix = {}
 i = 0
 todo = 0
 for {t:title, h:heteronyms}:entry in entries
@@ -81,17 +80,13 @@ for {t:title, h:heteronyms}:entry in entries
   if 0xD800 <= code <= 0xDBFF
     pre = title.slice(0, 2)
     code = pre.charCodeAt(1) - 0xDC00
-    post = title.slice(2)
-  else
-    post = title.slice(1)
-  prefix[pre] ?= ''
-  prefix[pre] += "|#post" if post.length
   entry.t = ""
-  title.=replace(
-    LTM-regexes[*-1]
-    -> "`#it~"
-  )
   idx = code % (if lang is \a then 1024 else 128)
+
+  english-index = title.indexOf \(
+  if english-index >= 0
+    entry.english = title.slice(english-index + 1, -1)
+    title = title.slice(0, english-index)
   chunk = JSON.stringify entry
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x

@@ -518,7 +518,7 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
           "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>"
         else ''
       }#{
-        if english then "(#english)" else ''
+        if english then "<span class='english'>(#english)</span>" else ''
       }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin
