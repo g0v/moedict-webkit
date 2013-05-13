@@ -1517,8 +1517,7 @@ body.lang-a.web #lookback {
     font-size: 70%;
     clear: both;
     width: auto;
-    text-align: left;
-    white-space: nowrap; }
+    text-align: left; }
   .example .mandarin {
     font-size: 90%;
     text-align: left;
