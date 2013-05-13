@@ -317,7 +317,7 @@ window.do-load = ->
     cache-loading := no
 
     if isCordova
-      $('#result .playAudio').on \tapone -> $(@).click!
+      $('#result .playAudio').on \touchstart -> $(@).click!
       return
 
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf

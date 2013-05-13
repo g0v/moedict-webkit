@@ -544,7 +544,7 @@
         setPinyinBindings();
         cacheLoading = false;
         if (isCordova) {
-          $('#result .playAudio').on('tapone', function(){
+          $('#result .playAudio').on('touchstart', function(){
             return $(this).click();
           });
           return;
