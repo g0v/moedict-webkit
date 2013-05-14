@@ -35,6 +35,7 @@ public class MoeActivity extends DroidGap {
         super.loadUrl("file:///android_asset/www/index.html", 3000);
     }
 
+    /*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent ke) {
 		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
@@ -46,7 +47,8 @@ public class MoeActivity extends DroidGap {
         }
 		return super.onKeyDown(keyCode, ke); 
     }
-   
+   */
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.example, menu);
