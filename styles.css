@@ -1658,3 +1658,11 @@ body.lang-t .ui-tooltip .example {
 
 .ui-menu-item {
   border-bottom: 1px solid #ddd; }
+
+.playAudio {
+  margin-left: 5px;
+  color: #6B0000;
+  font-size: 75%;
+  padding: 10px;
+  cursor: pointer;
+  line-height: 100%; }

@@ -64,6 +64,7 @@ if isCordova or isMobile
     ({ urls, onend, onloaderror }) ->
       @el = document.createElement \audio
       @el.set-attribute \src urls.0
+      @el.set-attribute \type \audio/mpeg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
       @el.add-event-listener \error -> onloaderror; try @el.remove!
@@ -510,13 +511,15 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     bopomofo ?= trs2bpmf "#pinyin"
+    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
     """#char-html
       <h1 class='title'>#{ h title }#{
-        if audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
+        if LANG is \t and audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
           basename = (100000 + Number audio_id) - /^1/
           mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
-          "<span style='margin-left: 5px; color: #6B0000; font-size: 75%; padding: 10px; cursor: pointer; line-height: 100%' class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>"
-        else ''
+        else if LANG is \a and audio_id
+          mp3 = "http://a.moedict.tw/#audio_id.mp3"
+        if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
       }</h1>#{
@@ -524,10 +527,7 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
             if pinyin then "<span class='pinyin'>#{ h pinyin
               .replace(/（.*）/, '')
             }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo
-            .replace(/ /g, '\u3000')
-            .replace(/([ˇˊˋ])\u3000/g, '$1 ')
-          }</span></div>" else ''
+          }<span class='bpmf'>#{ h bopomofo }</span></div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div>
