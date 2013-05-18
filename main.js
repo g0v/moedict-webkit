@@ -119,7 +119,7 @@
         urls = arg$.urls, onend = arg$.onend, onloaderror = arg$.onloaderror;
         this.el = document.createElement('audio');
         this.el.setAttribute('src', urls[0]);
-        this.el.setAttribute('type', 'audio/mpeg');
+        this.el.setAttribute('type', /mp3$/.exec(urls[0]) ? 'audio/mpeg' : 'audio/ogg');
         this.el.setAttribute('autoplay', true);
         this.el.setAttribute('controls', true);
         this.el.addEventListener('error', function(){
@@ -146,15 +146,19 @@
       return $(el).fadeIn('fast');
     };
     play = function(){
-      var audio;
+      var urls, audio;
       if (playing) {
         return;
       }
       playing = true;
       $(el).fadeOut('fast');
+      urls = [url];
+      if (/ogg$/.exec(url)) {
+        urls.push(url.replace(/ogg$/, 'mp3'));
+      }
       audio = new window.Howl({
         buffer: true,
-        urls: [url],
+        urls: urls,
         onend: done,
         onloaderror: done
       });
@@ -880,7 +884,15 @@
       return CACHED.canPlayMp3;
     }
     a = document.createElement('audio');
-    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg;') : void 8, /no/, ''));
+    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg') : void 8, /no/, ''));
+  }
+  function canPlayOgg(){
+    var a;
+    if (CACHED.canPlayOgg != null) {
+      return CACHED.canPlayOgg;
+    }
+    a = document.createElement('audio');
+    return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
   }
   function render(arg$){
     var title, english, heteronyms, radical, nrsCount, sCount, charHtml, result;
@@ -896,7 +908,7 @@
       bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
       return charHtml + "\n<h1 class='title'>" + h(title) + (LANG === 't' && audio_id && !(20000 < audio_id && audio_id < 50000) && canPlayMp3()
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/" + basename + ".mp3")
-        : LANG === 'a' && audio_id && (mp3 = "http://a.moedict.tw/" + audio_id + ".mp3"), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && audio_id && (canPlayOgg() || canPlayMp3()) && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg", !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin).replace(/（.*）/, '') + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
