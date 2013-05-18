@@ -64,7 +64,7 @@ if isCordova or isMobile
     ({ urls, onend, onloaderror }) ->
       @el = document.createElement \audio
       @el.set-attribute \src urls.0
-      @el.set-attribute \type \audio/mpeg
+      @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
       @el.add-event-listener \error -> onloaderror; try @el.remove!
@@ -80,7 +80,9 @@ window.play-audio = (el, url) ->
     return if playing
     playing := true
     $(el).fadeOut \fast
-    audio = new window.Howl { +buffer, urls: [url], onend: done, onloaderror: done }
+    urls = [url]
+    urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
+    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done }
     audio.play!
   return play! if window.Howl
   <- $.getScript \js/howler.min.js
@@ -502,7 +504,12 @@ function render-radical (char)
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
   a = document.createElement \audio
-  CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /no/)
+  CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg') - /no/)
+
+function can-play-ogg
+  return CACHED.can-play-ogg if CACHED.can-play-ogg?
+  a = document.createElement \audio
+  CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
 function render ({ title, english, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
@@ -517,8 +524,9 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
         if LANG is \t and audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
           basename = (100000 + Number audio_id) - /^1/
           mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
-        else if LANG is \a and audio_id
-          mp3 = "http://a.moedict.tw/#audio_id.mp3"
+        else if LANG is \a and audio_id and (can-play-ogg! or can-play-mp3!)
+          mp3 = "http://a.moedict.tw/#audio_id.ogg"
+          mp3.=replace(/ogg$/ \mp3) if not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
