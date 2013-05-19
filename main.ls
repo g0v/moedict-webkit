@@ -82,6 +82,7 @@ window.play-audio = (el, url) ->
     return if playing is url
     player?stop!
     playing := url
+    $('#result .playAudio').show!
     $(el).fadeOut \fast
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
@@ -521,24 +522,23 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
+    pinyin = pinyin - /<[^>]*>/g - /（.*）/
     bopomofo ?= trs2bpmf "#pinyin"
-    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
     """#char-html
       <h1 class='title'>#{ h title }#{
         if LANG is \t and audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
           basename = (100000 + Number audio_id) - /^1/
           mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
         else if LANG is \a and audio_id and (can-play-ogg! or can-play-mp3!)
-          mp3 = "http://a.ethercalc.org/#audio_id.ogg"
+          mp3 = "http://a.moedict.tw/#audio_id.ogg"
           mp3.=replace(/ogg$/ \mp3) if not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
       }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
-            if pinyin then "<span class='pinyin'>#{ h pinyin
-              .replace(/（.*）/, '')
-            }</span>" else ''
+            if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span></div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
