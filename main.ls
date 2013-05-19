@@ -67,10 +67,10 @@ if isCordova or isMobile
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \error onloaderror; try @el.remove!
-      @el.add-event-listener \ended onend; try @el.remove!
+      @el.add-event-listener \error onloaderror; try @el.remove!; @el = null
+      @el.add-event-listener \ended onend; try @el.remove!; @el = null
     play: -> @el.play!
-    stop: -> @el.currentTime = 0
+    stop: -> try @el?currentTime = 0
 
 var playing, player
 window.play-audio = (el, url) ->
