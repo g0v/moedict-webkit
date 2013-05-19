@@ -525,7 +525,7 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
           basename = (100000 + Number audio_id) - /^1/
           mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
         else if LANG is \a and audio_id and (can-play-ogg! or can-play-mp3!)
-          mp3 = "http://a.moedict.tw/#audio_id.ogg"
+          mp3 = "http://a.ethercalc.org/#audio_id.ogg"
           mp3.=replace(/ogg$/ \mp3) if not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
