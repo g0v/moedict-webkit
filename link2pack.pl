@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-use 5.14.0;
 use utf8;
+use Encode;
 my $lang = shift;
 unless ($lang ~~ [qw[ t a ]] and not -t STDIN) {
     die << '.';
@@ -9,8 +9,6 @@ Please invoke this as one of:
     perl link2pack.pl t < t.txt
 .
 }
-use Encode;
-use File::Slurp;
 binmode STDIN, ':raw';
 my %prepack;
 my %seen;
@@ -27,8 +25,8 @@ while (<STDIN>) {
     my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
     next if $file =~ /[⿰⿸]/;
     next if $seen{$file}++;
-    unless (-e "$lang/$file.json" and File::Slurp::read_file("$lang/$file.json") eq $_) {
-        File::Slurp::write_file("$lang/$file.json", $_);
+    unless (-e "$lang/$file.json" and read_file("$lang/$file.json") eq $_) {
+        write_file("$lang/$file.json", $_);
     }
     if ($prepack{$bucket}) {
         $prepack{$bucket} .= qq<\n,"$title":$_>
@@ -41,5 +39,8 @@ while (<STDIN>) {
 mkdir "p${lang}ck" unless -e "p${lang}ck";
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
-    File::Slurp::write_file("p${lang}ck/$k.txt", $v);
+    write_file("p${lang}ck/$k.txt", $v);
 }
+
+sub write_file { open my $fh, '>', shift(@_) or die $!; print $fh @_; }
+sub read_file { local $/; open my $fh, '<', shift(@_) or die $!; <$fh>; }
