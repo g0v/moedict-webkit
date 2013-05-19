@@ -93,13 +93,13 @@ for {t:title, h:heteronyms}:entry in entries
   if english-index >= 0
     entry.english = title.slice(english-index + 1, -1)
     title = title.slice(0, english-index)
-  if audio-map => for {b}, idx in heteronyms
+  if audio-map => for {b}, i in heteronyms
     break unless b
     b = b.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1').replace(/ /g, '\u3000')
     b = b - /^（.*）/ - /（.*）.*/
     title = title - /，/g
-    audio-id = if idx then audio-map["#title.#b"] else audio-map["#title.#b"] || audio-map[title]
-    heteronyms[idx] <<< {"=": audio-id} if audio-id
+    audio-id = if i then audio-map["#title.#b"] else audio-map["#title.#b"] || audio-map[title]
+    heteronyms[i] <<< {"=": audio-id} if audio-id
   chunk = JSON.stringify entry
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x
