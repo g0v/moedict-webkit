@@ -6,7 +6,7 @@ unless lang in <[ a t ]>
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
 for k, v of audio-map
-  k = k - /，/g - /^（.*）/ - /（.*）.*/
+  k = k.replace(/\.（.*?）/ \.) - /，/g - /（.*）.*/
   audio-map[k] = v
   k = k - /\..*/
   audio-map[k] = v
