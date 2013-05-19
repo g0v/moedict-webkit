@@ -125,17 +125,22 @@
         this.el.addEventListener('error', onloaderror);
         try {
           this.el.remove();
+          this.el = null;
         } catch (e$) {}
         this.el.addEventListener('ended', onend);
         try {
           this.el.remove();
+          this.el = null;
         } catch (e$) {}
       }
       prototype.play = function(){
         return this.el.play();
       };
       prototype.stop = function(){
-        return this.el.currentTime = 0;
+        var ref$;
+        try {
+          return (ref$ = this.el) != null ? ref$.currentTime = 0 : void 8;
+        } catch (e$) {}
       };
       return Howl;
     }());
