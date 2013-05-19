@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -122,12 +122,10 @@
         this.el.setAttribute('type', /mp3$/.exec(urls[0]) ? 'audio/mpeg' : 'audio/ogg');
         this.el.setAttribute('autoplay', true);
         this.el.setAttribute('controls', true);
-        this.el.addEventListener('error', function(){
-          onloaderror;
-          try {
-            return this.el.remove();
-          } catch (e$) {}
-        });
+        this.el.addEventListener('error', onloaderror);
+        try {
+          this.el.remove();
+        } catch (e$) {}
         this.el.addEventListener('ended', onend);
         try {
           this.el.remove();
@@ -136,21 +134,28 @@
       prototype.play = function(){
         return this.el.play();
       };
+      prototype.stop = function(){
+        return this.el.currentTime = 0;
+      };
       return Howl;
     }());
   }
   window.playAudio = function(el, url){
     var done, play;
     done = function(){
-      playing = false;
+      playing = null;
+      player = null;
       return $(el).fadeIn('fast');
     };
     play = function(){
       var urls, audio;
-      if (playing) {
+      if (playing === url) {
         return;
       }
-      playing = true;
+      if (player != null) {
+        player.stop();
+      }
+      playing = url;
       $(el).fadeOut('fast');
       urls = [url];
       if (/ogg$/.exec(url)) {
@@ -162,7 +167,8 @@
         onend: done,
         onloaderror: done
       });
-      return audio.play();
+      audio.play();
+      return player = audio;
     };
     if (window.Howl) {
       return play();

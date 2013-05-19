@@ -67,23 +67,27 @@ if isCordova or isMobile
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \error -> onloaderror; try @el.remove!
+      @el.add-event-listener \error onloaderror; try @el.remove!
       @el.add-event-listener \ended onend; try @el.remove!
     play: -> @el.play!
+    stop: -> @el.currentTime = 0
 
-var playing
+var playing, player
 window.play-audio = (el, url) ->
   done = ->
-    playing := false
+    playing := null
+    player := null
     $(el).fadeIn \fast
   play = ->
-    return if playing
-    playing := true
+    return if playing is url
+    player?stop!
+    playing := url
     $(el).fadeOut \fast
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done }
     audio.play!
+    player := audio
   return play! if window.Howl
   <- $.getScript \js/howler.min.js
   return play!
