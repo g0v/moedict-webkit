@@ -1141,19 +1141,19 @@ table {
   font-family: 'HANNOMmoesubset-Regular';
   src: url("HannomMoeSubset.ttf") format("truetype"); }
 
-body {
+body#moedict {
   background: #eeeeee url("background.jpg");
   font-family: "Biaodian Pro Sans CNS", sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   font-size: 14pt;
   line-height: 140%;
   margin: 10px; }
-  body.lang-t {
+  body#moedict.lang-t {
     background: #744; }
-  body.cordova {
+  body#moedict.cordova {
     font-family: "Biaodian Pro Sans CNS", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
-    body.cordova.lang-t {
+    body#moedict.cordova.lang-t {
       font-family: "Biaodian Pro Sans CNS", "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
-  body.lang-t .title, body.lang-t.cordova .title {
+  body#moedict.lang-t .title, body#moedict.lang-t.cordova .title {
     font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
 
 .title {
@@ -1311,6 +1311,7 @@ body.overflow-scrolling-false #query-box, body.overflow-scrolling-false img.info
     right: auto;
     width: 270px; } }
 #query {
+  font-family: "Biaodian Pro Sans CNS", sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
   height: 36pt;
   font-size: 1.2em;
   padding: 5px;
@@ -1330,14 +1331,23 @@ body.overflow-scrolling-false #query-box, body.overflow-scrolling-false img.info
   border-bottom: 1px dotted #dddddd;
   word-break: normal !important; }
 
-body.overflow-scrolling-false.lang-t .pinyin {
+body#moedict.overflow-scrolling-false.lang-t .pinyin {
   font-family: 'TWBLG'; }
-body.lang-t .pinyin {
+body#moedict.lang-t .pinyin {
   font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif; }
+
+.english {
+  word-break: normal !important;
+  font-family: "Georgia", "American Typewriter", sans-serif;
+  font-weight: normal;
+  font-size: 90%;
+  margin-left: 5px;
+  display: inline-block; }
 
 .pinyin {
   word-break: normal !important;
-  font-family: "Georgia", "American Typewriter", sans-serif; }
+  font-family: "Georgia", "American Typewriter", sans-serif;
+  display: inline-block; }
 
 .prefer-pinyin-false .bopomofo .bpmf {
   text-align: left;
@@ -1507,8 +1517,7 @@ body.lang-a.web #lookback {
     font-size: 70%;
     clear: both;
     width: auto;
-    text-align: left;
-    white-space: nowrap; }
+    text-align: left; }
   .example .mandarin {
     font-size: 90%;
     text-align: left;
@@ -1543,7 +1552,7 @@ body.lang-t .example {
   display: block;
   font-size: 92%; }
 
-.antonyms, .synonyms {
+.antonyms, .synonyms, .variants {
   clear: both;
   display: block;
   font-size: 85%;
@@ -1628,7 +1637,7 @@ span a {
 body.lang-t .ui-tooltip .example {
   display: none; }
 
-.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .radical {
+.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .variants, .ui-tooltip .radical {
   display: none; }
 
 #gcfbar {
@@ -1649,3 +1658,11 @@ body.lang-t .ui-tooltip .example {
 
 .ui-menu-item {
   border-bottom: 1px solid #ddd; }
+
+.playAudio {
+  margin-left: 5px;
+  color: #6B0000;
+  font-size: 75%;
+  padding: 10px;
+  cursor: pointer;
+  line-height: 100%; }
