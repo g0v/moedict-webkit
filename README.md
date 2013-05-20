@@ -3,9 +3,9 @@
 ## 需求
 
 * Node.js
-    * livescript
+    * LiveScript
     * webworker-threads
-* Perl 5.14 以上
+* Perl 5.8.0 以上
 * Ruby
     * SASS
 
