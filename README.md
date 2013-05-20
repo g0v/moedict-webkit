@@ -3,9 +3,9 @@
 ## 需求
 
 * Node.js
-    * livescript
+    * LiveScript
     * webworker-threads
-* Perl 5.14 以上
+* Perl 5.8.0 以上
 * Ruby
     * SASS
 
@@ -58,6 +58,12 @@ perl link2pack.pl t < t.txt
 
 `styles.css` 用到的四個字形檔（不得為商業利用）可於此取得：
 https://github.com/g0v/moedict-epub/tree/master/fontforge
+
+## 本機運行
+
+```
+make # runs in http://127.0.0.1:8888/
+```
 
 # 其他
 
