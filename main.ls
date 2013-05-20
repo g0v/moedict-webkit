@@ -516,7 +516,7 @@ function can-play-ogg
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
-function render ({ title, english, heteronyms, radical, non_radical_stroke_count: nrs-count, stroke_count: s-count})
+function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
@@ -575,6 +575,13 @@ function render ({ title, english, heteronyms, radical, non_radical_stroke_count
       #{ if variants then "<span class='variants'><span class='part-of-speech'>異</span> #{
         h(variants.replace(/,/g '、'))
       }</span>" else '' }
+      #{ if translation then "<span class='translation'> #{ 
+         if \francais of translation then "<span class='fw_lang'>français</span><ol>#{ 
+          ls translation.francais, -> "<li><span class='example'>#{ h it }</span></li>" }</ol>" else '' }
+        #{ if \English of translation then "<span class='fw_lang'>English</span><ol>#{ 
+          ls translation.English, -> "<li><span class='example'>#{ h it }</span></li>" }</ol>" else '' }
+        #{ if \Deutsch of translation then "<span class='fw_lang'>Deutsch</span><ol>#{ 
+          ls translation.Deutsch, -> "<li><span class='example'>#{ h it }</span></li>" }" else '' } </span>" else '' } 
       </div>
     """
   return result
