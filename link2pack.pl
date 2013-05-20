@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use utf8;
+use 5.008;
 use Encode;
 my $lang = shift;
 unless ($lang ~~ [qw[ t a ]] and not -t STDIN) {
@@ -22,7 +23,8 @@ while (<STDIN>) {
     my $bucket = $1;
     my $title = $2;
     /"t":"([^"]+)"/ or die;
-    my $file = (Encode::decode_utf8($1) =~ s![`~]!!gr);
+    my $file = Encode::decode_utf8($1);
+    $file =~ s![`~]!!g;
     next if $file =~ /[⿰⿸]/;
     next if $seen{$file}++;
     unless (-e "$lang/$file.json" and read_file("$lang/$file.json") eq $_) {
