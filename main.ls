@@ -147,6 +147,7 @@ window.do-load = ->
     $ \.lang .show!
     $ \.erase .hide!
   window.press-back = press-back = ->
+    player?stop!
     if isDroidGap and not(
       $ \.ui-autocomplete .hasClass \invisible
     ) and $ \body .width! < 768
@@ -191,6 +192,7 @@ window.do-load = ->
       fetch MOE-ID
 
   window.grok-val = grok-val = (val) ->
+    player?stop!
     return if val is /</
     lang = \a
     if "#val" is /^!/
@@ -527,12 +529,13 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
     """#char-html
       <h1 class='title'>#{ h title }#{
-        if LANG is \t and audio_id and not (20000 < audio_id < 50000) and can-play-mp3! then
-          basename = (100000 + Number audio_id) - /^1/
-          mp3 = "http://twblg.dict.edu.tw/holodict_new/audio/#basename.mp3"
-        else if LANG is \a and audio_id and (can-play-ogg! or can-play-mp3!)
-          mp3 = "http://a.moedict.tw/#audio_id.ogg"
-          mp3.=replace(/ogg$/ \mp3) if not can-play-ogg!
+        if audio_id and (can-play-ogg! or can-play-mp3!)
+          if LANG is \t and not (20000 < audio_id < 50000)
+            basename = (100000 + Number audio_id) - /^1/
+            mp3 = "http://t.moedict.tw/#basename.ogg"
+          else if LANG is \a
+            mp3 = "http://a.moedict.tw/#audio_id.ogg"
+          mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
