@@ -1,4 +1,4 @@
-const DEBUGGING = off
+const DEBUGGING = on
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -59,7 +59,7 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
-if isCordova or isMobile
+if !DEBUGGING and (isCordova or isMobile)
   class window.Howl
     ({ urls, onend, onloaderror }) ->
       @el = document.createElement \audio
@@ -310,7 +310,7 @@ window.do-load = ->
     return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
-    return fill-bucket id, bucket
+    return fill-bucket id, bucket, cb
 
   set-pinyin-bindings = ->
     $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
@@ -326,7 +326,7 @@ window.do-load = ->
 
     cache-loading := no
 
-    if isCordova
+    if isCordova and not DEBUGGING
       $('#result .playAudio').on \touchstart -> $(@).click!
       return
 
@@ -402,7 +402,7 @@ window.do-load = ->
     T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   }
 
-  fill-bucket = (id, bucket) ->
+  fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"
     key = escape id
     idx = raw.indexOf('"' + key + '"');
@@ -410,7 +410,7 @@ window.do-load = ->
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
     part = part.slice(0, idx)
-    fill-json part, id
+    fill-json part, id, cb
 
   if isCordova
     for lang in <[ a t ]> => let lang
