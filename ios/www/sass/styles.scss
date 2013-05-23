@@ -1,29 +1,73 @@
-@charset "UTF-8";
+// compass config
+$legacy-support-for-ie: false;
+$experimental-support-for-opera: false;
+$support-for-original-webkit-gradients: false;
 
-@import "han";
-@import "han.fonts";
+// bootstrap
+$baseFontSize: 16px;
+$baseBorderRadius: 0;
+$bodyBackground: hsl(0,3%,95%);
+
+// font-awesome
+$fontAwesomePath: "/fonts";
 
 $grayLight:             #ddd;
 $grayLighter:           #eee;
 $border-color:          $grayLight;
 
-/* ==========================================================================
-   Tables
-   ========================================================================== */
-/**
- * Remove most spacing between table cells.
+@import "compass/css3";
+@import "hidpi";
+
+/*!
+ * Bootstrap v2.3.1
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
+// Core variables and mixins
+@import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
+@import "bootstrap/mixins";
+
+// CSS Reset
+@import "bootstrap/reset";
+@import "han";
+@import "han.fonts";
+
+// Grid system and page structure
+@import "bootstrap/scaffolding";
+@import "bootstrap/grid";
+@import "bootstrap/layouts";
+
+// Base CSS
+@import "bootstrap/type";
+@import "bootstrap/forms";
+@import "bootstrap/tables";
+@import "font-awesome";
+@import "bootstrap/dropdowns";
+@import "bootstrap/wells";
+@import "bootstrap/component-animations";
+@import "bootstrap/close";
+@import "bootstrap/buttons";
+@import "bootstrap/button-groups";
+@import "bootstrap/alerts"; // Note: alerts share common CSS with buttons and thus have styles in buttons
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+@import "bootstrap/modals";
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+@import "bootstrap/labels-badges";
+
+// Utility classes
+@import "bootstrap/utilities"; // Has to be last to override when necessary
 
 @font-face {
     font-family: 'TWBLG';
     src: url('TWBLG.ttf') format("truetype");
 }
-
 
 @font-face {
     font-family: 'HANNOMmoesubset-Regular';
@@ -31,17 +75,18 @@ table {
 }
 
 @mixin fonts {
-    font-family: "Biaodian Pro Sans CNS", sans-serif, "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+    font-family: "Biaodian Pro Sans CNS", "TWBLG", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
 }
 
-body#moedict {
-    background: #eeeeee url("background.jpg");
+body {
+    @include hidpi('subtle_stripes', 'png');
     @include fonts;
-    font-size: 14pt;
-    line-height: 140%;
-    margin: 10px;
     &.lang-t {
         background: #744;
+        font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        .title, &.cordova .title {
+            font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
+        }
     }
     &.cordova {
         font-family: "Biaodian Pro Sans CNS", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
@@ -49,11 +94,12 @@ body#moedict {
             font-family: "Biaodian Pro Sans CNS", "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
         }
     }
-    &.lang-t {
-        .title, &.cordova .title {
-            font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
-        }
-    }
+}
+
+.ebas {
+    font-family: EBAS, serif;
+    font-smooth: always;
+    -webkit-font-smoothing: antialiased;
 }
 
 .title {
@@ -82,18 +128,154 @@ h1 audio {
     width: 50px;
 }
 
-h3 {
-    font-size: 100%;
+.rubber_stamp {
+    font-size: 18px;
+    line-height: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: red;
+    float: left;
+    padding: 2px;
+    border-radius: 3px;
+    position: relative;
+    background: #6b0000;
+    opacity: 0.8;
+    color: white;
+    margin-bottom: 40px;
+    &:hover {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: auto;
+        min-height:100%;
+        top: -10px;
+        left: -10px;
+        padding: 10px;
+        background: url(/images/noise.png) repeat;
+    }
 }
 
-a {
-    color: black !important;
-    text-decoration: none !important;
+.navbar {
+    @include box-shadow(#1a1a1a 0 0 3px);
+}
+
+.navbar .navbar-inner {
+    @include hidpi('leather', 'jpg');
+    border-top: 3px solid hsl(3,46%,13%);
+    border-bottom: 1px solid hsl(3,46%,16%);
+}
+
+.navbar-fixed-top .navbar-inner {
+    padding: 0 20px;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
+    background-color: hsla(3,46%,13%, 0.7);
+}
+
+.iconic-circle {
+    border-radius: 18px;
+    background-color: hsl(360,100%,21%);
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.navbar .ironic-circle {
+    background-color: #fff;
+    color: #1a1a1a;
+}
+
+.query-box {
+    width: 260px;
+    //background-color: hsl(0,0%,97%);
+    //background-color: #fff;
+    background-color: lighten(hsl(4,62%,26%), 70%);
+    //background-color: hsl(203,11%,85%);
+    position: fixed;
+    border-right: 1px solid hsl(0,0%,83%);
+    border-right: 1px solid hsl(360,1%,83%);
+    top: 45px;
+    bottom: 0;
+    z-index: 9;
+    padding: 20px;
+    @include box-sizing(border-box);
+
+    img {
+        position: absolute;
+        bottom: -220px;
+        right: 0;
+        //opacity: 0.5;
+        //z-index: -1;
+
+        @include transition(all 0.3s ease-in-out);
+        &:hover {
+            bottom: -30px;
+        }
+    }
+    li a {
+        background-color: rgba(255,255,255,.8);
+    }
+}
+
+.results {
+    margin-top: 65px;
+    margin-left: 280px;
+    margin-right: 20px;
+}
+
+.result {
+    background: #fff;
+    border: 1px solid hsl(0,1%,83%);
+    padding: 20px;
+    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+    margin-bottom: 20px;
+    font-size: 14pt;
+    line-height: 1.5;
+    ul, ol {
+        margin-left: 40px;
+    }
+    li {
+        line-height: 1.5;
+    }
+}
+
+input.query {
+    display: block;
+    font-size: 1.2em;
+    width: 100%;
+    height: 1.8em;
+    @include box-sizing(border-box);
+}
+
+::-webkit-search-cancel-button {   /* select all "X" buttons in search inputs */
+    -webkit-appearance: none;      /* hide the default "X" button */
+}
+
+::-webkit-search-cancel-button:after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 12px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAABSAQMAAAD94hHYAAAABlBMVEUAAACXl5cNUA2AAAAAAnRSTlP9B0nlx2sAAABxSURBVHhe7dK9DYYgFIXhYywsGYFRHA3djMRFGIGS4gb0XoRg4s9XfRVvcfIMcJCOnKwVLzCN52pAFxOgxISzySIUj1f7Ow/PTm5O3JB+9ha1L15JOfN/d3fLDz++qpkxW7EpG9KrffbIDo0pe2LX7A7qXBSslhfN8AAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position: top left;
+    opacity: 0.3;
+}
+
+.result a {
+    color: #000;
+    text-decoration: none;
     &:hover, &:focus {
         background: url("css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png") repeat-x scroll 50% 50% #e4f1fb;
         color: #0070A3;
-        outline: 1px solid #74B2E2 !important;
-        border-radius: 6px;
+        outline: 1px solid hsl(197,96%,70%);
     }
     &.erase:hover, &.lang:hover {
         background: #ddd;
@@ -112,10 +294,8 @@ a {
 }
 
 .radical {
-    position: absolute;
+    float: right;
     text-align: right;
-    right: 24px;
-    top: 36px;
     .count {
         font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace;
     }
@@ -135,25 +315,12 @@ center {
     padding: 15px;
 }
 
-#result {
-    box-shadow: 1px 1px 3px 0px #999999;
-    border: 1px solid $border-color;
-    margin-bottom: 4em;
-    padding: 5px 10px;
-    height: auto;
-    background: #ffffff;
-    border-radius: 10px;
-    word-break: break-all;
-}
-
-.prefer-down-false #result {
-    margin-bottom: 0;
-    margin-top: 62px;
+.result {
 }
 
 @media only screen and (min-width: 768px) {
     #result {
-        margin-left: 340px;
+        //margin-left: 340px;
     }
 }
 
@@ -165,10 +332,10 @@ center {
 
 body.overflow-scrolling-false {
     #query-box, img.info {
-        position: absolute;
+        ///position: absolute;
     }
 }
-
+/*
 #query-box {
     position: fixed;
     bottom: 5px;
@@ -180,7 +347,7 @@ body.overflow-scrolling-false {
     top: 5px;
     bottom: auto;
 }
-
+*/
 @media only screen and (max-width: 767px) {
     .info {
         display: none;
@@ -264,6 +431,7 @@ body.overflow-scrolling-false {
     }
 }
 
+/*
 @media only screen and (min-width: 768px) {
     #query-box {
         top: 10px;
@@ -282,7 +450,7 @@ body.overflow-scrolling-false {
     box-sizing: border-box;
     width: 100%;
 }
-
+*/
 .bopomofo {
     display: table;
     margin-top: -14px;
@@ -408,10 +576,9 @@ body.lang-t {
 
 .part-of-speech, .glyph, .fw_lang {
     color: white;
-    background-color: #555;
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    /*border: 1px solid black;*/
+    background-color: hsl(360,100%,21%);
+    border-radius: 4px;
+    padding: 2px;
     font-size: 100%;
 }
 
