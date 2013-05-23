@@ -578,16 +578,13 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       #{ if variants then "<span class='variants'><span class='part-of-speech'>異</span> #{
         h(variants.replace(/,/g '、'))
       }</span>" else '' }
-      #{ if translation then "<span class='translation'> #{ 
-         if \francais of translation then "<span class='fw_lang'>français</span><ol>#{ 
-          ls translation.francais, -> "<li><span class='example'>#{ h it }</span></li>" }</ol>" else '' }
-        #{ if \English of translation then "<span class='fw_lang'>English</span><ol>#{ 
-          ls translation.English, -> "<li><span class='example'>#{ h it }</span></li>" }</ol>" else '' }
-        #{ if \Deutsch of translation then "<span class='fw_lang'>Deutsch</span><ol>#{ 
-          ls translation.Deutsch, -> "<li><span class='example'>#{ h it }</span></li>" }" else '' } </span>" else '' } 
       </div>
     """
-  return result
+  return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
+    #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/ }</span></div>" else '' }
+    #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
+    #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }
+  </span></div>" else '' }"
   function expand-def (def)
     def.replace(
       /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
