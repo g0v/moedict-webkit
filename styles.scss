@@ -392,7 +392,21 @@ body.lang-t {
     }
 }
 
-.part-of-speech, .glyph {
+.translation .fw_def {
+    display: inline-block;
+    padding-left: 30px;
+    font-size: 90%;
+    font-family: "Georgia", "American Typewriter", sans-serif;
+    word-break: normal !important;
+}
+
+.translation .fw_lang {
+/*    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace; */
+    position: absolute;
+    display: inline-block;
+}
+
+.part-of-speech, .glyph, .fw_lang {
     color: white;
     background-color: #555;
     border-radius: 3px;
