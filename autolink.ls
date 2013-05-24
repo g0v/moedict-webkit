@@ -100,6 +100,7 @@ for {t:title, h:heteronyms}:entry in entries
     title = title - /，/g
     audio-id = if i then audio-map["#title.#b"] else audio-map["#title.#b"] || audio-map[title]
     heteronyms[i] <<< {"=": audio-id} if audio-id
+  delete entry<[ English francais Deutsch ]>
   chunk = JSON.stringify entry
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x
