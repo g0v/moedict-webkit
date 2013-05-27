@@ -315,86 +315,10 @@ center {
     padding: 15px;
 }
 
-.result {
-}
-
-@media only screen and (min-width: 768px) {
-    #result {
-        //margin-left: 340px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .prefer-down-false #result {
-        margin-top: 0px;
-    }
-}
-
-body.overflow-scrolling-false {
-    #query-box, img.info {
-        ///position: absolute;
-    }
-}
-/*
-#query-box {
-    position: fixed;
-    bottom: 5px;
-    right: 60px;
-    left: 10px;
-}
-
-.prefer-down-false #query-box {
-    top: 5px;
-    bottom: auto;
-}
-*/
 @media only screen and (max-width: 767px) {
     .info {
         display: none;
     }
-}
-
-@media only screen and (max-width: 767px) {
-    .prefer-down-false .radical {
-        top: 96px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .prefer-down-false img.back {
-        position: fixed;
-        bottom: auto;
-        top: 0px;
-        left: 0px;
-        width: 60px;
-        height: 60px;
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .prefer-down-false img.down {
-        position: fixed;
-        bottom: auto;
-        top: 0px;
-        left: 0px;
-        width: 60px;
-        height: 60px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .prefer-down-false img.info {
-        position: fixed;
-        bottom: auto;
-        top: 0px;
-        right: 0px;
-        width: 60px;
-        height: 60px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
     .erase, .lang {
         display: block;
         position: fixed;
@@ -402,15 +326,6 @@ body.overflow-scrolling-false {
         right: 0px;
         width: 60px;
         height: 60px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .prefer-down-false {
-        .erase, .lang {
-            top: 0px;
-            bottom: auto;
-        }
     }
 }
 
@@ -431,26 +346,6 @@ body.overflow-scrolling-false {
     }
 }
 
-/*
-@media only screen and (min-width: 768px) {
-    #query-box {
-        top: 10px;
-        left: 10px;
-        right: auto;
-        width: 270px;
-    }
-}
-
-#query {
-    @include fonts;
-    height: 36pt;
-    font-size: 1.2em;
-    padding: 5px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    width: 100%;
-}
-*/
 .bopomofo {
     display: table;
     margin-top: -14px;
@@ -659,11 +554,6 @@ body.overflow-scrolling-false .ui-autocomplete {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-
-.prefer-down-false .ui-autocomplete {
-    top: 54px !important;
-    bottom: auto !important;
 }
 
 @media only screen and (min-width: 768px) {
