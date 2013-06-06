@@ -26,7 +26,7 @@ def read_dict(infile):
         if not match:
             print l
             continue
-        fwdict[match.group("tradi")].extend(match.group("def")[1:-1].split("/"))
+        fwdict[match.group("tradi")].extend(match.group("def").replace("(u.E.)","")[1:-1].split("/"))
     return fwdict
 
 cedict = read_dict(cedictFile)
@@ -48,5 +48,5 @@ for i in range(0,len(moedict)):
 	    moedict[i][lang] = fwdict[form][0]
 
 # saving
-json.dump(moedict,open("./translation-data/moe-translation-merged.json","w"))
+json.dump(moedict,open("./translation-data/moe-translation.json","w"))
 
