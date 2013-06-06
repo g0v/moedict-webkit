@@ -15,8 +15,8 @@ checkout ::
 
 moedict-data :: checkout
 
-offline :: moedict-data deps
-	ln -fs ../moedict-data/dict-revised.json moedict-epub/dict-revised.json
+offline :: moedict-data deps translation
+	ln -fs ../moedict-data/dict-revised-translated.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
 	ln -fs moedict-epub/dict-revised.unicode.json          dict-revised.unicode.json
@@ -34,6 +34,7 @@ translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj handedict-20110528/handedict_nb.u8 > handedict.txt
 	python translation-data/txt2json.py
+	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
 
 all :: data/0/100.html
 	tar jxf data.tar.bz2
