@@ -1,7 +1,7 @@
 require! <[ fs ]>
 lang = process.argv.2
-unless lang in <[ a t ]>
-  console.log "Please invoke this as 'autolink.ls a' or 'autolink t'."
+unless lang in <[ a t h ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
@@ -70,10 +70,10 @@ grok = -> JSON.parse(
     .replace(/"audio_id":/g                  \"=":)
 )
 
-if lang is \t
-  entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
-else
-  entries = grok(\dict-revised.pua.json)
+entries = switch lang
+| \a => grok(\dict-revised.pua.json)
+| \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
+| \h => grok(\dict-hakka.json)
 
 i = 0
 todo = 0
