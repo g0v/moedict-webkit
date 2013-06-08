@@ -4,6 +4,8 @@ LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
 $ -> $('body').addClass("lang-#LANG")
 
+const HASH-OF = {a: \#, t: \#!, h: \#:}
+
 isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
@@ -11,8 +13,8 @@ isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
 entryHistory = []
-INDEX = { t: '', a: '' }
-XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"', tv: '' }
+INDEX = { t: '', a: '', h: '' }
+XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"', h: '"萌":"發芽"', tv: '' }
 function xref-of (id, lang=LANG)
   idx = XREF[lang].indexOf('"' + id + '":')
   return [] unless idx >= 0
@@ -198,6 +200,9 @@ window.do-load = ->
     if "#val" is /^!/
       lang = \t
       val.=substr 1
+    if "#val" is /^:/
+      lang = \h
+      val.=substr 1
     if lang isnt LANG
       LANG := LANG
       prevVal = ''
@@ -240,7 +245,7 @@ window.do-load = ->
     $ \#query .val ''
     prevId := null
     prevVal := null
-    LANG := lang || (if LANG is \a then \t else \a)
+    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
     setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
     unless isCordova
@@ -287,13 +292,13 @@ window.do-load = ->
     fetch title
     return true
 
-  htmlCache = {t:[], a:[]}
+  htmlCache = { t:[], a:[], h:[] }
   fetch = ->
     return unless it
     prevId := it
     prevVal := it
     setPref \prev-id prevId
-    hash = "#{ if LANG is \a then \# else \#! }#it"
+    hash = "#{ HASH-OF[LANG] }#it"
     try history.pushState null, null, hash unless "#{location.hash}" is hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
@@ -362,7 +367,7 @@ window.do-load = ->
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaqETAVCD_=])":/g (, k) -> keyMap[k] + \:
-    h = "#{ if LANG is \a then \# else \#! }"
+    h = HASH-OF[LANG]
     part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
@@ -383,11 +388,11 @@ window.do-load = ->
       html += """
           <div class="xref-line">
               <span class='xref'><span class='part-of-speech'>#{
-                if LANG is \t then \華 else \閩
+                if LANG is \a then \閩 else \華
               }</span>
       """
       html += (for word in words
-        h = "#{ if LANG is \t then \# else \#! }"
+        h = "#{ if LANG is \a then \#! else \# }"
         "<a class='xref' href='#h#word'>#word</a>"
       ) * \、
       html += '</span></div></div>'
@@ -413,7 +418,7 @@ window.do-load = ->
     fill-json part, id, cb
 
   if isCordova
-    for lang in <[ a t ]> => let lang
+    for lang in <[ a t h ]> => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it; init! if lang is LANG), \text
       p1 <- GET "#lang/index.1.json", _, \text
       p2 <- GET "#lang/index.2.json", _, \text
@@ -422,12 +427,12 @@ window.do-load = ->
   else
     GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
-    for lang in <[ a t ]> | lang isnt LANG => let lang
+    for lang in <[ a t h ]> | lang isnt LANG => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it), \text
 
   GET "t/variants.json", (-> XREF.tv = it), \text
 
-const MOE = '{"n":8,"t":"萌","r":"`艸~","Deutsch":"Leute, Menschen (u.E.) (S)","c":12,"francais":"germer","English":"to sprout","h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen (u.E.) (S)","Meng (u.E.) (Eig, Fam)","keimen, sprießen, knospen, ausschlagen (u.E.)"],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}'
+const MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen  (S)","Meng  (Eig, Fam)","keimen, sprießen, knospen, ausschlagen "],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}'
 
 function init-autocomplete
   $.widget "ui.autocomplete", $.ui.autocomplete, {
@@ -496,7 +501,7 @@ const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉�
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str)
-  return str if LANG is \t
+  return str unless LANG is \a
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
@@ -518,11 +523,11 @@ function can-play-ogg
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
-function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count})
+function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
-  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin, trs='', definitions=[], antonyms, synonyms, variants}) ->
+  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     pinyin = pinyin - /<[^>]*>/g - /（.*）/
     bopomofo ?= trs2bpmf "#pinyin"
@@ -535,6 +540,8 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
             mp3 = "http://t.moedict.tw/#basename.ogg"
           else if LANG is \a
             mp3 = "http://a.moedict.tw/#audio_id.ogg"
+          else if LANG is \h
+            mp3 = "http://h.moedict.tw/#audio_id.ogg"
           mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
@@ -625,6 +632,7 @@ re = -> [k for k of it].sort((x, y) -> y.length - x.length).join \|
 const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
+  return ' ' if LANG is \h # TODO
   return trs if LANG is \a
   trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
     tone = ''

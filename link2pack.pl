@@ -28,6 +28,7 @@ while (<STDIN>) {
     $file =~ s![`~]!!g;
     next if $file =~ /[⿰⿸]/;
     next if $seen{$file}++;
+    s/`\{~/{/g;
     unless (-e "$lang/$file.json" and read_file("$lang/$file.json") eq $_) {
         write_file("$lang/$file.json", $_);
     }

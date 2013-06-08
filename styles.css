@@ -1149,11 +1149,13 @@ body#moedict {
   margin: 10px; }
   body#moedict.lang-t {
     background: #744; }
+  body#moedict.lang-h {
+    background: #474; }
   body#moedict.cordova {
     font-family: "Biaodian Pro Sans CNS", "HANNOMmoesubset-Regular", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
-    body#moedict.cordova.lang-t {
+    body#moedict.cordova.lang-t, body#moedict.cordova.lang-h {
       font-family: "Biaodian Pro Sans CNS", "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
-  body#moedict.lang-t .title, body#moedict.lang-t.cordova .title {
+  body#moedict.lang-t .title, body#moedict.lang-t.cordova .title, body#moedict.lang-h .title, body#moedict.lang-h.cordova .title {
     font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
 
 .title {
@@ -1170,6 +1172,12 @@ body#moedict {
 
 body.lang-t .bopomofo, body.lang-t .radical {
   font-family: "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "TWBLG", "HAN NOM A", "HAN NOM B"; }
+
+body.lang-h .bopomofo {
+  font-family: "Georgia", "American Typewriter", sans-serif; }
+  body.lang-h .bopomofo .part-of-speech {
+    margin-right: 3px;
+    margin-left: 5px; }
 
 h1 audio {
   vertical-align: bottom;
@@ -1336,6 +1344,11 @@ body#moedict.overflow-scrolling-false.lang-t .pinyin {
 body#moedict.lang-t .pinyin {
   font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif; }
 
+body#moedict.overflow-scrolling-false.lang-h .pinyin {
+  font-family: 'TWBLG'; }
+body#moedict.lang-h .pinyin {
+  font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif; }
+
 .english {
   word-break: normal !important;
   font-family: "Georgia", "American Typewriter", sans-serif;
@@ -1389,7 +1402,7 @@ span .tone {
   top: -6px;
   font-size: 120%; }
 
-body.lang-t .radical .glyph, body.lang-t .bpmf {
+body.lang-t .radical .glyph, body.lang-t .bpmf, body.lang-h .radical .glyph, body.lang-h .bpmf {
   font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B"; }
 
 .radical .glyph {
@@ -1547,7 +1560,10 @@ body.lang-a.web #lookback {
     -moz-hyphens: auto;
     hyphens: auto; }
 
-body.lang-t .example {
+body.lang-h .ui-tooltip .bopomofo {
+  display: none; }
+
+body.lang-t .example, body.lang-h .example {
   font-size: 100%;
   display: inline-block;
   clear: both;
@@ -1590,7 +1606,7 @@ body.lang-t .example {
   display: block;
   margin-bottom: 2pt; }
 
-.lang-t .example b {
+.lang-t .example b, .lang-h .example b {
   background: #ffd;
   border-radius: 5px; }
 
@@ -1646,7 +1662,8 @@ span a {
   .ui-tooltip .title, .ui-tooltip .example {
     display: none; }
 
-body.lang-t .ui-tooltip .example {
+body.lang-t .ui-tooltip .example,
+body.lang-h .ui-tooltip .example {
   display: none; }
 
 .ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .variants, .ui-tooltip .radical {
