@@ -11,6 +11,7 @@ deps ::
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
+	-git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
 moedict-data :: checkout
@@ -29,6 +30,11 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
+
+hakka ::
+	lsc json2prefix.ls h
+	lsc autolink.ls h > h.txt
+	perl link2pack.pl h < h.txt
 
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt

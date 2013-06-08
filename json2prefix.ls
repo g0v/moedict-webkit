@@ -1,8 +1,8 @@
 require! fs
 lang = process.argv.2
 
-unless lang in <[ a t ]>
-  console.log "Please invoke this as 'json2prefix.ls a' or 'json2prefix.ls t'."
+unless lang in <[ a t h ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
   process.exit!
 
 fs.mkdir-sync lang unless fs.exists-sync lang
@@ -11,10 +11,10 @@ dump = (file, data) ->
   console.log "Writing: #file"
   fs.write-file-sync file, JSON.stringify data
 
-if lang is \t
-  entries = grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
-else
-  entries = grok(\dict-revised.pua.json)
+entries = switch lang
+  | \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
+  | \a => grok(\dict-revised.pua.json)
+  | \h => grok(\dict-hakka.json)
 
 prefix = {}
 defs = {}
