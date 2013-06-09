@@ -783,7 +783,9 @@ body.lang-h .ui-tooltip .example {
 
 .audioBlock {
     display: inline-block;
+    margin-top: 10px;
     &.playing {
+        box-sizing: border-box;
         border: 1px solid #6B0000;
         color: #6B0000;
         padding-left: 10px;

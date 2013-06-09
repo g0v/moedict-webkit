@@ -1698,8 +1698,10 @@ body.lang-h .ui-tooltip .example {
   display: inline-block; }
 
 .audioBlock {
-  display: inline-block; }
+  display: inline-block;
+  margin-top: 10px; }
   .audioBlock.playing {
+    box-sizing: border-box;
     border: 1px solid #6B0000;
     color: #6B0000;
     padding-left: 10px;
