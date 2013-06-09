@@ -157,6 +157,7 @@
     done = function(){
       playing = null;
       player = null;
+      $(el).parent('.audioBlock').removeClass('playing');
       return $(el).fadeIn('fast');
     };
     play = function(){
@@ -169,7 +170,10 @@
       }
       playing = url;
       $('#result .playAudio').show();
-      $(el).fadeOut('fast');
+      $('.audioBlock').removeClass('playing');
+      $(el).fadeOut('fast', function(){
+        return $(el).parent('.audioBlock').addClass('playing');
+      });
       urls = [url];
       if (/ogg$/.exec(url)) {
         urls.push(url.replace(/ogg$/, 'mp3'));
@@ -944,13 +948,19 @@
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants;
       pinyin == null && (pinyin = trs);
       pinyin = (replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '')).replace(/¹/g, '<sup>1</sup>').replace(/²/g, '<sup>2</sup>').replace(/³/g, '<sup>3</sup>').replace(/⁴/g, '<sup>4</sup>').replace(/⁵/g, '<sup>5</sup>');
+      if (audio_id && LANG === 'h') {
+        pinyin = pinyin.replace(/(.)\u20DE/g, function(_, $1){
+          var variant, mp3;
+          variant = " 四海大平安".indexOf($1);
+          mp3 = "http://h.moedict.tw/" + variant + "-" + audio_id + ".ogg";
+          return "</span><span class=\"audioBlock\"><div onclick='window.playAudio(this, \"" + mp3 + "\")' class='playAudio part-of-speech'>" + $1 + "</div>";
+        });
+      }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
       bopomofo = replace$.call(bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 '), /<[^>]*>/g, '');
       return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://t.moedict.tw/" + basename + ".ogg")
-        : LANG === 'a'
-          ? mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"
-          : LANG === 'h' && (mp3 = "http://h.moedict.tw/1-" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div>\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];

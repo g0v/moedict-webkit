@@ -771,6 +771,27 @@ body.lang-h .ui-tooltip .example {
     border-bottom: 1px solid #ddd;
 }
 
+.part-of-speech.playAudio {
+    background: #6B0000;
+    color: white;
+    font-size: 90%;
+    padding: 4px;
+    cursor: pointer;
+    line-height: 100%;
+    display: inline-block;
+}
+
+.audioBlock {
+    display: inline-block;
+    &.playing {
+        border: 1px solid #6B0000;
+        color: #6B0000;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+    }
+}
+
 .playAudio {
     margin-left: 5px;
     color: #6B0000;

@@ -79,13 +79,15 @@ window.play-audio = (el, url) ->
   done = ->
     playing := null
     player := null
+    $(el).parent('.audioBlock').removeClass('playing')
     $(el).fadeIn \fast
   play = ->
     return if playing is url
     player?stop!
     playing := url
     $('#result .playAudio').show!
-    $(el).fadeOut \fast
+    $('.audioBlock').removeClass('playing')
+    $(el).fadeOut \fast -> $(el).parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done }
@@ -535,6 +537,13 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       .replace(/³/g \<sup>3</sup>)
       .replace(/⁴/g \<sup>4</sup>)
       .replace(/⁵/g \<sup>5</sup>)
+    if audio_id and LANG is \h
+      pinyin.=replace /(.)\u20DE/g (_, $1) ->
+        variant = " 四海大平安".indexOf($1)
+        mp3 = "http://h.moedict.tw/#{variant}-#audio_id.ogg"
+        """
+        </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='playAudio part-of-speech'>#{$1}</div>
+      """
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
     """#char-html
@@ -545,8 +554,6 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
             mp3 = "http://t.moedict.tw/#basename.ogg"
           else if LANG is \a
             mp3 = "http://a.moedict.tw/#audio_id.ogg"
-          else if LANG is \h
-            mp3 = "http://h.moedict.tw/1-#audio_id.ogg" # TODO: Variants
           mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
