@@ -546,7 +546,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
           else if LANG is \a
             mp3 = "http://a.moedict.tw/#audio_id.ogg"
           else if LANG is \h
-            mp3 = "http://h.moedict.tw/#audio_id.ogg"
+            mp3 = "http://h.moedict.tw/1-#audio_id.ogg" # TODO: Variants
           mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
       }#{
@@ -558,9 +558,9 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div>
-        #{ if defs.0?type then "<span class='part-of-speech'>#{
-          defs.0?type
-        }</span>" else ''}
+        #{ if defs.0?type
+          [ "<span class='part-of-speech'>#t</span>" for t in defs.0.type / \, ] * '&nbsp;'
+        else '' }
         <ol>
         #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
           """<li><p class='definition'>
