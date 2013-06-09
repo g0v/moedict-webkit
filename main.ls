@@ -529,7 +529,12 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
-    pinyin = pinyin - /<[^>]*>/g - /（.*）/
+    pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
+      .replace(/¹/g \<sup>1</sup>)
+      .replace(/²/g \<sup>2</sup>)
+      .replace(/³/g \<sup>3</sup>)
+      .replace(/⁴/g \<sup>4</sup>)
+      .replace(/⁵/g \<sup>5</sup>)
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
     """#char-html
@@ -553,8 +558,8 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div>
-        #{ if defs.0.type then "<span class='part-of-speech'>#{
-          defs.0.type
+        #{ if defs.0?type then "<span class='part-of-speech'>#{
+          defs.0?type
         }</span>" else ''}
         <ol>
         #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
