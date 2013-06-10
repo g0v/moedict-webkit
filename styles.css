@@ -1704,8 +1704,9 @@ body.lang-h .ui-tooltip .example {
     box-sizing: border-box;
     border: 1px solid #6B0000;
     color: #6B0000;
+    margin-left: 12px;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 7px;
     border-radius: 5px; }
 
 .playAudio {
