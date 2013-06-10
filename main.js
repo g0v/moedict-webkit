@@ -838,10 +838,14 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!/[^\u0000-\u00FF]/.test(term)) {
+        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
         term = term.replace(/\*/g, '%');
+        term = term.replace(/[-—]/g, '－');
+        term = term.replace(/[,﹐]/g, '，');
+        term = term.replace(/[;﹔]/g, '；');
+        term = term.replace(/[﹒．]/g, '。');
         regex = term;
         if (/\s$/.exec(term) || /\^/.exec(term)) {
           regex = replace$.call(regex, /\^/g, '');

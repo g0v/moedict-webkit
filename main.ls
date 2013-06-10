@@ -464,8 +464,12 @@ function init-autocomplete
       return true
     source: ({term}, cb) ->
       return cb [] unless term.length
-      return cb [] unless term is /[^\u0000-\u00FF]/
+      return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       term.=replace(/\*/g '%')
+      term.=replace(/[-—]/g    \－)
+      term.=replace(/[,﹐]/g   \，)
+      term.=replace(/[;﹔]/g   \；)
+      term.=replace(/[﹒．]/g  \。)
       regex = term
       if term is /\s$/ or term is /\^/
         regex -= /\^/g
