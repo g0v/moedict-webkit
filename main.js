@@ -694,9 +694,16 @@
           for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
             word = ref$[i$];
             h = (LANG === 'a' ? '#!' : '#') + "";
-            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+            if (/`/.exec(word)) {
+              results$.push(word.replace(/`([^~]+)~/g, fn$));
+            } else {
+              results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+            }
           }
           return results$;
+          function fn$(arg$, word){
+            return "<a class='xref' href='" + h + word + "'>" + word + "</a>";
+          }
         }()).join('、');
         html += '</span></div></div>';
       }
