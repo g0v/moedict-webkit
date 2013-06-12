@@ -395,7 +395,10 @@ window.do-load = ->
       """
       html += (for word in words
         h = "#{ if LANG is \a then \#! else \# }"
-        "<a class='xref' href='#h#word'>#word</a>"
+        if word is /`/
+          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href='#h#word'>#word</a>"
+        else
+          "<a class='xref' href='#h#word'>#word</a>"
       ) * \、
       html += '</span></div></div>'
     cb(htmlCache[LANG][id] = html)
