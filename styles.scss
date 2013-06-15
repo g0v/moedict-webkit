@@ -685,6 +685,9 @@ span {
         }
         margin: 0;
         padding: 0;
+		&:not(:only-child) {
+			margin-left: 20px;
+		}
     }
     .ol, .definition {
         margin: 0;
