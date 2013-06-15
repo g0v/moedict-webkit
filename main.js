@@ -681,9 +681,15 @@
         html = eval("render(" + part + ")");
       }
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
+      html = html.replace(/¹/g, '<sup>1</sup>');
+      html = html.replace(/²/g, '<sup>2</sup>');
+      html = html.replace(/³/g, '<sup>3</sup>');
+      html = html.replace(/⁴/g, '<sup>4</sup>');
+      html = html.replace(/⁵/g, '<sup>5</sup>');
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
       words = xrefOf(id);
       if (words.length) {
@@ -958,7 +964,7 @@
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants;
       pinyin == null && (pinyin = trs);
-      pinyin = (replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '')).replace(/¹/g, '<sup>1</sup>').replace(/²/g, '<sup>2</sup>').replace(/³/g, '<sup>3</sup>').replace(/⁴/g, '<sup>4</sup>').replace(/⁵/g, '<sup>5</sup>');
+      pinyin = replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '');
       if (audio_id && LANG === 'h') {
         pinyin = pinyin.replace(/(.)\u20DE/g, function(_, $1){
           var variant, mp3;

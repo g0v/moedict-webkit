@@ -32,6 +32,7 @@ offline :: moedict-data deps translation
 	perl link2pack.pl t < t.txt
 
 hakka ::
+	cp ../hakka/dict-hakka.json .
 	lsc json2prefix.ls h
 	lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
