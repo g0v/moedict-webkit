@@ -437,7 +437,7 @@ article p {
   margin: 0; }
 
 article p:before {
-  content: " ";
+  content: "        ";
   font-style: normal;
   font-weight: normal;
   text-decoration: none; }
@@ -1425,7 +1425,12 @@ body.lang-t .radical .glyph, body.lang-t .bpmf, body.lang-h .radical .glyph, bod
   position: absolute;
   display: inline-block; }
 
-.part-of-speech, .glyph, .fw_lang {
+#result .variant {
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: 90%; }
+
+.part-of-speech, .glyph, .fw_lang, .variant {
   color: white;
   background-color: #555;
   border-radius: 3px;

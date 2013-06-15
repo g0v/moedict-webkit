@@ -379,9 +379,15 @@ window.do-load = ->
     else
       html = eval "render(#part)"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
+    html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
     html.=replace //(>[^<]*)#id//g      "$1<b>#id</b>"
+    html.=replace(/¹/g \<sup>1</sup>)
+    html.=replace(/²/g \<sup>2</sup>)
+    html.=replace(/³/g \<sup>3</sup>)
+    html.=replace(/⁴/g \<sup>4</sup>)
+    html.=replace(/⁵/g \<sup>5</sup>)
     html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     words = xref-of id
@@ -539,11 +545,6 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
-      .replace(/¹/g \<sup>1</sup>)
-      .replace(/²/g \<sup>2</sup>)
-      .replace(/³/g \<sup>3</sup>)
-      .replace(/⁴/g \<sup>4</sup>)
-      .replace(/⁵/g \<sup>5</sup>)
     if audio_id and LANG is \h
       pinyin.=replace /(.)\u20DE/g (_, $1) ->
         variant = " 四海大平安".indexOf($1)
