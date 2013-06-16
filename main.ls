@@ -304,7 +304,7 @@ window.do-load = ->
       id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     $ \#cond .val "^#{title}$"
-    hist = "#{ if LANG is \a then '' else \! }#title"
+    hist = "#{ HASH-OF[LANG].slice(1) }#title"
     entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
     $(\.back).show! if isCordova
     fetch title
@@ -516,7 +516,7 @@ function init-autocomplete
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
-      results ||= xref-of term, if LANG is \t then \a else \t
+      results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
       return cb [''] unless results?length
