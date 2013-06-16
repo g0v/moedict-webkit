@@ -548,7 +548,7 @@
         return true;
       }
       $('#cond').val("^" + title + "$");
-      hist = (LANG === 'a' ? '' : '!') + "" + title;
+      hist = HASHOF[LANG].slice(1) + "" + title;
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
@@ -926,7 +926,7 @@
         try {
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
-        results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
+        results || (results = xrefOf(term, LANG === 'a' ? 't' : 'a')[LANG]);
         if (LANG === 't') {
           for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').t.reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];
