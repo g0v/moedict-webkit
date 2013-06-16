@@ -5,6 +5,7 @@ MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
 $ -> $('body').addClass("lang-#LANG")
 
 const HASH-OF = {a: \#, t: \#!, h: \#:}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
 
 isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
@@ -14,14 +15,30 @@ isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
 entryHistory = []
 INDEX = { t: '', a: '', h: '' }
-XREF = { t: '"發穎":"萌,抽芽,發芽,萌芽"', a: '"萌":"發穎"', h: '"萌":"發芽"', tv: '' }
-function xref-of (id, lang=LANG)
-  idx = XREF[lang].indexOf('"' + id + '":')
-  return [] unless idx >= 0
-  part = XREF[lang].slice(idx + id.length + 4);
-  idx = part.indexOf \"
-  part.=slice 0 idx
-  return [ x || id for x in part / \, ]
+XREF = {
+  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
+  a: {t: '"萌":"發穎"' h: '"萌":"發芽"'}
+  h: {a: '"發芽":"萌,萌芽"'}
+  tv: {t: ''}
+}
+# Return an object of all matched with {key: [words]}.
+function xref-of (id, src-lang=LANG)
+  rv = {}
+  if typeof XREF[src-lang] is \string
+    parsed = {}
+    for chunk in XREF[src-lang].split \}
+      [tgt-lang, words] = chunk.split \":{
+      parsed[tgt-lang.slice(-1)] = words if words
+    XREF[src-lang] = parsed
+  for tgt-lang, words of XREF[src-lang]
+    alert tgt-lang unless words
+    idx = words.indexOf('"' + id + '":')
+    rv[tgt-lang] = if idx < 0 then [] else
+      part = words.slice(idx + id.length + 4);
+      idx = part.indexOf \"
+      part.=slice 0 idx
+      [ x || id for x in part / \, ]
+  return rv
 
 CACHED = {}
 GET = (url, data, onSuccess, dataType) ->
@@ -390,23 +407,24 @@ window.do-load = ->
     html.=replace(/⁵/g \<sup>5</sup>)
     html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
-    words = xref-of id
-    if words.length
-      html += '<div class="xrefs">'
+    has-xrefs = false
+    for tgt-lang, words of xref-of id | words.length
+      html += '<div class="xrefs">' unless has-xrefs++
       html += """
           <div class="xref-line">
               <span class='xref'><span class='part-of-speech'>#{
-                if LANG is \a then \閩 else \華
+                XREF-LABEL-OF[tgt-lang]
               }</span>
       """
       html += (for word in words
-        h = "#{ if LANG is \a then \#! else \# }"
+        h = HASH-OF[tgt-lang]
         if word is /`/
           word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href='#h#word'>#word</a>"
         else
           "<a class='xref' href='#h#word'>#word</a>"
       ) * \、
-      html += '</span></div></div>'
+      html += '</span></div>'
+    html += '</div>' if has-xrefs
     cb(htmlCache[LANG][id] = html)
     return
 
@@ -441,7 +459,7 @@ window.do-load = ->
     for lang in <[ a t h ]> | lang isnt LANG => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it), \text
 
-  GET "t/variants.json", (-> XREF.tv = it), \text
+  GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
 const MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen  (S)","Meng  (Eig, Fam)","keimen, sprießen, knospen, ausschlagen "],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}'
 
@@ -500,7 +518,7 @@ function init-autocomplete
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
       results ||= xref-of term, if LANG is \t then \a else \t
-      if LANG is \t => for v in xref-of(term, \tv).reverse!
+      if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
