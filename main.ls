@@ -31,7 +31,6 @@ function xref-of (id, src-lang=LANG)
       parsed[tgt-lang.slice(-1)] = words if words
     XREF[src-lang] = parsed
   for tgt-lang, words of XREF[src-lang]
-    alert tgt-lang unless words
     idx = words.indexOf('"' + id + '":')
     rv[tgt-lang] = if idx < 0 then [] else
       part = words.slice(idx + id.length + 4);
