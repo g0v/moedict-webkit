@@ -66,9 +66,6 @@
     }
     for (tgtLang in ref$ = XREF[srcLang]) {
       words = ref$[tgtLang];
-      if (!words) {
-        alert(tgtLang);
-      }
       idx = words.indexOf('"' + id + '":');
       rv[tgtLang] = idx < 0
         ? []
