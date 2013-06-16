@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, HASHOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, HASHOF, XREFLABELOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -14,6 +14,11 @@
     a: '#',
     t: '#!',
     h: '#:'
+  };
+  XREFLABELOF = {
+    a: '華',
+    t: '閩',
+    h: '客'
   };
   isCordova = !/^https?:/.test(document.URL);
   isDroidGap = isCordova && /android_asset/.exec(location.href);
@@ -30,29 +35,54 @@
     h: ''
   };
   XREF = {
-    t: '"發穎":"萌,抽芽,發芽,萌芽"',
-    a: '"萌":"發穎"',
-    h: '"萌":"發芽"',
-    tv: ''
-  };
-  function xrefOf(id, lang){
-    var idx, part, x;
-    lang == null && (lang = LANG);
-    idx = XREF[lang].indexOf('"' + id + '":');
-    if (!(idx >= 0)) {
-      return [];
+    t: {
+      a: '"發穎":"萌,抽芽,發芽,萌芽"'
+    },
+    a: {
+      t: '"萌":"發穎"',
+      h: '"萌":"發芽"'
+    },
+    h: {
+      a: '"發芽":"萌,萌芽"'
+    },
+    tv: {
+      t: ''
     }
-    part = XREF[lang].slice(idx + id.length + 4);
-    idx = part.indexOf('"');
-    part = part.slice(0, idx);
-    return (function(){
+  };
+  function xrefOf(id, srcLang){
+    var rv, parsed, i$, ref$, len$, chunk, ref1$, tgtLang, words, idx, part, x;
+    srcLang == null && (srcLang = LANG);
+    rv = {};
+    if (typeof XREF[srcLang] === 'string') {
+      parsed = {};
+      for (i$ = 0, len$ = (ref$ = XREF[srcLang].split('}')).length; i$ < len$; ++i$) {
+        chunk = ref$[i$];
+        ref1$ = chunk.split('":{'), tgtLang = ref1$[0], words = ref1$[1];
+        if (words) {
+          parsed[tgtLang.slice(-1)] = words;
+        }
+      }
+      XREF[srcLang] = parsed;
+    }
+    for (tgtLang in ref$ = XREF[srcLang]) {
+      words = ref$[tgtLang];
+      if (!words) {
+        alert(tgtLang);
+      }
+      idx = words.indexOf('"' + id + '":');
+      rv[tgtLang] = idx < 0
+        ? []
+        : (part = words.slice(idx + id.length + 4), idx = part.indexOf('"'), part = part.slice(0, idx), (fn$()));
+    }
+    return rv;
+    function fn$(){
       var i$, ref$, len$, results$ = [];
       for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
         x = ref$[i$];
         results$.push(x || id);
       }
       return results$;
-    }());
+    }
   }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
@@ -653,7 +683,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, words, word;
+      var h, html, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -691,29 +721,38 @@
       html = html.replace(/⁴/g, '<sup>4</sup>');
       html = html.replace(/⁵/g, '<sup>5</sup>');
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
-      words = xrefOf(id);
-      if (words.length) {
-        html += '<div class="xrefs">';
-        html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + (LANG === 'a' ? '閩' : '華') + "</span>";
-        html += (function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
-            word = ref$[i$];
-            h = (LANG === 'a' ? '#!' : '#') + "";
-            if (/`/.exec(word)) {
-              results$.push(word.replace(/`([^~]+)~/g, fn$));
-            } else {
-              results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
-            }
+      hasXrefs = false;
+      for (tgtLang in ref$ = xrefOf(id)) {
+        words = ref$[tgtLang];
+        if (words.length) {
+          if (!hasXrefs++) {
+            html += '<div class="xrefs">';
           }
-          return results$;
-          function fn$(arg$, word){
-            return "<a class='xref' href='" + h + word + "'>" + word + "</a>";
-          }
-        }()).join('、');
-        html += '</span></div></div>';
+          html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + XREFLABELOF[tgtLang] + "</span>";
+          html += (fn$()).join('、');
+          html += '</span></div>';
+        }
+      }
+      if (hasXrefs) {
+        html += '</div>';
       }
       cb(htmlCache[LANG][id] = html);
+      function fn$(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
+          word = ref$[i$];
+          h = HASHOF[tgtLang];
+          if (/`/.exec(word)) {
+            results$.push(word.replace(/`([^~]+)~/g, fn$));
+          } else {
+            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+          }
+        }
+        return results$;
+        function fn$(arg$, word){
+          return "<a class='xref' href='" + h + word + "'>" + word + "</a>";
+        }
+      }
     };
     keyMap = {
       h: '"heteronyms"',
@@ -775,7 +814,9 @@
       }
     }
     return GET("t/variants.json", function(it){
-      return XREF.tv = it;
+      return XREF.tv = {
+        t: it
+      };
     }, 'text');
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
@@ -890,7 +931,7 @@
         } catch (e$) {}
         results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
         if (LANG === 't') {
-          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').reverse()).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').t.reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];
             if (!in$(v, results)) {
               results.unshift(v);
