@@ -13,7 +13,7 @@ PUA2UNI = {
   \⿰虫念 : \󿑂
   \⿺皮卜 : \󿕅
 }
-grok = -> JSON.parse fs.read-file-sync(it, \utf8).replace(/[⿰⿸⿺]../g -> PUA2UNI[it])
+grok = -> JSON.parse fs.read-file-sync(it, \utf8).replace(/[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it])
 dump = (file, data) ->
   console.log "Writing: #file"
   fs.write-file-sync file, JSON.stringify data
