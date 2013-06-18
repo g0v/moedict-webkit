@@ -44,8 +44,16 @@ function init ()
   for len in lens => LTM-regexes.push lenToRegex[len]
 
 ##############
+PUA2UNI = {
+  \⿰𧾷百 : \󿌇
+  \⿸疒哥 : \󿗧
+  \⿰亻恩 : \󿌇
+  \⿰虫念 : \󿑂
+  \⿺皮卜 : \󿕅
+}
+
 grok = -> JSON.parse(
-  "#{fs.read-file-sync it}"
+  "#{fs.read-file-sync it, \utf8}"
     .replace(/"bopomofo2": "[^"]*",/g        '')
     .replace(/"heteronyms":/g                \"h":)
     .replace(/"bopomofo":/g                  \"b":)
@@ -68,6 +76,7 @@ grok = -> JSON.parse(
     .replace(/"dialects":/g                  \"D":)
     .replace(/"id":/g                        \"_":)
     .replace(/"audio_id":/g                  \"=":)
+    .replace(/[⿰⿸⿺]../g          -> PUA2UNI[it])
 )
 
 entries = switch lang

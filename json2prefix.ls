@@ -6,7 +6,14 @@ unless lang in <[ a t h ]>
   process.exit!
 
 fs.mkdir-sync lang unless fs.exists-sync lang
-grok = -> JSON.parse(fs.read-file-sync it)
+PUA2UNI = {
+  \⿰𧾷百 : \󿌇
+  \⿸疒哥 : \󿗧
+  \⿰亻恩 : \󿌇
+  \⿰虫念 : \󿑂
+  \⿺皮卜 : \󿕅
+}
+grok = -> JSON.parse fs.read-file-sync(it, \utf8).replace(/[⿰⿸⿺]../g -> PUA2UNI[it])
 dump = (file, data) ->
   console.log "Writing: #file"
   fs.write-file-sync file, JSON.stringify data
@@ -23,7 +30,7 @@ i = 0
 for {title, heteronyms}:entry in entries
   continue if title is /\{\[[0-9a-f]{4}\]\}/ # Unsubstituted
   continue if title is /\uDB40[\uDD00-\uDD0F]/ # Variant
-  continue if title is /[⿰⿸]/
+  continue if title is /[⿰⿸⿺]/
   pre = title.slice(0, 1)
   code = pre.charCodeAt(0)
   if 0xD800 <= code <= 0xDBFF

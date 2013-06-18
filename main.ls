@@ -606,18 +606,18 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
             #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
             #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-              h(synonyms.replace(/,/g '、'))
+              h((synonyms - /^,/).replace(/,/g '、'))
             }</span>" else '' }
             #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-              h(antonyms.replace(/,/g '、'))
+              h((antonyms - /^,/).replace(/,/g '、'))
             }</span>" else '' }
         </p></li>"""}</ol></div>
       """}
       #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-        h(synonyms.replace(/,/g '、'))
+        h((synonyms - /^,/).replace(/,/g '、'))
       }</span>" else '' }
       #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-        h(antonyms.replace(/,/g '、'))
+        h((antonyms - /^,/).replace(/,/g '、'))
       }</span>" else '' }
       #{ if variants then "<span class='variants'><span class='part-of-speech'>異</span> #{
         h(variants.replace(/,/g '、'))

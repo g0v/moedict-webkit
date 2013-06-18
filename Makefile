@@ -37,6 +37,11 @@ hakka ::
 	lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
 
+twblg ::
+	lsc json2prefix.ls t
+	lsc autolink.ls t > t.txt
+	perl link2pack.pl t < t.txt
+
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj handedict-20110528/handedict_nb.u8 > handedict.txt
