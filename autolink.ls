@@ -76,7 +76,7 @@ grok = -> JSON.parse(
     .replace(/"dialects":/g                  \"D":)
     .replace(/"id":/g                        \"_":)
     .replace(/"audio_id":/g                  \"=":)
-    .replace(/[⿰⿸⿺]../g          -> PUA2UNI[it])
+    .replace(/[⿰⿸⿺](?:𧾷|.)./g          -> PUA2UNI[it] or process.exit console.log(it))
 )
 
 entries = switch lang
