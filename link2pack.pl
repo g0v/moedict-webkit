@@ -26,7 +26,7 @@ while (<STDIN>) {
     /"t":"([^"]+)"/ or die;
     my $file = Encode::decode_utf8($1);
     $file =~ s![`~]!!g;
-    next if $file =~ /[⿰⿸]/;
+    next if $file =~ /[⿰⿸⿺]/;
     next if $seen{$file}++;
     s/`\{~/{/g;
     unless (-e "$lang/$file.json" and read_file("$lang/$file.json") eq $_) {
