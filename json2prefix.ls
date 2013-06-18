@@ -7,7 +7,7 @@ unless lang in <[ a t h ]>
 
 fs.mkdir-sync lang unless fs.exists-sync lang
 PUA2UNI = {
-  \⿰𧾷百 : \󿌇
+  \⿰𧾷百 : \󾜅
   \⿸疒哥 : \󿗧
   \⿰亻恩 : \󿌇
   \⿰虫念 : \󿑂
