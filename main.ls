@@ -78,7 +78,7 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
-if !DEBUGGING and (isCordova or isMobile)
+if !DEBUGGING and isMobile
   class window.Howl
     ({ urls, onend, onloaderror }) ->
       @el = document.createElement \audio
@@ -86,10 +86,11 @@ if !DEBUGGING and (isCordova or isMobile)
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \error onloaderror; try $(@el).remove!; @el = null
-      @el.add-event-listener \ended onend; try $(@el).remove!; @el = null
+      @el.add-event-listener \error ~> onloaderror!; @destroy!
+      @el.add-event-listener \ended ~> onend!; @destroy!
     play: -> @el.play!
-    stop: -> @el?pause!; @el?currentTime = 0.0; try $(@el).remove!; @el = null
+    stop: -> @el?pause!; @el?currentTime = 0.0; @destroy!
+    destroy: -> try $(@el).remove!; @el = null
 
 var playing, player
 window.play-audio = (el, url) ->
@@ -149,14 +150,14 @@ window.do-load = ->
 
   fontSize = getPref(\font-size) || 14
   $('body').bind \pinch (, {scale}) ->
-    $('body').css('font-size', Math.max(14, Math.min(22, (scale * fontSize))) + 'pt')
+    $('body').css('font-size', Math.max(14, Math.min(42, (scale * fontSize))) + 'pt')
   saveFontSize = (, {scale}) ->
-    setPref \font-size fontSize := Math.max(14, Math.min(22, (scale * fontSize)))
+    setPref \font-size fontSize := Math.max(14, Math.min(42, (scale * fontSize)))
     $('body').css('font-size', fontSize + 'pt')
   $('body').bind \pinchclose saveFontSize
   $('body').bind \pinchopen saveFontSize
   window.adjust-font-size = (offset) ->
-    setPref \font-size fontSize := Math.max(14, Math.min(22, (fontSize + offset)))
+    setPref \font-size fontSize := Math.max(14, Math.min(42, (fontSize + offset)))
     $('body').css('font-size', fontSize + 'pt')
   window.adjust-font-size 0
 
