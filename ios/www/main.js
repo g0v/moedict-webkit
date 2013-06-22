@@ -1,6 +1,6 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = true;
+  var DEBUGGING, LANG, MOEID, HASHOF, XREFLABELOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
+  DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
     a: '萌',
@@ -10,6 +10,16 @@
   $(function(){
     return $('body').addClass("lang-" + LANG);
   });
+  HASHOF = {
+    a: '#',
+    t: '#!',
+    h: '#:'
+  };
+  XREFLABELOF = {
+    a: '華',
+    t: '閩',
+    h: '客'
+  };
   isCordova = !/^https?:/.test(document.URL);
   isDroidGap = isCordova && /android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
@@ -21,31 +31,55 @@
   entryHistory = [];
   INDEX = {
     t: '',
-    a: ''
+    a: '',
+    h: ''
   };
   XREF = {
-    t: '"發穎":"萌,抽芽,發芽,萌芽"',
-    a: '"萌":"發穎"',
-    tv: ''
-  };
-  function xrefOf(id, lang){
-    var idx, part, x;
-    lang == null && (lang = LANG);
-    idx = XREF[lang].indexOf('"' + id + '":');
-    if (!(idx >= 0)) {
-      return [];
+    t: {
+      a: '"發穎":"萌,抽芽,發芽,萌芽"'
+    },
+    a: {
+      t: '"萌":"發穎"',
+      h: '"萌":"發芽"'
+    },
+    h: {
+      a: '"發芽":"萌,萌芽"'
+    },
+    tv: {
+      t: ''
     }
-    part = XREF[lang].slice(idx + id.length + 4);
-    idx = part.indexOf('"');
-    part = part.slice(0, idx);
-    return (function(){
+  };
+  function xrefOf(id, srcLang){
+    var rv, parsed, i$, ref$, len$, chunk, ref1$, tgtLang, words, idx, part, x;
+    srcLang == null && (srcLang = LANG);
+    rv = {};
+    if (typeof XREF[srcLang] === 'string') {
+      parsed = {};
+      for (i$ = 0, len$ = (ref$ = XREF[srcLang].split('}')).length; i$ < len$; ++i$) {
+        chunk = ref$[i$];
+        ref1$ = chunk.split('":{'), tgtLang = ref1$[0], words = ref1$[1];
+        if (words) {
+          parsed[tgtLang.slice(-1)] = words;
+        }
+      }
+      XREF[srcLang] = parsed;
+    }
+    for (tgtLang in ref$ = XREF[srcLang]) {
+      words = ref$[tgtLang];
+      idx = words.indexOf('"' + id + '":');
+      rv[tgtLang] = idx < 0
+        ? []
+        : (part = words.slice(idx + id.length + 4), idx = part.indexOf('"'), part = part.slice(0, idx), (fn$()));
+    }
+    return rv;
+    function fn$(){
       var i$, ref$, len$, results$ = [];
       for (i$ = 0, len$ = (ref$ = split$.call(part, ',')).length; i$ < len$; ++i$) {
         x = ref$[i$];
         results$.push(x || id);
       }
       return results$;
-    }());
+    }
   }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
@@ -70,6 +104,9 @@
       } catch (e$) {}
       isDeviceReady = true;
       return window.doLoad();
+    }, false);
+    document.addEventListener('pause', function(){
+      return typeof player != 'undefined' && player !== null ? player.stop() : void 8;
     }, false);
   } catch (e$) {
     e = e$;
@@ -110,36 +147,44 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
-  if (!DEBUGGING && (isCordova || isMobile)) {
+  if (!DEBUGGING && isMobile) {
     window.Howl = Howl = (function(){
       Howl.displayName = 'Howl';
       var prototype = Howl.prototype, constructor = Howl;
       function Howl(arg$){
-        var urls, onend, onloaderror;
+        var urls, onend, onloaderror, this$ = this;
         urls = arg$.urls, onend = arg$.onend, onloaderror = arg$.onloaderror;
         this.el = document.createElement('audio');
         this.el.setAttribute('src', urls[0]);
         this.el.setAttribute('type', /mp3$/.exec(urls[0]) ? 'audio/mpeg' : 'audio/ogg');
         this.el.setAttribute('autoplay', true);
         this.el.setAttribute('controls', true);
-        this.el.addEventListener('error', onloaderror);
-        try {
-          this.el.remove();
-          this.el = null;
-        } catch (e$) {}
-        this.el.addEventListener('ended', onend);
-        try {
-          this.el.remove();
-          this.el = null;
-        } catch (e$) {}
+        this.el.addEventListener('error', function(){
+          onloaderror();
+          return this$.destroy();
+        });
+        this.el.addEventListener('ended', function(){
+          onend();
+          return this$.destroy();
+        });
       }
       prototype.play = function(){
         return this.el.play();
       };
       prototype.stop = function(){
         var ref$;
+        if ((ref$ = this.el) != null) {
+          ref$.pause();
+        }
+        if ((ref$ = this.el) != null) {
+          ref$.currentTime = 0.0;
+        }
+        return this.destroy();
+      };
+      prototype.destroy = function(){
         try {
-          return (ref$ = this.el) != null ? ref$.currentTime = 0 : void 8;
+          $(this.el).remove();
+          return this.el = null;
         } catch (e$) {}
       };
       return Howl;
@@ -150,6 +195,7 @@
     done = function(){
       playing = null;
       player = null;
+      $(el).parent('.audioBlock').removeClass('playing');
       return $(el).fadeIn('fast');
     };
     play = function(){
@@ -162,7 +208,10 @@
       }
       playing = url;
       $('#result .playAudio').show();
-      $(el).fadeOut('fast');
+      $('.audioBlock').removeClass('playing');
+      $(el).fadeOut('fast', function(){
+        return $(el).parent('.audioBlock').addClass('playing');
+      });
       urls = [url];
       if (/ogg$/.exec(url)) {
         urls.push(url.replace(/ogg$/, 'mp3'));
@@ -242,18 +291,18 @@
     $('body').bind('pinch', function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      return $('body').css('font-size', Math.max(14, Math.min(22, scale * fontSize)) + 'pt');
+      return $('body').css('font-size', Math.max(14, Math.min(42, scale * fontSize)) + 'pt');
     });
     saveFontSize = function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      setPref('font-size', fontSize = Math.max(14, Math.min(22, scale * fontSize)));
+      setPref('font-size', fontSize = Math.max(14, Math.min(42, scale * fontSize)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     $('body').bind('pinchclose', saveFontSize);
     $('body').bind('pinchopen', saveFontSize);
     window.adjustFontSize = function(offset){
-      setPref('font-size', fontSize = Math.max(14, Math.min(22, fontSize + offset)));
+      setPref('font-size', fontSize = Math.max(14, Math.min(42, fontSize + offset)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     window.adjustFontSize(0);
@@ -362,6 +411,10 @@
         lang = 't';
         val = val.substr(1);
       }
+      if (/^:/.exec(val + "")) {
+        lang = 'h';
+        val = val.substr(1);
+      }
       if (lang !== LANG) {
         LANG = LANG;
         prevVal = '';
@@ -431,7 +484,16 @@
       $('#query').val('');
       prevId = null;
       prevVal = null;
-      LANG = lang || (LANG === 'a' ? 't' : 'a');
+      LANG = lang || (function(){
+        switch (LANG) {
+        case 'a':
+          return 't';
+        case 't':
+          return 'h';
+        case 'h':
+          return 'a';
+        }
+      }());
       setPref('lang', LANG);
       id || (id = {
         a: '萌',
@@ -497,7 +559,7 @@
         return true;
       }
       $('#cond').val("^" + title + "$");
-      hist = (LANG === 'a' ? '' : '!') + "" + title;
+      hist = HASHOF[LANG].slice(1) + "" + title;
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
@@ -509,7 +571,8 @@
     };
     htmlCache = {
       t: [],
-      a: []
+      a: [],
+      h: []
     };
     fetch = function(it){
       var hash;
@@ -519,7 +582,7 @@
       prevId = it;
       prevVal = it;
       setPref('prev-id', prevId);
-      hash = (LANG === 'a' ? '#' : '#!') + "" + it;
+      hash = HASHOF[LANG] + "" + it;
       try {
         if (location.hash + "" !== hash) {
           history.pushState(null, null, hash);
@@ -628,7 +691,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, words, word;
+      var h, html, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -637,7 +700,7 @@
       part = part.replace(/"([hbpdcnftrelsaqETAVCD_=])":/g, function(arg$, k){
         return keyMap[k] + ':';
       });
-      h = (LANG === 'a' ? '#' : '#!') + "";
+      h = HASHOF[LANG];
       part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
         return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
       });
@@ -656,26 +719,48 @@
         html = eval("render(" + part + ")");
       }
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
+      html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
+      html = html.replace(/¹/g, '<sup>1</sup>');
+      html = html.replace(/²/g, '<sup>2</sup>');
+      html = html.replace(/³/g, '<sup>3</sup>');
+      html = html.replace(/⁴/g, '<sup>4</sup>');
+      html = html.replace(/⁵/g, '<sup>5</sup>');
       html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
-      words = xrefOf(id);
-      if (words.length) {
-        html += '<div class="xrefs">';
-        html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + (LANG === 't' ? '華' : '閩') + "</span>";
-        html += (function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
-            word = ref$[i$];
-            h = (LANG === 't' ? '#' : '#!') + "";
-            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+      hasXrefs = false;
+      for (tgtLang in ref$ = xrefOf(id)) {
+        words = ref$[tgtLang];
+        if (words.length) {
+          if (!hasXrefs++) {
+            html += '<div class="xrefs">';
           }
-          return results$;
-        }()).join('、');
-        html += '</span></div></div>';
+          html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + XREFLABELOF[tgtLang] + "</span>";
+          html += (fn$()).join('、');
+          html += '</span></div>';
+        }
+      }
+      if (hasXrefs) {
+        html += '</div>';
       }
       cb(htmlCache[LANG][id] = html);
+      function fn$(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
+          word = ref$[i$];
+          h = HASHOF[tgtLang];
+          if (/`/.exec(word)) {
+            results$.push(word.replace(/`([^~]+)~/g, fn$));
+          } else {
+            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+          }
+        }
+        return results$;
+        function fn$(arg$, word){
+          return "<a class='xref' href='" + h + word + "'>" + word + "</a>";
+        }
+      }
     };
     keyMap = {
       h: '"heteronyms"',
@@ -716,7 +801,7 @@
       });
     };
     if (isCordova) {
-      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+      for (i$ = 0, len$ = (ref$ = ['a', 't', 'h']).length; i$ < len$; ++i$) {
         lang = ref$[i$];
         (fn$.call(this, lang));
       }
@@ -729,7 +814,7 @@
         INDEX[LANG] = it;
         return initAutocomplete();
       }, 'text');
-      for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+      for (i$ = 0, len$ = (ref$ = ['a', 't', 'h']).length; i$ < len$; ++i$) {
         lang = ref$[i$];
         if (lang !== LANG) {
           (fn1$.call(this, lang));
@@ -737,7 +822,9 @@
       }
     }
     return GET("t/variants.json", function(it){
-      return XREF.tv = it;
+      return XREF.tv = {
+        t: it
+      };
     }, 'text');
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
@@ -761,7 +848,7 @@
       }, 'text');
     }
   };
-  MOE = '{"n":8,"t":"萌","r":"`艸~","Deutsch":"Leute, Menschen (u.E.) (S)","c":12,"francais":"germer","English":"to sprout","h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen (u.E.) (S)","Meng (u.E.) (Eig, Fam)","keimen, sprießen, knospen, ausschlagen (u.E.)"],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}';
+  MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen  (S)","Meng  (Eig, Fam)","keimen, sprießen, knospen, ausschlagen "],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}';
   function initAutocomplete(){
     $.widget("ui.autocomplete", $.ui.autocomplete, {
       _close: function(){
@@ -813,10 +900,14 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!/[^\u0000-\u00FF]/.test(term)) {
+        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
         term = term.replace(/\*/g, '%');
+        term = term.replace(/[-—]/g, '－');
+        term = term.replace(/[,﹐]/g, '，');
+        term = term.replace(/[;﹔]/g, '；');
+        term = term.replace(/[﹒．]/g, '。');
         regex = term;
         if (/\s$/.exec(term) || /\^/.exec(term)) {
           regex = replace$.call(regex, /\^/g, '');
@@ -846,9 +937,9 @@
         try {
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
-        results || (results = xrefOf(term, LANG === 't' ? 'a' : 't'));
+        results || (results = xrefOf(term, LANG === 'a' ? 't' : 'a')[LANG]);
         if (LANG === 't') {
-          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').reverse()).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').t.reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];
             if (!in$(v, results)) {
               results.unshift(v);
@@ -875,7 +966,7 @@
   SIMPTRAD = (ref$ = window.SIMPTRAD) != null ? ref$ : '';
   function b2g(str){
     var rv, i$, ref$, len$, char, idx;
-    if (LANG === 't') {
+    if (LANG !== 'a') {
       return str;
     }
     rv = '';
@@ -913,22 +1004,41 @@
     return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
   }
   function render(arg$){
-    var title, english, heteronyms, radical, translation, nrsCount, sCount, charHtml, result;
-    title = arg$.title, english = arg$.english, heteronyms = arg$.heteronyms, radical = arg$.radical, translation = arg$.translation, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count;
+    var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
+    title = arg$.title, english = arg$.english, heteronyms = arg$.heteronyms, radical = arg$.radical, translation = arg$.translation, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count, py = arg$.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
-      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = arg$.pinyin, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
+      id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants;
       pinyin == null && (pinyin = trs);
       pinyin = replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '');
+      if (audio_id && LANG === 'h') {
+        pinyin = pinyin.replace(/(.)\u20DE/g, function(_, $1){
+          var variant, mp3;
+          variant = " 四海大平安".indexOf($1);
+          mp3 = "http://h.moedict.tw/" + variant + "-" + audio_id + ".ogg";
+          if (mp3 && !canPlayOgg()) {
+            mp3 = mp3.replace(/ogg$/, 'mp3');
+          }
+          return "</span><span class=\"audioBlock\"><div onclick='window.playAudio(this, \"" + mp3 + "\")' class='playAudio part-of-speech'>" + $1 + "</div>";
+        });
+      }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
       bopomofo = replace$.call(bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 '), /<[^>]*>/g, '');
       return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://t.moedict.tw/" + basename + ".ogg")
         : LANG === 'a' && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
-        return "<div>\n" + (defs[0].type ? "<span class='part-of-speech'>" + defs[0].type + "</span>" : '') + "\n<ol>\n" + ls(defs, function(arg$){
+        var ref$, t;
+        return "<div>\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = split$.call(defs[0].type, ',')).length; i$ < len$; ++i$) {
+            t = ref$[i$];
+            results$.push("<span class='part-of-speech'>" + t + "</span>");
+          }
+          return results$;
+        }()).join('&nbsp;') : '') + "\n<ol>\n" + ls(defs, function(arg$){
           var type, def, quote, ref$, example, link, antonyms, synonyms;
           type = arg$.type, def = arg$.def, quote = (ref$ = arg$.quote) != null
             ? ref$
@@ -943,9 +1053,9 @@
             return "<span class='quote'>" + h(it) + "</span>";
           }) + "\n    " + ls(link, function(it){
             return "<span class='link'>" + h(it) + "</span>";
-          }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
+          }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h(synonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h(antonyms.replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
+      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
     return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
     function expandDef(def){
@@ -1086,6 +1196,9 @@
   C = re(Consonants);
   V = re(Vowels);
   function trs2bpmf(trs){
+    if (LANG === 'h') {
+      return ' ';
+    }
     if (LANG === 'a') {
       return trs;
     }
