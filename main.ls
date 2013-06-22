@@ -55,6 +55,7 @@ try
     isDeviceReady := yes
     window.do-load!
   ), false
+  document.addEventListener \pause (-> player?stop!), false
 catch
   <- $
   $ \#F9868 .html '&#xF9868;'
@@ -85,10 +86,10 @@ if !DEBUGGING and (isCordova or isMobile)
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \error onloaderror; try @el.remove!; @el = null
-      @el.add-event-listener \ended onend; try @el.remove!; @el = null
+      @el.add-event-listener \error onloaderror; try $(@el).remove!; @el = null
+      @el.add-event-listener \ended onend; try $(@el).remove!; @el = null
     play: -> @el.play!
-    stop: -> try @el?currentTime = 0
+    stop: -> @el?pause!; @el?currentTime = 0.0; try $(@el).remove!; @el = null
 
 var playing, player
 window.play-audio = (el, url) ->
@@ -566,6 +567,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       pinyin.=replace /(.)\u20DE/g (_, $1) ->
         variant = " 四海大平安".indexOf($1)
         mp3 = "http://h.moedict.tw/#{variant}-#audio_id.ogg"
+        mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         """
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='playAudio part-of-speech'>#{$1}</div>
       """

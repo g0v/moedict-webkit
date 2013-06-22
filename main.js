@@ -105,6 +105,9 @@
       isDeviceReady = true;
       return window.doLoad();
     }, false);
+    document.addEventListener('pause', function(){
+      return typeof player != 'undefined' && player !== null ? player.stop() : void 8;
+    }, false);
   } catch (e$) {
     e = e$;
     $(function(){
@@ -158,12 +161,12 @@
         this.el.setAttribute('controls', true);
         this.el.addEventListener('error', onloaderror);
         try {
-          this.el.remove();
+          $(this.el).remove();
           this.el = null;
         } catch (e$) {}
         this.el.addEventListener('ended', onend);
         try {
-          this.el.remove();
+          $(this.el).remove();
           this.el = null;
         } catch (e$) {}
       }
@@ -172,8 +175,15 @@
       };
       prototype.stop = function(){
         var ref$;
+        if ((ref$ = this.el) != null) {
+          ref$.pause();
+        }
+        if ((ref$ = this.el) != null) {
+          ref$.currentTime = 0.0;
+        }
         try {
-          return (ref$ = this.el) != null ? ref$.currentTime = 0 : void 8;
+          $(this.el).remove();
+          return this.el = null;
         } catch (e$) {}
       };
       return Howl;
@@ -1008,6 +1018,9 @@
           var variant, mp3;
           variant = " 四海大平安".indexOf($1);
           mp3 = "http://h.moedict.tw/" + variant + "-" + audio_id + ".ogg";
+          if (mp3 && !canPlayOgg()) {
+            mp3 = mp3.replace(/ogg$/, 'mp3');
+          }
           return "</span><span class=\"audioBlock\"><div onclick='window.playAudio(this, \"" + mp3 + "\")' class='playAudio part-of-speech'>" + $1 + "</div>";
         });
       }
