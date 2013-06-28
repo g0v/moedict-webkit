@@ -13,6 +13,9 @@
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
 <script src="js/jquery.hoverIntent.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-transition.js"></script>
 <!--[if !IE]>-->
 <script src="js/jgestures.min.js" data-cfasync="true"></script>
 <!--<![endif]-->
@@ -20,26 +23,53 @@
 <script src="main.js" charset="utf-8"></script>
 </head>
 <body id="moedict" class="main" onhashchange="grokHash()">
-<div id="result">
-    <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px">
-        <span id="loading">
-        </span>
-        <br /><br />
-        <img class="logo" title="〔萌典〕" src="icon.png" width="100">
-        <br /><br />
-        <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
-        </span>
-    </center>
-</div>
-<div id="query-box">
-<input id="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞。" />
-</div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <a class="brand ebas" href="#">萌典</a>
+            <ul class="nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-book"></i> 國語字典
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">國語字典</a></li>
+                        <li><a href="#">閩南語字典</a></li>
+                        <li><a href="#">客語字典</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav pull-right">
+                <li>
+                    <a href="#" onclick="pressAbout(); return false" title="關於本站"><span class="ebas iconic-circle">告</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="results">
+        <div id="result" class="result">
+            <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px">
+                <span id="loading">
+                </span>
+                <br /><br />
+                <img class="logo" title="〔萌典〕" src="/images/icon.png" width="100">
+                <br /><br />
+                <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
+                </span>
+            </center>
+        </div>
+    </div>
+    <div id="query-box" class="query-box">
+        <input id="query" type="search" class="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞。" />
+    </div>
 <a class="back" href="#" onclick="pressBack(); return false"><img class="back" src="back.png" /></a>
 <!-- <a class="down" href="#" onclick="pressDown(); return false"><img
     title="切換搜尋列位置" class="down" src="down.png" /></a> -->
+<!--
 <a class="info" href="#" onclick="pressAbout(); return false"><img title="關於本站" class="info" src="info.png" /></a>
 <a class="erase" href="#" onclick="pressErase(); return false"><img title="清除搜尋框" class="erase" src="erase.png" /></a>
 <a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="lang.png" /></a>
+-->
 <div id="moe" style="display: none"></div>
 <!--[if !IE]>-->
 <form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none">
