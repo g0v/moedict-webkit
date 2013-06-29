@@ -223,6 +223,7 @@ window.do-load = ->
     if "#val" is /^:/
       lang = \h
       val.=substr 1
+    $('.lang-active').text $(".lang-option.#lang").text!
     if lang isnt LANG
       LANG := LANG
       prevVal = ''
@@ -261,6 +262,7 @@ window.do-load = ->
 
   prevId = prevVal = null
   window.press-lang = (lang='', id='') ->
+    $('.lang-active').text $(".lang-option.#lang").text!
     $('.ui-autocomplete li').remove!
     $ \#query .val ''
     prevId := null
