@@ -7246,12 +7246,21 @@ h1 audio {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.results {
-  margin-top: 65px;
-  margin-left: 280px;
-  margin-right: 20px;
+@media only screen and (max-width: 767px) {
+  .results {
+    margin-top: 120px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 10px;
+  }
 }
-
+@media only screen and (min-width: 768px) {
+  .results {
+    margin-top: 65px;
+    margin-left: 280px;
+    margin-right: 20px;
+  }
+}
 .result {
   background: #fff;
   border: 1px solid #d4d3d3;
@@ -7373,8 +7382,19 @@ center {
   }
 }
 @media only screen and (max-width: 767px) {
-  .ios #query-box {
-    left: 60px;
+  #query-box {
+    right: auto;
+    width: 100%;
+    bottom: auto !important;
+    padding: 15px;
+    padding-bottom: 8px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  ul.ui-autocomplete {
+    top: 100px !important;
+    height: auto !important;
+    max-height: 75% !important;
   }
 }
 .bopomofo {
@@ -7562,10 +7582,8 @@ body.overflow-scrolling-false .ui-autocomplete {
 
 .ui-autocomplete {
   overflow: auto;
-  top: auto !important;
   height: auto !important;
   position: fixed !important;
-  bottom: 52px !important;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -7577,6 +7595,11 @@ body.overflow-scrolling-false .ui-autocomplete {
 @media only screen and (min-width: 768px) {
   .ui-autocomplete.invisible {
     display: block !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .ui-autocomplete {
+    bottom: 52px !important;
   }
 }
 @media only screen and (min-width: 768px) {
