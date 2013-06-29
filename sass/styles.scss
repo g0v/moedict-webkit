@@ -288,6 +288,17 @@ input.query {
     opacity: 0.3;
 }
 
+.about {
+    font-family: 'Segoe UI', 'Charis SIL', 'TWBLG', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+}
+
+.about .content {
+    margin: 15px; margin-top: 60px; margin-bottom: 80px; background: white; padding: 20px;
+    border-radius: 10px;
+    font-size: 110%;
+    line-height: 150%;
+}
+
 .result a {
     color: #000;
     text-decoration: none;
@@ -771,7 +782,7 @@ span {
 }
 
 .about a {
-    border-bottom: 1px ridge #0070a3;
+    // border-bottom: 1px ridge #0070a3;
 }
 
 .entry {
