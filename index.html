@@ -39,6 +39,19 @@
                         <li><a class="lang-option h" href="#:">臺灣客家語</a></li>
                     </ul>
                 </li>
+<!--[if !IE]>-->
+<li>
+<form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none; margin: 0; padding: 0" class="back">
+    <input type="hidden" name="idx" value="dict.idx">
+    <input type="hidden" name="fld" value="1">
+    <input type="hidden" name="imgFont" value="1">
+    <input type="hidden" name="cat" value="">
+    <input type="hidden" id="cond" name="cond" value="^萌$">
+    <input type="submit" value="反" src="back.png"
+    title="反查來源（教育部國語辭典）" class="iconic-circle" style="font-family: EBAS; margin-top: 12px; border-radius: 20px; border: 0px;">
+</form>
+</li>
+<!--<![endif]-->
             </ul>
             <ul class="nav pull-right">
                 <li>
@@ -72,15 +85,5 @@
 <a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="lang.png" /></a>
 -->
 <div id="moe" style="display: none"></div>
-<!--[if !IE]>-->
-<form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none">
-    <input type="hidden" name="idx" value="dict.idx">
-    <input type="hidden" name="fld" value="1">
-    <input type="hidden" name="imgFont" value="1">
-    <input type="hidden" name="cat" value="">
-    <input type="hidden" id="cond" name="cond" value="^萌$">
-    <input type="image" src="back.png" class="back" title="反查來源（教育部國語辭典）">
-</form>
-<!--<![endif]-->
 </body>
 </html>
