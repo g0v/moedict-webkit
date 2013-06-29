@@ -162,10 +162,28 @@ h1 audio {
     @include box-shadow(#1a1a1a 0 0 3px);
 }
 
+body.lang-h {
+    .navbar { background: #070; }
+    .iconic-circle { background: #474; }
+    #query-box { background-color: #EFFBEF; }
+}
+
+body.lang-t {
+    .navbar { background: #700; }
+    .iconic-circle { background: #744; }
+    #query-box { background-color: #FBEFEF; }
+}
+
+body.lang-a {
+    .navbar { background: #100; }
+    .iconic-circle { background: #400; }
+    #query-box { background-color: #F3F0F0; }
+}
+
 .navbar .navbar-inner {
     @include hidpi('leather', 'jpg');
-    border-top: 3px solid hsl(3,46%,13%);
     border-bottom: 1px solid hsl(3,46%,16%);
+    opacity: 0.9;
 }
 
 .navbar-fixed-top .navbar-inner {
@@ -178,7 +196,6 @@ h1 audio {
 
 .iconic-circle {
     border-radius: 18px;
-    background-color: hsl(360,100%,21%);
     color: #fff;
     display: inline-block;
     font-size: 16px;
@@ -198,7 +215,6 @@ h1 audio {
     width: 260px;
     //background-color: hsl(0,0%,97%);
     //background-color: #fff;
-    background-color: lighten(hsl(4,62%,26%), 70%);
     //background-color: hsl(203,11%,85%);
     position: fixed;
     border-right: 1px solid hsl(0,0%,83%);
