@@ -633,7 +633,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
       </div>
     """
   return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
-    #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/ }</span></div>" else '' }
+    #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g }</span></div>" else '' }
     #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
     #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }
   </span></div>" else '' }"
