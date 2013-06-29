@@ -565,7 +565,9 @@
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
-      if (isCordova) {
+      if (isCordova || LANG !== 'a') {
+        $('.back').hide();
+      } else {
         $('.back').show();
       }
       fetch(title);
