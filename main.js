@@ -415,6 +415,7 @@
         lang = 'h';
         val = val.substr(1);
       }
+      $('.lang-active').text($(".lang-option." + lang).text());
       if (lang !== LANG) {
         LANG = LANG;
         prevVal = '';
@@ -480,6 +481,7 @@
     window.pressLang = function(lang, id){
       lang == null && (lang = '');
       id == null && (id = '');
+      $('.lang-active').text($(".lang-option." + lang).text());
       $('.ui-autocomplete li').remove();
       $('#query').val('');
       prevId = null;
