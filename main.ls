@@ -310,7 +310,10 @@ window.do-load = ->
     $ \#cond .val "^#{title}$"
     hist = "#{ HASH-OF[LANG].slice(1) }#title"
     entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
-    $(\.back).show! if isCordova
+    if isCordova or LANG isnt \a
+      $(\.back).hide!
+    else
+      $(\.back).show!
     fetch title
     return true
 
