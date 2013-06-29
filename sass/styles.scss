@@ -87,7 +87,6 @@ body {
     @include hidpi('subtle_stripes', 'png');
     @include fonts;
     &.lang-t {
-        font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
         .title, &.cordova .title {
             font-family: "TWBLG", "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", sans-serif, "HAN NOM A", "HAN NOM B";
         }
@@ -248,6 +247,10 @@ h1 audio {
     li {
         line-height: 1.5;
     }
+}
+
+body.lang-h .ui-tooltip .bopomofo {
+    display: none;
 }
 
 input.query {
@@ -473,14 +476,17 @@ body.lang-t {
 /*    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace; */
     position: absolute;
     display: inline-block;
+    padding-bottom: 3px;
 }
 
 .part-of-speech, .glyph, .fw_lang {
+    font-family: "Georgia", "American Typewriter", sans-serif;
     color: white;
     background-color: hsl(360,100%,21%);
     border-radius: 4px;
     padding: 2px;
     font-size: 100%;
+    line-height: 1;
 }
 
 img {
@@ -666,7 +672,7 @@ body.lang-h {
     }
 }
 
-body.lang-t .example {
+body.lang-t .example, body.lang-h .example {
     font-size: 100%;
     display: inline-block;
     clear: both;
@@ -717,7 +723,7 @@ body.lang-t .example {
     margin-bottom: 2pt;
 }
 
-.lang-t .example b {
+.lang-t .example b, .lang-h .example b {
     background: #ffd;
     border-radius: 5px;
 }
@@ -747,6 +753,7 @@ span {
 }
 
 .ui-tooltip {
+    @include fonts;
     background: #fffcfc !important;
     &.bpmf {
         font-size: 80%;
@@ -766,9 +773,10 @@ span {
             position: relative;
             left: 0px;
         }
+        @include fonts;
         margin: 0;
         margin-top: 5px;
-        line-height: 110%;
+        line-height: 1.2 !important;
         padding: 0;
     }
     .ol, .definition {
@@ -860,4 +868,12 @@ body.lang-t .ui-tooltip .example {
     padding: 10px;
     cursor: pointer;
     line-height: 100%;
+}
+
+ul.nav li:hover > ul.dropdown-menu {
+    display: block;
+}
+ul.dropdown-menu {
+    left: 8px;
+    top: 32px;
 }
