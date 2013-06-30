@@ -220,10 +220,12 @@ body.lang-a {
 
 @media only screen and (max-width: 767px) {
     .results {
-        margin-top: 120px;
-        margin-left: 1px;
-        margin-right: 1px;
+        margin-top: 117px;
+        margin-left: 0px;
+        margin-right: 0px;
         margin-bottom: 10px;
+        width: 100%;
+        max-width: 100%;
     }
 }
 
