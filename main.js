@@ -8,7 +8,8 @@
     h: '發芽'
   }[LANG];
   $(function(){
-    return $('body').addClass("lang-" + LANG);
+    $('body').addClass("lang-" + LANG);
+    return $('.lang-active').text($(".lang-option." + LANG).text());
   });
   HASHOF = {
     a: '#',

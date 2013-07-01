@@ -2,7 +2,9 @@ const DEBUGGING = off
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
-$ -> $('body').addClass("lang-#LANG")
+$ ->
+  $('body').addClass("lang-#LANG")
+  $('.lang-active').text $(".lang-option.#LANG").text!
 
 const HASH-OF = {a: \#, t: \#!, h: \#:}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
