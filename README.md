@@ -56,9 +56,6 @@ lsc autolink.ls t > t.txt
 perl link2pack.pl t < t.txt
 ```
 
-`styles.css` 用到的四個字形檔（不得為商業利用）可於此取得：
-https://github.com/g0v/moedict-epub/tree/master/fontforge
-
 ## 本機運行
 
 ```
