@@ -81,6 +81,7 @@ $border-color:          $grayLight;
 body {
     @include hidpi('subtle_stripes', 'png');
     @include fonts;
+    input, button, select, textarea, .ui-widget { @include fonts; }
 }
 
 .ebas {
