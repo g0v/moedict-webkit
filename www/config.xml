@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.audreyt.dict.moe" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.audreyt.dict.moe" version="0.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MoeDict</name>
     <description>Moe Dictionary</description>
     <author email="audreyt@audreyt.org" href="https://moedict.tw/">
@@ -8,4 +8,6 @@
     <access origin="*" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="false" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-targetSdkVersion" value="8" />
 </widget>
