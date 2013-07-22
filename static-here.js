@@ -73,7 +73,17 @@ var httpCb = function (req, res) {
       filename = path.join(process.cwd(), uri);
   };
 
-  path.exists(filename, function (exists) {
+  var exists = fs.existsSync(filename);
+  if (!exists) {
+    try {
+      filename = decodeURIComponent(path.join(process.cwd(), '..', uri));
+    } catch (e) {
+      filename = path.join(process.cwd(), '..', uri);
+    };
+    exists = fs.existsSync(filename);
+  }
+
+  {
     if (!exists) {
       httpRespond(res, 404, "Page Not Found!\n");
       return;
@@ -102,7 +112,7 @@ var httpCb = function (req, res) {
       res.write(file, 'binary');
       res.end();
     });
-  }); 
+  }
 };
 
 // Assign defaults and define the start server action.
