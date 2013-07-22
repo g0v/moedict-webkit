@@ -66,12 +66,12 @@ $border-color:          $grayLight;
 
 @font-face {
     font-family: 'MOEDICT';
-    src: url('MOEDICT.ttf') format("truetype");
+    src: url('../fonts/MOEDICT.ttf') format("truetype");
 }
 
 @font-face {
     font-family: 'EBAS';
-    src: url('EBAS-Subset.ttf') format("truetype");
+    src: url('../fonts/EBAS-Subset.ttf') format("truetype");
 }
 
 @mixin fonts {
