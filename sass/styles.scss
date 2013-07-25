@@ -67,10 +67,12 @@ $border-color:          $grayLight;
 @font-face {
     font-family: 'Fira Sans OT';
     src: url('FiraSansOT-Regular.otf?moedict') format("opentype");
+    src: url('FiraSansOT-Regular.ttf?moedict') format("truetype");
 }
 
 @font-face {
     font-family: 'MOEDICT';
+    src: url('MOEDICT.otf') format("opentype");
     src: url('MOEDICT.ttf') format("truetype");
 }
 
