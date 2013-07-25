@@ -652,11 +652,9 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
   function ls (entries=[], cb)
     [cb x for x in entries].join ""
   function h (text='')
-    text.=replace(/\uFF0E/g '\u00B7') unless isCordova
-    text.=replace(/\u223C/g '\uFF0D')
-    # return text.replace(/\u030d/g '\u0358') if isDroidGap
-    return text.replace(/\u0358/g '\u030d')
-    return text
+    text.replace(/\uFF0E/g '\u00B7')
+        .replace(/\u223C/g '\uFF0D')
+        .replace(/\u0358/g '\u030d')
   function groupBy (prop, xs)
     return [xs] if xs.length <= 1
     x = xs.shift!
