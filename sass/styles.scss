@@ -78,7 +78,8 @@ $border-color:          $grayLight;
 
 @font-face {
     font-family: 'EBAS';
-    src: url('EBAS-Subset.ttf') format("truetype");
+    src: url('EBAS-Subset.otf?moedict') format("opentype");
+    src: url('EBAS-Subset.ttf?moedict') format("truetype");
 }
 
 @mixin fonts {
