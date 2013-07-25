@@ -72,8 +72,8 @@ $border-color:          $grayLight;
 
 @font-face {
     font-family: 'MOEDICT';
-    src: url('MOEDICT.otf') format("opentype");
-    src: url('MOEDICT.ttf') format("truetype");
+    src: url('MOEDICT.otf?moedict') format("opentype");
+    src: url('MOEDICT.ttf?moedict') format("truetype");
 }
 
 @font-face {
