@@ -65,6 +65,11 @@ $border-color:          $grayLight;
 @import "bootstrap/utilities"; // Has to be last to override when necessary
 
 @font-face {
+    font-family: 'Fira Sans OT';
+    src: url('FiraSansOT-Regular.otf') format("opentype");
+}
+
+@font-face {
     font-family: 'MOEDICT';
     src: url('MOEDICT.ttf') format("truetype");
 }
@@ -76,6 +81,13 @@ $border-color:          $grayLight;
 
 @mixin fonts {
     font-family: "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+}
+@mixin en-fonts {
+    font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "dlig", "kern" on;
+    -moz-font-feature-settings: "liga", "dlig", "kern" on;
+    -webkit-font-feature-settings: "liga", "dlig", "kern" on;
 }
 
 body {
@@ -402,13 +414,14 @@ body#moedict {
         font-family: 'MOEDICT';
     }
     &.lang-t .pinyin {
-        font-family: 'Segoe UI', 'Charis SIL', 'MOEDICT', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+        // font-family: 'Segoe UI', 'Charis SIL', 'MOEDICT', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+        @include en-fonts
     }
 }
 
 .english {
     word-break: normal !important;
-    font-family: "Georgia", "American Typewriter", sans-serif;
+    @include en-fonts;
     font-weight: normal;
     font-size: 90%;
     margin-left: 5px;
@@ -417,7 +430,7 @@ body#moedict {
 
 .pinyin {
     word-break: normal !important;
-    font-family: "Georgia", "American Typewriter", sans-serif;
+    @include en-fonts;
     display: inline-block;
 }
 
@@ -490,7 +503,6 @@ span .tone {
     display: inline-block;
     padding-left: 30px;
     font-size: 90%;
-    font-family: "Georgia", "American Typewriter", sans-serif;
     word-break: normal !important;
 }
 
@@ -502,13 +514,16 @@ span .tone {
 }
 
 .part-of-speech, .glyph, .fw_lang {
-    font-family: "Georgia", "American Typewriter", sans-serif;
     color: white;
     background-color: hsl(360,100%,21%);
     border-radius: 4px;
     padding: 2px;
     font-size: 100%;
     line-height: 1;
+}
+
+.fw_def {
+    @include en-fonts;
 }
 
 img {
@@ -689,7 +704,7 @@ body.lang-a.web #lookback {
 
 body.lang-h {
     .bopomofo {
-        font-family: "Georgia", "American Typewriter", sans-serif;
+        @include en-fonts;
         .part-of-speech {
             margin-right: 3px;
             margin-left: 5px;
