@@ -1086,12 +1086,7 @@
     }
     function h(text){
       text == null && (text = '');
-      if (!isCordova) {
-        text = text.replace(/\uFF0E/g, '\u00B7');
-      }
-      text = text.replace(/\u223C/g, '\uFF0D');
-      return text.replace(/\u0358/g, '\u030d');
-      return text;
+      return text.replace(/\uFF0E/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
     }
     function groupBy(prop, xs){
       var x, pre, y;
