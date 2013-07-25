@@ -1090,12 +1090,7 @@
         text = text.replace(/\uFF0E/g, '\u00B7');
       }
       text = text.replace(/\u223C/g, '\uFF0D');
-      if (isCordova) {
-        if (isDroidGap) {
-          return text.replace(/\u030d/g, '\u0358');
-        }
-        return text.replace(/\u0358/g, '\u030d');
-      }
+      return text.replace(/\u0358/g, '\u030d');
       return text;
     }
     function groupBy(prop, xs){
