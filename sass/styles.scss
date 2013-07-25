@@ -110,6 +110,9 @@ body {
     margin-top: 15px;
     margin-bottom: 15px;
     font-weight: 501;
+    .english {
+        display: inline;
+    }
 }
 
 .bopomofo, .radical {
@@ -231,6 +234,13 @@ body.lang-a {
     li a {
         background-color: rgba(255,255,255,.8);
     }
+}
+
+@media only screen and (max-width: 767px) {
+    .brand, #lookback input { display: none !important; }
+}
+@media only screen and (max-width: 767px) {
+    .navbar-inner { padding: 0 !important; }
 }
 
 @media only screen and (max-width: 767px) {
@@ -502,7 +512,7 @@ span .tone {
 }
 
 .translation .fw_def {
-    display: inline-block;
+    display: inline;
     padding-left: 30px;
     font-size: 90%;
     word-break: normal !important;
