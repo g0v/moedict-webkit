@@ -92,9 +92,7 @@ if !DEBUGGING and isMobile
       @el.add-event-listener \error ~> onloaderror!; @destroy!
       @el.add-event-listener \ended ~> onend!; @destroy!
     play: -> @el.play!
-    stop: ->
-      alert \ehre
-      @el?pause!; @el?currentTime = 0.0; @destroy!
+    stop: -> @el?pause!; @el?currentTime = 0.0; @destroy!
     destroy: -> try $(@el).remove!; @el = null
 
 var playing, player
