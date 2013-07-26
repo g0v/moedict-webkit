@@ -82,16 +82,19 @@ function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
 if !DEBUGGING and isMobile
   class window.Howl
-    ({ urls, onend, onloaderror }) ->
+    ({ urls, onplay, onend, onloaderror }) ->
       @el = document.createElement \audio
       @el.set-attribute \src urls.0
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
+      @el.add-event-listener \playing ~> onplay!; @destroy!
       @el.add-event-listener \error ~> onloaderror!; @destroy!
       @el.add-event-listener \ended ~> onend!; @destroy!
     play: -> @el.play!
-    stop: -> @el?pause!; @el?currentTime = 0.0; @destroy!
+    stop: ->
+      alert \ehre
+      @el?pause!; @el?currentTime = 0.0; @destroy!
     destroy: -> try $(@el).remove!; @el = null
 
 var playing, player
@@ -100,17 +103,23 @@ window.play-audio = (el, url) ->
     playing := null
     player := null
     $(el).parent('.audioBlock').removeClass('playing')
-    $(el).fadeIn \fast
+    $(el).removeClass('icon-stop').removeClass('icon-spinner').show!
+    $(el).addClass('icon-play') unless $(el).hasClass('part-of-speech')
   play = ->
-    return if playing is url
+    if playing is url
+      if $(el).hasClass('icon-stop') => player?stop!; done!
+      return
     player?stop!
     playing := url
     $('#result .playAudio').show!
     $('.audioBlock').removeClass('playing')
-    $(el).fadeOut \fast -> $(el).parent('.audioBlock').addClass('playing')
+    $(el).removeClass('icon-play').addClass('icon-spinner')
+    $(el).parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done }
+    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: ->
+      $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    }
     audio.play!
     player := audio
   return play! if window.Howl
@@ -591,7 +600,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
           else if LANG is \a
             mp3 = "http://a.moedict.tw/#audio_id.ogg"
           mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
-        if mp3 then "<span class='playAudio' onclick='window.playAudio(this, \"#mp3\")'>▶</span>" else ''
+        if mp3 then "<i class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'></i>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
       }</h1>#{

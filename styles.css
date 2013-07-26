@@ -7979,8 +7979,8 @@ body.lang-t .ui-tooltip .example {
 .playAudio {
   margin-left: 5px;
   color: #6b0000;
-  font-size: 75%;
-  padding: 10px;
+  font-size: 70%;
+  padding: 8px;
   cursor: pointer;
   line-height: 100%;
 }
