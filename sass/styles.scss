@@ -963,8 +963,7 @@ body.lang-t .ui-tooltip .example {
     cursor: pointer;
     line-height: 100%;
 }
-
-ul.nav li:hover > ul.dropdown-menu {
+.desktop ul.nav li:hover > ul.dropdown-menu {
     display: block;
 }
 ul.dropdown-menu {
