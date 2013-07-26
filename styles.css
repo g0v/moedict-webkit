@@ -7088,8 +7088,8 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 
 @font-face {
   font-family: 'EBAS';
-  src: url("EBAS-Subset.otf") format("opentype");
-  src: url("EBAS-Subset.ttf") format("truetype");
+  src: url("EBAS-Subset.otf?moedict") format("opentype");
+  src: url("EBAS-Subset.ttf?moedict") format("truetype");
 }
 
 body {
@@ -7280,7 +7280,7 @@ body.lang-a #query-box {
 }
 @media only screen and (max-width: 767px) {
   .results {
-    margin-top: 117px;
+    margin-top: 105px;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 10px;
@@ -7434,9 +7434,10 @@ center {
   #query-box {
     right: auto;
     width: 100%;
+    top: 40px;
     bottom: auto !important;
     padding: 15px;
-    padding-bottom: 8px;
+    padding-bottom: 3px;
   }
 }
 @media only screen and (max-width: 767px) {
