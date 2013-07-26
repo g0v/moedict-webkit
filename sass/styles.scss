@@ -15,6 +15,8 @@ $grayLight:             #ddd;
 $grayLighter:           #eee;
 $border-color:          $grayLight;
 
+$primary-color: #6B0000;
+
 @import "compass/css3";
 @import "hidpi";
 
@@ -136,7 +138,7 @@ h1 audio {
     padding: 2px;
     border-radius: 3px;
     position: relative;
-    background: #6b0000;
+    background: $primary-color;
     opacity: 0.8;
     color: white;
     margin-bottom: 40px;
@@ -530,6 +532,12 @@ span .tone {
     .glyph {
         margin-right: 0.2em;
         padding-bottom: 4px;
+        b {
+            border-bottom: none !important;
+            &:hover {
+                background: $primary-color;
+            }
+        }
     }
     .sym {
         margin-left: 0.2em;
@@ -924,7 +932,7 @@ body.lang-t .ui-tooltip .example {
 }
 
 .part-of-speech.playAudio {
-    background: #6B0000;
+    background: $primary-color;
     color: white;
     font-size: 90%;
     padding: 4px;
@@ -938,8 +946,8 @@ body.lang-t .ui-tooltip .example {
     margin-top: 10px;
     &.playing {
         box-sizing: border-box;
-        border: 1px solid #6B0000;
-        color: #6B0000;
+        border: 1px solid $primary-color;
+        color: $primary-color;
         margin-left: 12px;
         padding-left: 10px;
         padding-right: 7px;
@@ -949,7 +957,7 @@ body.lang-t .ui-tooltip .example {
 
 .playAudio {
     margin-left: 5px;
-    color: #6B0000;
+    color: $primary-color;
     font-size: 75%;
     padding: 10px;
     cursor: pointer;
