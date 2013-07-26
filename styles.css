@@ -7572,6 +7572,12 @@ span .tone {
   margin-right: 0.2em;
   padding-bottom: 4px;
 }
+.radical .glyph b {
+  border-bottom: none !important;
+}
+.radical .glyph b:hover {
+  background: #6b0000;
+}
 .radical .sym {
   margin-left: 0.2em;
   padding-right: 0.2em;
@@ -7947,7 +7953,7 @@ body.lang-t .ui-tooltip .example {
 }
 
 .part-of-speech.playAudio {
-  background: #6B0000;
+  background: #6b0000;
   color: white;
   font-size: 90%;
   padding: 4px;
@@ -7962,8 +7968,8 @@ body.lang-t .ui-tooltip .example {
 }
 .audioBlock.playing {
   box-sizing: border-box;
-  border: 1px solid #6B0000;
-  color: #6B0000;
+  border: 1px solid #6b0000;
+  color: #6b0000;
   margin-left: 12px;
   padding-left: 10px;
   padding-right: 7px;
@@ -7972,7 +7978,7 @@ body.lang-t .ui-tooltip .example {
 
 .playAudio {
   margin-left: 5px;
-  color: #6B0000;
+  color: #6b0000;
   font-size: 75%;
   padding: 10px;
   cursor: pointer;
