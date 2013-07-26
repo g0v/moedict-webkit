@@ -216,6 +216,10 @@ body.lang-a {
 }
 
 @media only screen and (max-width: 767px) {
+    .radical { padding-top: 15px; }
+}
+
+@media only screen and (max-width: 767px) {
 .cordova .query-box input {
     position: fixed;
     left: 40px;
@@ -292,7 +296,7 @@ body.lang-a {
     font-size: 14pt;
     line-height: 1.5;
     ul, ol {
-        margin-left: 40px;
+        margin-left: 35px;
     }
     li {
         line-height: 1.5;
@@ -858,7 +862,7 @@ span {
         @include fonts;
         margin: 0;
         margin-top: 5px;
-        line-height: 1.2 !important;
+        line-height: 1.35 !important;
         padding: 0;
     }
     .ol, .definition {

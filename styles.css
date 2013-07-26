@@ -7249,6 +7249,11 @@ body.lang-a #query-box {
 }
 
 @media only screen and (max-width: 767px) {
+  .radical {
+    padding-top: 15px;
+  }
+}
+@media only screen and (max-width: 767px) {
   .cordova .query-box input {
     position: fixed;
     left: 40px;
@@ -7326,7 +7331,7 @@ body.lang-a #query-box {
   line-height: 1.5;
 }
 .result ul, .result ol {
-  margin-left: 40px;
+  margin-left: 35px;
 }
 .result li {
   line-height: 1.5;
@@ -7884,7 +7889,7 @@ span a {
   font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
   margin: 0;
   margin-top: 5px;
-  line-height: 1.2 !important;
+  line-height: 1.35 !important;
   padding: 0;
 }
 .ui-tooltip li .part-of-speech {
