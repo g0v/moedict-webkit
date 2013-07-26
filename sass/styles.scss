@@ -206,6 +206,25 @@ body.lang-a {
     color: #1a1a1a;
 }
 
+.cordova .back-box {
+    position: fixed;
+    text-align: center;
+    left: 0px;
+    top: 64px;
+    width: 40px;
+    z-index: 50;
+}
+
+@media only screen and (max-width: 767px) {
+.cordova .query-box input {
+    position: fixed;
+    left: 40px;
+    top: 55px;
+    right: 10px;
+    width: auto;
+}
+}
+
 .query-box {
     width: 260px;
     //background-color: hsl(0,0%,97%);
@@ -396,6 +415,7 @@ center {
         right: auto;
         width: 100%;
         top: 40px;
+        height: 65px;
         bottom: auto !important;
         padding: 15px;
         padding-bottom: 3px;
@@ -560,6 +580,14 @@ img {
         right: -999px !important;
         bottom: -999px !important;
     }
+}
+
+.cordova-only {
+    display: none;
+}
+
+.cordova .cordova-only {
+    display: block;
 }
 
 .cordova #opening {
