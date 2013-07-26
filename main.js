@@ -178,7 +178,6 @@
       };
       prototype.stop = function(){
         var ref$;
-        alert('ehre');
         if ((ref$ = this.el) != null) {
           ref$.pause();
         }
