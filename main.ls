@@ -1,4 +1,4 @@
-const DEBUGGING = off
+const DEBUGGING = on
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
