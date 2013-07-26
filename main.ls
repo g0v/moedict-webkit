@@ -1,4 +1,4 @@
-const DEBUGGING = on
+const DEBUGGING = off
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -142,6 +142,7 @@ window.do-load = ->
   $('body').addClass \cordova if isCordova
   $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and not isDroidGap
+  $('body').addClass \desktop unless isMobile
   $('body').addClass \android if isDroidGap
   if navigator.user-agent is /Android\s*[12]\./
     $('body').addClass \overflow-scrolling-false

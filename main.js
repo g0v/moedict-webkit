@@ -1,6 +1,6 @@
 (function(){
   var DEBUGGING, LANG, MOEID, HASHOF, XREFLABELOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
-  DEBUGGING = true;
+  DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
     a: '萌',
@@ -277,6 +277,9 @@
     }
     if (isCordova && !isDroidGap) {
       $('body').addClass('ios');
+    }
+    if (!isMobile) {
+      $('body').addClass('desktop');
     }
     if (isDroidGap) {
       $('body').addClass('android');
