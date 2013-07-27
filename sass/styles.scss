@@ -290,6 +290,9 @@ body.lang-a {
     margin-bottom: 20px;
     font-size: 100%;
     line-height: 1.5;
+    h1 {
+        @include fonts;
+    }
     ul, ol {
         padding-left: 35px;
         padding-top: 10px;
@@ -587,11 +590,11 @@ img {
 }
 
 .cordova-only {
-    display: none;
+    display: none !important;
 }
 
 .cordova .cordova-only {
-    display: block;
+    display: block !important;
 }
 
 .cordova #opening {
