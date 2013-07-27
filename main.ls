@@ -730,15 +730,15 @@ $ ->
   strokeWord = (word) ->
     utf8code = escape(word).replace(/%u/ , "")
     fetchStrokeXml utf8code, (doc) ->
-      paper = Raphael("result", 204, 204)
-      lV1 = paper.path("M68,0 L68,204");
-      lV1.attr({'stroke-width':'2', 'stroke': '#a00'});
-      lV2 = paper.path("M136,0 L136,204");
-      lV2.attr({'stroke-width':'2', 'stroke': '#a00'});
-      lH1 = paper.path("M0,68 L204,68");
-      lH1.attr({'stroke-width':'2', 'stroke': '#a00'});
-      lH2 = paper.path("M0,136 L204,136");
-      lH2.attr({'stroke-width':'2', 'stroke': '#a00'});
+      paper = Raphael \result 204 210
+      grid-lines = [
+        "M68,0 L68,210"
+        "M136,0 L136,210"
+        "M0,68 L204,70"
+        "M0,136 L204,140"
+      ]
+      for line in grid-lines
+        paper.path line .attr 'stroke-width': 1 stroke: \#a00
 
       color = "black" #hsb(.8, .75, .75)"
       #Raphael.getColor() # skip 1st color
