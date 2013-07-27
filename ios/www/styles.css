@@ -2539,6 +2539,9 @@ button.close {
   margin-bottom: 0;
 }
 
+.cordova .navbar {
+    padding-left: 0;
+}
 .navbar-brand {
   display: block;
   max-width: 200px;

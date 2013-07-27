@@ -209,6 +209,10 @@ window.do-load = ->
     $ \#query .show!
     $ \#query .focus! unless isCordova
 
+    $ \body .on \click \.iconic-circle.stroke ->
+      return ($('svg').fadeOut -> $('svg').remove!) if $('svg').length
+      strokeWords $('h1:first').text!
+
     unless ``('onhashchange' in window)``
       $ \body .on \click \a ->
         val = $(@).attr(\href)
@@ -575,7 +579,7 @@ function can-play-ogg
 function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
-  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span> 畫</div>" else ''
+  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke'>畫</div>" else ''
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
@@ -698,3 +702,45 @@ function trs2bpmf (trs)
     it + (tone || '\uFFFD')
   ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
 
+# draw.coffee from zh-stroke-data by @c9s
+$ ->
+  filterNodes = (childNodes) ->
+    nodes = []
+    for n in childNodes
+      nodes.push n if n.nodeType == 1
+    return nodes
+
+  drawOutline = (paper, outline ,pathAttrs) ->
+    path = []
+    for node in outline.childNodes
+      continue if node.nodeType != 1
+      a = node.attributes
+      continue unless a
+      switch node.nodeName
+        when "MoveTo"
+          path.push [ "M", parseFloat(a.x.value) , parseFloat(a.y.value) ]
+        when "LineTo"
+          path.push [ "L", parseFloat(a.x.value) , parseFloat(a.y.value) ]
+        when "QuadTo"
+          path.push [ "Q", parseFloat(a.x1.value) , parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value) ]
+    paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0")
+
+  fetchStrokeXml = (code, cb) -> $.get "utf8/" + code.toLowerCase() + ".xml", cb, "xml"
+
+  strokeWord = (word) ->
+    utf8code = escape(word).replace(/%u/ , "")
+    fetchStrokeXml utf8code, (doc) ->
+      paper = Raphael("result", 204, 204)
+      color = "black" #hsb(.8, .75, .75)"
+      #Raphael.getColor() # skip 1st color
+      #Raphael.getColor() # skip 2second color
+      #color = Raphael.getColor()
+      pathAttrs = { stroke: color, "stroke-width": 5, "stroke-linecap": "round", "fill": color }
+      timeoutSeconds = 0
+      delay = 500
+      for outline in doc.getElementsByTagName 'Outline' => let
+        setTimeout (->
+          drawOutline(paper,outline,pathAttrs)
+        ), timeoutSeconds += delay
+
+  window.strokeWords = (words) -> for a in words.split '' => strokeWord(a)

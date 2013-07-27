@@ -186,6 +186,9 @@ body.lang-a {
     color: #1a1a1a;
 }
 
+.cordova .navbar {
+    padding-left: 0;
+}
 .cordova .navbar-brand {
     display: none;
 }
@@ -748,6 +751,7 @@ body.lang-h {
         .part-of-speech {
             margin-right: 3px;
             margin-left: 5px;
+            width: auto;
         }
     }
 }
@@ -943,6 +947,9 @@ body.lang-t .ui-tooltip .example {
     }
 }
 
+.nav, .dropdown, #query-box {
+  font-size: 19px;
+}
 .playAudio {
     margin-left: 5px;
     color: $primary-color;
@@ -956,4 +963,17 @@ body.lang-t .ui-tooltip .example {
     display: block;
 }
 ul.dropdown-menu {
+}
+
+svg {
+    border: 2px solid #a00;
+}
+.iconic-circle.stroke {
+    width: 28px;
+    height: 24px;
+    padding: 2px;
+    cursor: pointer !important;
+    &:hover {
+        background: #888 !important;
+    }
 }
