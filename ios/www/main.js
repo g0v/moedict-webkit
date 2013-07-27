@@ -8,7 +8,8 @@
     h: '發芽'
   }[LANG];
   $(function(){
-    return $('body').addClass("lang-" + LANG);
+    $('body').addClass("lang-" + LANG);
+    return $('.lang-active').text($(".lang-option." + LANG).text());
   });
   HASHOF = {
     a: '#',
@@ -152,13 +153,17 @@
       Howl.displayName = 'Howl';
       var prototype = Howl.prototype, constructor = Howl;
       function Howl(arg$){
-        var urls, onend, onloaderror, this$ = this;
-        urls = arg$.urls, onend = arg$.onend, onloaderror = arg$.onloaderror;
+        var urls, onplay, onend, onloaderror, this$ = this;
+        urls = arg$.urls, onplay = arg$.onplay, onend = arg$.onend, onloaderror = arg$.onloaderror;
         this.el = document.createElement('audio');
         this.el.setAttribute('src', urls[0]);
         this.el.setAttribute('type', /mp3$/.exec(urls[0]) ? 'audio/mpeg' : 'audio/ogg');
         this.el.setAttribute('autoplay', true);
         this.el.setAttribute('controls', true);
+        this.el.addEventListener('playing', function(){
+          onplay();
+          return this$.destroy();
+        });
         this.el.addEventListener('error', function(){
           onloaderror();
           return this$.destroy();
@@ -196,11 +201,20 @@
       playing = null;
       player = null;
       $(el).parent('.audioBlock').removeClass('playing');
-      return $(el).fadeIn('fast');
+      $(el).removeClass('icon-stop').removeClass('icon-spinner').show();
+      if (!$(el).hasClass('part-of-speech')) {
+        return $(el).addClass('icon-play');
+      }
     };
     play = function(){
       var urls, audio;
       if (playing === url) {
+        if ($(el).hasClass('icon-stop')) {
+          if (player != null) {
+            player.stop();
+          }
+          done();
+        }
         return;
       }
       if (player != null) {
@@ -209,9 +223,8 @@
       playing = url;
       $('#result .playAudio').show();
       $('.audioBlock').removeClass('playing');
-      $(el).fadeOut('fast', function(){
-        return $(el).parent('.audioBlock').addClass('playing');
-      });
+      $(el).removeClass('icon-play').addClass('icon-spinner');
+      $(el).parent('.audioBlock').addClass('playing');
       urls = [url];
       if (/ogg$/.exec(url)) {
         urls.push(url.replace(/ogg$/, 'mp3'));
@@ -220,7 +233,10 @@
         buffer: true,
         urls: urls,
         onend: done,
-        onloaderror: done
+        onloaderror: done,
+        onplay: function(){
+          return $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show();
+        }
       });
       audio.play();
       return player = audio;
@@ -276,6 +292,9 @@
     }
     if (isCordova && !isDroidGap) {
       $('body').addClass('ios');
+    }
+    if (!isMobile) {
+      $('body').addClass('desktop');
     }
     if (isDroidGap) {
       $('body').addClass('android');
@@ -415,6 +434,7 @@
         lang = 'h';
         val = val.substr(1);
       }
+      $('.lang-active').text($(".lang-option." + lang).text());
       if (lang !== LANG) {
         LANG = LANG;
         prevVal = '';
@@ -480,6 +500,7 @@
     window.pressLang = function(lang, id){
       lang == null && (lang = '');
       id == null && (id = '');
+      $('.lang-active').text($(".lang-option." + lang).text());
       $('.ui-autocomplete li').remove();
       $('#query').val('');
       prevId = null;
@@ -563,7 +584,9 @@
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
-      if (isCordova) {
+      if (isCordova || LANG !== 'a') {
+        $('.back').hide();
+      } else {
         $('.back').show();
       }
       fetch(title);
@@ -1029,7 +1052,7 @@
       bopomofo = replace$.call(bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 '), /<[^>]*>/g, '');
       return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://t.moedict.tw/" + basename + ".ogg")
-        : LANG === 'a' && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<span class='playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'>▶</span>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div>\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];
@@ -1057,7 +1080,7 @@
         }) + "</ol></div>";
       }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
-    return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
+    return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
@@ -1081,17 +1104,7 @@
     }
     function h(text){
       text == null && (text = '');
-      if (!isCordova) {
-        text = text.replace(/\uFF0E/g, '\u00B7');
-      }
-      text = text.replace(/\u223C/g, '\uFF0D');
-      if (isCordova) {
-        if (isDroidGap) {
-          return text.replace(/\u030d/g, '\u0358');
-        }
-        return text.replace(/\u0358/g, '\u030d');
-      }
-      return text;
+      return text.replace(/\uFF0E/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
     }
     function groupBy(prop, xs){
       var x, pre, y;
