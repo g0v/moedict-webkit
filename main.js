@@ -1292,13 +1292,13 @@
       utf8code = escape(word).replace(/%u/, "");
       return fetchStrokeXml(utf8code, function(doc){
         var paper, gridLines, i$, len$, line, color, pathAttrs, timeoutSeconds, delay, ref$, outline, results$ = [];
-        paper = Raphael('result', 204, 210);
-        gridLines = ["M68,0 L68,210", "M136,0 L136,210", "M0,68 L204,70", "M0,136 L204,140"];
+        paper = Raphael('result', 204, 204);
+        gridLines = ["M68,0 L68,204", "M136,0 L136,204", "M0,68 L204,68", "M0,136 L204,136"];
         for (i$ = 0, len$ = gridLines.length; i$ < len$; ++i$) {
           line = gridLines[i$];
           paper.path(line).attr({
             'stroke-width': 1,
-            stroke: '#a00'
+            stroke: '#a33'
           });
         }
         color = "black";
