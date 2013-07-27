@@ -1,0 +1,43 @@
+{
+  "author": "au",
+  "status": "beta",
+  "name": "moedict",
+  "description": "moedict: Dictionaries from Ministry of Education",
+  "description_zh": "萌典: 教育部字典匯總",
+  "homepage": "https://moedict.tw/",
+  "document": "http://3du.tw/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/audreyt/moedict-webkit"
+  },
+  "licenses": [
+    {
+      "type": "CC0"
+    }
+  ],
+  "keywords": [
+    "livescript",
+    "sass",
+    "bootstrap"
+  ],
+  "audience": [
+    "contributor"
+  ],
+  "products": [
+    "website", "app"
+  ],
+  "projects": [
+    "meta"
+  ],
+  "contributors": [
+    "clkao",
+    "hlb",
+    "a-tsioh",
+    "pektiong",
+    "c9s",
+    "miaout17"
+  ],
+  "needs": [
+    "designer"
+  ]
+}
