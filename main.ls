@@ -729,28 +729,27 @@ $ ->
     <- setTimeout _, 0ms
     stroke.node.setAttribute "class" "fade in"
 
-  fetchStrokeXml = (code, cb) -> $.get "utf8/" + code.toLowerCase() + ".xml", cb, "xml"
+  fetchStrokeXml = (code, cb) ->
+    $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml")
+     .fail -> $('svg').fadeOut \fast -> $('svg').remove!
 
   strokeWord = (word) ->
     utf8code = escape(word).replace(/%u/ , "")
-    fetchStrokeXml utf8code, (doc) ->
-      paper = Raphael \result 204 204
-      grid-lines = [
-        "M68,0 L68,204"
-        "M136,0 L136,204"
-        "M0,68 L204,68"
-        "M0,136 L204,136"
-      ]
-      for line in grid-lines
-        paper.path line .attr 'stroke-width': 1 stroke: \#a33
+    paper = Raphael \result 204 204
+    grid-lines = [
+      "M68,0 L68,204"
+      "M136,0 L136,204"
+      "M0,68 L204,68"
+      "M0,136 L204,136"
+    ]
+    for line in grid-lines
+      paper.path line .attr 'stroke-width': 1 stroke: \#a33
 
-      color = "black" #hsb(.8, .75, .75)"
-      #Raphael.getColor() # skip 1st color
-      #Raphael.getColor() # skip 2second color
-      #color = Raphael.getColor()
+    fetchStrokeXml utf8code, (doc) ->
+      color = "black"
       pathAttrs = { stroke: color, "stroke-width": 5, "stroke-linecap": "round", "fill": color }
       timeoutSeconds = 0
-      delay = 500
+      delay = 500ms
       for outline in doc.getElementsByTagName 'Outline' => let
         setTimeout (->
           drawOutline(paper,outline,pathAttrs)
