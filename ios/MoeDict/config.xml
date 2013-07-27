@@ -56,5 +56,6 @@
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
     </plugins>
+    <access origin="*" />
     <!-- <access origin="*" /> -->
 </cordova>

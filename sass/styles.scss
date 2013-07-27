@@ -45,6 +45,12 @@ $primary-color: #6B0000;
 ,   "FiraSansOT-Regular.ttf", truetype
 ), "FiraSansOT-Regular.eot");
 
+@include font-face("EBAS", font-files(
+    "EBAS-Subset.woff", woff
+,   "EBAS-Subset.otf", opentype
+,   "EBAS-Subset.ttf", truetype
+), "EBAS-Subset.eot");
+
 @include font-face("MOEDICT", font-files(
     "MOEDICT.woff", woff
 ,   "MOEDICT.otf", opentype
@@ -195,6 +201,13 @@ body.lang-a {
     top: 64px;
     width: 40px;
     z-index: 50;
+    font-size: 19px;
+}
+@media only screen and (min-width: 768px) {
+    .cordova .back-box {
+        top: 72px;
+        width: 24px;
+    }
 }
 
 @media only screen and (max-width: 767px) {
@@ -275,7 +288,7 @@ body.lang-a {
     padding-top: 5px;
     @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
     margin-bottom: 20px;
-    font-size: 14pt;
+    font-size: 100%;
     line-height: 1.5;
     ul, ol {
         padding-left: 35px;
@@ -526,7 +539,7 @@ span .tone {
 
 .translation .fw_def {
     display: inline;
-    padding-left: 30px;
+    padding-left: 3ex;
     font-size: 90%;
     word-break: normal !important;
 }

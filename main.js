@@ -1312,6 +1312,7 @@
       }
       return fetchStrokeXml(utf8code, function(doc){
         var color, pathAttrs, timeoutSeconds, delay, i$, ref$, len$, outline, results$ = [];
+        window.scrollTo(0, 0);
         color = "black";
         pathAttrs = {
           stroke: color,

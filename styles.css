@@ -6931,6 +6931,12 @@ ul.icons li [class*=" icon-"] {
 }
 
 @font-face {
+  font-family: "EBAS";
+  src: url('fonts/EBAS-Subset.eot');
+  src: url('fonts/EBAS-Subset.eot?#iefix') format('eot'), url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
+}
+
+@font-face {
   font-family: "MOEDICT";
   src: url('fonts/FiraSansOT-Regular.eot');
   src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
@@ -7103,8 +7109,15 @@ body.lang-a #query-box {
   top: 64px;
   width: 40px;
   z-index: 50;
+  font-size: 19px;
 }
 
+@media only screen and (min-width: 768px) {
+  .cordova .back-box {
+    top: 72px;
+    width: 24px;
+  }
+}
 @media only screen and (max-width: 767px) {
   .radical {
     padding-top: 15px;
@@ -7183,7 +7196,7 @@ body.lang-a #query-box {
   -webkit-box-shadow: #d4d4d4 0 3px 3px;
   box-shadow: #d4d4d4 0 3px 3px;
   margin-bottom: 20px;
-  font-size: 14pt;
+  font-size: 100%;
   line-height: 1.5;
 }
 .result ul, .result ol {
@@ -7440,7 +7453,7 @@ span .tone {
 
 .translation .fw_def {
   display: inline;
-  padding-left: 30px;
+  padding-left: 3ex;
   font-size: 90%;
   word-break: normal !important;
 }
