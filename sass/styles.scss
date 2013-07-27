@@ -644,6 +644,12 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 @media only screen and (min-width: 768px) {
+    .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
     .ui-autocomplete {
         bottom: 52px !important;
     }

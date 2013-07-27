@@ -80,7 +80,7 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
-if !DEBUGGING and isMobile
+if true
   class window.Howl
     ({ urls, onplay, onend, onloaderror }) ->
       @el = document.createElement \audio

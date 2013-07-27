@@ -148,7 +148,7 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
-  if (!DEBUGGING && isMobile) {
+  if (true) {
     window.Howl = Howl = (function(){
       Howl.displayName = 'Howl';
       var prototype = Howl.prototype, constructor = Howl;
@@ -310,18 +310,18 @@
     $('body').bind('pinch', function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      return $('body').css('font-size', Math.max(14, Math.min(42, scale * fontSize)) + 'pt');
+      return $('body').css('font-size', Math.max(10, Math.min(42, scale * fontSize)) + 'pt');
     });
     saveFontSize = function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      setPref('font-size', fontSize = Math.max(14, Math.min(42, scale * fontSize)));
+      setPref('font-size', fontSize = Math.max(10, Math.min(42, scale * fontSize)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     $('body').bind('pinchclose', saveFontSize);
     $('body').bind('pinchopen', saveFontSize);
     window.adjustFontSize = function(offset){
-      setPref('font-size', fontSize = Math.max(14, Math.min(42, fontSize + offset)));
+      setPref('font-size', fontSize = Math.max(10, Math.min(42, fontSize + offset)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     window.adjustFontSize(0);
