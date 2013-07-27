@@ -1292,22 +1292,26 @@
       }, 0);
     };
     fetchStrokeXml = function(code, cb){
-      return $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml");
+      return $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
+        return $('svg').fadeOut('fast', function(){
+          return $('svg').remove();
+        });
+      });
     };
     strokeWord = function(word){
-      var utf8code;
+      var utf8code, paper, gridLines, i$, len$, line;
       utf8code = escape(word).replace(/%u/, "");
+      paper = Raphael('result', 204, 204);
+      gridLines = ["M68,0 L68,204", "M136,0 L136,204", "M0,68 L204,68", "M0,136 L204,136"];
+      for (i$ = 0, len$ = gridLines.length; i$ < len$; ++i$) {
+        line = gridLines[i$];
+        paper.path(line).attr({
+          'stroke-width': 1,
+          stroke: '#a33'
+        });
+      }
       return fetchStrokeXml(utf8code, function(doc){
-        var paper, gridLines, i$, len$, line, color, pathAttrs, timeoutSeconds, delay, ref$, outline, results$ = [];
-        paper = Raphael('result', 204, 204);
-        gridLines = ["M68,0 L68,204", "M136,0 L136,204", "M0,68 L204,68", "M0,136 L204,136"];
-        for (i$ = 0, len$ = gridLines.length; i$ < len$; ++i$) {
-          line = gridLines[i$];
-          paper.path(line).attr({
-            'stroke-width': 1,
-            stroke: '#a33'
-          });
-        }
+        var color, pathAttrs, timeoutSeconds, delay, i$, ref$, len$, outline, results$ = [];
         color = "black";
         pathAttrs = {
           stroke: color,

@@ -186,8 +186,10 @@ body.lang-a {
     color: #1a1a1a;
 }
 
-.cordova .navbar {
-    padding-left: 0;
+@media only screen and (max-width: 767px) {
+    body .navbar {
+        padding-left: 0;
+    }
 }
 .cordova .navbar-brand {
     display: none;
