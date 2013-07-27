@@ -2539,9 +2539,6 @@ button.close {
   margin-bottom: 0;
 }
 
-.cordova .navbar {
-    padding-left: 0;
-}
 .navbar-brand {
   display: block;
   max-width: 200px;
@@ -5643,7 +5640,8 @@ code:lang(ja) {
  */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("FontAwesome.otf");
+  src: url("./fonts/fontawesome-webfont.eot?v=3.0.1");
+  src: url("./fonts/fontawesome-webfont.eot?#iefix&v=3.0.1") format("embedded-opentype"), url("./fonts/fontawesome-webfont.woff?v=3.0.1") format("woff"), url("./fonts/fontawesome-webfont.ttf?v=3.0.1") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -6927,18 +6925,21 @@ ul.icons li [class*=" icon-"] {
 }
 
 @font-face {
-  font-family: 'Fira Sans OT';
-  src: url("FiraSansOT-Regular.otf");
+  font-family: "Fira Sans OT";
+  src: url('fonts/FiraSansOT-Regular.eot');
+  src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'MOEDICT';
-  src: url("MOEDICT.otf");
+  font-family: "EBAS";
+  src: url('fonts/EBAS-Subset.eot');
+  src: url('fonts/EBAS-Subset.eot?#iefix') format('eot'), url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'EBAS';
-  src: url("EBAS-Subset.otf");
+  font-family: "MOEDICT";
+  src: url('fonts/FiraSansOT-Regular.eot');
+  src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 
 body {
@@ -7009,7 +7010,7 @@ h1 audio {
   top: -10px;
   left: -10px;
   padding: 10px;
-  background: url(images/noise.png) repeat;
+  background: url(/images/noise.png) repeat;
 }
 
 .navbar {
@@ -7092,6 +7093,15 @@ body.lang-a #query-box {
   color: #1a1a1a;
 }
 
+@media only screen and (max-width: 767px) {
+  body .navbar {
+    padding-left: 0;
+  }
+}
+.cordova .navbar-brand {
+  display: none;
+}
+
 .cordova .back-box {
   position: fixed;
   text-align: center;
@@ -7099,8 +7109,15 @@ body.lang-a #query-box {
   top: 64px;
   width: 40px;
   z-index: 50;
+  font-size: 19px;
 }
 
+@media only screen and (min-width: 768px) {
+  .cordova .back-box {
+    top: 72px;
+    width: 24px;
+  }
+}
 @media only screen and (max-width: 767px) {
   .radical {
     padding-top: 15px;
@@ -7179,7 +7196,7 @@ body.lang-a #query-box {
   -webkit-box-shadow: #d4d4d4 0 3px 3px;
   box-shadow: #d4d4d4 0 3px 3px;
   margin-bottom: 20px;
-  font-size: 14pt;
+  font-size: 100%;
   line-height: 1.5;
 }
 .result ul, .result ol {
@@ -7436,7 +7453,7 @@ span .tone {
 
 .translation .fw_def {
   display: inline;
-  padding-left: 30px;
+  padding-left: 3ex;
   font-size: 90%;
   word-break: normal !important;
 }
@@ -7550,6 +7567,11 @@ body.overflow-scrolling-false .ui-autocomplete {
   }
 }
 @media only screen and (min-width: 768px) {
+  .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 768px) {
   .ui-autocomplete {
     bottom: 52px !important;
   }
@@ -7644,6 +7666,7 @@ body.lang-h .bopomofo {
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
   margin-left: 5px;
+  width: auto;
 }
 
 body.lang-t .example, body.lang-h .example {
@@ -7811,8 +7834,8 @@ body.lang-t .ui-tooltip .example {
   padding: 4px;
   cursor: pointer;
   line-height: 100%;
-  display: inline-block;
   width: 50px;
+  display: inline-block;
 }
 
 .audioBlock {
@@ -7832,6 +7855,7 @@ body.lang-t .ui-tooltip .example {
 .nav, .dropdown, #query-box {
   font-size: 19px;
 }
+
 .playAudio {
   margin-left: 5px;
   color: #6b0000;
@@ -7844,4 +7868,18 @@ body.lang-t .ui-tooltip .example {
 
 .desktop ul.nav li:hover > ul.dropdown-menu {
   display: block;
+}
+
+svg {
+  border: 2px solid #a00;
+}
+
+.iconic-circle.stroke {
+  width: 28px;
+  height: 24px;
+  padding: 2px;
+  cursor: pointer !important;
+}
+.iconic-circle.stroke:hover {
+  background: #888 !important;
 }
