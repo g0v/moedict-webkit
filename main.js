@@ -1260,7 +1260,7 @@
       return nodes;
     };
     drawOutline = function(paper, outline, pathAttrs){
-      var path, i$, ref$, len$, node, a;
+      var path, i$, ref$, len$, node, a, stroke;
       path = [];
       for (i$ = 0, len$ = (ref$ = outline.childNodes).length; i$ < len$; ++i$) {
         node = ref$[i$];
@@ -1282,7 +1282,11 @@
           path.push(["Q", parseFloat(a.x1.value), parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value)]);
         }
       }
-      return paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0");
+      stroke = paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0");
+      stroke.node.setAttribute("class", "fade");
+      return setTimeout(function(){
+        return stroke.node.setAttribute("class", "fade in");
+      }, 0);
     };
     fetchStrokeXml = function(code, cb){
       return $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml");

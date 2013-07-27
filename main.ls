@@ -723,7 +723,10 @@ $ ->
           path.push [ "L", parseFloat(a.x.value) , parseFloat(a.y.value) ]
         when "QuadTo"
           path.push [ "Q", parseFloat(a.x1.value) , parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value) ]
-    paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0")
+    stroke = paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0")
+    stroke.node.setAttribute "class" "fade"
+    <- setTimeout _, 0ms
+    stroke.node.setAttribute "class" "fade in"
 
   fetchStrokeXml = (code, cb) -> $.get "utf8/" + code.toLowerCase() + ".xml", cb, "xml"
 
