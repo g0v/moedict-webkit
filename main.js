@@ -148,7 +148,7 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
-  if (!DEBUGGING && isMobile) {
+  if (true) {
     window.Howl = Howl = (function(){
       Howl.displayName = 'Howl';
       var prototype = Howl.prototype, constructor = Howl;
