@@ -746,6 +746,7 @@ $ ->
       paper.path line .attr 'stroke-width': 1 stroke: \#a33
 
     fetchStrokeXml utf8code, (doc) ->
+      window.scroll-to 0 0
       color = "black"
       pathAttrs = { stroke: color, "stroke-width": 5, "stroke-linecap": "round", "fill": color }
       timeoutSeconds = 0
