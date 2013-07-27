@@ -106,8 +106,8 @@ for {t:title, h:heteronyms}:entry in entries
     break unless b
     b = b.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1').replace(/ /g, '\u3000')
     b = b - /^（.*）/ - /（.*）.*/
-    title = title - /，/g
-    audio-id = if i then audio-map["#title.#b"] else audio-map["#title.#b"] || audio-map[title]
+    audio-title = title - /，/g
+    audio-id = if i then audio-map["#audio-title.#b"] else audio-map["#audio-title.#b"] || audio-map[title]
     heteronyms[i] <<< {"=": audio-id} if audio-id
   delete entry<[ English francais Deutsch ]>
   chunk = JSON.stringify(entry).replace(
