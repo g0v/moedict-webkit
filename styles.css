@@ -7093,6 +7093,10 @@ body.lang-a #query-box {
   color: #1a1a1a;
 }
 
+.cordova .navbar {
+  padding-left: 0;
+}
+
 .cordova .navbar-brand {
   display: none;
 }
@@ -7654,6 +7658,7 @@ body.lang-h .bopomofo {
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
   margin-left: 5px;
+  width: auto;
 }
 
 body.lang-t .example, body.lang-h .example {
@@ -7839,6 +7844,10 @@ body.lang-t .ui-tooltip .example {
   border-radius: 5px;
 }
 
+.nav, .dropdown, #query-box {
+  font-size: 19px;
+}
+
 .playAudio {
   margin-left: 5px;
   color: #6b0000;
@@ -7851,4 +7860,18 @@ body.lang-t .ui-tooltip .example {
 
 .desktop ul.nav li:hover > ul.dropdown-menu {
   display: block;
+}
+
+svg {
+  border: 2px solid #a00;
+}
+
+.iconic-circle.stroke {
+  width: 28px;
+  height: 24px;
+  padding: 2px;
+  cursor: pointer !important;
+}
+.iconic-circle.stroke:hover {
+  background: #888 !important;
 }
