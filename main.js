@@ -1291,28 +1291,16 @@
       var utf8code;
       utf8code = escape(word).replace(/%u/, "");
       return fetchStrokeXml(utf8code, function(doc){
-        var paper, lV1, lV2, lH1, lH2, color, pathAttrs, timeoutSeconds, delay, i$, ref$, len$, outline, results$ = [];
-        paper = Raphael("result", 204, 204);
-        lV1 = paper.path("M68,0 L68,204");
-        lV1.attr({
-          'stroke-width': '2',
-          'stroke': '#a00'
-        });
-        lV2 = paper.path("M136,0 L136,204");
-        lV2.attr({
-          'stroke-width': '2',
-          'stroke': '#a00'
-        });
-        lH1 = paper.path("M0,68 L204,68");
-        lH1.attr({
-          'stroke-width': '2',
-          'stroke': '#a00'
-        });
-        lH2 = paper.path("M0,136 L204,136");
-        lH2.attr({
-          'stroke-width': '2',
-          'stroke': '#a00'
-        });
+        var paper, gridLines, i$, len$, line, color, pathAttrs, timeoutSeconds, delay, ref$, outline, results$ = [];
+        paper = Raphael('result', 204, 210);
+        gridLines = ["M68,0 L68,210", "M136,0 L136,210", "M0,68 L204,70", "M0,136 L204,140"];
+        for (i$ = 0, len$ = gridLines.length; i$ < len$; ++i$) {
+          line = gridLines[i$];
+          paper.path(line).attr({
+            'stroke-width': 1,
+            stroke: '#a00'
+          });
+        }
         color = "black";
         pathAttrs = {
           stroke: color,
