@@ -186,6 +186,9 @@ body.lang-a {
     color: #1a1a1a;
 }
 
+.cordova .navbar-brand {
+    display: none;
+}
 .cordova .back-box {
     position: fixed;
     text-align: center;
@@ -916,6 +919,7 @@ body.lang-t .ui-tooltip .example {
     padding: 4px;
     cursor: pointer;
     line-height: 100%;
+    width: 50px;
     display: inline-block;
 }
 
@@ -937,7 +941,8 @@ body.lang-t .ui-tooltip .example {
     margin-left: 5px;
     color: $primary-color;
     font-size: 70%;
-    padding: 8px;
+    padding-left: 5px;
+    display: inline-block !important;
     cursor: pointer;
     line-height: 100%;
 }

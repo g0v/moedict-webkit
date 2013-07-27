@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xml:lang="zh-Hant"><head><meta charset="utf-8" />
-<title>萌典〔教育部國語＋臺灣閩南語常用詞辭典〕（民間線上版）</title>
+<title>萌典〔教育部國+臺+客語有聲辭典〕（民間線上版）</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible"/>
 <meta name="description" content="收錄十六萬筆國語、一萬六千筆臺語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線版。來源為教育部「重編國語辭典（修訂本）」及「臺灣閩南語常用詞辭典」，辭典本文的著作權仍為教育部所有。">
@@ -13,31 +13,44 @@
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
 <script src="js/jquery.hoverIntent.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap/dropdown.js"></script>
+<script src="js/bootstrap/modal.js"></script>
+<script src="js/bootstrap/transition.js"></script>
 <!--[if !IE]>-->
 <script src="js/jgestures.min.js" data-cfasync="true"></script>
 <!--<![endif]-->
 <script src="js/simp-trad.js" charset="utf-8"></script>
 <script src="main.js" charset="utf-8"></script>
 </head>
-<body id="moedict" onhashchange="grokHash()">
+<body id="moedict" class="main" onhashchange="grokHash()">
+    <div class="nav-bg navbar-fixed-top"></div>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <a class="brand ebas" href="#">萌典</a>
-            <ul class="nav">
+            <a class="navbar-brand brand ebas" href="./">萌典</a>
+            <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-book"></i> 國語字典
+                        <i class="icon-book"></i>
+                        <span class="lang-active" style="margin: 0; padding: 0;">國語辭典</span>
                         <b class="caret"></b>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">國語字典</a></li>
-                        <li><a href="#">閩南語字典</a></li>
-                        <li><a href="#">客語字典</a></li>
+                    <ul class="dropdown-menu" role="navigation">
+                        <li role="presentation"><a role="menuitem" class="lang-option a" href="#萌">國語辭典</a></li>
+                        <li role="presentation"><a role="menuitem" class="lang-option t" href="#!">臺灣閩南語</a></li>
+                        <li role="presentation"><a role="menuitem" class="lang-option h" href="#:">臺灣客家語</a></li>
                     </ul>
                 </li>
+<!--[if !IE]>-->
+<li>
+<form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none; margin: 0; padding: 0" class="back">
+    <input type="hidden" name="idx" value="dict.idx">
+    <input type="hidden" name="fld" value="1">
+    <input type="hidden" name="imgFont" value="1">
+    <input type="hidden" name="cat" value="">
+    <input type="hidden" id="cond" name="cond" value="^萌$">
+    <input type="submit" value="反" title="反查來源（教育部國語辭典）" class="iconic-circle" style="font-family: EBAS; margin-top: 12px; border-radius: 20px; border: 0px;">
+</form>
+</li>
+<!--<![endif]-->
             </ul>
             <ul class="nav pull-right">
                 <li>
@@ -54,7 +67,7 @@
                 <br /><br />
                 <img class="logo" title="〔萌典〕" src="/images/icon.png" width="100">
                 <br /><br />
-                <span id="F9868" style="font-family: 'Extra'; margin-botom: 40px">
+                <span id="F9868" style="font-family: 'MOEDICT'; margin-botom: 40px">
                 </span>
             </center>
         </div>
@@ -62,9 +75,16 @@
     <div id="query-box" class="query-box">
         <input id="query" type="search" class="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞。" />
     </div>
-    <a class="back" href="#" onclick="pressBack(); return false"><img class="back" src="/images/back.png" /></a>
-    <a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="/images/lang.png" /></a>
-    <div id="moe" style="display: none">
-</div>
+    <a class="back-box cordova-only" href="#" onclick="pressBack(); return false">
+        <i class="icon-chevron-left" style="color: #6B0000"></i>
+    </a>
+<!-- <a class="down" href="#" onclick="pressDown(); return false"><img
+    title="切換搜尋列位置" class="down" src="down.png" /></a> -->
+<!--
+<a class="info" href="#" onclick="pressAbout(); return false"><img title="關於本站" class="info" src="info.png" /></a>
+<a class="erase" href="#" onclick="pressErase(); return false"><img title="清除搜尋框" class="erase" src="erase.png" /></a>
+<a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="lang.png" /></a>
+-->
+<div id="moe" style="display: none"></div>
 </body>
 </html>

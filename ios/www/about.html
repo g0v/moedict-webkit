@@ -1,19 +1,42 @@
-<html lang="zh-TW"><head><meta charset="utf-8" />
-<title>萌典〔教育部國語＋臺灣閩南語常用詞辭典〕（民間離線版）</title>
+<!DOCTYPE html>
+<html lang="zh-Hant" xml:lang="zh-Hant"><head><meta charset="utf-8" />
+<title>萌典〔教育部國語+臺語有聲辭典〕（民間線上版）</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script>
+if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
+    url = "https://www.moedict.tw/about.html";
+    location.replace(url);
+}
+</script>
 <link href="styles.css" rel="stylesheet"></link>
 </head>
-<body class="ios"><a class="quit" href="#" onclick="history.go(-1); return false;"><img class="info" src="/images/quit.png"></a><center><img style="float: left; margin: 10px 20px" class="logo" src="/images/icon.png" width="30%"></center><div id="result" style="margin: 15px">
-<p>本詞典共收錄十六萬筆國語、一萬六千筆臺語條目，並支援「自動完成」功能及「%_ *? ^.$」等萬用字元。</p>
+<body id="moedict" class="about">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+            <a class="navbar-brand brand ebas" href="./" onclick="
+        if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
+                ">萌典</a>
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                <a href="./" onclick="
+        if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
+                    " title="回到萌典"><span class="ebas iconic-circle">止</span></a>
+                </li>
+            </ul>
+    </div>
+    <a href="./"><img style="float: left; margin: 10px 20px 10px 30px" title="萌典首頁" class="logo" src="icon.png" width="30%"></a>
+    <div class="content">
+<p style="margin-right: 60px"><a href="./">本詞典</a>共收錄十六萬筆國語、一萬六千筆臺語條目，並支援「自動完成」功能及<span style="white-space: nowrap">「%_ *? ^.$」</span>等萬用字元。</p>
 <p>定義裡的每個字詞都可以點擊連到說明。</p>
 <p>源碼、其他平台版本、API 及原始資料等，均可在 <a target="_blank" href="http://3du.tw/">3du.tw</a> 取得。</p>
-<p>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw/">重編國語辭典（修訂本）</a>」及「<a target="_blank" href="http://twblg.dict.edu.tw">臺灣閩南語常用詞辭典</a>」，辭典本文的著作權仍為教育部所有。</p>
-<p>離線版包含下列第三方元件：</p>
+<p>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw/">重編國語辭典（修訂本）</a>」、「<a target="_blank" href="http://twblg.dict.edu.tw">臺灣閩南語常用詞辭典</a>」及「<a target="_blank" href="http://hakka.dict.edu.tw">臺灣客家語常用詞辭典</a>」，辭典本文的著作權仍為教育部所有。</p>
+<p>英/法/德文對照表 <a target="_blank" href="http://cc-cedict.org">CC-CEDict</a>、<a target="_blank" href="http://www.chine-informations.com/chinois/open">CFDict</a>、<a target="_blank" href="http://www.handedict.de/chinesisch_deutsch.php">HanDeDict</a> 採用 CC-BY-SA 3.0 授權。</p>
+<p><a href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe">Android</a> 及 <a href="https://itunes.apple.com/tw/app/meng-dian/id599429224">Apple iOS</a> 離線版包含下列第三方元件：</p>
 <ul>
 <li>jQuery 及 jQuery UI 由 jQuery Foundation 採用 MIT 授權。</li>
 <li>cordova.js 由 Apache 基金會採用 Apache v2 授權。</li>
 <li>Fira Sans 字型由 Mozilla 基金會採用 Apache v2 授權。</li>
 </ul>
 <p>感謝 <a target="_blank" href="http://g0v.tw">#g0v.tw</a> 頻道內所有協助開發的朋友們。</p>
-<h2 style="line-height: 150%" id="cc0-1.0-公眾領域貢獻宣告">CC0 1.0 公眾領域貢獻宣告</h2>
+<h2 style="line-height: 150%; text-rendering: optimizeLegibility; -webkit-font-feature-settings: "zero", "kern";" id="cc0-1.0-公眾領域貢獻宣告">CC0 1.0 公眾領域貢獻宣告</h2>
 <p>作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。</p>
+</div>
