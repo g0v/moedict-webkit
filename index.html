@@ -13,9 +13,9 @@
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
 <script src="js/jquery.hoverIntent.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap/dropdown.js"></script>
+<script src="js/bootstrap/modal.js"></script>
+<script src="js/bootstrap/transition.js"></script>
 <!--[if !IE]>-->
 <script src="js/jgestures.min.js" data-cfasync="true"></script>
 <!--<![endif]-->
@@ -23,20 +23,20 @@
 <script src="main.js" charset="utf-8"></script>
 </head>
 <body id="moedict" class="main" onhashchange="grokHash()">
+    <div class="nav-bg navbar-fixed-top"></div>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <a class="brand ebas" href="./">萌典</a>
-            <ul class="nav">
+            <a class="navbar-brand brand ebas" href="./">萌典</a>
+            <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-book"></i>
                         <span class="lang-active" style="margin: 0; padding: 0;">國語辭典</span>
                         <b class="caret"></b>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="lang-option a" href="#萌">國語辭典</a></li>
-                        <li><a class="lang-option t" href="#!">臺灣閩南語</a></li>
-                        <li><a class="lang-option h" href="#:">臺灣客家語</a></li>
+                    <ul class="dropdown-menu" role="navigation">
+                        <li role="presentation"><a role="menuitem" class="lang-option a" href="#萌">國語辭典</a></li>
+                        <li role="presentation"><a role="menuitem" class="lang-option t" href="#!">臺灣閩南語</a></li>
+                        <li role="presentation"><a role="menuitem" class="lang-option h" href="#:">臺灣客家語</a></li>
                     </ul>
                 </li>
 <!--[if !IE]>-->

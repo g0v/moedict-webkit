@@ -12,19 +12,16 @@ if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
 </head>
 <body id="moedict" class="about">
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <a class="brand ebas" href="./" onclick="
-
+            <a class="navbar-brand brand ebas" href="./" onclick="
         if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
                 ">萌典</a>
-            <ul class="nav pull-right">
+            <ul class="nav navbar-nav pull-right">
                 <li>
                 <a href="./" onclick="
         if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
                     " title="回到萌典"><span class="ebas iconic-circle">止</span></a>
                 </li>
             </ul>
-        </div>
     </div>
     <a href="./"><img style="float: left; margin: 10px 20px 10px 30px" title="萌典首頁" class="logo" src="icon.png" width="30%"></a>
     <div class="content">
@@ -44,7 +41,7 @@ if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
 <p>作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。</p>
 </div>
   <a href="https://github.com/audreyt/moedict-webkit"><img style="z-order: 9999;
-      position: absolute; top: 40px; right: 0; border: 0"
+      position: absolute; top: 50px; right: 0; border: 0"
       src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
   <div style="position: fixed; bottom: 10px; left: 10px"><a target="_blank" href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe"><img alt="Google Play 下載" title="Google Play 下載" src="css/google_play.jpg" width="135" height="46" /></a>
 <a target="_blank" href="https://itunes.apple.com/tw/app/meng-dian/id599429224"><img alt="App Store 下載" title="App Store 下載" src="css/Download_on_the_App_Store_Badge_HK_TW_135x40.png" width="155" height="46" /></a>
