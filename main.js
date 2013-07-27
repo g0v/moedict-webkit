@@ -395,6 +395,14 @@
       if (!isCordova) {
         $('#query').focus();
       }
+      $('body').on('click', '.iconic-circle.stroke', function(){
+        if ($('svg').length) {
+          return $('svg').fadeOut(function(){
+            return $('svg').remove();
+          });
+        }
+        return strokeWords($('h1:first').text());
+      });
       if (!('onhashchange' in window)) {
         $('body').on('click', 'a', function(){
           var val;
@@ -1029,7 +1037,7 @@
   function render(arg$){
     var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
     title = arg$.title, english = arg$.english, heteronyms = arg$.heteronyms, radical = arg$.radical, translation = arg$.translation, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count, py = arg$.pinyin;
-    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span> 畫</div>" : '';
+    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke'>畫</div>" : '';
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
@@ -1238,6 +1246,83 @@
       return it + (tone || '\uFFFD');
     }).replace(/[- ]/g, '').replace(/\uFFFD/g, ' ').replace(/\. ?/g, '。').replace(/\? ?/g, '？').replace(/\! ?/g, '！').replace(/\, ?/g, '，');
   }
+  $(function(){
+    var filterNodes, drawOutline, fetchStrokeXml, strokeWord;
+    filterNodes = function(childNodes){
+      var nodes, i$, len$, n;
+      nodes = [];
+      for (i$ = 0, len$ = childNodes.length; i$ < len$; ++i$) {
+        n = childNodes[i$];
+        if (n.nodeType === 1) {
+          nodes.push(n);
+        }
+      }
+      return nodes;
+    };
+    drawOutline = function(paper, outline, pathAttrs){
+      var path, i$, ref$, len$, node, a;
+      path = [];
+      for (i$ = 0, len$ = (ref$ = outline.childNodes).length; i$ < len$; ++i$) {
+        node = ref$[i$];
+        if (node.nodeType !== 1) {
+          continue;
+        }
+        a = node.attributes;
+        if (!a) {
+          continue;
+        }
+        switch (node.nodeName) {
+        case "MoveTo":
+          path.push(["M", parseFloat(a.x.value), parseFloat(a.y.value)]);
+          break;
+        case "LineTo":
+          path.push(["L", parseFloat(a.x.value), parseFloat(a.y.value)]);
+          break;
+        case "QuadTo":
+          path.push(["Q", parseFloat(a.x1.value), parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value)]);
+        }
+      }
+      return paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0");
+    };
+    fetchStrokeXml = function(code, cb){
+      return $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml");
+    };
+    strokeWord = function(word){
+      var utf8code;
+      utf8code = escape(word).replace(/%u/, "");
+      return fetchStrokeXml(utf8code, function(doc){
+        var paper, color, pathAttrs, timeoutSeconds, delay, i$, ref$, len$, outline, results$ = [];
+        paper = Raphael("result", 204, 204);
+        color = "black";
+        pathAttrs = {
+          stroke: color,
+          "stroke-width": 5,
+          "stroke-linecap": "round",
+          "fill": color
+        };
+        timeoutSeconds = 0;
+        delay = 500;
+        for (i$ = 0, len$ = (ref$ = doc.getElementsByTagName('Outline')).length; i$ < len$; ++i$) {
+          outline = ref$[i$];
+          results$.push((fn$.call(this, outline)));
+        }
+        return results$;
+        function fn$(outline){
+          return setTimeout(function(){
+            return drawOutline(paper, outline, pathAttrs);
+          }, timeoutSeconds += delay);
+        }
+      });
+    };
+    return window.strokeWords = function(words){
+      var i$, ref$, len$, a, results$ = [];
+      for (i$ = 0, len$ = (ref$ = words.split('')).length; i$ < len$; ++i$) {
+        a = ref$[i$];
+        results$.push(strokeWord(a));
+      }
+      return results$;
+    };
+  });
   function in$(x, arr){
     var i = -1, l = arr.length >>> 0;
     while (++i < l) if (x === arr[i] && i in arr) return true;
