@@ -148,7 +148,7 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
-  if (true) {
+  if (isMobile) {
     window.Howl = Howl = (function(){
       Howl.displayName = 'Howl';
       var prototype = Howl.prototype, constructor = Howl;
@@ -235,6 +235,9 @@
         onend: done,
         onloaderror: done,
         onplay: function(){
+          if (isMobile) {
+            return;
+          }
           return $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show();
         }
       });

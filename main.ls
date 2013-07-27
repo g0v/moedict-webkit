@@ -80,7 +80,7 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
-if true
+if isMobile
   class window.Howl
     ({ urls, onplay, onend, onloaderror }) ->
       @el = document.createElement \audio
@@ -116,6 +116,7 @@ window.play-audio = (el, url) ->
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: ->
+      return if isMobile
       $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
