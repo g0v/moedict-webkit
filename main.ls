@@ -730,7 +730,7 @@ $ ->
     stroke.node.setAttribute "class" "fade in"
 
   fetchStrokeXml = (code, cb) ->
-    $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml")
+    $.get((if isCordova then "http://stroke.moedict.tw/" else "utf8/") + code.toLowerCase() + ".xml", cb, "xml")
      .fail -> $('svg').fadeOut \fast -> $('svg').remove!
 
   strokeWord = (word) ->
