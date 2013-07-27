@@ -4,6 +4,7 @@ $experimental-support-for-opera: false;
 $support-for-original-webkit-gradients: false;
 
 // bootstrap
+$screen-small: 1px;
 $baseFontSize: 16px;
 $baseBorderRadius: 0;
 $bodyBackground: hsl(0,3%,95%);
@@ -31,40 +32,12 @@ $primary-color: #6B0000;
  */
 
 // Core variables and mixins
-@import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
-@import "bootstrap/mixins";
+@import "bootstrap/bootstrap";
 
 // CSS Reset
-@import "bootstrap/reset";
 @import "han";
 @import "han.fonts";
-
-// Grid system and page structure
-@import "bootstrap/scaffolding";
-@import "bootstrap/grid";
-@import "bootstrap/layouts";
-
-// Base CSS
-@import "bootstrap/type";
-@import "bootstrap/forms";
-@import "bootstrap/tables";
 @import "font-awesome";
-@import "bootstrap/dropdowns";
-@import "bootstrap/wells";
-@import "bootstrap/component-animations";
-@import "bootstrap/close";
-@import "bootstrap/buttons";
-@import "bootstrap/button-groups";
-@import "bootstrap/alerts"; // Note: alerts share common CSS with buttons and thus have styles in buttons
-@import "bootstrap/navs";
-@import "bootstrap/navbar";
-@import "bootstrap/modals";
-@import "bootstrap/tooltip";
-@import "bootstrap/popovers";
-@import "bootstrap/labels-badges";
-
-// Utility classes
-@import "bootstrap/utilities"; // Has to be last to override when necessary
 
 @font-face {
     font-family: 'Fira Sans OT';
@@ -160,24 +133,28 @@ h1 audio {
 }
 
 body.lang-h {
-    .navbar { background: #070; }
+    .nav-bg { background-color: #070; }
     .iconic-circle { background: #474; }
     #query-box { background-color: #EFFBEF; }
 }
 
 body.lang-t {
-    .navbar { background: #700; }
+    .nav-bg { background-color: #700; }
     .iconic-circle { background: #744; }
     #query-box { background-color: #FBEFEF; }
 }
 
 body.lang-a {
-    .navbar { background: #100; }
+    .nav-bg { background-color: #100; }
     .iconic-circle { background: #400; }
     #query-box { background-color: #F3F0F0; }
 }
 
-.navbar .navbar-inner {
+.nav-bg {
+    height: 50px;
+}
+
+.navbar-inverse {
     @include hidpi('leather', 'jpg');
     border-bottom: 1px solid hsl(3,46%,16%);
     opacity: 0.9;
@@ -193,6 +170,7 @@ body.lang-a {
 
 .iconic-circle {
     border-radius: 18px;
+    background: black;
     color: #fff;
     display: inline-block;
     font-size: 16px;
@@ -298,7 +276,10 @@ body.lang-a {
     font-size: 14pt;
     line-height: 1.5;
     ul, ol {
-        margin-left: 35px;
+        padding-left: 35px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin: 0 !important;
     }
     li {
         line-height: 1.5;
@@ -331,10 +312,6 @@ input.query {
     background-size: 12px;
     background-position: top left;
     opacity: 0.3;
-}
-
-.about {
-    font-family: 'Segoe UI', 'Charis SIL', 'MOEDICT', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
 }
 
 .about .content {
@@ -868,14 +845,15 @@ span {
             left: 0px;
         }
         @include fonts;
-        margin: 0;
+        margin: 0 !important;
+        margin-left: -18px !important;
         margin-top: 5px;
         line-height: 1.35 !important;
-        padding: 0;
+        padding: 0 !important;
     }
     .ol, .definition {
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     .entry {
         border-bottom: none;
@@ -967,6 +945,4 @@ body.lang-t .ui-tooltip .example {
     display: block;
 }
 ul.dropdown-menu {
-    left: 8px;
-    top: 32px;
 }
