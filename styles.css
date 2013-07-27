@@ -7093,6 +7093,10 @@ body.lang-a #query-box {
   color: #1a1a1a;
 }
 
+.cordova .navbar-brand {
+  display: none;
+}
+
 .cordova .back-box {
   position: fixed;
   text-align: center;
@@ -7551,6 +7555,11 @@ body.overflow-scrolling-false .ui-autocomplete {
   }
 }
 @media only screen and (min-width: 768px) {
+  .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 768px) {
   .ui-autocomplete {
     bottom: 52px !important;
   }
@@ -7812,6 +7821,7 @@ body.lang-t .ui-tooltip .example {
   padding: 4px;
   cursor: pointer;
   line-height: 100%;
+  width: 50px;
   display: inline-block;
 }
 
@@ -7833,7 +7843,8 @@ body.lang-t .ui-tooltip .example {
   margin-left: 5px;
   color: #6b0000;
   font-size: 70%;
-  padding: 8px;
+  padding-left: 5px;
+  display: inline-block !important;
   cursor: pointer;
   line-height: 100%;
 }
