@@ -10,7 +10,7 @@ $baseBorderRadius: 0;
 $bodyBackground: hsl(0,3%,95%);
 
 // font-awesome
-$fontAwesomePath: "/fonts";
+$fontAwesomePath: "./fonts";
 
 $grayLight:             #ddd;
 $grayLighter:           #eee;
@@ -39,23 +39,17 @@ $primary-color: #6B0000;
 @import "han.fonts";
 @import "font-awesome";
 
-@font-face {
-    font-family: 'Fira Sans OT';
-    src: url('FiraSansOT-Regular.otf?moedict') format("opentype");
-    src: url('FiraSansOT-Regular.ttf?moedict') format("truetype");
-}
+@include font-face("Fira Sans OT", font-files(
+    "FiraSansOT-Regular.woff", woff
+,   "FiraSansOT-Regular.otf", opentype
+,   "FiraSansOT-Regular.ttf", truetype
+), "FiraSansOT-Regular.eot");
 
-@font-face {
-    font-family: 'MOEDICT';
-    src: url('MOEDICT.otf?moedict') format("opentype");
-    src: url('MOEDICT.ttf?moedict') format("truetype");
-}
-
-@font-face {
-    font-family: 'EBAS';
-    src: url('EBAS-Subset.otf?moedict') format("opentype");
-    src: url('EBAS-Subset.ttf?moedict') format("truetype");
-}
+@include font-face("MOEDICT", font-files(
+    "MOEDICT.woff", woff
+,   "MOEDICT.otf", opentype
+,   "MOEDICT.ttf", truetype
+), "FiraSansOT-Regular.eot");
 
 @mixin fonts {
     font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";

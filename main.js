@@ -1292,7 +1292,7 @@
       }, 0);
     };
     fetchStrokeXml = function(code, cb){
-      return $.get("utf8/" + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
+      return $.get((isCordova ? "http://stroke.moedict.tw/" : "utf8/") + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
         return $('svg').fadeOut('fast', function(){
           return $('svg').remove();
         });
