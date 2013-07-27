@@ -730,15 +730,15 @@ $ ->
   strokeWord = (word) ->
     utf8code = escape(word).replace(/%u/ , "")
     fetchStrokeXml utf8code, (doc) ->
-      paper = Raphael \result 204 210
+      paper = Raphael \result 204 204
       grid-lines = [
-        "M68,0 L68,210"
-        "M136,0 L136,210"
-        "M0,68 L204,70"
-        "M0,136 L204,140"
+        "M68,0 L68,204"
+        "M136,0 L136,204"
+        "M0,68 L204,68"
+        "M0,136 L204,136"
       ]
       for line in grid-lines
-        paper.path line .attr 'stroke-width': 1 stroke: \#a00
+        paper.path line .attr 'stroke-width': 1 stroke: \#a33
 
       color = "black" #hsb(.8, .75, .75)"
       #Raphael.getColor() # skip 1st color
