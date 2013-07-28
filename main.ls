@@ -761,7 +761,7 @@ $ ->
         setTimeout (->
           drawOutline(paper,outline,pathAttrs)
         ), timeout += delay
-      cb timeout
+      cb (timeout + delay)
 
   window.strokeWords = (words) ->
     $('#strokes').html('').show!
