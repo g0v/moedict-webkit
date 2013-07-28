@@ -262,7 +262,7 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
-    title -= /^!/
+    title -= /^[:!]/
     return if title is /^</
     $ \#query .val title
     $ \#cond .val "^#{title}$" unless isCordova
@@ -310,7 +310,9 @@ window.do-load = ->
     $(\.erase).hide!
 
   window.do-lookup = do-lookup = (val) ->
+    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length
     title = val - /[（(].*/
+    strokeWords title if location.search is /draw/
     Index = INDEX[LANG]
     if isCordova or not Index
       return if title is /object/
@@ -365,7 +367,6 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
-    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
