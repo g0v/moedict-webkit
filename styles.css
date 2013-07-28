@@ -7891,7 +7891,7 @@ svg {
 .iconic-circle.stroke {
   width: 28px;
   height: 24px;
-  padding: 2px;
+  padding: 4px;
   cursor: pointer !important;
 }
 .iconic-circle.stroke:hover {
