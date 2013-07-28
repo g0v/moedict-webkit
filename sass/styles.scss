@@ -854,10 +854,10 @@ span {
 @media only screen and (max-width: 767px) {
     .entry-item {
         @include clearfix;
-        span.part-of-speech, ol {
+        >span.part-of-speech, >ol {
             float: left;
         }
-        ol {
+        >ol {
             padding-top: 0px;
         }
     }
