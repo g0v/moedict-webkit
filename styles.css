@@ -7759,10 +7759,10 @@ span a {
   .entry-item:after {
     clear: both;
   }
-  .entry-item span.part-of-speech, .entry-item ol {
+  .entry-item > span.part-of-speech, .entry-item > ol {
     float: left;
   }
-  .entry-item ol {
+  .entry-item > ol {
     padding-top: 0px;
   }
 }
