@@ -400,8 +400,8 @@
       }
       $('body').on('click', '.iconic-circle.stroke', function(){
         if ($('svg').length) {
-          return $('svg').fadeOut(function(){
-            return $('svg').remove();
+          return $('#strokes').fadeOut(function(){
+            return $('#strokes').html('');
           });
         }
         return strokeWords($('h1:first').text());
@@ -659,6 +659,11 @@
     };
     setHtml = function(html){
       return callLater(function(){
+        if ($('svg').length) {
+          $('#strokes').fadeOut(function(){
+            return $('#strokes').html('');
+          });
+        }
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
@@ -1040,7 +1045,7 @@
   function render(arg$){
     var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
     title = arg$.title, english = arg$.english, heteronyms = arg$.heteronyms, radical = arg$.radical, translation = arg$.translation, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count, py = arg$.pinyin;
-    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke'>畫</div>" : '';
+    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke'>畫</span></div>" : "<div class='radical'><span class='iconic-circle stroke'>畫</span></div>";
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
@@ -1291,17 +1296,28 @@
         return stroke.node.setAttribute("class", "fade in");
       }, 0);
     };
-    fetchStrokeXml = function(code, cb){
+    fetchStrokeXml = function(code, next, cb){
       return $.get((isCordova ? "http://stroke.moedict.tw/" : "utf8/") + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
-        return $('svg').fadeOut('fast', function(){
-          return $('svg').remove();
+        return $('svg:last').fadeOut('fast', function(){
+          $('svg:last').remove();
+          return next();
         });
       });
     };
-    strokeWord = function(word){
-      var utf8code, paper, gridLines, i$, len$, line;
+    strokeWord = function(word, cb, timeout){
+      var utf8code, id, div, paper, gridLines, i$, len$, line;
+      if (!$('#strokes').is(':visible')) {
+        return;
+      }
       utf8code = escape(word).replace(/%u/, "");
-      paper = Raphael('result', 204, 204);
+      id = "stroke-" + ((Math.random() + "").replace(/^../, ''));
+      div = $('<div/>', {
+        id: id,
+        css: {
+          display: 'inline-block'
+        }
+      }).appendTo($('#strokes'));
+      paper = Raphael(id, 204, 204);
       gridLines = ["M68,0 L68,204", "M136,0 L136,204", "M0,68 L204,68", "M0,136 L204,136"];
       for (i$ = 0, len$ = gridLines.length; i$ < len$; ++i$) {
         line = gridLines[i$];
@@ -1310,8 +1326,10 @@
           stroke: '#a33'
         });
       }
-      return fetchStrokeXml(utf8code, function(doc){
-        var color, pathAttrs, timeoutSeconds, delay, i$, ref$, len$, outline, results$ = [];
+      return fetchStrokeXml(utf8code, function(){
+        return cb(timeout);
+      }, function(doc){
+        var color, pathAttrs, delay, i$, ref$, len$, outline;
         window.scrollTo(0, 0);
         color = "black";
         pathAttrs = {
@@ -1320,27 +1338,29 @@
           "stroke-linecap": "round",
           "fill": color
         };
-        timeoutSeconds = 0;
         delay = 500;
         for (i$ = 0, len$ = (ref$ = doc.getElementsByTagName('Outline')).length; i$ < len$; ++i$) {
           outline = ref$[i$];
-          results$.push((fn$.call(this, outline)));
+          (fn$.call(this, outline));
         }
-        return results$;
+        return cb(timeout);
         function fn$(outline){
-          return setTimeout(function(){
+          setTimeout(function(){
             return drawOutline(paper, outline, pathAttrs);
-          }, timeoutSeconds += delay);
+          }, timeout += delay);
         }
       });
     };
     return window.strokeWords = function(words){
-      var i$, ref$, len$, a, results$ = [];
-      for (i$ = 0, len$ = (ref$ = words.split('')).length; i$ < len$; ++i$) {
-        a = ref$[i$];
-        results$.push(strokeWord(a));
-      }
-      return results$;
+      var ws, step;
+      $('#strokes').html('').show();
+      ws = words.split('');
+      step = function(it){
+        if (ws.length) {
+          return strokeWord(ws.shift(), step, it);
+        }
+      };
+      return step(0);
     };
   });
   function in$(x, arr){
