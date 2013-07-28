@@ -310,7 +310,6 @@ window.do-load = ->
     $(\.erase).hide!
 
   window.do-lookup = do-lookup = (val) ->
-    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length
     title = val - /[（(].*/
     if location.search is /draw/ and not $('body').hasClass('autodraw')
       $('body').addClass \autodraw
@@ -369,6 +368,7 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
+    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length and not $('body').hasClass('autodraw')
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!

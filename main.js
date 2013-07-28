@@ -567,11 +567,6 @@
     };
     window.doLookup = doLookup = function(val){
       var title, Index, id, hist;
-      if ($('svg').length) {
-        $('#strokes').fadeOut(function(){
-          return $('#strokes').html('');
-        });
-      }
       title = replace$.call(val, /[（(].*/, '');
       if (/draw/.exec(location.search) && !$('body').hasClass('autodraw')) {
         $('body').addClass('autodraw');
@@ -668,6 +663,11 @@
     };
     setHtml = function(html){
       return callLater(function(){
+        if ($('svg').length && !$('body').hasClass('autodraw')) {
+          $('#strokes').fadeOut(function(){
+            return $('#strokes').html('');
+          });
+        }
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
