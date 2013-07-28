@@ -401,7 +401,8 @@
       $('body').on('click', '.iconic-circle.stroke', function(){
         if ($('svg').length) {
           return $('#strokes').fadeOut(function(){
-            return $('#strokes').html('');
+            $('#strokes').html('');
+            return window.scrollTo(0, 0);
           });
         }
         return strokeWords($('h1:first').text());
@@ -665,7 +666,8 @@
       return callLater(function(){
         if ($('svg').length && !$('body').hasClass('autodraw')) {
           $('#strokes').fadeOut(function(){
-            return $('#strokes').html('');
+            $('#strokes').html('');
+            return window.scrollTo(0, 0);
           });
         }
         $('#result').html(html);
@@ -1313,6 +1315,7 @@
       if (!$('#strokes').is(':visible')) {
         return;
       }
+      window.scrollTo(0, 0);
       utf8code = escape(word).replace(/%u/, "");
       id = "stroke-" + ((Math.random() + "").replace(/^../, ''));
       div = $('<div/>', {

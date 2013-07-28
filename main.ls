@@ -211,7 +211,7 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     $ \body .on \click \.iconic-circle.stroke ->
-      return ($('#strokes').fadeOut -> $('#strokes').html('')) if $('svg').length
+      return ($('#strokes').fadeOut -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length
       strokeWords $('h1:first').text!
 
     unless ``('onhashchange' in window)``
@@ -368,7 +368,7 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
-    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length and not $('body').hasClass('autodraw')
+    $('#strokes').fadeOut(-> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length and not $('body').hasClass('autodraw')
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -740,6 +740,7 @@ $ ->
 
   strokeWord = (word, cb, timeout) ->
     return unless $('#strokes').is \:visible
+    window.scroll-to 0 0
     utf8code = escape(word).replace(/%u/ , "")
     id = "stroke-#{ "#{Math.random!}" - /^../ }"
     div = $('<div/>', { id, css: { display: \inline-block } }).appendTo $('#strokes')
