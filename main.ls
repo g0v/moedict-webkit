@@ -616,7 +616,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
           }<span class='bpmf'>#{ h bopomofo }</span></div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
-        """<div>
+        """<div class="entry-item">
         #{ if defs.0?type
           [ "<span class='part-of-speech'>#t</span>" for t in defs.0.type / \, ] * '&nbsp;'
         else '' }
