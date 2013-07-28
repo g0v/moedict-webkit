@@ -806,6 +806,9 @@ body.lang-t .example, body.lang-h .example {
     .part-of-speech {
         margin-right: 5px;
     }
+    span:first-child {
+        background-color: #006b00;
+    }
 }
 
 .link {
