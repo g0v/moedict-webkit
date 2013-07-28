@@ -779,7 +779,7 @@
           if (!hasXrefs++) {
             html += '<div class="xrefs">';
           }
-          html += "<div class=\"xref-line\">\n    <span class='xref'><span class='part-of-speech'>" + XREFLABELOF[tgtLang] + "</span>";
+          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + XREFLABELOF[tgtLang] + "</span>\n    <span class='xref'>";
           html += (fn$()).join('、');
           html += '</span></div>';
         }

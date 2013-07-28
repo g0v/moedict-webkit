@@ -437,9 +437,10 @@ window.do-load = ->
       html += '<div class="xrefs">' unless has-xrefs++
       html += """
           <div class="xref-line">
-              <span class='xref'><span class='part-of-speech'>#{
+              <span class='xref part-of-speech'>#{
                 XREF-LABEL-OF[tgt-lang]
               }</span>
+              <span class='xref'>
       """
       html += (for word in words
         h = HASH-OF[tgt-lang]
