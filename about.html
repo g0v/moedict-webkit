@@ -15,7 +15,17 @@ if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
             <a class="navbar-brand brand ebas" href="./" onclick="
         if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
                 ">萌典</a>
+            <ul class="nav navbar-nav">
+                <li><a href="https://twitter.com/moedict"
+                    target="_blank" title="萌典 Twitter"><i
+                        class="icon-twitter-sign"></i></a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe" target="_blank" title="Google Play 下載"><i class="icon-android"></i></a></li>
+                <li><a href="https://itunes.apple.com/tw/app/meng-dian/id599429224" target="_blank" title="App Store 下載"><i class="icon-apple"></i></a></li>
+</ul>
             <ul class="nav navbar-nav pull-right">
+                <li><a href="https://twitter.com/moedict"
+                    target="_blank" title="g0v.tw 零時政府">
+                    <img src="http://g0v.tw/imgs/g0v-icon-invert.png" /></a></li>
                 <li>
                 <a href="./" onclick="
         if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
@@ -29,6 +39,7 @@ if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
 <p>定義裡的每個字詞都可以點擊連到說明。</p>
 <p>源碼、其他平台版本、API 及原始資料等，均可在 <a target="_blank" href="http://3du.tw/">3du.tw</a> 取得。</p>
 <p>原始資料來源為教育部「<a target="_blank" href="http://dict.revised.moe.edu.tw/">重編國語辭典（修訂本）</a>」、「<a target="_blank" href="http://twblg.dict.edu.tw">臺灣閩南語常用詞辭典</a>」及「<a target="_blank" href="http://hakka.dict.edu.tw">臺灣客家語常用詞辭典</a>」，辭典本文的著作權仍為教育部所有。</p>
+<p>筆劃資料來源為教育部「<a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/">常用國字標準字體筆順學習網</a>」，國語發音資料來源為教育部「<a target="_blank" href="http://dict.concised.moe.edu.tw/">國語辭典簡編本多媒體網路版</a>」，著作權仍為教育部所有。</p>
 <p>英/法/德文對照表 <a target="_blank" href="http://cc-cedict.org">CC-CEDict</a>、<a target="_blank" href="http://www.chine-informations.com/chinois/open">CFDict</a>、<a target="_blank" href="http://www.handedict.de/chinesisch_deutsch.php">HanDeDict</a> 採用 CC-BY-SA 3.0 授權。</p>
 <p><a href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe">Android</a> 及 <a href="https://itunes.apple.com/tw/app/meng-dian/id599429224">Apple iOS</a> 離線版包含下列第三方元件：</p>
 <ul>
@@ -37,11 +48,13 @@ if (/http:\/\/(?:www.)?moedict.tw/i.test(document.URL)) {
 <li>Fira Sans 字型由 Mozilla 基金會採用 Apache v2 授權。</li>
 </ul>
 <p>感謝 <a target="_blank" href="http://g0v.tw">#g0v.tw</a> 頻道內所有協助開發的朋友們。</p>
-<h2 style="line-height: 150%; text-rendering: optimizeSpeed" id="cc0-1.0-公眾領域貢獻宣告">CC0 1.0 公眾領域貢獻宣告</h2>
+<h2 class="cc0" id="cc0-1.0-公眾領域貢獻宣告">CC0 1.0 公眾領域貢獻宣告</h2>
 <p>作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。</p>
 </div>
   <a href="https://github.com/audreyt/moedict-webkit"><img style="z-order: 9999;
       position: absolute; top: 50px; right: 0; border: 0"
       src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<div class="cc0">
   <div style="position: fixed; bottom: 10px; left: 10px"><a target="_blank" href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe"><img alt="Google Play 下載" title="Google Play 下載" src="css/google_play.jpg" width="135" height="46" /></a>
 <a target="_blank" href="https://itunes.apple.com/tw/app/meng-dian/id599429224"><img alt="App Store 下載" title="App Store 下載" src="css/Download_on_the_App_Store_Badge_HK_TW_135x40.png" width="155" height="46" /></a>
+</div>
