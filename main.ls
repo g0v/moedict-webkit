@@ -312,7 +312,9 @@ window.do-load = ->
   window.do-lookup = do-lookup = (val) ->
     $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length
     title = val - /[（(].*/
-    strokeWords title if location.search is /draw/
+    if location.search is /draw/ and not $('body').hasClass('autodraw')
+      $('body').addClass \autodraw
+      strokeWords title
     Index = INDEX[LANG]
     if isCordova or not Index
       return if title is /object/
