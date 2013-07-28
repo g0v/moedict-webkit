@@ -43,13 +43,14 @@ try {
       'txt': 'text/plain; charset=utf-8',
       'svg': 'image/svg+xml',
       'ttf': 'application/x-font-ttf',
+      'woff': 'application/font-woff',
       'apk': 'application/vnd.android.package-archive'
     };
     return {
       lookup: function (ext) {
         ext = ext.trim();
         if (ext[0] === '.') ext = ext.slice(1);
-        return CONTENT_TYPES[ext] || 'application/octec-stream';
+        return CONTENT_TYPES[ext] || 'application/octet-stream';
       }
     }
   })();
