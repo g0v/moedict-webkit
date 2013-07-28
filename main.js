@@ -1347,7 +1347,7 @@
           outline = ref$[i$];
           (fn$.call(this, outline));
         }
-        return cb(timeout);
+        return cb(timeout + delay);
         function fn$(outline){
           setTimeout(function(){
             return drawOutline(paper, outline, pathAttrs);
