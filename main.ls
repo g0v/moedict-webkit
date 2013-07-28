@@ -211,7 +211,7 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     $ \body .on \click \.iconic-circle.stroke ->
-      return ($('svg').fadeOut -> $('svg').remove!) if $('svg').length
+      return ($('#strokes').fadeOut -> $('#strokes').html('')) if $('svg').length
       strokeWords $('h1:first').text!
 
     unless ``('onhashchange' in window)``
@@ -365,6 +365,7 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
+    $('#strokes').fadeOut(-> $('#strokes').html('')) if $('svg').length
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -580,7 +581,7 @@ function can-play-ogg
 function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py})
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
-  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke'>畫</div>" else ''
+  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke'>畫</span></div>" else "<div class='radical'><span class='iconic-circle stroke'>畫</span></div>"
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
@@ -729,13 +730,16 @@ $ ->
     <- setTimeout _, 0ms
     stroke.node.setAttribute "class" "fade in"
 
-  fetchStrokeXml = (code, cb) ->
+  fetchStrokeXml = (code, next, cb) ->
     $.get((if isCordova then "http://stroke.moedict.tw/" else "utf8/") + code.toLowerCase() + ".xml", cb, "xml")
-     .fail -> $('svg').fadeOut \fast -> $('svg').remove!
+     .fail -> $('svg:last').fadeOut \fast -> $('svg:last').remove!; next!
 
-  strokeWord = (word) ->
+  strokeWord = (word, cb, timeout) ->
+    return unless $('#strokes').is \:visible
     utf8code = escape(word).replace(/%u/ , "")
-    paper = Raphael \result 204 204
+    id = "stroke-#{ "#{Math.random!}" - /^../ }"
+    div = $('<div/>', { id, css: { display: \inline-block } }).appendTo $('#strokes')
+    paper = Raphael id, 204 204
     grid-lines = [
       "M68,0 L68,204"
       "M136,0 L136,204"
@@ -745,15 +749,19 @@ $ ->
     for line in grid-lines
       paper.path line .attr 'stroke-width': 1 stroke: \#a33
 
-    fetchStrokeXml utf8code, (doc) ->
+    fetchStrokeXml utf8code, (-> cb timeout), (doc) ->
       window.scroll-to 0 0
       color = "black"
       pathAttrs = { stroke: color, "stroke-width": 5, "stroke-linecap": "round", "fill": color }
-      timeoutSeconds = 0
       delay = 500ms
       for outline in doc.getElementsByTagName 'Outline' => let
         setTimeout (->
           drawOutline(paper,outline,pathAttrs)
-        ), timeoutSeconds += delay
+        ), timeout += delay
+      cb timeout
 
-  window.strokeWords = (words) -> for a in words.split '' => strokeWord(a)
+  window.strokeWords = (words) ->
+    $('#strokes').html('').show!
+    ws = words.split ''
+    step = -> strokeWord(ws.shift!, step, it) if ws.length
+    step 0
