@@ -7360,15 +7360,19 @@ body#moedict.overflow-scrolling-false.lang-t .pinyin {
 }
 body#moedict.lang-t .pinyin {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
+  -webkit-font-feature-settings: "liga", "dlig", "kern" on;
 }
 
 .english {
   word-break: normal !important;
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
+  -webkit-font-feature-settings: "liga", "dlig", "kern" on;
   font-weight: normal;
   font-size: 90%;
   margin-left: 5px;
@@ -7378,8 +7382,10 @@ body#moedict.lang-t .pinyin {
 .pinyin {
   word-break: normal !important;
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
+  -webkit-font-feature-settings: "liga", "dlig", "kern" on;
   display: inline-block;
 }
 
@@ -7473,8 +7479,10 @@ span .tone {
 
 .fw_def {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
+  -webkit-font-feature-settings: "liga", "dlig", "kern" on;
 }
 
 img.logo {
@@ -7653,8 +7661,10 @@ body.lang-a.web #lookback {
 
 body.lang-h .bopomofo {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
+  -webkit-font-feature-settings: "liga", "dlig", "kern" on;
 }
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
