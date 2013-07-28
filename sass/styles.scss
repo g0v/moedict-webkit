@@ -848,6 +848,18 @@ span {
     border-bottom: 1px ridge #dddddd;
 }
 
+@media only screen and (max-width: 767px) {
+    .entry-item {
+        @include clearfix;
+        span.part-of-speech, ol {
+            float: left;
+        }
+        ol {
+            padding-top: 0px;
+        }
+    }
+}
+
 .ui-tooltip {
     @include fonts;
     background: #fffcfc !important;
@@ -986,7 +998,7 @@ svg {
 .iconic-circle.stroke {
     width: 28px;
     height: 24px;
-    padding: 2px;
+    padding: 4px;
     cursor: pointer !important;
     &:hover {
         background: #888 !important;
