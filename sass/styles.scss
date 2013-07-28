@@ -979,6 +979,9 @@ ul.dropdown-menu {
 
 svg {
     border: 2px solid #a00;
+    background: white;
+    margin-left: 5px;
+    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
 }
 .iconic-circle.stroke {
     width: 28px;
