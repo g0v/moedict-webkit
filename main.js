@@ -573,7 +573,8 @@
         });
       }
       title = replace$.call(val, /[（(].*/, '');
-      if (/draw/.exec(location.search)) {
+      if (/draw/.exec(location.search) && !$('body').hasClass('autodraw')) {
+        $('body').addClass('autodraw');
         strokeWords(title);
       }
       Index = INDEX[LANG];
