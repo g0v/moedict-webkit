@@ -1074,7 +1074,7 @@
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = "http://t.moedict.tw/" + basename + ".ogg")
         : LANG === 'a' && (mp3 = "http://a.moedict.tw/" + audio_id + ".ogg"), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
-        return "<div>\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
+        return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = split$.call(defs[0].type, ',')).length; i$ < len$; ++i$) {
             t = ref$[i$];
