@@ -653,6 +653,9 @@ input.back {
 }
 
 body.overflow-scrolling-false {
+    .bpmf, input, button, select, textarea, .ui-widget, .results {
+        font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
+    }
     .navbar-fixed-top, .erase-box, #query-box, .back-box {
         position: absolute !important;
     }
@@ -661,6 +664,15 @@ body.overflow-scrolling-false {
         font-feature-settings: normal !important;
         -moz-font-feature-settings: normal !important;
         -webkit-font-feature-settings: normal !important;
+    }
+}
+
+body.overflow-scrolling-true {
+    .pinyin, .english, .fw_def, .bopomofo, .cc0 {
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "liga", "dlig", "kern" on;
+        -moz-font-feature-settings: "liga", "dlig", "kern" on;
+        -webkit-font-feature-settings: "liga", "dlig", "kern" on;
     }
 }
 
