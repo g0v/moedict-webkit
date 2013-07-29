@@ -573,6 +573,9 @@
       if (!it) {
         return;
       }
+      if (prevId === it) {
+        return;
+      }
       prevId = it;
       prevVal = it;
       setPref('prev-id', prevId);

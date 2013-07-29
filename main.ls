@@ -330,6 +330,7 @@ window.do-load = ->
   htmlCache = { t:[], a:[], h:[] }
   fetch = ->
     return unless it
+    return if prevId is it
     prevId := it
     prevVal := it
     setPref \prev-id prevId
