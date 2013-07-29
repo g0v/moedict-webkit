@@ -205,6 +205,7 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     $ \body .on \click \.iconic-circle.stroke ->
+      return if $ \body .hasClass \overflow-scrolling-false
       return ($('#strokes').fadeOut -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length
       strokeWords $('h1:first').text!
 
