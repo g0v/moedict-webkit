@@ -58,12 +58,6 @@ public class MoeActivity extends DroidGap {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-	    case R.id.small:
-	        this.appView.sendJavascript("window.adjustFontSize(-1)");
-	        return true;
-	    case R.id.large:
-	        this.appView.sendJavascript("window.adjustFontSize(+1)");
-	        return true;
             case R.id.info:
                 this.appView.sendJavascript("window.showInfo()");
                 return true;

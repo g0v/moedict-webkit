@@ -199,14 +199,10 @@
         urls.push(url.replace(/ogg$/, 'mp3'));
       }
       audio = new window.Howl({
-        buffer: true,
         urls: urls,
         onend: done,
         onloaderror: done,
         onplay: function(){
-          if (isMobile) {
-            return;
-          }
           return $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show();
         }
       });
@@ -216,7 +212,7 @@
     if (window.Howl) {
       return play();
     }
-    return $.getScript('js/howler.min.js', function(){
+    return $.getScript('js/howler.js', function(){
       return play();
     });
   };
@@ -271,26 +267,27 @@
     $('body').bind('pinch', function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      return $('body').css('font-size', Math.max(14, Math.min(42, scale * fontSize)) + 'pt');
+      return $('body').css('font-size', Math.max(10, Math.min(42, scale * fontSize)) + 'pt');
     });
     saveFontSize = function(arg$, arg1$){
       var scale;
       scale = arg1$.scale;
-      setPref('font-size', fontSize = Math.max(14, Math.min(42, scale * fontSize)));
+      setPref('font-size', fontSize = Math.max(10, Math.min(42, scale * fontSize)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     $('body').bind('pinchclose', saveFontSize);
     $('body').bind('pinchopen', saveFontSize);
     window.adjustFontSize = function(offset){
-      setPref('font-size', fontSize = Math.max(14, Math.min(42, fontSize + offset)));
+      setPref('font-size', fontSize = Math.max(10, Math.min(42, fontSize + offset)));
       return $('body').css('font-size', fontSize + 'pt');
     };
     window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
       if (!isDroidGap) {
-        return location.href = 'about.html';
+        location.href = 'about.html';
       }
+      return showInfo();
     };
     window.pressErase = pressErase = function(){
       $('#query').val('').focus();
@@ -335,6 +332,9 @@
       }, false);
     } catch (e$) {}
     window.pressQuit = function(){
+      if (player != null) {
+        player.unload();
+      }
       return callLater(function(){
         return navigator.app.exitApp();
       });
@@ -631,7 +631,9 @@
         cacheLoading = false;
         if (isCordova && !DEBUGGING) {
           $('#result .playAudio').on('touchstart', function(){
-            return $(this).click();
+            if ($(this).hasClass('icon-play')) {
+              return $(this).click();
+            }
           });
           return;
         }

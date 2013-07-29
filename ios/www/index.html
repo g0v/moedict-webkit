@@ -70,7 +70,7 @@
                 <span id="loading">
                 </span>
                 <br /><br />
-                <img class="logo" title="〔萌典〕" src="/images/icon.png" width="100">
+                <img class="logo" title="〔萌典〕" src="images/icon.png" width="100">
                 <br /><br />
                 <span id="F9868" style="font-family: 'MOEDICT'; margin-botom: 40px">
                 </span>
@@ -78,16 +78,18 @@
         </div>
     </div>
     <div id="query-box" class="query-box">
-        <input id="query" type="search" class="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞。" />
+        <input id="query" type="search" class="query" style="display: none" autofocus autocomplete="off" placeholder="請輸入欲查詢的字詞" />
     </div>
     <a class="back-box cordova-only" href="#" onclick="pressBack(); return false">
         <i class="icon-chevron-left" style="color: #6B0000"></i>
+    </a>
+    <a class="erase-box mobile-only" href="#" onclick="pressErase(); return false">
+        <i class="icon-remove-sign" style="color: #c0c0c0" title="清除搜尋框"></i>
     </a>
 <!-- <a class="down" href="#" onclick="pressDown(); return false"><img
     title="切換搜尋列位置" class="down" src="down.png" /></a> -->
 <!--
 <a class="info" href="#" onclick="pressAbout(); return false"><img title="關於本站" class="info" src="info.png" /></a>
-<a class="erase" href="#" onclick="pressErase(); return false"><img title="清除搜尋框" class="erase" src="erase.png" /></a>
 <a class="lang" href="#" onclick="pressLang(); return false"><img title="切換語言" class="lang" src="lang.png" /></a>
 -->
 <div id="moe" style="display: none"></div>
