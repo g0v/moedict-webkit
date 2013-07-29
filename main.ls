@@ -177,8 +177,7 @@ window.do-load = ->
     location.href = \about.html unless isDroidGap
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
-    $ \.lang .show!
-    $ \.erase .hide!
+    $ \.erase-box .hide!
   window.press-back = press-back = ->
     player?stop!
     if isDroidGap and not(
@@ -303,11 +302,9 @@ window.do-load = ->
 
   lookup = ->
     if $(\#query).val!
-      $(\.erase).show!
-      $(\.lang).hide!
+      $(\.erase-box).show!
       return do-lookup b2g that
-    $(\.lang).show!
-    $(\.erase).hide!
+    $(\.erase-box).hide!
 
   window.do-lookup = do-lookup = (val) ->
     title = val - /[（(].*/
