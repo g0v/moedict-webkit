@@ -7683,11 +7683,28 @@ body.lang-a #query-box {
   display: none;
 }
 
+.erase-box {
+  position: fixed;
+  right: 0px;
+  top: 62px;
+  width: 40px;
+  z-index: 50;
+  font-size: 19px;
+}
+
+@media only screen and (min-width: 768px) {
+  .erase-box {
+    top: 72px;
+    right: auto;
+    left: 215px;
+    width: 24px;
+  }
+}
 .cordova .back-box {
   position: fixed;
   text-align: center;
   left: 0px;
-  top: 64px;
+  top: 62px;
   width: 40px;
   z-index: 50;
   font-size: 19px;
@@ -7802,6 +7819,7 @@ input.query {
   font-size: 1.2em;
   width: 100%;
   height: 1.8em;
+  padding-right: 24px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -7811,18 +7829,6 @@ input.query {
   /* select all "X" buttons in search inputs */
   -webkit-appearance: none;
   /* hide the default "X" button */
-}
-
-::-webkit-search-cancel-button:after {
-  content: '';
-  display: block;
-  width: 15px;
-  height: 12px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAABSAQMAAAD94hHYAAAABlBMVEUAAACXl5cNUA2AAAAAAnRSTlP9B0nlx2sAAABxSURBVHhe7dK9DYYgFIXhYywsGYFRHA3djMRFGIGS4gb0XoRg4s9XfRVvcfIMcJCOnKwVLzCN52pAFxOgxISzySIUj1f7Ow/PTm5O3JB+9ha1L15JOfN/d3fLDz++qpkxW7EpG9KrffbIDo0pe2LX7A7qXBSslhfN8AAAAABJRU5ErkJggg==);
-  background-repeat: no-repeat;
-  background-size: 12px;
-  background-position: top left;
-  opacity: 0.3;
 }
 
 .about .content {
@@ -8082,6 +8088,10 @@ img.quit {
   display: none !important;
   right: -999px !important;
   bottom: -999px !important;
+}
+
+.desktop .mobile-only {
+  display: none !important;
 }
 
 .cordova-only {
