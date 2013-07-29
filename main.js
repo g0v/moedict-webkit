@@ -260,6 +260,7 @@
       $('body').addClass('overflow-scrolling-false');
       $('body').addClass("prefer-down-false");
     } else {
+      $('body').addClass('overflow-scrolling-true');
       $('body').addClass("prefer-down-false");
     }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
