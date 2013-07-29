@@ -117,13 +117,13 @@ window.play-audio = (el, url) ->
     $(el).parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: ->
+    audio = new window.Howl { urls, onend: done, onloaderror: done, onplay: ->
       $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
   return play! if window.Howl
-  <- $.getScript \js/howler.min.js
+  <- $.getScript \js/howler.js
   return play!
 
 window.show-info = ->
@@ -153,20 +153,21 @@ window.do-load = ->
 
   fontSize = getPref(\font-size) || 14
   $('body').bind \pinch (, {scale}) ->
-    $('body').css('font-size', Math.max(14, Math.min(42, (scale * fontSize))) + 'pt')
+    $('body').css('font-size', Math.max(10, Math.min(42, (scale * fontSize))) + 'pt')
   saveFontSize = (, {scale}) ->
-    setPref \font-size fontSize := Math.max(14, Math.min(42, (scale * fontSize)))
+    setPref \font-size fontSize := Math.max(10, Math.min(42, (scale * fontSize)))
     $('body').css('font-size', fontSize + 'pt')
   $('body').bind \pinchclose saveFontSize
   $('body').bind \pinchopen saveFontSize
   window.adjust-font-size = (offset) ->
-    setPref \font-size fontSize := Math.max(14, Math.min(42, (fontSize + offset)))
+    setPref \font-size fontSize := Math.max(10, Math.min(42, (fontSize + offset)))
     $('body').css('font-size', fontSize + 'pt')
   window.adjust-font-size 0
 
   cache-loading = no
   window.press-about = press-about = ->
     location.href = \about.html unless isDroidGap
+    show-info!
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
     $ \.erase-box .hide!
@@ -367,7 +368,7 @@ window.do-load = ->
     cache-loading := no
 
     if isCordova and not DEBUGGING
-      $('#result .playAudio').on \touchstart -> $(@).click!
+      $('#result .playAudio').on \touchstart -> $(@).click! if $(@).hasClass('icon-play')
       return
 
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
