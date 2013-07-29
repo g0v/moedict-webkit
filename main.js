@@ -356,6 +356,9 @@
         $('#query').focus();
       }
       $('body').on('click', '.iconic-circle.stroke', function(){
+        if ($('body').hasClass('overflow-scrolling-false')) {
+          return;
+        }
         if ($('svg').length) {
           return $('#strokes').fadeOut(function(){
             $('#strokes').html('');
