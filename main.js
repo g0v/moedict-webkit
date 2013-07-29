@@ -285,10 +285,11 @@
     window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
-      if (!isDroidGap) {
-        location.href = 'about.html';
+      if (isDroidGap) {
+        return showInfo();
+      } else {
+        return location.href = 'about.html';
       }
-      return showInfo();
     };
     window.pressErase = pressErase = function(){
       $('#query').val('').focus();
