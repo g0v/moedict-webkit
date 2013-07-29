@@ -8128,7 +8128,13 @@ input.back {
   height: 60px;
 }
 
-body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box, body.overflow-scrolling-false .query-box input {
+@media only screen and (max-width: 767px) {
+  body.overflow-scrolling-false .query-box input {
+    position: absolute !important;
+    top: 18px !important;
+  }
+}
+body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
   position: absolute !important;
 }
 body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0 {

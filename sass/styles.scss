@@ -645,8 +645,15 @@ input.back {
     height: 60px;
 }
 
+@media only screen and (max-width: 767px) {
+    body.overflow-scrolling-false .query-box input {
+        position: absolute !important;
+        top: 18px !important;
+    }
+}
+
 body.overflow-scrolling-false {
-    .navbar-fixed-top, .erase-box, #query-box, .back-box, .query-box input {
+    .navbar-fixed-top, .erase-box, #query-box, .back-box {
         position: absolute !important;
     }
     .pinyin, .english, .fw_def, .bopomofo, .cc0 {
