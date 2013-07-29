@@ -57,7 +57,7 @@ try
     isDeviceReady := yes
     window.do-load!
   ), false
-  document.addEventListener \pause (-> player?stop!), false
+  document.addEventListener \pause (-> player?unload!), false
 catch
   <- $
   $ \#F9868 .html '&#xF9868;'
@@ -80,6 +80,7 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
 
+/*
 if isMobile
   class window.Howl
     ({ urls, onplay, onend, onloaderror }) ->
@@ -88,12 +89,13 @@ if isMobile
       @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
       @el.set-attribute \autoplay true
       @el.set-attribute \controls true
-      @el.add-event-listener \playing ~> onplay!; @destroy!
-      @el.add-event-listener \error ~> onloaderror!; @destroy!
-      @el.add-event-listener \ended ~> onend!; @destroy!
+      @el.add-event-listener \playing ~> onplay!; @unload!
+      @el.add-event-listener \error ~> onloaderror!; @unload!
+      @el.add-event-listener \ended ~> onend!; @unload!
     play: -> @el.play!
-    stop: -> @el?pause!; @el?currentTime = 0.0; @destroy!
-    destroy: -> try $(@el).remove!; @el = null
+    stop: -> @el?pause?!; @el?currentTime = 0.0; @unload!
+    unload: -> try $(@el).remove!; @el = null
+  */
 
 var playing, player
 window.play-audio = (el, url) ->
@@ -105,9 +107,9 @@ window.play-audio = (el, url) ->
     $(el).addClass('icon-play') unless $(el).hasClass('part-of-speech')
   play = ->
     if playing is url
-      if $(el).hasClass('icon-stop') => player?stop!; done!
+      if $(el).hasClass('icon-stop') => player?unload!; done!
       return
-    player?stop!
+    player?unload!
     playing := url
     $('#result .playAudio').show!
     $('.audioBlock').removeClass('playing')
@@ -116,7 +118,6 @@ window.play-audio = (el, url) ->
     urls = [url]
     urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: ->
-      return if isMobile
       $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
@@ -136,15 +137,6 @@ window.show-info = ->
 
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 
-window.press-down = ->
-  if navigator.user-agent is /Android\s*[12]\./
-    alert "抱歉，Android 2.x 版僅能於上方顯示搜尋框。"
-    return
-  $('body').removeClass "prefer-down-#{ !!getPref \prefer-down }"
-  val = !getPref \prefer-down
-  setPref \prefer-down val
-  $('body').addClass "prefer-down-#{ !!getPref \prefer-down }"
-
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
@@ -156,7 +148,7 @@ window.do-load = ->
     $('body').addClass \overflow-scrolling-false
     $('body').addClass "prefer-down-false"
   else
-    $('body').addClass "prefer-down-#{ !!getPref \prefer-down }"
+    $('body').addClass "prefer-down-false"
   $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
 
   fontSize = getPref(\font-size) || 14
@@ -179,7 +171,7 @@ window.do-load = ->
     $ \#query .val '' .focus!
     $ \.erase-box .hide!
   window.press-back = press-back = ->
-    player?stop!
+    player?unload!
     if isDroidGap and not(
       $ \.ui-autocomplete .hasClass \invisible
     ) and $ \body .width! < 768
@@ -199,7 +191,9 @@ window.do-load = ->
     if entryHistory.length <= 1 then window.press-quit! else window.press-back!
   ), false
 
-  window.press-quit = -> callLater -> navigator.app.exit-app!
+  window.press-quit = ->
+    player?unload!
+    callLater -> navigator.app.exit-app!
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
@@ -228,7 +222,7 @@ window.do-load = ->
       fetch MOE-ID
 
   window.grok-val = grok-val = (val) ->
-    player?stop!
+    player?unload!
     return if val is /</
     lang = \a
     if "#val" is /^!/

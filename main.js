@@ -1,5 +1,5 @@
 (function(){
-  var DEBUGGING, LANG, MOEID, HASHOF, XREFLABELOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, Howl, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
+  var DEBUGGING, LANG, MOEID, HASHOF, XREFLABELOF, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, entryHistory, INDEX, XREF, CACHED, GET, e, playing, player, callLater, MOE, CJKRADICALS, SIMPTRAD, ref$, Consonants, Vowels, Tones, re, C, V, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
@@ -107,7 +107,7 @@
       return window.doLoad();
     }, false);
     document.addEventListener('pause', function(){
-      return typeof player != 'undefined' && player !== null ? player.stop() : void 8;
+      return typeof player != 'undefined' && player !== null ? player.unload() : void 8;
     }, false);
   } catch (e$) {
     e = e$;
@@ -148,53 +148,22 @@
       return typeof JSON != 'undefined' && JSON !== null ? JSON.parse((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null') : void 8;
     } catch (e$) {}
   }
-  if (isMobile) {
-    window.Howl = Howl = (function(){
-      Howl.displayName = 'Howl';
-      var prototype = Howl.prototype, constructor = Howl;
-      function Howl(arg$){
-        var urls, onplay, onend, onloaderror, this$ = this;
-        urls = arg$.urls, onplay = arg$.onplay, onend = arg$.onend, onloaderror = arg$.onloaderror;
-        this.el = document.createElement('audio');
-        this.el.setAttribute('src', urls[0]);
-        this.el.setAttribute('type', /mp3$/.exec(urls[0]) ? 'audio/mpeg' : 'audio/ogg');
-        this.el.setAttribute('autoplay', true);
-        this.el.setAttribute('controls', true);
-        this.el.addEventListener('playing', function(){
-          onplay();
-          return this$.destroy();
-        });
-        this.el.addEventListener('error', function(){
-          onloaderror();
-          return this$.destroy();
-        });
-        this.el.addEventListener('ended', function(){
-          onend();
-          return this$.destroy();
-        });
-      }
-      prototype.play = function(){
-        return this.el.play();
-      };
-      prototype.stop = function(){
-        var ref$;
-        if ((ref$ = this.el) != null) {
-          ref$.pause();
-        }
-        if ((ref$ = this.el) != null) {
-          ref$.currentTime = 0.0;
-        }
-        return this.destroy();
-      };
-      prototype.destroy = function(){
-        try {
-          $(this.el).remove();
-          return this.el = null;
-        } catch (e$) {}
-      };
-      return Howl;
-    }());
-  }
+  /*
+  if isMobile
+    class window.Howl
+      ({ urls, onplay, onend, onloaderror }) ->
+        @el = document.createElement \audio
+        @el.set-attribute \src urls.0
+        @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
+        @el.set-attribute \autoplay true
+        @el.set-attribute \controls true
+        @el.add-event-listener \playing ~> onplay!; @unload!
+        @el.add-event-listener \error ~> onloaderror!; @unload!
+        @el.add-event-listener \ended ~> onend!; @unload!
+      play: -> @el.play!
+      stop: -> @el?pause?!; @el?currentTime = 0.0; @unload!
+      unload: -> try $(@el).remove!; @el = null
+    */
   window.playAudio = function(el, url){
     var done, play;
     done = function(){
@@ -211,14 +180,14 @@
       if (playing === url) {
         if ($(el).hasClass('icon-stop')) {
           if (player != null) {
-            player.stop();
+            player.unload();
           }
           done();
         }
         return;
       }
       if (player != null) {
-        player.stop();
+        player.unload();
       }
       playing = url;
       $('#result .playAudio').show();
@@ -271,17 +240,6 @@
   callLater = function(it){
     return setTimeout(it, isMobile ? 10 : 1);
   };
-  window.pressDown = function(){
-    var val;
-    if (/Android\s*[12]\./.exec(navigator.userAgent)) {
-      alert("抱歉，Android 2.x 版僅能於上方顯示搜尋框。");
-      return;
-    }
-    $('body').removeClass("prefer-down-" + !!getPref('prefer-down'));
-    val = !getPref('prefer-down');
-    setPref('prefer-down', val);
-    return $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
-  };
   window.doLoad = function(){
     var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang;
     if (!isDeviceReady) {
@@ -306,7 +264,7 @@
       $('body').addClass('overflow-scrolling-false');
       $('body').addClass("prefer-down-false");
     } else {
-      $('body').addClass("prefer-down-" + !!getPref('prefer-down'));
+      $('body').addClass("prefer-down-false");
     }
     $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
     fontSize = getPref('font-size') || 14;
@@ -341,7 +299,7 @@
     window.pressBack = pressBack = function(){
       var token;
       if (player != null) {
-        player.stop();
+        player.unload();
       }
       if (isDroidGap && !$('.ui-autocomplete').hasClass('invisible') && $('body').width() < 768) {
         try {
@@ -431,7 +389,7 @@
     window.grokVal = grokVal = function(val){
       var lang, prevVal;
       if (player != null) {
-        player.stop();
+        player.unload();
       }
       if (/</.exec(val)) {
         return;
