@@ -336,8 +336,7 @@
     };
     window.pressErase = pressErase = function(){
       $('#query').val('').focus();
-      $('.lang').show();
-      return $('.erase').hide();
+      return $('.erase-box').hide();
     };
     window.pressBack = pressBack = function(){
       var token;
@@ -559,12 +558,10 @@
     lookup = function(){
       var that;
       if (that = $('#query').val()) {
-        $('.erase').show();
-        $('.lang').hide();
+        $('.erase-box').show();
         return doLookup(b2g(that));
       }
-      $('.lang').show();
-      return $('.erase').hide();
+      return $('.erase-box').hide();
     };
     window.doLookup = doLookup = function(val){
       var title, Index, id, hist;
