@@ -8289,9 +8289,6 @@ body.lang-t .example, body.lang-h .example {
   padding: 10px;
   border-bottom: 1px solid #dddddd;
 }
-.xref-line .part-of-speech {
-  margin-right: 5px;
-}
 
 .link {
   clear: both;
