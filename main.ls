@@ -206,7 +206,7 @@ window.do-load = ->
 
     $ \body .on \click \.iconic-circle.stroke ->
       return if $ \body .hasClass \overflow-scrolling-false
-      return ($('#strokes').fadeOut -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length
+      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length
       strokeWords $('h1:first').text!
 
     unless ``('onhashchange' in window)``
@@ -362,7 +362,7 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
-    $('#strokes').fadeOut(-> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length and not $('body').hasClass('autodraw')
+    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length and not $('body').hasClass('autodraw')
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -725,7 +725,7 @@ $ ->
           path.push [ "Q", parseFloat(a.x1.value) , parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value) ]
     stroke = paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0")
     stroke.node.setAttribute "class" "fade"
-    <- setTimeout _, 150ms
+    <- setTimeout _, 1ms
     stroke.node.setAttribute "class" "fade in"
 
   fetchStrokeXml = (code, next, cb) ->
