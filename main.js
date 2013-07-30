@@ -362,7 +362,7 @@
           return;
         }
         if ($('svg').length) {
-          return $('#strokes').fadeOut(function(){
+          return $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
             return window.scrollTo(0, 0);
           });
@@ -628,7 +628,7 @@
     setHtml = function(html){
       return callLater(function(){
         if ($('svg').length && !$('body').hasClass('autodraw')) {
-          $('#strokes').fadeOut(function(){
+          $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
             return window.scrollTo(0, 0);
           });
@@ -1265,7 +1265,7 @@
       stroke.node.setAttribute("class", "fade");
       return setTimeout(function(){
         return stroke.node.setAttribute("class", "fade in");
-      }, 150);
+      }, 1);
     };
     fetchStrokeXml = function(code, next, cb){
       return $.get((isCordova ? "http://stroke.moedict.tw/" : "utf8/") + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
