@@ -1265,7 +1265,7 @@
       stroke.node.setAttribute("class", "fade");
       return setTimeout(function(){
         return stroke.node.setAttribute("class", "fade in");
-      }, 0);
+      }, 150);
     };
     fetchStrokeXml = function(code, next, cb){
       return $.get((isCordova ? "http://stroke.moedict.tw/" : "utf8/") + code.toLowerCase() + ".xml", cb, "xml").fail(function(){
@@ -1306,11 +1306,11 @@
         color = "black";
         pathAttrs = {
           stroke: color,
-          "stroke-width": 5,
+          "stroke-width": 2,
           "stroke-linecap": "round",
           "fill": color
         };
-        delay = 500;
+        delay = 300;
         for (i$ = 0, len$ = (ref$ = doc.getElementsByTagName('Outline')).length; i$ < len$; ++i$) {
           outline = ref$[i$];
           (fn$.call(this, outline));
