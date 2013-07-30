@@ -725,7 +725,7 @@ $ ->
           path.push [ "Q", parseFloat(a.x1.value) , parseFloat(a.y1.value), parseFloat(a.x2.value), parseFloat(a.y2.value) ]
     stroke = paper.path(path).attr(pathAttrs).transform("s0.1,0.1,0,0")
     stroke.node.setAttribute "class" "fade"
-    <- setTimeout _, 0ms
+    <- setTimeout _, 150ms
     stroke.node.setAttribute "class" "fade in"
 
   fetchStrokeXml = (code, next, cb) ->
@@ -751,8 +751,8 @@ $ ->
     fetchStrokeXml utf8code, (-> cb timeout), (doc) ->
       window.scroll-to 0 0
       color = "black"
-      pathAttrs = { stroke: color, "stroke-width": 5, "stroke-linecap": "round", "fill": color }
-      delay = 500ms
+      pathAttrs = { stroke: color, "stroke-width": 2, "stroke-linecap": "round", "fill": color }
+      delay = 300ms
       for outline in doc.getElementsByTagName 'Outline' => let
         setTimeout (->
           drawOutline(paper,outline,pathAttrs)
