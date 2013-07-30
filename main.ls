@@ -751,7 +751,7 @@ $ ->
     fetchStrokeXml utf8code, (-> cb timeout), (doc) ->
       window.scroll-to 0 0
       color = "black"
-      pathAttrs = { stroke: color, "stroke-width": 2, "stroke-linecap": "round", "fill": color }
+      pathAttrs = { stroke: color, "stroke-width": 0, "stroke-linecap": "round", "fill": color }
       delay = 300ms
       for outline in doc.getElementsByTagName 'Outline' => let
         setTimeout (->

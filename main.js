@@ -1306,7 +1306,7 @@
         color = "black";
         pathAttrs = {
           stroke: color,
-          "stroke-width": 2,
+          "stroke-width": 0,
           "stroke-linecap": "round",
           "fill": color
         };
