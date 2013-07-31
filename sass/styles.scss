@@ -1053,3 +1053,7 @@ svg {
     line-height: 150%;
     @include en-fonts;
 }
+
+@media print {
+    .query-box { display: none; }
+}
