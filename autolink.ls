@@ -1,4 +1,4 @@
-require! <[ fs ]>
+require! <[ fs os ]>
 lang = process.argv.2
 unless lang in <[ a t h ]>
   console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
@@ -12,7 +12,7 @@ for k, v of audio-map
   audio-map[k] = v
 LTM-regexes = []
 Threads = require \webworker-threads
-pool = Threads.create-pool 8
+pool = Threads.create-pool(os.cpus!length)
 pool.all.eval("var pre2 = #pre2;")
 pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
 pool.all.eval(init);
