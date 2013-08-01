@@ -8041,6 +8041,7 @@ span .tone {
   padding-left: 3ex;
   font-size: 90%;
   word-break: normal !important;
+  vertical-align: top;
 }
 
 .translation .fw_lang {
@@ -8494,6 +8495,12 @@ body.lang-t .ui-tooltip .example {
 svg {
   border: 2px solid #a00;
   background: white;
+  margin-left: 5px;
+  -webkit-box-shadow: #d4d4d4 0 3px 3px;
+  box-shadow: #d4d4d4 0 3px 3px;
+}
+
+canvas {
   margin-left: 5px;
   -webkit-box-shadow: #d4d4d4 0 3px 3px;
   box-shadow: #d4d4d4 0 3px 3px;
