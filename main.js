@@ -361,7 +361,7 @@
         if ($('body').hasClass('overflow-scrolling-false')) {
           return;
         }
-        if ($('svg').length) {
+        if ($('svg, canvas').length) {
           return $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
             return window.scrollTo(0, 0);
@@ -627,7 +627,7 @@
     };
     setHtml = function(html){
       return callLater(function(){
-        if ($('svg').length && !$('body').hasClass('autodraw')) {
+        if ($('svg, canvas').length && !$('body').hasClass('autodraw')) {
           $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
             return window.scrollTo(0, 0);
@@ -1313,7 +1313,7 @@
           "stroke-linecap": "round",
           "fill": color
         };
-        delay = 300;
+        delay = 350;
         for (i$ = 0, len$ = (ref$ = doc.getElementsByTagName('Outline')).length; i$ < len$; ++i$) {
           outline = ref$[i$];
           (fn$.call(this, outline));
@@ -1327,15 +1327,26 @@
       });
     };
     return window.strokeWords = function(words){
-      var ws, step;
+      var ref$;
       $('#strokes').html('').show();
-      ws = words.split('');
-      step = function(it){
-        if (ws.length) {
-          return strokeWord(ws.shift(), step, it);
-        }
-      };
-      return step(0);
+      if ((ref$ = document.createElement('canvas')) != null && ref$.getContext('2d')) {
+        return $.getScript('js/jquery.strokeWords.js', function(){
+          return $('#strokes').strokeWords(words, {
+            svg: false
+          });
+        });
+      } else {
+        return $.getScript('js/raphael.js', function(){
+          var ws, step;
+          ws = words.split('');
+          step = function(it){
+            if (ws.length) {
+              return strokeWord(ws.shift(), step, it);
+            }
+          };
+          return step(0);
+        });
+      }
     };
   });
   function in$(x, arr){
