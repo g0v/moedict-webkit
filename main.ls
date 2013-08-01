@@ -206,7 +206,7 @@ window.do-load = ->
 
     $ \body .on \click \.iconic-circle.stroke ->
       return if $ \body .hasClass \overflow-scrolling-false
-      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length
+      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords $('h1:first').text!
 
     unless ``('onhashchange' in window)``
@@ -362,7 +362,7 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   set-html = (html) -> callLater ->
-    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg').length and not $('body').hasClass('autodraw')
+    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -754,7 +754,7 @@ $ ->
       window.scroll-to 0 0
       color = "black"
       pathAttrs = { stroke: color, "stroke-width": 0, "stroke-linecap": "round", "fill": color }
-      delay = 300ms
+      delay = 350ms
       for outline in doc.getElementsByTagName 'Outline' => let
         setTimeout (->
           drawOutline(paper,outline,pathAttrs)
@@ -763,6 +763,11 @@ $ ->
 
   window.strokeWords = (words) ->
     $('#strokes').html('').show!
-    ws = words.split ''
-    step = -> strokeWord(ws.shift!, step, it) if ws.length
-    step 0
+    if document.createElement('canvas')?getContext('2d')
+      <- $.getScript \js/jquery.strokeWords.js
+      $('#strokes').strokeWords(words, { svg: false });
+    else
+      <- $.getScript \js/raphael.js
+      ws = words.split ''
+      step = -> strokeWord(ws.shift!, step, it) if ws.length
+      step 0
