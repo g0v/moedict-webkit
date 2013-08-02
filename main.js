@@ -21,7 +21,7 @@
     t: '閩',
     h: '客'
   };
-  isCordova = !/^https?:/.test(document.URL);
+  window.isCordova = isCordova = !/^https?:/.test(document.URL);
   isDroidGap = isCordova && /android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
@@ -358,9 +358,6 @@
         $('#query').focus();
       }
       $('body').on('click', '.iconic-circle.stroke', function(){
-        if ($('body').hasClass('overflow-scrolling-false')) {
-          return;
-        }
         if ($('svg, canvas').length) {
           return $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
@@ -474,9 +471,6 @@
     window.pressLang = function(lang, id){
       lang == null && (lang = '');
       id == null && (id = '');
-      $('.lang-active').text($(".lang-option." + lang).text());
-      $('.ui-autocomplete li').remove();
-      $('#query').val('');
       prevId = null;
       prevVal = null;
       LANG = lang || (function(){
@@ -489,6 +483,9 @@
           return 'a';
         }
       }());
+      $('#query').val('');
+      $('.ui-autocomplete li').remove();
+      $('.lang-active').text($(".lang-option." + LANG).text());
       setPref('lang', LANG);
       id || (id = {
         a: '萌',
