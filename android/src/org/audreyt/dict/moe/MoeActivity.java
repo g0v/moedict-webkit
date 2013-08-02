@@ -70,6 +70,9 @@ public class MoeActivity extends DroidGap {
             case R.id.quit:
                 this.appView.sendJavascript("window.pressQuit()");
                 return true;
+            case R.id.lang:
+                this.appView.sendJavascript("window.pressLang()");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
