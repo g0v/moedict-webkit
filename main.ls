@@ -9,7 +9,7 @@ $ ->
 const HASH-OF = {a: \#, t: \#!, h: \#:}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
 
-isCordova = document.URL isnt /^https?:/
+window.isCordova = isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
@@ -205,7 +205,6 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     $ \body .on \click \.iconic-circle.stroke ->
-      return if $ \body .hasClass \overflow-scrolling-false
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords $('h1:first').text!
 
@@ -272,12 +271,12 @@ window.do-load = ->
 
   prevId = prevVal = null
   window.press-lang = (lang='', id='') ->
-    $('.lang-active').text $(".lang-option.#lang").text!
-    $('.ui-autocomplete li').remove!
-    $ \#query .val ''
     prevId := null
     prevVal := null
     LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
+    $ \#query .val ''
+    $('.ui-autocomplete li').remove!
+    $('.lang-active').text $(".lang-option.#LANG").text!
     setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
     unless isCordova
