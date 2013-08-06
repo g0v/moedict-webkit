@@ -7519,8 +7519,8 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 
 @font-face {
   font-family: "MOEDICT";
-  src: url('fonts/FiraSansOT-Regular.eot');
-  src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
+  src: url('fonts/MOEDICT.eot');
+  src: url('fonts/MOEDICT.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 
 body {

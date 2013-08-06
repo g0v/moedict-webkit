@@ -55,7 +55,7 @@ $primary-color: #6B0000;
     "MOEDICT.woff", woff
 ,   "MOEDICT.otf", opentype
 ,   "MOEDICT.ttf", truetype
-), "FiraSansOT-Regular.eot");
+), "MOEDICT.eot");
 
 @mixin fonts {
     font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
