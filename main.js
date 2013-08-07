@@ -172,9 +172,7 @@
       player = null;
       $(el).parent('.audioBlock').removeClass('playing');
       $(el).removeClass('icon-stop').removeClass('icon-spinner').show();
-      if (!$(el).hasClass('part-of-speech')) {
-        return $(el).addClass('icon-play');
-      }
+      return $(el).addClass('icon-play');
     };
     play = function(){
       var urls, audio;
@@ -200,7 +198,7 @@
         urls.push(url.replace(/ogg$/, 'mp3'));
       }
       audio = new window.Howl({
-        buffer: false,
+        buffer: true,
         urls: urls,
         onend: done,
         onloaderror: done,
@@ -1031,7 +1029,7 @@
           if (mp3 && !canPlayOgg()) {
             mp3 = mp3.replace(/ogg$/, 'mp3');
           }
-          return "</span><span class=\"audioBlock\"><div onclick='window.playAudio(this, \"" + mp3 + "\")' class='playAudio part-of-speech'>" + $1 + "</div>";
+          return "</span><span class=\"audioBlock\"><div onclick='window.playAudio(this, \"" + mp3 + "\")' class='icon-play playAudio part-of-speech'>" + $1 + "</div>";
         });
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
