@@ -104,7 +104,7 @@ window.play-audio = (el, url) ->
     player := null
     $(el).parent('.audioBlock').removeClass('playing')
     $(el).removeClass('icon-stop').removeClass('icon-spinner').show!
-    $(el).addClass('icon-play') unless $(el).hasClass('part-of-speech')
+    $(el).addClass('icon-play')
   play = ->
     if playing is url
       if $(el).hasClass('icon-stop') => player?unload!; done!
@@ -588,7 +588,7 @@ function render ({ title, english, heteronyms, radical, translation, non_radical
         mp3 = "http://h.moedict.tw/#{variant}-#audio_id.ogg"
         mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         """
-        </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='playAudio part-of-speech'>#{$1}</div>
+        </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
       """
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
