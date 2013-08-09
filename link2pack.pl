@@ -17,7 +17,7 @@ my %seen;
 mkdir $lang;
 mkdir "p${lang}ck";
 while (<STDIN>) {
-    say STDERR $. unless $. % 10000;
+    print STDERR "$.\n" unless $. % 10000;
     chomp;
     s/^(\d+) (\S+) // or die $_;
     # s/\x{fffb}\K([^"]*)/$1 =~ s![`~]!!gr/eg;
