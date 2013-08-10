@@ -57,7 +57,7 @@ try
     isDeviceReady := yes
     window.do-load!
   ), false
-  document.addEventListener \pause (-> player?unload!), false
+  document.addEventListener \pause (-> stop-audio!), false
 catch
   <- $
   $ \#F9868 .html '&#xF9868;'
@@ -97,27 +97,36 @@ if isMobile
     unload: -> try $(@el).remove!; @el = null
   */
 
-var playing, player
+var playing, player, seq
+window.stop-audio = ->
+  player?unload!
+  player := null
+  playing := null
 window.play-audio = (el, url) ->
+  seq++
+  get-el = -> $("\#player-#seq")
+  $(el).attr \id "player-#seq"
   done = ->
-    playing := null
-    player := null
-    $(el).parent('.audioBlock').removeClass('playing')
-    $(el).removeClass('icon-stop').removeClass('icon-spinner').show!
-    $(el).addClass('icon-play')
+    stop-audio!
+    $el = get-el!
+    return unless $el.length
+    $el.parent('.audioBlock').removeClass('playing')
+    $el.removeClass('icon-stop').removeClass('icon-spinner').show!
+    $el.addClass('icon-play')
   play = ->
+    $el = get-el!
     if playing is url
-      if $(el).hasClass('icon-stop') => player?unload!; done!
+      if $el.hasClass('icon-stop') => stop-audio!; done!
       return
-    player?unload!
+    stop-audio!
     playing := url
     $('#result .playAudio').show!
     $('.audioBlock').removeClass('playing')
-    $(el).removeClass('icon-play').addClass('icon-spinner')
-    $(el).parent('.audioBlock').addClass('playing')
+    $el.removeClass('icon-play').addClass('icon-spinner')
+    $el.parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3!
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
@@ -171,7 +180,7 @@ window.do-load = ->
     $ \#query .val '' .focus!
     $ \.erase-box .hide!
   window.press-back = press-back = ->
-    player?unload!
+    stop-audio!
     if isDroidGap and not(
       $ \.ui-autocomplete .hasClass \invisible
     ) and $ \body .width! < 768
@@ -192,7 +201,7 @@ window.do-load = ->
   ), false
 
   window.press-quit = ->
-    player?unload!
+    stop-audio!
     callLater -> navigator.app.exit-app!
 
   init = ->
@@ -222,9 +231,9 @@ window.do-load = ->
       fetch MOE-ID
 
   window.grok-val = grok-val = (val) ->
-    player?unload!
+    stop-audio!
     return if val is /</
-    if val is /，$/
+    if val is /[，。]$/
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
     lang = \a
