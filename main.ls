@@ -116,9 +116,8 @@ window.play-audio = (el, url) ->
     $(el).removeClass('icon-play').addClass('icon-spinner')
     $(el).parent('.audioBlock').addClass('playing')
     urls = [url]
-    urls.push url.replace(/ogg$/ 'mp3') if url is /ogg$/
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: ->
-      $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/
+    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $(el).removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
