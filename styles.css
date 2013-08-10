@@ -8529,7 +8529,7 @@ canvas {
 .dropdown-submenu {
   position: relative;
 }
-.dropdown-submenu:after {
+.dropdown-submenu > a:after {
   font-size: 10px;
   content: "▶";
   display: block;
