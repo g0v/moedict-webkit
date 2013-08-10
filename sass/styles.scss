@@ -1065,7 +1065,7 @@ canvas {
 
 .dropdown-submenu {
   position: relative;
-  &:after {
+  > a:after {
     font-size: 10px;
     content: "▶";
     display: block;
