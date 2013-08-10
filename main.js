@@ -194,7 +194,7 @@
       $(el).removeClass('icon-play').addClass('icon-spinner');
       $(el).parent('.audioBlock').addClass('playing');
       urls = [url];
-      if (/ogg$/.exec(url)) {
+      if (/ogg$/.exec(url) && canPlayMp3()) {
         urls.unshift(url.replace(/ogg$/, 'mp3'));
       }
       audio = new window.Howl({
