@@ -224,6 +224,9 @@ window.do-load = ->
   window.grok-val = grok-val = (val) ->
     player?unload!
     return if val is /</
+    if val is /，$/
+      <- setTimeout _, 500ms
+      $(\#query).autocomplete(\search)
     lang = \a
     if "#val" is /^!/
       lang = \t
