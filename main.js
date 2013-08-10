@@ -396,6 +396,11 @@
       if (/</.exec(val)) {
         return;
       }
+      if (/，$/.exec(val)) {
+        setTimeout(function(){
+          return $('#query').autocomplete('search');
+        }, 500);
+      }
       lang = 'a';
       if (/^!/.exec(val + "")) {
         lang = 't';
