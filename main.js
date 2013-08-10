@@ -195,7 +195,7 @@
       $(el).parent('.audioBlock').addClass('playing');
       urls = [url];
       if (/ogg$/.exec(url)) {
-        urls.push(url.replace(/ogg$/, 'mp3'));
+        urls.unshift(url.replace(/ogg$/, 'mp3'));
       }
       audio = new window.Howl({
         buffer: true,
