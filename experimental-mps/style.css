@@ -1,0 +1,233 @@
+@charset 'utf-8';
+
+
+
+/* ---------------------------------------
+   `font-face`字體樣式
+   --------------------------------------- */
+
+/* 滙入Font Awesome */
+@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.css') all;
+
+
+/* 覆寫`han.ff.css`裡的「Han Heiti」。 */
+@font-face {
+    font-family: 'Han Heiti';
+    src:  local('Hiragino Kaku Gothic ProN'), local('Hiragino Kaku Gothic Pro'),
+        local('Hiragino Sans GB'), local('Heiti SC'), local('Heiti TC'),
+        local('Microsoft Yahei'), local('Microsoft Jhenghei'),
+        local('Droid Sans Fallback');
+}
+/* 騙過IE詭譎fallback的手法 */
+@font-face {
+    font-family: 'Han Heiti';
+    src: local('Microsoft Yahei'), local('Microsoft Jhenghei');
+    unicode-range: U+4E00;
+}
+
+
+
+/* ---------------------------------------
+   字體、連結文字、清單、代碼⋯⋯等，
+   基本元素樣式及重設
+   --------------------------------------- */
+
+html {
+    font: 15px 'Biaodian Sans Pro', 'Helvetica Neue', Helvetica, Arial,
+        'Han Heiti', sans-serif;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+header,
+nav,
+article,
+footer {
+    position: relative;
+}
+
+
+a:link {
+    color: #0645ad;
+}
+
+a:visited {
+    color: #0645ad;
+}
+
+a:hover {
+    color: #04317c;
+}
+
+a:active {
+    color: #faa700;
+}
+
+article {
+    color: #222;
+    font: .95em 'Biaodian Pro Sans', 'Helvetica Neue', Helvetica, Arial,
+        'Han Heiti', sans-serif;
+}
+
+article ul {
+    list-style: square;
+}
+
+article ul ul {
+    list-style: disc;
+}
+
+html:lang(zh).han-biaodian-pro code {
+    font-family: 'Biaodian Pro Sans',
+        Consolas, Menlo, 'Liberation Mono', Courier, 
+        'Han Heiti', monospace, sans-serif;
+}
+
+html:lang(zh).han-biaodian-pro code:not(:lang(zh)):not(:lang(ja)),
+html:lang(zh).han-biaodian-pro code :not(:lang(zh)):not(:lang(ja)) {
+    font-family: Consolas, Menlo, 'Liberation Mono', Courier, 
+        'Han Heiti', monospace, sans-serif;
+}
+
+
+/*
+ * 1. 只要是「行內區塊」元素（`inline-block`）
+ *    便會繼承父元素的`text-indent`設定
+ */
+p code,
+li code,
+dl > * code,
+table code {
+    color: #070;
+    display: inline-block;
+    font-size: .9em;
+    line-height: 1em;
+    margin: -4px 0 0;
+    text-indent: 0 /* 1 */;
+    vertical-align: middle;
+}
+
+li pre {
+    margin: 0;
+}
+
+pre code {
+    background-color: #f1f1ee;
+    border: 1px solid #bbb;
+    border-radius:          3px;
+        -moz-border-radius: 3px;
+    box-shadow:             #e0ccb7 0 1px 5px inset;
+        -moz-box-shadow:    #e0ccb7 0 1px 5px inset;
+        -webkit-box-shadow: #e0ccb7 0 1px 5px inset;
+    color: #6b5438;
+    font-size: .9em;
+    line-height: 1.5;
+    margin: 1em auto 2em;
+    padding: 7px;
+    width: 90%;
+}
+
+
+
+/* -------------------------------------
+ * 主題樣式
+ * ------------------------------------- */
+
+/* 漸層背景 */
+body:before {
+    background-color: #f1f1ee;
+    backgrounround-image: radial-gradient(50% 50%, circle cover, #fff, #d9dbd1 60%);
+        background-image: -moz-radial-gradient(50% 50%, circle cover, #fff, #d9dbd1 60%);
+        background-image: -ms-radial-gradient(50% 50%, circle cover, #fff, #d9dbd1 60%);
+        background-image: -webkit-radial-gradient(50% 50%, circle cover, #fff, #d9dbd1 60%);
+    content: '';
+    display: block;
+    height: 120%;
+    left: -5%;
+    opacity: .7;
+    position: fixed;
+    top: -5%;
+    width: 120%;
+    z-index: -5;
+}
+
+header {
+    background: url(../img/hr.png) no-repeat center bottom;
+    height: 5em;
+    padding-bottom: 3em;
+    text-align: center;
+}
+
+
+header h1 {
+    font: 300 1.65em
+        'Biaodian Serif', 'Bell MT', Georgia, 'Times New Roman',
+        'Hiragino Mincho ProN', 'Hiragino Mincho Pro', 'Kozuka Mincho Pro',
+        '華康明體 Std', DFMingStd-W3, SimSun, serif;
+    letter-spacing: .25em;
+    margin: 0;
+    padding: .95em 0 .125em;
+    text-shadow: #999 1px 1px 3px;
+}
+
+header h1 a:link,
+header h1 a:visited {  color: #058455;  }
+header h1 a:hover {  color: #069460;  }
+header h1 a:active {  color: #035335;  }
+
+header h1 a:link:last-child,
+header h1 a:visited:last-child {  color: #069460;  }
+
+header h1 sup,
+header h1 sup a:link,
+header h1 sup a:visited {
+    color: #d6a901;
+    font: bold .75em Courier, monospace;
+    letter-spacing: 1px;
+    padding-left: .1em;
+    top: -.025em;
+    vertical-align: top;
+}
+
+header h1 sup a:hover {
+    text-decoration: underline !important;
+}
+
+header h1 + p.des {
+    color: #6e8561;
+    font-family: 'Biaodian Pro Sans', 'Helvetica Neue', Helvetica, Arial,
+        'Han Heiti', sans-serif;
+    font-size: .8em;
+    font-weight: normal;
+    letter-spacing: .25em;
+    margin: -.2em .125em;
+}
+
+p.des u {  letter-spacing: 0;  margin-right: .35em;  }
+
+
+/* Fork圖章 */
+#fork {
+    background: url(../img/fork.png) no-repeat 0 0;
+    border: 0 none;
+    height: 141px;
+    left: -5px;
+    position: fixed;
+    text-indent: -999999px;
+    top: 0;
+    width: 150px;
+    z-index: 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
