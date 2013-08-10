@@ -4,7 +4,7 @@ LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
-  $('.lang-active').text $(".lang-option.#LANG").text!
+  $('.lang-active').text $(".lang-option.#LANG:first").text!
 
 const HASH-OF = {a: \#, t: \#!, h: \#:}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
@@ -234,7 +234,7 @@ window.do-load = ->
     if "#val" is /^:/
       lang = \h
       val.=substr 1
-    $('.lang-active').text $(".lang-option.#lang").text!
+    $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       LANG := LANG
       prevVal = ''
@@ -278,7 +278,7 @@ window.do-load = ->
     LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
-    $('.lang-active').text $(".lang-option.#LANG").text!
+    $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
     unless isCordova

@@ -10,7 +10,7 @@
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
-    return $('.lang-active').text($(".lang-option." + LANG).text());
+    return $('.lang-active').text($(".lang-option." + LANG + ":first").text());
   });
   HASHOF = {
     a: '#',
@@ -410,7 +410,7 @@
         lang = 'h';
         val = val.substr(1);
       }
-      $('.lang-active').text($(".lang-option." + lang).text());
+      $('.lang-active').text($(".lang-option." + lang + ":first").text());
       if (lang !== LANG) {
         LANG = LANG;
         prevVal = '';
@@ -490,7 +490,7 @@
       }());
       $('#query').val('');
       $('.ui-autocomplete li').remove();
-      $('.lang-active').text($(".lang-option." + LANG).text());
+      $('.lang-active').text($(".lang-option." + LANG + ":first").text());
       setPref('lang', LANG);
       id || (id = {
         a: '萌',
