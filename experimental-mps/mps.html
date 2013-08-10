@@ -34,20 +34,45 @@ jQuery('<iframe id="moedict" name="moedict" src="' + href + '" style="float: rig
   src: url('MOEDICT.eot');
   src: url('MOEDICT.eot?#iefix') format('eot'), url('MOEDICT.woff') format('woff'), url('MOEDICT.otf') format('opentype'), url('MOEDICT.ttf') format('truetype');
 }
+/*
     .zy, rt, .rt { font-family: 'Fira Sans Regular', 'Fira Sans OT', sans-serif; white-space: nowrap !important }
     u.pn  { font-family: 'Fira Sans Regular', 'Fira Sans OT', sans-serif; margin-left: 10px; }
     .mps, .zi, rb, .rb { font-family: "XinGothic-Citicpress","XinGothic Citicpress","Lantinghei TC","Hiragino Kaku Gothic Pro","Apple LiGothic","Heiti TC","LiHei Pro","Microsoft YaHei","微軟正黑體","文泉驿正黑",sans-serif; font-size: 24px !important }
     p { font-size: 20px }
+    */
+    p {
+        font-size: 24px;
+        width: 30em;
+    }
     span.romanization { display: inline-block; margin-right: 5px;
-        vertical-align: top }
+        vertical-align: top; outline: 1px solid; }
+    .ruby-zhuyin-constructed {
+        outline: 1px solid #f00;
+    }
+
+    .romanization > a {
+        display: inline-block;
+        position:relative;
+    }
+    .romanization > a > rt {
+        display: block;
+        position: absolute;
+        bottom: -100px;
+        left: -1em;
+        z-index: 10;
+        font-size: 14px;
+        color: #333;
+    }
 </style>
 </head>
 <body style="margin: 20px">
 <p>
 <span class="romanization">
+<a href="https://www.moedict.tw/#!你">
 <ruby class="mps">
-<a href="https://www.moedict.tw/#!你">你<rt>ㄌㄧˋ</rt></a>
+你<rt>ㄌㄧˋ</rt>
 </ruby>
+</a>
 <a href="https://www.moedict.tw/#!敢有">
 <ruby class="mps">
 敢<rt>ㄍㆰˋ</rt>
@@ -83,16 +108,18 @@ kám-ū
 thiann-tio̍h
 lán
 ê
-kua 
+kua
 </rt>
 </span>
 <hr>
 
 <span class="romanization">
+<a href="https://www.moedict.tw/#!你">
 <ruby class="mps">
-<a href="https://www.moedict.tw/#!你">你<rt>ㄌㄧˋ</rt></a>
+你<rt>ㄌㄧˋ</rt>
 </ruby><br>
 <rt>Lí</rt>
+</a>
 </span>
 <span class="romanization">
 <a href="https://www.moedict.tw/#!敢有">
@@ -102,8 +129,9 @@ kua
 <ruby class="mps">
 有<rt>ㄨ˫</rt>
 </ruby>
-</a><br>
+<br>
 <rt>kám-ū</rt>
+</a>
 </span>
 
 <span class="romanization">
@@ -114,36 +142,382 @@ kua
 <ruby class="mps">
 著<rt>ㄉㄧㄜㆷ̍</rt>
 </ruby>
-</a><br>
+<br>
 <rt>thiann-tio̍h</rt>
+</a>
 </span>
 
 <span class="romanization">
 <a href="https://www.moedict.tw/#!咱">
 <ruby class="mps">
 咱<rt>ㄌㄢˋ</rt>
-</ruby></a><br>
+</ruby>
+<br>
 <rt>lán</rt>
+</a>
 </span>
 
 <span class="romanization">
 <a href="https://www.moedict.tw/#!的">
 <ruby class="mps">
 的<rt>ㆤˊ</rt>
-</ruby></a><br>
+</ruby>
+<br>
 <rt>ê</rt>
+</a>
 </span>
 
 <span class="romanization">
 <a href="https://www.moedict.tw/#!歌">
 <ruby class="mps">
 歌<rt>ㄍㄨㄚ</rt>
-</ruby></a><br>
+</ruby>
+<br>
 <rt>kua</rt>
+</a>
 </span>
 
 <hr>
-
+<p>
+<span class="romanization">
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!你">
+    <ruby class="mps">
+    你<rt>ㄌㄧˋ</rt>
+    </ruby>
+    <rt>Lí</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!敢有">
+    <ruby class="mps">
+    敢<rt>ㄍㆰˋ</rt>
+    </ruby>
+    <ruby class="mps">
+    有<rt>ㄨ˫</rt>
+    </ruby>
+    <rt>kám-ū</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!聽著">
+    <ruby class="mps">
+    聽<rt>ㄊㄧㆩ</rt>
+    </ruby>
+    <ruby class="mps">
+    著<rt>ㄉㄧㄜㆷ̍</rt>
+    </ruby>
+    <rt>thiann-tio̍h</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!咱">
+    <ruby class="mps">
+    咱<rt>ㄌㄢˋ</rt>
+    </ruby>
+    <rt>lán</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!的">
+    <ruby class="mps">
+    的<rt>ㆤˊ</rt>
+    </ruby>
+    <rt>ê</rt>
+    </a>
+    <a href="https://www.moedict.tw/#!歌">
+    <ruby class="mps">
+    歌<rt>ㄍㄨㄚ</rt>
+    </ruby>
+    <rt>kua</rt>
+    </a>
+</span>
+</p>
 <br>
 <br>
 <br>
