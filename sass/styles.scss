@@ -1062,3 +1062,24 @@ canvas {
 @media print {
     .query-box { display: none; }
 }
+
+.dropdown-submenu {
+  position: relative;
+  &:after {
+    font-size: 10px;
+    content: "▶";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    line-height: 1em;
+    margin-top: -5px;
+  }
+  &:hover {
+    .dropdown-menu {
+      display: block;
+      left: 100%;
+      top: 0;
+    }
+  }
+}
