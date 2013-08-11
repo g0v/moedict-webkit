@@ -774,6 +774,8 @@ $ ->
   window.strokeWords = (words) ->
     $('#strokes').html('').show!
     if document.createElement('canvas')?getContext('2d')
+      <- $.getScript \js/gl-matrix-min.js
+      <- $.getScript \js/sax.js
       <- $.getScript \js/jquery.strokeWords.js
       $('#strokes').strokeWords(words, { svg: false });
     else
