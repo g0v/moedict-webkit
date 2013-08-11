@@ -98,27 +98,28 @@ if isMobile
   */
 
 var playing, player, seq
+seq = 0
+get-el = -> $("\#player-#seq")
 window.stop-audio = ->
+  $el = get-el!
+  if $el.length
+    $el.parent('.audioBlock').removeClass('playing')
+    $el.removeClass('icon-stop').removeClass('icon-spinner').show!
+    $el.addClass('icon-play')
   player?unload!
   player := null
   playing := null
 window.play-audio = (el, url) ->
-  seq++
-  get-el = -> $("\#player-#seq")
-  $(el).attr \id "player-#seq"
-  done = ->
-    stop-audio!
-    $el = get-el!
-    return unless $el.length
-    $el.parent('.audioBlock').removeClass('playing')
-    $el.removeClass('icon-stop').removeClass('icon-spinner').show!
-    $el.addClass('icon-play')
+  done = -> stop-audio!
   play = ->
     $el = get-el!
     if playing is url
       if $el.hasClass('icon-stop') => stop-audio!; done!
       return
     stop-audio!
+    seq++
+    $(el).attr \id "player-#seq"
+    $el = get-el!
     playing := url
     $('#result .playAudio').show!
     $('.audioBlock').removeClass('playing')
