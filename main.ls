@@ -69,13 +69,13 @@ catch
   else
     window.do-load!
     if navigator.user-agent is /MSIE\s+[678]/
-      <- $.getScript \https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
+      <- getScript \https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
       window.gcfnConfig = do
         imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/'
         msgPre: ''
         msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。'
         msgAfter: ''
-      <- $.getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
+      <- getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
@@ -132,7 +132,7 @@ window.play-audio = (el, url) ->
     audio.play!
     player := audio
   return play! if window.Howl
-  <- $.getScript \js/howler.js
+  <- getScript \js/howler.js
   return play!
 
 window.show-info = ->
@@ -775,12 +775,25 @@ $ ->
   window.strokeWords = (words) ->
     $('#strokes').html('').show!
     if document.createElement('canvas')?getContext('2d')
-      <- $.getScript \js/gl-matrix-min.js
-      <- $.getScript \js/sax.js
-      <- $.getScript \js/jquery.strokeWords.js
+      <- getScript \js/raf.min.js
+      <- getScript \js/gl-matrix-min.js
+      <- getScript \js/sax.js
+      <- getScript \js/jquery.strokeWords.js
       $('#strokes').strokeWords(words, { svg: false });
     else
-      <- $.getScript \js/raphael.js
+      <- getScript \js/raphael.js
       ws = words.split ''
       step = -> strokeWord(ws.shift!, step, it) if ws.length
       step 0
+
+LoadedScripts = {}
+function getScript (src, cb)
+  return cb! if LoadedScripts[src]
+  LoadedScripts[src] = true
+  $.ajax do
+    type: \GET
+    url: src
+    dataType: \script
+    cache: yes
+    crossDomain: yes
+    complete: cb
