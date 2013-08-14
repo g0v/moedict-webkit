@@ -374,7 +374,7 @@
             return window.scrollTo(0, 0);
           });
         }
-        return strokeWords($('h1:first').text());
+        return strokeWords(replace$.call($('h1:first').text(), /[（(].*/, ''));
       });
       if (!('onhashchange' in window)) {
         $('body').on('click', 'a', function(){
