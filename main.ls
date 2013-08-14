@@ -215,7 +215,7 @@ window.do-load = ->
 
     $ \body .on \click \.iconic-circle.stroke ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
-      strokeWords $('h1:first').text!
+      strokeWords($('h1:first').text! - /[（(].*/) # Strip the english part and draw the strokes
 
     unless ``('onhashchange' in window)``
       $ \body .on \click \a ->
