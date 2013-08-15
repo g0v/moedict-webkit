@@ -1,0 +1,219 @@
+
+@import "css3";
+
+.han-js-ruby-right-angle-rendered {
+	display: inline-block;
+    text-indent: 0;
+    vertical-align: 1.15em;
+}
+
+
+.han-js-ruby-right-angle-rendered [data-romanization] {
+	@include borderBox;
+	display: inline-block;
+	height: 3em;
+	line-height: 1.2em;
+	position: relative;
+	text-align: center;
+
+	&:after {
+		content: attr(data-romanization);
+		display: block;
+		font-size: .55em;
+		line-height: normal;
+		margin-right: 1.75em;
+		text-align: center;
+	}
+}
+
+.han-js-ruby-right-angle-rendered [data-zhuyin] {
+    display: inline-block;
+    height: 2.125em;
+    margin-right: .35em;
+    position: relative;
+    text-indent: 0;
+    vertical-align: middle;
+
+    & > span {
+    	display: inline-block;
+    	height: 1em;
+    	margin-top: -.5em;
+    	vertical-align: middle;
+    }
+
+    &:before,
+    &:after {
+    	@include borderBox;
+    	display: inline-block;
+    	font-family: 'Han Zhuyin Sans', sans-serif;
+    	font-style: normal;
+    	font-weight: normal;
+    	text-indent: 0;
+    	vertical-align: middle;
+    }
+
+	&:after {
+	    content: attr(data-zhuyin);
+	    height: 2.7em;
+	    line-height: .9;
+	    margin-left: -.175em;
+	    @include extraSmall();
+	    white-space: pre-wrap;
+	    width: .8em;
+	}
+
+	&[data-form="shengmu"]:after,
+	&[data-form="jieyin"]:after,
+	&[data-form="yunmu"]:after {
+	    padding-top: 1em;
+	}
+
+	&[data-form="shengmu-jieyin"]:after,
+	&[data-form="shengmu-yunmu"]:after,
+	&[data-form="jieyin-yunmu"]:after {
+		padding-top: .65em;
+	}
+
+	&[data-form="shengmu-jieyin-yunmu"]:after {
+		padding-top: -.25em;
+	}
+
+	&[data-tone]:before {
+	    height: 2.7em;
+	    position: absolute;
+	    top: 0;
+	    @include extraSmall(.8);
+	    width: 1em;
+	}
+
+	/*
+	 * 各調號
+	 * ========================
+	 * 1. 陰平無調號
+	 * 2. 陰上及陽上
+	 * 3. 陰去
+	 * 4. 陰入
+	 * 5. 陽平
+	 * 6. 同第2項
+	 * 7. 陽去
+	 * 8. 陽入
+	 * 9. 輕聲（單字不標註）
+	 *
+	 * ------------------------
+	 * 其中，陰入及陽入依韻尾標註，需
+	 * 使用屬性`data-rusheng`
+	 *
+	 * ------------------------
+	 *
+	 */
+
+	&[data-tone="2"]:before {
+	    content: 'ˋ'; /* 2, 6 */
+	}
+
+	&[data-tone="3"]:before {
+	    content: '˪'; /* 3 */
+	}
+
+	&[data-tone="5"]:before {
+	    content: 'ˊ'; /* 5 */
+	}
+
+	&[data-tone="7"]:before {
+	    content: '˫'; /* 7 */
+	}
+
+
+	/* 4 */
+	&[data-tone="4/p"]:before {
+		content: 'ㆴ';
+	}
+
+	&[data-tone="4/t"]:before {
+		content: 'ㆵ';
+	}
+
+	&[data-tone="4/k"]:before {
+		content: 'ㆶ';
+	}
+
+	&[data-tone="4/h"]:before {
+		content: 'ㆷ';
+	}
+
+	/* 8 */
+	&[data-tone="8/p"]:before {
+		content: 'ㆴ̍';
+	}
+
+	&[data-tone="8/t"]:before {
+		content: 'ㆵ̍';
+	}
+
+	&[data-tone="8/k"]:before {
+		content: 'ㆶ̍';
+	}
+
+	&[data-tone="8/h"]:before {
+		content: 'ㆷ̍';
+	}
+
+
+
+	&[data-tone="2"]:before,
+	&[data-tone="3"]:before,
+	&[data-tone="5"]:before,
+	&[data-tone="7"]:before,
+	&[data-tone^="4"]:before,
+	&[data-tone^="8"]:before {
+	    margin-right: -.6em;
+	    right: 0;
+	}
+
+	&[data-tone="5"]:before {
+		margin-right: -.4em;
+	}
+
+	&[data-tone^="4"]:before,
+	&[data-tone^="8"]:before {
+		margin-right: -.65em;
+		margin-top: .175em;
+	    @include extraSmall(.55);
+	}
+
+	/*
+	 * 依據「聲母／介音／韻母」形式
+     * 及「調號別」微調調號位置
+	 */
+
+	&[data-tone][data-form="shengmu"]:before,
+	&[data-tone][data-form="jieyin"]:before,
+	&[data-tone][data-form="yunmu"]:before {
+	    padding-top: .5em;
+	}
+
+	&[data-tone][data-form="shengmu-jieyin"]:before,
+	&[data-tone][data-form="shengmu-yunmu"]:before,
+	&[data-tone][data-form="jieyin-yunmu"]:before {
+	    padding-top: 1.25em;
+	}
+
+	&[data-tone][data-form="shengmu-jieyin-yunmu"]:before {
+	    padding-top: 1.35em;
+	}
+
+	&[data-tone="5"][data-form="shengmu"]:before,
+	&[data-tone="5"][data-form="jieyin"]:before,
+	&[data-tone="5"][data-form="yunmu"]:before {
+	    padding-top: .75em;
+	}
+}
+
+
+
+
+
+
+
+
+
