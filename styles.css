@@ -9570,6 +9570,12 @@ body.lang-a #query-box {
   background-color: rgba(48, 19, 18, 0.7);
 }
 
+input.iconic-circle {
+  padding: 0;
+  margin-top: 16px !important;
+  display: block;
+}
+
 .iconic-circle {
   border-radius: 18px;
   background: black;
@@ -9807,6 +9813,10 @@ center {
 }
 
 @media only screen and (max-width: 767px) {
+  * .navbar-nav {
+    margin: 4px;
+  }
+
   * .navbar-nav .open .dropdown-menu > li > a {
     line-height: 1.5;
     border-bottom: 1px solid #999;
