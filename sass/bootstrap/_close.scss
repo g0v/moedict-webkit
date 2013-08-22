@@ -6,19 +6,21 @@
 .close {
   float: right;
   font-size: ($font-size-base * 1.5);
-  font-weight: bold;
+  font-weight: $close-font-weight;
   line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 rgba(255,255,255,1);
+  color: $close-color;
+  text-shadow: $close-text-shadow;
   @include opacity(.2);
 
   &:hover,
   &:focus {
-    color: #000;
+    color: $close-color;
     text-decoration: none;
     cursor: pointer;
     @include opacity(.5);
   }
+
+  // [converter] extracted button& to button.close
 }
 
 // Additional properties for button version
