@@ -10452,11 +10452,6 @@ canvas {
     display: none;
   }
 }
-@media only screen and (max-width: 767px) {
-  .lang-option.icon-long-arrow-right {
-    display: none !important;
-  }
-}
 .dropdown-submenu {
   position: relative;
 }
