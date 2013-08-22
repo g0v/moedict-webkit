@@ -1075,8 +1075,8 @@ canvas {
 }
 
 .dropdown-submenu {
-  position: relative;
-  > a:after {
+  > a { position: relative; }
+  > a:before {
     font-size: 10px;
     content: "▶";
     display: block;
@@ -1093,4 +1093,8 @@ canvas {
       top: 0;
     }
   }
+}
+
+@media only screen and (max-width: 767px) {
+    .dropdown-submenu > a:before { content: "▼"; }
 }
