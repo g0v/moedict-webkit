@@ -394,6 +394,10 @@ center {
 }
 
 @media only screen and (max-width: 767px) {
+    * .navbar-nav .open .dropdown-menu > li > a {
+        line-height: 1.5;
+        border-bottom: 1px solid #999;
+    }
     .info {
         display: none;
     }
@@ -1016,7 +1020,7 @@ body.lang-t .ui-tooltip .example {
     }
 }
 
-.nav, .dropdown, #query-box {
+.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
   font-size: 19px;
 }
 .playAudio {
