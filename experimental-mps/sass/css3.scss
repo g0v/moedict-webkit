@@ -1,0 +1,28 @@
+
+
+@mixin gradient($lighter, $darker) {
+	background-image: linear-gradient(left bottom, $darker, $lighter);
+	background-image: -moz-linear-gradient(left bottom, $darker, $lighter);
+	background-image: -ms-linear-gradient(left bottom, $darker, $lighter);
+	background-image: -webkit-linear-gradient(left bottom, $darker, $lighter);
+}
+
+@mixin radius($radius: 7px) {
+	border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	-webkit-border-radius: $radius;
+}
+
+@mixin extraSmall($multi: .55) {
+    transform:              scale($multi);
+        -moz-transform:     scale($multi);
+        -ms-transform:      scale($multi);
+        -o-transform:       scale($multi);
+        -webkit-transform:  scale($multi);
+}
+
+@mixin borderBox() {
+	box-sizing: border-box;
+		-moz-box-sizing: border-box;
+}

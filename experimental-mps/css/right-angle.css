@@ -1,0 +1,173 @@
+.han-js-ruby-right-angle-rendered {
+  text-indent: 0;
+}
+
+.han-js-ruby-right-angle-rendered [data-romanization] {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: inline-block;
+  height: 3em;
+  line-height: 1.2em;
+  position: relative;
+  text-align: center;
+}
+.han-js-ruby-right-angle-rendered [data-romanization]:after {
+  content: attr(data-romanization);
+  display: block;
+  font-size: .55em;
+  line-height: normal;
+  margin-right: 1.75em;
+  text-align: center;
+}
+
+.han-js-ruby-right-angle-rendered [data-zhuyin] {
+  display: inline-block;
+  height: 2.125em;
+  margin-right: .35em;
+  position: relative;
+  text-indent: 0;
+  vertical-align: middle;
+  /*
+   * 各調號
+   * ========================
+   * 1. 陰平無調號
+   * 2. 陰上及陽上
+   * 3. 陰去
+   * 4. 陰入
+   * 5. 陽平
+   * 6. 同第2項
+   * 7. 陽去
+   * 8. 陽入
+   * 9. 輕聲（單字不標註）
+   *
+   * ------------------------
+   * 其中，陰入及陽入依韻尾標註，需
+   * 使用屬性`data-rusheng`
+   *
+   * ------------------------
+   *
+   */
+  /* 4 */
+  /* 8 */
+  	/*
+  	 * 依據「聲母／介音／韻母」形式
+       * 及「調號別」微調調號位置
+  	 */
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin] > span {
+  display: inline-block;
+  height: 1em;
+  margin-top: -.5em;
+  vertical-align: middle;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin]:before, .han-js-ruby-right-angle-rendered [data-zhuyin]:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: inline-block;
+  font-family: 'Han Zhuyin Sans', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-indent: 0;
+  vertical-align: middle;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin]:after {
+  content: attr(data-zhuyin);
+  height: 2.7em;
+  line-height: .9;
+  margin-left: -.175em;
+  transform: scale(0.55);
+  -moz-transform: scale(0.55);
+  -ms-transform: scale(0.55);
+  -o-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  white-space: pre-wrap;
+  width: .8em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="jieyin"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="yunmu"]:after {
+  padding-top: 1em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-jieyin"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-yunmu"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="jieyin-yunmu"]:after {
+  padding-top: .65em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-jieyin-yunmu"]:after {
+  padding-top: -.25em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone]:before {
+  height: 2.7em;
+  position: absolute;
+  top: 0;
+  transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+  width: 1em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="2"]:before {
+  content: 'ˋ';
+  /* 2, 6 */
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="3"]:before {
+  content: '˪';
+  /* 3 */
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"]:before {
+  content: 'ˊ';
+  /* 5 */
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="7"]:before {
+  content: '˫';
+  /* 7 */
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/p"]:before {
+  content: 'ㆴ';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/t"]:before {
+  content: 'ㆵ';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/k"]:before {
+  content: 'ㆶ';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/h"]:before {
+  content: 'ㆷ';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/p"]:before {
+  content: 'ㆴ̍';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/t"]:before {
+  content: 'ㆵ̍';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/k"]:before {
+  content: 'ㆶ̍';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/h"]:before {
+  content: 'ㆷ̍';
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="2"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="3"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="7"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="4"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="8"]:before {
+  margin-right: -.6em;
+  right: 0;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"]:before {
+  margin-right: -.4em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="4"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="8"]:before {
+  margin-right: -.65em;
+  margin-top: .175em;
+  transform: scale(0.55);
+  -moz-transform: scale(0.55);
+  -ms-transform: scale(0.55);
+  -o-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="jieyin"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="yunmu"]:before {
+  padding-top: .5em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-jieyin"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-yunmu"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="jieyin-yunmu"]:before {
+  padding-top: 1.25em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-jieyin-yunmu"]:before {
+  padding-top: 1.35em;
+}
+.han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"][data-form="shengmu"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"][data-form="jieyin"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"][data-form="yunmu"]:before {
+  padding-top: .75em;
+}
