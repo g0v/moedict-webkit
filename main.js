@@ -367,6 +367,12 @@
       if (!isCordova) {
         $('#query').focus();
       }
+      $('body').on('click', 'li.dropdown-submenu > a', function(){
+        if ($('body').width() < 768) {
+          $(this).next('ul').toggle();
+          return false;
+        }
+      });
       $('body').on('click', '.iconic-circle.stroke', function(){
         if ($('svg, canvas').length) {
           return $('#strokes').fadeOut('fast', function(){

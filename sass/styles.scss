@@ -1040,9 +1040,13 @@ body.lang-t .ui-tooltip .example {
     cursor: pointer;
     line-height: 100%;
 }
-.desktop ul.nav li:hover > ul.dropdown-menu {
-    display: block;
+
+@media only screen and (min-width: 768px) {
+    .desktop ul.nav li:hover > ul.dropdown-menu {
+        display: block;
+    }
 }
+
 ul.dropdown-menu {
 }
 
@@ -1086,7 +1090,10 @@ canvas {
     line-height: 1em;
     margin-top: -5px;
   }
-  &:hover {
+}
+
+@media only screen and (min-width: 768px) {
+  .dropdown-submenu:hover {
     > .dropdown-menu {
       display: block;
       left: 100%;
