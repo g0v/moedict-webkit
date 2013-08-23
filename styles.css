@@ -10472,7 +10472,17 @@ canvas {
 }
 
 @media only screen and (max-width: 767px) {
-  .dropdown-submenu > a:before {
+  .dropdown .dropdown-submenu > .dropdown-menu {
+    margin-left: 10%;
+  }
+  .dropdown .dropdown-submenu > a:before {
     content: "▼";
+  }
+  .dropdown .dropdown-submenu .dropdown-menu > li > a {
+    padding-left: .5em;
+  }
+
+  .navbar {
+    position: absolute;
   }
 }
