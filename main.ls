@@ -213,6 +213,12 @@ window.do-load = ->
     $ \#query .show!
     $ \#query .focus! unless isCordova
 
+    # Toggle submenu visibility.
+    $ \body .on \click 'li.dropdown-submenu > a' ->
+      if $(\body).width! < 768
+        $(@).next(\ul).toggle!
+        return false
+
     $ \body .on \click \.iconic-circle.stroke ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords($('h1:first').text! - /[（(].*/) # Strip the english part and draw the strokes
