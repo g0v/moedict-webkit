@@ -1087,7 +1087,7 @@ canvas {
     margin-top: -5px;
   }
   &:hover {
-    .dropdown-menu {
+    > .dropdown-menu {
       display: block;
       left: 100%;
       top: 0;
