@@ -15,6 +15,7 @@ isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
 isWebKit = navigator.userAgent is /WebKit/
+width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '' }
 XREF = {
@@ -184,7 +185,7 @@ window.do-load = ->
     stop-audio!
     if isDroidGap and not(
       $ \.ui-autocomplete .hasClass \invisible
-    ) and $ \body .width! < 768
+    ) and width-is-xs!
       try $(\#query).autocomplete \close
       return
     return if cache-loading
@@ -214,9 +215,12 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     # Toggle submenu visibility.
+    $ \.navbar .on \shown.bs.dropdown -> $(@).css \position \absolute if width-is-xs!
+    $ \.navbar .on \hidden.bs.dropdown -> $(@).css \position \fixed
+
     $ \body .on \click 'li.dropdown-submenu > a' ->
-      if $(\body).width! < 768
-        $(@).next(\ul).toggle!
+      if width-is-xs!
+        $(@).next(\ul).slide-toggle \fast
         return false
 
     $ \body .on \click \.iconic-circle.stroke ->
@@ -276,6 +280,10 @@ window.do-load = ->
     title = decodeURIComponent(it) - /[（(].*/
     title -= /^[:!]/
     return if title is /^</
+    if title is /^→/
+      <- setTimeout _, 500ms
+      $(\#query).autocomplete(\search)
+      return
     $ \#query .val title
     $ \#cond .val "^#{title}$" unless isCordova
     input = $ \#query .get 0
@@ -529,6 +537,9 @@ function init-autocomplete
     source: ({term}, cb) ->
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
+      return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs!
+      term.=replace(/^→列出含有「/ '')
+      term.=replace(/」的詞$/ '')
       term.=replace(/\*/g '%')
       term.=replace(/[-—]/g    \－)
       term.=replace(/[,﹐]/g   \，)
