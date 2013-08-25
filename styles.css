@@ -10484,8 +10484,4 @@ canvas {
   .dropdown .dropdown-submenu .dropdown-menu > li > a {
     padding-left: .5em;
   }
-
-  .navbar {
-    position: absolute;
-  }
 }
