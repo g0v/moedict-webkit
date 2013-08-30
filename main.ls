@@ -364,10 +364,10 @@ window.do-load = ->
     try history.pushState null, null, hash unless "#{location.hash}" is hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
-      $('#result h1:first').text(it).show!
+      $('#result h1:first').text(it - /^=/).show!
     else
       $('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
-      $('#result h1:first').text(it).css \visibility \visible
+      $('#result h1:first').text(it - /^=/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌
@@ -435,7 +435,9 @@ window.do-load = ->
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-    if JSON?parse?
+    if part is /^\[/
+      html = render-list part
+    else if JSON?parse?
       html = render JSON.parse part
     else
       html = eval "render(#part)"
@@ -604,7 +606,15 @@ function can-play-ogg
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
-function render ({ title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py})
+function render-list (terms)
+  h = HASH-OF[LANG]
+  title = "<h1>#{ $(\#query).val! - /^=/ }</h1>"
+  terms -= /^[^"]*/
+  terms.=replace(/"([^"]+)"[^"]*/g "\u00B7 <a href='#{h}$1'>$1</a><br>\n")
+  return "#title<div class='list'>#terms</div>"
+
+function render (json)
+  { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke'>畫</span></div>" else "<div class='radical'><span class='iconic-circle stroke'>畫</span></div>"
