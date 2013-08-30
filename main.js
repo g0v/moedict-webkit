@@ -624,10 +624,10 @@
       } catch (e$) {}
       if (isMobile) {
         $('#result div, #result span, #result h1:not(:first)').hide();
-        $('#result h1:first').text(it).show();
+        $('#result h1:first').text(replace$.call(it, /^=/, '')).show();
       } else {
         $('#result div, #result span, #result h1:not(:first)').css('visibility', 'hidden');
-        $('#result h1:first').text(it).css('visibility', 'visible');
+        $('#result h1:first').text(replace$.call(it, /^=/, '')).css('visibility', 'visible');
         window.scrollTo(0, 0);
       }
       if (loadCacheHtml(it)) {
@@ -755,7 +755,9 @@
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
-      if ((typeof JSON != 'undefined' && JSON !== null ? JSON.parse : void 8) != null) {
+      if (/^\[/.exec(part)) {
+        html = renderList(part);
+      } else if ((typeof JSON != 'undefined' && JSON !== null ? JSON.parse : void 8) != null) {
         html = render(JSON.parse(part));
       } else {
         html = eval("render(" + part + ")");
@@ -1050,9 +1052,17 @@
     a = document.createElement('audio');
     return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
   }
-  function render(arg$){
+  function renderList(terms){
+    var h, title;
+    h = HASHOF[LANG];
+    title = "<h1>" + (replace$.call($('#query').val(), /^=/, '')) + "</h1>";
+    terms = replace$.call(terms, /^[^"]*/, '');
+    terms = terms.replace(/"([^"]+)"[^"]*/g, "\u00B7 <a href='" + h + "$1'>$1</a><br>\n");
+    return title + "<div class='list'>" + terms + "</div>";
+  }
+  function render(json){
     var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
-    title = arg$.title, english = arg$.english, heteronyms = arg$.heteronyms, radical = arg$.radical, translation = arg$.translation, nrsCount = arg$.non_radical_stroke_count, sCount = arg$.stroke_count, py = arg$.pinyin;
+    title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke'>畫</span></div>" : "<div class='radical'><span class='iconic-circle stroke'>畫</span></div>";
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
