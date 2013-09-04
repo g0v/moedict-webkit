@@ -223,7 +223,7 @@ window.do-load = ->
         $(@).next(\ul).slide-toggle \fast
         return false
 
-    $ \body .on \click \.iconic-circle.stroke ->
+    $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords($('h1:first').text! - /[（(].*/) # Strip the english part and draw the strokes
 
@@ -617,7 +617,7 @@ function render (json)
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
-  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke'>畫</span></div>" else "<div class='radical'><span class='iconic-circle stroke'>畫</span></div>"
+  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke' title='筆順動畫'>畫</span></div>" else "<div class='radical'><span class='iconic-circle stroke' title='筆順動畫'>畫</span></div>"
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
@@ -631,6 +631,8 @@ function render (json)
       """
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
+    unless title is /</
+      title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """#char-html
       <h1 class='title'>#{ h title }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)

@@ -57,11 +57,17 @@ $primary-color: #6B0000;
 ,   "MOEDICT.ttf", truetype
 ), "MOEDICT.eot");
 
+@mixin kai-fonts {
+    font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+@mixin song-fonts {
+    font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
 @mixin fonts {
-    font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+    font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 @mixin en-fonts {
-    font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+    font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
 body {
@@ -77,7 +83,8 @@ body {
 }
 
 .title {
-    font-size: 185%;
+    @include kai-fonts;
+    font-size: 200%;
     line-height: 100%;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -311,7 +318,16 @@ input.iconic-circle {
     font-size: 100%;
     line-height: 1.5;
     h1 {
-        @include fonts;
+        @include kai-fonts;
+        div.stroke {
+            display: inline;
+            cursor: pointer;
+            border: 1px solid white;
+            &:hover {
+                border: 1px solid #a00;
+                background: #fff8f8;
+            }
+        }
     }
     ul, ol {
         padding-left: 35px;
@@ -836,7 +852,11 @@ body.lang-t .example, body.lang-h .example {
     vertical-align: top;
 }
 
+.example {
+    @include song-fonts;
+}
 .quote {
+    @include song-fonts;
     clear: both;
     display: block;
     font-size: 92%;
@@ -964,7 +984,14 @@ span {
         padding: 0px;
         font-size: 75%;
     }
-    .title, .example {
+    .title {
+        margin: 0;
+        padding: 0;
+        font-size: 130%;
+        line-height: 120%;
+        .playAudio { display: none !important }
+    }
+    .example {
         display: none;
     }
 }

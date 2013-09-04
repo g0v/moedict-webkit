@@ -9441,7 +9441,7 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 
 body {
   background-image: url('images/subtle_stripes.png?1374954579');
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   body {
@@ -9452,7 +9452,7 @@ body {
   }
 }
 body input, body button, body select, body textarea, body .ui-widget {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 
 .ebas {
@@ -9462,7 +9462,8 @@ body input, body button, body select, body textarea, body .ui-widget {
 }
 
 .title {
-  font-size: 185%;
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-size: 200%;
   line-height: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -9720,7 +9721,16 @@ input.iconic-circle {
   line-height: 1.5;
 }
 .result h1 {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+.result h1 div.stroke {
+  display: inline;
+  cursor: pointer;
+  border: 1px solid white;
+}
+.result h1 div.stroke:hover {
+  border: 1px solid #a00;
+  background: #fff8f8;
 }
 .result ul, .result ol {
   padding-left: 35px;
@@ -9880,12 +9890,12 @@ body#moedict.overflow-scrolling-false.lang-t .pinyin {
   font-family: 'MOEDICT';
 }
 body#moedict.lang-t .pinyin {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
 .english {
   word-break: normal !important;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
   font-weight: normal;
   font-size: 90%;
   margin-left: 5px;
@@ -9894,7 +9904,7 @@ body#moedict.lang-t .pinyin {
 
 .pinyin {
   word-break: normal !important;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
   display: inline-block;
 }
 
@@ -9988,7 +9998,7 @@ span .tone {
 }
 
 .fw_def {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
 img.logo {
@@ -10196,7 +10206,7 @@ body.lang-a.web #lookback {
 }
 
 body.lang-h .bopomofo {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
@@ -10217,7 +10227,12 @@ body.lang-t .example, body.lang-h .example {
   vertical-align: top;
 }
 
+.example {
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+
 .quote {
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   clear: both;
   display: block;
   font-size: 92%;
@@ -10293,7 +10308,7 @@ span a {
   }
 }
 .ui-tooltip {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   background: #fffcfc !important;
   min-width: 300px;
   width: 300px;
@@ -10315,7 +10330,7 @@ span a {
   left: 7px;
 }
 .ui-tooltip li {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   margin: 0 !important;
   margin-left: -18px !important;
   margin-top: 5px;
@@ -10339,7 +10354,16 @@ span a {
   padding: 0px;
   font-size: 75%;
 }
-.ui-tooltip .title, .ui-tooltip .example {
+.ui-tooltip .title {
+  margin: 0;
+  padding: 0;
+  font-size: 130%;
+  line-height: 120%;
+}
+.ui-tooltip .title .playAudio {
+  display: none !important;
+}
+.ui-tooltip .example {
   display: none;
 }
 
@@ -10445,7 +10469,7 @@ canvas {
 
 .cc0 {
   line-height: 150%;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif, "MOESongUN", "教育部標準宋體UN", "全字庫正宋體", "TW-Sung-98_1", "教育部標準宋體", "CMEXa1", "新細明體", "PMingLiU", "MingLiU", "全字庫正楷體", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "HAN NOM A", "HAN NOM B";
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
 @media print {
