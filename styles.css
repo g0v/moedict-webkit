@@ -1,6 +1,6 @@
-@charset "UTF-8";
-/*! HiDPI v1 | MIT License | git.io/hidpi */
-/*!
+@charset "utf-8";
+/* HiDPI v1 | MIT License | git.io/hidpi */
+/*
  * Bootstrap v2.3.1
  *
  * Copyright 2012 Twitter, Inc
@@ -9,7 +9,7 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
-/*!
+/*
  * Bootstrap v3.0.0
  *
  * Copyright 2013 Twitter, Inc
@@ -18,7 +18,7 @@
  *
  * Designed and built with all the love in the world by @mdo and @fat.
  */
-/*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+/* normalize.css v2.1.0 | MIT License | git.io/normalize */
 article,
 aside,
 details,
@@ -7122,20 +7122,115 @@ code:lang(ja) {
 }
 
 /* 
- * 漢字標準格式·字體設定
- * Font settings for Standard Han Format
+ * 漢字標準格式 v2.1.0
+ * @font-face字體設定
+ * ---
+ * @font-face settings,
+ * Hanzi-optimised CSS Mode
+ *
+ *
  *
  * Lisence: MIT Lisence
- * Last-Modified: 2013/01/13
+ * Last Modified: 2013/08/28
  *
  */
 /* ---------------------------------------
- * 四類漢字字體集（Four typefaces in Han）
+   四類漢字字體集
+   ---
+   The Four Typefaces
    ---------------------------------------
+ *
  * 1. On Mac OS X;
  * 2. On Windows;
  * 3. For Webkit;
- * 4. For Gecko.
+ * 4. For Gecko;
+ * 5. On Android;
+ * 6. IE hacks.
+ *
+ *
+   ---------------------------------------
+   黑體
+   Heiti (Gothic)
+   --------------------------------------- */
+@font-face {
+  font-family: 'Han Heiti';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
+}
+
+@font-face {
+  font-family: 'Han Heiti';
+  src: local("Microsoft Yahei"), local("Microsoft Jhenghei");
+  unicode-range: U+4E00;
+}
+
+/* 宋體（明朝體）
+   Songti (Mincho)
+   --------------------------------------- */
+@font-face {
+  font-family: 'Han Songti';
+  src: local(STSongti-SC-Regular), local("Songti SC"), local(PMingLiU), local(SimSun);
+}
+
+@font-face {
+  font-family: 'Han Songti';
+  src: local(PMingLiU), local(SimSun);
+  unicode-range: U+4E00;
+}
+
+/* 楷體
+   Kaiti (Cursive)
+   --------------------------------------- */
+@font-face {
+  font-family: 'Han Kaiti';
+  src: local(STKaiti), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
+}
+
+@font-face {
+  font-family: 'Han Kaiti';
+  src: local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
+  unicode-range: U+4E00;
+}
+
+/* 中華民國國家標準楷體 */
+@font-face {
+  font-family: 'Han Kaiti CNS';
+  src: local("標楷體"), local(DFKaiShu-SB-Estd-BF);
+}
+
+@font-face {
+  font-family: 'Han Kaiti CNS';
+  src: local("標楷體"), local(DFKaiShu-SB-Estd-BF);
+  unicode-range: U+4E00;
+}
+
+/* 中國國家標準楷體 */
+@font-face {
+  font-family: 'Han Kaiti GB';
+  src: local(STKaiti), local(Kai), local(Kaiti), local(DFKai-SB);
+}
+
+@font-face {
+  font-family: 'Han Kaiti GB';
+  src: local(Kaiti), local(DFKai-SB);
+  unicode-range: U+4E00;
+}
+
+/* 仿宋體
+   Fangsong
+   --------------------------------------- */
+@font-face {
+  font-family: 'Han Fangsong';
+  src: local(STFangsong), local(FangSong);
+}
+
+@font-face {
+  font-family: 'Han Fangsong';
+  src: local(FangSong);
+  unicode-range: U+4E00;
+}
+
+/* 手寫體
+   Cursive
    --------------------------------------- */
 @font-face {
   font-family: cursive;
@@ -7143,37 +7238,15 @@ code:lang(ja) {
 }
 
 @font-face {
-  font-family: 'Han Heiti';
-  src: local("Hiragino Sans GB"), local("Microsoft Yahei"), local("Microsoft Jhenghei");
-}
-
-@font-face {
-  font-family: 'Han Songti';
-  src: local(STSongti-SC-Regular), local("Songti SC"), local(PMingLiU), local(SimSun);
-}
-
-@font-face {
-  font-family: 'Han Kaiti';
-  src: local(STKaiti), local(Kai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
-}
-
-@font-face {
-  font-family: 'Han Kaiti CNS';
+  font-family: cursive;
   src: local("標楷體"), local(DFKaiShu-SB-Estd-BF);
-}
-
-@font-face {
-  font-family: 'Han Kaiti GB';
-  src: local(STKaiti), local(Kai);
-}
-
-@font-face {
-  font-family: 'Han Fangsong';
-  src: local(STFangsong), local(FangSong);
+  unicode-range: U+4E00;
 }
 
 /* ---------------------------------------
- * 襯線西文斜體（Serif italic for Latin）
+   襯線西文斜體
+   ---
+   Italic serif for Latin
    --------------------------------------- */
 @font-face {
   /* 襯線西文斜體字型 */
@@ -7182,7 +7255,9 @@ code:lang(ja) {
 }
 
 /* ---------------------------------------
- * 無襯線西文斜體（Sans-serif italic for Latin）
+   無襯線西文斜體
+   ---
+   Italic sans-serif for Latin
    --------------------------------------- */
 @font-face {
   font-family: 'Latin Italic Sans';
@@ -7190,34 +7265,51 @@ code:lang(ja) {
 }
 
 /* ---------------------------------------
- * 注音符號（MPS，Zhuyin）
+   注音符號
+   ---
+   Zhuyin
    --------------------------------------- */
 @font-face {
-  font-family: 'Han Zhuyin';
-  src: url(../fonts/zhuyin.eot);
+  font-family: 'Han Zhuyin Cursive';
+  src: local("☺"), url(../fonts/zhuyin.eot) format("embedded-opentype"), url(../fonts/zhuyin.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Han Zhuyin';
-  src: url(../fonts/zhuyin.ttf);
+  font-family: 'Han Zhuyin Sans';
+  src: local("Hiragino Sans GB");
+}
+
+@font-face {
+  font-family: 'Han Zhuyin Sans';
+  src: local("Heiti TC");
+  unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
 }
 
 /* ---------------------------------------
- * 漢字標點（Biaodian, Yakumono）
-   ---------------------------------------
+   漢字標點
+   ---
+   Hanzi puncuation,
+   ‘Biaodian’(zh) and ‘Yakumono’(ja)
+   --------------------------------------
+   **注意：**為Windows設定的字體*必須*置於
+   OS X字體設定後方。
+
    **NOTE**: Font settings for Windows
    should be *always* placed after tho-
    se for OS X. Since there are quite a
    few fonts from Windows existing on 
    OS X as well.
-   --------------------------------------- 
+   ---------------------------------------
+ *
  * 1. On Mac OS X and iOS;
  * 2. On Windows;
  * 3. On Ubuntu and Debian;
  * 4. For other OSs, uses web font.
-
-
-   Fullwidth full stop (單點全形句號: ．)
+ *
+ *
+   ---------------------------------------
+   單點全形句號（．）
+   Fullwidth full stop
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7227,7 +7319,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
   unicode-range: U+FF0E;
 }
 
@@ -7239,7 +7331,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
   unicode-range: U+FF0E;
 }
 
@@ -7251,11 +7343,12 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local(SimSun), local(IPAexMincho), local(IPAMincho), local(UMingCN);
   unicode-range: U+FF0E;
 }
 
-/* Middle dot (間隔號: ·)
+/* 間隔號（·）
+   Middle dot
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7265,7 +7358,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Serif';
-  src: local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
+  src: local(STSongti-SC-Regular), local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
   unicode-range: U+00B7;
 }
 
@@ -7277,7 +7370,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
+  src: local(STSongti-SC-Regular), local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
   unicode-range: U+00B7;
 }
 
@@ -7289,11 +7382,12 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
+  src: local(STSongti-SC-Regular), local(STSong), local("Heiti SC"), local(SimSun), local("ARPLMingU20"), local("VL Gothic");
   unicode-range: U+00B7;
 }
 
-/* Em dash (破折號: ——)
+/* 破折號（——）
+   Em dash
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7303,7 +7397,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local("Microsoft Yahei"), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
   unicode-range: U+2014;
 }
 
@@ -7327,7 +7421,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local("Microsoft Yahei"), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
   unicode-range: U+2014;
 }
 
@@ -7339,11 +7433,12 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSong), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(STSongti-SC-Regular), local(STSong), local("Microsoft Yahei"), local(SimSun), local(IPAexMincho), local(WenQuanYiZenHei), local("VL Gothic");
   unicode-range: U+2014;
 }
 
-/* Ellipsis (省略號: ……)
+/* 省略號（……）
+   Ellipsis
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7393,7 +7488,8 @@ code:lang(ja) {
   unicode-range: U+2026;
 }
 
-/* Curve quotes (彎引號: “‘’”)
+/* 彎引號（“‘’”）
+   Curve quotes
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7403,7 +7499,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Serif';
-  src: local("Lisong Pro"), local(STSong), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
+  src: local("Lisong Pro"), local(STSongti-SC-Regular), local(STSong), local(STHeiti), local("Heiti SC"), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
   unicode-range: U+201C-201D, U+2018-2019;
 }
 
@@ -7415,7 +7511,7 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: local("Lisong Pro"), local(STSong), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
+  src: local("Lisong Pro"), local(STSongti-SC-Regular), local(STSong), local(STHeiti), local("Heiti SC"), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
   unicode-range: U+201C-201D, U+2018-2019;
 }
 
@@ -7427,33 +7523,76 @@ code:lang(ja) {
 
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: local("Lisong Pro"), local(STSong), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
+  src: local("Lisong Pro"), local(STSongti-SC-Regular), local(STSong), local(SimSun), local(PMingLiU), local("IPAexMincho"), local(IPAMincho), local("AR PL UMing TW"), local("ARPLMingU20");
   unicode-range: U+201C-201D, U+2018-2019;
 }
 
-/* ---------------------------------------
-   Biaodian: Advanced
-   ---------------------------------------
-
-
- * a. Period, comma, paused comma
-      (句、逗、頓號: 。，、);
-   b. Colon, semicolon, question, exclam-
-      ation marks.
+/* 着重號（●）
+   Emphasis dots
    --------------------------------------- */
 @font-face {
+  font-family: 'Biaodian Sans';
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+@font-face {
   font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU), local("IPAexGothic"), local("AR PL UMing TW"), local("ARPLMingU20");
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local("Times New Roman"), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+
+/* ---------------------------------------
+   進階版標點樣式修正
+   ---
+   Advanced Correction to
+   Hanzi Punctuation
+   ---------------------------------------
+ *
+ * a. 句、逗、頓號（。，、）
+ *    Period, comma, paused comma
+ *
+ * b. 分、冒、問、嘆號（；：？！）
+ *    Colon, semicolon, question, exclam-
+ *    ation marks
+ *
+ */
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("MS Gothic"), local("IPAexGothic"), local("AR PL UMing TW"), local("ARPLMingU20");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
 }
 
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun), local(PMingLiU), local("IPAexGothic"), local("AR PL UMing TW"), local("ARPLMingU20");
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("IPAexGothic"), local("AR PL UMing TW"), local("ARPLMingU20");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
 }
 
-/* CNS */
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU), local("ARPLMingU20");
@@ -7466,9 +7605,14 @@ code:lang(ja) {
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
 }
 
-/* a. Quotes (引號:「『』」);
-   b. Brackets (括號:（）《》〈〉).
-   --------------------------------------- */
+/*
+ * a. 引號（「『』」）
+ *    Quotes
+ *
+ * b. 括號、書名號（（）《》〈〉）
+ *    Brackets
+ *
+ */
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU), local("IPAexGothic"), local("AR PL UMing TW"), local("ARPLMingU20");
@@ -7493,8 +7637,11 @@ code:lang(ja) {
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09;
 }
 
-/* ‘Unicode-range’ solution to Firefox's
-   unspported issue
+/*
+ * 解決Firefox不支援`Unicode-range`的問題
+ * 
+ * Solution to Firefox's `Unicode-range`
+ * unspported issue
    --------------------------------------- */
 @font-face {
   font-family: 'Biaodian Sans';
@@ -7532,7 +7679,7 @@ code:lang(ja) {
   unicode-range: U+270C;
 }
 
-/*!
+/*
  *  Font Awesome 3.2.1
  *  the iconic font designed for Bootstrap
  *  ------------------------------------------------------------------------------
@@ -9440,12 +9587,12 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 }
 
 body {
-  background-image: url('images/subtle_stripes.png?1374954579');
+  background-image: url('images/subtle_stripes.png?1378306894');
   font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "XinGothic-CiticPress", "蘭亭黑-繁", "黑體-繁", "微軟正黑體", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   body {
-    background-image: url('images/subtle_stripes_x2.png?1374954579');
+    background-image: url('images/subtle_stripes_x2.png?1378306894');
     -webkit-background-size: 40px 40px;
     -moz-background-size: 40px 40px;
     background-size: 40px 40px;
@@ -9462,7 +9609,7 @@ body input, body button, body select, body textarea, body .ui-widget {
 }
 
 .title {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Serif CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   font-size: 200%;
   line-height: 100%;
   margin-top: 15px;
@@ -9550,13 +9697,13 @@ body.lang-a #query-box {
 }
 
 .navbar-inverse {
-  background-image: url('images/leather.jpg?1374954579');
+  background-image: url('images/leather.jpg?1378306894');
   border-bottom: 1px solid #3c1816;
   opacity: 0.9;
 }
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   .navbar-inverse {
-    background-image: url('images/leather_x2.jpg?1374954579');
+    background-image: url('images/leather_x2.jpg?1378306894');
     -webkit-background-size: 400px 219px;
     -moz-background-size: 400px 219px;
     background-size: 400px 219px;
@@ -9721,7 +9868,7 @@ input.iconic-circle {
   line-height: 1.5;
 }
 .result h1 {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Serif CNS", "MOEDICT", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .result h1 div.stroke {
   display: inline;
@@ -10228,11 +10375,11 @@ body.lang-t .example, body.lang-h .example {
 }
 
 .example {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Serif CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 
 .quote {
-  font-family: "Biaodian Pro Sans CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-family: "Biaodian Pro Serif CNS", "MOEDICT", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "宋體-繁", "儷宋 Pro", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   clear: both;
   display: block;
   font-size: 92%;
