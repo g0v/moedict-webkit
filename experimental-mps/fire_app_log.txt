@@ -1,0 +1,1034 @@
+2013-08-12 18:45:40     error sass/right-angle.sass (Line 1: Invalid CSS after ".right-angle ": expected selector, was "{")
+2013-08-12 18:45:40    create stylesheets/right-angle.css 
+2013-08-12 18:45:44     error sass/right-angle.sass (Line 1: Invalid CSS after ".right-angle ": expected selector, was "{")
+2013-08-12 18:45:44 overwrite stylesheets/right-angle.css 
+2013-08-12 18:45:46    remove .sass-cache/ 
+2013-08-12 18:45:46    remove stylesheets/right-angle.css 
+2013-08-12 18:45:46     error sass/right-angle.sass (Line 1: Invalid CSS after ".right-angle ": expected selector, was "{")
+2013-08-12 18:45:46    create stylesheets/right-angle.css 
+2013-08-12 18:46:38     error sass/right-angle.sass (Line 1: Invalid CSS after ".right-angle ": expected selector, was "{")
+2013-08-12 18:46:38 overwrite stylesheets/right-angle.css 
+2013-08-12 18:46:43    remove .sass-cache/ 
+2013-08-12 18:46:43 directory css/ 
+2013-08-12 18:46:43     error sass/right-angle.sass (Line 1: Invalid CSS after ".right-angle ": expected selector, was "{")
+2013-08-12 18:46:43    create css/right-angle.css 
+2013-08-12 18:47:38     error sass/right-angle.sass (Line 4: Invalid CSS after "#ff0": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:47:38 overwrite css/right-angle.css 
+2013-08-12 18:48:00    remove .sass-cache/ 
+2013-08-12 18:48:00    remove css/right-angle.css 
+2013-08-12 18:48:00     error sass/right-angle.sass (Line 4: Invalid CSS after "#ff0": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:48:00    create css/right-angle.css 
+2013-08-12 18:48:00     error sass/right-angle.sass (Line 4: Invalid CSS after "#ff0": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:48:00 overwrite css/right-angle.css 
+2013-08-12 18:48:13     error sass/right-angle.sass (Line 4: Invalid CSS after "#ffff00": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:48:13 overwrite css/right-angle.css 
+2013-08-12 18:48:47    remove css/right-angle.css 
+2013-08-12 18:48:47     error sass/right-angle.sass (Line 4: Invalid CSS after "#ffff00": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:48:47    create css/right-angle.css 
+2013-08-12 18:48:47     error sass/right-angle.sass (Line 4: Invalid CSS after "#ffff00": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:48:47 overwrite css/right-angle.css 
+2013-08-12 18:49:06     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ".")
+2013-08-12 18:49:06 overwrite css/right-angle.css 
+2013-08-12 18:49:07     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:07 overwrite css/right-angle.css 
+2013-08-12 18:49:24    remove css/right-angle.css 
+2013-08-12 18:49:24     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:24    create css/right-angle.css 
+2013-08-12 18:49:24     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:25 overwrite css/right-angle.css 
+2013-08-12 18:49:47     error sass/right-angle.sass (Line 4: Invalid CSS after "2em": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:47 overwrite css/right-angle.css 
+2013-08-12 18:49:56    remove css/right-angle.css 
+2013-08-12 18:49:56     error sass/right-angle.sass (Line 4: Invalid CSS after "2em": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:56    create css/right-angle.css 
+2013-08-12 18:49:57     error sass/right-angle.sass (Line 4: Invalid CSS after "2em": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:49:57 overwrite css/right-angle.css 
+2013-08-12 18:50:10     error sass/right-angle.sass (Line 6: Invalid CSS after "2em": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:50:10 overwrite css/right-angle.css 
+2013-08-12 18:50:51     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:50:51 overwrite css/right-angle.css 
+2013-08-12 18:50:59     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:50:59 identical css/right-angle.css 
+2013-08-12 18:51:05     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:51:05 identical css/right-angle.css 
+2013-08-12 18:51:43     error sass/right-angle.sass (Line 4: Invalid CSS after "red": expected expression (e.g. 1px, bold), was ";")
+2013-08-12 18:51:43 overwrite css/right-angle.css 
+2013-08-12 18:52:07    remove .sass-cache/ 
+2013-08-12 18:52:07    create css/right-angle.css 
+2013-08-12 18:57:14 overwrite css/right-angle.css 
+2013-08-12 22:57:48 overwrite stylesheets/right-angle.css 
+2013-08-14 22:17:54    remove .sass-cache/ 
+2013-08-14 22:17:54    remove css/right-angle.css 
+2013-08-14 22:17:54    create css/right-angle.css 
+2013-08-14 22:30:14 overwrite css/right-angle.css 
+2013-08-14 22:50:26    remove .sass-cache/ 
+2013-08-14 22:50:26    remove css/right-angle.css 
+2013-08-14 22:50:27    create css/right-angle.css 
+2013-08-14 23:32:33    remove .sass-cache/ 
+2013-08-14 23:32:33    remove css/right-angle.css 
+2013-08-14 23:32:33    create css/right-angle.css 
+2013-08-15 00:23:49 identical css/right-angle.css 
+2013-08-15 00:23:52     error sass/right-angle.scss (Line 6: Invalid CSS after "": expected selector_comma_sequence, was "")
+2013-08-15 00:23:52 overwrite css/right-angle.css 
+2013-08-15 00:24:05 overwrite css/right-angle.css 
+2013-08-15 00:24:11 identical css/right-angle.css 
+2013-08-15 00:24:22 overwrite css/right-angle.css 
+2013-08-15 00:24:25 identical css/right-angle.css 
+2013-08-15 00:24:29    remove .sass-cache/ 
+2013-08-15 00:24:29    remove css/right-angle.css 
+2013-08-15 00:24:29    create css/right-angle.css 
+2013-08-15 00:30:51 overwrite css/right-angle.css 
+2013-08-15 00:31:02 overwrite css/right-angle.css 
+2013-08-15 00:31:37 overwrite css/right-angle.css 
+2013-08-15 00:31:44 identical css/right-angle.css 
+2013-08-15 00:31:57     error sass/right-angle.scss (Line 11: Invalid CSS after "		text-transform:": expected expression (e.g. 1px, bold), was "}")
+2013-08-15 00:31:57 overwrite css/right-angle.css 
+2013-08-15 00:38:06     error sass/right-angle.scss (Line 10: Invalid CSS after "		text-transform: ": expected expression (e.g. 1px, bold), was "@include textXS...")
+2013-08-15 00:38:06 overwrite css/right-angle.css 
+2013-08-15 00:38:16     error sass/right-angle.scss (Line 9: Invalid CSS after "		text-transform: ": expected expression (e.g. 1px, bold), was "@include textXS...")
+2013-08-15 00:38:16 overwrite css/right-angle.css 
+2013-08-15 00:38:21     error sass/right-angle.scss (Line 9: Undefined mixin 'textXS'.)
+2013-08-15 00:38:21 overwrite css/right-angle.css 
+2013-08-15 00:38:25     error sass/right-angle.scss (Line 10: Invalid CSS after "		text-transform: ": expected expression (e.g. 1px, bold), was "@include textXS...")
+2013-08-15 00:38:25 overwrite css/right-angle.css 
+2013-08-15 00:38:29     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:38:29 overwrite css/right-angle.css 
+2013-08-15 00:38:34     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:38:34 identical css/right-angle.css 
+2013-08-15 00:40:52    remove .sass-cache/ 
+2013-08-15 00:40:52    remove css/right-angle.css 
+2013-08-15 00:40:52     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:40:52    create css/right-angle.css 
+2013-08-15 00:41:42     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:41:42 overwrite css/right-angle.css 
+2013-08-15 00:41:50    remove .sass-cache/ 
+2013-08-15 00:41:50    remove css/right-angle.css 
+2013-08-15 00:41:50     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:41:50    create css/right-angle.css 
+2013-08-15 00:41:57     error sass/right-angle.scss (Line 10: Undefined mixin 'textXS'.)
+2013-08-15 00:41:57 overwrite css/right-angle.css 
+2013-08-15 00:42:10     error sass/right-angle.scss (Line 2: Invalid CSS after "@import": expected file to import (string or url()), was "(css3)")
+2013-08-15 00:42:10 overwrite css/right-angle.css 
+2013-08-15 00:42:12     error sass/right-angle.scss (Line 2: Invalid CSS after "@import": expected file to import (string or url()), was "(css3);")
+2013-08-15 00:42:12 overwrite css/right-angle.css 
+2013-08-15 00:42:15    remove .sass-cache/ 
+2013-08-15 00:42:15    remove css/right-angle.css 
+2013-08-15 00:42:15     error sass/right-angle.scss (Line 2: Invalid CSS after "@import": expected file to import (string or url()), was "(css3);")
+2013-08-15 00:42:15    create css/right-angle.css 
+2013-08-15 00:42:15     error sass/right-angle.scss (Line 2: Invalid CSS after "@import": expected file to import (string or url()), was "(css3);")
+2013-08-15 00:42:15 overwrite css/right-angle.css 
+2013-08-15 00:42:22     error sass/right-angle.scss (Line 2: Invalid CSS after "import": expected "{", was "(css3);")
+2013-08-15 00:42:22 overwrite css/right-angle.css 
+2013-08-15 00:42:25    remove css/right-angle.css 
+2013-08-15 00:42:25     error sass/right-angle.scss (Line 2: Invalid CSS after "import": expected "{", was "(css3);")
+2013-08-15 00:42:25    create css/right-angle.css 
+2013-08-15 00:42:25     error sass/right-angle.scss (Line 2: Invalid CSS after "import": expected "{", was "(css3);")
+2013-08-15 00:42:25 overwrite css/right-angle.css 
+2013-08-15 00:43:11     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:43:11 overwrite css/right-angle.css 
+2013-08-15 00:43:15    remove .sass-cache/ 
+2013-08-15 00:43:15    remove css/right-angle.css 
+2013-08-15 00:43:15     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:43:15    create css/right-angle.css 
+2013-08-15 00:43:16     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:43:16 overwrite css/right-angle.css 
+2013-08-15 00:44:47    remove .sass-cache/ 
+2013-08-15 00:44:47    remove css/right-angle.css 
+2013-08-15 00:44:47     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:44:47    create css/right-angle.css 
+2013-08-15 00:44:48     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:44:48 overwrite css/right-angle.css 
+2013-08-15 00:45:19     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:45:19 overwrite css/right-angle.css 
+2013-08-15 00:45:29     error sass/right-angle.scss (Line 2: File to import not found or unreadable: css3.
+Load paths:
+  /Users/Yijun/網站/projects/Mengdian/experimental-mps/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-f4bfe8555a7d2cae09bc/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/heygrady-compass-html5-boilerplate-4cc8815/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.1.1/vendor/assets/stylesheets
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.5/sass
+  /Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss
+  Compass::SpriteImporter
+  /vendor/assets/stylesheets)
+2013-08-15 00:45:29 identical css/right-angle.css 
+2013-08-15 00:46:24    create css/css3.css 
+2013-08-15 00:46:25 overwrite css/right-angle.css 
+2013-08-15 00:46:33 identical css/right-angle.css 
+2013-08-15 00:46:37 overwrite css/right-angle.css 
+2013-08-15 00:46:53 overwrite css/right-angle.css 
+2013-08-15 00:46:58 overwrite css/right-angle.css 
+2013-08-15 00:47:08 overwrite css/right-angle.css 
+2013-08-15 00:47:26 overwrite css/right-angle.css 
+2013-08-15 00:47:34 overwrite css/right-angle.css 
+2013-08-15 00:47:40 overwrite css/right-angle.css 
+2013-08-15 00:47:47 overwrite css/right-angle.css 
+2013-08-15 00:48:06 overwrite css/right-angle.css 
+2013-08-15 00:48:08 overwrite css/right-angle.css 
+2013-08-15 00:48:18 overwrite css/right-angle.css 
+2013-08-15 00:48:40 overwrite css/right-angle.css 
+2013-08-15 00:48:41 identical css/right-angle.css 
+2013-08-15 00:53:49 overwrite css/right-angle.css 
+2013-08-15 00:53:56    remove .sass-cache/ 
+2013-08-15 00:53:57    remove css/css3.css 
+2013-08-15 00:53:57    remove css/right-angle.css 
+2013-08-15 00:53:57    create css/css3.css 
+2013-08-15 00:53:57    create css/right-angle.css 
+2013-08-15 00:54:50     error sass/right-angle.scss (Line 8: Invalid CSS after "		display": expected ";", was ": inline-block;")
+2013-08-15 00:54:50 overwrite css/right-angle.css 
+2013-08-15 00:54:52 overwrite css/right-angle.css 
+2013-08-15 01:03:43 overwrite css/right-angle.css 
+2013-08-15 01:09:14 overwrite css/right-angle.css 
+2013-08-15 01:09:40 overwrite css/right-angle.css 
+2013-08-15 01:09:46    remove .sass-cache/ 
+2013-08-15 01:09:46    remove css/css3.css 
+2013-08-15 01:09:46    remove css/right-angle.css 
+2013-08-15 01:09:46    create css/css3.css 
+2013-08-15 01:09:46    create css/right-angle.css 
+2013-08-15 03:17:29 identical css/right-angle.css 
+2013-08-15 03:17:40 overwrite css/right-angle.css 
+2013-08-15 03:17:47    remove .sass-cache/ 
+2013-08-15 03:17:48    remove css/css3.css 
+2013-08-15 03:17:48    remove css/right-angle.css 
+2013-08-15 03:17:48    create css/css3.css 
+2013-08-15 03:17:48    create css/right-angle.css 
+2013-08-15 03:19:29 overwrite css/right-angle.css 
+2013-08-15 03:19:40    remove .sass-cache/ 
+2013-08-15 03:19:40    remove css/css3.css 
+2013-08-15 03:19:40    remove css/right-angle.css 
+2013-08-15 03:19:40    create css/css3.css 
+2013-08-15 03:19:40    create css/right-angle.css 
+2013-08-15 03:19:44 identical css/right-angle.css 
+2013-08-15 03:19:50    remove .sass-cache/ 
+2013-08-15 03:19:50    remove css/css3.css 
+2013-08-15 03:19:50    remove css/right-angle.css 
+2013-08-15 03:19:50    create css/css3.css 
+2013-08-15 03:19:50    create css/right-angle.css 
+2013-08-15 03:20:27 overwrite css/right-angle.css 
+2013-08-15 03:20:47 overwrite css/right-angle.css 
+2013-08-15 03:21:02 overwrite css/right-angle.css 
+2013-08-15 03:21:04 overwrite css/right-angle.css 
+2013-08-15 03:21:09    remove .sass-cache/ 
+2013-08-15 03:21:09    remove css/css3.css 
+2013-08-15 03:21:09    remove css/right-angle.css 
+2013-08-15 03:21:09    create css/css3.css 
+2013-08-15 03:21:09    create css/right-angle.css 
+2013-08-15 03:21:38 overwrite css/right-angle.css 
+2013-08-15 03:21:51 overwrite css/right-angle.css 
+2013-08-15 03:22:16     error sass/right-angle.scss (Line 8: Invalid CSS after "    text-indent": expected ";", was ": 0;")
+2013-08-15 03:22:16 overwrite css/right-angle.css 
+2013-08-15 03:22:20 overwrite css/right-angle.css 
+2013-08-15 03:22:23 overwrite css/right-angle.css 
+2013-08-15 03:22:35 overwrite css/right-angle.css 
+2013-08-15 03:22:51 overwrite css/right-angle.css 
+2013-08-15 03:22:56 overwrite css/right-angle.css 
+2013-08-15 03:28:35 overwrite css/right-angle.css 
+2013-08-15 03:28:38 overwrite css/right-angle.css 
+2013-08-15 03:28:47 overwrite css/right-angle.css 
+2013-08-15 03:29:24 overwrite css/right-angle.css 
+2013-08-15 03:29:26 overwrite css/right-angle.css 
+2013-08-15 03:29:42 overwrite css/right-angle.css 
+2013-08-15 03:29:47 identical css/right-angle.css 
+2013-08-15 03:29:49 overwrite css/right-angle.css 
+2013-08-15 03:29:51 overwrite css/right-angle.css 
+2013-08-15 03:29:57 overwrite css/right-angle.css 
+2013-08-15 03:30:03    remove .sass-cache/ 
+2013-08-15 03:30:03    remove css/css3.css 
+2013-08-15 03:30:03    remove css/right-angle.css 
+2013-08-15 03:30:03    create css/css3.css 
+2013-08-15 03:30:04    create css/right-angle.css 
+2013-08-15 03:30:34 identical css/right-angle.css 
+2013-08-15 03:30:53 overwrite css/right-angle.css 
+2013-08-15 03:30:55    remove .sass-cache/ 
+2013-08-15 03:30:55    remove css/css3.css 
+2013-08-15 03:30:55    remove css/right-angle.css 
+2013-08-15 03:30:56    create css/css3.css 
+2013-08-15 03:30:56    create css/right-angle.css 
+2013-08-15 03:31:08 overwrite css/right-angle.css 
+2013-08-15 03:31:37 overwrite css/right-angle.css 
+2013-08-15 03:31:48 identical css/right-angle.css 
+2013-08-15 03:31:55 identical css/right-angle.css 
+2013-08-15 03:31:58    remove .sass-cache/ 
+2013-08-15 03:31:58    remove css/css3.css 
+2013-08-15 03:31:58    remove css/right-angle.css 
+2013-08-15 03:31:59    create css/css3.css 
+2013-08-15 03:31:59    create css/right-angle.css 
+2013-08-15 03:32:14 overwrite css/right-angle.css 
+2013-08-15 03:33:01 overwrite css/right-angle.css 
+2013-08-15 03:33:05    remove .sass-cache/ 
+2013-08-15 03:33:05    remove css/css3.css 
+2013-08-15 03:33:06    remove css/right-angle.css 
+2013-08-15 03:33:06    create css/css3.css 
+2013-08-15 03:33:06    create css/right-angle.css 
+2013-08-15 03:33:15 overwrite css/right-angle.css 
+2013-08-15 03:33:17    remove .sass-cache/ 
+2013-08-15 03:33:17    remove css/css3.css 
+2013-08-15 03:33:18    remove css/right-angle.css 
+2013-08-15 03:33:18    create css/css3.css 
+2013-08-15 03:33:18    create css/right-angle.css 
+2013-08-15 03:33:24    remove .sass-cache/ 
+2013-08-15 03:33:25    remove css/css3.css 
+2013-08-15 03:33:25    remove css/right-angle.css 
+2013-08-15 03:33:25    create css/css3.css 
+2013-08-15 03:33:25    create css/right-angle.css 
+2013-08-15 03:33:40 identical css/right-angle.css 
+2013-08-15 03:34:04 identical css/right-angle.css 
+2013-08-15 03:34:18 overwrite css/right-angle.css 
+2013-08-15 03:34:20    remove .sass-cache/ 
+2013-08-15 03:34:21    remove css/css3.css 
+2013-08-15 03:34:21    remove css/right-angle.css 
+2013-08-15 03:34:21    create css/css3.css 
+2013-08-15 03:34:21    create css/right-angle.css 
+2013-08-15 03:34:58 overwrite css/right-angle.css 
+2013-08-15 03:35:02    remove .sass-cache/ 
+2013-08-15 03:35:02    remove css/css3.css 
+2013-08-15 03:35:02    remove css/right-angle.css 
+2013-08-15 03:35:02    create css/css3.css 
+2013-08-15 03:35:02    create css/right-angle.css 
+2013-08-15 03:35:29 overwrite css/right-angle.css 
+2013-08-15 03:35:36 overwrite css/right-angle.css 
+2013-08-15 03:36:17 overwrite css/right-angle.css 
+2013-08-15 03:36:29    remove .sass-cache/ 
+2013-08-15 03:36:29    remove css/css3.css 
+2013-08-15 03:36:29    remove css/right-angle.css 
+2013-08-15 03:36:29    create css/css3.css 
+2013-08-15 03:36:29    create css/right-angle.css 
+2013-08-15 03:37:52 overwrite css/right-angle.css 
+2013-08-15 03:41:02 overwrite css/right-angle.css 
+2013-08-15 03:41:21 overwrite css/right-angle.css 
+2013-08-15 03:41:30 overwrite css/right-angle.css 
+2013-08-15 03:42:41 overwrite css/right-angle.css 
+2013-08-15 03:42:44 overwrite css/right-angle.css 
+2013-08-15 03:43:03 overwrite css/right-angle.css 
+2013-08-15 03:43:14 overwrite css/right-angle.css 
+2013-08-15 03:43:20 overwrite css/right-angle.css 
+2013-08-15 03:43:54 overwrite css/right-angle.css 
+2013-08-15 03:46:10 overwrite css/right-angle.css 
+2013-08-15 03:46:30 overwrite css/right-angle.css 
+2013-08-15 03:48:19 overwrite css/right-angle.css 
+2013-08-15 03:48:23 overwrite css/right-angle.css 
+2013-08-15 03:48:50 overwrite css/right-angle.css 
+2013-08-15 03:48:54 identical css/right-angle.css 
+2013-08-15 03:49:24 overwrite css/right-angle.css 
+2013-08-15 03:49:27 overwrite css/right-angle.css 
+2013-08-15 03:49:43     error sass/right-angle.scss (Line 28: Invalid CSS after "		@include": expected identifier, was "}")
+2013-08-15 03:49:43 overwrite css/right-angle.css 
+2013-08-15 03:49:49 overwrite css/right-angle.css 
+2013-08-15 03:50:30 overwrite css/right-angle.css 
+2013-08-15 03:51:50 overwrite css/right-angle.css 
+2013-08-15 03:53:39 overwrite css/right-angle.css 
+2013-08-15 03:53:46 overwrite css/right-angle.css 
+2013-08-15 03:53:49 overwrite css/right-angle.css 
+2013-08-15 03:54:40 overwrite css/right-angle.css 
+2013-08-15 03:57:17 overwrite css/right-angle.css 
+2013-08-15 03:57:26 overwrite css/right-angle.css 
+2013-08-15 03:57:29 overwrite css/right-angle.css 
+2013-08-15 03:57:44 overwrite css/right-angle.css 
+2013-08-15 03:58:06 overwrite css/right-angle.css 
+2013-08-15 03:58:11 overwrite css/right-angle.css 
+2013-08-15 03:58:47 overwrite css/right-angle.css 
+2013-08-15 03:58:56 overwrite css/right-angle.css 
+2013-08-15 03:59:14 overwrite css/right-angle.css 
+2013-08-15 03:59:25 overwrite css/right-angle.css 
+2013-08-15 03:59:27 overwrite css/right-angle.css 
+2013-08-15 03:59:50 overwrite css/right-angle.css 
+2013-08-15 04:01:12 overwrite css/right-angle.css 
+2013-08-15 04:01:15 overwrite css/right-angle.css 
+2013-08-15 04:01:18 overwrite css/right-angle.css 
+2013-08-15 04:01:26 overwrite css/right-angle.css 
+2013-08-15 04:01:36 overwrite css/right-angle.css 
+2013-08-15 04:01:54 overwrite css/right-angle.css 
+2013-08-15 04:02:35 overwrite css/right-angle.css 
+2013-08-15 04:02:37 overwrite css/right-angle.css 
+2013-08-15 04:03:18 overwrite css/right-angle.css 
+2013-08-15 04:03:22    remove .sass-cache/ 
+2013-08-15 04:03:22    remove css/css3.css 
+2013-08-15 04:03:22    remove css/right-angle.css 
+2013-08-15 04:03:22    create css/css3.css 
+2013-08-15 04:03:23    create css/right-angle.css 
+2013-08-15 04:04:30 overwrite css/right-angle.css 
+2013-08-15 04:04:34 overwrite css/right-angle.css 
+2013-08-15 04:04:36 overwrite css/right-angle.css 
+2013-08-15 04:05:33 overwrite css/right-angle.css 
+2013-08-15 04:05:36 overwrite css/right-angle.css 
+2013-08-15 04:05:40    remove .sass-cache/ 
+2013-08-15 04:05:40    remove css/css3.css 
+2013-08-15 04:05:40    remove css/right-angle.css 
+2013-08-15 04:05:40    create css/css3.css 
+2013-08-15 04:05:41    create css/right-angle.css 
+2013-08-15 04:06:23 overwrite css/right-angle.css 
+2013-08-15 04:06:27    remove .sass-cache/ 
+2013-08-15 04:06:27    remove css/css3.css 
+2013-08-15 04:06:27    remove css/right-angle.css 
+2013-08-15 04:06:27    create css/css3.css 
+2013-08-15 04:06:28    create css/right-angle.css 
+2013-08-15 04:06:52 overwrite css/right-angle.css 
+2013-08-15 04:06:55 overwrite css/right-angle.css 
+2013-08-15 04:07:01    remove .sass-cache/ 
+2013-08-15 04:07:01    remove css/css3.css 
+2013-08-15 04:07:01    remove css/right-angle.css 
+2013-08-15 04:07:01    create css/css3.css 
+2013-08-15 04:07:01    create css/right-angle.css 
+2013-08-15 04:07:21 overwrite css/right-angle.css 
+2013-08-15 04:07:33 identical css/right-angle.css 
+2013-08-15 04:07:39 overwrite css/right-angle.css 
+2013-08-15 04:08:54 overwrite css/right-angle.css 
+2013-08-15 04:09:00    remove .sass-cache/ 
+2013-08-15 04:09:00    remove css/css3.css 
+2013-08-15 04:09:00    remove css/right-angle.css 
+2013-08-15 04:09:00    create css/css3.css 
+2013-08-15 04:09:00    create css/right-angle.css 
+2013-08-15 04:09:45 overwrite css/right-angle.css 
+2013-08-15 04:09:55 overwrite css/right-angle.css 
+2013-08-15 04:10:06     error sass/right-angle.scss (Line 31: Invalid CSS after "		/*": expected /\//, was "@include textXS();")
+2013-08-15 04:10:06 overwrite css/right-angle.css 
+2013-08-15 04:10:07 overwrite css/right-angle.css 
+2013-08-15 04:10:13    remove .sass-cache/ 
+2013-08-15 04:10:13    remove css/css3.css 
+2013-08-15 04:10:13    remove css/right-angle.css 
+2013-08-15 04:10:13    create css/css3.css 
+2013-08-15 04:10:13    create css/right-angle.css 
+2013-08-15 04:10:29 overwrite css/right-angle.css 
+2013-08-15 04:10:43 overwrite css/right-angle.css 
+2013-08-15 04:10:49 overwrite css/right-angle.css 
+2013-08-15 04:10:57 overwrite css/right-angle.css 
+2013-08-15 04:11:00 overwrite css/right-angle.css 
+2013-08-15 04:11:53 identical css/right-angle.css 
+2013-08-15 04:12:00 overwrite css/right-angle.css 
+2013-08-15 04:12:02 overwrite css/right-angle.css 
+2013-08-15 04:12:22     error sass/right-angle.scss (Line 38: Invalid CSS after "	&": expected "{", was "}")
+2013-08-15 04:12:22 overwrite css/right-angle.css 
+2013-08-15 04:12:56 overwrite css/right-angle.css 
+2013-08-15 04:13:03 overwrite css/right-angle.css 
+2013-08-15 04:13:18     error sass/right-angle.scss (Line 42: Invalid CSS after "	    *": expected identifier, was "/")
+2013-08-15 04:13:18 overwrite css/right-angle.css 
+2013-08-15 04:13:28 overwrite css/right-angle.css 
+2013-08-15 04:13:32 overwrite css/right-angle.css 
+2013-08-15 04:13:53 overwrite css/right-angle.css 
+2013-08-15 04:14:16 overwrite css/right-angle.css 
+2013-08-15 04:14:27 overwrite css/right-angle.css 
+2013-08-15 04:15:04 overwrite css/right-angle.css 
+2013-08-15 04:16:05 overwrite css/right-angle.css 
+2013-08-15 04:16:15 overwrite css/right-angle.css 
+2013-08-15 04:16:24 overwrite css/right-angle.css 
+2013-08-15 04:16:31 overwrite css/right-angle.css 
+2013-08-15 04:16:46 overwrite css/right-angle.css 
+2013-08-15 04:16:56 overwrite css/right-angle.css 
+2013-08-15 04:17:50 overwrite css/right-angle.css 
+2013-08-15 04:17:58 overwrite css/right-angle.css 
+2013-08-15 04:18:06 overwrite css/right-angle.css 
+2013-08-15 04:18:16 overwrite css/right-angle.css 
+2013-08-15 04:18:42 overwrite css/right-angle.css 
+2013-08-15 04:18:48 overwrite css/right-angle.css 
+2013-08-15 04:18:51 overwrite css/right-angle.css 
+2013-08-15 04:19:02     error sass/right-angle.scss (Line 27: Invalid CSS after "		padding": expected ";", was ": 0 .05em;")
+2013-08-15 04:19:02 overwrite css/right-angle.css 
+2013-08-15 04:19:09 overwrite css/right-angle.css 
+2013-08-15 04:19:21 overwrite css/right-angle.css 
+2013-08-15 04:19:35 overwrite css/right-angle.css 
+2013-08-15 04:25:18 overwrite css/right-angle.css 
+2013-08-15 04:34:53 overwrite css/right-angle.css 
+2013-08-15 04:34:59 identical css/right-angle.css 
+2013-08-15 04:35:14 overwrite css/right-angle.css 
+2013-08-15 04:35:21 overwrite css/right-angle.css 
+2013-08-15 04:35:27 overwrite css/right-angle.css 
+2013-08-15 04:35:33 overwrite css/right-angle.css 
+2013-08-15 04:35:39 overwrite css/right-angle.css 
+2013-08-15 04:35:46 overwrite css/right-angle.css 
+2013-08-15 04:35:52 overwrite css/right-angle.css 
+2013-08-15 04:35:54 overwrite css/right-angle.css 
+2013-08-15 04:35:58 overwrite css/right-angle.css 
+2013-08-15 04:36:01 overwrite css/right-angle.css 
+2013-08-15 04:36:21 overwrite css/right-angle.css 
+2013-08-15 10:21:32 overwrite css/right-angle.css 
+2013-08-15 10:21:43 overwrite css/right-angle.css 
+2013-08-15 10:22:48 identical css/right-angle.css 
+2013-08-15 10:22:55 overwrite css/right-angle.css 
+2013-08-15 10:23:04 overwrite css/right-angle.css 
+2013-08-15 10:23:12 overwrite css/right-angle.css 
+2013-08-15 10:23:20 overwrite css/right-angle.css 
+2013-08-15 10:23:26 overwrite css/right-angle.css 
+2013-08-15 10:23:35 overwrite css/right-angle.css 
+2013-08-15 10:23:47 overwrite css/right-angle.css 
+2013-08-15 10:26:45 overwrite css/right-angle.css 
+2013-08-15 10:27:50 overwrite css/right-angle.css 
+2013-08-15 10:28:01 overwrite css/right-angle.css 
+2013-08-15 10:28:25 overwrite css/right-angle.css 
+2013-08-15 12:30:05 overwrite css/right-angle.css 
+2013-08-15 12:31:06    create css/css3.css 
+2013-08-15 12:31:06    create css/right-angle.css 
+2013-08-15 12:31:36    create css/css3.css 
+2013-08-15 12:31:36    create css/right-angle.css 
+2013-08-15 12:31:57 overwrite css/right-angle.css 
+2013-08-15 12:32:23 overwrite css/right-angle.css 
+2013-08-15 12:41:59 overwrite css/right-angle.css 
+2013-08-15 12:46:08 overwrite css/right-angle.css 
+2013-08-15 12:46:14 overwrite css/right-angle.css 
+2013-08-15 12:46:27 overwrite css/right-angle.css 
+2013-08-15 12:47:42 identical css/right-angle.css 
+2013-08-15 12:48:56 overwrite css/right-angle.css 
+2013-08-15 12:50:34 overwrite css/right-angle.css 
+2013-08-15 12:50:41 overwrite css/right-angle.css 
+2013-08-15 12:50:47 overwrite css/right-angle.css 
+2013-08-15 12:50:58 overwrite css/right-angle.css 
+2013-08-15 12:51:04 overwrite css/right-angle.css 
+2013-08-15 12:51:12 overwrite css/right-angle.css 
+2013-08-15 12:51:17 overwrite css/right-angle.css 
+2013-08-15 12:51:34 overwrite css/right-angle.css 
+2013-08-15 12:51:58 overwrite css/right-angle.css 
+2013-08-15 12:53:33 overwrite css/right-angle.css 
+2013-08-15 12:55:09 overwrite css/right-angle.css 
+2013-08-15 12:55:18 overwrite css/right-angle.css 
+2013-08-15 12:55:33 overwrite css/right-angle.css 
+2013-08-15 12:56:19 overwrite css/right-angle.css 
+2013-08-15 12:56:28 overwrite css/right-angle.css 
+2013-08-15 12:56:35 overwrite css/right-angle.css 
+2013-08-15 12:56:37 overwrite css/right-angle.css 
+2013-08-15 12:56:57 overwrite css/right-angle.css 
+2013-08-15 12:57:06 overwrite css/right-angle.css 
+2013-08-15 12:57:19 overwrite css/right-angle.css 
+2013-08-15 12:57:31 overwrite css/right-angle.css 
+2013-08-15 12:57:47 overwrite css/right-angle.css 
+2013-08-15 12:58:01 overwrite css/right-angle.css 
+2013-08-15 12:58:07 overwrite css/right-angle.css 
+2013-08-15 12:58:09 overwrite css/right-angle.css 
+2013-08-15 12:58:23 overwrite css/right-angle.css 
+2013-08-15 12:58:33 identical css/right-angle.css 
+2013-08-15 12:58:41 overwrite css/right-angle.css 
+2013-08-15 12:58:45 overwrite css/right-angle.css 
+2013-08-15 12:58:54 overwrite css/right-angle.css 
+2013-08-15 12:58:58 overwrite css/right-angle.css 
+2013-08-15 12:59:19 overwrite css/right-angle.css 
+2013-08-15 12:59:41 overwrite css/right-angle.css 
+2013-08-15 12:59:58 overwrite css/right-angle.css 
+2013-08-15 13:00:11 overwrite css/right-angle.css 
+2013-08-15 13:00:20 overwrite css/right-angle.css 
+2013-08-15 13:00:35 overwrite css/right-angle.css 
+2013-08-15 13:01:08 overwrite css/right-angle.css 
+2013-08-15 13:01:21 overwrite css/right-angle.css 
+2013-08-15 13:01:36 overwrite css/right-angle.css 
+2013-08-15 13:01:41 overwrite css/right-angle.css 
+2013-08-15 13:01:46 overwrite css/right-angle.css 
+2013-08-15 13:02:01 overwrite css/right-angle.css 
+2013-08-15 13:02:13 overwrite css/right-angle.css 
+2013-08-15 13:02:32 identical css/right-angle.css 
+2013-08-15 13:03:25 overwrite css/right-angle.css 
+2013-08-15 13:07:44 overwrite css/right-angle.css 
+2013-08-15 13:07:49 overwrite css/right-angle.css 
+2013-08-15 13:07:56 overwrite css/right-angle.css 
+2013-08-15 13:08:16 overwrite css/right-angle.css 
+2013-08-15 13:08:36 overwrite css/right-angle.css 
+2013-08-15 13:09:15 overwrite css/right-angle.css 
+2013-08-15 13:09:52 overwrite css/right-angle.css 
+2013-08-15 13:10:47 overwrite css/right-angle.css 
+2013-08-15 13:11:12 overwrite css/right-angle.css 
+2013-08-15 13:11:18 overwrite css/right-angle.css 
+2013-08-15 13:12:23 overwrite css/right-angle.css 
+2013-08-15 13:12:34 overwrite css/right-angle.css 
+2013-08-15 13:12:41 overwrite css/right-angle.css 
+2013-08-15 13:13:14 overwrite css/right-angle.css 
+2013-08-15 13:13:22 overwrite css/right-angle.css 
+2013-08-15 13:13:34 overwrite css/right-angle.css 
+2013-08-15 13:13:56 overwrite css/right-angle.css 
+2013-08-15 13:13:58 overwrite css/right-angle.css 
+2013-08-15 13:14:05 overwrite css/right-angle.css 
+2013-08-15 13:14:26 overwrite css/right-angle.css 
+2013-08-15 13:14:45 overwrite css/right-angle.css 
+2013-08-15 13:14:50 overwrite css/right-angle.css 
+2013-08-15 13:15:03 overwrite css/right-angle.css 
+2013-08-15 13:15:27 overwrite css/right-angle.css 
+2013-08-15 13:15:32 overwrite css/right-angle.css 
+2013-08-15 13:16:14 identical css/right-angle.css 
+2013-08-15 13:16:22 overwrite css/right-angle.css 
+2013-08-15 13:16:34 overwrite css/right-angle.css 
+2013-08-15 13:16:42 overwrite css/right-angle.css 
+2013-08-15 13:16:54 overwrite css/right-angle.css 
+2013-08-15 13:17:03 overwrite css/right-angle.css 
+2013-08-15 13:17:07 identical css/right-angle.css 
+2013-08-15 13:17:15 overwrite css/right-angle.css 
+2013-08-15 13:17:20 overwrite css/right-angle.css 
+2013-08-15 13:17:26 identical css/right-angle.css 
+2013-08-15 13:17:31 overwrite css/right-angle.css 
+2013-08-15 13:17:44 overwrite css/right-angle.css 
+2013-08-15 13:17:59     error sass/right-angle.scss (Line 73: Invalid CSS after "		padding-top:": expected expression (e.g. 1px, bold), was "}")
+2013-08-15 13:17:59 overwrite css/right-angle.css 
+2013-08-15 13:18:03 overwrite css/right-angle.css 
+2013-08-15 13:18:17     error sass/right-angle.scss (Line 77: Invalid CSS after "		padding-top:": expected expression (e.g. 1px, bold), was "}")
+2013-08-15 13:18:17 overwrite css/right-angle.css 
+2013-08-15 13:18:25 overwrite css/right-angle.css 
+2013-08-15 13:19:28 identical css/right-angle.css 
+2013-08-15 13:19:34 overwrite css/right-angle.css 
+2013-08-15 13:19:41     error sass/right-angle.scss (Line 47: Invalid CSS after "    	font-style: ": expected expression (e.g. 1px, bold), was ";")
+2013-08-15 13:19:41 overwrite css/right-angle.css 
+2013-08-15 13:19:45 overwrite css/right-angle.css 
+2013-08-15 13:19:57 overwrite css/right-angle.css 
+2013-08-15 13:20:10 overwrite css/right-angle.css 
+2013-08-15 13:20:12 identical css/right-angle.css 
+2013-08-15 13:29:42 overwrite css/right-angle.css 
+2013-08-15 13:32:50 overwrite css/right-angle.css 
+2013-08-15 13:33:01 overwrite css/right-angle.css 
+2013-08-15 13:33:05 overwrite css/right-angle.css 
+2013-08-15 13:33:13 overwrite css/right-angle.css 
+2013-08-15 13:33:29 overwrite css/right-angle.css 
+2013-08-15 13:33:34 overwrite css/right-angle.css 
+2013-08-15 13:33:39 overwrite css/right-angle.css 
+2013-08-15 13:33:45 overwrite css/right-angle.css 
+2013-08-15 13:34:01 overwrite css/right-angle.css 
+2013-08-15 13:34:07 identical css/right-angle.css 
+2013-08-15 13:34:18 overwrite css/right-angle.css 
+2013-08-15 13:34:22 overwrite css/right-angle.css 
+2013-08-15 13:34:27 overwrite css/right-angle.css 
+2013-08-15 13:34:48 overwrite css/right-angle.css 
+2013-08-15 13:34:56 overwrite css/right-angle.css 
+2013-08-15 13:35:07 overwrite css/right-angle.css 
+2013-08-15 13:35:09 overwrite css/right-angle.css 
+2013-08-15 13:35:33 overwrite css/right-angle.css 
+2013-08-15 13:35:44 overwrite css/right-angle.css 
+2013-08-15 13:35:57 overwrite css/right-angle.css 
+2013-08-15 13:36:28 overwrite css/right-angle.css 
+2013-08-15 13:36:44 overwrite css/right-angle.css 
+2013-08-15 13:36:56 overwrite css/right-angle.css 
+2013-08-15 13:37:07 overwrite css/right-angle.css 
+2013-08-15 13:37:13 overwrite css/right-angle.css 
+2013-08-15 13:37:31 overwrite css/right-angle.css 
+2013-08-15 13:37:33 overwrite css/right-angle.css 
+2013-08-15 13:37:56 overwrite css/right-angle.css 
+2013-08-15 13:38:03     error sass/right-angle.scss (Line 83: Invalid CSS after "	    height": expected ";", was ": 2.7em;")
+2013-08-15 13:38:03 overwrite css/right-angle.css 
+2013-08-15 13:38:06 overwrite css/right-angle.css 
+2013-08-15 13:38:20     error sass/right-angle.scss (Line 147: Invalid CSS after "	    padding-top:": expected expression (e.g. 1px, bold), was "}")
+2013-08-15 13:38:20 overwrite css/right-angle.css 
+2013-08-15 13:38:23 overwrite css/right-angle.css 
+2013-08-15 13:38:32 overwrite css/right-angle.css 
+2013-08-15 13:38:47 overwrite css/right-angle.css 
+2013-08-15 13:39:38 overwrite css/right-angle.css 
+2013-08-15 13:45:56 overwrite css/right-angle.css 
+2013-08-15 13:46:02 overwrite css/right-angle.css 
+2013-08-15 13:46:12 overwrite css/right-angle.css 
+2013-08-15 13:46:13 overwrite css/right-angle.css 
+2013-08-15 13:46:20 overwrite css/right-angle.css 
+2013-08-15 13:46:24 overwrite css/right-angle.css 
+2013-08-15 13:46:35 overwrite css/right-angle.css 
+2013-08-15 13:47:29 overwrite css/right-angle.css 
+2013-08-15 13:47:36 overwrite css/right-angle.css 
+2013-08-15 13:47:42 overwrite css/right-angle.css 
+2013-08-15 13:47:50 overwrite css/right-angle.css 
+2013-08-15 13:49:43 overwrite css/right-angle.css 
+2013-08-15 13:49:45 overwrite css/right-angle.css 
+2013-08-15 13:50:00 overwrite css/right-angle.css 
+2013-08-15 13:50:11 overwrite css/right-angle.css 
+2013-08-15 13:50:22 overwrite css/right-angle.css 
+2013-08-15 13:50:27 overwrite css/right-angle.css 
+2013-08-15 13:50:42 identical css/right-angle.css 
+2013-08-15 13:51:03 identical css/right-angle.css 
+2013-08-15 13:52:04 overwrite css/right-angle.css 
+2013-08-15 13:52:06 overwrite css/right-angle.css 
+2013-08-15 13:52:09 overwrite css/right-angle.css 
+2013-08-15 13:52:17 overwrite css/right-angle.css 
+2013-08-15 13:53:02 overwrite css/right-angle.css 
+2013-08-15 13:53:18 overwrite css/right-angle.css 
+2013-08-15 13:53:36     error sass/right-angle.scss (Line 152: Invalid CSS after "	&[data-form=": expected identifier or string, was "*][data-tone="6...")
+2013-08-15 13:53:36 overwrite css/right-angle.css 
+2013-08-15 13:53:49 overwrite css/right-angle.css 
+2013-08-15 13:53:51     error sass/right-angle.scss (Line 152: Invalid CSS after "	&[data-form=": expected identifier or string, was "*][data-tone="6...")
+2013-08-15 13:53:51 overwrite css/right-angle.css 
+2013-08-15 13:54:38 overwrite css/right-angle.css 
+2013-08-15 13:54:46 overwrite css/right-angle.css 
+2013-08-15 13:54:54 overwrite css/right-angle.css 
+2013-08-15 13:55:15 identical css/right-angle.css 
+2013-08-15 13:55:44 overwrite css/right-angle.css 
+2013-08-15 13:55:57 overwrite css/right-angle.css 
+2013-08-15 14:11:30 overwrite css/right-angle.css 
+2013-08-15 21:40:32 overwrite css/right-angle.css 
+2013-08-15 21:40:39    remove .sass-cache/ 
+2013-08-15 21:40:39    remove css/css3.css 
+2013-08-15 21:40:39    remove css/right-angle.css 
+2013-08-15 21:40:40    create css/css3.css 
+2013-08-15 21:40:40    create css/right-angle.css 
+2013-08-15 21:45:06 overwrite css/right-angle.css 
+2013-08-15 21:45:14 overwrite css/right-angle.css 
+2013-08-15 21:45:16 overwrite css/right-angle.css 
+2013-08-15 21:45:37 overwrite css/right-angle.css 
+2013-08-15 21:45:46 overwrite css/right-angle.css 
+2013-08-15 21:45:55 overwrite css/right-angle.css 
+2013-08-15 21:46:20 overwrite css/right-angle.css 
+2013-08-15 21:46:31 overwrite css/right-angle.css 
+2013-08-15 21:47:00 overwrite css/right-angle.css 
+2013-08-15 21:47:13 overwrite css/right-angle.css 
+2013-08-15 21:47:19 overwrite css/right-angle.css 
+2013-08-15 21:47:27 overwrite css/right-angle.css 
+2013-08-15 21:48:02 overwrite css/right-angle.css 
+2013-08-15 21:48:13 overwrite css/right-angle.css 
+2013-08-15 21:48:39 identical css/right-angle.css 
+2013-08-15 21:50:09 overwrite css/right-angle.css 
+2013-08-15 21:50:14 overwrite css/right-angle.css 
+2013-08-15 21:50:16 overwrite css/right-angle.css 
+2013-08-15 21:50:23 overwrite css/right-angle.css 
+2013-08-15 21:50:36 overwrite css/right-angle.css 
+2013-08-15 21:50:47 overwrite css/right-angle.css 
+2013-08-15 21:50:58 overwrite css/right-angle.css 
+2013-08-15 21:51:11 overwrite css/right-angle.css 
+2013-08-15 21:52:06 overwrite css/right-angle.css 
+2013-08-15 21:52:13 overwrite css/right-angle.css 
+2013-08-15 21:56:27 overwrite css/right-angle.css 
+2013-08-15 21:57:14 overwrite css/right-angle.css 
+2013-08-15 21:57:56 identical css/right-angle.css 
+2013-08-15 21:58:02 overwrite css/right-angle.css 
+2013-08-15 21:58:13 overwrite css/right-angle.css 
+2013-08-15 21:58:27 overwrite css/right-angle.css 
+2013-08-15 21:59:16 overwrite css/right-angle.css 
+2013-08-15 21:59:22 overwrite css/right-angle.css 
+2013-08-15 21:59:26 overwrite css/right-angle.css 
+2013-08-15 21:59:40 overwrite css/right-angle.css 
+2013-08-15 21:59:49 overwrite css/right-angle.css 
+2013-08-15 21:59:59 overwrite css/right-angle.css 
+2013-08-15 22:00:08 overwrite css/right-angle.css 
+2013-08-15 22:00:51 overwrite css/right-angle.css 
+2013-08-15 22:00:57 overwrite css/right-angle.css 
+2013-08-15 22:01:03 overwrite css/right-angle.css 
+2013-08-15 22:01:06 overwrite css/right-angle.css 
+2013-08-15 22:01:12 overwrite css/right-angle.css 
+2013-08-15 22:01:44     error sass/right-angle.scss (Line 128: Invalid CSS after "	&[data-tone^=": expected identifier or string, was "4]")
+2013-08-15 22:01:44 overwrite css/right-angle.css 
+2013-08-15 22:01:48 overwrite css/right-angle.css 
+2013-08-15 22:01:49 overwrite css/right-angle.css 
+2013-08-15 22:02:04 overwrite css/right-angle.css 
+2013-08-15 22:02:07 identical css/right-angle.css 
+2013-08-15 22:02:13 identical css/right-angle.css 
+2013-08-15 22:02:18     error sass/right-angle.scss (Line 131: Invalid CSS after "		&": expected "{", was "}")
+2013-08-15 22:02:18 overwrite css/right-angle.css 
+2013-08-15 22:02:23     error sass/right-angle.scss (Line 131: Invalid CSS after "		&[data]": expected "{", was "}")
+2013-08-15 22:02:23 overwrite css/right-angle.css 
+2013-08-15 22:02:42     error sass/right-angle.scss (Line 130: Invalid CSS after "		&[data]": expected "{", was "}")
+2013-08-15 22:02:42 overwrite css/right-angle.css 
+2013-08-15 22:02:55     error sass/right-angle.scss (Line 130: Invalid CSS after "...ata-tone="8/h"]": expected "{", was "}")
+2013-08-15 22:02:55 overwrite css/right-angle.css 
+2013-08-15 22:03:02 overwrite css/right-angle.css 
+2013-08-15 22:03:21 overwrite css/right-angle.css 
+2013-08-15 22:03:24 overwrite css/right-angle.css 
+2013-08-15 22:03:49 overwrite css/right-angle.css 
+2013-08-15 22:05:25 identical css/right-angle.css 
+2013-08-15 22:05:34 overwrite css/right-angle.css 
+2013-08-15 22:06:10 overwrite css/right-angle.css 
+2013-08-15 22:06:40 overwrite css/right-angle.css 
+2013-08-15 22:06:54 overwrite css/right-angle.css 
+2013-08-15 22:07:02 overwrite css/right-angle.css 
+2013-08-15 22:07:08 overwrite css/right-angle.css 
+2013-08-15 22:07:12 overwrite css/right-angle.css 
+2013-08-15 22:07:39 overwrite css/right-angle.css 
+2013-08-15 22:08:00 overwrite css/right-angle.css 
+2013-08-15 22:08:09 overwrite css/right-angle.css 
+2013-08-15 22:08:23 overwrite css/right-angle.css 
+2013-08-15 22:08:33 overwrite css/right-angle.css 
+2013-08-15 22:08:35 identical css/right-angle.css 
+2013-08-15 22:08:44 overwrite css/right-angle.css 
+2013-08-15 22:08:59 overwrite css/right-angle.css 
+2013-08-15 22:09:07 overwrite css/right-angle.css 
+2013-08-15 22:09:16 overwrite css/right-angle.css 
+2013-08-15 22:09:25 overwrite css/right-angle.css 
+2013-08-15 22:09:53 overwrite css/right-angle.css 
+2013-08-15 22:10:04 overwrite css/right-angle.css 
+2013-08-15 22:10:35     error sass/right-angle.scss (Line 151: Invalid CSS after "		margin-top:": expected expression (e.g. 1px, bold), was "@include textXS...")
+2013-08-15 22:10:35 overwrite css/right-angle.css 
+2013-08-15 22:11:07 overwrite css/right-angle.css 
+2013-08-15 22:11:27 overwrite css/right-angle.css 
+2013-08-15 22:11:36 overwrite css/right-angle.css 
+2013-08-15 22:11:47 overwrite css/right-angle.css 
+2013-08-15 22:11:53 overwrite css/right-angle.css 
+2013-08-15 22:12:15 overwrite css/right-angle.css 
+2013-08-15 22:12:27 overwrite css/right-angle.css 
+2013-08-15 22:12:29 overwrite css/right-angle.css 
+2013-08-15 22:12:41 overwrite css/right-angle.css 
+2013-08-15 22:13:04 overwrite css/right-angle.css 
+2013-08-15 22:13:18 overwrite css/right-angle.css 
+2013-08-15 22:13:34 overwrite css/right-angle.css 
+2013-08-15 22:13:57 identical css/right-angle.css 
+2013-08-15 22:14:05 overwrite css/right-angle.css 
+2013-08-15 22:14:41 overwrite css/right-angle.css 
+2013-08-15 22:15:43 identical css/right-angle.css 
+2013-08-15 22:16:11 overwrite css/right-angle.css 
+2013-08-15 22:16:16 overwrite css/right-angle.css 
+2013-08-15 22:16:23 overwrite css/right-angle.css 
+2013-08-15 22:16:34 overwrite css/right-angle.css 
+2013-08-15 22:16:41 overwrite css/right-angle.css 
+2013-08-15 22:17:03 overwrite css/right-angle.css 
+2013-08-15 22:17:15 overwrite css/right-angle.css 
+2013-08-15 22:17:52 overwrite css/right-angle.css 
+2013-08-15 22:17:57 overwrite css/right-angle.css 
+2013-08-15 22:18:04 overwrite css/right-angle.css 
+2013-08-15 22:18:10 overwrite css/right-angle.css 
+2013-08-15 22:20:47 overwrite css/right-angle.css 
+2013-08-15 22:20:59 overwrite css/right-angle.css 
+2013-08-15 22:21:01 overwrite css/right-angle.css 
+2013-08-15 22:21:07 overwrite css/right-angle.css 
+2013-08-15 22:30:20 identical css/right-angle.css 
+2013-08-15 22:30:27 overwrite css/right-angle.css 
+2013-08-15 22:30:42 overwrite css/right-angle.css 
+2013-08-15 22:30:48 overwrite css/right-angle.css 
+2013-08-15 22:30:50 identical css/right-angle.css 
+2013-08-15 22:30:56 overwrite css/right-angle.css 
+2013-08-15 22:31:13 overwrite css/right-angle.css 
+2013-08-15 22:31:15 identical css/right-angle.css 
+2013-08-15 22:31:17 overwrite css/right-angle.css 
+2013-08-15 22:31:30 overwrite css/right-angle.css 
+2013-08-16 01:23:58 overwrite css/right-angle.css 
+2013-08-16 01:24:54 overwrite css/right-angle.css 
+2013-08-16 01:25:05 overwrite css/right-angle.css 
+2013-08-16 01:25:12 overwrite css/right-angle.css 
+2013-08-16 01:25:17 overwrite css/right-angle.css 
+2013-08-16 01:25:27 overwrite css/right-angle.css 
+2013-08-16 01:25:38 overwrite css/right-angle.css 
+2013-08-16 01:25:49 overwrite css/right-angle.css 
+2013-08-16 01:26:06 overwrite css/right-angle.css 
+2013-08-16 01:26:15 overwrite css/right-angle.css 
+2013-08-16 01:26:28 identical css/right-angle.css 
+2013-08-16 01:26:47 overwrite css/right-angle.css 
+2013-08-16 01:26:53 overwrite css/right-angle.css 
+2013-08-16 01:26:59 overwrite css/right-angle.css 
+2013-08-16 01:27:09 overwrite css/right-angle.css 
+2013-08-16 01:27:15 overwrite css/right-angle.css 
+2013-08-16 01:27:20 identical css/right-angle.css 
+2013-08-16 01:27:28 overwrite css/right-angle.css 
+2013-08-16 01:27:31 overwrite css/right-angle.css 
+2013-08-16 01:27:33 overwrite css/right-angle.css 
+2013-08-16 01:27:36 overwrite css/right-angle.css 
+2013-08-16 01:27:48 overwrite css/right-angle.css 
+2013-08-16 01:28:20 overwrite css/right-angle.css 
+2013-08-16 01:28:42 overwrite css/right-angle.css 
+2013-08-16 01:29:02 overwrite css/right-angle.css 
+2013-08-16 01:29:34 overwrite css/right-angle.css 
+2013-08-16 01:30:34     error sass/right-angle.scss (Line 46: Undefined mixin 'border-box'.)
+2013-08-16 01:30:34 overwrite css/right-angle.css 
+2013-08-16 01:30:54 identical css/css3.css 
+2013-08-16 01:30:54 overwrite css/right-angle.css 
+2013-08-16 01:30:57 identical css/css3.css 
+2013-08-16 01:30:57 identical css/right-angle.css 
+2013-08-16 01:31:18 identical css/css3.css 
+2013-08-16 01:31:18     error sass/right-angle.scss (Line 60: Undefined mixin 'textXS'.)
+2013-08-16 01:31:18 overwrite css/right-angle.css 
+2013-08-16 01:31:26 identical css/css3.css 
+2013-08-16 01:31:26     error sass/right-angle.scss (Line 60: Undefined mixin 'textXS'.)
+2013-08-16 01:31:26 identical css/right-angle.css 
+2013-08-16 01:31:31 identical css/css3.css 
+2013-08-16 01:31:31     error sass/right-angle.scss (Line 46: Undefined mixin 'border-box'.)
+2013-08-16 01:31:31 overwrite css/right-angle.css 
+2013-08-16 01:31:45     error sass/right-angle.scss (Line 46: Undefined mixin 'border-box'.)
+2013-08-16 01:31:45 identical css/right-angle.css 
+2013-08-16 01:31:51 overwrite css/right-angle.css 
+2013-08-16 01:35:41 overwrite css/right-angle.css 
+2013-08-16 01:35:58 identical css/right-angle.css 
+2013-08-16 01:36:21 overwrite css/right-angle.css 
+2013-08-16 01:37:14 overwrite css/right-angle.css 
+2013-08-16 01:37:32 overwrite css/right-angle.css 
+2013-08-16 01:37:47 overwrite css/right-angle.css 
+2013-08-16 01:37:54 overwrite css/right-angle.css 
+2013-08-16 01:39:01 overwrite css/right-angle.css 
+2013-08-16 01:39:03 overwrite css/right-angle.css 
+2013-08-16 01:39:09 overwrite css/right-angle.css 
+2013-08-16 01:39:34 overwrite css/right-angle.css 
+2013-08-16 01:41:36 overwrite css/right-angle.css 
+2013-08-16 01:41:45 overwrite css/right-angle.css 
+2013-08-16 01:42:04 overwrite css/right-angle.css 
+2013-08-16 01:42:45 overwrite css/right-angle.css 
+2013-08-16 01:46:30 overwrite css/right-angle.css 
+2013-08-16 01:46:43 overwrite css/right-angle.css 
+2013-08-16 01:46:52 overwrite css/right-angle.css 
+2013-08-16 01:46:53 identical css/right-angle.css 
+2013-08-16 01:47:01 overwrite css/right-angle.css 
+2013-08-16 01:47:24 overwrite css/right-angle.css 
+2013-08-16 01:47:38 overwrite css/right-angle.css 
+2013-08-16 01:47:43 overwrite css/right-angle.css 
+2013-08-16 01:48:13 overwrite css/right-angle.css 
+2013-08-16 01:48:20 overwrite css/right-angle.css 
+2013-08-16 01:48:41 identical css/right-angle.css 
+2013-08-16 01:48:47 overwrite css/right-angle.css 
+2013-08-16 01:48:50 overwrite css/right-angle.css 
+2013-08-16 01:49:00 overwrite css/right-angle.css 
+2013-08-16 01:49:04 overwrite css/right-angle.css 
+2013-08-16 01:49:16 overwrite css/right-angle.css 
+2013-08-16 01:49:28 overwrite css/right-angle.css 
+2013-08-16 01:49:55 overwrite css/right-angle.css 
+2013-08-16 01:50:06 overwrite css/right-angle.css 
+2013-08-16 01:50:21 overwrite css/right-angle.css 
+2013-08-16 01:52:00 overwrite css/right-angle.css 
+2013-08-16 01:52:16 overwrite css/right-angle.css 
+2013-08-16 01:52:25 overwrite css/right-angle.css 
+2013-08-16 01:52:39 overwrite css/right-angle.css 
+2013-08-16 01:52:52 overwrite css/right-angle.css 
+2013-08-16 01:53:09 overwrite css/right-angle.css 
+2013-08-16 01:53:16 overwrite css/right-angle.css 
+2013-08-16 01:53:26 overwrite css/right-angle.css 
+2013-08-16 01:53:44 overwrite css/right-angle.css 
+2013-08-16 01:53:55 overwrite css/right-angle.css 
+2013-08-16 01:54:01 overwrite css/right-angle.css 
+2013-08-16 01:54:08 overwrite css/right-angle.css 
+2013-08-16 01:54:15 overwrite css/right-angle.css 
+2013-08-16 01:54:21 overwrite css/right-angle.css 
+2013-08-16 01:54:38 overwrite css/right-angle.css 
+2013-08-16 01:54:54 overwrite css/right-angle.css 
+2013-08-16 01:55:20 overwrite css/right-angle.css 
+2013-08-16 01:55:29 overwrite css/right-angle.css 
+2013-08-16 01:55:38 overwrite css/right-angle.css 
+2013-08-16 01:55:44 overwrite css/right-angle.css 
+2013-08-16 01:56:18 overwrite css/right-angle.css 
+2013-08-16 01:56:52 overwrite css/right-angle.css 
+2013-08-16 01:56:56 overwrite css/right-angle.css 
+2013-08-16 01:57:07 overwrite css/right-angle.css 
+2013-08-16 01:57:16 overwrite css/right-angle.css 
+2013-08-16 01:59:06 overwrite css/right-angle.css 
+2013-08-16 01:59:27 overwrite css/right-angle.css 
+2013-08-16 01:59:38 overwrite css/right-angle.css 
+2013-08-16 01:59:58 overwrite css/right-angle.css 
+2013-08-16 02:06:43 overwrite css/right-angle.css 
+2013-08-16 02:06:53 overwrite css/right-angle.css 
+2013-08-16 02:07:58    create css/css3.css 
+2013-08-16 02:07:58    create css/right-angle.css 
+2013-08-16 02:08:05    remove .sass-cache/ 
+2013-08-16 02:08:05    remove css/css3.css 
+2013-08-16 02:08:05    remove css/right-angle.css 
+2013-08-16 02:08:05    create css/css3.css 
+2013-08-16 02:08:05    create css/right-angle.css 
+2013-08-16 02:08:09    remove .sass-cache/ 
+2013-08-16 02:08:09    remove css/css3.css 
+2013-08-16 02:08:09    remove css/right-angle.css 
+2013-08-16 02:08:09    create css/css3.css 
+2013-08-16 02:08:09    create css/right-angle.css 
+2013-08-16 02:28:30 overwrite css/right-angle.css 
+2013-08-16 02:28:41 overwrite css/right-angle.css 
+2013-08-16 02:28:50 identical css/right-angle.css 
+2013-08-16 02:28:56 overwrite css/right-angle.css 
+2013-08-16 02:29:02 overwrite css/right-angle.css 
+2013-08-18 15:28:32 overwrite css/right-angle.css 
+2013-08-18 15:28:40 overwrite css/right-angle.css 
+2013-08-18 15:28:47 overwrite css/right-angle.css 
+2013-08-18 15:28:55 overwrite css/right-angle.css 
+2013-08-18 15:28:58 overwrite css/right-angle.css 
+2013-08-18 15:29:18 overwrite css/right-angle.css 
+2013-08-18 15:29:23 overwrite css/right-angle.css 
+2013-08-18 15:29:28 overwrite css/right-angle.css 
+2013-08-18 15:29:32 overwrite css/right-angle.css 
+2013-08-18 15:29:48 overwrite css/right-angle.css 
+2013-08-18 15:29:55 overwrite css/right-angle.css 
+2013-08-18 15:30:12 overwrite css/right-angle.css 
+2013-08-18 15:30:28 overwrite css/right-angle.css 
+2013-08-18 15:30:33 overwrite css/right-angle.css 
+2013-08-18 15:30:41 overwrite css/right-angle.css 
+2013-08-18 15:30:49 overwrite css/right-angle.css 
+2013-08-18 15:30:55 overwrite css/right-angle.css 
+2013-08-18 15:31:00 overwrite css/right-angle.css 
+2013-08-18 15:31:03 overwrite css/right-angle.css 
+2013-08-18 15:31:05 overwrite css/right-angle.css 
+2013-08-18 15:32:25 overwrite css/right-angle.css 
+2013-08-18 15:34:41     error sass/right-angle.scss (Line 6: Invalid CSS after "...ical-align: top": expected ";", was ":")
+2013-08-18 15:34:41 overwrite css/right-angle.css 
+2013-08-18 15:34:43 overwrite css/right-angle.css 
+2013-08-18 15:34:54 overwrite css/right-angle.css 
+2013-08-18 15:35:03 overwrite css/right-angle.css 
+2013-08-18 15:35:11 overwrite css/right-angle.css 
+2013-08-18 15:35:49 overwrite css/right-angle.css 
+2013-08-18 15:35:55 overwrite css/right-angle.css 
+2013-08-18 15:35:58 overwrite css/right-angle.css 
+2013-08-18 15:36:03 overwrite css/right-angle.css 
+2013-08-18 15:36:12 overwrite css/right-angle.css 
+2013-08-18 15:36:22 identical css/right-angle.css 
+2013-08-18 15:36:27 identical css/right-angle.css 
+2013-08-18 15:36:50 overwrite css/right-angle.css 
+2013-08-18 15:37:01 overwrite css/right-angle.css 
+2013-08-18 15:37:09 overwrite css/right-angle.css 
+2013-08-18 15:37:20 overwrite css/right-angle.css 
+2013-08-18 15:37:32 overwrite css/right-angle.css 
+2013-08-18 15:37:49 overwrite css/right-angle.css 
+2013-08-18 15:38:03 overwrite css/right-angle.css 
+2013-08-18 15:38:27 overwrite css/right-angle.css 
+2013-08-18 15:39:00 overwrite css/right-angle.css 
+2013-08-18 15:39:04 overwrite css/right-angle.css 
+2013-08-18 15:43:10     error sass/right-angle.scss (Line 8: Invalid CSS after "...d {height: 100%": expected ";", was ":")
+2013-08-18 15:43:11 overwrite css/right-angle.css 
+2013-08-18 15:43:25 overwrite css/right-angle.css 
+2013-08-18 15:43:35 overwrite css/right-angle.css 
+2013-08-18 15:43:38 overwrite css/right-angle.css 
+2013-08-18 15:43:51 overwrite css/right-angle.css 
+2013-08-18 15:44:10 overwrite css/right-angle.css 
+2013-08-18 15:44:17 overwrite css/right-angle.css 
+2013-08-18 15:44:24 overwrite css/right-angle.css 
+2013-08-18 15:44:31 overwrite css/right-angle.css 
+2013-08-18 15:46:47 overwrite css/right-angle.css 
+2013-08-18 15:46:52 overwrite css/right-angle.css 
+2013-08-18 15:47:18 overwrite css/right-angle.css 
+2013-08-18 15:47:24 overwrite css/right-angle.css 
+2013-08-18 15:47:43 overwrite css/right-angle.css 
+2013-08-18 15:47:48 overwrite css/right-angle.css 
