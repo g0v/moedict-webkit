@@ -1,8 +1,15 @@
 
 @import "css3";
 
-.han-js-ruby-right-angle-rendered {
+p.han-js-ruby-right-angle-rendered {
+	line-height: 3em;
+	vertical-align: middle;
+}
+
+span.han-js-ruby-right-angle-rendered {
+	line-height: 3em;
 	text-indent: 0;
+	vertical-align: middle;
 }
 
 
@@ -35,7 +42,6 @@
     & > span {
     	display: inline-block;
     	height: 1em;
-    	margin-top: -.5em;
     	vertical-align: middle;
     }
 
@@ -55,7 +61,7 @@
 	    height: 2.7em;
 	    line-height: .9;
 	    margin-left: -.175em;
-	    @include extraSmall();
+	    @include extraSmall(.4);
 	    white-space: pre-wrap;
 	    width: .8em;
 	}
@@ -73,14 +79,14 @@
 	}
 
 	&[data-form="shengmu-jieyin-yunmu"]:after {
-		padding-top: -.25em;
+		padding-top: -.45em;
 	}
 
 	&[data-tone]:before {
 	    height: 2.7em;
 	    position: absolute;
 	    top: 0;
-	    @include extraSmall(.8);
+	    @include extraSmall(.5);
 	    width: 1em;
 	}
 
@@ -176,7 +182,7 @@
 	&[data-tone^="8"]:before {
 		margin-right: -.65em;
 		margin-top: .175em;
-	    @include extraSmall(.55);
+	    @include extraSmall(.4);
 	}
 
 	/*
@@ -193,7 +199,7 @@
 	&[data-tone][data-form="shengmu-jieyin"]:before,
 	&[data-tone][data-form="shengmu-yunmu"]:before,
 	&[data-tone][data-form="jieyin-yunmu"]:before {
-	    padding-top: 1.25em;
+	    padding-top: .5em;
 	}
 
 	&[data-tone][data-form="shengmu-jieyin-yunmu"]:before {
