@@ -1,5 +1,12 @@
-.han-js-ruby-right-angle-rendered {
+p.han-js-ruby-right-angle-rendered {
+  line-height: 3em;
+  vertical-align: middle;
+}
+
+span.han-js-ruby-right-angle-rendered {
+  line-height: 3em;
   text-indent: 0;
+  vertical-align: middle;
 }
 
 .han-js-ruby-right-angle-rendered [data-romanization] {
@@ -57,7 +64,6 @@
 .han-js-ruby-right-angle-rendered [data-zhuyin] > span {
   display: inline-block;
   height: 1em;
-  margin-top: -.5em;
   vertical-align: middle;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin]:before, .han-js-ruby-right-angle-rendered [data-zhuyin]:after {
@@ -75,11 +81,11 @@
   height: 2.7em;
   line-height: .9;
   margin-left: -.175em;
-  transform: scale(0.55);
-  -moz-transform: scale(0.55);
-  -ms-transform: scale(0.55);
-  -o-transform: scale(0.55);
-  -webkit-transform: scale(0.55);
+  transform: scale(0.4);
+  -moz-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+  -o-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
   white-space: pre-wrap;
   width: .8em;
 }
@@ -90,17 +96,17 @@
   padding-top: .65em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-jieyin-yunmu"]:after {
-  padding-top: -.25em;
+  padding-top: -.45em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone]:before {
   height: 2.7em;
   position: absolute;
   top: 0;
-  transform: scale(0.8);
-  -moz-transform: scale(0.8);
-  -ms-transform: scale(0.8);
-  -o-transform: scale(0.8);
-  -webkit-transform: scale(0.8);
+  transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  -webkit-transform: scale(0.5);
   width: 1em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="2"]:before {
@@ -153,17 +159,17 @@
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="4"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="8"]:before {
   margin-right: -.65em;
   margin-top: .175em;
-  transform: scale(0.55);
-  -moz-transform: scale(0.55);
-  -ms-transform: scale(0.55);
-  -o-transform: scale(0.55);
-  -webkit-transform: scale(0.55);
+  transform: scale(0.4);
+  -moz-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+  -o-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="jieyin"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="yunmu"]:before {
   padding-top: .5em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-jieyin"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-yunmu"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="jieyin-yunmu"]:before {
-  padding-top: 1.25em;
+  padding-top: .5em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone][data-form="shengmu-jieyin-yunmu"]:before {
   padding-top: 1.35em;
