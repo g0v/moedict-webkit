@@ -7,6 +7,7 @@ span.han-js-ruby-right-angle-rendered {
   line-height: 3em;
   text-indent: 0;
   vertical-align: middle;
+  font-family: 'Fira Sans Regular', 'MOEDICT', "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif;
 }
 
 .han-js-ruby-right-angle-rendered [data-romanization] {
@@ -25,6 +26,8 @@ span.han-js-ruby-right-angle-rendered {
   line-height: normal;
   margin-right: 1.75em;
   text-align: center;
+  white-space: nowrap;
+  margin-top: 0.5em;
 }
 
 .han-js-ruby-right-angle-rendered [data-zhuyin] {
@@ -70,9 +73,11 @@ span.han-js-ruby-right-angle-rendered {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: inline-block;
-  font-family: 'Han Zhuyin Sans', sans-serif;
+  margin-top: 0.15em;
+  font-family: 'MOEDICT', 'Han Zhuyin Sans', sans-serif;
   font-style: normal;
   font-weight: normal;
+  font-size: 1.1em;
   text-indent: 0;
   vertical-align: middle;
 }
@@ -107,10 +112,10 @@ span.han-js-ruby-right-angle-rendered {
   -ms-transform: scale(0.5);
   -o-transform: scale(0.5);
   -webkit-transform: scale(0.5);
-  width: 1em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="2"]:before {
   content: 'ˋ';
+  width: 1.25em;
   /* 2, 6 */
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="3"]:before {
@@ -119,6 +124,7 @@ span.han-js-ruby-right-angle-rendered {
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"]:before {
   content: 'ˊ';
+  width: 0.9em;
   /* 5 */
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="7"]:before {
@@ -127,27 +133,34 @@ span.han-js-ruby-right-angle-rendered {
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/p"]:before {
   content: 'ㆴ';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/t"]:before {
   content: 'ㆵ';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/k"]:before {
   content: 'ㆶ';
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="4/h"]:before {
   content: 'ㆷ';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/p"]:before {
   content: 'ㆴ̍';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/t"]:before {
   content: 'ㆵ̍';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/k"]:before {
   content: 'ㆶ̍';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="8/h"]:before {
   content: 'ㆷ̍';
+  width: 1.25em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="2"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="3"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="5"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone="7"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="4"]:before, .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone^="8"]:before {
   margin-right: -.6em;
