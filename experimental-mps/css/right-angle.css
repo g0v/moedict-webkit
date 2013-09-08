@@ -8,6 +8,7 @@ span.han-js-ruby-right-angle-rendered {
   text-indent: 0;
   vertical-align: middle;
   font-family: 'Fira Sans Regular', 'MOEDICT', "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif;
+  font-size: 40pt;
 }
 
 .han-js-ruby-right-angle-rendered [data-romanization] {
@@ -73,7 +74,7 @@ span.han-js-ruby-right-angle-rendered {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: inline-block;
-  margin-top: 0.15em;
+  margin-top: 0.2em;
   font-family: 'MOEDICT', 'Han Zhuyin Sans', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -95,16 +96,16 @@ span.han-js-ruby-right-angle-rendered {
   width: .8em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="jieyin"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="yunmu"]:after {
-  padding-top: 1em;
+  padding-top: 1.2em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-jieyin"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-yunmu"]:after, .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="jieyin-yunmu"]:after {
-  padding-top: .65em;
+  padding-top: .5em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-form="shengmu-jieyin-yunmu"]:after {
   padding-top: -.45em;
 }
 .han-js-ruby-right-angle-rendered [data-zhuyin][data-tone]:before {
-  height: 2.7em;
+  height: 3.2em;
   position: absolute;
   top: 0;
   transform: scale(0.5);
