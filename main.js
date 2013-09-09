@@ -606,7 +606,7 @@
       h: []
     };
     fetch = function(it){
-      var hash;
+      var hash, e;
       if (!it) {
         return;
       }
@@ -617,11 +617,14 @@
       prevVal = it;
       setPref('prev-id', prevId);
       hash = HASHOF[LANG] + "" + it;
-      try {
-        if (location.hash + "" !== hash) {
+      if (location.hash + "" !== hash) {
+        try {
           history.pushState(null, null, hash);
+        } catch (e$) {
+          e = e$;
+          location.replace(hash);
         }
-      } catch (e$) {}
+      }
       if (isMobile) {
         $('#result div, #result span, #result h1:not(:first)').hide();
         $('#result h1:first').text(replace$.call(it, /^=/, '')).show();

@@ -361,7 +361,8 @@ window.do-load = ->
     prevVal := it
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
-    try history.pushState null, null, hash unless "#{location.hash}" is hash
+    if "#{location.hash}" isnt hash => try history.pushState null, null, hash
+      catch => location.replace hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it - /^=/).show!
