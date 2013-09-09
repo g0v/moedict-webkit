@@ -128,14 +128,16 @@
       } else {
         window.doLoad();
         if (/MSIE\s+[678]/.exec(navigator.userAgent)) {
+          $('.navbar, .query-box').hide();
+          $('#result').css('margin-top', '50px');
           return getScript('https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js', function(){
             window.gcfnConfig = {
               imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/',
               msgPre: '',
-              msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。',
+              msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得完整的萌典功能。',
               msgAfter: ''
             };
-            return getScript('https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js', function(){});
+            return getScript('js/jquery.gcnotify.min.js', function(){});
           });
         }
       }
@@ -1380,9 +1382,13 @@
       });
     };
     return window.strokeWords = function(words){
-      var ref$;
       $('#strokes').html('').show();
-      if ((ref$ = document.createElement('canvas')) != null && ref$.getContext('2d')) {
+      if ((function(){
+        var ref$;
+        try {
+          return (ref$ = document.createElement('canvas')) != null ? ref$.getContext('2d') : void 8;
+        } catch (e$) {}
+      }())) {
         return getScript('js/raf.min.js', function(){
           return getScript('js/gl-matrix-min.js', function(){
             return getScript('js/sax.js', function(){

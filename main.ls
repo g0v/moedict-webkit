@@ -70,13 +70,15 @@ catch
   else
     window.do-load!
     if navigator.user-agent is /MSIE\s+[678]/
+      $('.navbar, .query-box').hide!
+      $('#result').css \margin-top \50px
       <- getScript \https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
       window.gcfnConfig = do
         imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/'
         msgPre: ''
-        msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得更完整的萌典功能。'
+        msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得完整的萌典功能。'
         msgAfter: ''
-      <- getScript \https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/jquery.gcnotify.min.js
+      <- getScript \js/jquery.gcnotify.min.js
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
@@ -804,7 +806,7 @@ $ ->
 
   window.strokeWords = (words) ->
     $('#strokes').html('').show!
-    if document.createElement('canvas')?getContext('2d')
+    if (try document.createElement('canvas')?getContext('2d'))
       <- getScript \js/raf.min.js
       <- getScript \js/gl-matrix-min.js
       <- getScript \js/sax.js
