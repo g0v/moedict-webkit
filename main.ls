@@ -814,7 +814,7 @@ $ ->
       $('#strokes').strokeWords(
         words
         do
-          url: if isCordova then "./bin/" else "http://stroke-json.moedict.tw/"
+          url: if isCordova then "./bin/" else "./json/"
           dataType: if isCordova then "bin" else "json"
           svg: false
       );
