@@ -1,0 +1,39 @@
+#strokes {
+  min-height: 221px;
+
+  .word {
+    position: relative;
+    float: left;
+  }
+
+  .loader {
+    position: absolute;
+    margin: auto;
+    left: 0; top: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: #CCC;
+  }
+
+  .loader div {
+    height: 100%;
+    background: #FFF;
+  }
+
+  .loader i { 
+    position: absolute;
+    top: 107.5px;
+    left: 107.5px;
+    color: #A33;
+  }
+
+  .loader i.icon-fixed-width {
+    margin-top: -0.5714em;
+    margin-left: -0.5714em;
+  }
+
+  .loader i.icon-fixed-width.icon-large {
+    margin-top: -0.714em;
+    margin-left: -0.714em;
+  }
+}
