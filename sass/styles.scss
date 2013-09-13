@@ -34,6 +34,9 @@ $primary-color: #6B0000;
 // Core variables and mixins
 @import "bootstrap/bootstrap";
 
+// for progress indicator of strokes
+@import "strokes";
+
 // CSS Reset
 @import "han";
 @import "han.fonts";
