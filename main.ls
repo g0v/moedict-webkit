@@ -811,7 +811,13 @@ $ ->
       <- getScript \js/gl-matrix-min.js
       <- getScript \js/sax.js
       <- getScript \js/jquery.strokeWords.js
-      $('#strokes').strokeWords(words, { svg: false });
+      $('#strokes').strokeWords(
+        words
+        do
+          url: if isCordova then "./bin/" else "http://stroke-json.moedict.tw/"
+          dataType: if isCordova then "bin" else "json"
+          svg: false
+      );
     else
       <- getScript \js/raphael.js
       ws = words.split ''
