@@ -30,6 +30,7 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
+	perl special2pack.pl
 
 hakka ::
 	cp ../hakka/dict-hakka.json .
