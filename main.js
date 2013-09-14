@@ -1087,7 +1087,7 @@
           ch = chars[j$];
           list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a>";
         }
-        list += "</span><br>\n";
+        list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
       }
     }
     return title + "<div class='list'>" + list + "</div>";
@@ -1098,7 +1098,7 @@
     id = replace$.call(id, /^[@=]/, '');
     title = "<h1>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
-    terms = terms.replace(/"([^"]+)"[^"]*/g, "\u00B7 <a href='" + h + "$1'>$1</a><br>\n");
+    terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href='" + h + "$1'>$1</a></span>");
     return title + "<div class='list'>" + terms + "</div>";
   }
   function render(json){
