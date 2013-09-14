@@ -1,4 +1,4 @@
-const DEBUGGING = off
+const DEBUGGING = on
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -378,7 +378,7 @@ window.do-load = ->
     return load-json it
 
   load-json = (id, cb) ->
-    return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
+    return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova and id isnt /^[@=]/
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket, cb
@@ -825,13 +825,14 @@ $ ->
       <- getScript \js/gl-matrix-min.js
       <- getScript \js/sax.js
       <- getScript \js/jquery.strokeWords.js
-      $('#strokes').strokeWords(
-        words
-        do
-          url: if isCordova then "./bin/" else "./json/"
-          dataType: if isCordova then "bin" else "json"
-          svg: false
-      );
+      url = \./json/
+      dataType = \json
+      if isCordova
+        if window.DataView and window.ArrayBuffer
+          url = \./bin/
+          dataType = \bin
+        else url = \http://stroke-json.moedict.tw/ # Android <4 has no DataView support
+      $('#strokes').strokeWords(words, {url, dataType, -svg})
     else
       <- getScript \js/raphael.js
       ws = words.split ''
