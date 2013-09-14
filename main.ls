@@ -81,7 +81,7 @@ catch
       <- getScript \js/jquery.gcnotify.min.js
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
-function getPref (k) => try JSON?parse(localStorage?getItem(k) ? \null)
+function getPref (k) => try $.parseJSON(localStorage?getItem(k) ? \null)
 
 /*
 if isMobile
@@ -334,6 +334,7 @@ window.do-load = ->
     if location.search is /draw/ and not $('body').hasClass('autodraw')
       $('body').addClass \autodraw
       strokeWords title
+    return fetch title if title is /^[=@]/
     Index = INDEX[LANG]
     if isCordova or not Index
       return if title is /object/
@@ -367,10 +368,10 @@ window.do-load = ->
       catch => location.replace hash
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
-      $('#result h1:first').text(it - /^=/).show!
+      $('#result h1:first').text(it - /^[@=]/).show!
     else
       $('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
-      $('#result h1:first').text(it - /^=/).css \visibility \visible
+      $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌
@@ -438,12 +439,12 @@ window.do-load = ->
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-    if part is /^\[/
+    if part is /^\[\s*\[/
+      html = render-strokes part
+    else if part is /^\[/
       html = render-list part
-    else if JSON?parse?
-      html = render JSON.parse part
     else
-      html = eval "render(#part)"
+      html = render $.parseJSON part
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
@@ -543,6 +544,7 @@ function init-autocomplete
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs!
+      return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
       term.=replace(/」的詞$/ '')
       term.=replace(/\*/g '%')
@@ -609,9 +611,21 @@ function can-play-ogg
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
+function render-strokes (terms)
+  h = HASH-OF[LANG]
+  title = "<h1>#{ $(\#query).val! - /^[@=]/ } 部</h1>"
+  rows = $.parseJSON terms
+  list = ''
+  for chars, strokes in rows | chars?length
+    list += "\u00A0#strokes."
+    for ch in chars
+      list += "\u00A0<a href='#h#ch'>#ch</a>"
+    list += "<br>\n"
+  return "#title<div class='list'>#list</div>"
+
 function render-list (terms)
   h = HASH-OF[LANG]
-  title = "<h1>#{ $(\#query).val! - /^=/ }</h1>"
+  title = "<h1>#{ $(\#query).val! - /^[@=]/ }</h1>"
   terms -= /^[^"]*/
   terms.=replace(/"([^"]+)"[^"]*/g "\u00B7 <a href='#{h}$1'>$1</a><br>\n")
   return "#title<div class='list'>#terms</div>"
