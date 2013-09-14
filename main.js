@@ -763,9 +763,9 @@
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
       if (/^\[\s*\[/.exec(part)) {
-        html = renderStrokes(part);
+        html = renderStrokes(part, id);
       } else if (/^\[/.exec(part)) {
-        html = renderList(part);
+        html = renderList(part, id);
       } else {
         html = render($.parseJSON(part));
       }
@@ -1025,7 +1025,8 @@
   SIMPTRAD = (ref$ = window.SIMPTRAD) != null ? ref$ : '';
   function b2g(str){
     var rv, i$, ref$, len$, char, idx;
-    if (LANG !== 'a') {
+    str == null && (str = '');
+    if (!(LANG === 'a' && !/^@/.test(str))) {
       return str;
     }
     rv = '';
@@ -1065,10 +1066,16 @@
     a = document.createElement('audio');
     return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
   }
-  function renderStrokes(terms){
+  function renderStrokes(terms, id){
     var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
     h = HASHOF[LANG];
-    title = "<h1>" + (replace$.call($('#query').val(), /^[@=]/, '')) + " 部</h1>";
+    id = replace$.call(id, /^[@=]/, '');
+    if (/^\s*$/.exec(id)) {
+      title = "<h1>部首表</h1>";
+      h += '@';
+    } else {
+      title = "<h1>" + id + " <a class='xref' href='#@' title='部首表'>部</a></h1>";
+    }
     rows = $.parseJSON(terms);
     list = '';
     for (i$ = 0, len$ = rows.length; i$ < len$; ++i$) {
@@ -1085,10 +1092,11 @@
     }
     return title + "<div class='list'>" + list + "</div>";
   }
-  function renderList(terms){
+  function renderList(terms, id){
     var h, title;
     h = HASHOF[LANG];
-    title = "<h1>" + (replace$.call($('#query').val(), /^[@=]/, '')) + "</h1>";
+    id = replace$.call(id, /^[@=]/, '');
+    title = "<h1>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
     terms = terms.replace(/"([^"]+)"[^"]*/g, "\u00B7 <a href='" + h + "$1'>$1</a><br>\n");
     return title + "<div class='list'>" + terms + "</div>";
