@@ -372,12 +372,12 @@
       if (!isCordova) {
         $('#query').focus();
       }
-      $('.navbar').on('shown.bs.dropdown', function(){
+      $('body').on('shown.bs.dropdown', '.navbar', function(){
         if (widthIsXs()) {
           return $(this).css('position', 'absolute');
         }
       });
-      $('.navbar').on('hidden.bs.dropdown', function(){
+      $('body').on('hidden.bs.dropdown', '.navbar', function(){
         return $(this).css('position', 'fixed');
       });
       $('body').on('click', 'li.dropdown-submenu > a', function(){
@@ -570,18 +570,14 @@
         $('body').addClass('autodraw');
         strokeWords(title);
       }
-      if (/^[=@]/.exec(title)) {
-        return fetch(title);
-      }
       Index = INDEX[LANG];
-      if (isCordova || !Index) {
+      if (/^[=@]/.exec(title)) {} else if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
         }
         if (Index && Index.indexOf("\"" + title + "\"") === -1) {
           return true;
         }
-        id = title;
       } else {
         if (prevVal === val) {
           return true;
@@ -590,8 +586,8 @@
         if (!(Index.indexOf("\"" + title + "\"") >= 0)) {
           return true;
         }
-        id = title;
       }
+      id = title;
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
@@ -600,7 +596,7 @@
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
-      if (isCordova || LANG !== 'a') {
+      if (isCordova || LANG !== 'a' || /^[=@]/.exec(title)) {
         $('.back').hide();
       } else {
         $('.back').show();
@@ -958,7 +954,7 @@
         if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
-        if (term.length === 1 && widthIsXs()) {
+        if (term.length === 1 && widthIsXs() && !/[。，]/.test(term)) {
           return cb(["→列出含有「" + term + "」的詞"]);
         }
         if (/^[@=]/.exec(term)) {
@@ -1045,10 +1041,13 @@
   function renderRadical(char){
     var idx;
     idx = CJKRADICALS.indexOf(char);
-    if (idx % 2) {
+    if (!(idx % 2)) {
+      char = CJKRADICALS[idx + 1];
+    }
+    if (LANG !== 'a') {
       return char;
     }
-    return CJKRADICALS[idx + 1];
+    return "<a title='部首檢索' class='xref' style='color: white' href='#@" + char + "'> " + char + "</a>";
   }
   function canPlayMp3(){
     var a;
@@ -1076,12 +1075,12 @@
       strokes = i$;
       chars = rows[i$];
       if (chars != null && chars.length) {
-        list += "\u00A0" + strokes + ".";
+        list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
         for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
           ch = chars[j$];
-          list += "\u00A0<a href='" + h + ch + "'>" + ch + "</a>";
+          list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a>";
         }
-        list += "<br>\n";
+        list += "</span><br>\n";
       }
     }
     return title + "<div class='list'>" + list + "</div>";

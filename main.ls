@@ -1,4 +1,4 @@
-const DEBUGGING = on
+const DEBUGGING = off
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -217,8 +217,8 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     # Toggle submenu visibility.
-    $ \.navbar .on \shown.bs.dropdown -> $(@).css \position \absolute if width-is-xs!
-    $ \.navbar .on \hidden.bs.dropdown -> $(@).css \position \fixed
+    $ \body .on \shown.bs.dropdown \.navbar -> $(@).css \position \absolute if width-is-xs!
+    $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
       if width-is-xs!
@@ -335,22 +335,21 @@ window.do-load = ->
     if location.search is /draw/ and not $('body').hasClass('autodraw')
       $('body').addClass \autodraw
       strokeWords title
-    return fetch title if title is /^[=@]/
     Index = INDEX[LANG]
-    if isCordova or not Index
+    if title is /^[=@]/ => # pass through...
+    else if isCordova or not Index
       return if title is /object/
       return true if Index and Index.indexOf("\"#title\"") is -1
-      id = title
     else
       return true if prevVal is val
       prevVal := val
       return true unless Index.indexOf("\"#title\"") >= 0
-      id = title
+    id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
     $ \#cond .val "^#{title}$"
     hist = "#{ HASH-OF[LANG].slice(1) }#title"
     entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
-    if isCordova or LANG isnt \a
+    if isCordova or LANG isnt \a or title is /^[=@]/
       $(\.back).hide!
     else
       $(\.back).show!
@@ -544,7 +543,7 @@ function init-autocomplete
     source: ({term}, cb) ->
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
-      return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs!
+      return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs! and term isnt /[。，]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
       term.=replace(/」的詞$/ '')
@@ -599,8 +598,9 @@ function b2g (str)
 
 function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
-  return char if idx % 2
-  return CJK-RADICALS[idx + 1]
+  char = CJK-RADICALS[idx + 1] unless idx % 2
+  return char unless LANG is \a
+  return "<a title='部首檢索' class='xref' style='color: white' href='\#@#char'> #char</a>"
 
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
@@ -618,10 +618,10 @@ function render-strokes (terms)
   rows = $.parseJSON terms
   list = ''
   for chars, strokes in rows | chars?length
-    list += "\u00A0#strokes."
+    list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
     for ch in chars
-      list += "\u00A0<a href='#h#ch'>#ch</a>"
-    list += "<br>\n"
+      list += "<a class='stroke-char' href='#h#ch'>#ch</a>"
+    list += "</span><br>\n"
   return "#title<div class='list'>#list</div>"
 
 function render-list (terms)

@@ -10629,6 +10629,23 @@ body.lang-t .ui-tooltip .example {
     display: block;
   }
 }
+a.stroke-char {
+  font-size: 120%;
+  padding: 0.2em !important;
+  line-height: 200%;
+}
+
+.stroke-count {
+  width: 1.6em;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  background-color: #6b0000;
+  border-radius: 4px;
+  padding: 2px;
+  line-height: 1;
+}
+
 svg {
   border: 2px solid #a00;
   background: white;
