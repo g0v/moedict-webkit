@@ -626,7 +626,7 @@ function render-strokes (terms, id)
     list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
     for ch in chars
       list += "<a class='stroke-char' href='#h#ch'>#ch</a>"
-    list += "</span><br>\n"
+    list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
   return "#title<div class='list'>#list</div>"
 
 function render-list (terms, id)
@@ -634,7 +634,7 @@ function render-list (terms, id)
   id -= /^[@=]/
   title = "<h1>#id</h1>"
   terms -= /^[^"]*/
-  terms.=replace(/"([^"]+)"[^"]*/g "\u00B7 <a href='#{h}$1'>$1</a><br>\n")
+  terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
   return "#title<div class='list'>#terms</div>"
 
 function render (json)

@@ -10632,7 +10632,7 @@ body.lang-t .ui-tooltip .example {
 a.stroke-char {
   font-size: 120%;
   padding: 0.2em !important;
-  line-height: 200%;
+  line-height: 180%;
 }
 
 .stroke-count {
