@@ -440,9 +440,9 @@ window.do-load = ->
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     if part is /^\[\s*\[/
-      html = render-strokes part
+      html = render-strokes part, id
     else if part is /^\[/
-      html = render-list part
+      html = render-list part, id
     else
       html = render $.parseJSON part
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
@@ -588,8 +588,8 @@ const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉�
 
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
-function b2g (str)
-  return str unless LANG is \a
+function b2g (str='')
+  return str unless LANG is \a and str isnt /^@/
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
@@ -598,7 +598,7 @@ function b2g (str)
 
 function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
-  char = CJK-RADICALS[idx + 1] unless idx % 2
+  char = CJK-RADICALS[idx+1] unless idx % 2
   return char unless LANG is \a
   return "<a title='部首檢索' class='xref' style='color: white' href='\#@#char'> #char</a>"
 
@@ -612,9 +612,14 @@ function can-play-ogg
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
 
-function render-strokes (terms)
+function render-strokes (terms, id)
   h = HASH-OF[LANG]
-  title = "<h1>#{ $(\#query).val! - /^[@=]/ } 部</h1>"
+  id -= /^[@=]/
+  if id is /^\s*$/
+    title = "<h1>部首表</h1>"
+    h += '@'
+  else
+    title = "<h1>#id <a class='xref' href='#\@' title='部首表'>部</a></h1>"
   rows = $.parseJSON terms
   list = ''
   for chars, strokes in rows | chars?length
@@ -624,9 +629,10 @@ function render-strokes (terms)
     list += "</span><br>\n"
   return "#title<div class='list'>#list</div>"
 
-function render-list (terms)
+function render-list (terms, id)
   h = HASH-OF[LANG]
-  title = "<h1>#{ $(\#query).val! - /^[@=]/ }</h1>"
+  id -= /^[@=]/
+  title = "<h1>#id</h1>"
   terms -= /^[^"]*/
   terms.=replace(/"([^"]+)"[^"]*/g "\u00B7 <a href='#{h}$1'>$1</a><br>\n")
   return "#title<div class='list'>#terms</div>"
