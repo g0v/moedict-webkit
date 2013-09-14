@@ -318,6 +318,7 @@ window.do-load = ->
     window.do-lookup id
 
   bucket-of = ->
+    return it.0 if it is /^[=@]/
     code = it.charCodeAt(0)
     if 0xD800 <= code <= 0xDBFF
       code = it.charCodeAt(1) - 0xDC00
@@ -378,7 +379,7 @@ window.do-load = ->
     return load-json it
 
   load-json = (id, cb) ->
-    return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova and id isnt /^[@=]/
+    return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
     return fill-bucket id, bucket, cb

@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-    package="org.audreyt.dict.moe" android:versionName="0.4.3" android:versionCode="40215" android:hardwareAccelerated="true" android:installLocation="auto">
+    package="org.audreyt.dict.moe" android:versionName="0.4.4" android:versionCode="43990" android:hardwareAccelerated="true" android:installLocation="auto">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
