@@ -423,7 +423,7 @@
       if (/</.exec(val)) {
         return;
       }
-      if (/[，。]$/.exec(val)) {
+      if (val === '!=諺語') {
         setTimeout(function(){
           return $('#query').autocomplete('search');
         }, 500);
@@ -987,6 +987,9 @@
       source: function(arg$, cb){
         var term, regex, results, i$, ref$, len$, v, MaxResults, more;
         term = arg$.term;
+        if (term === '=諺語' && LANG === 't') {
+          term = "。";
+        }
         if (!term.length) {
           return cb([]);
         }
