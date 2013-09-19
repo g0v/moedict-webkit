@@ -423,7 +423,7 @@
       if (/</.exec(val)) {
         return;
       }
-      if (val === '!=諺語') {
+      if ((val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {
         setTimeout(function(){
           return $('#query').autocomplete('search');
         }, 500);
@@ -989,6 +989,9 @@
         term = arg$.term;
         if (term === '=諺語' && LANG === 't') {
           term = "。";
+        }
+        if (term === '=諺語' && LANG === 'h') {
+          term = "，";
         }
         if (!term.length) {
           return cb([]);
