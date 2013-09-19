@@ -877,7 +877,7 @@
         t: it
       };
     }, 'text');
-    for (i$ = 0, len$ = (ref$ = ['a']).length; i$ < len$; ++i$) {
+    for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
       lang = ref$[i$];
       results$.push((fn2$.call(this, lang)));
     }
@@ -905,7 +905,7 @@
     }
     function fn2$(lang){
       return GET(lang + "/=.json", function(it){
-        return $(".taxonomy." + lang).before(renderTaxonomy(lang, $.parseJSON(it)));
+        return $(".taxonomy." + lang).after(renderTaxonomy(lang, $.parseJSON(it)));
       }, 'text');
     }
   };
