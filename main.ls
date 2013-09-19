@@ -512,8 +512,8 @@ window.do-load = ->
 
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
-  for lang in <[ a ]> => let lang
-    GET "#lang/=.json", (-> $(".taxonomy.#lang").before( render-taxonomy lang, $.parseJSON it )), \text
+  for lang in <[ a t ]> => let lang
+    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
