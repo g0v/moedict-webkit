@@ -246,7 +246,7 @@ window.do-load = ->
   window.grok-val = grok-val = (val) ->
     stop-audio!
     return if val is /</
-    if val is \!=諺語
+    if val in <[ !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
     lang = \a
@@ -558,6 +558,7 @@ function init-autocomplete
       return true
     source: ({term}, cb) ->
       term = "。" if term is \=諺語 and LANG is \t
+      term = "，" if term is \=諺語 and LANG is \h
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs! and term isnt /[。，]/
