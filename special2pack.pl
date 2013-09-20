@@ -1,13 +1,16 @@
 use strict;
 use Encode;
 for my $special (qw[ = @ ]) {
-    for my $lang (qw[ a ]) {
+    for my $lang (qw[ a t ]) {
+        next if $special eq '@' and $lang eq 't';
         my @files = sort glob("$lang/$special*.json") or next;
         open my $out, '>:raw', "p${lang}ck/$special.txt";
         select $out;
         print "{";
         for my $file (@files) {
+            next if $file =~ /=\.json$/;
             my $payload = do { open my $fh, '<:raw', $file; local $/; <$fh>; };
+            $payload =~ s/\s*\n\s*//g;
             my $escaped = $file;
             $escaped =~ s!.*/!!;
             $escaped =~ s!\.json!!;
