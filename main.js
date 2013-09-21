@@ -374,7 +374,9 @@
       }
       $('body').on('shown.bs.dropdown', '.navbar', function(){
         if (widthIsXs()) {
-          return $(this).css('position', 'absolute');
+          $(this).css('position', 'absolute');
+          $(this).hide();
+          return $(this).fadeIn(0);
         }
       });
       $('body').on('hidden.bs.dropdown', '.navbar', function(){
@@ -762,6 +764,7 @@
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
+      part = part.replace(/([)）])/g, "$1\u200B");
       if (/^\[\s*\[/.exec(part)) {
         html = renderStrokes(part, id);
       } else if (/^\[/.exec(part)) {
@@ -1130,7 +1133,7 @@
         list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
         for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
           ch = chars[j$];
-          list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a>";
+          list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a> ";
         }
         list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
       }

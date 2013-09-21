@@ -9757,6 +9757,11 @@ body.lang-a #query-box {
   background-color: rgba(48, 19, 18, 0.7);
 }
 
+@media only screen and (max-width: 767px) {
+  body .navbar-inverse {
+    opacity: 0.95;
+  }
+}
 input.iconic-circle {
   padding: 0;
   margin-top: 16px !important;
