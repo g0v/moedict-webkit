@@ -11,14 +11,21 @@ $(function(){
        window.open($(this).attr('href'), '_system');
        return false;
    });
+   if (window.DataView && window.ArrayBuffer) {
+       $('.offline-strokes').show();
+   } else {
+       $('.online-strokes').show();
+   }
 });
 </script>
 </head>
 <body id="moedict" class="about">
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <a class="navbar-brand brand ebas" href="quit.html">萌典</a>
+        <a class="navbar-brand ebas" href="quit.html">萌典</a>
             <ul class="nav navbar-nav pull-right">
-                <li><a name="g0v"><img src="images/g0v-icon-invert.png" /></a></li><li>
+                <li style="display: inline-block"><a name="g0v"><img
+                    src="images/g0v-icon-invert.png" /></a></li><li
+                style="display: inline-block">
                 <a href="quit.html" title="回到萌典"><span class="ebas iconic-circle">止</span></a>
                 </li>
             </ul>
@@ -27,7 +34,7 @@ $(function(){
         <center><img class="logo" src="icon.png" width="30%"></center><div id="result">
 <p>本詞典共收錄十六萬筆國語、兩萬筆台語、一萬四千筆客語條目，不需網路連線即可檢閱。</p>
 <p>有網路連線時可播放國語常用條目、台語及客語條目名稱的真人發音。</p>
-<p>有網路連線時可按「畫」來顯示筆順動畫。</p>
+<p><span class="online-strokes" style="display: none">有網路連線時</span><span class="offline-strokes" style="display: none">不需網路連線，即</span>可按「畫」來顯示筆順動畫。</p>
 <p>查詢框支援「自動完成」功能及「%_ *? ^.$」等萬用字元。</p>
 <p>定義裡的每個字詞都可以點擊連到說明。</p>
 <p>源碼、其他平台版本、API 及原始資料等，均可在 3du.tw 取得。</p>
