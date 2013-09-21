@@ -173,6 +173,11 @@ body.lang-a {
 .navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
     background-color: hsla(3,46%,13%, 0.7);
 }
+@media only screen and (max-width: 767px) {
+    body .navbar-inverse {
+        opacity: 0.95
+    }
+}
 
 input.iconic-circle {
     padding: 0;

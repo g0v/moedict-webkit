@@ -217,7 +217,10 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     # Toggle submenu visibility.
-    $ \body .on \shown.bs.dropdown \.navbar -> $(@).css \position \absolute if width-is-xs!
+    $ \body .on \shown.bs.dropdown \.navbar -> if width-is-xs!
+      $(@).css \position \absolute
+      $(@).hide!
+      $(@).fadeIn 0ms
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
@@ -439,6 +442,7 @@ window.do-load = ->
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+    part.=replace /([)）])/g "$1\u200B"
     if part is /^\[\s*\[/
       html = render-strokes part, id
     else if part is /^\[/
@@ -643,7 +647,7 @@ function render-strokes (terms, id)
   for chars, strokes in rows | chars?length
     list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
     for ch in chars
-      list += "<a class='stroke-char' href='#h#ch'>#ch</a>"
+      list += "<a class='stroke-char' href='#h#ch'>#ch</a> "
     list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
   return "#title<div class='list'>#list</div>"
 
