@@ -517,7 +517,7 @@ window.do-load = ->
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang in <[ a t ]> => let lang
-    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
+    GET "#lang/=.json", (-> $(".taxonomy.#lang").click(-> false).after( render-taxonomy lang, $.parseJSON it )), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
@@ -528,7 +528,7 @@ function render-taxonomy (lang, taxonomy)
       ).text(taxo)
     else for label, submenu of taxo
       $ul.append $(\<li/> class: \dropdown-submenu).append(
-        $(\<a/> href: \#).text(label)
+        $(\<a/> href: \#).text(label).click -> false
       ).append(render-taxonomy lang, submenu)
   return $ul
 
