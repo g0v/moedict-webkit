@@ -224,9 +224,8 @@ window.do-load = ->
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
-      if width-is-xs!
-        $(@).next(\ul).slide-toggle \fast
-        return false
+      $(@).next(\ul).slide-toggle \fast if width-is-xs!
+      return false
 
     $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
@@ -517,7 +516,7 @@ window.do-load = ->
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang in <[ a t ]> => let lang
-    GET "#lang/=.json", (-> $(".taxonomy.#lang").click(-> false).after( render-taxonomy lang, $.parseJSON it )), \text
+    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
@@ -528,7 +527,7 @@ function render-taxonomy (lang, taxonomy)
       ).text(taxo)
     else for label, submenu of taxo
       $ul.append $(\<li/> class: \dropdown-submenu).append(
-        $(\<a/> href: \#).text(label).click -> false
+        $(\<a/> href: \#).text(label)
       ).append(render-taxonomy lang, submenu)
   return $ul
 
