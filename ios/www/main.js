@@ -256,7 +256,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang;
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -372,19 +372,21 @@
       if (!isCordova) {
         $('#query').focus();
       }
-      $('.navbar').on('shown.bs.dropdown', function(){
+      $('body').on('shown.bs.dropdown', '.navbar', function(){
         if (widthIsXs()) {
-          return $(this).css('position', 'absolute');
+          $(this).css('position', 'absolute');
+          $(this).hide();
+          return $(this).fadeIn(0);
         }
       });
-      $('.navbar').on('hidden.bs.dropdown', function(){
+      $('body').on('hidden.bs.dropdown', '.navbar', function(){
         return $(this).css('position', 'fixed');
       });
       $('body').on('click', 'li.dropdown-submenu > a', function(){
         if (widthIsXs()) {
           $(this).next('ul').slideToggle('fast');
-          return false;
         }
+        return false;
       });
       $('body').on('click', '.results .stroke', function(){
         if ($('svg, canvas').length) {
@@ -423,7 +425,7 @@
       if (/</.exec(val)) {
         return;
       }
-      if (/[，。]$/.exec(val)) {
+      if ((val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {
         setTimeout(function(){
           return $('#query').autocomplete('search');
         }, 500);
@@ -546,6 +548,9 @@
     };
     bucketOf = function(it){
       var code;
+      if (/^[=@]/.exec(it)) {
+        return it[0];
+      }
       code = it.charCodeAt(0);
       if (0xD800 <= code && code <= 0xDBFF) {
         code = it.charCodeAt(1) - 0xDC00;
@@ -567,18 +572,14 @@
         $('body').addClass('autodraw');
         strokeWords(title);
       }
-      if (/^[=@]/.exec(title)) {
-        return fetch(title);
-      }
       Index = INDEX[LANG];
-      if (isCordova || !Index) {
+      if (/^[=@]/.exec(title)) {} else if (isCordova || !Index) {
         if (/object/.exec(title)) {
           return;
         }
         if (Index && Index.indexOf("\"" + title + "\"") === -1) {
           return true;
         }
-        id = title;
       } else {
         if (prevVal === val) {
           return true;
@@ -587,8 +588,8 @@
         if (!(Index.indexOf("\"" + title + "\"") >= 0)) {
           return true;
         }
-        id = title;
       }
+      id = title;
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
@@ -597,7 +598,7 @@
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);
       }
-      if (isCordova || LANG !== 'a') {
+      if (isCordova || LANG !== 'a' || /^[=@]/.exec(title)) {
         $('.back').hide();
       } else {
         $('.back').show();
@@ -648,7 +649,7 @@
     };
     loadJson = function(id, cb){
       var bucket;
-      if (!(isCordova && !/^[@=]/.test(id))) {
+      if (!isCordova) {
         return GET(LANG + "/" + encodeURIComponent(replace$.call(id, /\(.*/, '')) + ".json", null, function(it){
           return fillJson(it, id, cb);
         }, 'text');
@@ -763,10 +764,11 @@
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
         return "<a href='" + h + word + "'>" + word + "</a>";
       });
+      part = part.replace(/([)）])/g, "$1\u200B");
       if (/^\[\s*\[/.exec(part)) {
-        html = renderStrokes(part);
+        html = renderStrokes(part, id);
       } else if (/^\[/.exec(part)) {
-        html = renderList(part);
+        html = renderList(part, id);
       } else {
         html = render($.parseJSON(part));
       }
@@ -873,11 +875,16 @@
         }
       }
     }
-    return GET("t/variants.json", function(it){
+    GET("t/variants.json", function(it){
       return XREF.tv = {
         t: it
       };
     }, 'text');
+    for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+      lang = ref$[i$];
+      results$.push((fn2$.call(this, lang)));
+    }
+    return results$;
     function fn$(lang){
       GET(lang + "/xref.json", function(it){
         XREF[lang] = it;
@@ -899,7 +906,41 @@
         return XREF[lang] = it;
       }, 'text');
     }
+    function fn2$(lang){
+      return GET(lang + "/=.json", function(it){
+        return $(".taxonomy." + lang).after(renderTaxonomy(lang, $.parseJSON(it)));
+      }, 'text');
+    }
   };
+  function renderTaxonomy(lang, taxonomy){
+    var $ul, i$, ref$, len$, taxo, label, submenu;
+    $ul = $('<ul/>', {
+      'class': 'dropdown-menu'
+    });
+    for (i$ = 0, len$ = (ref$ = taxonomy instanceof Array
+      ? taxonomy
+      : [taxonomy]).length; i$ < len$; ++i$) {
+      taxo = ref$[i$];
+      if (typeof taxo === 'string') {
+        $ul.append($('<li/>', {
+          role: 'presentation'
+        }).append($('<a/>', {
+          'class': "lang-option " + lang,
+          href: HASHOF[lang] + "=" + taxo
+        }).text(taxo)));
+      } else {
+        for (label in taxo) {
+          submenu = taxo[label];
+          $ul.append($('<li/>', {
+            'class': 'dropdown-submenu'
+          }).append($('<a/>', {
+            href: '#'
+          }).text(label)).append(renderTaxonomy(lang, submenu)));
+        }
+      }
+    }
+    return $ul;
+  }
   MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen  (S)","Meng  (Eig, Fam)","keimen, sprießen, knospen, ausschlagen "],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}';
   function initAutocomplete(){
     $.widget("ui.autocomplete", $.ui.autocomplete, {
@@ -949,13 +990,19 @@
       source: function(arg$, cb){
         var term, regex, results, i$, ref$, len$, v, MaxResults, more;
         term = arg$.term;
+        if (term === '=諺語' && LANG === 't') {
+          term = "。";
+        }
+        if (term === '=諺語' && LANG === 'h') {
+          term = "，";
+        }
         if (!term.length) {
           return cb([]);
         }
         if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
-        if (term.length === 1 && widthIsXs()) {
+        if (term.length === 1 && widthIsXs() && !/[。，]/.test(term)) {
           return cb(["→列出含有「" + term + "」的詞"]);
         }
         if (/^[@=]/.exec(term)) {
@@ -1026,7 +1073,8 @@
   SIMPTRAD = (ref$ = window.SIMPTRAD) != null ? ref$ : '';
   function b2g(str){
     var rv, i$, ref$, len$, char, idx;
-    if (LANG !== 'a') {
+    str == null && (str = '');
+    if (!(LANG === 'a' && !/^@/.test(str))) {
       return str;
     }
     rv = '';
@@ -1042,10 +1090,13 @@
   function renderRadical(char){
     var idx;
     idx = CJKRADICALS.indexOf(char);
-    if (idx % 2) {
+    if (!(idx % 2)) {
+      char = CJKRADICALS[idx + 1];
+    }
+    if (LANG !== 'a') {
       return char;
     }
-    return CJKRADICALS[idx + 1];
+    return "<a title='部首檢索' class='xref' style='color: white' href='#@" + char + "'> " + char + "</a>";
   }
   function canPlayMp3(){
     var a;
@@ -1063,32 +1114,39 @@
     a = document.createElement('audio');
     return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
   }
-  function renderStrokes(terms){
+  function renderStrokes(terms, id){
     var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
     h = HASHOF[LANG];
-    title = "<h1>" + (replace$.call($('#query').val(), /^[@=]/, '')) + " 部</h1>";
+    id = replace$.call(id, /^[@=]/, '');
+    if (/^\s*$/.exec(id)) {
+      title = "<h1>部首表</h1>";
+      h += '@';
+    } else {
+      title = "<h1>" + id + " <a class='xref' href='#@' title='部首表'>部</a></h1>";
+    }
     rows = $.parseJSON(terms);
     list = '';
     for (i$ = 0, len$ = rows.length; i$ < len$; ++i$) {
       strokes = i$;
       chars = rows[i$];
       if (chars != null && chars.length) {
-        list += "\u00A0" + strokes + ".";
+        list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
         for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
           ch = chars[j$];
-          list += "\u00A0<a href='" + h + ch + "'>" + ch + "</a>";
+          list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a> ";
         }
-        list += "<br>\n";
+        list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
       }
     }
     return title + "<div class='list'>" + list + "</div>";
   }
-  function renderList(terms){
+  function renderList(terms, id){
     var h, title;
     h = HASHOF[LANG];
-    title = "<h1>" + (replace$.call($('#query').val(), /^[@=]/, '')) + "</h1>";
+    id = replace$.call(id, /^[@=]/, '');
+    title = "<h1>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
-    terms = terms.replace(/"([^"]+)"[^"]*/g, "\u00B7 <a href='" + h + "$1'>$1</a><br>\n");
+    terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href='" + h + "$1'>$1</a></span>");
     return title + "<div class='list'>" + terms + "</div>";
   }
   function render(json){
