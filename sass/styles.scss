@@ -645,6 +645,14 @@ img {
     display: block !important;
 }
 
+.web-only {
+    display: none !important;
+}
+
+.web .web-only {
+    display: block !important;
+}
+
 .cordova #opening {
     display: none !important;
 }
@@ -690,11 +698,14 @@ input.back {
 }
 
 body.overflow-scrolling-false {
-    .bpmf, input, button, select, textarea, .ui-widget, .results {
-        font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
-    }
     .navbar-fixed-top, .erase-box, #query-box, .back-box {
         position: absolute !important;
+    }
+}
+
+body.overflow-scrolling-false, body.cordova {
+    .pinyin, .bpmf, input, button, select, textarea, .ui-widget, .results {
+        font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
     }
     .pinyin, .english, .fw_def, .bopomofo, .cc0 {
         text-rendering: auto !important;
@@ -704,7 +715,7 @@ body.overflow-scrolling-false {
     }
 }
 
-body.overflow-scrolling-true {
+body.overflow-scrolling-true.web {
     .pinyin, .english, .fw_def, .bopomofo, .cc0 {
         text-rendering: optimizeLegibility;
         font-feature-settings: "liga", "dlig", "kern" on;

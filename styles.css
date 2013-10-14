@@ -10222,6 +10222,14 @@ img.quit {
   display: block !important;
 }
 
+.web-only {
+  display: none !important;
+}
+
+.web .web-only {
+  display: block !important;
+}
+
 .cordova #opening {
   display: none !important;
 }
@@ -10263,20 +10271,21 @@ input.back {
     top: 18px !important;
   }
 }
-body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results {
-  font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
-}
 body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
   position: absolute !important;
 }
-body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0 {
+
+body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.cordova .pinyin, body.cordova .bpmf, body.cordova input, body.cordova button, body.cordova select, body.cordova textarea, body.cordova .ui-widget, body.cordova .results {
+  font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
+}
+body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.cordova .pinyin, body.cordova .english, body.cordova .fw_def, body.cordova .bopomofo, body.cordova .cc0 {
   text-rendering: auto !important;
   font-feature-settings: normal !important;
   -moz-font-feature-settings: normal !important;
   -webkit-font-feature-settings: normal !important;
 }
 
-body.overflow-scrolling-true .pinyin, body.overflow-scrolling-true .english, body.overflow-scrolling-true .fw_def, body.overflow-scrolling-true .bopomofo, body.overflow-scrolling-true .cc0 {
+body.overflow-scrolling-true.web .pinyin, body.overflow-scrolling-true.web .english, body.overflow-scrolling-true.web .fw_def, body.overflow-scrolling-true.web .bopomofo, body.overflow-scrolling-true.web .cc0 {
   text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;

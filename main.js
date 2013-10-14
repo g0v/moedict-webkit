@@ -154,22 +154,6 @@
       return $.parseJSON((ref$ = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem(k) : void 8) != null ? ref$ : 'null');
     } catch (e$) {}
   }
-  /*
-  if isMobile
-    class window.Howl
-      ({ urls, onplay, onend, onloaderror }) ->
-        @el = document.createElement \audio
-        @el.set-attribute \src urls.0
-        @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
-        @el.set-attribute \autoplay true
-        @el.set-attribute \controls true
-        @el.add-event-listener \playing ~> onplay!; @unload!
-        @el.add-event-listener \error ~> onloaderror!; @unload!
-        @el.add-event-listener \ended ~> onend!; @unload!
-      play: -> @el.play!
-      stop: -> @el?pause?!; @el?currentTime = 0.0; @unload!
-      unload: -> try $(@el).remove!; @el = null
-    */
   seq = 0;
   getEl = function(){
     return $("#player-" + seq);
@@ -631,6 +615,11 @@
           location.replace(hash);
         }
       }
+      $('.share .btn').each(function(){
+        return $(this).attr({
+          href: $(this).data('href') + encodeURIComponent(encodeURIComponent(hash.substr(1)))
+        });
+      });
       if (isMobile) {
         $('#result div, #result span, #result h1:not(:first)').hide();
         $('#result h1:first').text(replace$.call(it, /^[@=]/, '')).show();
@@ -1173,6 +1162,8 @@
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
       bopomofo = replace$.call(bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 '), /<[^>]*>/g, '');
+      bopomofo = bopomofo.replace(/\u0358/g, "\u02c8");
+      pinyin = pinyin.replace(/\u030d/g, "\u02c8");
       if (!/</.test(title)) {
         title = "<div class='stroke' title='筆順動畫'>" + title + "</div>";
       }
