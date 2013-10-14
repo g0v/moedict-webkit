@@ -83,23 +83,6 @@ catch
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try $.parseJSON(localStorage?getItem(k) ? \null)
 
-/*
-if isMobile
-  class window.Howl
-    ({ urls, onplay, onend, onloaderror }) ->
-      @el = document.createElement \audio
-      @el.set-attribute \src urls.0
-      @el.set-attribute \type if urls.0 is /mp3$/ then \audio/mpeg else \audio/ogg
-      @el.set-attribute \autoplay true
-      @el.set-attribute \controls true
-      @el.add-event-listener \playing ~> onplay!; @unload!
-      @el.add-event-listener \error ~> onloaderror!; @unload!
-      @el.add-event-listener \ended ~> onend!; @unload!
-    play: -> @el.play!
-    stop: -> @el?pause?!; @el?currentTime = 0.0; @unload!
-    unload: -> try $(@el).remove!; @el = null
-  */
-
 var playing, player, seq
 seq = 0
 get-el = -> $("\#player-#seq")
@@ -368,6 +351,8 @@ window.do-load = ->
     hash = "#{ HASH-OF[LANG] }#it"
     if "#{location.hash}" isnt hash => try history.pushState null, null, hash
       catch => location.replace hash
+    $('.share .btn').each ->
+      $(@).attr href: $(@).data(\href) + encodeURIComponent encodeURIComponent hash.substr(1)
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it - /^[@=]/).show!
@@ -676,6 +661,8 @@ function render (json)
       """
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
+    bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
+    pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """#char-html
