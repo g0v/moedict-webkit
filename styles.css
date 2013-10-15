@@ -10275,8 +10275,11 @@ body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .
   position: absolute !important;
 }
 
-body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.cordova .pinyin, body.cordova .bpmf, body.cordova input, body.cordova button, body.cordova select, body.cordova textarea, body.cordova .ui-widget, body.cordova .results {
+body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.cordova .bpmf, body.cordova input, body.cordova button, body.cordova select, body.cordova textarea, body.cordova .ui-widget, body.cordova .results {
   font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
+}
+body.overflow-scrolling-false .pinyin, body.cordova .pinyin {
+  font-family: "Fira Sans OT", sans-serif !important;
 }
 body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.cordova .pinyin, body.cordova .english, body.cordova .fw_def, body.cordova .bopomofo, body.cordova .cc0 {
   text-rendering: auto !important;
