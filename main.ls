@@ -112,7 +112,7 @@ window.play-audio = (el, url) ->
     $el.removeClass('icon-play').addClass('icon-spinner')
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
-    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3!
+    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3! and navigator.userAgent isnt /\bGecko\/\b/
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
@@ -643,6 +643,17 @@ function render-list (terms, id)
   terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
   return "#title<div class='list'>#terms</div>"
 
+http-map =
+  a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com
+  h: \a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com
+  t: \1763c5ee9859e0316ed6-db85b55a6a3fbe33f09b9245992383bd.ssl.cf1.rackcdn.com
+  'stroke-json': \829091573dd46381a321-9e8a43b8d3436eaf4353af683c892840.ssl.cf1.rackcdn.com
+  stroke: \/626a26a628fa127d6a25-47cac8eba79cfb787dbcc3e49a1a65f1.ssl.cf1.rackcdn.com
+
+function http
+  return "http://#it" unless location.protocol is \https:
+  return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
+
 function render (json)
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
@@ -654,7 +665,7 @@ function render (json)
     if audio_id and LANG is \h
       pinyin.=replace /(.)\u20DE/g (_, $1) ->
         variant = " 四海大平安".indexOf($1)
-        mp3 = "http://h.moedict.tw/#{variant}-#audio_id.ogg"
+        mp3 = http "h.moedict.tw/#{variant}-#audio_id.ogg"
         mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         """
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
@@ -670,9 +681,9 @@ function render (json)
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
-            mp3 = "http://t.moedict.tw/#basename.ogg"
+            mp3 = http "t.moedict.tw/#basename.ogg"
           else if LANG is \a
-            mp3 = "http://a.moedict.tw/#audio_id.ogg"
+            mp3 = http "a.moedict.tw/#audio_id.ogg"
           mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         if mp3 then "<i class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'></i>" else ''
       }#{
@@ -803,7 +814,7 @@ $ ->
     stroke.node.setAttribute "class" "fade in"
 
   fetchStrokeXml = (code, next, cb) ->
-    $.get((if isCordova then "http://stroke.moedict.tw/" else "utf8/") + code.toLowerCase() + ".xml", cb, "xml")
+    $.get((if isCordova then http "stroke.moedict.tw/" else "utf8/") + code.toLowerCase() + ".xml", cb, "xml")
      .fail -> $('svg:last').fadeOut \fast -> $('svg:last').remove!; next!
 
   strokeWord = (word, cb, timeout) ->
@@ -846,7 +857,7 @@ $ ->
         if window.DataView and window.ArrayBuffer
           url = \./bin/
           dataType = \bin
-        else url = \http://stroke-json.moedict.tw/ # Android <4 has no DataView support
+        else url = http \stroke-json.moedict.tw/ # Android <4 has no DataView support
       $('#strokes').strokeWords(words, {url, dataType, -svg})
     else
       <- getScript \js/raphael.js
