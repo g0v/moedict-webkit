@@ -359,7 +359,7 @@ window.do-load = ->
       $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
-    return fill-json MOE, \萌 if it is \萌
+    return fill-json MOE, \萌 if it is \萌 and LANG is \a
     return load-json it
 
   load-json = (id, cb) ->
@@ -431,6 +431,7 @@ window.do-load = ->
       html = render-list part, id
     else
       html = render $.parseJSON part
+    html.=replace /(.)\u20DD/g          "<span class='part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
@@ -449,7 +450,7 @@ window.do-load = ->
       html += """
           <div class="xref-line">
               <span class='xref part-of-speech'>#{
-                XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[lang]
+                XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[tgt-lang]
               }</span>
               <span class='xref'>
       """
