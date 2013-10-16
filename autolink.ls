@@ -1,6 +1,6 @@
 require! <[ fs os ]>
 lang = process.argv.2
-unless lang in <[ a t h ]>
+unless lang in <[ a t h c ]>
   console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
@@ -83,6 +83,7 @@ entries = switch lang
 | \a => grok(\dict-revised.pua.json)
 | \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
 | \h => grok(\dict-hakka.json)
+| \c => grok(\dict-csld.json)
 
 i = 0
 todo = 0
@@ -111,7 +112,7 @@ for {t:title, h:heteronyms}:entry in entries
     heteronyms[i] <<< {"=": audio-id} if audio-id
   delete entry<[ English francais Deutsch ]>
   chunk = JSON.stringify(entry).replace(
-    /.[\u20E3\u20DE]/g -> escape it
+    /.[\u20E3\u20DE\u20DD]/g -> escape it
   )
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x

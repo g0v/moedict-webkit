@@ -643,7 +643,7 @@
       if (loadCacheHtml(it)) {
         return;
       }
-      if (it === '萌') {
+      if (it === '萌' && LANG === 'a') {
         return fillJson(MOE, '萌');
       }
       return loadJson(it);
@@ -773,6 +773,7 @@
       } else {
         html = render($.parseJSON(part));
       }
+      html = html.replace(/(.)\u20DD/g, "<span class='part-of-speech'>$1</span>");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
@@ -791,7 +792,7 @@
           if (!hasXrefs++) {
             html += '<div class="xrefs">';
           }
-          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[lang]) + "</span>\n    <span class='xref'>";
+          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[tgtLang]) + "</span>\n    <span class='xref'>";
           html += (fn$()).join('、');
           html += '</span></div>';
         }
