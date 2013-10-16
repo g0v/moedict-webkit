@@ -15,12 +15,15 @@
   HASHOF = {
     a: '#',
     t: '#!',
-    h: '#:'
+    h: '#:',
+    c: '#~'
   };
   XREFLABELOF = {
     a: '華',
     t: '閩',
-    h: '客'
+    h: '客',
+    c: '陸',
+    ca: '臺'
   };
   window.isCordova = isCordova = !/^https?:/.test(document.URL);
   isDroidGap = isCordova && /android_asset/.exec(location.href);
@@ -37,7 +40,8 @@
   INDEX = {
     t: '',
     a: '',
-    h: ''
+    h: '',
+    c: ''
   };
   XREF = {
     t: {
@@ -240,7 +244,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, i$, ref$, len$, lang, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, ref$, len$, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -423,6 +427,10 @@
         lang = 'h';
         val = val.substr(1);
       }
+      if (/^~/.exec(val + "")) {
+        lang = 'c';
+        val = val.substr(1);
+      }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
       if (lang !== LANG) {
         LANG = LANG;
@@ -463,7 +471,7 @@
     window.fillQuery = fillQuery = function(it){
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
-      title = replace$.call(title, /^[:!]/, '');
+      title = replace$.call(title, /^[:!~]/, '');
       if (/^</.exec(title)) {
         return;
       }
@@ -503,6 +511,8 @@
         case 't':
           return 'h';
         case 'h':
+          return 'c';
+        case 'c':
           return 'a';
         }
       }());
@@ -513,7 +523,8 @@
       id || (id = {
         a: '萌',
         t: '發穎',
-        h: '發芽'
+        h: '發芽',
+        c: '萌'
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
@@ -526,6 +537,7 @@
       $('body').removeClass("lang-t");
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
+      $('body').removeClass("lang-c");
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
       return window.doLookup(id);
@@ -590,11 +602,11 @@
       fetch(title);
       return true;
     };
-    htmlCache = {
-      t: [],
-      a: [],
-      h: []
-    };
+    res$ = {};
+    for (key in HASHOF) {
+      res$[key] = [];
+    }
+    htmlCache = res$;
     fetch = function(it){
       var hash, e;
       if (!it) {
@@ -779,7 +791,7 @@
           if (!hasXrefs++) {
             html += '<div class="xrefs">';
           }
-          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + XREFLABELOF[tgtLang] + "</span>\n    <span class='xref'>";
+          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[lang]) + "</span>\n    <span class='xref'>";
           html += (fn$()).join('、');
           html += '</span></div>';
         }
@@ -844,8 +856,7 @@
       });
     };
     if (isCordova) {
-      for (i$ = 0, len$ = (ref$ = ['a', 't', 'h']).length; i$ < len$; ++i$) {
-        lang = ref$[i$];
+      for (lang in HASHOF) {
         (fn$.call(this, lang));
       }
     } else {
@@ -857,7 +868,7 @@
         INDEX[LANG] = it;
         return initAutocomplete();
       }, 'text');
-      for (i$ = 0, len$ = (ref$ = ['a', 't', 'h']).length; i$ < len$; ++i$) {
+      for (i$ = 0, len$ = (ref$ = HASHOF).length; i$ < len$; ++i$) {
         lang = ref$[i$];
         if (lang !== LANG) {
           (fn1$.call(this, lang));
