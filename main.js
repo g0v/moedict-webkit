@@ -31,7 +31,7 @@
   if (DEBUGGING) {
     isCordova = true;
   }
-  isMobile = isCordova || /Android|iPhone|iPad|Mobile/.exec(navigator.userAgent);
+  isMobile = isCordova || 'ontouchstart' in window || in$('onmsgesturechange', window);
   isWebKit = /WebKit/.exec(navigator.userAgent);
   widthIsXs = function(){
     return $('body').width() < 768;
@@ -476,6 +476,9 @@
         return;
       }
       if (/^→/.exec(title)) {
+        if (isMobile && widthIsXs()) {
+          $('#query').blur();
+        }
         setTimeout(function(){
           $('#query').autocomplete('search');
         }, 500);
@@ -489,8 +492,11 @@
         try {
           $('#query').autocomplete('close');
         } catch (e$) {}
-      } else if (/列出含有「/.exec(title)) {
-        input.blur();
+        try {
+          if (widthIsXs) {
+            $('#query').blur();
+          }
+        } catch (e$) {}
       } else {
         input.focus();
         try {

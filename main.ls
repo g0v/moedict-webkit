@@ -13,7 +13,7 @@ window.isCordova = isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
-isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
 isWebKit = navigator.userAgent is /WebKit/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
@@ -265,6 +265,7 @@ window.do-load = ->
     title -= /^[:!~]/
     return if title is /^</
     if title is /^→/
+      $(\#query).blur! if isMobile and width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
       return
@@ -273,8 +274,7 @@ window.do-load = ->
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
-    else if title is /列出含有「/
-      input.blur!
+      try $(\#query).blur! if width-is-xs
     else
       input.focus!
       try input.select!
