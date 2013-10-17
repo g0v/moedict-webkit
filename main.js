@@ -1050,7 +1050,7 @@
         if (results.length === 1) {
           doLookup(replace$.call(results[0], /"/g, ''));
         }
-        MaxResults = 400;
+        MaxResults = widthIsXs() ? 400 : 1024;
         if (results.length > MaxResults) {
           more = "(僅顯示前 " + MaxResults + " 筆)";
           results = results.slice(0, MaxResults);
