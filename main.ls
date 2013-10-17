@@ -585,7 +585,7 @@ function init-autocomplete
         results.unshift v unless v in results
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
-      MaxResults = 400
+      MaxResults = if width-is-xs! then 400 else 1024
       if results.length > MaxResults
         more = "(僅顯示前 #MaxResults 筆)"
         results.=slice(0, MaxResults)
