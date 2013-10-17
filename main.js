@@ -889,7 +889,7 @@
         t: it
       };
     }, 'text');
-    for (i$ = 0, len$ = (ref$ = ['a', 't']).length; i$ < len$; ++i$) {
+    for (i$ = 0, len$ = (ref$ = ['a', 't', 'c']).length; i$ < len$; ++i$) {
       lang = ref$[i$];
       results$.push((fn2$.call(this, lang)));
     }
@@ -926,6 +926,12 @@
     $ul = $('<ul/>', {
       'class': 'dropdown-menu'
     });
+    if (lang === 'c') {
+      $ul.css({
+        bottom: 0,
+        top: 'auto'
+      });
+    }
     for (i$ = 0, len$ = (ref$ = taxonomy instanceof Array
       ? taxonomy
       : [taxonomy]).length; i$ < len$; ++i$) {
