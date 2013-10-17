@@ -481,6 +481,8 @@
         try {
           $('#query').autocomplete('close');
         } catch (e$) {}
+      } else if (/列出含有「/.exec(title)) {
+        input.blur();
       } else {
         input.focus();
         try {
@@ -991,7 +993,7 @@
         if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
-        if (term.length === 1 && widthIsXs() && !/[。，]/.test(term)) {
+        if (widthIsXs() && !/[「」。，?.*_% ]/.test(term)) {
           return cb(["→列出含有「" + term + "」的詞"]);
         }
         if (/^[@=]/.exec(term)) {
