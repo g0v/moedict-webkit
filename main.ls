@@ -273,6 +273,8 @@ window.do-load = ->
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
+    else if title is /列出含有「/
+      input.blur!
     else
       input.focus!
       try input.select!
@@ -548,7 +550,7 @@ function init-autocomplete
       term = "，" if term is \=諺語 and LANG is \h
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
-      return cb ["→列出含有「#{term}」的詞"] if term.length is 1 and width-is-xs! and term isnt /[。，]/
+      return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
       term.=replace(/」的詞$/ '')
