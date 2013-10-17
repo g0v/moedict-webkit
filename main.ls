@@ -501,11 +501,12 @@ window.do-load = ->
 
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
-  for lang in <[ a t ]> => let lang
+  for lang in <[ a t c ]> => let lang
     GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
+  $ul.css bottom: 0 top: \auto if lang is \c
   for taxo in (if taxonomy instanceof Array then taxonomy else [taxonomy])
     if typeof taxo is \string
       $ul.append $(\<li/> role: \presentation).append $(
