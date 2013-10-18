@@ -1166,6 +1166,10 @@
     id = replace$.call(id, /^[@=]/, '');
     title = "<h1>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
+    if (/^";/.exec(terms)) {
+      terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
+    }
+    terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href='" + h + "$1'>$1</a></td><td><a href='" + h + "$2'>$2</a></td></tr>");
     terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href='" + h + "$1'>$1</a></span>");
     return title + "<div class='list'>" + terms + "</div>";
   }
