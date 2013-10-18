@@ -925,7 +925,12 @@
     }
     function fn2$(lang){
       return GET(lang + "/=.json", function(it){
-        return $(".taxonomy." + lang).after(renderTaxonomy(lang, $.parseJSON(it)));
+        var $ul;
+        $ul = renderTaxonomy(lang, $.parseJSON(it));
+        if (STANDALONE) {
+          return $(".taxonomy." + lang).parent().replaceWith($ul.children());
+        }
+        return $(".taxonomy." + lang).after($ul);
       }, 'text');
     }
   };
@@ -934,12 +939,6 @@
     $ul = $('<ul/>', {
       'class': 'dropdown-menu'
     });
-    if (lang === 'c') {
-      $ul.css({
-        bottom: 0,
-        top: 'auto'
-      });
-    }
     for (i$ = 0, len$ = (ref$ = taxonomy instanceof Array
       ? taxonomy
       : [taxonomy]).length; i$ < len$; ++i$) {
@@ -1194,8 +1193,8 @@
     });
   }
   function render(json){
-    var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
-    title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
+    var title, english, heteronyms, radical, translation, nrsCount, sCount, py, alt, charHtml, result;
+    title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin, alt = json.alt;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" : "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>";
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, basename, mp3;
@@ -1252,7 +1251,7 @@
         }) + "</ol></div>";
       }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
-    return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
+    return result + "" + (alt != null ? "<div class='xrefs'>\n  <div class=\"xref-line\"><span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');

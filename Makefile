@@ -39,6 +39,7 @@ offline :: moedict-data deps translation
 	perl special2pack.pl
 
 csld ::
+	cp ../moedict-csld/dict-csld.json .
 	lsc json2prefix.ls c
 	lsc autolink.ls c > c.txt
 	perl link2pack.pl c < c.txt

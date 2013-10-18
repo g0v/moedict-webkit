@@ -506,11 +506,16 @@ window.do-load = ->
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang of HASH-OF => let lang
-    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
+    GET "#lang/=.json", (->
+      $ul = render-taxonomy lang, $.parseJSON it
+      if STANDALONE
+        return $(".taxonomy.#lang").parent!replaceWith $ul.children!
+      $(".taxonomy.#lang").after $ul
+    ), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
-  $ul.css bottom: 0 top: \auto if lang is \c
+  # $ul.css bottom: 0 top: \auto if lang is \c
   for taxo in (if taxonomy instanceof Array then taxonomy else [taxonomy])
     if typeof taxo is \string
       $ul.append $(\<li/> role: \presentation).append $(
@@ -663,7 +668,7 @@ function http
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 
 function render (json)
-  { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
+  { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, alt } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" else "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>"
@@ -737,7 +742,12 @@ function render (json)
       }</span>" else '' }
       </div>
     """
-  return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
+  return "#result#{ if alt? then """
+    <div class='xrefs'>
+      <div class="xref-line"><span class='xref part-of-speech'>简</span>
+      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
+    </div>
+  """ else ''}#{ if translation then "<div class='xrefs'><span class='translation'>
     #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g }</span></div>" else '' }
     #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
     #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }
