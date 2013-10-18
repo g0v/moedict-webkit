@@ -12,7 +12,4 @@
     <item android:id="@+id/large"
           android:icon="@drawable/large"
           android:title="@string/large" />
-    <item android:id="@+id/lang"
-          android:icon="@drawable/lang"
-          android:title="@string/lang" />
 </menu>
