@@ -1,4 +1,5 @@
 const DEBUGGING = off
+const STANDALONE = \a
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -6,7 +7,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:}
+const HASH-OF = {a: \#}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
@@ -18,14 +19,10 @@ isWebKit = navigator.userAgent is /WebKit/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '' }
-XREF = {
-  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
-  a: {t: '"萌":"發穎"' h: '"萌":"發芽"'}
-  h: {a: '"發芽":"萌,萌芽"'}
-  tv: {t: ''}
-}
+XREF = { a: {}}
 # Return an object of all matched with {key: [words]}.
 function xref-of (id, src-lang=LANG)
+  return [] unless XREF[src-lang]
   rv = {}
   if typeof XREF[src-lang] is \string
     parsed = {}
@@ -448,24 +445,6 @@ window.do-load = ->
     html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     has-xrefs = false
-    for tgt-lang, words of xref-of id | words.length
-      html += '<div class="xrefs">' unless has-xrefs++
-      html += """
-          <div class="xref-line">
-              <span class='xref part-of-speech'>#{
-                XREF-LABEL-OF[tgt-lang]
-              }</span>
-              <span class='xref'>
-      """
-      html += (for word in words
-        h = HASH-OF[tgt-lang]
-        if word is /`/
-          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href='#h#word'>#word</a>"
-        else
-          "<a class='xref' href='#h#word'>#word</a>"
-      ) * \、
-      html += '</span></div>'
-    html += '</div>' if has-xrefs
     cb(htmlCache[LANG][id] = html)
     return
 
@@ -488,7 +467,7 @@ window.do-load = ->
     fill-json part, id, cb
 
   if isCordova
-    for lang in <[ a t h ]> => let lang
+    for lang of HASH-OF => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it; init! if lang is LANG), \text
       p1 <- GET "#lang/index.1.json", _, \text
       p2 <- GET "#lang/index.2.json", _, \text
@@ -503,7 +482,9 @@ window.do-load = ->
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang in <[ a t ]> => let lang
-    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
+    GET "#lang/=.json", (
+      -> $(".taxonomy.#lang").parent!replaceWith( render-taxonomy(lang, $.parseJSON it).children! )
+    ), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
@@ -611,11 +592,13 @@ function render-radical (char)
   return "<a title='部首檢索' class='xref' style='color: white' href='\#@#char'> #char</a>"
 
 function can-play-mp3
+  return false if STANDALONE and LANG in <[ a c ]>
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
   a = document.createElement \audio
   CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg') - /no/)
 
 function can-play-ogg
+  return false if STANDALONE and LANG in <[ a c ]>
   return CACHED.can-play-ogg if CACHED.can-play-ogg?
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
