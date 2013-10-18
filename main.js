@@ -3,11 +3,12 @@
   var DEBUGGING, STANDALONE, LANG, MOEID, HASHOF, XREFLABELOF, ref$, isCordova, isDroidGap, isDeviceReady, isMobile, isWebKit, widthIsXs, entryHistory, INDEX, XREF, CACHED, GET, e, playing, player, seq, getEl, callLater, MOE, CJKRADICALS, SIMPTRAD, httpMap, Consonants, Vowels, Tones, re, C, V, LoadedScripts, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
   DEBUGGING = false;
   STANDALONE = 'c';
-  LANG = getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
+  LANG = getPref('lang') || STANDALONE || (/twblg/.exec(document.URL) ? 't' : 'a');
   MOEID = getPref('prev-id') || {
     a: '萌',
     t: '發穎',
-    h: '發芽'
+    h: '發芽',
+    c: '萌'
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -1212,7 +1213,9 @@
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants;
       pinyin == null && (pinyin = trs);
-      pinyin = replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '');
+      if (LANG !== 'c') {
+        pinyin = replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '');
+      }
       if (audio_id && LANG === 'h') {
         pinyin = pinyin.replace(/(.)\u20DE/g, function(_, $1){
           var variant, mp3;
@@ -1225,7 +1228,10 @@
         });
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      bopomofo = replace$.call(bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 '), /<[^>]*>/g, '');
+      bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
+      if (LANG !== 'c') {
+        bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
+      }
       bopomofo = bopomofo.replace(/\u0358/g, "\u02c8");
       pinyin = pinyin.replace(/\u030d/g, "\u02c8");
       if (!/</.test(title)) {

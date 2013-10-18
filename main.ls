@@ -1,8 +1,8 @@
 const DEBUGGING = off
 const STANDALONE = \c
 
-LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
+LANG = getPref(\lang) || STANDALONE || (if document.URL is /twblg/ then \t else \a)
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
@@ -676,7 +676,7 @@ function render (json)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" else "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>"
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
     pinyin ?= trs
-    pinyin = (pinyin - /<[^>]*>/g - /（.*）/)
+    pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
     if audio_id and LANG is \h
       pinyin.=replace /(.)\u20DE/g (_, $1) ->
         variant = " 四海大平安".indexOf($1)
@@ -686,7 +686,8 @@ function render (json)
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
       """
     bopomofo ?= trs2bpmf "#pinyin"
-    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ') - /<[^>]*>/g
+    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    bopomofo -= /<[^>]*>/g unless LANG is \c
     bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
     pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
     unless title is /</
