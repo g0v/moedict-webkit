@@ -1,5 +1,5 @@
 const DEBUGGING = off
-const STANDALONE = \a
+const STANDALONE = \c
 
 LANG = getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽}[LANG]
@@ -7,19 +7,26 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#}
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客}
+HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
+
+HASH-OF = { "#STANDALONE": HASH-OF[STANDALONE] } if STANDALONE
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
-isMobile = isCordova or navigator.userAgent is /Android|iPhone|iPad|Mobile/
+isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
 isWebKit = navigator.userAgent is /WebKit/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '' }
-XREF = { a: {}}
+INDEX = { t: '', a: '', h: '', c: '' }
+XREF = {
+  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
+  a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
+  h: {a: '"發芽":"萌,萌芽"'}
+  tv: {t: ''}
+}
 # Return an object of all matched with {key: [words]}.
 function xref-of (id, src-lang=LANG)
   return [] unless XREF[src-lang]
@@ -232,12 +239,9 @@ window.do-load = ->
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
     lang = \a
-    if "#val" is /^!/
-      lang = \t
-      val.=substr 1
-    if "#val" is /^:/
-      lang = \h
-      val.=substr 1
+    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^:/ => lang = \h; val.=substr 1
+    if "#val" is /^~/ => lang = \c; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       LANG := LANG
@@ -262,9 +266,10 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
-    title -= /^[:!]/
+    title -= /^[:!~]/
     return if title is /^</
     if title is /^→/
+      $(\#query).blur! if isMobile and width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
       return
@@ -273,8 +278,7 @@ window.do-load = ->
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
-    else if title is /列出含有「/
-      input.blur!
+      try $(\#query).blur! if width-is-xs
     else
       input.focus!
       try input.select!
@@ -285,18 +289,19 @@ window.do-load = ->
   window.press-lang = (lang='', id='') ->
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
+    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
-    id ||= {a: \萌 t: \發穎 h: \發芽}[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
     $('body').removeClass("lang-t")
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-h")
+    $('body').removeClass("lang-c")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id
@@ -340,7 +345,7 @@ window.do-load = ->
     fetch title
     return true
 
-  htmlCache = { t:[], a:[], h:[] }
+  htmlCache = {[key, []] for key of HASH-OF}
   fetch = ->
     return unless it
     return if prevId is it
@@ -360,7 +365,7 @@ window.do-load = ->
       $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
-    return fill-json MOE, \萌 if it is \萌
+    return fill-json MOE, \萌 if it is \萌 and LANG is \a
     return load-json it
 
   load-json = (id, cb) ->
@@ -432,6 +437,7 @@ window.do-load = ->
       html = render-list part, id
     else
       html = render $.parseJSON part
+    html.=replace /(.)\u20DD/g          "<span class='part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
@@ -445,6 +451,24 @@ window.do-load = ->
     html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     has-xrefs = false
+    for tgt-lang, words of (if STANDALONE then {} else xref-of id) | words.length
+      html += '<div class="xrefs">' unless has-xrefs++
+      html += """
+          <div class="xref-line">
+              <span class='xref part-of-speech'>#{
+                XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[tgt-lang]
+              }</span>
+              <span class='xref'>
+      """
+      html += (for word in words
+        h = HASH-OF[tgt-lang]
+        if word is /`/
+          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href='#h#word'>#word</a>"
+        else
+          "<a class='xref' href='#h#word'>#word</a>"
+      ) * \、
+      html += '</span></div>'
+    html += '</div>' if has-xrefs
     cb(htmlCache[LANG][id] = html)
     return
 
@@ -476,18 +500,17 @@ window.do-load = ->
   else
     GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
-    for lang in <[ a t h ]> | lang isnt LANG => let lang
+    for lang in HASH-OF | lang isnt LANG => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it), \text
 
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
-  for lang in <[ a t ]> => let lang
-    GET "#lang/=.json", (
-      -> $(".taxonomy.#lang").parent!replaceWith( render-taxonomy(lang, $.parseJSON it).children! )
-    ), \text
+  for lang of HASH-OF => let lang
+    GET "#lang/=.json", (-> $(".taxonomy.#lang").after( render-taxonomy lang, $.parseJSON it )), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
+  $ul.css bottom: 0 top: \auto if lang is \c
   for taxo in (if taxonomy instanceof Array then taxonomy else [taxonomy])
     if typeof taxo is \string
       $ul.append $(\<li/> role: \presentation).append $(

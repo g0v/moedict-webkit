@@ -9731,6 +9731,16 @@ body.lang-a #query-box {
   background-color: #F3F0F0;
 }
 
+body.lang-c .nav-bg {
+  background-color: #007;
+}
+body.lang-c .iconic-circle {
+  background: #447;
+}
+body.lang-c #query-box {
+  background-color: #EFEFFB;
+}
+
 .nav-bg {
   height: 50px;
 }

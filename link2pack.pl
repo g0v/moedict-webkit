@@ -3,12 +3,13 @@ use utf8;
 use 5.008;
 use Encode;
 my $lang = shift;
-unless ($lang ~~ [qw[ t a h ]] and not -t STDIN) {
+unless ($lang ~~ [qw[ t a h c ]] and not -t STDIN) {
     die << '.';
 Please invoke this as one of:
     perl link2pack.pl a < a.txt
     perl link2pack.pl t < t.txt
     perl link2pack.pl h < h.txt
+    perl link2pack.pl c < c.txt
 .
 }
 binmode STDIN, ':raw';

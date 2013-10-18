@@ -1,7 +1,7 @@
 require! fs
 lang = process.argv.2
 
-unless lang in <[ a t h ]>
+unless lang in <[ a t h c ]>
   console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
   process.exit!
 
@@ -22,6 +22,7 @@ entries = switch lang
   | \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
   | \a => grok(\dict-revised.pua.json)
   | \h => grok(\dict-hakka.json)
+  | \c => grok(\dict-csld.json)
 
 prefix = {}
 defs = {}
