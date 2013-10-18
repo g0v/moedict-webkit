@@ -10086,6 +10086,9 @@ center {
   border-bottom: 1px dotted #dddddd;
   word-break: normal !important;
 }
+.bopomofo .part-of-speech {
+  margin: 0px 5px 0 10px;
+}
 
 body#moedict.overflow-scrolling-false.lang-t .pinyin {
   font-family: 'MOEDICT';
