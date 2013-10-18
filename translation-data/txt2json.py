@@ -11,7 +11,7 @@ fwdictRE = re.compile(ur"(?P<tradi>[^ ]+) +(?P<simpl>[^ ]+) +\[(?P<pinyin>[^\]]+
 cedictFile = "./translation-data/cedict.txt"
 cfdictFile = "./translation-data/cfdict.txt"
 handedictFile = "./translation-data/handedict.txt"
-moedictFile = "./moedict-data/dict-revised.json"
+moedictFile = "./dict-csld.json"
 
 
 #reading translation dictionnaries
@@ -48,5 +48,5 @@ for i in range(0,len(moedict)):
 	    moedict[i][lang] = fwdict[form][0]
 
 # saving
-json.dump(moedict,open("./translation-data/moe-translation.json","w"))
+json.dump(moedict,open("./translation-data/csld-translation.json","w"))
 

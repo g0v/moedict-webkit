@@ -40,9 +40,12 @@ offline :: moedict-data deps translation
 
 csld ::
 	cp ../moedict-csld/dict-csld.json .
+	python translation-data/txt2json.py
+	cp translation-data/csld-translation.json dict-csld.json
 	lsc json2prefix.ls c
 	lsc autolink.ls c > c.txt
 	perl link2pack.pl c < c.txt
+	perl special2pack.pl
 
 hakka ::
 	cp ../hakka/dict-hakka.json .
