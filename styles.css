@@ -10541,7 +10541,7 @@ span a {
 .ui-tooltip .xrefs {
   display: none;
 }
-.ui-tooltip .part-of-speech {
+.ui-tooltip .entry .part-of-speech {
   position: absolute;
   left: 7px;
 }
