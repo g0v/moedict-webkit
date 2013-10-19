@@ -15,6 +15,7 @@ isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
+isApp = true if window.locationbar.visible is false
 isWebKit = navigator.userAgent is /WebKit/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
@@ -136,6 +137,7 @@ callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
+  $('body').addClass \app if isCordova or isApp
   $('body').addClass \web unless isCordova
   $('body').addClass \ios if isCordova and not isDroidGap
   $('body').addClass \desktop unless isMobile
