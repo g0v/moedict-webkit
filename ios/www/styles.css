@@ -9731,6 +9731,16 @@ body.lang-a #query-box {
   background-color: #F3F0F0;
 }
 
+body.lang-c .nav-bg {
+  background-color: #007;
+}
+body.lang-c .iconic-circle {
+  background: #447;
+}
+body.lang-c #query-box {
+  background-color: #EFEFFB;
+}
+
 .nav-bg {
   height: 50px;
 }
@@ -9795,7 +9805,7 @@ input.iconic-circle {
   display: block;
 }
 
-.cordova .navbar-brand {
+.app .navbar-brand {
   display: none;
 }
 
@@ -9816,7 +9826,7 @@ input.iconic-circle {
     width: 24px;
   }
 }
-.cordova .back-box {
+.app .back-box {
   position: fixed;
   text-align: center;
   left: 0px;
@@ -9827,7 +9837,7 @@ input.iconic-circle {
 }
 
 @media only screen and (min-width: 768px) {
-  .cordova .back-box {
+  .app .back-box {
     top: 72px;
     width: 24px;
   }
@@ -9838,7 +9848,7 @@ input.iconic-circle {
   }
 }
 @media only screen and (max-width: 767px) {
-  .cordova .query-box input {
+  .app .query-box input {
     position: fixed;
     left: 40px;
     top: 55px;
@@ -9947,7 +9957,7 @@ input.query {
   box-sizing: border-box;
 }
 
-.cordova input.query {
+.app input.query {
   padding-right: 32px;
 }
 
@@ -10075,6 +10085,9 @@ center {
   width: 100%;
   border-bottom: 1px dotted #dddddd;
   word-break: normal !important;
+}
+.bopomofo .part-of-speech {
+  margin: 0px 5px 0 10px;
 }
 
 body#moedict.overflow-scrolling-false.lang-t .pinyin {
@@ -10222,7 +10235,23 @@ img.quit {
   display: block !important;
 }
 
-.cordova #opening {
+.app-only {
+  display: none !important;
+}
+
+.app .app-only {
+  display: block !important;
+}
+
+.web-only {
+  display: none !important;
+}
+
+.web .web-only {
+  display: block !important;
+}
+
+.app #opening {
   display: none !important;
 }
 
@@ -10244,7 +10273,7 @@ img.back {
   display: none;
 }
 
-.cordova img.down {
+.app img.down {
   display: none;
 }
 
@@ -10263,20 +10292,24 @@ input.back {
     top: 18px !important;
   }
 }
-body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results {
-  font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
-}
 body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
   position: absolute !important;
 }
-body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0 {
+
+body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results {
+  font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
+}
+body.overflow-scrolling-false .pinyin, body.app .pinyin {
+  font-family: "Fira Sans OT", sans-serif !important;
+}
+body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.app .pinyin, body.app .english, body.app .fw_def, body.app .bopomofo, body.app .cc0 {
   text-rendering: auto !important;
   font-feature-settings: normal !important;
   -moz-font-feature-settings: normal !important;
   -webkit-font-feature-settings: normal !important;
 }
 
-body.overflow-scrolling-true .pinyin, body.overflow-scrolling-true .english, body.overflow-scrolling-true .fw_def, body.overflow-scrolling-true .bopomofo, body.overflow-scrolling-true .cc0 {
+body.overflow-scrolling-true.web .pinyin, body.overflow-scrolling-true.web .english, body.overflow-scrolling-true.web .fw_def, body.overflow-scrolling-true.web .bopomofo, body.overflow-scrolling-true.web .cc0 {
   text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
@@ -10356,7 +10389,7 @@ body.lang-a.web #lookback {
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.cordova .ui-autocomplete {
+.app .ui-autocomplete {
   max-height: 75% !important;
 }
 
@@ -10516,7 +10549,7 @@ span a {
 .ui-tooltip .xrefs {
   display: none;
 }
-.ui-tooltip .part-of-speech {
+.ui-tooltip .entry .part-of-speech {
   position: absolute;
   left: 7px;
 }

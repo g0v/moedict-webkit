@@ -17,6 +17,7 @@ isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
+isApp = true if isCordova or window.locationbar?visible is false
 isWebKit = navigator.userAgent is /WebKit/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
@@ -139,9 +140,10 @@ callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
-  $('body').addClass \web unless isCordova
+  $('body').addClass \app if isApp
+  $('body').addClass \web unless isApp
   $('body').addClass \ios if isCordova and not isDroidGap
-  $('body').addClass \desktop unless isMobile
+  $('body').addClass \desktop unless isMobile or isApp
   $('body').addClass \android if isDroidGap
   if navigator.user-agent is /Android\s*[12]\./
     $('body').addClass \overflow-scrolling-false
@@ -338,7 +340,7 @@ window.do-load = ->
     $ \#cond .val "^#{title}$"
     hist = "#{ HASH-OF[LANG].slice(1) }#title"
     entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
-    if isCordova or LANG isnt \a or title is /^[=@]/
+    if isApp or LANG isnt \a or title is /^[=@]/
       $(\.back).hide!
     else
       $(\.back).show!
@@ -606,7 +608,7 @@ const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉�
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
-  return str unless LANG is \a and str isnt /^@/
+  return str unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
