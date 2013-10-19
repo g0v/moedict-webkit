@@ -1101,7 +1101,7 @@
   function b2g(str){
     var rv, i$, ref$, len$, char, idx;
     str == null && (str = '');
-    if (!(LANG === 'a' && !/^@/.test(str))) {
+    if (!((LANG === 'a' || LANG === 'c') && !/^@/.test(str))) {
       return str;
     }
     rv = '';
