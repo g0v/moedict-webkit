@@ -605,7 +605,7 @@ const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉�
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
-  return str unless LANG is \a and str isnt /^@/
+  return str unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
