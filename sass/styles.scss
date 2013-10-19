@@ -216,7 +216,7 @@ input.iconic-circle {
 #moedict.about .navbar-brand {
     display: block;
 }
-.cordova .navbar-brand {
+.app .navbar-brand {
     display: none;
 }
 .erase-box {
@@ -235,7 +235,7 @@ input.iconic-circle {
         width: 24px;
     }
 }
-.cordova .back-box {
+.app .back-box {
     position: fixed;
     text-align: center;
     left: 0px;
@@ -245,7 +245,7 @@ input.iconic-circle {
     font-size: 19px;
 }
 @media only screen and (min-width: 768px) {
-    .cordova .back-box {
+    .app .back-box {
         top: 72px;
         width: 24px;
     }
@@ -256,7 +256,7 @@ input.iconic-circle {
 }
 
 @media only screen and (max-width: 767px) {
-.cordova .query-box input {
+.app .query-box input {
     position: fixed;
     left: 40px;
     top: 55px;
@@ -366,7 +366,7 @@ input.query {
     @include box-sizing(border-box);
 }
 
-.cordova input.query {
+.app input.query {
     padding-right: 32px;
 }
 
@@ -652,6 +652,15 @@ img {
     display: block !important;
 }
 
+.app-only {
+    display: none !important;
+}
+
+.app .app-only {
+    display: block !important;
+}
+
+
 .web-only {
     display: none !important;
 }
@@ -660,7 +669,7 @@ img {
     display: block !important;
 }
 
-.cordova #opening {
+.app #opening {
     display: none !important;
 }
 
@@ -684,7 +693,7 @@ img {
     }
 }
 
-.cordova img.down {
+.app img.down {
     display: none;
 }
 
@@ -710,7 +719,7 @@ body.overflow-scrolling-false {
     }
 }
 
-body.overflow-scrolling-false, body.cordova {
+body.overflow-scrolling-false, body.app {
     .bpmf, input, button, select, textarea, .ui-widget, .results {
         font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
     }
@@ -815,7 +824,7 @@ body.lang-a.web #lookback {
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.cordova .ui-autocomplete {
+.app .ui-autocomplete {
     max-height: 75% !important;
 }
 

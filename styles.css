@@ -9805,7 +9805,7 @@ input.iconic-circle {
   display: block;
 }
 
-.cordova .navbar-brand {
+.app .navbar-brand {
   display: none;
 }
 
@@ -9826,7 +9826,7 @@ input.iconic-circle {
     width: 24px;
   }
 }
-.cordova .back-box {
+.app .back-box {
   position: fixed;
   text-align: center;
   left: 0px;
@@ -9837,7 +9837,7 @@ input.iconic-circle {
 }
 
 @media only screen and (min-width: 768px) {
-  .cordova .back-box {
+  .app .back-box {
     top: 72px;
     width: 24px;
   }
@@ -9848,7 +9848,7 @@ input.iconic-circle {
   }
 }
 @media only screen and (max-width: 767px) {
-  .cordova .query-box input {
+  .app .query-box input {
     position: fixed;
     left: 40px;
     top: 55px;
@@ -9957,7 +9957,7 @@ input.query {
   box-sizing: border-box;
 }
 
-.cordova input.query {
+.app input.query {
   padding-right: 32px;
 }
 
@@ -10235,6 +10235,14 @@ img.quit {
   display: block !important;
 }
 
+.app-only {
+  display: none !important;
+}
+
+.app .app-only {
+  display: block !important;
+}
+
 .web-only {
   display: none !important;
 }
@@ -10243,7 +10251,7 @@ img.quit {
   display: block !important;
 }
 
-.cordova #opening {
+.app #opening {
   display: none !important;
 }
 
@@ -10265,7 +10273,7 @@ img.back {
   display: none;
 }
 
-.cordova img.down {
+.app img.down {
   display: none;
 }
 
@@ -10288,13 +10296,13 @@ body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .
   position: absolute !important;
 }
 
-body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.cordova .bpmf, body.cordova input, body.cordova button, body.cordova select, body.cordova textarea, body.cordova .ui-widget, body.cordova .results {
+body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results {
   font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
 }
-body.overflow-scrolling-false .pinyin, body.cordova .pinyin {
+body.overflow-scrolling-false .pinyin, body.app .pinyin {
   font-family: "Fira Sans OT", sans-serif !important;
 }
-body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.cordova .pinyin, body.cordova .english, body.cordova .fw_def, body.cordova .bopomofo, body.cordova .cc0 {
+body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.app .pinyin, body.app .english, body.app .fw_def, body.app .bopomofo, body.app .cc0 {
   text-rendering: auto !important;
   font-feature-settings: normal !important;
   -moz-font-feature-settings: normal !important;
@@ -10381,7 +10389,7 @@ body.lang-a.web #lookback {
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.cordova .ui-autocomplete {
+.app .ui-autocomplete {
   max-height: 75% !important;
 }
 
