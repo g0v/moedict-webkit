@@ -368,6 +368,17 @@
       if (!isCordova) {
         $('#query').focus();
       }
+      $('body').on('dblclick', '.entry', function(){
+        return;
+        if (LANG !== 'c') {
+          return;
+        }
+        $(this).css({
+          borderRadius: '10px',
+          background: '#eeeeff'
+        }).attr('contentEditable', true);
+        return $('#sendback').fadeIn();
+      });
       $('body').on('shown.bs.dropdown', '.navbar', function(){
         if (widthIsXs()) {
           $(this).css('position', 'absolute');
@@ -482,10 +493,6 @@
       title = replace$.call(title, /^[:!~]/, '');
       if (/^</.exec(title)) {
         return;
-      }
-      if (/^▶/.exec(title)) {
-        window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val(), '_self');
-        return false;
       }
       if (/^→/.exec(title)) {
         if (isMobile && widthIsXs()) {

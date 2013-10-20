@@ -203,6 +203,11 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     # Toggle submenu visibility.
+    $ \body .on \dblclick \.entry ->
+      return
+      return unless LANG is \c
+      $(@).css {borderRadius: \10px background: \#eeeeff} .attr \contentEditable true
+      $ \#sendback .fadeIn!
     $ \body .on \shown.bs.dropdown \.navbar -> if width-is-xs!
       $(@).css \position \absolute
       $(@).hide!
@@ -267,9 +272,6 @@ window.do-load = ->
     title = decodeURIComponent(it) - /[（(].*/
     title -= /^[:!~]/
     return if title is /^</
-    if title is /^▶/
-      window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#{ $ \#query .val! }", '_self'
-      return false
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
       <- setTimeout _, 500ms
