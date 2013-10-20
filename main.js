@@ -483,6 +483,10 @@
       if (/^</.exec(title)) {
         return;
       }
+      if (/^▶/.exec(title)) {
+        window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val(), '_self');
+        return false;
+      }
       if (/^→/.exec(title)) {
         if (isMobile && widthIsXs()) {
           $('#query').blur();
@@ -995,6 +999,10 @@
       select: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^▶/.exec(item != null ? item.value : void 8)) {
+          window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
+          return false;
+        }
         if (/^\(/.exec(item != null ? item.value : void 8)) {
           return false;
         }
@@ -1079,6 +1087,9 @@
               results.unshift(v);
             }
           }
+        }
+        if (LANG === 'c' && !(results != null && results.length)) {
+          return cb(["▶找不到。建議收錄？"]);
         }
         if (!(results != null && results.length)) {
           return cb(['']);
