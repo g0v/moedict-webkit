@@ -704,7 +704,13 @@ function render (json)
       }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo }</span></div>" else ''
+          }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
+    <div style='background: \#eeeeff; border-radius: 10px'>
+      <span class='xref part-of-speech'>简</span>
+      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
+    </div>
+  """ else ''}
+            </div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
@@ -742,12 +748,7 @@ function render (json)
       }</span>" else '' }
       </div>
     """
-  return "#result#{ if alt? then """
-    <div class='xrefs'>
-      <div class="xref-line"><span class='xref part-of-speech'>简</span>
-      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
-    </div>
-  """ else ''}#{ if translation then "<div class='xrefs'><span class='translation'>
+  return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
     #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g }</span></div>" else '' }
     #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
     #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }
