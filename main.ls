@@ -222,7 +222,7 @@ window.do-load = ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords($('h1:first').text! - /[（(].*/) # Strip the english part and draw the strokes
 
-    unless ``('onhashchange' in window)``
+    unless \onhashchange of window
       $ \body .on \click \a ->
         val = $(@).attr(\href)
         val -= /.*\#/ if val
@@ -599,7 +599,7 @@ function init-autocomplete
       results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
-      return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length
+      return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length and not isApp
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = if width-is-xs! then 400 else 1024
