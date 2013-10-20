@@ -42,10 +42,11 @@ while (<STDIN>) {
 }
 
 mkdir "p${lang}ck" unless -e "p${lang}ck";
+mkdir "ios/www/p${lang}ck" unless -e "ios/www/p${lang}ck";
 while (my ($k, $v) = each %prepack) {
     $v .= "\n}\n";
     write_file("p${lang}ck/$k.txt", $v);
 }
 
-sub write_file { open my $fh, '>', shift(@_) or die $!; print $fh @_; }
+sub write_file { open my $fh, '>', shift(@_) or die "Cannot write to: @_ - $!"; print $fh @_; }
 sub read_file { local $/; open my $fh, '<', shift(@_) or die $!; <$fh>; }
