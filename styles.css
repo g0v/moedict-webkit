@@ -10243,6 +10243,14 @@ img.quit {
   display: block !important;
 }
 
+.web-inline-only {
+  display: none !important;
+}
+
+.web .web-inline-only {
+  display: inline-block !important;
+}
+
 .web-only {
   display: none !important;
 }
