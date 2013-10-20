@@ -1103,7 +1103,7 @@
             }
           }
         }
-        if (LANG === 'c' && !(results != null && results.length)) {
+        if (LANG === 'c' && !(results != null && results.length) && !isApp) {
           return cb(["▶找不到。建議收錄？"]);
         }
         if (!(results != null && results.length)) {
