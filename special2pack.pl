@@ -2,7 +2,7 @@ use strict;
 use Encode;
 for my $special (qw[ = @ ]) {
     for my $lang (qw[ a t h c ]) {
-        next if $special eq '@' and $lang ne 'a';
+        next if $special eq '@' and $lang ne 'a' and $lang ne 'c';
         my @files = sort glob("$lang/$special*.json") or next;
         open my $out, '>:raw', "p${lang}ck/$special.txt";
         select $out;
