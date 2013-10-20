@@ -206,6 +206,11 @@ window.do-load = ->
     $ \#query .focus! unless isCordova
 
     # Toggle submenu visibility.
+    $ \body .on \dblclick \.entry ->
+      return
+      return unless LANG is \c
+      $(@).css {borderRadius: \10px background: \#eeeeff} .attr \contentEditable true
+      $ \#sendback .fadeIn!
     $ \body .on \shown.bs.dropdown \.navbar -> if width-is-xs!
       $(@).css \position \absolute
       $(@).hide!
@@ -550,6 +555,9 @@ function init-autocomplete
       my: "left bottom"
       at: "left top"
     select: (e, {item}) ->
+      if item?value is /^▶/
+        window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#{ $ \#query .val! }&body=出處及定義："
+        return false
       return false if item?value is /^\(/
       fill-query item.value if item?value
       return true
@@ -594,6 +602,7 @@ function init-autocomplete
       results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
+      return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = if width-is-xs! then 400 else 1024
@@ -709,7 +718,13 @@ function render (json)
       }</h1>#{
         if bopomofo then "<div class='bopomofo'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo }</span></div>" else ''
+          }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
+    <div style='background: \#eeeeff; border-radius: 10px'>
+      <span class='xref part-of-speech'>简</span>
+      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
+    </div>
+  """ else ''}
+            </div>" else ''
       }<div class="entry">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
@@ -747,12 +762,7 @@ function render (json)
       }</span>" else '' }
       </div>
     """
-  return "#result#{ if alt? then """
-    <div class='xrefs'>
-      <div class="xref-line"><span class='xref part-of-speech'>简</span>
-      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
-    </div>
-  """ else ''}#{ if translation then "<div class='xrefs'><span class='translation'>
+  return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
     #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g }</span></div>" else '' }
     #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
     #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }

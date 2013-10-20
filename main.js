@@ -374,6 +374,17 @@
       if (!isCordova) {
         $('#query').focus();
       }
+      $('body').on('dblclick', '.entry', function(){
+        return;
+        if (LANG !== 'c') {
+          return;
+        }
+        $(this).css({
+          borderRadius: '10px',
+          background: '#eeeeff'
+        }).attr('contentEditable', true);
+        return $('#sendback').fadeIn();
+      });
       $('body').on('shown.bs.dropdown', '.navbar', function(){
         if (widthIsXs()) {
           $(this).css('position', 'absolute');
@@ -1003,6 +1014,10 @@
       select: function(e, arg$){
         var item;
         item = arg$.item;
+        if (/^▶/.exec(item != null ? item.value : void 8)) {
+          window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
+          return false;
+        }
         if (/^\(/.exec(item != null ? item.value : void 8)) {
           return false;
         }
@@ -1087,6 +1102,9 @@
               results.unshift(v);
             }
           }
+        }
+        if (LANG === 'c' && !(results != null && results.length)) {
+          return cb(["▶找不到。建議收錄？"]);
         }
         if (!(results != null && results.length)) {
           return cb(['']);
@@ -1243,9 +1261,9 @@
       if (!/</.test(title)) {
         title = "<div class='stroke' title='筆順動畫'>" + title + "</div>";
       }
-      return charHtml + "\n<h1 class='title'>" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
+      return charHtml + "\n    <h1 class='title'>" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span></div>" : '') + "<div class=\"entry\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div style='background: #eeeeff; border-radius: 10px'>\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];
@@ -1271,9 +1289,9 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
+      }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n    </div>";
     });
-    return result + "" + (alt != null ? "<div class='xrefs'>\n  <div class=\"xref-line\"><span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
+    return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
     function expandDef(def){
       return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');

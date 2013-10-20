@@ -12,6 +12,7 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
+	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
 moedict-data :: checkout
@@ -24,6 +25,8 @@ offline :: moedict-data deps translation
 	ln -fs moedict-epub/dict-revised.pua.json              dict-revised.pua.json
 	ln -fs moedict-data-twblg/dict-twblg.json              dict-twblg.json 
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json 
+	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
+	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	lsc json2prefix.ls a
 	lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
