@@ -698,6 +698,7 @@ function render (json)
     bopomofo -= /<[^>]*>/g unless LANG is \c
     bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
     pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
+    pinyin.=replace /ɡ/g \g
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
     unless title is /</
