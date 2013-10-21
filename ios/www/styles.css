@@ -10887,10 +10887,14 @@ canvas {
     padding-left: .5em;
   }
 }
+.app .i-030d {
+  margin-right: -0.38em;
+}
+
 .i-030d {
   display: inline-block;
   color: transparent;
-  margin-right: -0.31em;
+  margin-right: -0.3em;
 }
 .i-030d:before {
   content: "󰁩";
@@ -10900,7 +10904,7 @@ canvas {
 .a-030d {
   display: inline-block;
   color: transparent;
-  margin-right: -0.6em;
+  margin-right: -0.65em;
 }
 .a-030d:before {
   content: "󰁡";
@@ -10910,7 +10914,7 @@ canvas {
 .e-030d {
   display: inline-block;
   color: transparent;
-  margin-right: -0.6em;
+  margin-right: -0.65em;
 }
 .e-030d:before {
   content: "󰁥";
@@ -10920,7 +10924,7 @@ canvas {
 .o-030d {
   display: inline-block;
   color: transparent;
-  margin-right: -0.6em;
+  margin-right: -0.65em;
 }
 .o-030d:before {
   content: "󰁯";
@@ -10930,7 +10934,7 @@ canvas {
 .u-030d {
   display: inline-block;
   color: transparent;
-  margin-right: -0.6em;
+  margin-right: -0.65em;
 }
 .u-030d:before {
   content: "󰁵";

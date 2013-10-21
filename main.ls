@@ -703,7 +703,10 @@ function render (json)
     bopomofo.=replace /(\u31B5)\u0358/g "<span class='u31b5-0358'>$1\u0358</span>"
     bopomofo.=replace /(\u31B6)\u0358/g "<span class='u31b6-0358'>$1\u0358</span>"
     bopomofo.=replace /(\u31B7)\u0358/g "<span class='u31b7-0358'>$1\u0358</span>"
-    pinyin.=replace /([aieou])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
+    if isDroidGap
+      pinyin.=replace /([aieou])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
+    else
+      pinyin.=replace /([i])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
     pinyin.=replace /ɡ/g \g
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
