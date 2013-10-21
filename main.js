@@ -1253,16 +1253,6 @@
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
-      bopomofo = bopomofo.replace(/([\u31B4-\u31B7])([^\u0358])/g, "<span class='u31bX'>$1</span>$2");
-      bopomofo = bopomofo.replace(/(\u31B4)\u0358/g, "<span class='u31b4-0358'>$1\u0358</span>");
-      bopomofo = bopomofo.replace(/(\u31B5)\u0358/g, "<span class='u31b5-0358'>$1\u0358</span>");
-      bopomofo = bopomofo.replace(/(\u31B6)\u0358/g, "<span class='u31b6-0358'>$1\u0358</span>");
-      bopomofo = bopomofo.replace(/(\u31B7)\u0358/g, "<span class='u31b7-0358'>$1\u0358</span>");
-      if (isDroidGap) {
-        pinyin = pinyin.replace(/([aieou])\u030d/g, "<span class='$1-030d'>$1\u030d</span>");
-      } else {
-        pinyin = pinyin.replace(/([i])\u030d/g, "<span class='$1-030d'>$1\u030d</span>");
-      }
       pinyin = pinyin.replace(/ɡ/g, 'g');
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
@@ -1325,6 +1315,18 @@
     }
     function h(text){
       text == null && (text = '');
+      if (LANG === 't') {
+        text = text.replace(/([\u31B4-\u31B7])([^\u0358])/g, "<span class='u31bX'>$1</span>$2");
+        text = text.replace(/(\u31B4)\u0358/g, "<span class='u31b4-0358'>$1\u0358</span>");
+        text = text.replace(/(\u31B5)\u0358/g, "<span class='u31b5-0358'>$1\u0358</span>");
+        text = text.replace(/(\u31B6)\u0358/g, "<span class='u31b6-0358'>$1\u0358</span>");
+        text = text.replace(/(\u31B7)\u0358/g, "<span class='u31b7-0358'>$1\u0358</span>");
+        if (isDroidGap) {
+          text = text.replace(/([aieou])\u030d/g, "<span class='$1-030d'>$1\u030d</span>");
+        } else {
+          text = text.replace(/([i])\u030d/g, "<span class='$1-030d'>$1\u030d</span>");
+        }
+      }
       return text.replace(/\uFF0E/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
     }
     function groupBy(prop, xs){
