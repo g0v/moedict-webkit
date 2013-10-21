@@ -696,6 +696,11 @@ function render (json)
     bopomofo -= /<[^>]*>/g unless LANG is \c
     bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
     pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
+    cn-specific = ''
+    if bopomofo is /^<br>/
+      bopomofo -= /^<br>/
+      pinyin -= /^<br>/
+      cn-specific = \cn
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """#char-html
@@ -711,10 +716,10 @@ function render (json)
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
       }</h1>#{
-        if bopomofo then "<div class='bopomofo'>#{
+        if bopomofo then "<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
-    <div style='background: \#eeeeff; border-radius: 10px'>
+    <div class="cn">
       <span class='xref part-of-speech'>简</span>
       <span class='xref'>#{ alt - /<[^>]*>/g }</span>
     </div>

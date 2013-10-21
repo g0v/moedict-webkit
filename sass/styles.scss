@@ -72,6 +72,15 @@ body {
     }
 }
 
+.cn {
+    background: #eeeeff;
+    border-radius: 10px;
+    &.bopomofo {
+        padding-top: 3px;
+        border-top: 5px solid white;
+    }
+}
+
 .ebas {
     font-family: EBAS, serif;
     font-smooth: always;

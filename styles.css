@@ -9747,6 +9747,15 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: FontAwesome;
 }
 
+.cn {
+  background: #eeeeff;
+  border-radius: 10px;
+}
+.cn.bopomofo {
+  padding-top: 3px;
+  border-top: 5px solid white;
+}
+
 .ebas {
   font-family: EBAS, serif;
   font-smooth: always;
