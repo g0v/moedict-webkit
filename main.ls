@@ -220,7 +220,7 @@ window.do-load = ->
 
     $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
-      strokeWords($('h1:first').text! - /[（(].*/) # Strip the english part and draw the strokes
+      strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
 
     unless \onhashchange of window
       $ \body .on \click \a ->
@@ -704,7 +704,7 @@ function render (json)
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """#char-html
-      <h1 class='title'>#{ h title }#{
+      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
