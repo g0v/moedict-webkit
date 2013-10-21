@@ -36,9 +36,9 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls h
 	lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
-	lsc json2prefix.ls c
-	lsc autolink.ls c > c.txt
-	perl link2pack.pl c < c.txt
+	-lsc json2prefix.ls c
+	-lsc autolink.ls c > c.txt
+	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
 csld ::
