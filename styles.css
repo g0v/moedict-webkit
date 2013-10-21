@@ -9755,6 +9755,9 @@ body [class^="icon-"], body [class*=" icon-"] {
   padding-top: 3px;
   border-top: 5px solid white;
 }
+.cn.bopomofo .cn {
+  border-top: 1px solid #eee;
+}
 
 .ebas {
   font-family: EBAS, serif;
@@ -9769,6 +9772,11 @@ body [class^="icon-"], body [class*=" icon-"] {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 501;
+}
+.title .specific_to {
+  display: inline;
+  font-size: 40%;
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "黑體-繁", "微軟正黑體", "儷黑 Pro", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
   display: inline;
@@ -10110,7 +10118,7 @@ input.query {
   border-radius: 30px;
 }
 
-.part-of-speech a:hover, .part-of-speech a:focus {
+.part-of-speech a:hover, .part-of-speech a:focus, .specific a:hover, .specific a:focus {
   background: none !important;
   color: inherit;
   outline: none !important;
@@ -10124,10 +10132,10 @@ input.query {
   font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace;
 }
 
-.part-of-speech a {
+.part-of-speech a, .specific a {
   color: white !important;
 }
-.part-of-speech a:hover, .part-of-speech a:focus {
+.part-of-speech a:hover, .part-of-speech a:focus, .specific a:hover, .specific a:focus {
   color: white;
   background: #aaf;
   text-decoration: none;
@@ -10202,7 +10210,7 @@ center {
   word-break: normal !important;
 }
 .bopomofo .part-of-speech {
-  margin: 0px 5px 0 10px;
+  margin: 0px 5px 0 5px;
 }
 
 body#moedict.overflow-scrolling-false.lang-t .pinyin {
@@ -10307,7 +10315,7 @@ span .tone {
   padding-bottom: 3px;
 }
 
-.part-of-speech, .glyph, .fw_lang {
+.part-of-speech, .glyph, .fw_lang, .specific {
   color: white;
   background-color: #6b0000;
   border-radius: 4px;
@@ -10559,6 +10567,12 @@ body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
   margin-left: 5px;
   width: auto;
+}
+
+body.lang-c .specific {
+  background: #66c;
+  margin-left: 5px;
+  border-radius: 1px;
 }
 
 body.lang-t .example, body.lang-h .example {
