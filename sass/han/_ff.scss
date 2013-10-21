@@ -1,7 +1,7 @@
 @charset 'utf-8';
 
 /* 
- * 漢字標準格式 v2.1.0
+ * 漢字標準格式 v2.1.1
  * @font-face字體設定
  * ---
  * @font-face settings,
@@ -10,9 +10,13 @@
  *
  *
  * Lisence: MIT Lisence
- * Last Modified: 2013/08/28
+ * Last Modified: 2013/10/21
  *
  */
+
+$zhuyin_ttf: '';
+$zhuyin_eot: '';
+
 
 
 /* ---------------------------------------
@@ -36,7 +40,9 @@
 
 @font-face {
     font-family: 'Han Heiti';
-    src: local('Hiragino Sans GB'), local('Heiti SC'), local('Heiti TC') /* 1 */,
+    src: local('Hiragino Sans GB'), 
+        local('Lantinghei TC'), local('Lantinghei SC'),
+        local('Heiti SC'), local('Heiti TC') /* 1 */,
         local('Microsoft Yahei'), local('Microsoft Jhenghei'), /* 2 */
         local('Droid Sans Fallback') /* 5 */;
 }
@@ -45,6 +51,26 @@
     font-family: 'Han Heiti';
     src: local('Microsoft Yahei'), local('Microsoft Jhenghei') /* 2 */;
     unicode-range: U+4E00 /* 6 */;
+}
+
+@font-face {
+    font-family: 'Han Heiti';
+    src: local('Hiragino Sans GB'), 
+        local('Lantinghei TC'), local('Lantinghei SC'),
+        local('Heiti SC'), local('Heiti TC') /* 1 */,
+        local('Microsoft Yahei'), local('Microsoft Jhenghei'), /* 2 */
+        local('Droid Sans Fallback') /* 5 */;
+    unicode-range: U+270C /* 4 */;
+}
+
+@font-face {
+    font-family: 'Han Heiti';
+    font-weight: 600;
+
+    src: local('Hiragino Sans GB W6'), 
+        local('Heiti SC Medium'), local('Heiti TC Medium') /* 1 */,
+        local('Microsoft Yahei Bold'), local('Microsoft Jhenghei Bold') /* 2 */;
+    unicode-range: U+270C /* 4 */;
 }
 
 
@@ -64,6 +90,23 @@
     unicode-range: U+4E00 /* 6 */;
 }
 
+@font-face {
+    font-family: 'Han Songti';
+    src: local(STSongti-SC-Regular) /* 1, 3 */, local('Songti SC') /* 1, 4 */,
+        local(PMingLiU), local(SimSun) /* 2 */;
+    unicode-range: U+270C /* 4 */;
+}
+
+@font-face {
+    font-family: 'Han Songti';
+    font-weight: 600;
+
+    src: local(STSongti-SC-Bold) /* 1, 3 */;
+    unicode-range: U+270C /* 4 */;
+}
+
+
+
 /* 楷體
    Kaiti (Cursive)
    --------------------------------------- */
@@ -73,11 +116,19 @@
     src: local(STKaiti) /* 1 */, local('標楷體') /* 2, 4 */, local(DFKaiShu-SB-Estd-BF) /* 3 */,
         local(Kaiti), local(DFKai-SB);
 }
+
 @font-face {
     font-family: 'Han Kaiti';
     src: local('標楷體') /* 2, 4 */, local(DFKaiShu-SB-Estd-BF) /* 3 */,
         local(Kaiti), local(DFKai-SB);
     unicode-range: U+4E00 /* 6 */;
+}
+
+@font-face {
+    font-family: 'Han Kaiti';
+    src: local(STKaiti) /* 1 */, local('標楷體') /* 2, 4 */, local(DFKaiShu-SB-Estd-BF) /* 3 */,
+        local(Kaiti), local(DFKai-SB);
+    unicode-range: U+270C /* 4 */;
 }
 
 
@@ -93,6 +144,12 @@
     unicode-range: U+4E00 /* 6 */;
 }
 
+@font-face {
+    font-family: 'Han Kaiti CNS';
+    src: local('標楷體'), local(DFKaiShu-SB-Estd-BF);
+    unicode-range: U+270C /* 4 */;
+}
+
 
 /* 中國國家標準楷體 */
 @font-face {
@@ -104,6 +161,12 @@
     font-family: 'Han Kaiti GB';
     src: local(Kaiti), local(DFKai-SB) /* 2 */;
     unicode-range: U+4E00 /* 6 */;
+}
+
+@font-face {
+    font-family: 'Han Kaiti GB';
+    src: local(STKaiti) /* 1 */, local(Kai) /* 3 */, local(Kaiti), local(DFKai-SB) /* 2 */;
+    unicode-range: U+270C /* 4 */;
 }
 
 
@@ -121,6 +184,13 @@
     src: local(FangSong) /* 2 */;
     unicode-range: U+4E00 /* 6 */;
 }
+
+@font-face {
+    font-family: 'Han Fangsong';
+    src: local(STFangsong) /* 1 */, local(FangSong) /* 2 */;
+    unicode-range: U+270C /* 4 */;
+}
+
 
 
 /* 手寫體
@@ -148,13 +218,24 @@
    --------------------------------------- */
 
 @font-face {
-    /* 襯線西文斜體字型 */
     font-family: 'Latin Italic Serif';
     src: local('Georgia-Italic'),
         local('Georgia Italic'),
         local('Times-Italic'),
         local('TimesNewRomanPS-ItalicMT') /* 3 */,
         local('Times New Roman Italic') /* 4 */;
+}
+
+
+@font-face {
+    font-family: 'Latin Italic Serif';
+    font-weight: 700;
+
+    src: local(Georgia-BoldItalic),
+        local('Georgia Bold Italic'),
+        local(Times-Italic),
+        local(TimesNewRomanPS-BoldItalicMT) /* 3 */,
+        local('Times New Roman Bold Italic') /* 4 */;
 }
 
 
@@ -167,12 +248,24 @@
 
 @font-face {
     font-family: 'Latin Italic Sans';
-    src: local('HelveticaNeue-Italic'),
+    src: local(HelveticaNeue-Italic),
         local('Helvetica Neue Italic'),
-        local('Helvetica-LightOblique') /* 3 */,
+        local(Helvetica-LightOblique) /* 3 */,
         local('Helvetica Oblique') /* 4 */,
         local('Arial Italic') /* 2 */,
-        local('Arial-ItalicMT');
+        local(Arial-ItalicMT);
+}
+
+@font-face {
+    font-family: 'Latin Italic Sans';
+    font-weight: 700;
+
+    src: local(HelveticaNeue-BoldItalic),
+        local('Helvetica Neue Bold Italic'),
+        local(Helvetica-BoldOblique) /* 3 */,
+        local('Helvetica Bold Oblique') /* 4 */,
+        local('Arial Bold Italic') /* 2 */,
+        local(Arial-BoldItalicMT);
 }
 
 
@@ -185,18 +278,19 @@
 
 @font-face {
     font-family: 'Han Zhuyin Cursive';
-    src: local('☺'), url(../fonts/zhuyin.eot) format('embedded-opentype')  /* for IE10 */,
-         url(../fonts/zhuyin.ttf) format('truetype'); 
+    src: local('☺'),
+         url($zhuyin_eot) format('embedded-opentype')  /* for IE10 */,
+         url($zhuyin_ttf) format('truetype'); 
 }
 
 @font-face {
     font-family: 'Han Zhuyin Sans';
-    src: local('Hiragino Sans GB'); 
+    src: local('Hiragino Sans GB'), local('Microsoft JhengHei'); 
 }
 
 @font-face {
     font-family: 'Han Zhuyin Sans';
-    src: local('Heiti TC'); 
+    src: local('Heiti TC'), local('Microsoft JhengHei'); 
     unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
 }
 
@@ -610,7 +704,7 @@
 
 @font-face {
     font-family: 'Biaodian Pro Serif CNS';
-    src: local('Lisong Pro'), local(LiSungLight), local('Heiti TC'), /* 1 */
+    src: local(STSongti-TC-Regular), local('Lisong Pro'), local(LiSungLight), local('Heiti TC'), /* 1 */
         local(PMingLiU), /* 2 */
         local('IPAexGothic'), local('AR PL UMing TW'), local('ARPLMingU20') /* 3 */;
     unicode-range: U+3002, U+FF0C, U+3001, /* a */
