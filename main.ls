@@ -1,7 +1,7 @@
 const DEBUGGING = off
 const STANDALONE = false
 
-LANG = getPref(\lang) || STANDALONE || (if document.URL is /twblg/ then \t else \a)
+LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
