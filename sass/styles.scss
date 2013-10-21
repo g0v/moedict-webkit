@@ -39,7 +39,6 @@ $primary-color: #6B0000;
 
 // CSS Reset
 @import "han";
-@import "han.fonts";
 @import "font-awesome";
 
 @include font-face("Fira Sans OT", font-files(
