@@ -431,7 +431,7 @@ window.do-load = ->
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaqETAVCD_=])":/g (, k) -> keyMap[k] + \:
+    part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
     h = HASH-OF[LANG]
     part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
@@ -446,6 +446,7 @@ window.do-load = ->
       html = render $.parseJSON part
     html.=replace /(.)\u20DD/g          "<span class='part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
+    html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
     html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
@@ -485,6 +486,7 @@ window.do-load = ->
     t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
     a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id" E: \"english"
     T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
+    S: \"specific_to"
   }
 
   fill-bucket = (id, bucket, cb) ->
@@ -685,7 +687,7 @@ function render (json)
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
   }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" else "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>"
-  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants}) ->
+  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants, specific_to}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
     if audio_id and LANG is \h
@@ -701,6 +703,8 @@ function render (json)
     bopomofo -= /<[^>]*>/g unless LANG is \c
     bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
     pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
+    cn-specific = ''
+    cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """#char-html
@@ -715,11 +719,13 @@ function render (json)
         if mp3 then "<i class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'></i>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
+      }#{
+        if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
       }</h1>#{
-        if bopomofo then "<div class='bopomofo'>#{
+        if bopomofo then "<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
-    <div style='background: \#eeeeff; border-radius: 10px'>
+    <div class="cn">
       <span class='xref part-of-speech'>简</span>
       <span class='xref'>#{ alt - /<[^>]*>/g }</span>
     </div>

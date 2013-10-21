@@ -36,9 +36,9 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls h
 	lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
-	lsc json2prefix.ls c
-	lsc autolink.ls c > c.txt
-	perl link2pack.pl c < c.txt
+	-lsc json2prefix.ls c
+	-lsc autolink.ls c > c.txt
+	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
 csld ::
@@ -64,6 +64,7 @@ twblg ::
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
+	# cd translation-data && curl 'http://www.chine-informations.com/chinois/open/CFDICT/download.php?get=all' http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	python translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
 
