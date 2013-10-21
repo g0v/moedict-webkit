@@ -78,6 +78,9 @@ body {
     &.bopomofo {
         padding-top: 3px;
         border-top: 5px solid white;
+        .cn {
+            border-top: 1px solid #eee;
+        }
     }
 }
 
@@ -94,6 +97,11 @@ body {
     margin-top: 15px;
     margin-bottom: 15px;
     font-weight: 501;
+    .specific_to {
+        display: inline;
+        font-size: 40%;
+        @include fonts;
+    }
     .english {
         display: inline;
     }
@@ -400,7 +408,7 @@ input.query {
     }
 }
 
-.part-of-speech a {
+.part-of-speech a, .specific a {
     &:hover, &:focus {
         background: none !important;
         color: inherit;
@@ -416,7 +424,7 @@ input.query {
     }
 }
 
-.part-of-speech a {
+.part-of-speech a, .specific a {
     color: white !important;
     &:hover, &:focus {
         color: white;
@@ -493,7 +501,7 @@ center {
     width: 100%;
     border-bottom: 1px dotted $border-color;
     word-break: normal !important;
-    .part-of-speech { margin: 0px 5px 0 10px }
+    .part-of-speech { margin: 0px 5px 0 5px }
 }
 
 body#moedict {
@@ -607,7 +615,7 @@ span .tone {
     padding-bottom: 3px;
 }
 
-.part-of-speech, .glyph, .fw_lang {
+.part-of-speech, .glyph, .fw_lang, .specific {
     color: white;
     background-color: hsl(360,100%,21%);
     border-radius: 4px;
@@ -884,6 +892,14 @@ body.lang-h {
             margin-left: 5px;
             width: auto;
         }
+    }
+}
+
+body.lang-c {
+    .specific {
+        background: #66c;
+        margin-left: 5px;
+        border-radius: 1px;
     }
 }
 
