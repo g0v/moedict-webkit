@@ -76,6 +76,7 @@ grok = -> JSON.parse(
     .replace(/"dialects":/g                  \"D":)
     .replace(/"id":/g                        \"_":)
     .replace(/"audio_id":/g                  \"=":)
+    .replace(/"specific_to":/g               \"S":)
     .replace(/[⿰⿸⿺](?:𧾷|.)./g          -> PUA2UNI[it] or process.exit console.log(it))
 )
 
@@ -112,7 +113,7 @@ for {t:title, h:heteronyms}:entry in entries
     heteronyms[i] <<< {"=": audio-id} if audio-id
   delete entry<[ English francais Deutsch ]>
   chunk = JSON.stringify(entry).replace(
-    /.[\u20E3\u20DE\u20DD]/g -> escape it
+    /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
   pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
     console.log x
