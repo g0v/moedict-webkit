@@ -1260,6 +1260,7 @@
       }
       bopomofo = bopomofo.replace(/\u0358/g, "\u02c8");
       pinyin = pinyin.replace(/\u030d/g, "\u02c8");
+      pinyin = pinyin.replace(/ɡ/g, 'g');
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
         cnSpecific = 'cn';
