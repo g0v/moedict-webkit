@@ -10887,3 +10887,92 @@ canvas {
     padding-left: .5em;
   }
 }
+.i-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.31em;
+}
+.i-030d:before {
+  content: "󰁩";
+  color: #666;
+}
+
+.a-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.6em;
+}
+.a-030d:before {
+  content: "󰁡";
+  color: #666;
+}
+
+.e-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.6em;
+}
+.e-030d:before {
+  content: "󰁥";
+  color: #666;
+}
+
+.o-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.6em;
+}
+.o-030d:before {
+  content: "󰁯";
+  color: #666;
+}
+
+.u-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.6em;
+}
+.u-030d:before {
+  content: "󰁵";
+  color: #666;
+}
+
+.u31bX {
+  margin-right: 1ex;
+}
+
+.u31b4-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b4-0358:before {
+  content: "󳆴";
+  color: #666;
+}
+
+.u31b5-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b5-0358:before {
+  content: "󳆵";
+  color: #666;
+}
+
+.u31b6-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b6-0358:before {
+  content: "󳆶";
+  color: #666;
+}
+
+.u31b7-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b7-0358:before {
+  content: "󳆷";
+  color: #666;
+}

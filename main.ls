@@ -15,8 +15,10 @@ isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
 isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
-isApp = true if isCordova or window.locationbar?visible is false
+isApp = true if isCordova or try window.locationbar?visible is false
 isWebKit = navigator.userAgent is /WebKit/
+isGecko = navigator.userAgent is /\bGecko\/\b/
+isChrome = navigator.userAgent is /\bChrome\/\b/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '', c: '' }
@@ -114,7 +116,7 @@ window.play-audio = (el, url) ->
     $el.removeClass('icon-play').addClass('icon-spinner')
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
-    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3! and navigator.userAgent isnt /\bGecko\/\b/
+    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3! and not isGecko
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
@@ -511,7 +513,7 @@ window.do-load = ->
 
   GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
-  for lang of HASH-OF => let lang
+  for lang of HASH-OF | lang isnt \h => let lang
     GET "#lang/=.json", (->
       $ul = render-taxonomy lang, $.parseJSON it
       if STANDALONE
@@ -696,8 +698,12 @@ function render (json)
     bopomofo ?= trs2bpmf "#pinyin"
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
-    bopomofo.=replace /\u0358/g "\u02c8" # if isDroidGap
-    pinyin.=replace /\u030d/g "\u02c8" # if isDroidGap
+    bopomofo.=replace /([\u31B4-\u31B7])([^\u0358])/g "<span class='u31bX'>$1</span>$2"
+    bopomofo.=replace /(\u31B4)\u0358/g "<span class='u31b4-0358'>$1\u0358</span>"
+    bopomofo.=replace /(\u31B5)\u0358/g "<span class='u31b5-0358'>$1\u0358</span>"
+    bopomofo.=replace /(\u31B6)\u0358/g "<span class='u31b6-0358'>$1\u0358</span>"
+    bopomofo.=replace /(\u31B7)\u0358/g "<span class='u31b7-0358'>$1\u0358</span>"
+    pinyin.=replace /([aieou])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
     pinyin.=replace /ɡ/g \g
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
