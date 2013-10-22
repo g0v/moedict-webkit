@@ -8,6 +8,7 @@
 * Perl 5.8.0 以上
 * Ruby
     * SASS
+    * compass
 
 ## 安裝環境
 
@@ -15,6 +16,7 @@
 sudo npm install -g LiveScript
 npm install webworker-threads
 gem install sass
+gem install compass
 ```
 
 ## 建置
