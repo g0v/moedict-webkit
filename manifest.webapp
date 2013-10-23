@@ -12,7 +12,9 @@
     "90": "/fxos/icon-90.png",
     "120": "/fxos/icon-120.png",
     "128": "/fxos/icon-128.png",
-    "256": "/fxos/icon-256.png"
+    "256": "/fxos/icon-256.png",
+    "1000": "/fxos/icon-1000.png",
+    "1024": "/fxos/icon-1024.png"
   },
   "installs_allowed_from": [
     "*"
