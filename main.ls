@@ -3,13 +3,14 @@ const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
-STARRED = getPref(\starred) || ''
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
+
+STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
 isDroidGap = isCordova and location.href is /android_asset/
@@ -222,10 +223,10 @@ window.do-load = ->
       return false
 
     $ \body .on \click '.results .star' ->
-      key = "#{ HASH-OF[LANG] }#prevId\n"
-      if $(@).hasClass \icon-star-empty then STARRED += key else STARRED -= "#key"
+      key = "\"#prevId\"\n"
+      if $(@).hasClass \icon-star-empty then STARRED[LANG] += key else STARRED[LANG] -= "#key"
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
-      setPref \starred STARRED
+      setPref "starred-#LANG" STARRED[LANG]
 
     $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
@@ -382,6 +383,7 @@ window.do-load = ->
     return load-json it
 
   load-json = (id, cb) ->
+    return fill-json("[#{ STARRED[LANG] }]", '字詞紀錄簿', cb) if id is /^=\*/
     return GET("#LANG/#{ encodeURIComponent(id - /\(.*/)}.json", null, (-> fill-json it, id, cb), \text) unless isCordova
     # Cordova
     bucket = bucket-of id
@@ -397,7 +399,7 @@ window.do-load = ->
   set-html = (html) -> callLater ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
 
-    html.=replace '<!-- STAR -->' if ~STARRED.indexOf(HASH-OF[LANG] + "#prevId\n")
+    html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<span class='star iconic-color icon-star' title='加入字詞記錄簿'></span>"
       else "<span class='star iconic-color icon-star-empty' title='已加入記錄簿'></span>"
     $ \#result .html html
