@@ -224,7 +224,7 @@ window.do-load = ->
 
     $ \body .on \click '.results .star' ->
       key = "\"#prevId\"\n"
-      if $(@).hasClass \icon-star-empty then STARRED[LANG] += key else STARRED[LANG] -= "#key"
+      if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
       setPref "starred-#LANG" STARRED[LANG]
 
