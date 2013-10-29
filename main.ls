@@ -226,7 +226,12 @@ window.do-load = ->
       key = "\"#prevId\"\n"
       if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
+      $(\#btn-starred).fadeOut \fast -> $(@).css(\background \#ddd)fadeIn -> $(@).css(\background \transparent)
       setPref "starred-#LANG" STARRED[LANG]
+
+    $ \body .on \click '#btn-starred' ->
+      grok-val("#{HASH-OF[LANG]}=*" - /^#/)
+      return false
 
     $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
@@ -400,8 +405,8 @@ window.do-load = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
 
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
-      then "<span class='star iconic-color icon-star' title='加入字詞記錄簿'></span>"
-      else "<span class='star iconic-color icon-star-empty' title='已加入記錄簿'></span>"
+      then "<span class='star iconic-color icon-star' title='已加入記錄簿'></span>"
+      else "<span class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></span>"
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
