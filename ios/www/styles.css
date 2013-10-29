@@ -10887,3 +10887,96 @@ canvas {
     padding-left: .5em;
   }
 }
+.app .i-030d {
+  margin-right: -0.38em;
+}
+
+.i-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.3em;
+}
+.i-030d:before {
+  content: "󰁩";
+  color: #666;
+}
+
+.a-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.65em;
+}
+.a-030d:before {
+  content: "󰁡";
+  color: #666;
+}
+
+.e-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.65em;
+}
+.e-030d:before {
+  content: "󰁥";
+  color: #666;
+}
+
+.o-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.65em;
+}
+.o-030d:before {
+  content: "󰁯";
+  color: #666;
+}
+
+.u-030d {
+  display: inline-block;
+  color: transparent;
+  margin-right: -0.65em;
+}
+.u-030d:before {
+  content: "󰁵";
+  color: #666;
+}
+
+.u31bX {
+  margin-right: 1ex;
+}
+
+.u31b4-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b4-0358:before {
+  content: "󳆴";
+  color: #666;
+}
+
+.u31b5-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b5-0358:before {
+  content: "󳆵";
+  color: #666;
+}
+
+.u31b6-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b6-0358:before {
+  content: "󳆶";
+  color: #666;
+}
+
+.u31b7-0358 {
+  display: inline-block;
+  color: transparent;
+}
+.u31b7-0358:before {
+  content: "󳆷";
+  color: #666;
+}
