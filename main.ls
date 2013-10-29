@@ -3,6 +3,7 @@ const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+STARRED = getPref(\starred) || ''
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
@@ -220,6 +221,12 @@ window.do-load = ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
       return false
 
+    $ \body .on \click '.results .star' ->
+      key = "#{ HASH-OF[LANG] }#prevId\n"
+      if $(@).hasClass \icon-star-empty then STARRED += key else STARRED -= "#key"
+      $(@).toggleClass \icon-star-empty .toggleClass \icon-star
+      setPref \starred STARRED
+
     $ \body .on \click '.results .stroke' ->
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
@@ -389,6 +396,10 @@ window.do-load = ->
 
   set-html = (html) -> callLater ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
+
+    html.=replace '<!-- STAR -->' if ~STARRED.indexOf(HASH-OF[LANG] + "#prevId\n")
+      then "<span class='star iconic-color icon-star' title='加入字詞記錄簿'></span>"
+      else "<span class='star iconic-color icon-star-empty' title='已加入記錄簿'></span>"
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -717,10 +728,7 @@ function render (json)
         if english then "<span class='english'>(#english)</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1>
-        <span class='star iconic-color icon-star' title='加入記錄簿'></span>
-        <span class='star iconic-color icon-star-empty' title='加入記錄簿'></span>
-        #{
+      }</h1><!-- STAR -->#{
         if bopomofo then "<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
