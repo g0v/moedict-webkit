@@ -11009,3 +11009,22 @@ canvas {
   content: "󳆷";
   color: #666;
 }
+
+@media only screen and (max-width: 767px) {
+  body #btn-starred {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body #btn-starred {
+    padding-right: 0;
+    margin-right: 10px;
+  }
+  body #btn-starred i {
+    display: block;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}

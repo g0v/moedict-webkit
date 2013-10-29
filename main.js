@@ -416,7 +416,16 @@
           STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
         }
         $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
+        $('#btn-starred').fadeOut('fast', function(){
+          return $(this).css('background', '#ddd').fadeIn(function(){
+            return $(this).css('background', 'transparent');
+          });
+        });
         return setPref("starred-" + LANG, STARRED[LANG]);
+      });
+      $('body').on('click', '#btn-starred', function(){
+        grokVal((HASHOF[LANG] + "=*").replace(/^#/, ''));
+        return false;
       });
       $('body').on('click', '.results .stroke', function(){
         if ($('svg, canvas').length) {
@@ -728,7 +737,7 @@
             return window.scrollTo(0, 0);
           });
         }
-        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<span class='star iconic-color icon-star' title='加入字詞記錄簿'></span>" : "<span class='star iconic-color icon-star-empty' title='已加入記錄簿'></span>");
+        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<span class='star iconic-color icon-star' title='已加入記錄簿'></span>" : "<span class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></span>");
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
