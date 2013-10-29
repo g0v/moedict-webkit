@@ -9830,6 +9830,9 @@ body.lang-h .nav-bg {
 body.lang-h .iconic-circle {
   background: #474;
 }
+body.lang-h .iconic-color {
+  color: #474;
+}
 body.lang-h #query-box {
   background-color: #EFFBEF;
 }
@@ -9839,6 +9842,9 @@ body.lang-t .nav-bg {
 }
 body.lang-t .iconic-circle {
   background: #744;
+}
+body.lang-t .iconic-color {
+  color: #744;
 }
 body.lang-t #query-box {
   background-color: #FBEFEF;
@@ -9850,6 +9856,9 @@ body.lang-a .nav-bg {
 body.lang-a .iconic-circle {
   background: #400;
 }
+body.lang-a .iconic-color {
+  color: #400;
+}
 body.lang-a #query-box {
   background-color: #F3F0F0;
 }
@@ -9859,6 +9868,9 @@ body.lang-c .nav-bg {
 }
 body.lang-c .iconic-circle {
   background: #447;
+}
+body.lang-c .iconic-color {
+  color: #447;
 }
 body.lang-c #query-box {
   background-color: #EFEFFB;
@@ -9901,7 +9913,7 @@ input.iconic-circle {
   display: block;
 }
 
-.iconic-circle {
+.iconic-circle, .iconic-color {
   border-radius: 18px;
   background: black;
   color: #fff;
@@ -10208,6 +10220,7 @@ center {
   width: 100%;
   border-bottom: 1px dotted #dddddd;
   word-break: normal !important;
+  padding-right: 36px;
 }
 .bopomofo .part-of-speech {
   margin: 0px 5px 0 5px;
@@ -10835,13 +10848,29 @@ canvas {
   box-shadow: #d4d4d4 0 3px 3px;
 }
 
-.iconic-circle.stroke {
+@media only screen and (max-width: 767px) {
+  body .iconic-color.star {
+    right: 22px;
+    top: 170px;
+  }
+}
+.iconic-color.star {
+  background: white;
+  position: absolute;
+  right: 42px;
+  top: 130px;
+}
+.iconic-color.star:hover {
+  background: #ccc !important;
+}
+
+.iconic-circle.stroke, .star {
   width: 28px;
   height: 24px;
   padding: 4px;
   cursor: pointer !important;
 }
-.iconic-circle.stroke:hover {
+.iconic-circle.stroke:hover, .star:hover {
   background: #888 !important;
 }
 

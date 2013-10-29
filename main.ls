@@ -717,7 +717,10 @@ function render (json)
         if english then "<span class='english'>(#english)</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1>#{
+      }</h1>
+        <span class='star iconic-color icon-star' title='加入記錄簿'></span>
+        <span class='star iconic-color icon-star-empty' title='加入記錄簿'></span>
+        #{
         if bopomofo then "<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
