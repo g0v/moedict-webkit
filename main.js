@@ -411,7 +411,7 @@
         var key;
         key = "\"" + prevId + "\"\n";
         if ($(this).hasClass('icon-star-empty')) {
-          STARRED[LANG] += key;
+          STARRED[LANG] = key + STARRED[LANG];
         } else {
           STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
         }
