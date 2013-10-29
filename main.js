@@ -737,7 +737,7 @@
             return window.scrollTo(0, 0);
           });
         }
-        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<span class='star iconic-color icon-star' title='已加入記錄簿'></span>" : "<span class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></span>");
+        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<i class='star iconic-color icon-star' title='已加入記錄簿'></i>" : "<i class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></i>");
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
@@ -1229,8 +1229,11 @@
     var h, title;
     h = HASHOF[LANG];
     id = replace$.call(id, /^[@=]/, '');
-    title = "<h1>" + id + "</h1>";
+    title = "<h1 style='padding-bottom: 10px'>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
+    if (id === '字詞紀錄簿' && !terms) {
+      terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）";
+    }
     if (/^";/.exec(terms)) {
       terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
     }
@@ -1290,9 +1293,9 @@
       if (!/</.test(title)) {
         title = "<div class='stroke' title='筆順動畫'>" + title + "</div>";
       }
-      return charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
+      return "    <!-- STAR -->\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1><!-- STAR -->" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];

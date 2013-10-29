@@ -405,8 +405,8 @@ window.do-load = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
 
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
-      then "<span class='star iconic-color icon-star' title='已加入記錄簿'></span>"
-      else "<span class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></span>"
+      then "<i class='star iconic-color icon-star' title='已加入記錄簿'></i>"
+      else "<i class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></i>"
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -679,8 +679,10 @@ function render-strokes (terms, id)
 function render-list (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
-  title = "<h1>#id</h1>"
+  title = "<h1 style='padding-bottom: 10px'>#id</h1>"
   terms -= /^[^"]*/
+  if id is \字詞紀錄簿 and not terms
+    terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）"
   terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>" if terms is /^";/
   terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href='#{h}$1'>$1</a></td><td><a href='#{h}$2'>$2</a></td></tr>"""
   terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
@@ -721,7 +723,9 @@ function render (json)
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
-    """#char-html
+    """
+      <!-- STAR -->
+      #char-html
       <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
@@ -735,7 +739,7 @@ function render (json)
         if english then "<span class='english'>(#english)</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1><!-- STAR -->#{
+      }</h1>#{
         if bopomofo then "<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
