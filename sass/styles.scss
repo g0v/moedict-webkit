@@ -100,6 +100,8 @@ body {
     .specific_to {
         display: inline;
         font-size: 40%;
+        position: absolute;
+        margin-top: 1ex;
         @include fonts;
     }
     .english {
