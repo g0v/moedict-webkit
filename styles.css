@@ -9776,6 +9776,8 @@ body [class^="icon-"], body [class*=" icon-"] {
 .title .specific_to {
   display: inline;
   font-size: 40%;
+  position: absolute;
+  margin-top: 1ex;
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "黑體-繁", "微軟正黑體", "儷黑 Pro", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
