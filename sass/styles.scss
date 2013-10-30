@@ -151,24 +151,28 @@ h1 audio {
 body.lang-h {
     .nav-bg { background-color: #070; }
     .iconic-circle { background: #474; }
+    .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
 }
 
 body.lang-t {
     .nav-bg { background-color: #700; }
     .iconic-circle { background: #744; }
+    .iconic-color { color: #744; }
     #query-box { background-color: #FBEFEF; }
 }
 
 body.lang-a {
     .nav-bg { background-color: #100; }
     .iconic-circle { background: #400; }
+    .iconic-color { color: #400; }
     #query-box { background-color: #F3F0F0; }
 }
 
 body.lang-c {
     .nav-bg { background-color: #007; }
     .iconic-circle { background: #447; }
+    .iconic-color { color: #447; }
     #query-box { background-color: #EFEFFB; }
 }
 
@@ -200,7 +204,7 @@ input.iconic-circle {
     margin-top: 16px !important;
     display: block;
 }
-.iconic-circle {
+.iconic-circle, .iconic-color {
     border-radius: 18px;
     background: black;
     color: #fff;
@@ -502,6 +506,7 @@ center {
     border-bottom: 1px dotted $border-color;
     word-break: normal !important;
     .part-of-speech { margin: 0px 5px 0 5px }
+    padding-right: 34px;
 }
 
 body#moedict {
@@ -1168,7 +1173,22 @@ canvas {
     margin-left: 5px;
     @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
 }
-.iconic-circle.stroke {
+@media only screen and (max-width: 767px) {
+    body .iconic-color.star {
+        right: 22px;
+        top: 165px;
+    }
+}
+.iconic-color.star {
+    background: white;
+    position: absolute;
+    right: 42px;
+    top: 125px;
+    &:hover {
+        background: #ccc !important;
+    }
+}
+.iconic-circle.stroke, .star {
     width: 28px;
     height: 24px;
     padding: 4px;
@@ -1258,3 +1278,22 @@ canvas {
     display: inline-block; color: transparent;
 }
 
+@media only screen and (max-width: 767px) {
+    body #btn-starred {
+        position: absolute;
+        top: 2px;
+        right: 10px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    body #btn-starred {
+        i {
+            display: block;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        padding-right: 0;
+        margin-right: 10px;
+    }
+}
