@@ -581,8 +581,11 @@ function init-autocomplete
       fill-query item.value if item?value
       return true
     change: (e, {item}) ->
+      return if $ \#query .data \changing
       return false if item?value is /^\(/
+      return $ \#query .data { +changing }
       fill-query item.value if item?value
+      return $ \#query .data { -changing }
       return true
     source: ({term}, cb) ->
       term = "。" if term is \=諺語 and LANG is \t
