@@ -1061,12 +1061,21 @@
       change: function(e, arg$){
         var item;
         item = arg$.item;
+        if ($('#query').data('changing')) {
+          return;
+        }
         if (/^\(/.exec(item != null ? item.value : void 8)) {
           return false;
         }
+        return $('#query').data({
+          changing: true
+        });
         if (item != null && item.value) {
           fillQuery(item.value);
         }
+        return $('#query').data({
+          changing: false
+        });
         return true;
       },
       source: function(arg$, cb){
