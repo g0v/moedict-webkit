@@ -1,5 +1,28 @@
+################################################ YHT #######################################
+
+origin = "http://127.0.0.1:8888/"
+window.id = \dict
+window.reset = -> grok-val \~@
+window.addEventListener("message", ->
+  console.log "MSG: #{ it.source.id } #{ it.data }"
+  window.input it.data, false
+);
+window.input = ->
+  while it.length
+    Index = INDEX.c
+    if ~Index.indexOf("\"#it\"")
+      return grok-val it
+    it.=substr 1
+  # grok-val "萌"
+window.output = ->
+  return if window.muted
+  window.top.postMessage(it, origin)
+window.muted = false
+
+################################################ YHT #######################################
+
 const DEBUGGING = off
-const STANDALONE = false
+const STANDALONE = \c
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
@@ -56,6 +79,8 @@ GET = (url, data, onSuccess, dataType) ->
   $.get(url, data, (->
     onSuccess(CACHED[url] = it)
   ), dataType).fail ->
+    x = decodeURIComponent(url) - /\.json$/ - /^\w/
+    window.input x
 
 try
   throw unless isCordova and not DEBUGGING
@@ -372,6 +397,7 @@ window.do-load = ->
     prevVal := it
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
+    window.output it
     if "#{location.hash}" isnt hash => try history.pushState null, null, hash
       catch => location.replace hash
     $('.share .btn').each ->
@@ -946,3 +972,4 @@ function getScript (src, cb)
     cache: yes
     crossDomain: yes
     complete: cb
+
