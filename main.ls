@@ -1,6 +1,6 @@
 ################################################ YHT #######################################
 
-origin = "http://127.0.0.1:8888/"
+origin = "http://direct.moedict.tw/"
 window.id = \dict
 window.reset = -> grok-val \~@
 window.addEventListener("message", ->
@@ -25,7 +25,7 @@ const DEBUGGING = off
 const STANDALONE = \c
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+MOE-ID = \明 # getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
