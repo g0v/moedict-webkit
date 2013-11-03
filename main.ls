@@ -1,6 +1,6 @@
 ################################################ YHT #######################################
 
-origin = "http://direct.moedict.tw/"
+origin = "http://direct.moedict.tw"
 window.id = \dict
 window.reset = -> grok-val \~@
 window.addEventListener("message", ->
@@ -11,7 +11,7 @@ window.input = ->
   while it.length
     Index = INDEX.c
     if ~Index.indexOf("\"#it\"")
-      return grok-val it
+      return grok-val "~#it"
     it.=substr 1
   # grok-val "萌"
 window.output = ->

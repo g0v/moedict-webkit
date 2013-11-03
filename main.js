@@ -15,7 +15,7 @@
     while (it.length) {
       Index = INDEX.c;
       if (~Index.indexOf("\"" + it + "\"")) {
-        return grokVal(it);
+        return grokVal("~" + it);
       }
       it = it.substr(1);
     }
