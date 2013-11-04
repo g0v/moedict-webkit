@@ -23,8 +23,8 @@ offline :: moedict-data deps translation
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
 	ln -fs moedict-epub/dict-revised.unicode.json          dict-revised.unicode.json
 	ln -fs moedict-epub/dict-revised.pua.json              dict-revised.pua.json
-	ln -fs moedict-data-twblg/dict-twblg.json              dict-twblg.json 
-	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json 
+	ln -fs moedict-data-twblg/dict-twblg.json              dict-twblg.json
+	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	lsc json2prefix.ls a
@@ -62,7 +62,7 @@ twblg ::
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
-	# cd translation-data && curl 'http://www.chine-informations.com/chinois/open/CFDICT/download.php?get=all' http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
+	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict.zip' && unzip cfdict.zip && mv cfdict.u8 cfdict.txt && rm cfdict.zip
 	python translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
 
