@@ -3,10 +3,10 @@
 origin = "http://direct.moedict.tw"
 window.id = \dict
 window.reset = -> grok-val \~@
-window.addEventListener("message", ->
-  console.log "MSG: #{ it.source.id } #{ it.data }"
-  window.input it.data, false
-);
+#window.addEventListener("message", ->
+#  console.log "MSG: #{ it.source.id } #{ it.data }"
+#  window.input it.data, false
+#);
 window.input = ->
   while it.length
     Index = INDEX.c

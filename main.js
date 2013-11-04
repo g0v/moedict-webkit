@@ -6,10 +6,6 @@
   window.reset = function(){
     return grokVal('~@');
   };
-  window.addEventListener("message", function(it){
-    console.log("MSG: " + it.source.id + " " + it.data);
-    return window.input(it.data, false);
-  });
   window.input = function(it){
     var Index;
     while (it.length) {
