@@ -21,10 +21,13 @@
     }
   };
   window.output = function(it){
+    var ref$;
     if (window.muted) {
       return;
     }
-    return window.top.postMessage(it, origin);
+    try {
+      return typeof (ref$ = window.parent).post === 'function' ? ref$.post(it, window.id) : void 8;
+    } catch (e$) {}
   };
   window.muted = false;
   DEBUGGING = false;

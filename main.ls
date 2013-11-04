@@ -16,7 +16,8 @@ window.input = ->
   # grok-val "萌"
 window.output = ->
   return if window.muted
-  window.top.postMessage(it, origin)
+  # window.top.postMessage(it, origin)
+  try window.parent.post? it, window.id
 window.muted = false
 
 ################################################ YHT #######################################
