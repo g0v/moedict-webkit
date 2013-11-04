@@ -11034,17 +11034,30 @@ canvas {
   display: none;
 }
 
-body {
-  margin-top: -120px;
+@media only screen and (min-width: 768px) {
+  body {
+    margin-top: -120px;
+  }
 }
-
+@media only screen and (max-width: 767px) {
+  body {
+    margin-top: -70px;
+  }
+}
 @media only screen and (max-width: 767px) {
   #query-box {
-    display: none;
+    -webkit-box-shadow: #1a1a1a 0 0 3px;
+    box-shadow: #1a1a1a 0 0 3px;
+    margin-top: -50px;
   }
 }
 @media only screen and (min-width: 768px) {
   #query-box {
+    margin-top: -55px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .ui-autocomplete.ui-menu {
     margin-top: -55px;
   }
 }
@@ -11064,5 +11077,5 @@ body {
   }
 }
 .star.iconic-color {
-  margin-top: -115px;
+  margin-top: -70px;
 }
