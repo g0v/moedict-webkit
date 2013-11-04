@@ -722,6 +722,7 @@ function render (json)
     bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
+    pinyin.=replace /ɑ/g \a
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
     unless title is /</
