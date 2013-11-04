@@ -1295,6 +1295,7 @@
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
       pinyin = pinyin.replace(/ɡ/g, 'g');
+      pinyin = pinyin.replace(/ɑ/g, 'a');
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
         cnSpecific = 'cn';
