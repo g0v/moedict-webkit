@@ -30,6 +30,12 @@ XREF = {
   h: {a: '"發芽":"萌,萌芽"'}
   tv: {t: ''}
 }
+
+if isCordova
+  delete HASH-OF.c
+  delete INDEX.c
+  $ -> $('.nav .c').remove!
+
 # Return an object of all matched with {key: [words]}.
 function xref-of (id, src-lang=LANG)
   rv = {}
