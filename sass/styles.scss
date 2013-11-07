@@ -787,6 +787,14 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 @media only screen and (min-width: 768px) {
+    .resize-btn.app-only {
+        left: auto !important;
+        right: 64px !important;
+        top: -4px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
     .ui-autocomplete.invisible {
         display: block !important;
     }

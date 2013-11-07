@@ -75,6 +75,13 @@
       t: ''
     }
   };
+  if (isCordova) {
+    delete HASHOF.c;
+    delete INDEX.c;
+    $(function(){
+      return $('.nav .c').remove();
+    });
+  }
   function xrefOf(id, srcLang){
     var rv, parsed, i$, ref$, len$, chunk, ref1$, tgtLang, words, idx, part, x;
     srcLang == null && (srcLang = LANG);

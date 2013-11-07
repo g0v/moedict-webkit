@@ -9776,6 +9776,8 @@ body [class^="icon-"], body [class*=" icon-"] {
 .title .specific_to {
   display: inline;
   font-size: 40%;
+  position: absolute;
+  margin-top: 1ex;
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "黑體-繁", "微軟正黑體", "儷黑 Pro", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
@@ -9830,6 +9832,9 @@ body.lang-h .nav-bg {
 body.lang-h .iconic-circle {
   background: #474;
 }
+body.lang-h .iconic-color {
+  color: #474;
+}
 body.lang-h #query-box {
   background-color: #EFFBEF;
 }
@@ -9839,6 +9844,9 @@ body.lang-t .nav-bg {
 }
 body.lang-t .iconic-circle {
   background: #744;
+}
+body.lang-t .iconic-color {
+  color: #744;
 }
 body.lang-t #query-box {
   background-color: #FBEFEF;
@@ -9850,6 +9858,9 @@ body.lang-a .nav-bg {
 body.lang-a .iconic-circle {
   background: #400;
 }
+body.lang-a .iconic-color {
+  color: #400;
+}
 body.lang-a #query-box {
   background-color: #F3F0F0;
 }
@@ -9859,6 +9870,9 @@ body.lang-c .nav-bg {
 }
 body.lang-c .iconic-circle {
   background: #447;
+}
+body.lang-c .iconic-color {
+  color: #447;
 }
 body.lang-c #query-box {
   background-color: #EFEFFB;
@@ -9901,7 +9915,7 @@ input.iconic-circle {
   display: block;
 }
 
-.iconic-circle {
+.iconic-circle, .iconic-color {
   border-radius: 18px;
   background: black;
   color: #fff;
@@ -10208,6 +10222,7 @@ center {
   width: 100%;
   border-bottom: 1px dotted #dddddd;
   word-break: normal !important;
+  padding-right: 34px;
 }
 .bopomofo .part-of-speech {
   margin: 0px 5px 0 5px;
@@ -10465,6 +10480,13 @@ body.overflow-scrolling-false .ui-autocomplete {
   display: none;
 }
 
+@media only screen and (min-width: 768px) {
+  .resize-btn.app-only {
+    left: auto !important;
+    right: 64px !important;
+    top: -4px;
+  }
+}
 @media only screen and (min-width: 768px) {
   .ui-autocomplete.invisible {
     display: block !important;
@@ -10835,13 +10857,29 @@ canvas {
   box-shadow: #d4d4d4 0 3px 3px;
 }
 
-.iconic-circle.stroke {
+@media only screen and (max-width: 767px) {
+  body .iconic-color.star {
+    right: 22px;
+    top: 165px;
+  }
+}
+.iconic-color.star {
+  background: white;
+  position: absolute;
+  right: 42px;
+  top: 125px;
+}
+.iconic-color.star:hover {
+  background: #ccc !important;
+}
+
+.iconic-circle.stroke, .star {
   width: 28px;
   height: 24px;
   padding: 4px;
   cursor: pointer !important;
 }
-.iconic-circle.stroke:hover {
+.iconic-circle.stroke:hover, .star:hover {
   background: #888 !important;
 }
 
@@ -10979,4 +11017,23 @@ canvas {
 .u31b7-0358:before {
   content: "󳆷";
   color: #666;
+}
+
+@media only screen and (max-width: 767px) {
+  body #btn-starred {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body #btn-starred {
+    padding-right: 0;
+    margin-right: 10px;
+  }
+  body #btn-starred i {
+    display: block;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
 }
