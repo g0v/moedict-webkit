@@ -5,6 +5,7 @@
 * Node.js
     * LiveScript
     * webworker-threads
+    * jade
 * Perl 5.8.0 以上
 * Ruby
     * SASS
@@ -13,7 +14,7 @@
 ## 安裝環境
 
 ```
-sudo npm install -g LiveScript
+sudo npm install -g LiveScript jade
 npm install webworker-threads
 gem install sass
 gem install compass
