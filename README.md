@@ -300,7 +300,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 
 ### 國語 /a/
 
-已使用 Unicode 字元，再加上內文自動斷詞。
+已使用 PUA 造字，再加上內文自動斷詞。
 
 範例： https://www.moedict.tw/a/%E8%90%8C.json
 
