@@ -71,9 +71,9 @@ make # runs in http://127.0.0.1:8888/
 
 API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62BP4)，本段落的說明是參考連結整理後並加上範例。
 
-目前 API 已有 8 個端點，分別是 /a/, /t/, /h/, /c/, /raw/, /uni/, /pua/
+目前 API 已有 7 個端點，分別是 /a/, /t/, /h/, /c/, /raw/, /uni/, /pua/
 
-### /raw/
+### 1. /raw/
 
 原始 json 檔，Big5 區之外的字以造字碼 {[abcd]} 表示。
 
@@ -148,7 +148,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 }
 ```
 
-### /uni/
+### 2. /uni/
 
 將原始 json 檔，Big5 區之外的字轉成相應的 Unicode 字元表示。
 
@@ -223,7 +223,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 }
 ```
 
-### /pua/
+### 3. /pua/
 
 與 /uni/ 相同，已使用 Unicode 字元，但動態組字改用 @medicalwei 的造字替代。
 
@@ -298,7 +298,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 }
 ```
 
-### 國語 /a/
+### 4. 國語 /a/
 
 已使用 PUA 造字，再加上內文自動斷詞。
 
@@ -389,15 +389,15 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 }
 ```
 
-### 閩南語 /t/
+### 5. 閩南語 /t/
 
 結構基本同 `/a/` （待補）
 
-### 客語 /h/
+### 6. 客語 /h/
 
 結構基本同 `/a/` （待補）
 
-### 兩岸詞典 /c/
+### 7. 兩岸詞典 /c/
 
 結構基本同 `/a/` （待補）
 
