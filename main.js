@@ -455,6 +455,9 @@
           return false;
         });
       }
+      if ($('#result h1').length) {
+        return setHtml($('#result').html());
+      }
       if (window.grokHash()) {
         return;
       }
