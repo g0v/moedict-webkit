@@ -250,6 +250,7 @@ window.do-load = ->
         val ||= $(@).text!
         window.grok-val val
         return false
+    return set-html $(\#result).html! if $('#result h1').length
     return if window.grok-hash!
     if isCordova
       fill-query MOE-ID
