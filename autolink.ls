@@ -1,7 +1,7 @@
 require! <[ fs os ]>
 lang = process.argv.2
-unless lang in <[ a t h c ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c ]>."
+unless lang in <[ a t h c n ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c n ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
@@ -85,6 +85,7 @@ entries = switch lang
 | \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
 | \h => grok(\dict-hakka.json)
 | \c => grok(\dict-csld.json)
+| \n => grok(\dict-nan.json)
 
 i = 0
 todo = 0

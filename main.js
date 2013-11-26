@@ -8,7 +8,8 @@
     a: '萌',
     t: '發穎',
     h: '發芽',
-    c: '萌'
+    c: '萌',
+    n: '汫'
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -18,14 +19,16 @@
     a: '#',
     t: '#!',
     h: '#:',
-    c: '#~'
+    c: '#~',
+    n: '#^'
   };
   XREFLABELOF = {
     a: '華',
     t: '閩',
     h: '客',
     c: '陸',
-    ca: '臺'
+    ca: '臺',
+    n: '台'
   };
   res$ = {};
   for (key in HASHOF) {
@@ -58,7 +61,8 @@
     t: '',
     a: '',
     h: '',
-    c: ''
+    c: '',
+    n: ''
   };
   XREF = {
     t: {
@@ -72,6 +76,9 @@
       a: '"發芽":"萌,萌芽"'
     },
     tv: {
+      t: ''
+    },
+    n: {
       t: ''
     }
   };
@@ -492,6 +499,10 @@
         lang = 'c';
         val = val.substr(1);
       }
+      if (/^[^]/.exec(val + "")) {
+        lang = 'n';
+        val = val.substr(1);
+      }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
       if (lang !== LANG) {
         LANG = LANG;
@@ -582,6 +593,8 @@
         case 'h':
           return 'c';
         case 'c':
+          return 'n';
+        case 'n':
           return 'a';
         }
       }());
@@ -593,7 +606,8 @@
         a: '萌',
         t: '發穎',
         h: '發芽',
-        c: '萌'
+        c: '萌',
+        n: '汫'
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
@@ -607,6 +621,7 @@
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
       $('body').removeClass("lang-c");
+      $('body').removeClass("lang-n");
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
       return window.doLookup(id);

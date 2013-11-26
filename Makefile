@@ -59,6 +59,11 @@ twblg ::
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
 
+nan ::
+	lsc json2prefix.ls n
+	lsc autolink.ls n > n.txt
+	perl link2pack.pl n < n.txt
+
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt

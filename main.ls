@@ -2,13 +2,13 @@ const DEBUGGING = off
 const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 n: \汫}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
+const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, n: '#^'}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺, n: \台}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
@@ -23,12 +23,13 @@ isGecko = navigator.userAgent is /\bGecko\/\b/
 isChrome = navigator.userAgent is /\bChrome\/\b/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '', c: '' }
+INDEX = { t: '', a: '', h: '', c: '' , n: ''}
 XREF = {
   t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
   a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
   h: {a: '"發芽":"萌,萌芽"'}
   tv: {t: ''}
+  n: {t: ''}
 }
 
 if isCordova
@@ -268,6 +269,7 @@ window.do-load = ->
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
+    if "#val" is /^[^]/ => lang = \n; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       LANG := LANG
@@ -315,12 +317,12 @@ window.do-load = ->
   window.press-lang = (lang='', id='') ->
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \n | \n => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 n: \汫}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
@@ -328,6 +330,7 @@ window.do-load = ->
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-h")
     $('body').removeClass("lang-c")
+    $('body').removeClass("lang-n")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id
