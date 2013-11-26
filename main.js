@@ -9,7 +9,7 @@
     t: '發穎',
     h: '發芽',
     c: '萌',
-    p: 'ca'
+    p: 'ha'
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);

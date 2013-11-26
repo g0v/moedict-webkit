@@ -2,7 +2,7 @@ const DEBUGGING = off
 const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ca}[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!

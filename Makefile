@@ -39,6 +39,9 @@ offline :: moedict-data deps translation
 	-lsc json2prefix.ls c
 	-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
+	lsc json2prefix.ls p
+	lsc autolink.ls p > p.txt
+	perl link2pack.pl p < p.txt
 	perl special2pack.pl
 
 csld ::
@@ -58,6 +61,11 @@ twblg ::
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
+
+amis ::
+	lsc json2prefix.ls p
+	lsc autolink.ls p > p.txt
+	perl link2pack.pl p < p.txt
 
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
