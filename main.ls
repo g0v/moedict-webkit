@@ -786,7 +786,7 @@ function render (json)
             }</span>
             #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
-            #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
+            #{ ls link,    -> "<span class='link'><span class='part-of-speech'>相關</span>#{    h it }</span>" }
             #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
               h((synonyms - /^,/).replace(/,/g '、'))
             }</span>" else '' }
