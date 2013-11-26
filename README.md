@@ -6,12 +6,12 @@
     * LiveScript
     * webworker-threads
     * jade
-* Perl 5.8.0 以上
+* Perl 5.8.0+
 * Python
     * lxml
 * Ruby
-    * sass
-    * compass
+    * sass 3.2+
+    * compass 0.12+
 
 ## 前置作業 (Debian/Ubuntu)
 
