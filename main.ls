@@ -322,7 +322,7 @@ window.do-load = ->
     $('.ui-autocomplete li').remove!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ca}[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
