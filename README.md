@@ -11,6 +11,16 @@
     * SASS
     * compass
 
+## 前置作業 (Debian/Ubuntu)
+
+```
+sudo apt-get update
+sudo apt-get install -y python-software-properties python g++ make
+sudo add-apt-repository -y ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs python-lxml curl
+```
+
 ## 安裝環境
 
 ```
