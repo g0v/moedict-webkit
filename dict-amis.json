@@ -1,0 +1,91 @@
+[
+  {
+    "title": "'a'am",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺soft watery rice￻稀飯、粥、米乳、米湯"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "'sam",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺attitude of being tired of looking at something￻不耐煩，因疲倦而厭煩的態度",
+            "example": [
+              "￹Ma'samento kako.￺I am upset / disturbed (by a situation).￻我已經提不起興趣了"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "ca",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺a negative particle￻否定詞"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "'ca",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺negative particle￻不是，不",
+	    "example": [
+              "￹aka ka 'ca￺do by all means￻不得不，不得不",
+              "￹caay ka 'ca￺definitely￻一定",
+              "￹O nika'caan pidmak ko ga'ay.￺It is best not to do it.￻最好不去做，不如不做。"
+	    ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "da'at",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺to suffocate, smother, in or out of water￻被煙或水嗆住不能呼吸"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "ha",
+    "heteronyms": [
+      {
+        "definitions": [
+          {
+            "def": "￺a gremmatical particle￻文法上的用詞"
+          },
+          {
+            "def": "￺a thing used or planned to accomplish a task￻事情或計劃完成的任務"
+          },
+          {
+            "def": "￺a thing or action to be done, a planned activity￻即將完成(成就)的事情或行動(已經計劃就緒的活動)"
+          },
+          {
+            "def": "￺a prefix used in the south on many words￻南部阿美語許多詞彙之前加上此字首"
+          }
+        ]
+      }
+    ]
+  }
+]
