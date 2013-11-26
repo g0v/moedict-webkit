@@ -852,7 +852,7 @@ re = -> [k for k of it].sort((x, y) -> y.length - x.length).join \|
 const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
-  return ' ' if LANG is \h # TODO
+  return ' ' if LANG in [\h \p]# TODO
   return trs if LANG is \a
   trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
     tone = ''

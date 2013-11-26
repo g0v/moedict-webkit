@@ -605,7 +605,7 @@
         t: '發穎',
         h: '發芽',
         c: '萌',
-        p: 'ca'
+        p: 'ha'
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
@@ -1497,7 +1497,7 @@
   C = re(Consonants);
   V = re(Vowels);
   function trs2bpmf(trs){
-    if (LANG === 'h') {
+    if (LANG === 'h' || LANG === 'p') {
       return ' ';
     }
     if (LANG === 'a') {
