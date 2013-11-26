@@ -7,7 +7,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, p: \#;}
+const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, p: '#;'}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺, p: \阿美}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
@@ -269,6 +269,7 @@ window.do-load = ->
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
+    if "#val" is /^;/ => lang = \p; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       LANG := LANG
@@ -600,7 +601,7 @@ function init-autocomplete
       term = "。" if term is \=諺語 and LANG is \t
       term = "，" if term is \=諺語 and LANG is \h
       return cb [] unless term.length
-      return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
+      return cb [] unless LANG is \p or term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')

@@ -20,7 +20,7 @@
     t: '#!',
     h: '#:',
     c: '#~',
-    p: '#'
+    p: '#;'
   };
   XREFLABELOF = {
     a: '華',
@@ -497,6 +497,10 @@
       }
       if (/^~/.exec(val + "")) {
         lang = 'c';
+        val = val.substr(1);
+      }
+      if (/^;/.exec(val + "")) {
+        lang = 'p';
         val = val.substr(1);
       }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
@@ -1109,7 +1113,7 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
+        if (!(LANG === 'p' || /[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
         if (widthIsXs() && !/[「」。，?.*_% ]/.test(term)) {
