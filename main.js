@@ -871,7 +871,11 @@
       html = html.replace(/³/g, '<sup>3</sup>');
       html = html.replace(/⁴/g, '<sup>4</sup>');
       html = html.replace(/⁵/g, '<sup>5</sup>');
-      html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
+      if (LANG === 'p') {
+        html = html.replace(/\uFFF9/g, '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g, '</span><br><span class="amisenglish">').replace(/\uFFFB/g, '</span><br><span class="amismandarin">');
+      } else {
+        html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
+      }
       hasXrefs = false;
       for (tgtLang in ref$ = xrefOf(id)) {
         words = ref$[tgtLang];
@@ -1346,7 +1350,7 @@
             : [], link = (ref$ = arg$.link) != null
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
-          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
+          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def english">').replace(/\uFFFB/g, '</span><span class="def mandarin">') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span></span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
@@ -1497,8 +1501,11 @@
   C = re(Consonants);
   V = re(Vowels);
   function trs2bpmf(trs){
-    if (LANG === 'h' || LANG === 'p') {
+    if (LANG === 'h') {
       return ' ';
+    }
+    if (LANG === 'p') {
+      return trs;
     }
     if (LANG === 'a') {
       return trs;
