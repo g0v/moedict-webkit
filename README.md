@@ -7,8 +7,10 @@
     * webworker-threads
     * jade
 * Perl 5.8.0 以上
+* Python
+    * lxml
 * Ruby
-    * SASS
+    * sass
     * compass
 
 ## 前置作業 (Debian/Ubuntu)
