@@ -10548,6 +10548,8 @@ body.lang-a.web #lookback {
 
 .example {
   font-size: 92%;
+  clear: both;
+  display: block;
 }
 .example .mandarin:before {
   content: "（";
@@ -10569,6 +10571,10 @@ body.lang-a.web #lookback {
 }
 .example .mandarin:after {
   content: '）';
+}
+.example .amismandarin {
+  font-size: 90%;
+  text-align: left;
 }
 .example .ruby {
   text-align: left;

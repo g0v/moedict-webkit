@@ -483,7 +483,10 @@ window.do-load = ->
     html.=replace(/³/g \<sup>3</sup>)
     html.=replace(/⁴/g \<sup>4</sup>)
     html.=replace(/⁵/g \<sup>5</sup>)
-    html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
+    if LANG is \p then   # Amis
+      html.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+    else
+      html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     has-xrefs = false
     for tgt-lang, words of xref-of id | words.length
@@ -776,6 +779,9 @@ function render (json)
               (h expand-def def).replace(
                 /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
                 '$1</span><span class="def">$2'
+              ).replace( /\uFFF9/g '</span><span class="def native">'
+              ).replace( /\uFFFA/g '</span><span class="def english">'
+              ).replace( /\uFFFB/g '</span><span class="def mandarin">'
               )
             }</span>
             #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
@@ -852,7 +858,8 @@ re = -> [k for k of it].sort((x, y) -> y.length - x.length).join \|
 const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
-  return ' ' if LANG in [\h \p]# TODO
+  return ' ' if LANG is \h # TODO
+  return trs if LANG is \p # FIXME
   return trs if LANG is \a
   trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
     tone = ''
