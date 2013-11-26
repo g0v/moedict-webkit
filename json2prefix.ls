@@ -73,8 +73,7 @@ for len, titles of lenToTitles
 
 lens.sort (a, b) -> b - a
 
-for len in [2 3 4]
-  titles = lenToTitles[len]
+for len in [2 3 4] | titles = lenToTitles[len]
   cur = ''
   re = ''
   for t in titles
