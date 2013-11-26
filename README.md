@@ -2,7 +2,7 @@
 
 ## 需求
 
-* Node.js
+* Node.js 0.10.x
     * LiveScript
     * webworker-threads
     * jade
