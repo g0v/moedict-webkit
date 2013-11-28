@@ -14,6 +14,8 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
+	-git clone --depth 1 https://github.com/miaoski/amis-data.git
+	-hg clone https://bitbucket.org/pcchen/nan
 
 moedict-data :: checkout
 
@@ -27,6 +29,10 @@ offline :: moedict-data deps translation
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
+	cd amis-data && python moedict.py
+	ln -fs amis-data/dict-amis.json                        dict-amis.json
+	cd nan/util && ./moedict.sh
+	ln -fs nan/util/dict-nan.json                          dict-nan.json
 	lsc json2prefix.ls a
 	lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
@@ -42,6 +48,11 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
+	cd p && ln -fs ../amis-data/index.json                 index.json
+	lsc json2prefix.ls n
+	lsc autolink.ls n > n.txt
+	perl link2pack.pl n < n.txt
+	cd n && ln -fs ../nan/util/index.json                  index.json
 	perl special2pack.pl
 
 csld ::
