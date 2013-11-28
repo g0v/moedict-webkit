@@ -785,6 +785,7 @@ function render (json)
               ).replace( /\uFFF9/g '</span><span class="def native">'
               ).replace( /\uFFFA/g '</span><span class="def english">'
               ).replace( /\uFFFB/g '</span><span class="def mandarin">'
+              ).replace( /\uFFFD/g '</span><span class="def lomaji">'
               )
             }</span>
             #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
@@ -871,6 +872,9 @@ function trs2bpmf (trs)
      .replace(/ô͘/g, 'o\u0302o')
      .replace(/ō͘/g, 'o\u0304o')
      .replace(/ń/g, 'n\u0301')
+     .replace(/ǹ/g, 'n\u0300')
+     .replace(/n̂/g, 'n\u0302')
+     .replace(/n̄/g, 'n\u0304')
      .replace(/á/g, 'a\u0301')
      .replace(/à/g, 'a\u0300')
      .replace(/â/g, 'a\u0302')

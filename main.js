@@ -1367,7 +1367,7 @@
             : [], link = (ref$ = arg$.link) != null
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
-          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def english">').replace(/\uFFFB/g, '</span><span class="def mandarin">') + "</span>\n    " + ls(example, function(it){
+          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def english">').replace(/\uFFFB/g, '</span><span class="def mandarin">').replace(/\uFFFD/g, '</span><span class="def lomaji">') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span></span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
@@ -1531,7 +1531,7 @@
     if (LANG !== 'n') {
       return moebpmf(trs);
     }
-    midform = trs.replace('o͘', 'oo').replace(/ó͘/g, 'o\u0301o').replace(/ò͘/g, 'o\u0300o').replace(/ô͘/g, 'o\u0302o').replace(/ō͘/g, 'o\u0304o').replace(/ń/g, 'n\u0301').replace(/á/g, 'a\u0301').replace(/à/g, 'a\u0300').replace(/â/g, 'a\u0302').replace(/ā/g, 'a\u0304').replace(/ú/g, 'u\u0301').replace(/ù/g, 'u\u0300').replace(/û/g, 'u\u0302').replace(/ū/g, 'u\u0304').replace(/í/g, 'i\u0301').replace(/ì/g, 'i\u0300').replace(/î/g, 'i\u0302').replace(/ī/g, 'i\u0304').replace(/é/g, 'e\u0301').replace(/è/g, 'e\u0300').replace(/ê/g, 'e\u0302').replace(/ē/g, 'e\u0304').replace(/ó/g, 'o\u0301').replace(/ò/g, 'o\u0300').replace(/ô/g, 'o\u0302').replace(/ō/g, 'o\u0304').replace(/\u207f/g, 'nn');
+    midform = trs.replace('o͘', 'oo').replace(/ó͘/g, 'o\u0301o').replace(/ò͘/g, 'o\u0300o').replace(/ô͘/g, 'o\u0302o').replace(/ō͘/g, 'o\u0304o').replace(/ń/g, 'n\u0301').replace(/ǹ/g, 'n\u0300').replace(/n̂/g, 'n\u0302').replace(/n̄/g, 'n\u0304').replace(/á/g, 'a\u0301').replace(/à/g, 'a\u0300').replace(/â/g, 'a\u0302').replace(/ā/g, 'a\u0304').replace(/ú/g, 'u\u0301').replace(/ù/g, 'u\u0300').replace(/û/g, 'u\u0302').replace(/ū/g, 'u\u0304').replace(/í/g, 'i\u0301').replace(/ì/g, 'i\u0300').replace(/î/g, 'i\u0302').replace(/ī/g, 'i\u0304').replace(/é/g, 'e\u0301').replace(/è/g, 'e\u0300').replace(/ê/g, 'e\u0302').replace(/ē/g, 'e\u0304').replace(/ó/g, 'o\u0301').replace(/ò/g, 'o\u0300').replace(/ô/g, 'o\u0302').replace(/ō/g, 'o\u0304').replace(/\u207f/g, 'nn');
     return moebpmf(midform);
   }
   function moebpmf(trs){
