@@ -47,6 +47,7 @@ csld ::
 	lsc json2prefix.ls c
 	lsc autolink.ls c > c.txt
 	perl link2pack.pl c < c.txt
+	cp moedict-data-csld/index.json c/
 
 hakka ::
 	cp ../hakka/dict-hakka.json .
