@@ -7,7 +7,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, p: '#;', n: '#^'}
+const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, p: '#;', n: '#@'}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺, p: \阿美, n: \台}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
@@ -270,7 +270,7 @@ window.do-load = ->
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
-    if "#val" is /^[^]/ => lang = \n; val.=substr 1
+    if "#val" is /^@/ => lang = \n; val.=substr 1
     if "#val" is /^;/ => lang = \p; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
@@ -783,9 +783,9 @@ function render (json)
                 /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
                 '$1</span><span class="def">$2'
               ).replace( /\uFFF9/g '</span><span class="def native">'
-              ).replace( /\uFFFA/g '</span><span class="def english">'
-              ).replace( /\uFFFB/g '</span><span class="def mandarin">'
-              ).replace( /\uFFFD/g '</span><span class="def lomaji">'
+              ).replace( /\uFFFA/g '</span><span class="def lomaji">'
+              ).replace( /\uFFFB/g '</span><span class="def english">'
+              ).replace( /\uFFFD/g '</span><span class="def mandarin">'
               )
             }</span>
             #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }

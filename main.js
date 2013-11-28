@@ -22,7 +22,7 @@
     h: '#:',
     c: '#~',
     p: '#;',
-    n: '#^'
+    n: '#@'
   };
   XREFLABELOF = {
     a: '華',
@@ -506,7 +506,7 @@
         lang = 'c';
         val = val.substr(1);
       }
-      if (/^[^]/.exec(val + "")) {
+      if (/^@/.exec(val + "")) {
         lang = 'n';
         val = val.substr(1);
       }
@@ -1367,7 +1367,7 @@
             : [], link = (ref$ = arg$.link) != null
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
-          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def english">').replace(/\uFFFB/g, '</span><span class="def mandarin">').replace(/\uFFFD/g, '</span><span class="def lomaji">') + "</span>\n    " + ls(example, function(it){
+          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def lomaji">').replace(/\uFFFB/g, '</span><span class="def english">').replace(/\uFFFD/g, '</span><span class="def mandarin">') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span></span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
