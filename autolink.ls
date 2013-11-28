@@ -1,7 +1,7 @@
 require! <[ fs os ]>
 lang = process.argv.2
-unless lang in <[ a t h c n ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c n ]>."
+unless lang in <[ a t h c p n ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c p n ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
@@ -18,6 +18,7 @@ pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
 pool.all.eval(init);
 pool.all.eval('init()');
 pool.all.eval(proc);
+pool.all.eval(procNoSeg);
 
 function proc (struct, title, idx)
   chunk = JSON.stringify(struct)
@@ -28,6 +29,13 @@ function proc (struct, title, idx)
   title-codes = codepoints-of title
   for len in lens | len < title-codes
     title.=replace(lenToRegex[len], -> escape "`#it~")
+  return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
+    "t":"#{ unescape title }"
+  """)
+
+function procNoSeg (struct, title, idx)   # no segmentation
+  chunk = JSON.stringify(struct)
+  esc = escape title
   return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
     "t":"#{ unescape title }"
   """)
@@ -86,6 +94,7 @@ entries = switch lang
 | \h => grok(\dict-hakka.json)
 | \c => grok(\dict-csld.json)
 | \n => grok(\dict-nan.json)
+| \p => grok(\dict-amis.json)
 
 i = 0
 todo = 0
@@ -116,6 +125,11 @@ for {t:title, h:heteronyms}:entry in entries
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
-  pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
-    console.log x
-    process.exit! unless --todo
+  if lang is \p then
+    pool.any.eval "procNoSeg(#chunk, \"#title\", #idx)", (,x) ->
+      console.log x
+      process.exit! unless --todo
+  else
+    pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
+      console.log x
+      process.exit! unless --todo

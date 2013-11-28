@@ -4,13 +4,16 @@ a
 c
 h
 t
+p
 a.txt
 c.txt
 h.txt
 t.txt
+p.txt
 pack/
 pcck/
 phck/
+ppck/
 ptck/
 ios/MoeDict.xcodeproj/project.xcworkspace/xcuserdata
 fire_app_log.txt

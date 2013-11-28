@@ -2,13 +2,13 @@ const DEBUGGING = off
 const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 n: \汫}[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha n: \汫}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, n: '#^'}
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺, n: \台}
+const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~, p: '#;', n: '#^'}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺, p: \阿美, n: \台}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
@@ -23,13 +23,14 @@ isGecko = navigator.userAgent is /\bGecko\/\b/
 isChrome = navigator.userAgent is /\bChrome\/\b/
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '', c: '' , n: ''}
+INDEX = { t: '', a: '', h: '', c: '', p: '', n: ''}
 XREF = {
   t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
   a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
   h: {a: '"發芽":"萌,萌芽"'}
   tv: {t: ''}
   n: {t: ''}
+  p: {t: ''}
 }
 
 if isCordova
@@ -270,6 +271,7 @@ window.do-load = ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     if "#val" is /^[^]/ => lang = \n; val.=substr 1
+    if "#val" is /^;/ => lang = \p; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       LANG := LANG
@@ -322,7 +324,7 @@ window.do-load = ->
     $('.ui-autocomplete li').remove!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 n: \汫}[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha n: \汫}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
@@ -331,6 +333,7 @@ window.do-load = ->
     $('body').removeClass("lang-h")
     $('body').removeClass("lang-c")
     $('body').removeClass("lang-n")
+    $('body').removeClass("lang-p")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id
@@ -483,7 +486,10 @@ window.do-load = ->
     html.=replace(/³/g \<sup>3</sup>)
     html.=replace(/⁴/g \<sup>4</sup>)
     html.=replace(/⁵/g \<sup>5</sup>)
-    html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
+    if LANG is \p then   # Amis
+      html.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+    else
+      html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     has-xrefs = false
     for tgt-lang, words of xref-of id | words.length
@@ -601,7 +607,7 @@ function init-autocomplete
       term = "。" if term is \=諺語 and LANG is \t
       term = "，" if term is \=諺語 and LANG is \h
       return cb [] unless term.length
-      return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
+      return cb [] unless LANG is \p or term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -776,11 +782,14 @@ function render (json)
               (h expand-def def).replace(
                 /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
                 '$1</span><span class="def">$2'
+              ).replace( /\uFFF9/g '</span><span class="def native">'
+              ).replace( /\uFFFA/g '</span><span class="def english">'
+              ).replace( /\uFFFB/g '</span><span class="def mandarin">'
               )
             }</span>
             #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
             #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
-            #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
+            #{ ls link,    -> "<span class='link'><span class='part-of-speech'>相關</span>#{    h it }</span>" }
             #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
               h((synonyms - /^,/).replace(/,/g '、'))
             }</span>" else '' }
@@ -853,6 +862,7 @@ const C = re Consonants
 const V = re Vowels
 function trs2bpmf (trs)
   return ' ' if LANG is \h # TODO
+  return trs if LANG is \p # FIXME
   return trs if LANG is \a
   trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
     tone = ''

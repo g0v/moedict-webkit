@@ -1,8 +1,8 @@
 require! fs
 lang = process.argv.2
 
-unless lang in <[ a t h c n ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c n ]>."
+unless lang in <[ a t h c p n ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c p n ]>."
   process.exit!
 
 fs.mkdir-sync lang unless fs.exists-sync lang
@@ -24,6 +24,7 @@ entries = switch lang
   | \h => grok(\dict-hakka.json)
   | \c => grok(\dict-csld.json)
   | \n => grok(\dict-nan.json)
+  | \p => grok(\dict-amis.json)
 
 prefix = {}
 defs = {}

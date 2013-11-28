@@ -9,7 +9,11 @@
     t: '發穎',
     h: '發芽',
     c: '萌',
+<<<<<<< HEAD
     n: '汫'
+=======
+    p: 'ha'
+>>>>>>> amis
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -20,7 +24,11 @@
     t: '#!',
     h: '#:',
     c: '#~',
+<<<<<<< HEAD
     n: '#^'
+=======
+    p: '#;'
+>>>>>>> amis
   };
   XREFLABELOF = {
     a: '華',
@@ -28,7 +36,11 @@
     h: '客',
     c: '陸',
     ca: '臺',
+<<<<<<< HEAD
     n: '台'
+=======
+    p: '阿美'
+>>>>>>> amis
   };
   res$ = {};
   for (key in HASHOF) {
@@ -62,7 +74,11 @@
     a: '',
     h: '',
     c: '',
+<<<<<<< HEAD
     n: ''
+=======
+    p: ''
+>>>>>>> amis
   };
   XREF = {
     t: {
@@ -78,7 +94,11 @@
     tv: {
       t: ''
     },
+<<<<<<< HEAD
     n: {
+=======
+    p: {
+>>>>>>> amis
       t: ''
     }
   };
@@ -499,8 +519,13 @@
         lang = 'c';
         val = val.substr(1);
       }
+<<<<<<< HEAD
       if (/^[^]/.exec(val + "")) {
         lang = 'n';
+=======
+      if (/^;/.exec(val + "")) {
+        lang = 'p';
+>>>>>>> amis
         val = val.substr(1);
       }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
@@ -607,7 +632,11 @@
         t: '發穎',
         h: '發芽',
         c: '萌',
+<<<<<<< HEAD
         n: '汫'
+=======
+        p: 'ha'
+>>>>>>> amis
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
@@ -621,7 +650,11 @@
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
       $('body').removeClass("lang-c");
+<<<<<<< HEAD
       $('body').removeClass("lang-n");
+=======
+      $('body').removeClass("lang-p");
+>>>>>>> amis
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
       return window.doLookup(id);
@@ -873,7 +906,11 @@
       html = html.replace(/³/g, '<sup>3</sup>');
       html = html.replace(/⁴/g, '<sup>4</sup>');
       html = html.replace(/⁵/g, '<sup>5</sup>');
-      html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
+      if (LANG === 'p') {
+        html = html.replace(/\uFFF9/g, '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g, '</span><br><span class="amisenglish">').replace(/\uFFFB/g, '</span><br><span class="amismandarin">');
+      } else {
+        html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
+      }
       hasXrefs = false;
       for (tgtLang in ref$ = xrefOf(id)) {
         words = ref$[tgtLang];
@@ -1115,7 +1152,7 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
+        if (!(LANG === 'p' || /[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
           return cb([]);
         }
         if (widthIsXs() && !/[「」。，?.*_% ]/.test(term)) {
@@ -1348,12 +1385,12 @@
             : [], link = (ref$ = arg$.link) != null
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
-          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
+          return "<li><p class='definition'>\n    <span class=\"def\">" + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2').replace(/\uFFF9/g, '</span><span class="def native">').replace(/\uFFFA/g, '</span><span class="def english">').replace(/\uFFFB/g, '</span><span class="def mandarin">') + "</span>\n    " + ls(example, function(it){
             return "<span class='example'>" + h(it) + "</span></span>";
           }) + "\n    " + ls(quote, function(it){
             return "<span class='quote'>" + h(it) + "</span>";
           }) + "\n    " + ls(link, function(it){
-            return "<span class='link'>" + h(it) + "</span>";
+            return "<span class='link'><span class='part-of-speech'>相關</span>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
       }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n    </div>";
@@ -1501,6 +1538,9 @@
   function trs2bpmf(trs){
     if (LANG === 'h') {
       return ' ';
+    }
+    if (LANG === 'p') {
+      return trs;
     }
     if (LANG === 'a') {
       return trs;
