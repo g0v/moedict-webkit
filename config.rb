@@ -10,3 +10,4 @@ javascripts_dir = "javascripts"
 #output_style = :compressed
 line_comments = false
 preferred_syntax = :scss
+asset_cache_buster :none

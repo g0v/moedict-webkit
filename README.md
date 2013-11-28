@@ -2,14 +2,26 @@
 
 ## 需求
 
-* Node.js
+* Node.js 0.10.x
     * LiveScript
     * webworker-threads
     * jade
-* Perl 5.8.0 以上
+* Perl 5.8.0+
+* Python
+    * lxml
 * Ruby
-    * SASS
-    * compass
+    * sass 3.2+
+    * compass 0.12+
+
+## 前置作業 (Debian/Ubuntu)
+
+```
+sudo apt-get update
+sudo apt-get install -y python-software-properties python g++ make
+sudo add-apt-repository -y ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs python-lxml curl
+```
 
 ## 安裝環境
 
