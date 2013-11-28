@@ -3,7 +3,7 @@ use utf8;
 use 5.008;
 use Encode;
 my $lang = shift;
-unless ($lang ~~ [qw[ t a h c n ]] and not -t STDIN) {
+unless ($lang =~ /^[tahcn]/ and not -t STDIN) {
     die << '.';
 Please invoke this as one of:
     perl link2pack.pl a < a.txt
