@@ -2,7 +2,7 @@ const DEBUGGING = off
 const STANDALONE = false
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha n: \汫}[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ha n: \汫 }[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
@@ -319,7 +319,7 @@ window.do-load = ->
   window.press-lang = (lang='', id='') ->
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \n | \n => \a
+    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \n | \n => \p | \p => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
