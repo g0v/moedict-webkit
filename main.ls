@@ -486,10 +486,10 @@ window.do-load = ->
     html.=replace(/³/g \<sup>3</sup>)
     html.=replace(/⁴/g \<sup>4</sup>)
     html.=replace(/⁵/g \<sup>5</sup>)
-    if LANG is \p then   # Amis
+    if LANG is \p    # Amis
       html.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
     else
-      html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
+      html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/\uFFFD/g '</span><br><span class="rt english">').replace(/<span class="rt mandarin">\s*<\//g '</')
 
     has-xrefs = false
     for tgt-lang, words of xref-of id | words.length
@@ -864,11 +864,42 @@ function trs2bpmf (trs)
   return ' ' if LANG is \h # TODO
   return trs if LANG is \p # FIXME
   return trs if LANG is \a
-  trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
+  return moebpmf(trs) unless LANG is \n  # Tweak only for NAN dict
+  midform = trs.replace('o͘', 'oo')
+     .replace(/ó͘/g, 'o\u0301o')
+     .replace(/ò͘/g, 'o\u0300o')
+     .replace(/ô͘/g, 'o\u0302o')
+     .replace(/ō͘/g, 'o\u0304o')
+     .replace(/ń/g, 'n\u0301')
+     .replace(/á/g, 'a\u0301')
+     .replace(/à/g, 'a\u0300')
+     .replace(/â/g, 'a\u0302')
+     .replace(/ā/g, 'a\u0304')
+     .replace(/ú/g, 'u\u0301')
+     .replace(/ù/g, 'u\u0300')
+     .replace(/û/g, 'u\u0302')
+     .replace(/ū/g, 'u\u0304')
+     .replace(/í/g, 'i\u0301')
+     .replace(/ì/g, 'i\u0300')
+     .replace(/î/g, 'i\u0302')
+     .replace(/ī/g, 'i\u0304')
+     .replace(/é/g, 'e\u0301')
+     .replace(/è/g, 'e\u0300')
+     .replace(/ê/g, 'e\u0302')
+     .replace(/ē/g, 'e\u0304')
+     .replace(/ó/g, 'o\u0301')
+     .replace(/ò/g, 'o\u0300')
+     .replace(/ô/g, 'o\u0302')
+     .replace(/ō/g, 'o\u0304')
+     .replace(/\u207f/g, 'nn')
+  moebpmf(midform)
+
+function moebpmf (trs)  # Was: trs2bpmf
+  trs.replace(/[A-Za-z\u00d0-\u00fe\u0300-\u030dⁿ]+/g ->
     tone = ''
     it.=toLowerCase!
     it.=replace //([\u0300-\u0302\u0304\u030d])// -> tone := Tones[it]; ''
-    it.=replace //^(tsh?|[sj])i// '$1ii'
+    it.=replace //^(tsh?|[sj])i//g '$1ii'
     it.=replace //ok$// 'ook'
     it.=replace //^(#C)((?:#V)+[ptkh]?)$// -> Consonants[&1] + &2
     it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''

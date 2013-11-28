@@ -9,11 +9,8 @@
     t: '發穎',
     h: '發芽',
     c: '萌',
-<<<<<<< HEAD
+    p: 'ha',
     n: '汫'
-=======
-    p: 'ha'
->>>>>>> amis
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -24,11 +21,8 @@
     t: '#!',
     h: '#:',
     c: '#~',
-<<<<<<< HEAD
+    p: '#;',
     n: '#^'
-=======
-    p: '#;'
->>>>>>> amis
   };
   XREFLABELOF = {
     a: '華',
@@ -36,11 +30,8 @@
     h: '客',
     c: '陸',
     ca: '臺',
-<<<<<<< HEAD
+    p: '阿美',
     n: '台'
-=======
-    p: '阿美'
->>>>>>> amis
   };
   res$ = {};
   for (key in HASHOF) {
@@ -74,11 +65,8 @@
     a: '',
     h: '',
     c: '',
-<<<<<<< HEAD
+    p: '',
     n: ''
-=======
-    p: ''
->>>>>>> amis
   };
   XREF = {
     t: {
@@ -94,11 +82,10 @@
     tv: {
       t: ''
     },
-<<<<<<< HEAD
     n: {
-=======
+      t: ''
+    },
     p: {
->>>>>>> amis
       t: ''
     }
   };
@@ -519,13 +506,12 @@
         lang = 'c';
         val = val.substr(1);
       }
-<<<<<<< HEAD
       if (/^[^]/.exec(val + "")) {
         lang = 'n';
-=======
+        val = val.substr(1);
+      }
       if (/^;/.exec(val + "")) {
         lang = 'p';
->>>>>>> amis
         val = val.substr(1);
       }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
@@ -620,6 +606,8 @@
         case 'c':
           return 'n';
         case 'n':
+          return 'p';
+        case 'p':
           return 'a';
         }
       }());
@@ -632,11 +620,8 @@
         t: '發穎',
         h: '發芽',
         c: '萌',
-<<<<<<< HEAD
+        p: 'ha',
         n: '汫'
-=======
-        p: 'ha'
->>>>>>> amis
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
@@ -650,11 +635,8 @@
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
       $('body').removeClass("lang-c");
-<<<<<<< HEAD
       $('body').removeClass("lang-n");
-=======
       $('body').removeClass("lang-p");
->>>>>>> amis
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
       return window.doLookup(id);
@@ -909,7 +891,7 @@
       if (LANG === 'p') {
         html = html.replace(/\uFFF9/g, '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g, '</span><br><span class="amisenglish">').replace(/\uFFFB/g, '</span><br><span class="amismandarin">');
       } else {
-        html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</');
+        html = html.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/\uFFFD/g, '</span><br><span class="rt english">').replace(/<span class="rt mandarin">\s*<\//g, '</');
       }
       hasXrefs = false;
       for (tgtLang in ref$ = xrefOf(id)) {
@@ -1536,6 +1518,7 @@
   C = re(Consonants);
   V = re(Vowels);
   function trs2bpmf(trs){
+    var midform;
     if (LANG === 'h') {
       return ' ';
     }
@@ -1545,7 +1528,14 @@
     if (LANG === 'a') {
       return trs;
     }
-    return trs.replace(/[A-Za-z\u0300-\u030d]+/g, function(it){
+    if (LANG !== 'n') {
+      return moebpmf(trs);
+    }
+    midform = trs.replace('o͘', 'oo').replace(/ó͘/g, 'o\u0301o').replace(/ò͘/g, 'o\u0300o').replace(/ô͘/g, 'o\u0302o').replace(/ō͘/g, 'o\u0304o').replace(/ń/g, 'n\u0301').replace(/á/g, 'a\u0301').replace(/à/g, 'a\u0300').replace(/â/g, 'a\u0302').replace(/ā/g, 'a\u0304').replace(/ú/g, 'u\u0301').replace(/ù/g, 'u\u0300').replace(/û/g, 'u\u0302').replace(/ū/g, 'u\u0304').replace(/í/g, 'i\u0301').replace(/ì/g, 'i\u0300').replace(/î/g, 'i\u0302').replace(/ī/g, 'i\u0304').replace(/é/g, 'e\u0301').replace(/è/g, 'e\u0300').replace(/ê/g, 'e\u0302').replace(/ē/g, 'e\u0304').replace(/ó/g, 'o\u0301').replace(/ò/g, 'o\u0300').replace(/ô/g, 'o\u0302').replace(/ō/g, 'o\u0304').replace(/\u207f/g, 'nn');
+    return moebpmf(midform);
+  }
+  function moebpmf(trs){
+    return trs.replace(/[A-Za-z\u00d0-\u00fe\u0300-\u030dⁿ]+/g, function(it){
       var tone;
       tone = '';
       it = it.toLowerCase();
@@ -1553,7 +1543,7 @@
         tone = Tones[it];
         return '';
       });
-      it = it.replace(/^(tsh?|[sj])i/, '$1ii');
+      it = it.replace(/^(tsh?|[sj])i/g, '$1ii');
       it = it.replace(/ok$/, 'ook');
       it = it.replace(RegExp('^(' + C + ')((?:' + V + ')+[ptkh]?)$'), function(){
         return Consonants[arguments[1]] + arguments[2];
