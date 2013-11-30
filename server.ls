@@ -10,7 +10,8 @@ require(\zappajs) ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ require('fs').readFile("#lang/#val.json")
-    @render index: { layout: 'layout', text } <<< JSON.parse(json || '{}')
+    isBot = @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
+    @render index: { layout: 'layout', text, isBot } <<< JSON.parse(json || '{}')
 
   @view index: ->
     trim = -> (it ? '').replace /[`~]/g ''
@@ -32,11 +33,15 @@ require(\zappajs) ->
       w = Math.ceil(len / Math.sqrt(len * 0.5)) if w > 4
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
-      meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" if @t
+      unless @isBot
+        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" if @t
+        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/" unless @t
       t = trim @t
       t += " (#{ @english })" if @english
       t ||= @text
       title "#t - 萌典"
+      meta name:"twitter:title" content:"#t - 萌典"
+      meta property:"og:description" content:def
       meta name:"description" content:def
     body -> h1 def unless @t
 
