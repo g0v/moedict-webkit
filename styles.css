@@ -9878,6 +9878,20 @@ body.lang-c #query-box {
   background-color: #EFEFFB;
 }
 
+body.lang-n .nav-bg {
+  background-color: #700;
+}
+body.lang-n .iconic-circle {
+  background: #744;
+}
+body.lang-n .iconic-color {
+  color: #744;
+}
+body.lang-n #query-box {
+  background-color: #FBEFEF;
+}
+
+
 .nav-bg {
   height: 50px;
 }
@@ -10554,6 +10568,9 @@ body.lang-a.web #lookback {
 .example .mandarin:before {
   content: "（";
 }
+body.lang-n .example .mandarin:before {
+  content: "" !important;
+}
 .example .ruby .ruby .rb {
   text-align: left;
   display: inline-block;
@@ -10571,6 +10588,9 @@ body.lang-a.web #lookback {
 }
 .example .mandarin:after {
   content: '）';
+}
+body.lang-n .example .mandarin:after {
+  content: "" !important;
 }
 .example .amismandarin {
   font-size: 90%;
@@ -10603,7 +10623,7 @@ body.lang-c .specific {
   border-radius: 1px;
 }
 
-body.lang-t .example, body.lang-h .example {
+body.lang-t .example, body.lang-h .example, body.lang-n .example {
   font-size: 100%;
   display: inline-block;
   clear: both;
