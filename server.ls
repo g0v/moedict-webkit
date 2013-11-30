@@ -11,7 +11,10 @@ require(\zappajs) ->
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ require('fs').readFile("#lang/#val.json")
     isBot = @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
-    @render index: { layout: 'layout', text, isBot } <<< JSON.parse(json || '{}')
+    payload = if err then {} else try JSON.parse(json)
+    payload = null if payload instanceof Array
+    payload ?= { t: val }
+    @render index: { layout: 'layout', text, isBot } <<< payload
 
   @view index: ->
     trim = -> (it ? '').replace /[`~]/g ''
