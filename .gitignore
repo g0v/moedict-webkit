@@ -5,16 +5,19 @@ c
 h
 t
 p
+n
 a.txt
 c.txt
 h.txt
 t.txt
 p.txt
+n.txt
 pack/
 pcck/
 phck/
 ppck/
 ptck/
+pnck/
 ios/MoeDict.xcodeproj/project.xcworkspace/xcuserdata
 fire_app_log.txt
 node_modules/
@@ -28,6 +31,8 @@ dict-revised.pua.json
 dict-revised.unicode.json
 dict-twblg-ext.json
 dict-twblg.json
+dict-amis.json
+dict-nan.json
 translation-data/cedict.txt
 translation-data/cfdict.txt
 translation-data/handedict.txt
@@ -37,3 +42,5 @@ moedict-data-hakka/
 moedict-data-twblg/
 moedict-data/
 moedict-epub/
+amis-data/
+nan/
