@@ -1,7 +1,7 @@
-require \zappajs ->
+require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
-    text2png(@params.text).pipe @response
+    text2png(@params.text.replace(/^[!~:]/, '')).pipe @response
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
@@ -19,10 +19,13 @@ require \zappajs ->
       for {f} in d => def += f
     def = trim def || (@text + '。')
     doctype 5
-    html ->
+    html {prefix:"og: http://ogp.me/ns#"} ->
       meta charset:\utf-8
+      meta name:"twitter:card" content:"summary"
+      meta name:"twitter:site" content:"@moedict"
+      meta name:"twitter:creator" content:"@audreyt"
       meta property:"og:url" content:"https://www.moedict.tw/#{ @text }"
-      meta property:"og:image" content:"https://www.moedict.tw/#{ @text }.png"
+      meta property:"og:image" content:"https://www.moedict.tw/#{ @text.replace(/^[!~:]/, '') }.png"
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
       w = len
