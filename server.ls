@@ -1,3 +1,22 @@
+require! fs
+{lenToRegex} = JSON.parse fs.read-file-sync "a/lenToRegex.json"
+lens = []
+for len of lenToRegex
+  lens.push len
+  lenToRegex[len] = new RegExp lenToRegex[len], \g
+lens.sort (a, b) -> b - a
+LTM-regexes = [ lenToRegex[len] for len in lens ]
+
+trim = -> (it ? '').replace /[`~]/g ''
+def-of = (lang, title, cb) ->
+  err, json <~ fs.readFile("#lang/#title.json")
+  payload = try JSON.parse json unless err
+  def = ''
+  for {d} in payload?h || [] => for {f} in d => def += f
+  cb(trim def)
+
+const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
+
 require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
@@ -9,12 +28,30 @@ require(\zappajs) ->
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
-    err, json <~ require('fs').readFile("#lang/#val.json")
+    err, json <~ fs.readFile("#lang/#val.json")
     isBot = @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    @render index: { layout: 'layout', text, isBot } <<< payload
+    payload = { layout: 'layout', text, isBot } <<< payload
+    if err
+      chunk = val - /[`~]/g
+      for re in LTM-regexes
+        chunk.=replace(re, -> escape "`#it~")
+      parts = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
+      segments = []
+      do iter = ~> if parts.length then
+        part = parts.pop!
+        def <- def-of lang, part
+        href = "https://www.moedict.tw/#{ HASH-OF[lang] }#part" if def
+        if part is "９７２"
+          href = "http://ly.g0v.tw/bills/1150L15359"
+          def = \擬具「民法親屬編、繼承編部分條文修正草案」，請審議案。
+        segments.unshift {def, part, href}
+        iter!
+      else @render index: payload <<< { segments }
+    else
+      @render index: payload
 
   @view index: ->
     trim = -> (it ? '').replace /[`~]/g ''
@@ -23,30 +60,48 @@ require(\zappajs) ->
       for {f} in d => def += f
     def = trim def || (@text + '。')
     doctype 5
-    html {prefix:"og: http://ogp.me/ns#"} ->
+    og-image = "https://www.moedict.tw/#{ @text.replace(/^[!~:]/, '') }.png"
+    html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
       meta property:"og:url" content:"https://www.moedict.tw/#{ @text }"
-      meta property:"og:image" content:"https://www.moedict.tw/#{ @text.replace(/^[!~:]/, '') }.png"
+      meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
       w = len
       w = Math.ceil(len / Math.sqrt(len * 0.5)) if w > 4
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
-      unless @isBot
-        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" if @t
-        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/" unless @t
       t = trim @t
+      if t
+        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" unless @isBot
       t += " (#{ @english })" if @english
       t ||= @text
       title "#t - 萌典"
       meta name:"twitter:title" content:"#t - 萌典"
       meta property:"og:description" content:def
       meta name:"description" content:def
-    body -> h1 def unless @t
+      base target:\_blank
+    body -> center ->
+      return unless @segments
+      img src:og-image, width:320 height:320
+      table style:'''
+        background: #eee;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: #d4d4d4 0 3px 3px;
+      ''', -> for {href, part, def} in @segments || [] => tr ->
+        td ->
+          a {href} -> img style:'''
+            vertical-align: top;
+            background: white;
+            border-radius: 20px;
+            boder: 1px solid #999;
+            box-shadow: #d4d4d4 0 3px 3px;
+          ''' src: "#part.png" width:160 height:160 alt:part
+        td -> a {href}, def
 
 function text2dim (len)
   len <?= 50
