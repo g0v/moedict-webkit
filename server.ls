@@ -154,7 +154,8 @@ function text2png (text)
     text.=slice w
     for ch, idx in part
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
-      ctx.fillText ch, (margin + idx * 360), (padding + row - 0.22) * 375
+      offset = if ch is /[\u3000\uFF01-\uFF5E]/ then 0.17 else 0.23
+      ctx.fillText ch, (margin + idx * 360), (padding + row - offset) * 375
     row++
   return canvas.pngStream!
 
