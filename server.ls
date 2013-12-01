@@ -97,7 +97,7 @@ require(\zappajs) ->
           a {href} -> img style:'''
             vertical-align: top;
             background: white;
-            border-radius: 20px;
+            border-radius: 10px;
             boder: 1px solid #999;
             box-shadow: #d4d4d4 0 3px 3px;
           ''' src: "#part.png" width:160 height:160 alt:part
@@ -120,7 +120,7 @@ function text2png (text)
 
   margin = (w * 15) / 2
   ctx = canvas.getContext('2d');
-  ctx.font = '355px TW-MOE-Std-Kai';
+  ctx.font = '355px TW-Kai';
   row = 1
   while text.length
     part = text.slice 0, w
