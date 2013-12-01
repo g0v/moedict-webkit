@@ -62,13 +62,13 @@ require(\zappajs) ->
       for {f} in d => def += f
     def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
-    og-image = "https://www.moedict.tw/#{ @text.replace(/^[!~:]/, '') }.png"
+    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }.png"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
-      meta property:"og:url" content:"https://www.moedict.tw/#{ @text }"
+      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
@@ -82,6 +82,7 @@ require(\zappajs) ->
       t += " (#{ @english })" if @english
       t ||= @text
       title "#t - 萌典"
+      meta name:"og:title" content:"#t - 萌典"
       meta name:"twitter:title" content:"#t - 萌典"
       meta property:"og:description" content:def
       meta name:"description" content:def
@@ -108,7 +109,7 @@ require(\zappajs) ->
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
-        a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+        a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^[!~:]/, '') }", ->
           i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
         a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
