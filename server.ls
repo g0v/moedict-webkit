@@ -145,8 +145,8 @@ function text2png (text)
   canvas = new Canvas (w * 375) , (w * 375)
 
   margin = (w * 15) / 2
-  ctx = canvas.getContext('2d');
-  ctx.font = '355px TW-Kai';
+  ctx = canvas.getContext \2d
+  ctx.font = '355px TW-Kai'
   row = 1
   while text.length
     part = text.slice 0, w
@@ -181,11 +181,3 @@ function drawBackground (ctx, x, y, dim)
   ctx.moveTo(x+ dim / 3 * 2, y)
   ctx.lineTo(x+ dim / 3 * 2, y+ dim)
   ctx.stroke!
-
-/*
-require! fs
-out = fs.createWriteStream(__dirname + '/tmp/text.png')
-stream = canvas.pngStream!
-stream.on \data -> out.write it
-stream.on \end  -> console.log \OK
-*/
