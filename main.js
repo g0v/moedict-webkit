@@ -1060,7 +1060,9 @@
           if (LANG === 'c') {
             window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
           } else {
-            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + encodeURIComponent($('#query').val()));
+            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + encodeURIComponent(($('#query').val() + "").replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){
+              return String.fromCharCode(it.charCodeAt(0) + 0xFEE0);
+            })));
           }
           return false;
         }
