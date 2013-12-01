@@ -12,7 +12,7 @@ def-of = (lang, title, cb) ->
   err, json <~ fs.readFile("#lang/#title.json")
   payload = try JSON.parse json unless err
   def = ''
-  for {d} in payload?h || [] => for {f} in d => def += f
+  for {d} in payload?h || [] => for {f, l} in d => def += (f || l)
   cb(trim def)
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
@@ -59,7 +59,7 @@ require(\zappajs) ->
     trim = -> (it ? '').replace /[`~]/g ''
     def = ''
     for {d} in (@h || {d:[{f: @t}]})
-      for {f} in d => def += f
+      for {f, l} in d => def += (f || l)
     def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }.png"
