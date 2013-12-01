@@ -698,7 +698,7 @@
       }
       $('.share .btn').each(function(){
         return $(this).attr({
-          href: $(this).data('href') + encodeURIComponent(encodeURIComponent(hash.substr(1)))
+          href: $(this).data('href').replace(/__TEXT__/, prevId) + encodeURIComponent(encodeURIComponent(hash.substr(1)))
         });
       });
       if (isMobile) {
@@ -1057,7 +1057,11 @@
         var item;
         item = arg$.item;
         if (/^▶/.exec(item != null ? item.value : void 8)) {
-          window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
+          if (LANG === 'c') {
+            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
+          } else {
+            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + encodeURIComponent($('#query').val()));
+          }
           return false;
         }
         if (/^\(/.exec(item != null ? item.value : void 8)) {
@@ -1156,6 +1160,9 @@
         }
         if (LANG === 'c' && !(results != null && results.length) && !isApp) {
           return cb(["▶找不到。建議收錄？"]);
+        }
+        if (LANG !== 'c' && !(results != null && results.length) && !isApp) {
+          return cb(["▶找不到。分享這些字？"]);
         }
         if (!(results != null && results.length)) {
           return cb(['']);
