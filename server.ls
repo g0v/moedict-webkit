@@ -21,6 +21,8 @@ require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
     text2png(@params.text.replace(/^[!~:]/, '')).pipe @response
+  @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
@@ -83,14 +85,37 @@ require(\zappajs) ->
       meta name:"twitter:title" content:"#t - 萌典"
       meta property:"og:description" content:def
       meta name:"description" content:def
+      link href:'styles.css' rel:'stylesheet'
       base target:\_blank
     body -> center ->
       return unless @segments
-      img src:og-image, width:320 height:320
+      img src:"#{ @text.replace(/^[!~:]/, '') }.png" width:320 height:320, style: '''
+        margin-top: -50px;
+        margin-bottom: -50px;
+      '''
+      uri = encodeURIComponent encodeURIComponent @text
+      form class:'hidden-xs' style:'''
+        top: 0;
+        right: 0;
+        background: rgba(200, 200, 200, 0.5);
+        border-radius: 5px;
+        padding: 5px 15px;
+        position: absolute;
+      ''', ->
+        span '再寫幾個字：'
+        input id:'in' name: 'in' autofocus:true
+        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); }))}; return false"
+      div class:'share' style:'margin: 15px', ->
+        a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+          i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
+        a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+          i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
+        a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+          i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
       table style:'''
+        max-width: 90%;
         background: #eee;
-        border-radius: 10px;
-        padding: 10px;
+        border: 24px #f9f9f9 solid !important;
         box-shadow: #d4d4d4 0 3px 3px;
       ''', -> for {href, part, def} in @segments || [] => tr ->
         td ->
@@ -100,8 +125,9 @@ require(\zappajs) ->
             border-radius: 10px;
             boder: 1px solid #999;
             box-shadow: #d4d4d4 0 3px 3px;
+            margin: 10px;
           ''' src: "#part.png" width:160 height:160 alt:part
-        td -> a {href}, def
+        td -> a {style: 'color: #006', href}, def
 
 function text2dim (len)
   len <?= 50
