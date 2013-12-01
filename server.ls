@@ -58,7 +58,7 @@ require(\zappajs) ->
     def = ''
     for {d} in (@h || {d:[{f: @t}]})
       for {f} in d => def += f
-    def = trim def || (@text + '。')
+    def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
     og-image = "https://www.moedict.tw/#{ @text.replace(/^[!~:]/, '') }.png"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
