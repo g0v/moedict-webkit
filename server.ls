@@ -127,7 +127,7 @@ require(\zappajs) ->
             boder: 1px solid #999;
             box-shadow: #d4d4d4 0 3px 3px;
             margin: 10px;
-          ''' src: "#part.png" width:160 height:160 alt:part
+          ''' class: 'btn btn-default' src: "#part.png" width:160 height:160 alt:part
         td -> a {style: 'color: #006', href}, def
 
 function text2dim (len)
