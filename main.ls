@@ -585,7 +585,11 @@ function init-autocomplete
         if LANG is \c
           window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#{ $ \#query .val! }&body=出處及定義："
         else
-          window.open "https://www.moedict.tw/#{ HASH-OF[LANG].slice(1) }#{ encodeURIComponent $(\#query).val! }"
+          window.open "https://www.moedict.tw/#{ HASH-OF[LANG].slice(1) }#{ encodeURIComponent(
+            "#{ $(\#query).val! }"
+              .replace(/ /g '\u3000')
+              .replace(/[\u0020-\u007E]/g -> String.fromCharCode(it.charCodeAt(0) + 0xFEE0))
+          ) }"
         return false
       return false if item?value is /^\(/
       fill-query item.value if item?value
