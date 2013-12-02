@@ -9,7 +9,6 @@ for let lang in <[ a t h c ]>
       lens.push len
       lenToRegex[len] = new RegExp lenToRegex[len], \g
     lens.sort (a, b) -> b - a
-    console.log lang
     LTM-regexes[lang] = [ lenToRegex[len] for len in lens ]
 
 trim = -> (it ? '').replace /[`~]/g ''
@@ -22,10 +21,13 @@ def-of = (lang, title, cb) ->
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 
+const wt2font = { wt002: \HanWangMingMedium wt009: \HanWangYenHeavy wt006: \HanWangYenLight wt071: \HanWangShinSuMedium wthc06: \HanWangGB06 wt014: \HanWangHeiHeavy wt001: \HanWangMingLight wt011: \HanWangHeiLight wt024: \HanWangFangSongMedium wt003: \HanWangMingBold wt005: \HanWangMingBlack wt064: \HanWangYanKai wt004: \HanWangMingHeavy wtcc02: \HanWangCC02 wt021: \HanWangLiSuMedium wt028: \HanWangKanDaYan wt034: \HanWangKanTan wtcc15: \HanWangCC15 wt040: \HanWangZonYi }
+const font2name = { HanWangMingMedium: \中明體 HanWangYenHeavy: \特圓體 HanWangYenLight: \細圓體 HanWangShinSuMedium: \中行書 HanWangGB06: \鋼筆行楷 HanWangHeiHeavy: \特黑體 HanWangMingLight: \細明體 HanWangHeiLight: \細黑體 HanWangFangSongMedium: \中仿宋 HanWangMingBold: \粗明體 HanWangMingBlack: \超明體 HanWangYanKai: \顏楷體 HanWangMingHeavy: \特明體 HanWangCC02: \酷儷海報 HanWangLiSuMedium: \中隸書 HanWangKanDaYan: \空疊圓 HanWangKanTan: \勘亭流 HanWangCC15: \酷正海報 HanWangZonYi: \綜藝體 }
+
 font-of = ->
   return 'TW-Sung' if it is /sung/i
   return 'EBAS' if it is /ebas/i
-  return 'TW-Kai'
+  return wt2font[it] || 'TW-Kai'
 
 require(\zappajs) ->
   @get '/:text.png': ->
@@ -39,7 +41,7 @@ require(\zappajs) ->
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
     png-suffix = '.png'
-    png-suffix += "?font=#font" unless font is \TW-Kai
+    png-suffix += "?font=#{ @query.font }" unless font is \TW-Kai
     lang = \a
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
@@ -49,7 +51,7 @@ require(\zappajs) ->
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, png-suffix } <<< payload
+    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name } <<< payload
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -132,9 +134,11 @@ require(\zappajs) ->
           option selected:(@text is /^:/), value:\:, \客語
         select id:'font' name:'font', ->
           option value:'', \楷書
-          option selected:(png-suffix is '.png?font=TW-Sung'), value:\?font=sung, \宋體
-          option selected:(png-suffix is '.png?font=EBAS'), value:\?font=ebas, \篆文
-        input id:'in' name: 'in' autofocus:true size:10
+          option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
+          option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
+          for wt, font of @wt2font
+            option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
+        input id:'in' name: 'in' autofocus:true size:10 value: @text.replace(/^[!~:]/, '')
         input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
@@ -184,7 +188,7 @@ function text2png (text, font)
       ch = text.slice 0, 1
       text.=slice 1
       ctx.font = "355px #font"
-      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/
+      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS/
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/
         ctx.font = '355px Arial Unicode MS'
         ch += text.0
