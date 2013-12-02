@@ -866,7 +866,7 @@
         return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
       });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href='" + h + word + "'>" + word + "</a>";
+        return "<a href=\\\"" + h + word + "\\\">" + word + "</a>";
       });
       part = part.replace(/([)）])/g, "$1\u200B");
       if (/^\[\s*\[/.exec(part)) {
