@@ -47,7 +47,7 @@ require(\zappajs) ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
-    isBot = @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
+    isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
@@ -110,6 +110,17 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'styles.css' rel:'stylesheet'
       base target:\_blank
+    if @isBot
+      h = ''
+      h = @text.slice(0, 1) if @text is /^[!~:]/
+      body -> h1 @text.replace(/^[!~:]/ ''); for {d, T, b} in (@h || {d:[{f: @t}]})
+        p trim(b || T)
+        dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+          S = if s then "似:[#s]" else ''
+          A = if a then "反:[#a]" else ''
+          dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+          dd "#{ q.join('<br>') }<br>#S<br>#A".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+      return
     body -> center ->
       return unless @segments
       img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
