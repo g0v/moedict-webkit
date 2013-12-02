@@ -81,7 +81,7 @@ require(\zappajs) ->
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
-      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }"
+      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#png-suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
@@ -108,6 +108,8 @@ require(\zappajs) ->
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
+      uri += '?font=sung' if png-suffix is '.png?font=TW-Sung'
+      uri += '?font=ebas' if png-suffix is '.png?font=EBAS'
       form class:'hidden-xs' style:'''
         top: 0;
         right: 0;
