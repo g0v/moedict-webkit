@@ -1,11 +1,15 @@
 require! fs
-{lenToRegex} = JSON.parse fs.read-file-sync "a/lenToRegex.json"
-lens = []
-for len of lenToRegex
-  lens.push len
-  lenToRegex[len] = new RegExp lenToRegex[len], \g
-lens.sort (a, b) -> b - a
-LTM-regexes = [ lenToRegex[len] for len in lens ]
+LTM-regexes = {}
+for let lang in <[ a t h c ]>
+  err, json <- fs.read-file "#lang/lenToRegex.json"
+  try
+    {lenToRegex} = JSON.parse json
+    lens = []
+    for len of lenToRegex
+      lens.push len
+      lenToRegex[len] = new RegExp lenToRegex[len], \g
+    lens.sort (a, b) -> b - a
+    LTM-regexes[lang] = [ lenToRegex[len] for len in lens ]
 
 trim = -> (it ? '').replace /[`~]/g ''
 def-of = (lang, title, cb) ->
@@ -17,15 +21,27 @@ def-of = (lang, title, cb) ->
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 
+const wt2font = { wt002: \HanWangMingMedium wt009: \HanWangYenHeavy wt006: \HanWangYenLight wt071: \HanWangShinSuMedium wthc06: \HanWangGB06 wt014: \HanWangHeiHeavy wt001: \HanWangMingLight wt011: \HanWangHeiLight wt024: \HanWangFangSongMedium wt003: \HanWangMingBold wt005: \HanWangMingBlack wt064: \HanWangYanKai wt004: \HanWangMingHeavy wtcc02: \HanWangCC02 wt021: \HanWangLiSuMedium wt028: \HanWangKanDaYan wt034: \HanWangKanTan wtcc15: \HanWangCC15 wt040: \HanWangZonYi }
+const font2name = { HanWangMingMedium: \中明體 HanWangYenHeavy: \特圓體 HanWangYenLight: \細圓體 HanWangShinSuMedium: \中行書 HanWangGB06: \鋼筆行楷 HanWangHeiHeavy: \特黑體 HanWangMingLight: \細明體 HanWangHeiLight: \細黑體 HanWangFangSongMedium: \中仿宋 HanWangMingBold: \粗明體 HanWangMingBlack: \超明體 HanWangYanKai: \顏楷體 HanWangMingHeavy: \特明體 HanWangCC02: \酷儷海報 HanWangLiSuMedium: \中隸書 HanWangKanDaYan: \空疊圓 HanWangKanTan: \勘亭流 HanWangCC15: \酷正海報 HanWangZonYi: \綜藝體 }
+
+font-of = ->
+  return 'TW-Sung' if it is /sung/i
+  return 'EBAS' if it is /ebas/i
+  return wt2font[it] || 'TW-Kai'
+
 require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
-    text2png(@params.text.replace(/^[!~:]/, '')).pipe @response
+    font = font-of @query.font
+    text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
+    font = font-of @query.font
+    png-suffix = '.png'
+    png-suffix += "?font=#{ @query.font }" unless font is \TW-Kai
     lang = \a
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
@@ -35,10 +51,10 @@ require(\zappajs) ->
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot } <<< payload
+    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name } <<< payload
     if err
       chunk = val - /[`~]/g
-      for re in LTM-regexes
+      for re in LTM-regexes[lang]
         chunk.=replace(re, -> escape "`#it~")
       parts = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
       segments = []
@@ -65,13 +81,15 @@ require(\zappajs) ->
       for {f, l} in d => def += (f || l)
     def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
-    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }.png"
+    png-suffix = @png-suffix
+    suffix = png-suffix.slice(4)
+    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
-      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }"
+      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
@@ -84,6 +102,7 @@ require(\zappajs) ->
         meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" unless @isBot
       t += " (#{ @english })" if @english
       t ||= @text
+      t = t.slice(1) if t is /^[!~:]/
       title "#t - 萌典"
       meta name:"og:title" content:"#t - 萌典"
       meta name:"twitter:title" content:"#t - 萌典"
@@ -93,11 +112,13 @@ require(\zappajs) ->
       base target:\_blank
     body -> center ->
       return unless @segments
-      img src:"#{ @text.replace(/^[!~:]/, '') }.png" width:320 height:320, style: '''
+      img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
         margin-top: -50px;
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
+      uri += '?font=sung' if png-suffix is '.png?font=TW-Sung'
+      uri += '?font=ebas' if png-suffix is '.png?font=EBAS'
       form class:'hidden-xs' style:'''
         top: 0;
         right: 0;
@@ -107,8 +128,18 @@ require(\zappajs) ->
         position: absolute;
       ''', ->
         span '再寫幾個字：'
-        input id:'in' name: 'in' autofocus:true
-        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); }))}; return false"
+        select id:'lang' name:'lang', ->
+          option value:'', \國語
+          option selected:(@text is /^!/), value:\!, \臺語
+          option selected:(@text is /^:/), value:\:, \客語
+        select id:'font' name:'font', ->
+          option value:'', \楷書
+          option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
+          option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
+          for wt, font of @wt2font
+            option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
+        input id:'in' name: 'in' autofocus:true size:10 value: @text.replace(/^[!~:]/, '')
+        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
@@ -130,7 +161,7 @@ require(\zappajs) ->
             boder: 1px solid #999;
             box-shadow: #d4d4d4 0 3px 3px;
             margin: 10px;
-          ''' class: 'btn btn-default' src: "#part.png" width:160 height:160 alt:part
+          ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part
         td -> a {style: 'color: #006', href}, def
 
 function text2dim (len)
@@ -140,7 +171,7 @@ function text2dim (len)
   h = Math.ceil(len / w) <? w
   return [w, h]
 
-function text2png (text)
+function text2png (text, font)
   text.=slice(0, 50)
   [w, h] = text2dim text.length
   padding = (w - h) / 2
@@ -150,15 +181,22 @@ function text2png (text)
 
   margin = (w * 15) / 2
   ctx = canvas.getContext \2d
-  ctx.font = '355px TW-Kai'
   row = 1
   while text.length
-    part = text.slice 0, w
-    text.=slice w
-    for ch, idx in part
+    idx = 0
+    while idx < w and text.length
+      ch = text.slice 0, 1
+      text.=slice 1
+      ctx.font = "355px #font"
+      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS/
+      while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/
+        ctx.font = '355px Arial Unicode MS'
+        ch += text.0
+        text.=slice 1
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
       offset = if ch is /[\u3000\uFF01-\uFF5E]/ then 0.17 else 0.23
       ctx.fillText ch, (margin + idx * 360), (padding + row - offset) * 375
+      idx++
     row++
   return canvas.pngStream!
 
