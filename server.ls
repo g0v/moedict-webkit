@@ -49,6 +49,9 @@ require(\zappajs) ->
         if part is "９７２"
           href = "http://ly.g0v.tw/bills/1150L15359"
           def = \擬具「民法親屬編、繼承編部分條文修正草案」，請審議案。
+        else if part is "１３３"
+          href = "http://law.moj.gov.tw/LawClass/LawSingle.aspx?Pcode=A0000001&FLNO=133"
+          def = \被選舉人得由原選舉區依法罷免之。
         segments.unshift {def, part, href}
         iter!
       else @render index: payload <<< { segments }
