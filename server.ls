@@ -147,15 +147,21 @@ function text2png (text)
 
   margin = (w * 15) / 2
   ctx = canvas.getContext \2d
-  ctx.font = '355px TW-Kai'
   row = 1
   while text.length
-    part = text.slice 0, w
-    text.=slice w
-    for ch, idx in part
+    idx = 0
+    while idx < w and text.length
+      ch = text.slice 0, 1
+      text.=slice 1
+      ctx.font = '355px TW-Kai'
+      while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/
+        ctx.font = '355px Arial Unicode MS'
+        ch += text.0
+        text.=slice 1
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
       offset = if ch is /[\u3000\uFF01-\uFF5E]/ then 0.17 else 0.23
       ctx.fillText ch, (margin + idx * 360), (padding + row - offset) * 375
+      idx++
     row++
   return canvas.pngStream!
 
