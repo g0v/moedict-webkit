@@ -1054,15 +1054,14 @@
         at: "left top"
       },
       select: function(e, arg$){
-        var item;
+        var item, val;
         item = arg$.item;
         if (/^▶/.exec(item != null ? item.value : void 8)) {
+          val = $('#query').val().replace(/^→列出含有「/, '').replace(/」的詞$/, '');
           if (LANG === 'c') {
-            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + $('#query').val() + "&body=出處及定義：");
+            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + val + "&body=出處及定義：");
           } else {
-            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + encodeURIComponent(($('#query').val() + "").replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){
-              return String.fromCharCode(it.charCodeAt(0) + 0xFEE0);
-            })));
+            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + val);
           }
           return false;
         }
