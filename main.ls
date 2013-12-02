@@ -388,7 +388,7 @@ window.do-load = ->
     if "#{location.hash}" isnt hash => try history.pushState null, null, hash
       catch => location.replace hash
     $('.share .btn').each ->
-      $(@).attr href: $(@).data(\href) + encodeURIComponent encodeURIComponent hash.substr(1)
+      $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
     if isMobile
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it - /^[@=]/).show!
@@ -591,7 +591,14 @@ function init-autocomplete
       at: "left top"
     select: (e, {item}) ->
       if item?value is /^▶/
-        window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#{ $ \#query .val! }&body=出處及定義："
+        if LANG is \c
+          window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#{ $ \#query .val! }&body=出處及定義："
+        else
+          window.open "https://www.moedict.tw/#{ HASH-OF[LANG].slice(1) }#{ encodeURIComponent(
+            "#{ $(\#query).val! }"
+              .replace(/ /g '\u3000')
+              .replace(/[\u0020-\u007E]/g -> String.fromCharCode(it.charCodeAt(0) + 0xFEE0))
+          ) }"
         return false
       return false if item?value is /^\(/
       fill-query item.value if item?value
@@ -641,6 +648,7 @@ function init-autocomplete
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
       return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length and not isApp
+      return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length and not isApp
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = if width-is-xs! then 400 else 1024
