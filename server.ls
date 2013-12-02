@@ -117,8 +117,12 @@ require(\zappajs) ->
         position: absolute;
       ''', ->
         span '再寫幾個字：'
-        input id:'in' name: 'in' autofocus:true
-        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); }))}; return false"
+        select id:'font' name:'font', ->
+          option value:'', \楷書
+          option selected:(png-suffix is '.png?font=TW-Sung'), value:\?font=sung, \宋體
+          option selected:(png-suffix is '.png?font=EBAS'), value:\?font=ebas, \篆文
+        input id:'in' name: 'in' autofocus:true size:10
+        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
@@ -167,6 +171,7 @@ function text2png (text, font)
       ch = text.slice 0, 1
       text.=slice 1
       ctx.font = "355px #font"
+      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/
         ctx.font = '355px Arial Unicode MS'
         ch += text.0
