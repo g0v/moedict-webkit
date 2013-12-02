@@ -1,11 +1,16 @@
 require! fs
-{lenToRegex} = JSON.parse fs.read-file-sync "a/lenToRegex.json"
-lens = []
-for len of lenToRegex
-  lens.push len
-  lenToRegex[len] = new RegExp lenToRegex[len], \g
-lens.sort (a, b) -> b - a
-LTM-regexes = [ lenToRegex[len] for len in lens ]
+LTM-regexes = {}
+for let lang in <[ a t h c ]>
+  err, json <- fs.read-file "#lang/lenToRegex.json"
+  try
+    {lenToRegex} = JSON.parse json
+    lens = []
+    for len of lenToRegex
+      lens.push len
+      lenToRegex[len] = new RegExp lenToRegex[len], \g
+    lens.sort (a, b) -> b - a
+    console.log lang
+    LTM-regexes[lang] = [ lenToRegex[len] for len in lens ]
 
 trim = -> (it ? '').replace /[`~]/g ''
 def-of = (lang, title, cb) ->
@@ -47,7 +52,7 @@ require(\zappajs) ->
     payload = { layout: 'layout', text, isBot, png-suffix } <<< payload
     if err
       chunk = val - /[`~]/g
-      for re in LTM-regexes
+      for re in LTM-regexes[lang]
         chunk.=replace(re, -> escape "`#it~")
       parts = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
       segments = []
@@ -122,7 +127,7 @@ require(\zappajs) ->
       ''', ->
         span '再寫幾個字：'
         select id:'lang' name:'lang', ->
-          option value:'', \國
+          option value:'', \國語
           option selected:(@text is /^!/), value:\!, \臺語
           option selected:(@text is /^:/), value:\:, \客語
         select id:'font' name:'font', ->
