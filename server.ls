@@ -95,6 +95,7 @@ require(\zappajs) ->
         meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" unless @isBot
       t += " (#{ @english })" if @english
       t ||= @text
+      t = t.slice(1) if t is /^[!~:]/
       title "#t - 萌典"
       meta name:"og:title" content:"#t - 萌典"
       meta name:"twitter:title" content:"#t - 萌典"
@@ -120,12 +121,16 @@ require(\zappajs) ->
         position: absolute;
       ''', ->
         span '再寫幾個字：'
+        select id:'lang' name:'lang', ->
+          option value:'', \國
+          option selected:(@text is /^!/), value:\!, \臺語
+          option selected:(@text is /^:/), value:\:, \客語
         select id:'font' name:'font', ->
           option value:'', \楷書
           option selected:(png-suffix is '.png?font=TW-Sung'), value:\?font=sung, \宋體
           option selected:(png-suffix is '.png?font=EBAS'), value:\?font=ebas, \篆文
         input id:'in' name: 'in' autofocus:true size:10
-        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
+        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
