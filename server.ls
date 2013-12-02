@@ -17,15 +17,24 @@ def-of = (lang, title, cb) ->
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 
+font-of = ->
+  return 'TW-Sung' if it is /sung/i
+  return 'EBAS' if it is /ebas/i
+  return 'TW-Kai'
+
 require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
-    text2png(@params.text.replace(/^[!~:]/, '')).pipe @response
+    font = font-of @query.font
+    text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
+    font = font-of @query.font
+    png-suffix = '.png'
+    png-suffix += "?font=#font" unless font is \TW-Kai
     lang = \a
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
@@ -35,7 +44,7 @@ require(\zappajs) ->
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot } <<< payload
+    payload = { layout: 'layout', text, isBot, png-suffix } <<< payload
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes
@@ -65,7 +74,8 @@ require(\zappajs) ->
       for {f, l} in d => def += (f || l)
     def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
-    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }.png"
+    png-suffix = @png-suffix
+    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
@@ -93,7 +103,7 @@ require(\zappajs) ->
       base target:\_blank
     body -> center ->
       return unless @segments
-      img src:"#{ @text.replace(/^[!~:]/, '') }.png" width:320 height:320, style: '''
+      img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
         margin-top: -50px;
         margin-bottom: -50px;
       '''
@@ -130,7 +140,7 @@ require(\zappajs) ->
             boder: 1px solid #999;
             box-shadow: #d4d4d4 0 3px 3px;
             margin: 10px;
-          ''' class: 'btn btn-default' src: "#part.png" width:160 height:160 alt:part
+          ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part
         td -> a {style: 'color: #006', href}, def
 
 function text2dim (len)
@@ -140,7 +150,7 @@ function text2dim (len)
   h = Math.ceil(len / w) <? w
   return [w, h]
 
-function text2png (text)
+function text2png (text, font)
   text.=slice(0, 50)
   [w, h] = text2dim text.length
   padding = (w - h) / 2
@@ -156,7 +166,7 @@ function text2png (text)
     while idx < w and text.length
       ch = text.slice 0, 1
       text.=slice 1
-      ctx.font = '355px TW-Kai'
+      ctx.font = "355px #font"
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/
         ctx.font = '355px Arial Unicode MS'
         ch += text.0
