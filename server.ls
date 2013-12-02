@@ -75,13 +75,14 @@ require(\zappajs) ->
     def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
     doctype 5
     png-suffix = @png-suffix
+    suffix = png-suffix.slice(4)
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
-      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#png-suffix"
+      meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
       len = @text.length <? 50
