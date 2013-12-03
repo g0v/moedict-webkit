@@ -103,8 +103,8 @@ require(\zappajs) ->
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
       t = trim @t
-      if t and not @isBot and not (@isCLI and not @segments) and not suffix
-        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
+      # if t and not @isBot and not (@isCLI and not @segments) and not suffix
+      #   meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
       t += " (#{ @english })" if @english
       t ||= @text
       t = t.slice(1) if t is /^[!~:]/
@@ -115,16 +115,20 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'styles.css' rel:'stylesheet'
       base target:\_blank
-    if @isBot or (@isCLI and not @segments)
+    if not @segments
       h = ''
       h = @text.slice(0, 1) if @text is /^[!~:]/
-      body -> h1 @text.replace(/^[!~:]/ ''); for {d, T, b} in (@h || {d:[{f: @t}]})
-        p trim(b || T)
-        dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
-          S = if s then "<br>似:[#s]" else ''
-          A = if a then "<br>反:[#a]" else ''
-          dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-          dd "#{ q.join('<br>') }#S#A".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+      body ->
+        script "location.href = 'https://www.moedict.tw/##{ @text }'"
+        noscript ->
+          h1 @text.replace(/^[!~:]/ '')
+          for {d, t, b} in (@h || {d:[{f: @t}]})
+            p trim(b || t)
+            dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+              s = if s then "<br>似:[#s]" else ''
+              a = if a then "<br>反:[#a]" else ''
+              dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
       return
     body -> center ->
       return unless @segments
