@@ -50,10 +50,11 @@ require(\zappajs) ->
     isWord = not err
     err = true if @query.font
     isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
+    isCLI = @query.bot or @request.headers['user-agent'] isnt /\bMozilla\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name, isWord } <<< payload
+    payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -102,7 +103,7 @@ require(\zappajs) ->
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
       t = trim @t
-      if t and not @isBot and not suffix
+      if t and not @isBot and not (@isCLI and not @segments) and not suffix
         meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
       t += " (#{ @english })" if @english
       t ||= @text
@@ -114,16 +115,16 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'styles.css' rel:'stylesheet'
       base target:\_blank
-    if @isBot
+    if @isBot or (@isCLI and not @segments)
       h = ''
       h = @text.slice(0, 1) if @text is /^[!~:]/
       body -> h1 @text.replace(/^[!~:]/ ''); for {d, T, b} in (@h || {d:[{f: @t}]})
         p trim(b || T)
         dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
-          S = if s then "似:[#s]" else ''
-          A = if a then "反:[#a]" else ''
+          S = if s then "<br>似:[#s]" else ''
+          A = if a then "<br>反:[#a]" else ''
           dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-          dd "#{ q.join('<br>') }<br>#S<br>#A".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+          dd "#{ q.join('<br>') }#S#A".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
       return
     body -> center ->
       return unless @segments
