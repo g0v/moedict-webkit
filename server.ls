@@ -41,17 +41,19 @@ require(\zappajs) ->
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
     png-suffix = '.png'
-    png-suffix += "?font=#{ @query.font }" unless font is \TW-Kai
+    png-suffix += "?font=#{ @query.font }" if @query.font
     lang = \a
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
+    isWord = not err
+    err = true if @query.font
     isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name } <<< payload
+    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name, isWord } <<< payload
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -83,6 +85,8 @@ require(\zappajs) ->
     doctype 5
     png-suffix = @png-suffix
     suffix = png-suffix.slice(4)
+    suffix = '' if suffix is '?font=kai' and not @isWord
+    png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
@@ -98,8 +102,8 @@ require(\zappajs) ->
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
       t = trim @t
-      if t
-        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" unless @isBot
+      if t and not @isBot and not suffix
+        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
       t += " (#{ @english })" if @english
       t ||= @text
       t = t.slice(1) if t is /^[!~:]/
@@ -128,8 +132,7 @@ require(\zappajs) ->
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
-      uri += '?font=sung' if png-suffix is '.png?font=TW-Sung'
-      uri += '?font=ebas' if png-suffix is '.png?font=EBAS'
+      uri += suffix
       form class:'hidden-xs' style:'''
         top: 0;
         right: 0;
@@ -144,7 +147,7 @@ require(\zappajs) ->
           option selected:(@text is /^!/), value:\!, \臺語
           option selected:(@text is /^:/), value:\:, \客語
         select id:'font' name:'font', ->
-          option value:'', \楷書
+          option value:'?font=kai', \楷書
           option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
           option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
           for wt, font of @wt2font
