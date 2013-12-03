@@ -138,7 +138,7 @@ require(\zappajs) ->
       '''
       uri = encodeURIComponent encodeURIComponent @text
       uri += suffix
-      form class:'hidden-xs' style:'''
+      form id:'frm' class:'hidden-xs' style:'''
         top: 0;
         right: 0;
         background: rgba(200, 200, 200, 0.5);
@@ -146,19 +146,18 @@ require(\zappajs) ->
         padding: 5px 15px;
         position: absolute;
       ''', ->
-        span '再寫幾個字：'
-        select id:'lang' name:'lang', ->
+        select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
           option value:'', \國語
           option selected:(@text is /^!/), value:\!, \臺語
           option selected:(@text is /^:/), value:\:, \客語
-        select id:'font' name:'font', ->
+        select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
           option value:'?font=kai', \楷書
           option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
           option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
           for wt, font of @wt2font
             option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
-        input id:'in' name: 'in' autofocus:true size:10 value: @text.replace(/^[!~:]/, '')
-        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
+        input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: @text.replace(/^[!~:]/, '')
+        button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
