@@ -71,6 +71,8 @@ lsc autolink.ls t > t.txt
 perl link2pack.pl t < t.txt
 ```
 
+`style.css` 由 `sass/style.scss` 在 `make` 時產生。
+
 ## 本機運行
 
 ```
