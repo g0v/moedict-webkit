@@ -41,17 +41,20 @@ require(\zappajs) ->
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
     png-suffix = '.png'
-    png-suffix += "?font=#{ @query.font }" unless font is \TW-Kai
+    png-suffix += "?font=#{ @query.font }" if @query.font
     lang = \a
     if "#val" is /^!/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
-    isBot = @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
+    isWord = not err
+    err = true if @query.font
+    isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
+    isCLI = @query.bot or @request.headers['user-agent'] isnt /\bMozilla\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, png-suffix, wt2font, font2name } <<< payload
+    payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -83,6 +86,8 @@ require(\zappajs) ->
     doctype 5
     png-suffix = @png-suffix
     suffix = png-suffix.slice(4)
+    suffix = '' if suffix is '?font=kai' and not @isWord
+    png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
     html {prefix:"og: http://ogp.me/ns#"} -> head ->
       meta charset:\utf-8
@@ -98,8 +103,8 @@ require(\zappajs) ->
       meta property:"og:image:width" content:"#{ w * 375 }"
       meta property:"og:image:height" content:"#{ w * 375 }"
       t = trim @t
-      if t
-        meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }" unless @isBot
+      # if t and not @isBot and not (@isCLI and not @segments) and not suffix
+      #   meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
       t += " (#{ @english })" if @english
       t ||= @text
       t = t.slice(1) if t is /^[!~:]/
@@ -110,6 +115,21 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'styles.css' rel:'stylesheet'
       base target:\_blank
+    if not @segments
+      h = ''
+      h = @text.slice(0, 1) if @text is /^[!~:]/
+      body ->
+        script "location.href = 'https://www.moedict.tw/##{ @text }'"
+        noscript ->
+          h1 @text.replace(/^[!~:]/ '')
+          for {d, t, b} in (@h || {d:[{f: @t}]})
+            p trim(b || t)
+            dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+              s = if s then "<br>似:[#s]" else ''
+              a = if a then "<br>反:[#a]" else ''
+              dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+      return
     body -> center ->
       return unless @segments
       img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
@@ -117,9 +137,8 @@ require(\zappajs) ->
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
-      uri += '?font=sung' if png-suffix is '.png?font=TW-Sung'
-      uri += '?font=ebas' if png-suffix is '.png?font=EBAS'
-      form class:'hidden-xs' style:'''
+      uri += suffix
+      form id:'frm' class:'hidden-xs' style:'''
         top: 0;
         right: 0;
         background: rgba(200, 200, 200, 0.5);
@@ -127,19 +146,18 @@ require(\zappajs) ->
         padding: 5px 15px;
         position: absolute;
       ''', ->
-        span '再寫幾個字：'
-        select id:'lang' name:'lang', ->
+        select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
           option value:'', \國語
           option selected:(@text is /^!/), value:\!, \臺語
           option selected:(@text is /^:/), value:\:, \客語
-        select id:'font' name:'font', ->
-          option value:'', \楷書
+        select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
+          option value:'?font=kai', \楷書
           option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
           option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
           for wt, font of @wt2font
             option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
-        input id:'in' name: 'in' autofocus:true size:10 value: @text.replace(/^[!~:]/, '')
-        input type:'submit' value:'送出' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false"
+        input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: @text.replace(/^[!~:]/, '')
+        button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
       div class:'share' style:'margin: 15px', ->
         a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
