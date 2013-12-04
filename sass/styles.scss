@@ -178,6 +178,14 @@ body.lang-c {
     #query-box { background-color: #EFEFFB; }
 }
 
+body.lang-n {
+    .nav-bg { background-color: #700; }
+    .iconic-circle { background: #744; }
+    .iconic-color { color: #744; }
+    #query-box { background-color: #FBEFEF; }
+}
+
+
 .nav-bg {
     height: 50px;
 }
@@ -918,7 +926,7 @@ body.lang-c {
     }
 }
 
-body.lang-t .example, body.lang-h .example {
+body.lang-t .example, body.lang-h .example, body.lang-n .example {
     font-size: 100%;
     display: inline-block;
     clear: both;
@@ -929,6 +937,26 @@ body.lang-t .example, body.lang-h .example {
     margin-right: 10px;
     margin-bottom: 2px;
     vertical-align: top;
+}
+
+body.lang-n .example {
+    .mandarin:before {
+        content: "" !important;
+    }
+    .mandarin:after {
+        content: "" !important;
+    }
+}
+
+body.lang-p {
+    .example {
+        clear: both;
+        display: block;
+    }
+    .amismandarin {
+        font-size: 90%;
+        text-align: left;
+    }
 }
 
 .example {
