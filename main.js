@@ -865,9 +865,15 @@
       part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, post){
         return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
       });
-      part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href=\\\"" + h + word + "\\\">" + word + "</a>";
-      });
+      if (LANG === 'p') {
+        part = part.replace(/`([^~]+)~/g, function(arg$, word){
+          return "<a href=\\\"" + h + word.toLowerCase() + "\\\">" + word + "</a>";
+        });
+      } else {
+        part = part.replace(/`([^~]+)~/g, function(arg$, word){
+          return "<a href='" + h + word + "'>" + word + "</a>";
+        });
+      }
       part = part.replace(/([)）])/g, "$1\u200B");
       if (/^\[\s*\[/.exec(part)) {
         html = renderStrokes(part, id);

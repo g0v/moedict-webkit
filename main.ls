@@ -466,7 +466,10 @@ window.do-load = ->
     part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
     part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
-    part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#word\\\">#word</a>"
+    if LANG is \p
+      part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#{word.toLowerCase!}\\\">#word</a>"
+    else
+      part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
     part.=replace /([)）])/g "$1\u200B"
     if part is /^\[\s*\[/
       html = render-strokes part, id
