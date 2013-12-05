@@ -387,6 +387,7 @@ window.do-load = ->
     hash = "#{ HASH-OF[LANG] }#it"
     if "#{location.hash}" isnt hash => try history.pushState null, null, hash
       catch => location.replace hash
+    try document.title = "#it - 萌典"
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
     if isMobile
