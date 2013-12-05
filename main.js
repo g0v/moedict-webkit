@@ -696,6 +696,9 @@
           location.replace(hash);
         }
       }
+      try {
+        document.title = it + " - 萌典";
+      } catch (e$) {}
       $('.share .btn').each(function(){
         return $(this).attr({
           href: $(this).data('href').replace(/__TEXT__/, prevId) + encodeURIComponent(encodeURIComponent(hash.substr(1)))
