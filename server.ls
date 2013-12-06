@@ -29,6 +29,7 @@ font-of = ->
   return 'EBAS' if it is /ebas/i
   return wt2font[it] || 'TW-Kai'
 
+<- fs.mkdir \png
 require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
@@ -55,6 +56,16 @@ require(\zappajs) ->
     payload = null if payload instanceof Array
     payload ?= { t: val }
     payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
+
+    chars = text.replace(/^[!~:]/, '')
+    png-file = "png/#{encodeURIComponent chars}.#font.png"
+    if fs.existsSync png-file
+      png = fs.createReadStream \/dev/null
+      png-stream = fs.createWriteStream \/dev/null
+    else
+      png = text2png(chars, font)
+      png-stream = fs.createWriteStream "png/#{encodeURIComponent chars}.#font.png"
+    <~ png.pipe(png-stream).on \close
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -190,6 +201,9 @@ function text2dim (len)
   return [w, h]
 
 function text2png (text, font)
+  png-file = "png/#{encodeURIComponent text}.#font.png"
+  return fs.createReadStream png-file if fs.existsSync png-file
+
   text.=slice(0, 50)
   [w, h] = text2dim text.length
   padding = (w - h) / 2
