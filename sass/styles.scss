@@ -554,6 +554,10 @@ body#moedict {
     display: inline-block;
 }
 
+.bpmf {
+    @include kai-fonts;
+}
+
 .prefer-pinyin-false .bopomofo .bpmf {
     text-align: left;
     vertical-align: top;
