@@ -110,7 +110,7 @@ require(\zappajs) ->
       meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
-      meta name:'viewport' content:'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi'
+      meta name:'viewport' content:'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1'
       len = @text.length <? 50
       w = len
       w = Math.ceil(len / Math.sqrt(len * 0.5)) if w > 4
