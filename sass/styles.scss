@@ -409,7 +409,7 @@ input.query {
 }
 
 .about .content {
-    margin: 15px; margin-top: 60px; margin-bottom: 80px; background: white; padding: 20px;
+    margin: 15px; margin-bottom: 80px; background: white; padding: 20px;
     border-radius: 10px;
     font-size: 110%;
     line-height: 150%;
@@ -1035,6 +1035,7 @@ span {
             float: left;
         }
         >ol {
+            width: 100%;
             padding-top: 0px;
         }
     }
@@ -1330,5 +1331,21 @@ canvas {
         }
         padding-right: 0;
         margin-right: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    table.moetext tr {
+        display: table;
+        width: 100%;
+        td {
+            display: table-row;
+        }
+    }
+}
+@media only screen and (max-width: 767px) {
+    img.moedict {
+        margin-top: 0 !important;
+        margin-left: -12px !important;
     }
 }
