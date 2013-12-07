@@ -178,8 +178,7 @@ window.do-load = ->
   window.adjust-font-size 0
 
   cache-loading = no
-  window.press-about = press-about = ->
-    if isDroidGap then show-info! else location.href = \about.html
+  window.press-about = press-about = -> location.href = \about.html
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
     $ \.erase-box .hide!
