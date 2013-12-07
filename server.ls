@@ -58,13 +58,14 @@ require(\zappajs) ->
     payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
 
     chars = text.replace(/^[!~:]/, '')
-    png-file = "png/#{encodeURIComponent chars}.#font.png"
+    chars.=slice(0, 50)
+    png-file = "png/#chars.#font.png"
     if fs.existsSync png-file
       png = fs.createReadStream \/dev/null
       png-stream = fs.createWriteStream \/dev/null
     else
       png = text2png(chars, font)
-      png-stream = fs.createWriteStream "png/#{encodeURIComponent chars}.#font.png"
+      png-stream = fs.createWriteStream png-file
     <~ png.pipe(png-stream).on \close
     if err
       chunk = val - /[`~]/g
@@ -201,10 +202,10 @@ function text2dim (len)
   return [w, h]
 
 function text2png (text, font)
-  png-file = "png/#{encodeURIComponent text}.#font.png"
+  text.=slice(0, 50)
+  png-file = "png/#text.#font.png"
   return fs.createReadStream png-file if fs.existsSync png-file
 
-  text.=slice(0, 50)
   [w, h] = text2dim text.length
   padding = (w - h) / 2
 
