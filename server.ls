@@ -37,6 +37,7 @@ require(\zappajs) ->
     text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
+  @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
@@ -109,6 +110,7 @@ require(\zappajs) ->
       meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
+      meta name:'viewport' content:'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi'
       len = @text.length <? 50
       w = len
       w = Math.ceil(len / Math.sqrt(len * 0.5)) if w > 4
@@ -144,13 +146,13 @@ require(\zappajs) ->
       return
     body -> center ->
       return unless @segments
-      img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
+      img class:'moedict' src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
         margin-top: -50px;
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
       uri += suffix
-      form id:'frm' class:'hidden-xs' style:'''
+      form id:'frm' style:'''
         top: 0;
         right: 0;
         background: rgba(200, 200, 200, 0.5);
@@ -177,7 +179,7 @@ require(\zappajs) ->
           i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
         a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
-      table style:'''
+      table class:'moetext' style:'''
         max-width: 90%;
         background: #eee;
         border: 24px #f9f9f9 solid !important;

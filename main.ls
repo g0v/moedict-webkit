@@ -68,6 +68,10 @@ try
   document.addEventListener \deviceready (->
     try navigator.splashscreen.hide!
     isDeviceReady := yes
+    $ \body .on \click 'a[target]' ->
+      href = $(@).attr \href
+      window.open href, \_system
+      return false
     window.do-load!
   ), false
   document.addEventListener \pause (-> stop-audio!), false
@@ -134,7 +138,7 @@ window.play-audio = (el, url) ->
   return play!
 
 window.show-info = ->
-  ref = window.open \Android.html \_blank \location=no
+  ref = window.open \about.html \_blank \location=no
   on-stop = ({url}) -> ref.close! if url is /quit\.html/
   on-exit = ->
     ref.removeEventListener \loadstop on-stop
@@ -585,9 +589,9 @@ function init-autocomplete
       if item?value is /^▶/
         val = $(\#query).val!replace(/^→列出含有「/ '').replace(/」的詞$/ '')
         if LANG is \c
-          window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#val&body=出處及定義："
+          window.open "mailto:xldictionary@gmail.com?subject=建議收錄：#val&body=出處及定義：", \_system
         else
-          window.open "https://www.moedict.tw/#{ HASH-OF[LANG].slice(1) }#val"
+          window.open "https://www.moedict.tw/#{ HASH-OF[LANG].slice(1) }#val", \_system
         return false
       return false if item?value is /^\(/
       fill-query item.value if item?value
@@ -636,8 +640,8 @@ function init-autocomplete
       results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
-      return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length and not isApp
-      return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length and not isApp
+      return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length
+      return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
       MaxResults = if width-is-xs! then 400 else 1024

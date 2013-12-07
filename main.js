@@ -136,6 +136,12 @@
         navigator.splashscreen.hide();
       } catch (e$) {}
       isDeviceReady = true;
+      $('body').on('click', 'a[target]', function(){
+        var href;
+        href = $(this).attr('href');
+        window.open(href, '_system');
+        return false;
+      });
       return window.doLoad();
     }, false);
     document.addEventListener('pause', function(){
@@ -249,7 +255,7 @@
   };
   window.showInfo = function(){
     var ref, onStop, onExit;
-    ref = window.open('Android.html', '_blank', 'location=no');
+    ref = window.open('about.html', '_blank', 'location=no');
     onStop = function(arg$){
       var url;
       url = arg$.url;
@@ -1062,9 +1068,9 @@
         if (/^▶/.exec(item != null ? item.value : void 8)) {
           val = $('#query').val().replace(/^→列出含有「/, '').replace(/」的詞$/, '');
           if (LANG === 'c') {
-            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + val + "&body=出處及定義：");
+            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + val + "&body=出處及定義：", '_system');
           } else {
-            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + val);
+            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + val, '_system');
           }
           return false;
         }
@@ -1162,10 +1168,10 @@
             }
           }
         }
-        if (LANG === 'c' && !(results != null && results.length) && !isApp) {
+        if (LANG === 'c' && !(results != null && results.length)) {
           return cb(["▶找不到。建議收錄？"]);
         }
-        if (LANG !== 'c' && !(results != null && results.length) && !isApp) {
+        if (LANG !== 'c' && !(results != null && results.length)) {
           return cb(["▶找不到。分享這些字？"]);
         }
         if (!(results != null && results.length)) {

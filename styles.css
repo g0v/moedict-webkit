@@ -9532,7 +9532,6 @@ input.query {
 
 .about .content {
   margin: 15px;
-  margin-top: 60px;
   margin-bottom: 80px;
   background: white;
   padding: 20px;
@@ -10121,6 +10120,7 @@ span a {
     float: left;
   }
   .entry-item > ol {
+    width: 100%;
     padding-top: 0px;
   }
 }
@@ -10470,5 +10470,20 @@ canvas {
     display: block;
     padding-right: 5px;
     padding-left: 5px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  table.moetext tr {
+    display: table;
+    width: 100%;
+  }
+  table.moetext tr td {
+    display: table-row;
+  }
+}
+@media only screen and (max-width: 767px) {
+  img.moedict {
+    margin-top: 0 !important;
+    margin-left: -12px !important;
   }
 }
