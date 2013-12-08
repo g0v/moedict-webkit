@@ -341,7 +341,7 @@
 
         // determine where to start playing from
         var pos = (node._pos > 0) ? node._pos : self._sprite[sprite][0] / 1000,
-          duration = self._sprite[sprite][1] / 1000 - node._pos;
+          duration = self._sprite[sprite][1] / 1000 - node._pos + 1;
 
         // determine if this sound should be looped
         var loop = !!(self._loop || self._sprite[sprite][2]);
