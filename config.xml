@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.audreyt.dict.moe" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>萌典</name>
+<widget id="org.audreyt.moe.dict" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MoeDict</name>
     <description>教育部國語/臺語/客語有聲辭典。</description>
     <author email="audreyt@audreyt.org" href="https://www.moedict.tw/">Audrey Tang</author>
     <preference name="WebViewBounce" value="false" />
