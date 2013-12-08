@@ -128,7 +128,7 @@ window.play-audio = (el, url) ->
     $el.removeClass('icon-play').addClass('icon-spinner')
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
-    urls.unshift url.replace(/ogg$/ 'mp3') if url is /ogg$/ and can-play-mp3! and not isGecko
+    urls.unshift url.replace(/(ogg|opus)$/ 'mp3') if url is /(ogg|opus)$/ and can-play-mp3! and not isGecko
     audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
@@ -671,12 +671,17 @@ function render-radical (char)
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
   a = document.createElement \audio
-  CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg') - /no/)
+  CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /^no$/)
 
 function can-play-ogg
   return CACHED.can-play-ogg if CACHED.can-play-ogg?
   a = document.createElement \audio
-  CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg') - /no/)
+  CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg; codecs="vorbis"') - /^no$/)
+
+function can-play-opus
+  return CACHED.can-play-opus if CACHED.can-play-opus?
+  a = document.createElement \audio
+  CACHED.can-play-opus = !!(a.canPlayType?('audio/ogg; codecs="opus"') - /^no$/)
 
 function render-strokes (terms, id)
   h = HASH-OF[LANG]
@@ -752,8 +757,9 @@ function render (json)
             basename = (100000 + Number audio_id) - /^1/
             mp3 = http "t.moedict.tw/#basename.ogg"
           else if LANG is \a
-            mp3 = http "a.moedict.tw/#audio_id.ogg"
-          mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
+            mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
+          mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
+          mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
         if mp3 then "<i class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'></i>" else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
