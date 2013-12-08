@@ -44,7 +44,8 @@ try {
       'svg': 'image/svg+xml',
       'ttf': 'application/x-font-ttf',
       'woff': 'application/font-woff',
-      'apk': 'application/vnd.android.package-archive'
+      'apk': 'application/vnd.android.package-archive',
+      'appcache': 'text/cache-manifest'
     };
     return {
       lookup: function (ext) {
