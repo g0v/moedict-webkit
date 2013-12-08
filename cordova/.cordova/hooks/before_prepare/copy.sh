@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -av --delete --copy-links base/* www
+make before_prepare
