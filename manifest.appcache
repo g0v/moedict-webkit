@@ -26,36 +26,8 @@ t/=.json
 t/index.json
 t/xref.json
 
-# image files
-images/background.jpg
-images/g0v-icon-invert.png
-images/icon.png
-images/leather.jpg
-images/leather_x2.jpg
-images/noise.png
-images/right-graphite@2x.png
-images/subtle_stripes.png
-images/subtle_stripes_x2.png
-
 # css files
-css/cupertino/images/animated-overlay.gif
-css/cupertino/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
-css/cupertino/images/ui-bg_flat_15_cd0a0a_40x100.png
-css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png
-css/cupertino/images/ui-bg_glass_50_3baae3_1x400.png
-css/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png
-css/cupertino/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png
-css/cupertino/images/ui-bg_highlight-hard_70_000000_1x100.png
-css/cupertino/images/ui-bg_highlight-soft_100_deedf7_1x100.png
-css/cupertino/images/ui-bg_highlight-soft_25_ffef8f_1x100.png
-css/cupertino/images/ui-icons_2694e8_256x240.png
-css/cupertino/images/ui-icons_2e83ff_256x240.png
-css/cupertino/images/ui-icons_3d80b3_256x240.png
-css/cupertino/images/ui-icons_72a7cf_256x240.png
-css/cupertino/images/ui-icons_ffffff_256x240.png
 css/cupertino/jquery-ui-1.10.2.custom.css
-css/Download_on_the_App_Store_Badge_HK_TW_135x40.png
-css/google_play.jpg
 
 # font files (use the .ttf form for portability)
 fonts/EBAS-Subset.ttf
@@ -65,7 +37,6 @@ fonts/MOEDICT.ttf
 
 # html files
 about.html
-icon.png
 favicon.ico
 background.jpg
 
@@ -81,6 +52,36 @@ js/gl-matrix-min.js
 js/sax.js
 js/jquery.strokeWords.js
 js/raphael.js
+
+# image files
+images/leather.jpg
+images/leather_x2.jpg
+images/noise.png
+images/right-graphite@2x.png
+images/subtle_stripes.png
+images/subtle_stripes_x2.png
+css/cupertino/images/animated-overlay.gif
+css/cupertino/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
+css/cupertino/images/ui-bg_flat_15_cd0a0a_40x100.png
+css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png
+css/cupertino/images/ui-bg_glass_50_3baae3_1x400.png
+css/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png
+css/cupertino/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png
+css/cupertino/images/ui-bg_highlight-hard_70_000000_1x100.png
+css/cupertino/images/ui-bg_highlight-soft_100_deedf7_1x100.png
+css/cupertino/images/ui-bg_highlight-soft_25_ffef8f_1x100.png
+css/cupertino/images/ui-icons_2694e8_256x240.png
+css/cupertino/images/ui-icons_2e83ff_256x240.png
+css/cupertino/images/ui-icons_3d80b3_256x240.png
+css/cupertino/images/ui-icons_72a7cf_256x240.png
+css/cupertino/images/ui-icons_ffffff_256x240.png
+
+# non-essential images
+icon.png
+css/Download_on_the_App_Store_Badge_HK_TW_135x40.png
+css/google_play.jpg
+images/g0v-icon-invert.png
+images/icon.png
 
 FALLBACK:
 
