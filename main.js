@@ -132,9 +132,6 @@
       throw null;
     }
     document.addEventListener('deviceready', function(){
-      try {
-        navigator.splashscreen.hide();
-      } catch (e$) {}
       isDeviceReady = true;
       $('body').on('click', 'a[target]', function(){
         var href;
@@ -758,6 +755,9 @@
         setPinyinBindings();
         cacheLoading = false;
         if (isCordova && !DEBUGGING) {
+          try {
+            navigator.splashscreen.hide();
+          } catch (e$) {}
           $('#result .playAudio').on('touchstart', function(){
             if ($(this).hasClass('icon-play')) {
               return $(this).click();
