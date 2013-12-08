@@ -38,6 +38,17 @@ require(\zappajs) ->
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
+  @get '/:text/:idx': ->
+    @response.type \text/html
+    text = val = (@params.text - /.html$/)
+    lang = \a
+    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^:/ => lang = \h; val.=substr 1
+    if "#val" is /^~/ => lang = \c; val.=substr 1
+    err, json <~ fs.readFile("#lang/#val.json")
+    payload = if err then {} else try JSON.parse(json)
+    payload = { layout: 'layout', text, +isBot, +isCLI, png-suffix: '.png', wt2font, font2name, -isWord, idx:@params.idx } <<< payload
+    @render index: payload
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
@@ -52,11 +63,10 @@ require(\zappajs) ->
     isWord = not err
     err = true if @query.font
     isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
-    isCLI = @query.bot or @request.headers['user-agent'] isnt /\bMozilla\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
+    payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
 
     chars = text.replace(/^[!~:]/, '')
     chars.=slice(0, 50)
@@ -127,22 +137,24 @@ require(\zappajs) ->
       meta name:"twitter:title" content:"#t - 萌典"
       meta property:"og:description" content:def
       meta name:"description" content:def
-      link href:'styles.css' rel:'stylesheet'
+      link href:'/styles.css' rel:'stylesheet'
       base target:\_blank
     if not @segments
       h = ''
       h = @text.slice(0, 1) if @text is /^[!~:]/
       body ->
-        script "location.href = 'https://www.moedict.tw/##{ @text }'"
-        noscript ->
-          h1 @text.replace(/^[!~:]/ '')
+        script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
+        idx = 0
+        (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
+          word = @text.replace(/^[!~:]/ '')
+          h1 "<a href='/#h#word'>#word"
           for {d, t, b} in (@h || {d:[{f: @t}]})
             p trim(b || t)
-            dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+            ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
               s = if s then "<br>似:[#s]" else ''
               a = if a then "<br>反:[#a]" else ''
-              dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+              dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
       return
     body -> center ->
       return unless @segments
