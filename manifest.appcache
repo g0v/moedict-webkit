@@ -84,6 +84,9 @@ css/google_play.jpg
 images/g0v-icon-invert.png
 images/icon.png
 
+# cordova specific
+cordova.js
+
 FALLBACK:
 
 NETWORK:
