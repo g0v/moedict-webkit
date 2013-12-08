@@ -231,8 +231,8 @@
       $el.removeClass('icon-play').addClass('icon-spinner');
       $el.parent('.audioBlock').addClass('playing');
       urls = [url];
-      if (/ogg$/.exec(url) && canPlayMp3() && !isGecko) {
-        urls.unshift(url.replace(/ogg$/, 'mp3'));
+      if (/(ogg|opus)$/.exec(url) && canPlayMp3() && !isGecko) {
+        urls.unshift(url.replace(/(ogg|opus)$/, 'mp3'));
       }
       audio = new window.Howl({
         buffer: true,
@@ -1221,7 +1221,7 @@
       return CACHED.canPlayMp3;
     }
     a = document.createElement('audio');
-    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg') : void 8, /no/, ''));
+    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg;') : void 8, /^no$/, ''));
   }
   function canPlayOgg(){
     var a;
@@ -1229,7 +1229,15 @@
       return CACHED.canPlayOgg;
     }
     a = document.createElement('audio');
-    return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
+    return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="vorbis"') : void 8, /^no$/, ''));
+  }
+  function canPlayOpus(){
+    var a;
+    if (CACHED.canPlayOpus != null) {
+      return CACHED.canPlayOpus;
+    }
+    a = document.createElement('audio');
+    return CACHED.canPlayOpus = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="opus"') : void 8, /^no$/, ''));
   }
   function renderStrokes(terms, id){
     var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
@@ -1328,7 +1336,7 @@
       }
       return "    <!-- STAR -->\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];
