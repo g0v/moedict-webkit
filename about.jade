@@ -13,7 +13,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant')
     script(src='cordova.js', data-cfasync='true')
     script(src='js/jquery-1.9.1.min.js')
     script.
-        document.addEventListener('deviceready', function(){
+        if (! /^https?:/.test(document.URL)) { $(function(){
             $('body').addClass('app');
             $('body').removeClass('web');
             $('body').on("click", "a.home", function(){
@@ -24,7 +24,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant')
                 window.open(href, '_system');
                 return false;
             });
-        });
+        }); };
     // <![endif]
   body#moedict.about.web
     .navbar.navbar-inverse.navbar-fixed-top
@@ -95,6 +95,10 @@ html(lang='zh-Hant', xml:lang='zh-Hant')
       p 作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。
     a(href='https://github.com/audreyt/moedict-webkit')
       img(style='z-order: 9999; position: absolute; top: 50px; right: 0; border: 0;', src='images/right-graphite@2x.png', width='120', height='120')
+    div.app-only
+      a.visible-xs.pull-left.ebas.btn.btn-default.home(href='./', title='回到萌典', style='float: left; margin-top: -60px; margin-left: 5px')
+        span.iconic-circle: i.icon-arrow-left
+        span  萌典
     div.web-only(style='position: fixed; bottom: 10px; left: 10px; z-index: 2')
       a(target='_blank', href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe')
         img(alt='Google Play 下載', title='Google Play 下載', src='css/google_play.jpg', width='135', height='46')
