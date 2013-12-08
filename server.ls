@@ -36,6 +36,7 @@ require(\zappajs) ->
     font = font-of @query.font
     text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
   @get '/:text/:idx': ->
@@ -112,7 +113,8 @@ require(\zappajs) ->
     suffix = '' if suffix is '?font=kai' and not @isWord
     png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
-    html {prefix:"og: http://ogp.me/ns#"} -> head ->
+
+    html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant', manifest:"manifest.appcache"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
