@@ -25,6 +25,7 @@ h/xref.json
 t/=.json
 t/index.json
 t/xref.json
+t/variants.json
 
 # css files
 css/cupertino/jquery-ui-1.10.2.custom.css
