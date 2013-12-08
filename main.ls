@@ -66,7 +66,6 @@ GET = (url, data, onSuccess, dataType) ->
 try
   throw unless isCordova and not DEBUGGING
   document.addEventListener \deviceready (->
-    try navigator.splashscreen.hide!
     isDeviceReady := yes
     $ \body .on \click 'a[target]' ->
       href = $(@).attr \href
@@ -425,6 +424,7 @@ window.do-load = ->
     cache-loading := no
 
     if isCordova and not DEBUGGING
+      try navigator.splashscreen.hide!
       $('#result .playAudio').on \touchstart -> $(@).click! if $(@).hasClass('icon-play')
       return
 
