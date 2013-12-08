@@ -13,7 +13,7 @@
     <script src="cordova.js" data-cfasync="true"></script>
     <script src="js/jquery-1.9.1.min.js"></script>
     <script>
-      document.addEventListener('deviceready', function(){
+      if (! /^https?:/.test(document.URL)) { $(function(){
           $('body').addClass('app');
           $('body').removeClass('web');
           $('body').on("click", "a.home", function(){
@@ -24,7 +24,7 @@
               window.open(href, '_system');
               return false;
           });
-      });
+      }); };
     </script>
     <!-- <![endif]-->
   </head>
@@ -57,6 +57,7 @@
       <h2 class="cc0">CC0 1.0 公眾領域貢獻宣告</h2>
       <p>作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。</p>
     </div><a href="https://github.com/audreyt/moedict-webkit"><img style="z-order: 9999; position: absolute; top: 50px; right: 0; border: 0;" src="images/right-graphite@2x.png" width="120" height="120"></a>
+    <div class="app-only"><a href="./" title="回到萌典" style="float: left; margin-top: -60px; margin-left: 5px" class="visible-xs pull-left ebas btn btn-default home"><span class="iconic-circle"><i class="icon-arrow-left"></i></span><span> 萌典</span></a></div>
     <div style="position: fixed; bottom: 10px; left: 10px; z-index: 2" class="web-only"><a target="_blank" href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe"><img alt="Google Play 下載" title="Google Play 下載" src="css/google_play.jpg" width="135" height="46"></a><a target="_blank" href="https://itunes.apple.com/tw/app/meng-dian/id599429224" style="margin-left: 10px"><img alt="App Store 下載" title="App Store 下載" src="css/Download_on_the_App_Store_Badge_HK_TW_135x40.png" width="155" height="46"></a></div>
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1" class="web-only"><a id="opensearch" onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false" class="btn btn-default btn-info"><i class="icon icon-plus-sign"></i> 加入搜尋列</a></div>
   </body>
