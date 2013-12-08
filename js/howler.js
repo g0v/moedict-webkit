@@ -1,5 +1,5 @@
 /*!
- *  howler.js v1.1.11
+ *  howler.js v1.1.14
  *  howlerjs.com
  *
  *  (c) 2013, James Simpson of GoldFire Studios
@@ -22,6 +22,11 @@
     ctx = new webkitAudioContext();
   } else if (typeof Audio !== 'undefined') {
     usingWebAudio = false;
+    try {
+      new Audio();
+    } catch(e) {
+      noAudio = true;
+    }
   } else {
     usingWebAudio = false;
     noAudio = true;
@@ -129,12 +134,12 @@
   if (!noAudio) {
     audioTest = new Audio();
     var codecs = {
-      mp3: !!audioTest.canPlayType('audio/mpeg;').replace(/^no$/,''),
-      opus: !!audioTest.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/,''),
-      ogg: !!audioTest.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,''),
-      wav: !!audioTest.canPlayType('audio/wav; codecs="1"').replace(/^no$/,''),
-      m4a: !!(audioTest.canPlayType('audio/x-m4a;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/,''),
-      webm: !!audioTest.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,'')
+      mp3: !!audioTest.canPlayType('audio/mpeg;').replace(/^no$/, ''),
+      opus: !!audioTest.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/, ''),
+      ogg: !!audioTest.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ''),
+      wav: !!audioTest.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ''),
+      m4a: !!(audioTest.canPlayType('audio/x-m4a;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/, ''),
+      weba: !!audioTest.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, '')
     };
   }
 
@@ -154,6 +159,7 @@
     self._pos3d = o.pos3d || [0, 0, -0.5];
     self._volume = o.volume || 1;
     self._urls = o.urls || [];
+    self._rate = o.rate || 1;
 
     // setup event functions
     self._onload = [o.onload || function() {}];
@@ -196,29 +202,28 @@
         return;
       }
 
-      var canPlay = {
-        mp3: codecs.mp3,
-        opus: codecs.opus,
-        ogg: codecs.ogg,
-        wav: codecs.wav,
-        m4a: codecs.m4a,
-        weba: codecs.webm
-      };
-
       // loop through source URLs and pick the first one that is compatible
-      for (var i=0; i<self._urls.length; i++) {
-        var ext;
+      for (var i=0; i<self._urls.length; i++) {        
+        var ext, urlItem;
 
         if (self._format) {
           // use specified audio format if available
           ext = self._format;
         } else {
           // figure out the filetype (whether an extension or base64 data)
-          ext = self._urls[i].toLowerCase().match(/.+\.([^?]+)(\?|$)/);
-          ext = (ext && ext.length >= 2) ? ext[1] : self._urls[i].toLowerCase().match(/data\:audio\/([^?]+);/)[1];
+          urlItem = self._urls[i].toLowerCase().split('?')[0];
+          ext = urlItem.match(/.+\.([^?]+)(\?|$)/);
+          ext = (ext && ext.length >= 2) ? ext : urlItem.match(/data\:audio\/([^?]+);/);
+
+          if (ext) {
+            ext = ext[1];
+          } else {
+            self.on('loaderror');
+            return;
+          }
         }
 
-        if (canPlay[ext]) {
+        if (codecs[ext]) {
           url = self._urls[i];
           break;
         }
@@ -242,7 +247,7 @@
         newNode._pos = 0;
         newNode.preload = 'auto';
         newNode.volume = (Howler._muted) ? 0 : self._volume * Howler.volume();
-
+       
         // add this sound to the cache
         cache[url] = self;
 
@@ -336,7 +341,7 @@
 
         // determine where to start playing from
         var pos = (node._pos > 0) ? node._pos : self._sprite[sprite][0] / 1000,
-          duration = self._sprite[sprite][1] / 1000 - node._pos + 1;
+          duration = self._sprite[sprite][1] / 1000 - node._pos;
 
         // determine if this sound should be looped
         var loop = !!(self._loop || self._sprite[sprite][2]);
@@ -1160,22 +1165,25 @@
         node.bufferSource.loopStart = loop[1];
         node.bufferSource.loopEnd = loop[1] + loop[2];
       }
+      node.bufferSource.playbackRate.value = obj._rate;
     };
 
   }
 
   /**
-   * Add support for AMD (Async Module Definition) libraries such as require.js.
+   * Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
    */
   if (typeof define === 'function' && define.amd) {
-    define('Howler', function() {
+    define(function() {
       return {
         Howler: Howler,
         Howl: Howl
       };
     });
-  } else {
-    window.Howler = Howler;
-    window.Howl = Howl;
   }
+  
+  // define globally in case AMD is not available or available but not used
+  window.Howler = Howler;
+  window.Howl = Howl;
+  
 })();
