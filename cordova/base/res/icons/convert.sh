@@ -1,10 +1,11 @@
 #!/bin/sh
 
 mkdir android || true
-convert my-hires-icon.png -resize 36x36 android/icon-36-ldpi.png
-convert my-hires-icon.png -resize 48x48 android/icon-48-mdpi.png
-convert my-hires-icon.png -resize 72x72 android/icon-72-hdpi.png
-convert my-hires-icon.png -resize 96x96 android/icon-96-xhdpi.png
+mkdir android/drawable-{l,m,h,xh}dpi || true
+convert my-hires-icon.png -resize 36x36 android/drawable-ldpi/icon.png
+convert my-hires-icon.png -resize 48x48 android/drawable-mdpi/icon.png
+convert my-hires-icon.png -resize 72x72 android/drawable-hdpi/icon.png
+convert my-hires-icon.png -resize 96x96 android/drawable-xhdpi/icon.png
  
 mkdir ios || true
 convert my-hires-icon.png -resize 29 ios/icon-small.png
