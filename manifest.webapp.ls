@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc -cj
-version: \0.1
+version: \0.5.0
 name: \MoeDict
 description: 'MoE Chinese dictionaries including Mandarin, Taiwanese Holok and Hakka.'
 launch_path: \/index.html

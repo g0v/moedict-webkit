@@ -40,3 +40,11 @@ release :: platforms/android/bin/MoeDict-debug.apk copy after_prepare
 install ::
 	-adb uninstall org.audreyt.dict.moe
 	adb install -r platforms/android/bin/MoeDict-release.apk
+
+fxos :: copy
+	-mkdir platforms/firefoxos
+	rsync -av --delete --copy-links base/* platforms/firefoxos
+	rsync -av --delete --copy-links ../fxos platforms/firefoxos
+	cp cordova-firefoxos.js platforms/firefoxos/cordova.js
+	-rm package.zip
+	cd platforms/firefoxos && zip -r ../../package.zip * && cd ../..
