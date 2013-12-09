@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" xml:lang="zh-Hant">
+<html lang="zh-Hant" xml:lang="zh-Hant" manifest="manifest.appcache">
   <head>
     <meta charset="utf-8">
     <title>萌典</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible">
     <meta name="description" content="收錄十六萬筆國語、一萬六千筆臺語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線版。來源為教育部「重編國語辭典（修訂本）」及「臺灣閩南語常用詞辭典」，辭典本文的著作權仍為教育部所有。">
     <link rel="apple-touch-icon" href="icon.png">
@@ -82,7 +82,8 @@
       <div id="result" class="result">
         <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px"><span id="loading"></span><br><br><img title="〔萌典〕" src="images/icon.png" width="100" class="logo"><br><br><span id="F9868" style="font-family: &quot;MOEDICT&quot;; margin-botom: 40px"></span><i class="icon-spinner"></i></center>
       </div><a id="sendback" title="送回編修" style="margin-left: 50%; display: none; background: #333333; color: white" href="mailto:xldictionary@gmail.com?subject=編修建議&amp;body=出處及定義：" target="_blank" class="btn btn-default small">送回編修</a>
-      <div style="float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px" class="share web-only"><a id="share-f" title="Facebook 分享" style="background: #3B579D; color: white" data-href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share"></i><i class="icon-facebook"></i></a><a id="share-t" title="Twitter 分享" style="background: #00ACED; color: white" data-href="https://twitter.com/share?text=__TEXT__&amp;url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share"></i><i class="icon-twitter"></i></a><a id="share-g" title="Google+ 分享" style="background: #D95C5C; color: white" data-href="https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share"></i><i class="icon-google-plus"></i></a></div>
+      <!-- a.visible-xs.pull-left.ebas(href='about.html', title='關於本站', onclick='pressAbout(); return false') 萌典--><a href="#" onclick="pressAbout(); return false" title="關於本站" style="float: left; margin-top: -10px; margin-left: 5px" class="visible-xs pull-left ebas btn btn-default"><span class="iconic-circle"><i class="icon-info"></i></span><span> 萌典</span></a>
+      <div style="float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px" class="share"><a id="share-f" title="Facebook 分享" style="background: #3B579D; color: white" data-href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-facebook"></i></a><a id="share-t" title="Twitter 分享" style="background: #00ACED; color: white" data-href="https://twitter.com/share?text=__TEXT__&amp;url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-twitter"></i></a><a id="share-g" title="Google+ 分享" style="background: #D95C5C; color: white" data-href="https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-google-plus"></i></a></div>
     </div>
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">

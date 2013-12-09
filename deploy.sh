@@ -7,4 +7,4 @@ rm -f n/index.json
 cp nan/util/index.json n/
 cp amis-data/index.json p/
 
-rsync -avz --delete a about.html config.rb cordova.js css fonts h images index.html js main.js sass styles.css t p n $DST
+rsync -avz --delete a icon.png about.html config.rb cordova.js css fonts h images index.html js main.js sass styles.css t p n $DST

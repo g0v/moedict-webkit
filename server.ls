@@ -29,13 +29,27 @@ font-of = ->
   return 'EBAS' if it is /ebas/i
   return wt2font[it] || 'TW-Kai'
 
+<- fs.mkdir \png
 require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
     font = font-of @query.font
     text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
+  @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
+  @get '/:text/:idx': ->
+    @response.type \text/html
+    text = val = (@params.text - /.html$/)
+    lang = \a
+    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^:/ => lang = \h; val.=substr 1
+    if "#val" is /^~/ => lang = \c; val.=substr 1
+    err, json <~ fs.readFile("#lang/#val.json")
+    payload = if err then {} else try JSON.parse(json)
+    payload = { layout: 'layout', text, +isBot, +isCLI, png-suffix: '.png', wt2font, font2name, -isWord, idx:@params.idx } <<< payload
+    @render index: payload
   @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
@@ -50,11 +64,21 @@ require(\zappajs) ->
     isWord = not err
     err = true if @query.font
     isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
-    isCLI = @query.bot or @request.headers['user-agent'] isnt /\bMozilla\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
     payload ?= { t: val }
-    payload = { layout: 'layout', text, isBot, isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
+    payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
+
+    chars = text.replace(/^[!~:]/, '')
+    chars.=slice(0, 50)
+    png-file = "png/#chars.#font.png"
+    if fs.existsSync png-file
+      png = fs.createReadStream \/dev/null
+      png-stream = fs.createWriteStream \/dev/null
+    else
+      png = text2png(chars, font)
+      png-stream = fs.createWriteStream png-file
+    <~ png.pipe(png-stream).on \close
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang]
@@ -89,7 +113,8 @@ require(\zappajs) ->
     suffix = '' if suffix is '?font=kai' and not @isWord
     png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
-    html {prefix:"og: http://ogp.me/ns#"} -> head ->
+
+    html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant', manifest:"manifest.appcache"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
@@ -97,6 +122,7 @@ require(\zappajs) ->
       meta property:"og:url" content:"https://www.moedict.tw/#{ encodeURIComponent @text }#suffix"
       meta property:"og:image" content:og-image
       meta property:"og:image:type" content:"image/png"
+      meta name:'viewport' content:'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1'
       len = @text.length <? 50
       w = len
       w = Math.ceil(len / Math.sqrt(len * 0.5)) if w > 4
@@ -113,32 +139,34 @@ require(\zappajs) ->
       meta name:"twitter:title" content:"#t - 萌典"
       meta property:"og:description" content:def
       meta name:"description" content:def
-      link href:'styles.css' rel:'stylesheet'
+      link href:'/styles.css' rel:'stylesheet'
       base target:\_blank
     if not @segments
       h = ''
       h = @text.slice(0, 1) if @text is /^[!~:]/
       body ->
-        script "location.href = 'https://www.moedict.tw/##{ @text }'"
-        noscript ->
-          h1 @text.replace(/^[!~:]/ '')
+        script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
+        idx = 0
+        (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
+          word = @text.replace(/^[!~:]/ '')
+          h1 "<a href='/#h#word'>#word"
           for {d, t, b} in (@h || {d:[{f: @t}]})
             p trim(b || t)
-            dl -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+            ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
               s = if s then "<br>似:[#s]" else ''
               a = if a then "<br>反:[#a]" else ''
-              dt -> h3 "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
-              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+              dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
       return
     body -> center ->
       return unless @segments
-      img src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
+      img class:'moedict' src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
         margin-top: -50px;
         margin-bottom: -50px;
       '''
       uri = encodeURIComponent encodeURIComponent @text
       uri += suffix
-      form id:'frm' class:'hidden-xs' style:'''
+      form id:'frm' style:'''
         top: 0;
         right: 0;
         background: rgba(200, 200, 200, 0.5);
@@ -165,7 +193,7 @@ require(\zappajs) ->
           i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
         a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
           i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
-      table style:'''
+      table class:'moetext' style:'''
         max-width: 90%;
         background: #eee;
         border: 24px #f9f9f9 solid !important;
@@ -191,6 +219,9 @@ function text2dim (len)
 
 function text2png (text, font)
   text.=slice(0, 50)
+  png-file = "png/#text.#font.png"
+  return fs.createReadStream png-file if fs.existsSync png-file
+
   [w, h] = text2dim text.length
   padding = (w - h) / 2
 

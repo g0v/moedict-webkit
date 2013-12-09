@@ -1,5 +1,5 @@
 run ::
-	node ./static-here.js 8888 | lsc -cw main.ls server.ls | jade -Pw index.jade | compass watch
+	node ./static-here.js 8888 | lsc -cw main.ls server.ls | jade -Pw *.jade | compass watch
 
 upload ::
 	rsync -avzP main.* styles.css index.html js moe0:code/
@@ -87,10 +87,13 @@ amis ::
 translation :: moedict-data
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
-	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict_xml.zip' && unzip cfdict_xml.zip && rm cfdict_xml.zip
+	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict_xml.zip' && unzip -o cfdict_xml.zip && rm cfdict_xml.zip
 	python translation-data/xml2txt.py
 	python translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
 
 all :: data/0/100.html
 	tar jxf data.tar.bz2
+
+emulate ::
+	make -C cordova emulate

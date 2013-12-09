@@ -130,26 +130,34 @@
   }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
-    var ref$;
+    var ref$, that;
     if (data instanceof Function) {
       ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
     }
-    if (CACHED[url]) {
-      return onSuccess(CACHED[url]);
+    if (that = CACHED[url]) {
+      return onSuccess(that);
     }
     return $.get(url, data, function(it){
       return onSuccess(CACHED[url] = it);
-    }, dataType).fail(function(){});
+    }, dataType).fail(function(){
+      var that;
+      if (that = getPref("GET " + url)) {
+        return onSuccess(CACHED[url] = that);
+      }
+    });
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
       throw null;
     }
     document.addEventListener('deviceready', function(){
-      try {
-        navigator.splashscreen.hide();
-      } catch (e$) {}
       isDeviceReady = true;
+      $('body').on('click', 'a[target]', function(){
+        var href;
+        href = $(this).attr('href');
+        window.open(href, '_system');
+        return false;
+      });
       return window.doLoad();
     }, false);
     document.addEventListener('pause', function(){
@@ -239,8 +247,8 @@
       $el.removeClass('icon-play').addClass('icon-spinner');
       $el.parent('.audioBlock').addClass('playing');
       urls = [url];
-      if (/ogg$/.exec(url) && canPlayMp3() && !isGecko) {
-        urls.unshift(url.replace(/ogg$/, 'mp3'));
+      if (/(ogg|opus)$/.exec(url) && canPlayMp3() && !isGecko) {
+        urls.unshift(url.replace(/(ogg|opus)$/, 'mp3'));
       }
       audio = new window.Howl({
         buffer: true,
@@ -263,7 +271,7 @@
   };
   window.showInfo = function(){
     var ref, onStop, onExit;
-    ref = window.open('Android.html', '_blank', 'location=no');
+    ref = window.open('about.html', '_blank', 'location=no');
     onStop = function(arg$){
       var url;
       url = arg$.url;
@@ -333,11 +341,7 @@
     window.adjustFontSize(0);
     cacheLoading = false;
     window.pressAbout = pressAbout = function(){
-      if (isDroidGap) {
-        return showInfo();
-      } else {
-        return location.href = 'about.html';
-      }
+      return location.href = 'about.html';
     };
     window.pressErase = pressErase = function(){
       $('#query').val('').focus();
@@ -786,6 +790,9 @@
         setPinyinBindings();
         cacheLoading = false;
         if (isCordova && !DEBUGGING) {
+          try {
+            navigator.splashscreen.hide();
+          } catch (e$) {}
           $('#result .playAudio').on('touchstart', function(){
             if ($(this).hasClass('icon-play')) {
               return $(this).click();
@@ -1102,9 +1109,9 @@
         if (/^▶/.exec(item != null ? item.value : void 8)) {
           val = $('#query').val().replace(/^→列出含有「/, '').replace(/」的詞$/, '');
           if (LANG === 'c') {
-            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + val + "&body=出處及定義：");
+            window.open("mailto:xldictionary@gmail.com?subject=建議收錄：" + val + "&body=出處及定義：", '_system');
           } else {
-            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + val);
+            window.open("https://www.moedict.tw/" + HASHOF[LANG].slice(1) + val, '_system');
           }
           return false;
         }
@@ -1202,10 +1209,10 @@
             }
           }
         }
-        if (LANG === 'c' && !(results != null && results.length) && !isApp) {
+        if (LANG === 'c' && !(results != null && results.length)) {
           return cb(["▶找不到。建議收錄？"]);
         }
-        if (LANG !== 'c' && !(results != null && results.length) && !isApp) {
+        if (LANG !== 'c' && !(results != null && results.length)) {
           return cb(["▶找不到。分享這些字？"]);
         }
         if (!(results != null && results.length)) {
@@ -1259,7 +1266,7 @@
       return CACHED.canPlayMp3;
     }
     a = document.createElement('audio');
-    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg') : void 8, /no/, ''));
+    return CACHED.canPlayMp3 = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/mpeg;') : void 8, /^no$/, ''));
   }
   function canPlayOgg(){
     var a;
@@ -1267,7 +1274,15 @@
       return CACHED.canPlayOgg;
     }
     a = document.createElement('audio');
-    return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg') : void 8, /no/, ''));
+    return CACHED.canPlayOgg = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="vorbis"') : void 8, /^no$/, ''));
+  }
+  function canPlayOpus(){
+    var a;
+    if (CACHED.canPlayOpus != null) {
+      return CACHED.canPlayOpus;
+    }
+    a = document.createElement('audio');
+    return CACHED.canPlayOpus = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="opus"') : void 8, /^no$/, ''));
   }
   function renderStrokes(terms, id){
     var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
@@ -1366,7 +1381,7 @@
       }
       return "    <!-- STAR -->\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), mp3 && !canPlayOgg() && (mp3 = mp3.replace(/ogg$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];

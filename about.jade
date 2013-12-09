@@ -1,0 +1,110 @@
+!!! 5
+html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
+  head
+    meta(charset='utf-8')
+    title 萌典
+    meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1')
+    meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
+    meta(name='description', content='收錄十六萬筆國語、一萬六千筆臺語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線版。來源為教育部「重編國語辭典（修訂本）」及「臺灣閩南語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+    link(rel='apple-touch-icon', href='icon.png')
+    link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
+    link(href='styles.css', rel='stylesheet')
+    //if !IE
+    script(src='cordova.js', data-cfasync='true')
+    script(src='js/jquery-1.9.1.min.js')
+    script.
+        if (! /^https?:/.test(document.URL)) { $(function(){
+            $('body').addClass('app');
+            $('body').removeClass('web');
+            $('body').on("click", "a.home", function(){
+                if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
+            });
+            $('body').on("click", "a[target]", function(){
+                var href = $(this).attr('href');
+                window.open(href, '_system');
+                return false;
+            });
+        }); };
+    // <![endif]
+  body#moedict.about.web
+    .navbar.navbar-inverse.navbar-fixed-top
+      a.navbar-brand.brand.ebas.home(href='./') 萌典
+      ul.nav.navbar-nav(style='float: left; width: 200px;')
+        li(style='display: inline-block;')
+          a(href='https://twitter.com/moedict', target='_blank', title='萌典 Twitter')
+            i.icon-twitter-sign
+      ul.nav.navbar-nav.pull-right(style='display: inline-block; min-width: 120px; position: absolute; right: 0;')
+        li(style='display: inline-block; position: absolute; right: 32px')
+          a(href='http://g0v.tw/', target='_blank', title='g0v.tw 零時政府')
+              img(src='images/g0v-icon-invert.png', height='54', width='162', style='position: absolute; top: -6px; right: 10px')
+        li(style='display: inline-block; position: absolute; right: 0')
+          a.home(href='./', title='回到萌典'): i.icon-remove-circle
+    center
+      img.logo(style='margin-top: 60px; background: white', title='萌典首頁', src='icon.png', width='50%')
+    .content
+      p
+        a.home(href='./') 萌典
+        | 共收錄十六萬筆國語、兩萬筆台語、一萬四千筆客語條目，並支援「自動完成」功能及
+        span(style='white-space: nowrap;') 「%_ *? ^.$」
+        | 等萬用字元。
+      p 定義裡的每個字詞都可以點擊連到說明。
+      p
+        | 源碼、其他平台版本、API 及原始資料等，均可在 
+        a(target='_blank', href='http://3du.tw/') 3du.tw
+        |  取得。
+      p
+        | 原始資料來源為教育部「
+        a(target='_blank', href='http://dict.revised.moe.edu.tw/') 重編國語辭典（修訂本）
+        | 」、「
+        a(target='_blank', href='http://twblg.dict.edu.tw') 臺灣閩南語常用詞辭典
+        | 」及「
+        a(target='_blank', href='http://hakka.dict.edu.tw') 臺灣客家語常用詞辭典
+        | 」，辭典本文的著作權仍為教育部所有。
+      p
+        | 筆劃資料來源為教育部「
+        a(target='_blank', href='http://stroke-order.learningweb.moe.edu.tw/') 常用國字標準字體筆順學習網
+        | 」，國語發音資料來源為教育部「
+        a(target='_blank', href='http://dict.concised.moe.edu.tw/') 國語辭典簡編本多媒體網路版
+        | 」，著作權仍為教育部所有。
+      p
+        | 英/法/德文對照表 
+        a(target='_blank', href='http://cc-cedict.org') CC-CEDict
+        | 、
+        a(target='_blank', href='http://www.chine-informations.com/chinois/open') CFDict
+        | 、
+        a(target='_blank', href='http://www.handedict.de/chinesisch_deutsch.php') HanDeDict
+        |  採用 CC-BY-SA 3.0 授權。
+      p
+        | 兩岸詞典由
+        a(target='_blank', href='http://www.gacc.org.tw/') 中華文化總會
+        | 採用 CC-BY-NC-ND 3.0 授權。
+      p
+        a(target='_blank', href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe') Android
+        |  及 
+        a(target='_blank', href='https://itunes.apple.com/tw/app/meng-dian/id599429224') Apple iOS
+        |  離線版包含下列第三方元件：
+      ul
+        li jQuery 及 jQuery UI 由 jQuery Foundation 採用 MIT 授權。
+        li cordova.js 由 Apache 基金會採用 Apache v2 授權。
+        li Fira Sans 字型由 Mozilla 基金會採用 Apache v2 授權。
+      p
+        | 感謝 
+        a(target='_blank', href='http://g0v.tw') #g0v.tw
+        |  頻道內所有協助開發的朋友們。
+      h2.cc0 CC0 1.0 公眾領域貢獻宣告
+      p 作者 唐鳳 在法律許可的範圍內，拋棄此著作依著作權法所享有之權利，包括所有相關與鄰接的法律權利，並宣告將該著作貢獻至公眾領域。
+    a(target='_blank', href='https://github.com/audreyt/moedict-webkit')
+      img(style='z-order: 9999; position: absolute; top: 50px; right: 0; border: 0;', src='images/right-graphite@2x.png', width='120', height='120')
+    div.app-only
+      a.visible-xs.pull-left.ebas.btn.btn-default.home(href='./', title='回到萌典', style='float: left; margin-top: -60px; margin-left: 5px')
+        span.iconic-circle: i.icon-arrow-left
+        span  萌典
+    div.web-only(style='position: fixed; bottom: 10px; left: 10px; z-index: 2')
+      a(target='_blank', href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe')
+        img(alt='Google Play 下載', title='Google Play 下載', src='css/google_play.jpg', width='135', height='46')
+      a(target='_blank', href='http://itunes.apple.com/app/id599429224', style='margin-left: 10px')
+        img(alt='App Store 下載', title='App Store 下載', src='css/Download_on_the_App_Store_Badge_HK_TW_135x40.png', width='155', height='46')
+    .web-only(style='position: fixed; bottom: 10px; right: 10px; z-index: 1')
+      a#opensearch.btn.btn-default.btn-info(onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false")
+        i.icon.icon-plus-sign
+        |  加入搜尋列
