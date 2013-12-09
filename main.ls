@@ -60,7 +60,7 @@ GET = (url, data, onSuccess, dataType) ->
     [data, dataType, onSuccess] = [null, onSuccess, data]
   return onSuccess(that) if CACHED[url]
   $.get(url, data, (->
-    setPref "GET #url", it if url is /^[a-z]\/.+\.json$/
+    # setPref "GET #url", it if url is /^[a-z]\/.+\.json$/
     onSuccess(CACHED[url] = it)
   ), dataType).fail ->
     return onSuccess(CACHED[url] = that) if getPref "GET #url"

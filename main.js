@@ -124,9 +124,6 @@
       return onSuccess(that);
     }
     return $.get(url, data, function(it){
-      if (/^[a-z]\/.+\.json$/.exec(url)) {
-        setPref("GET " + url, it);
-      }
       return onSuccess(CACHED[url] = it);
     }, dataType).fail(function(){
       var that;
