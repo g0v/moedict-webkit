@@ -45,7 +45,7 @@ try {
       'ttf': 'application/x-font-ttf',
       'woff': 'application/font-woff',
       'apk': 'application/vnd.android.package-archive',
-      'appcache': 'text/cache-manifest'
+      'appcache': 'text/plain' // 'text/cache-manifest'
     };
     return {
       lookup: function (ext) {
