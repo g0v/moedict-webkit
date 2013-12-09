@@ -34,5 +34,9 @@ res/icons/android/drawable-hdpi/icon.png :
 platforms/android/bin/MoeDict-debug.apk :
 	cordova build android
 
-release :: platforms/android/bin/MoeDict-debug.apk
+release :: platforms/android/bin/MoeDict-debug.apk copy after_prepare
 	cd platforms/android ; yes $(MOEDICT_PASSWORD) | $(run) ant release
+
+install ::
+	-adb uninstall org.audreyt.dict.moe
+	adb install -r platforms/android/bin/MoeDict-release.apk
