@@ -22,7 +22,6 @@ ios/MoeDict.xcodeproj/project.xcworkspace/xcuserdata
 fire_app_log.txt
 node_modules/
 npm-debug.log
-
 lenToRegex.*.json
 prefix.json
 dict-csld.json
@@ -33,6 +32,7 @@ dict-twblg-ext.json
 dict-twblg.json
 dict-amis.json
 dict-nan.json
+translation-data/cfdict.xml
 translation-data/cedict.txt
 translation-data/cfdict.txt
 translation-data/handedict.txt
