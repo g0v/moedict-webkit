@@ -116,16 +116,24 @@
   }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
-    var ref$;
+    var ref$, that;
     if (data instanceof Function) {
       ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
     }
-    if (CACHED[url]) {
-      return onSuccess(CACHED[url]);
+    if (that = CACHED[url]) {
+      return onSuccess(that);
     }
     return $.get(url, data, function(it){
+      if (/^[a-z]\/.+\.json$/.exec(url)) {
+        setPref("GET " + url, it);
+      }
       return onSuccess(CACHED[url] = it);
-    }, dataType).fail(function(){});
+    }, dataType).fail(function(){
+      var that;
+      if (that = getPref("GET " + url)) {
+        return onSuccess(CACHED[url] = that);
+      }
+    });
   };
   try {
     if (!(isCordova && !DEBUGGING)) {
