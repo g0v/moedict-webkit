@@ -309,6 +309,9 @@
     if (isDroidGap) {
       $('body').addClass('android');
     }
+    if (!(isMobile || isApp || widthIsXs())) {
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    }
     if (/Android\s*[12]\./.exec(navigator.userAgent)) {
       $('body').addClass('overflow-scrolling-false');
       $('body').addClass("prefer-down-false");
@@ -602,6 +605,7 @@
       }());
       $('#query').val('');
       $('.ui-autocomplete li').remove();
+      $('iframe').show();
       $('.lang-active').text($(".lang-option." + LANG + ":first").text());
       setPref('lang', LANG);
       id || (id = {
@@ -1123,6 +1127,7 @@
         if (term === '=諺語' && LANG === 'h') {
           term = "，";
         }
+        $('iframe').hide();
         if (!term.length) {
           return cb([]);
         }

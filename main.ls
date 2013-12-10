@@ -158,6 +158,10 @@ window.do-load = ->
   $('body').addClass \ios if isCordova and not isDroidGap
   $('body').addClass \desktop unless isMobile or isApp
   $('body').addClass \android if isDroidGap
+
+  unless isMobile or isApp or width-is-xs!
+    ``!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");``
+
   if navigator.user-agent is /Android\s*[12]\./
     $('body').addClass \overflow-scrolling-false
     $('body').addClass "prefer-down-false"
@@ -323,6 +327,7 @@ window.do-load = ->
     LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
+    $('iframe').show!
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
     id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
@@ -608,6 +613,7 @@ function init-autocomplete
     source: ({term}, cb) ->
       term = "。" if term is \=諺語 and LANG is \t
       term = "，" if term is \=諺語 and LANG is \h
+      $('iframe').hide!
       return cb [] unless term.length
       return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
