@@ -130,20 +130,31 @@
   }
   CACHED = {};
   GET = function(url, data, onSuccess, dataType){
-    var ref$, that;
+    var ref$, that, success, error, beforeSend;
     if (data instanceof Function) {
       ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
     }
     if (that = CACHED[url]) {
       return onSuccess(that);
     }
-    return $.get(url, data, function(it){
+    success = function(it){
       return onSuccess(CACHED[url] = it);
-    }, dataType).fail(function(){
+    };
+    error = function(){
       var that;
       if (that = getPref("GET " + url)) {
         return onSuccess(CACHED[url] = that);
       }
+    };
+    beforeSend = function(it){
+      return it.overrideMimeType('text/plain; charset=UTF-8');
+    };
+    return $.ajax({
+      url: url,
+      data: data,
+      success: success,
+      error: error,
+      beforeSend: beforeSend
     });
   };
   try {
