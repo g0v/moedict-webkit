@@ -44,8 +44,7 @@ try {
       'svg': 'image/svg+xml',
       'ttf': 'application/x-font-ttf',
       'woff': 'application/font-woff',
-      'apk': 'application/vnd.android.package-archive',
-      'appcache': 'text/plain' // 'text/cache-manifest'
+      'apk': 'application/vnd.android.package-archive'
     };
     return {
       lookup: function (ext) {
@@ -76,7 +75,7 @@ var httpCb = function (req, res) {
   };
 
   path.exists(filename, function (exists) {
-    if (!exists) {
+    if (!exists || /manifest.appcache/.test(filename)) {
       httpRespond(res, 404, "Page Not Found!\n");
       return;
     }

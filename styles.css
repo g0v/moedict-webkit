@@ -10486,3 +10486,6 @@ canvas {
     margin-left: -12px !important;
   }
 }
+#timeline iframe {
+  height: 100% !important;
+}
