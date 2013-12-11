@@ -432,34 +432,13 @@
         }
         return false;
       });
-      $('body').on('click', '.results .star', function(){
-        var key;
-        key = "\"" + prevId + "\"\n";
-        if ($(this).hasClass('icon-star-empty')) {
-          STARRED[LANG] = key + STARRED[LANG];
-        } else {
-          STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
-        }
-        $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
-        $('#btn-starred').fadeOut('fast', function(){
-          return $(this).css('background', '#ddd').fadeIn(function(){
-            return $(this).css('background', 'transparent');
-          });
-        });
-        return setPref("starred-" + LANG, STARRED[LANG]);
-      });
       $('body').on('click', '#btn-starred', function(){
-        grokVal((HASHOF[LANG] + "=*").replace(/^#/, ''));
-        return false;
-      });
-      $('body').on('click', '.results .stroke', function(){
-        if ($('svg, canvas').length) {
-          return $('#strokes').fadeOut('fast', function(){
-            $('#strokes').html('');
-            return window.scrollTo(0, 0);
-          });
+        if ($('#query').val() === '=*') {
+          window.pressBack();
+        } else {
+          grokVal((HASHOF[LANG] + "=*").replace(/^#/, ''));
         }
-        return strokeWords(replace$.call($('h1:first').data('title'), /[（(].*/, ''));
+        return false;
       });
       if (!('onhashchange' in window)) {
         $('body').on('click', 'a', function(){
@@ -763,17 +742,45 @@
     };
     setHtml = function(html){
       return callLater(function(){
+        var vclick;
         if ($('svg, canvas').length && !$('body').hasClass('autodraw')) {
           $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');
             return window.scrollTo(0, 0);
           });
         }
-        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<i class='star iconic-color icon-star' title='已加入記錄簿'></i>" : "<i class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></i>");
+        html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>" : "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>");
         $('#result').html(html);
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
         cacheLoading = false;
+        vclick = isMobile ? 'touchstart' : 'click';
+        $('.results .star').on(vclick, function(){
+          var key;
+          key = "\"" + prevId + "\"\n";
+          if ($(this).hasClass('icon-star-empty')) {
+            STARRED[LANG] = key + STARRED[LANG];
+          } else {
+            STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
+          }
+          $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
+          $('#btn-starred').fadeOut('fast', function(){
+            return $(this).css('background', '#ddd').fadeIn(function(){
+              return $(this).css('background', 'transparent');
+            });
+          });
+          return setPref("starred-" + LANG, STARRED[LANG]);
+        });
+        $('.results .stroke').on(vclick, function(){
+          if ($('svg, canvas').length) {
+            return $('#strokes').fadeOut('fast', function(){
+              $('#strokes').html('');
+              return window.scrollTo(0, 0);
+            });
+          }
+          window.scrollTo(0, 0);
+          return strokeWords(replace$.call($('h1:first').data('title'), /[（(].*/, ''));
+        });
         if (isCordova && !DEBUGGING) {
           try {
             navigator.splashscreen.hide();
@@ -1320,7 +1327,7 @@
   function render(json){
     var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
-    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" : "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>";
+    charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
     result = ls(heteronyms, function(arg$){
       var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, specific_to, alt, cnSpecific, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null

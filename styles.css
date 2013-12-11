@@ -9342,7 +9342,7 @@ input.iconic-circle {
 }
 
 .iconic-circle, .iconic-color {
-  border-radius: 18px;
+  border-radius: 4px;
   background: black;
   color: #fff;
   display: inline-block;
@@ -9403,11 +9403,6 @@ input.iconic-circle {
   .app .back-box {
     top: 72px;
     width: 24px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .radical {
-    padding-top: 15px;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -10294,23 +10289,28 @@ canvas {
 @media only screen and (max-width: 767px) {
   body .iconic-color.star {
     right: 22px;
-    top: 165px;
+    top: 162px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  body.cordova .iconic-color.star {
+    top: 167px !important;
   }
 }
 .iconic-color.star {
   background: white;
   position: absolute;
   right: 42px;
-  top: 125px;
+  top: 122px;
 }
 .iconic-color.star:hover {
   background: #ccc !important;
 }
 
 .iconic-circle.stroke, .star {
-  width: 28px;
-  height: 24px;
-  padding: 4px;
+  width: 32px;
+  height: 30px;
+  padding: 7px;
   cursor: pointer !important;
 }
 .iconic-circle.stroke:hover, .star:hover {
@@ -10457,7 +10457,12 @@ canvas {
   body #btn-starred {
     position: absolute;
     top: 2px;
-    right: 10px;
+    right: 0px;
+  }
+  body #btn-starred i {
+    display: block;
+    padding-right: 15px;
+    padding-left: 25px;
   }
 }
 @media only screen and (min-width: 768px) {
