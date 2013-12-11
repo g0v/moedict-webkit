@@ -605,7 +605,7 @@
       }());
       $('#query').val('');
       $('.ui-autocomplete li').remove();
-      $('iframe').show();
+      $('iframe').fadeIn('fast');
       $('.lang-active').text($(".lang-option." + LANG + ":first").text());
       setPref('lang', LANG);
       id || (id = {
@@ -1127,7 +1127,7 @@
         if (term === '=諺語' && LANG === 'h') {
           term = "，";
         }
-        $('iframe').hide();
+        $('iframe').fadeOut('fast');
         if (!term.length) {
           return cb([]);
         }
