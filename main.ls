@@ -237,20 +237,12 @@ window.do-load = ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
       return false
 
-    $ \body .on \click '.results .star' ->
-      key = "\"#prevId\"\n"
-      if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
-      $(@).toggleClass \icon-star-empty .toggleClass \icon-star
-      $(\#btn-starred).fadeOut \fast -> $(@).css(\background \#ddd)fadeIn -> $(@).css(\background \transparent)
-      setPref "starred-#LANG" STARRED[LANG]
-
     $ \body .on \click '#btn-starred' ->
-      grok-val("#{HASH-OF[LANG]}=*" - /^#/)
+      if $(\#query).val! is '=*'
+        window.press-back!
+      else
+        grok-val("#{HASH-OF[LANG]}=*" - /^#/)
       return false
-
-    $ \body .on \click '.results .stroke' ->
-      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
-      strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
 
     unless \onhashchange of window
       $ \body .on \click \a ->
@@ -423,13 +415,27 @@ window.do-load = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
 
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
-      then "<i class='star iconic-color icon-star' title='已加入記錄簿'></i>"
-      else "<i class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></i>"
+      then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
+      else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
     $ \#result .html html
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
 
     cache-loading := no
+
+    vclick = if isMobile then \touchstart else \click
+    $ '.results .star' .on vclick, ->
+      key = "\"#prevId\"\n"
+      if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
+      $(@).toggleClass \icon-star-empty .toggleClass \icon-star
+      $(\#btn-starred).fadeOut \fast -> $(@).css(\background \#ddd)fadeIn -> $(@).css(\background \transparent)
+      setPref "starred-#LANG" STARRED[LANG]
+
+    $ '.results .stroke' .on vclick, ->
+      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
+      window.scroll-to 0 0
+      strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
+
 
     if isCordova and not DEBUGGING
       try navigator.splashscreen.hide!
@@ -736,7 +742,7 @@ function render (json)
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
-  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>" else "<div class='radical'><span class='iconic-circle stroke icon-pencil' title='筆順動畫'></span></div>"
+  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" else "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>"
   result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants, specific_to, alt}) ->
     pinyin ?= trs
     pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
