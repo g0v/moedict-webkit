@@ -102,11 +102,23 @@ require(\zappajs) ->
       @render index: payload
 
   @view index: ->
+    expand-def = (def) ->
+      def.replace(
+        /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
+          String.fromCharCode(0x327F + parseInt num)
+        }#{ if char then "#char\u20DE" else '' }"
+      ).replace(
+        /<(\d)>/g (_, num) -> String.fromCharCode(0x327F + parseInt num)
+      ).replace(
+        /\{(\d)\}/g (_, num) -> String.fromCharCode(0x2775 + parseInt num)
+      ).replace(
+        /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
+      ).replace(/\(/g, '（').replace(/\)/g, '）')
     trim = -> (it ? '').replace /[`~]/g ''
     def = ''
     for {d} in (@h || {d:[{f: @t}]})
       for {f, l} in d => def += (f || l)
-    def = trim def || [def for {def} in @segments || []].join('') || (@text+'。')
+    def = expand-def(trim def || [def for {def} in @segments || []].join('') || (@text+'。'))
     doctype 5
     png-suffix = @png-suffix
     suffix = png-suffix.slice(4)
@@ -155,8 +167,9 @@ require(\zappajs) ->
             ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
               s = if s then "<br>似:[#s]" else ''
               a = if a then "<br>反:[#a]" else ''
-              dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#f#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-              dd "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+              dl ->
+                dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+                dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
       return
     body -> center ->
       return unless @segments
@@ -208,7 +221,7 @@ require(\zappajs) ->
             box-shadow: #d4d4d4 0 3px 3px;
             margin: 10px;
           ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part
-        td -> a {style: 'color: #006', href}, def
+        td -> a {style: 'color: #006', href}, expand-def def
 
 function text2dim (len)
   len <?= 50

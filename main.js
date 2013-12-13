@@ -1398,6 +1398,8 @@
         return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
       }).replace(/<(\d)>/g, function(_, num){
         return String.fromCharCode(0x327F + parseInt(num));
+      }).replace(/\{(\d)\}/g, function(_, num){
+        return String.fromCharCode(0x2775 + parseInt(num));
       }).replace(/[（(](\d)[)）]/g, function(_, num){
         return String.fromCharCode(0x2789 + parseInt(num));
       }).replace(/\(/g, '（').replace(/\)/g, '）');
