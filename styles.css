@@ -10521,13 +10521,14 @@ li.gcse {
 .gcse > span .gsc-control-cse .gscb_a {
   vertical-align: middle;
 }
-.gcse > span .gsc-control-cse .gs-spelling.gs-result {
+.gcse > span .gsc-control-cse .gs-spelling {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  margin-bottom: 5px;
 }
-.gcse > span .gsc-control-cse .gs-spelling.gs-result a {
+.gcse > span .gsc-control-cse .gs-spelling a {
   visibility: hidden;
 }
-.gcse > span .gsc-control-cse .gs-spelling.gs-result a em {
+.gcse > span .gsc-control-cse .gs-spelling a em {
   visibility: visible;
 }
 .gcse > span .gsc-control-cse .gsc-result {
