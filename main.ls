@@ -13,6 +13,7 @@ const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
+isQuery = location.search is /^\?q=/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
@@ -158,6 +159,22 @@ window.do-load = ->
   $('body').addClass \ios if isCordova and not isDroidGap
   $('body').addClass \desktop unless isMobile or isApp
   $('body').addClass \android if isDroidGap
+
+  unless isApp or width-is-xs!
+    cx = '007966820757635393756:sasf0rnevk4';
+    gcse = document.createElement('script')
+    gcse.type = 'text/javascript'
+    gcse.async = true
+    gcse.src = "#{
+      if document.location.protocol is 'https:' then 'https:' else 'http:'
+    }//www.google.com/cse/cse.js?cx=#cx"
+    s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+    poll-gsc = ->
+      return setTimeout poll-gsc, 500ms unless $('.gsc-input').length
+      $('.gsc-input').attr \placeholder \全文檢索
+      isQuery := no
+    setTimeout poll-gsc, 500ms
 
   unless isMobile or isApp or width-is-xs!
     ``!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");``
@@ -381,8 +398,10 @@ window.do-load = ->
     prevVal := it
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
-    if "#{location.hash}" isnt hash => try history.pushState null, null, hash
-      catch => location.replace hash
+    unless isQuery
+      if "#{location.hash}" isnt hash => try history.pushState null, null, "/#hash"
+        catch => location.replace "/#hash"
+      location.search = '' if location.search is /^\?q=/
     try document.title = "#it - 萌典"
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
