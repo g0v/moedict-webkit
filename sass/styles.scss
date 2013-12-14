@@ -1381,8 +1381,9 @@ li.gcse {
         .gscb_a {
             vertical-align: middle;
         }
-        .gs-spelling.gs-result {
+        .gs-spelling {
             @include fonts;
+            margin-bottom: 5px;
             a {
                 visibility: hidden;
                 em {
