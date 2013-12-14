@@ -399,8 +399,8 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if "#{location.hash}" isnt hash => try history.pushState null, null, "/#hash"
-        catch => location.replace "/#hash"
+      if "#{location.hash}" isnt hash => try history.pushState null, null, hash
+        catch => location.replace hash
       location.search = '' if location.search is /^\?q=/
     try document.title = "#it - 萌典"
     $('.share .btn').each ->
