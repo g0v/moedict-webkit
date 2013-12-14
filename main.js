@@ -707,10 +707,10 @@
       if (!isQuery) {
         if (location.hash + "" !== hash) {
           try {
-            history.pushState(null, null, "/" + hash);
+            history.pushState(null, null, hash);
           } catch (e$) {
             e = e$;
-            location.replace("/" + hash);
+            location.replace(hash);
           }
         }
         if (/^\?q=/.exec(location.search)) {
