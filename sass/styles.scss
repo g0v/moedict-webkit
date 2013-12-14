@@ -1416,7 +1416,7 @@ li.gcse {
         }
         .gs-snippet {
             @include fonts;
-            padding-top: 2px !important;
+            padding-top: 1px !important;
             padding-left: 4px !important;
             padding-bottom: 10px !important;
         }
@@ -1445,6 +1445,9 @@ li.gcse {
         .gsc-cursor-page {
             padding: 15px !important;
             cursor: pointer !important;
+            &:only-child {
+                display: none !important;
+            }
         }
     }
 }
