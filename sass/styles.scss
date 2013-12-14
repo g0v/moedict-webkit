@@ -1360,3 +1360,57 @@ canvas {
     border-radius: 8px;
     border-top: 1px solid #ddd !important;
 }
+
+li.gcse {
+    margin-top: 12px !important;
+    margin-bottom: -12px !important;
+    vertical-align: top !important;
+}
+.gcse > span {
+    display: inline-block;
+    height: 24px;
+    width: 200px;
+    margin-bottom: -5px;
+    .gsc-control-cse {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        .gsc-search-button {
+            display: none;
+        }
+        .gscb_a {
+            vertical-align: middle;
+        }
+        .gsc-results-wrapper-overlay {
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            border-radius: 10px;
+        }
+        .gsc-modal-background-image {
+            opacity: 0.8;
+            background: black;
+        }
+        .gsc-input {
+            font-size: 15px !important;
+            vertical-align: top;
+        }
+        .gsc-url-top, .gsc-above-wrapper-area, .gsc-table-cell-thumbnail {
+            display: none;
+        }
+        .gsc-thumbnail-inside {
+            padding: 0 !important;
+        }
+        a.gs-title {
+            display: block !important;
+            padding-left: 2px !important;
+            border-left: 2px solid white !important;
+            &:hover, &:focus {
+                border-left: 2px solid #00f !important;
+            }
+        }
+        .gsc-cursor-page {
+            padding: 10px !important;
+        }
+    }
+}
