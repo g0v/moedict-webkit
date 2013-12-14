@@ -10521,11 +10521,17 @@ li.gcse {
 .gcse > span .gsc-control-cse .gscb_a {
   vertical-align: middle;
 }
+.gcse > span .gsc-control-cse .gs-spelling.gs-result {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
 .gcse > span .gsc-control-cse .gs-spelling.gs-result a {
   visibility: hidden;
 }
 .gcse > span .gsc-control-cse .gs-spelling.gs-result a em {
   visibility: visible;
+}
+.gcse > span .gsc-control-cse .gsc-result {
+  padding: 0;
 }
 .gcse > span .gsc-control-cse .gsc-results-wrapper-overlay {
   width: 90%;
@@ -10538,6 +10544,7 @@ li.gcse {
   background: black;
 }
 .gcse > span .gsc-control-cse .gsc-input {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   font-size: 15px !important;
   vertical-align: top;
 }
@@ -10547,14 +10554,35 @@ li.gcse {
 .gcse > span .gsc-control-cse .gsc-thumbnail-inside {
   padding: 0 !important;
 }
+.gcse > span .gsc-control-cse .gs-snippet {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  padding-top: 2px !important;
+  padding-left: 4px !important;
+  padding-bottom: 10px !important;
+}
+.gcse > span .gsc-control-cse div.gs-title {
+  text-decoration: underline !important;
+  text-decoration-color: #aaf !important;
+}
 .gcse > span .gsc-control-cse a.gs-title {
+  font-size: 16px !important;
   display: block !important;
   padding-left: 2px !important;
   border-left: 2px solid white !important;
+  text-decoration: underline !important;
+  text-decoration-color: #aaf !important;
+  margin-top: -1px !important;
 }
 .gcse > span .gsc-control-cse a.gs-title:hover, .gcse > span .gsc-control-cse a.gs-title:focus {
   border-left: 2px solid #00f !important;
 }
+.gcse > span .gsc-control-cse a.gs-title b:last-child {
+  display: inline-block;
+  margin-left: -10px;
+  background: white;
+  color: white;
+}
 .gcse > span .gsc-control-cse .gsc-cursor-page {
-  padding: 10px !important;
+  padding: 15px !important;
+  cursor: pointer !important;
 }
