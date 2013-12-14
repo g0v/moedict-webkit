@@ -1381,6 +1381,12 @@ li.gcse {
         .gscb_a {
             vertical-align: middle;
         }
+        .gs-spelling.gs-result a {
+            visibility: hidden;
+            em {
+                visibility: visible;
+            }
+        }
         .gsc-results-wrapper-overlay {
             width: 90%;
             height: 90%;

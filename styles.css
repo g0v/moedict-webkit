@@ -10521,6 +10521,12 @@ li.gcse {
 .gcse > span .gsc-control-cse .gscb_a {
   vertical-align: middle;
 }
+.gcse > span .gsc-control-cse .gs-spelling.gs-result a {
+  visibility: hidden;
+}
+.gcse > span .gsc-control-cse .gs-spelling.gs-result a em {
+  visibility: visible;
+}
 .gcse > span .gsc-control-cse .gsc-results-wrapper-overlay {
   width: 90%;
   height: 90%;
