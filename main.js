@@ -310,7 +310,7 @@
     if (isDroidGap) {
       $('body').addClass('android');
     }
-    if (!(isApp || widthIsXs())) {
+    if (!isCordova) {
       cx = '007966820757635393756:sasf0rnevk4';
       gcse = document.createElement('script');
       gcse.type = 'text/javascript';

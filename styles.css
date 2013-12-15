@@ -10498,74 +10498,89 @@ canvas {
   border-top: 1px solid #ddd !important;
 }
 
-li.gcse {
+body li#gcse {
   margin-top: 12px !important;
   margin-bottom: -12px !important;
   vertical-align: top !important;
+  position: absolute;
+  right: 190px;
 }
 
-.gcse > span {
+@media only screen and (max-width: 767px) {
+  body li#gcse {
+    top: 0;
+    right: 40px;
+  }
+  body li#gcse > span {
+    width: 120px;
+  }
+}
+#gcse > span {
   display: inline-block;
   height: 24px;
   width: 200px;
   margin-bottom: -5px;
 }
-.gcse > span .gsc-control-cse {
+#gcse > span .gsc-control-cse {
   padding: 0;
   border: 0;
   background: transparent;
 }
-.gcse > span .gsc-control-cse .gsc-search-button {
+#gcse > span .gsc-control-cse .gsc-search-button {
   display: none;
 }
-.gcse > span .gsc-control-cse .gscb_a {
+#gcse > span .gsc-control-cse .gscb_a {
   vertical-align: middle;
 }
-.gcse > span .gsc-control-cse .gs-spelling {
+#gcse > span .gsc-control-cse .gs-spelling {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   margin-bottom: 5px;
 }
-.gcse > span .gsc-control-cse .gs-spelling a {
+#gcse > span .gsc-control-cse .gs-spelling a {
   visibility: hidden;
 }
-.gcse > span .gsc-control-cse .gs-spelling a em {
+#gcse > span .gsc-control-cse .gs-spelling a em {
   visibility: visible;
 }
-.gcse > span .gsc-control-cse .gsc-result {
+#gcse > span .gsc-control-cse .gsc-result {
   padding: 0;
 }
-.gcse > span .gsc-control-cse .gsc-results-wrapper-overlay {
+#gcse > span .gsc-control-cse .gsc-results-wrapper-overlay {
   width: 90%;
   height: 90%;
   left: 5%;
   border-radius: 10px;
 }
-.gcse > span .gsc-control-cse .gsc-modal-background-image {
+#gcse > span .gsc-control-cse .gsc-modal-background-image {
   opacity: 0.8;
   background: black;
 }
-.gcse > span .gsc-control-cse .gsc-input {
+#gcse > span .gsc-control-cse .gsc-input-box {
+  height: 27px !important;
+  border-radius: 2px;
+}
+#gcse > span .gsc-control-cse .gsc-input {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   font-size: 15px !important;
   vertical-align: top;
 }
-.gcse > span .gsc-control-cse .gsc-url-top, .gcse > span .gsc-control-cse .gsc-above-wrapper-area, .gcse > span .gsc-control-cse .gsc-table-cell-thumbnail {
+#gcse > span .gsc-control-cse .gsc-url-top, #gcse > span .gsc-control-cse .gsc-above-wrapper-area, #gcse > span .gsc-control-cse .gsc-table-cell-thumbnail {
   display: none;
 }
-.gcse > span .gsc-control-cse .gsc-thumbnail-inside {
+#gcse > span .gsc-control-cse .gsc-thumbnail-inside {
   padding: 0 !important;
 }
-.gcse > span .gsc-control-cse .gs-snippet {
+#gcse > span .gsc-control-cse .gs-snippet {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   padding-top: 1px !important;
   padding-left: 4px !important;
   padding-bottom: 10px !important;
 }
-.gcse > span .gsc-control-cse div.gs-title {
+#gcse > span .gsc-control-cse div.gs-title {
   text-decoration: underline !important;
   text-decoration-color: #aaf !important;
 }
-.gcse > span .gsc-control-cse a.gs-title {
+#gcse > span .gsc-control-cse a.gs-title {
   font-size: 16px !important;
   display: block !important;
   padding-left: 2px !important;
@@ -10574,19 +10589,19 @@ li.gcse {
   text-decoration-color: #aaf !important;
   margin-top: -1px !important;
 }
-.gcse > span .gsc-control-cse a.gs-title:hover, .gcse > span .gsc-control-cse a.gs-title:focus {
+#gcse > span .gsc-control-cse a.gs-title:hover, #gcse > span .gsc-control-cse a.gs-title:focus {
   border-left: 2px solid #00f !important;
 }
-.gcse > span .gsc-control-cse a.gs-title b:last-child {
+#gcse > span .gsc-control-cse a.gs-title b:last-child {
   display: inline-block;
   margin-left: -10px;
   background: white;
   color: white;
 }
-.gcse > span .gsc-control-cse .gsc-cursor-page {
+#gcse > span .gsc-control-cse .gsc-cursor-page {
   padding: 15px !important;
   cursor: pointer !important;
 }
-.gcse > span .gsc-control-cse .gsc-cursor-page:only-child {
+#gcse > span .gsc-control-cse .gsc-cursor-page:only-child {
   display: none !important;
 }

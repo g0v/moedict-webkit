@@ -160,7 +160,7 @@ window.do-load = ->
   $('body').addClass \desktop unless isMobile or isApp
   $('body').addClass \android if isDroidGap
 
-  unless isApp or width-is-xs!
+  unless isCordova
     cx = '007966820757635393756:sasf0rnevk4';
     gcse = document.createElement('script')
     gcse.type = 'text/javascript'

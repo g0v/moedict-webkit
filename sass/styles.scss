@@ -1361,12 +1361,23 @@ canvas {
     border-top: 1px solid #ddd !important;
 }
 
-li.gcse {
+body li#gcse {
     margin-top: 12px !important;
     margin-bottom: -12px !important;
     vertical-align: top !important;
+    position: absolute;
+    right: 190px;
 }
-.gcse > span {
+@media only screen and (max-width: 767px) {
+    body li#gcse {
+        top: 0;
+        right: 40px;
+        > span {
+            width: 120px;
+        }
+    }
+}
+#gcse > span {
     display: inline-block;
     height: 24px;
     width: 200px;
@@ -1403,6 +1414,10 @@ li.gcse {
         .gsc-modal-background-image {
             opacity: 0.8;
             background: black;
+        }
+        .gsc-input-box {
+            height: 27px !important;
+            border-radius: 2px;
         }
         .gsc-input {
             @include fonts;
