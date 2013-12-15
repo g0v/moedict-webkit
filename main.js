@@ -174,20 +174,11 @@
         }
         return location.replace(url);
       } else {
-        window.doLoad();
         if (/MSIE\s+[678]/.exec(navigator.userAgent)) {
           $('.navbar, .query-box').hide();
           $('#result').css('margin-top', '50px');
-          return getScript('https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js', function(){
-            window.gcfnConfig = {
-              imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/',
-              msgPre: '',
-              msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得完整的萌典功能。',
-              msgAfter: ''
-            };
-            return getScript('js/jquery.gcnotify.min.js', function(){});
-          });
         }
+        return window.doLoad();
       }
     });
   }

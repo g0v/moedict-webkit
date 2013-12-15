@@ -87,6 +87,9 @@ catch
     url += location.hash if location.hash is /^#./
     location.replace url
   else
+    if navigator.userAgent is /MSIE\s+[678]/
+      $ '.navbar, .query-box' .hide!
+      $ '#result' .css \margin-top \50px
     window.do-load!
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
