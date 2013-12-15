@@ -921,7 +921,7 @@
           if (!hasXrefs++) {
             html += '<div class="xrefs">';
           }
-          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[tgtLang]) + "</span>\n    <span class='xref'>";
+          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[tgtLang]) + "</span>\n    <span class='xref' itemprop='citation'>";
           html += (fn$()).join('、');
           html += '</span></div>';
         }
@@ -1295,10 +1295,10 @@
     h = HASHOF[LANG];
     id = replace$.call(id, /^[@=]/, '');
     if (/^\s*$/.exec(id)) {
-      title = "<h1>部首表</h1>";
+      title = "<h1 itemprop='name'>部首表</h1>";
       h += '@';
     } else {
-      title = "<h1>" + id + " <a class='xref' href='#@' title='部首表'>部</a></h1>";
+      title = "<h1 itemprop='name'>" + id + " <a class='xref' href='#@' title='部首表'>部</a></h1>";
     }
     rows = $.parseJSON(terms);
     list = '';
@@ -1320,7 +1320,7 @@
     var h, title;
     h = HASHOF[LANG];
     id = replace$.call(id, /^[@=]/, '');
-    title = "<h1 style='padding-bottom: 10px'>" + id + "</h1>";
+    title = "<h1 itemprop='name' style='padding-bottom: 10px'>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
     if (id === '字詞紀錄簿' && !terms) {
       terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）";
@@ -1385,9 +1385,9 @@
       if (!/</.test(title)) {
         title = "<div class='stroke' title='筆順動畫'>" + title + "</div>";
       }
-      return "    <!-- STAR -->\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
+      return "    <!-- STAR -->\n    <meta itemprop=\"image\" content=\"" + encodeURIComponent(replace$.call(h(title), /<[^>]+>/g, '')) + ".png\" />\n    <meta itemprop=\"name\" content=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\" />\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">" + h(title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '') + (english ? "<span class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\" itemprop=\"articleBody\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];

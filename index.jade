@@ -19,7 +19,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     script(src='js/bootstrap/dropdown.js')
     script(src='js/simp-trad.js', charset='utf-8')
     script(src='main.js', charset='utf-8')
-  body#moedict.main(onhashchange='grokHash()')
+  body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ
       dd: 草木初生的芽。
@@ -33,7 +33,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             i.icon-book &nbsp;
-            span.lang-active(style='margin: 0; padding: 0;') 國語辭典
+            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 國語辭典
             b.caret
           ul.dropdown-menu(role='navigation')
             li(role='presentation')

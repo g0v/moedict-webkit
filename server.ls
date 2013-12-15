@@ -156,13 +156,13 @@ require(\zappajs) ->
     if not @segments
       h = ''
       h = @text.slice(0, 1) if @text is /^[!~:]/
-      body ->
+      body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
         script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
         idx = 0
         (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
           word = @text.replace(/^[!~:]/ '')
-          h1 "<a href='/#h#word'>#word"
-          for {d, t, b} in (@h || {d:[{f: @t}]})
+          h1 {itemprop:\name}, "<a href='/#h#word'>#word"
+          div {itemprop:\articleBody}, -> for {d, t, b} in (@h || {d:[{f: @t}]})
             p trim(b || t)
             ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
               s = if s then "<br>似:[#s]" else ''
