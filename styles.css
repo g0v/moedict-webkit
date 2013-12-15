@@ -7247,6 +7247,237 @@ td.visible-print {
   unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
 }
 
+hruby {
+  display: inline;
+  line-height: 2;
+}
+
+/* ==========================================================================
+ * 隱藏`<rp>`
+ * Hide `<rp>`
+ * ========================================================================== */
+hruby rp {
+  display: none;
+}
+
+/* ==========================================================================
+ * 隱藏的`<copy>`元素，利於複製貼上
+ * Invisible `<copy>` elements for copy-and-paste
+ * ========================================================================== */
+hruby copy {
+  display: inline-block;
+  opacity: 0;
+  text-indent: -9999999px;
+  height: 0;
+  width: 0;
+}
+
+/* ==========================================================================
+ * 小字標注
+ * Annotations
+ * ========================================================================== */
+hruby rb[annotation] {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+}
+hruby rb[annotation]:before {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  left: -200%;
+  position: absolute;
+  top: -0.5em;
+  vertical-align: middle;
+  -moz-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  transform: scale(0.55);
+  height: 1em;
+  width: 500%;
+  content: attr(annotation);
+  line-height: 1.5;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* ==========================================================================
+ * 複合式小字標注
+ * Complex annotations
+ * ========================================================================== */
+hruby[complex] rb[annotation][order="1"]:before {
+  top: -0.5em;
+}
+hruby[complex] rb[annotation][order="2"]:before {
+  bottom: -0.25em;
+  top: auto;
+}
+
+/* ==========================================================================
+ * 拼、注音直角共同顯示
+ * Complex right-angle ruby for Romanization & Zhuyin
+ * ========================================================================== */
+hruby[rightangle] rb[annotation]:before {
+  bottom: -0.25em;
+  top: auto;
+  margin-left: -0.3em;
+  line-height: 1;
+}
+
+/* ==========================================================================
+ * 國語注音、台灣方言音符號
+ * Zhuyin
+ * ========================================================================== */
+hruby rb[zhuyin] {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+  width: 1.65em;
+}
+hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -moz-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  transform: scale(0.55);
+  height: 2.7em;
+  width: 0.8em;
+  -moz-text-emphasis: none;
+  -webkit-text-emphasis: none;
+  text-emphasis: none;
+  -moz-text-emphasis-position: under;
+  -webkit-text-emphasis-position: under;
+  text-emphasis-position: under;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 0.9;
+  text-indent: 0;
+  text-decoration: none;
+}
+hruby rb[zhuyin]:before {
+  content: attr(yin);
+  line-height: 0.9;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hruby rb[zhuyin][diao]:after {
+  right: -0.6em;
+  width: 1em;
+  content: attr(diao);
+}
+hruby rb[zhuyin][length="1"]:before {
+  margin-top: 0.25em;
+}
+hruby rb[zhuyin][length="1"]:after {
+  margin-top: -0.35em;
+}
+hruby rb[zhuyin][length="2"]:before {
+  margin-top: -0.15em;
+}
+hruby rb[zhuyin][length="2"]:after {
+  margin-top: 0.125em;
+}
+hruby rb[zhuyin][length="3"]:before {
+  margin-top: -0.4em;
+}
+hruby rb[zhuyin][length="3"]:after {
+  margin-top: 0.25em;
+}
+hruby rb[zhuyin][diao="˙"]:after {
+  right: -0.275em;
+}
+hruby rb[zhuyin][diao="˙"][length="1"]:after {
+  margin-top: 0;
+}
+hruby rb[zhuyin][diao="˙"][length="2"]:after {
+  margin-top: -0.25em;
+}
+hruby rb[zhuyin][diao="˙"][length="3"]:after {
+  margin-top: -0.55em;
+}
+hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
+  -moz-transform: scale(0.6);
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+  margin-right: -0.15em;
+}
+hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after {
+  margin-right: -0.2em;
+  margin-top: 0.55em;
+}
+
+/* ==========================================================================
+ * Retina Display
+ * ========================================================================== */
+/* ==========================================================================
+ * Optimised for Moedict
+ * ========================================================================== */
+h1 + h1[data-title],
+h1 + h1 + .bopomofo {
+  display: none;
+}
+
+h1[data-title] {
+  border-bottom: 1px dotted #dddddd;
+  line-height: 2;
+  padding-bottom: 0.25em;
+}
+
+hruby[rightangle] rb[annotation]:before {
+  -moz-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+  bottom: -0.3em;
+  color: #666666;
+}
+hruby rb[zhuyin] {
+  width: 1.5em;
+}
+hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
+  top: 0.15em;
+  -moz-transform: scale(0.33);
+  -webkit-transform: scale(0.33);
+  transform: scale(0.33);
+  line-height: 0.9;
+  color: #666666;
+}
+hruby rb[zhuyin][diao]:after {
+  right: -0.4em;
+  top: 0;
+}
+hruby rb[zhuyin][length="1"]:before {
+  margin-top: -0.2em;
+}
+hruby rb[zhuyin][length="1"]:after {
+  margin-top: -0.2em;
+}
+hruby rb[zhuyin][length="2"]:before {
+  margin-top: -0.25em;
+}
+hruby rb[zhuyin][length="2"]:after {
+  margin-top: 0.1em;
+}
+hruby rb[zhuyin][length="3"]:before {
+  line-height: 0.8;
+}
+hruby rb[zhuyin][length="3"]:after {
+  margin-top: 0.15em;
+}
+hruby rb[zhuyin][diao="˙"]:after {
+  right: -0.2em;
+}
+hruby rb[zhuyin][diao="˙"][length="1"]:after {
+  margin-top: 0.15em;
+}
+hruby rb[zhuyin][diao="˙"][length="3"]:after {
+  margin-top: -0.35em;
+}
+
 /*!
  *  Font Awesome 3.2.1
  *  the iconic font designed for Bootstrap
