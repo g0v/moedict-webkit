@@ -88,16 +88,6 @@ catch
     location.replace url
   else
     window.do-load!
-    if navigator.user-agent is /MSIE\s+[678]/
-      $('.navbar, .query-box').hide!
-      $('#result').css \margin-top \50px
-      <- getScript \https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
-      window.gcfnConfig = do
-        imgpath: 'https://raw.github.com/atomantic/jquery.ChromeFrameNotify/master/img/'
-        msgPre: ''
-        msgLink: '敬請安裝 Google 內嵌瀏覽框，以取得完整的萌典功能。'
-        msgAfter: ''
-      <- getScript \js/jquery.gcnotify.min.js
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try $.parseJSON(localStorage?getItem(k) ? \null)
@@ -527,7 +517,7 @@ window.do-load = ->
               <span class='xref part-of-speech'>#{
                 XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[tgt-lang]
               }</span>
-              <span class='xref'>
+              <span class='xref' itemprop='citation'>
       """
       html += (for word in words
         h = HASH-OF[tgt-lang]
@@ -721,10 +711,10 @@ function render-strokes (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
   if id is /^\s*$/
-    title = "<h1>部首表</h1>"
+    title = "<h1 itemprop='name'>部首表</h1>"
     h += '@'
   else
-    title = "<h1>#id <a class='xref' href='#\@' title='部首表'>部</a></h1>"
+    title = "<h1 itemprop='name'>#id <a class='xref' href='#\@' title='部首表'>部</a></h1>"
   rows = $.parseJSON terms
   list = ''
   for chars, strokes in rows | chars?length
@@ -737,7 +727,7 @@ function render-strokes (terms, id)
 function render-list (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
-  title = "<h1 style='padding-bottom: 10px'>#id</h1>"
+  title = "<h1 itemprop='name' style='padding-bottom: 10px'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿 and not terms
     terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）"
@@ -784,6 +774,8 @@ function render (json)
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """
       <!-- STAR -->
+      <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
+      <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
       #char-html
       <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
@@ -794,7 +786,12 @@ function render (json)
             mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
           mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
           mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
-        if mp3 then "<i class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'></i>" else ''
+        if mp3 then """
+          <i itemscope itemtype="http://schema.org/AudioObject"
+            class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'><meta
+            itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
+            itemprop="contentURL" content="#mp3" /></i>
+        """ else ''
       }#{
         if english then "<span class='english'>(#english)</span>" else ''
       }#{
@@ -809,7 +806,7 @@ function render (json)
     </div>
   """ else ''}
             </div>" else ''
-      }<div class="entry">
+      }<div class="entry" itemprop="articleBody">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
         #{ if defs.0?type
