@@ -429,7 +429,7 @@ window.do-load = ->
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    $ \#result .html html
+    $ \#result .html html .ruby()
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
 
@@ -767,10 +767,18 @@ function render (json)
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
       """
     bopomofo ?= trs2bpmf "#pinyin"
-    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
+
+    ruby = '<rbc>' + title.replace( />([\W]+)</g, (_m, _ci) ->
+      return '>' + _ci.replace(/([^，、；。])/g, '<rb>$1</rb>') + '<'
+    ) + '</rbc>'
+
+    ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.split(' ').join('</rt><rt>') + '</rt></rtc>'
+    ruby += '<rtc hidden class="romanization"><rt>' + pinyin.split(' ').join('</rt><rt>') + '</rt></rtc>' 
+
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
     unless title is /</
@@ -780,6 +788,10 @@ function render (json)
       <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
       <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
       #char-html
+      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">
+        <ruby class="rightangle">#ruby</ruby>
+      </h1>
+
       <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
