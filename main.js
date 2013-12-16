@@ -1363,7 +1363,9 @@
         });
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      bopomofo = bopomofo.replace(/(\W)(ㄦ)/g, '$1 $2').replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ');
+      bopomofo = bopomofo.replace(/([，、；。－—])/g, '');
+      bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2');
+      bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
@@ -1372,8 +1374,20 @@
       ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
         return '>' + _ci.replace(/([^，、；。－—])/g, '<rb>$1</rb>');
       }) + '</rbc>';
-      ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.split(' ').join('</rt><rt>') + '</rt></rtc>';
-      ruby += '<rtc hidden class="romanization"><rt>' + pinyin.split(' ').join('</rt><rt>') + '</rt></rtc>';
+      ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+      ruby += '<rtc hidden class="romanization">';
+      (function(){
+        var rpy, i$, len$, yin, c;
+        rpy = pinyin.replace(/[,\.]/g, '').split(' ');
+        for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
+          yin = rpy[i$];
+          if (yin !== '') {
+            c = yin.match(/\-/g) ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"' : '';
+            rpy[i$] = '<rt' + c + '>' + yin + '</rt>';
+          }
+        }
+        return ruby += rpy.join('') + '</rtc>';
+      })();
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
         cnSpecific = 'cn';

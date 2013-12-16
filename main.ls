@@ -769,7 +769,9 @@ function render (json)
     bopomofo ?= trs2bpmf "#pinyin"
     # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
-    bopomofo = bopomofo.replace(/(\W)(ㄦ)/g, '$1 $2').replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ')
+    bopomofo = bopomofo.replace(/([，、；。－—])/g, '')
+    bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2')
+    bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
@@ -778,10 +780,19 @@ function render (json)
       return '>' + _ci.replace(/([^，、；。－—])/g, '<rb>$1</rb>')
     ) + '</rbc>'
 
-    ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.split(' ').join('</rt><rt>') + '</rt></rtc>'
-    ruby += '<rtc hidden class="romanization"><rt>' + pinyin.split(' ').join('</rt><rt>') + '</rt></rtc>' 
+    ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+    ruby += '<rtc hidden class="romanization">'
+    do ->
+      rpy = pinyin.replace(/[,\.]/g, '').split(' ')
 
+      for yin in rpy
+        unless yin == ''
+          c = if yin.match(/\-/g)
+              then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
+              else ''
+          rpy[i$] = '<rt' + c + '>' + yin + '</rt>'
 
+      ruby += rpy.join('') + '</rtc>'
 
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
