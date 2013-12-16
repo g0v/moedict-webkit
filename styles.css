@@ -7463,6 +7463,9 @@ hruby rb[zhuyin][diao="˙"]:after {
 hruby rb[zhuyin][diao="˙"][length="1"]:after {
   margin-top: -0.05em;
 }
+hruby rb[zhuyin][diao="˙"][length="2"]:after {
+  margin-top: -0.2em;
+}
 hruby rb[zhuyin][diao="˙"][length="3"]:after {
   margin-top: -0.35em;
 }
