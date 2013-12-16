@@ -769,7 +769,7 @@ function render (json)
     bopomofo ?= trs2bpmf "#pinyin"
     # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
-    bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ')
+    bopomofo = bopomofo.replace(/(\W)(ㄦ)/g, '$1 $2').replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
