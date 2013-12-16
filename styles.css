@@ -7466,6 +7466,13 @@ hruby rb[zhuyin][diao="˙"][length="1"]:after {
 hruby rb[zhuyin][diao="˙"][length="3"]:after {
   margin-top: -0.35em;
 }
+hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
+  margin-right: -0.1em;
+}
+hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after {
+  margin-right: -0.1em;
+  margin-top: 0.25em;
+}
 
 /*!
  *  Font Awesome 3.2.1
