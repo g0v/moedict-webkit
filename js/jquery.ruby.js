@@ -248,11 +248,11 @@ var rubies,
 		form += ( zy.match(eval('/(' + jy + ')/')) ) ? (( form !== '' ) ? '-' : '') + 'jieyin' : ''
 		form += ( zy.match(eval('/(' + ym + ')/')) ) ? (( form !== '' ) ? '-' : '') + 'yunmu' : ''
 
-		length = form.split('-').length
-
 		yin = zy
 			.replace(eval('/(' + tone + ')/g'), '')
 			.replace(eval('/(' + yj + '[\u0358\u030D]?)/g'), '')
+
+		length = (yin) ? yin.match(/./g).length : 0
 
 		diao = 	( zy.match(/(\u02D9)/) )					? '\u02D9' : 
 				( zy.match(/(\u02CA)/) )					? '\u02CA' : 
