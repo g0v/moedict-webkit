@@ -10498,7 +10498,17 @@ canvas {
   border-top: 1px solid #ddd !important;
 }
 
+body.lang-t li#gcse, body.lang-h li#gcse, body.lang-c li#gcse {
+  display: block;
+  -webkit-transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
 body li#gcse {
+  -webkit-transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
   margin-top: 12px !important;
   margin-bottom: -12px !important;
   vertical-align: top !important;
