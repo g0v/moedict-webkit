@@ -779,9 +779,12 @@ function render (json)
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
 
-    ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
-      return '>' + _ci.replace(/([^，、；。－—])/g, '<rb>$1</rb>')
-    ) + '</rbc>'
+    if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)
+      ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
+    else 
+      ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
+        return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
+      ) + '</rbc>'
 
     ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
     ruby += '<rtc hidden class="romanization">'
