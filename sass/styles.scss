@@ -352,6 +352,18 @@ input.iconic-circle {
     }
 }
 
+h1 + h1[data-title],
+h1 + h1 + .bopomofo {
+    display: none;
+}
+
+h1[data-title] {
+    border-bottom: 1px dotted #ddd;
+    line-height: 2;
+    margin: -.25em 0 .5em;
+    padding-bottom: .3em;
+}
+
 .result {
     background: #fff;
     border: 1px solid hsl(0,1%,83%);
@@ -363,6 +375,7 @@ input.iconic-circle {
     line-height: 1.5;
     h1 {
         @include kai-fonts;
+
         div.stroke {
             display: inline;
             cursor: pointer;
@@ -1219,7 +1232,7 @@ canvas {
     background: white;
     position: absolute;
     right: 42px;
-    top: 122px;
+    top: 113px;
     &:hover {
         background: #ccc !important;
     }
