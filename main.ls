@@ -803,11 +803,7 @@ function render (json)
       <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
       <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
       #char-html
-      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">
-        <ruby class="rightangle">#ruby</ruby>
-      </h1>
-
-      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
+      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }"><ruby class="rightangle">#ruby</ruby>#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
@@ -827,7 +823,7 @@ function render (json)
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
       }</h1>#{
-        if bopomofo then "<div class='bopomofo #cn-specific'>#{
+        if bopomofo then "<!--<div class='bopomofo #cn-specific'>#{
             if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
           }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
     <div class="cn">
@@ -835,7 +831,7 @@ function render (json)
       <span class='xref'>#{ alt - /<[^>]*>/g }</span>
     </div>
   """ else ''}
-            </div>" else ''
+            </div>-->" else ''
       }<div class="entry" itemprop="articleBody">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
