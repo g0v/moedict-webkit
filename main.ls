@@ -457,7 +457,10 @@ window.do-load = ->
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
-      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
+      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a,
+      open: ->
+        $('.ui-tooltip-content h1').ruby!
+      content: (cb) ->
         id = $(@).text!
         callLater ->
           if htmlCache[LANG][id]
