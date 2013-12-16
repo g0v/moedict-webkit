@@ -123,7 +123,10 @@ body {
         @include fonts;
     }
     .english {
-        display: inline;
+        color: #777;
+        display: inline-block;
+        font-size: .65em;
+        line-height: 1;
     }
 }
 
@@ -352,17 +355,6 @@ input.iconic-circle {
     }
 }
 
-h1 + h1[data-title],
-h1 + h1 + .bopomofo {
-    display: none;
-}
-
-h1[data-title] {
-    border-bottom: 1px dotted #ddd;
-    line-height: 2;
-    margin: -.25em 0 .5em;
-    padding-bottom: .3em;
-}
 
 .result {
     background: #fff;
@@ -375,6 +367,13 @@ h1[data-title] {
     line-height: 1.5;
     h1 {
         @include kai-fonts;
+        border-bottom: 1px dotted #ddd;
+        margin: -.25em 0 .5em;
+        padding-bottom: .3em;
+
+        &[itemprop="name"] {
+            margin-top: .25em;
+        }
 
         div.stroke {
             display: inline;
@@ -394,6 +393,13 @@ h1[data-title] {
     }
     li {
         line-height: 1.5;
+    }
+}
+
+hruby {
+    rb[annotation]:before,
+    rb[annotation]:after {
+        @include en-fonts;
     }
 }
 

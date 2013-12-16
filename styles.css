@@ -9427,7 +9427,10 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
-  display: inline;
+  color: #777;
+  display: inline-block;
+  font-size: .65em;
+  line-height: 1;
 }
 
 .bopomofo, .radical {
@@ -9688,18 +9691,6 @@ input.iconic-circle {
     margin-right: 20px;
   }
 }
-h1 + h1[data-title],
-h1 + h1 + .bopomofo {
-  display: none;
-}
-
-h1[data-title] {
-  border-bottom: 1px dotted #ddd;
-  line-height: 2;
-  margin: -.25em 0 .5em;
-  padding-bottom: .3em;
-}
-
 .result {
   background: #fff;
   border: 1px solid #d4d3d3;
@@ -9713,6 +9704,12 @@ h1[data-title] {
 }
 .result h1 {
   font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  border-bottom: 1px dotted #ddd;
+  margin: -.25em 0 .5em;
+  padding-bottom: .3em;
+}
+.result h1[itemprop="name"] {
+  margin-top: .25em;
 }
 .result h1 div.stroke {
   display: inline;
@@ -9731,6 +9728,11 @@ h1[data-title] {
 }
 .result li {
   line-height: 1.5;
+}
+
+hruby rb[annotation]:before,
+hruby rb[annotation]:after {
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
 body.lang-h .ui-tooltip .bopomofo {

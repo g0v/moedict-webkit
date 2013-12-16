@@ -819,7 +819,7 @@ function render (json)
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
       }#{
-        if english then "<span class='english'>(#english)</span>" else ''
+        if english then "<span lang='en' class='english'>(#english)</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
       }</h1>#{
