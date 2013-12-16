@@ -1363,13 +1363,14 @@
         });
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
+      bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ');
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
-      ruby = '<rbc>' + title.replace(/>([\W]+)</g, function(_m, _ci){
-        return '>' + _ci.replace(/([^，、；。])/g, '<rb>$1</rb>') + '<';
+      ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
+        return '>' + _ci.replace(/([^，、；。－—])/g, '<rb>$1</rb>');
       }) + '</rbc>';
       ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.split(' ').join('</rt><rt>') + '</rt></rtc>';
       ruby += '<rtc hidden class="romanization"><rt>' + pinyin.split(' ').join('</rt><rt>') + '</rt></rtc>';
