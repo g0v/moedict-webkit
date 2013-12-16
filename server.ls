@@ -21,12 +21,33 @@ def-of = (lang, title, cb) ->
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 
-const wt2font = { wt002: \HanWangMingMedium wt009: \HanWangYenHeavy wt006: \HanWangYenLight wt071: \HanWangShinSuMedium wthc06: \HanWangGB06 wt014: \HanWangHeiHeavy wt001: \HanWangMingLight wt011: \HanWangHeiLight wt024: \HanWangFangSongMedium wt003: \HanWangMingBold wt005: \HanWangMingBlack wt064: \HanWangYanKai wt004: \HanWangMingHeavy wtcc02: \HanWangCC02 wt021: \HanWangLiSuMedium wt028: \HanWangKanDaYan wt034: \HanWangKanTan wtcc15: \HanWangCC15 wt040: \HanWangZonYi }
-const font2name = { HanWangMingMedium: \中明體 HanWangYenHeavy: \特圓體 HanWangYenLight: \細圓體 HanWangShinSuMedium: \中行書 HanWangGB06: \鋼筆行楷 HanWangHeiHeavy: \特黑體 HanWangMingLight: \細明體 HanWangHeiLight: \細黑體 HanWangFangSongMedium: \中仿宋 HanWangMingBold: \粗明體 HanWangMingBlack: \超明體 HanWangYanKai: \顏楷體 HanWangMingHeavy: \特明體 HanWangCC02: \酷儷海報 HanWangLiSuMedium: \中隸書 HanWangKanDaYan: \空疊圓 HanWangKanTan: \勘亭流 HanWangCC15: \酷正海報 HanWangZonYi: \綜藝體 }
+const wt2font = {
+  wt071: \HanWangShinSuMedium
+  wt024: \HanWangFangSongMedium
+  wt021: \HanWangLiSuMedium
+  wt001: \HanWangMingLight
+  wt002: \HanWangMingMedium
+  wt003: \HanWangMingBold
+  wt005: \HanWangMingBlack
+  wt004: \HanWangMingHeavy
+  wt006: \HanWangYenLight
+  wt009: \HanWangYenHeavy
+  wt011: \HanWangHeiLight
+  wt014: \HanWangHeiHeavy
+  wt064: \HanWangYanKai
+  wt028: \HanWangKanDaYan
+  wt034: \HanWangKanTan
+  wt040: \HanWangZonYi
+  wtcc02: \HanWangCC02
+  wtcc15: \HanWangCC15
+  wthc06: \HanWangGB06
+}
+const font2name = { HanWangMingMedium: \中明體 HanWangYenHeavy: \特圓體 HanWangYenLight: \細圓體 HanWangShinSuMedium: \中行書 HanWangGB06: \鋼筆行楷 HanWangHeiHeavy: \特黑體 HanWangMingLight: \細明體 HanWangHeiLight: \細黑體 HanWangFangSongMedium: \中仿宋 HanWangMingBold: \粗明體 HanWangMingBlack: \超明體 HanWangYanKai: \顏楷體 HanWangMingHeavy: \特明體 HanWangCC02: \酷儷海報 HanWangLiSuMedium: \中隸書 HanWangKanDaYan: \空疊圓 HanWangKanTan: \勘亭流 HanWangCC15: \酷正海報 HanWangZonYi: \綜藝體 ShuoWen: \說文標篆}
 
 font-of = ->
   return 'TW-Sung' if it is /sung/i
   return 'EBAS' if it is /ebas/i
+  return 'ShuoWen' if it is /shuowen/i
   return wt2font[it] || 'TW-Kai'
 
 <- fs.mkdir \png
@@ -152,76 +173,85 @@ require(\zappajs) ->
       meta property:"og:description" content:def
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
+      link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
       base target:\_blank
-    if not @segments
-      h = ''
-      h = @text.slice(0, 1) if @text is /^[!~:]/
-      body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-        script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
-        idx = 0
-        (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
-          word = @text.replace(/^[!~:]/ '')
-          h1 {itemprop:\name}, "<a href='/#h#word'>#word"
-          div {itemprop:\articleBody}, -> for {d, t, b} in (@h || {d:[{f: @t}]})
-            p trim(b || t)
-            ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
-              s = if s then "<br>似:[#s]" else ''
-              a = if a then "<br>反:[#a]" else ''
-              dl ->
-                dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-                dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-      return
-    body -> center ->
-      return unless @segments
-      img class:'moedict' src:"#{ @text.replace(/^[!~:]/, '') }#png-suffix" width:320 height:320, style: '''
-        margin-top: -50px;
-        margin-bottom: -50px;
-      '''
-      uri = encodeURIComponent encodeURIComponent @text
-      uri += suffix
-      form id:'frm' style:'''
-        top: 0;
-        right: 0;
-        background: rgba(200, 200, 200, 0.5);
-        border-radius: 5px;
-        padding: 5px 15px;
-        position: absolute;
-      ''', ->
-        select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
-          option value:'', \國語
-          option selected:(@text is /^!/), value:\!, \臺語
-          option selected:(@text is /^:/), value:\:, \客語
-        select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
-          option value:'?font=kai', \楷書
-          option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
-          option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
-          for wt, font of @wt2font
-            option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
-        input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: @text.replace(/^[!~:]/, '')
-        button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
-      div class:'share' style:'margin: 15px', ->
-        a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
-          i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
-        a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^[!~:]/, '') }", ->
-          i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
-        a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
-          i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
-      table class:'moetext' style:'''
-        max-width: 90%;
-        background: #eee;
-        border: 24px #f9f9f9 solid !important;
-        box-shadow: #d4d4d4 0 3px 3px;
-      ''', -> for {href, part, def} in @segments || [] => tr ->
-        td ->
-          a {href} -> img style:'''
-            vertical-align: top;
-            background: white;
-            border-radius: 10px;
-            boder: 1px solid #999;
-            box-shadow: #d4d4d4 0 3px 3px;
-            margin: 10px;
-          ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part
-        td -> a {style: 'color: #006', href}, expand-def def
+      word = @text.replace(/^[!~:]/ '')
+      if not @segments
+        h = ''
+        h = @text.slice(0, 1) if @text is /^[!~:]/
+        body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
+          script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
+          idx = 0
+          (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
+            meta itemprop:"image" content:og-image
+            h1 {itemprop:\name}, "<a href='/#h#word'>#word"
+            div {itemprop:\articleBody}, -> for {d, t, b} in (@h || {d:[{f: @t}]})
+              p trim(b || t)
+              ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+                s = if s then "<br>似:[#s]" else ''
+                a = if a then "<br>反:[#a]" else ''
+                dl ->
+                  dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+                  dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+        return
+      body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
+        meta itemprop:"name" content:word
+        meta itemprop:"image" content:og-image
+        meta itemprop:"itemListOrder" content:\Unordered
+        attrs = class:'moedict' src:"#word#png-suffix" width:240 height:240 alt:word, title:word
+        if word.length > 1
+          attrs <<< style:'margin-top: -50px; margin-bottom: -50px;' width:320 height:320
+        img attrs
+        uri = encodeURIComponent encodeURIComponent @text
+        uri += suffix
+        form id:'frm' style:'''
+          top: 0;
+          right: 0;
+          background: rgba(200, 200, 200, 0.5);
+          border-radius: 5px;
+          padding: 5px 15px;
+          position: absolute;
+        ''', ->
+          select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
+            option value:'', \國語
+            option selected:(@text is /^!/), value:\!, \臺語
+            option selected:(@text is /^:/), value:\:, \客語
+          select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
+            optgroup label:'全字庫', ->
+              option value:'?font=kai', \楷書
+              option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
+              option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
+            optgroup label:'逢甲大學', ->
+              option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
+            optgroup label:'王漢宗', ->
+              for wt, font of @wt2font
+                option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
+          input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: word
+          button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
+        div class:'share' style:'margin: 15px', ->
+          a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+            i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
+          a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^[!~:]/, '') }", ->
+            i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
+          a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
+            i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
+        table class:'moetext' style:'''
+          max-width: 90%;
+          background: #eee;
+          border: 24px #f9f9f9 solid !important;
+          box-shadow: #d4d4d4 0 3px 3px;
+        ''', -> for {href, part, def} in @segments || [] => tr ->
+          td ->
+            meta itemprop:"itemListElement" content:part
+            a {href} -> img style:'''
+              vertical-align: top;
+              background: white;
+              border-radius: 10px;
+              boder: 1px solid #999;
+              box-shadow: #d4d4d4 0 3px 3px;
+              margin: 10px;
+            ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part, title:part
+          td -> a {style: 'color: #006', href}, expand-def def
 
 function text2dim (len)
   len <?= 50
@@ -250,7 +280,7 @@ function text2png (text, font)
       ch = text.slice 0, 1
       text.=slice 1
       ctx.font = "355px #font"
-      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS/
+      ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
         ctx.font = '355px TWBLG'
         ch += text.0
@@ -261,7 +291,12 @@ function text2png (text, font)
         text.=slice 1
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
       offset = if ch is /[\u3000\uFF01-\uFF5E]/ then 0.17 else 0.23
-      ctx.fillText ch, (margin + idx * 360), (padding + row - offset) * 375
+      x = (margin + idx * 360)
+      y = (padding + row - offset) * 375
+      if font is /ShuoWen/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        x += 50
+        y += 45
+      ctx.fillText ch, x, y
       idx++
     row++
   return canvas.pngStream!
