@@ -7417,17 +7417,6 @@ hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby 
 /* ==========================================================================
  * Optimised for Moedict
  * ========================================================================== */
-h1 + h1[data-title],
-h1 + h1 + .bopomofo {
-  display: none;
-}
-
-h1[data-title] {
-  border-bottom: 1px dotted #dddddd;
-  line-height: 2;
-  padding-bottom: 0.25em;
-}
-
 hruby[rightangle] rb[annotation]:before {
   -moz-transform: scale(0.4);
   -webkit-transform: scale(0.4);
@@ -7451,10 +7440,10 @@ hruby rb[zhuyin][diao]:after {
   top: 0;
 }
 hruby rb[zhuyin][length="1"]:before {
-  margin-top: -0.2em;
+  margin-top: -0.1em;
 }
 hruby rb[zhuyin][length="1"]:after {
-  margin-top: -0.2em;
+  margin-top: -0.1em;
 }
 hruby rb[zhuyin][length="2"]:before {
   margin-top: -0.25em;
@@ -7472,7 +7461,7 @@ hruby rb[zhuyin][diao="˙"]:after {
   right: -0.2em;
 }
 hruby rb[zhuyin][diao="˙"][length="1"]:after {
-  margin-top: 0.15em;
+  margin-top: -0.05em;
 }
 hruby rb[zhuyin][diao="˙"][length="3"]:after {
   margin-top: -0.35em;
@@ -9699,6 +9688,18 @@ input.iconic-circle {
     margin-right: 20px;
   }
 }
+h1 + h1[data-title],
+h1 + h1 + .bopomofo {
+  display: none;
+}
+
+h1[data-title] {
+  border-bottom: 1px dotted #ddd;
+  line-height: 2;
+  margin: -.25em 0 .5em;
+  padding-bottom: .3em;
+}
+
 .result {
   background: #fff;
   border: 1px solid #d4d3d3;
@@ -10533,7 +10534,7 @@ canvas {
   background: white;
   position: absolute;
   right: 42px;
-  top: 122px;
+  top: 113px;
 }
 .iconic-color.star:hover {
   background: #ccc !important;
