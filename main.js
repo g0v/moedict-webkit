@@ -817,6 +817,9 @@
           show: 100,
           hide: 100,
           items: 'a',
+          open: function(){
+            return $('.ui-tooltip-content h1').ruby();
+          },
           content: function(cb){
             var id;
             id = $(this).text();
