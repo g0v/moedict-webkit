@@ -1363,7 +1363,7 @@
         });
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
-      bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ');
+      bopomofo = bopomofo.replace(/(\W)(ㄦ)/g, '$1 $2').replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][͘]?)/g, '$1 ');
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
