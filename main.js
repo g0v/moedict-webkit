@@ -1367,34 +1367,34 @@
       }
       bopomofo == null && (bopomofo = trs2bpmf(pinyin + ""));
       bopomofo = bopomofo.replace(/([，、；。－—])/g, '');
-      bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2');
+      bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
-      if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)) {
-        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>';
-      } else {
-        ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
-          return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>');
-        }) + '</rbc>';
-      }
-      ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
-      ruby += '<rtc hidden class="romanization">';
-      (function(){
-        var rpy, i$, len$, yin, c;
-        rpy = pinyin.replace(/[,\.]/g, '').split(' ');
-        for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
-          yin = rpy[i$];
+      ruby = function(){
+        var ruby, rpinyin, i$, len$, yin, c;
+        if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)) {
+          ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>';
+        } else {
+          ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
+            return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>');
+          }) + '</rbc>';
+        }
+        ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+        ruby += '<rtc hidden class="romanization">';
+        rpinyin = pinyin.replace(/[,\.]/g, '').split(' ');
+        for (i$ = 0, len$ = rpinyin.length; i$ < len$; ++i$) {
+          yin = rpinyin[i$];
           if (yin !== '') {
             c = yin.match(/\-/g) ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"' : '';
-            rpy[i$] = '<rt' + c + '>' + yin + '</rt>';
+            rpinyin[i$] = '<rt' + c + '>' + yin + '</rt>';
           }
         }
-        return ruby += rpy.join('') + '</rtc>';
-      })();
+        return ruby += rpinyin.join('') + '</rtc>';
+      }();
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
         cnSpecific = 'cn';
@@ -1404,7 +1404,7 @@
       }
       return "    <!-- STAR -->\n    <meta itemprop=\"image\" content=\"" + encodeURIComponent(replace$.call(h(title), /<[^>]+>/g, '')) + ".png\" />\n    <meta itemprop=\"name\" content=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\" />\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\"><ruby class=\"rightangle\">" + ruby + "</ruby>" + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '') + (english ? "<span lang='en' class='english'>(" + english + ")</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<!--<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>-->" : '') + "<div class=\"entry\" itemprop=\"articleBody\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '') + (english ? "<span lang='en' class='english'>" + english + "</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<!--<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>-->" : '') + "<div class=\"entry\" itemprop=\"articleBody\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];

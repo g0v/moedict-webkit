@@ -429,7 +429,7 @@ window.do-load = ->
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    $ \#result .html html .ruby()
+    $ \#result .html html .ruby!
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
 
@@ -773,22 +773,23 @@ function render (json)
     # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
     bopomofo = bopomofo.replace(/([，、；。－—])/g, '')
-    bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2')
+    bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ')
     bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
 
-    if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)
-      ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
-    else 
-      ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
-        return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
-      ) + '</rbc>'
+    ruby = do ->
+      if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)
+        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
+      else 
+        ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
+          return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
+        ) + '</rbc>'
 
-    ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-    ruby += '<rtc hidden class="romanization">'
-    do ->
+      ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+      ruby += '<rtc hidden class="romanization">'
+
       rpy = pinyin.replace(/[,\.]/g, '').split(' ')
 
       for yin in rpy
@@ -825,7 +826,7 @@ function render (json)
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
       }#{
-        if english then "<span lang='en' class='english'>(#english)</span>" else ''
+        if english then "<span lang='en' class='english'>#english</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
       }</h1>#{
