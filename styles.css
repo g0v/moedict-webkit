@@ -9497,6 +9497,13 @@ body.lang-h .iconic-color {
 body.lang-h #query-box {
   background-color: #EFFBEF;
 }
+body.lang-h h1 {
+  border-bottom: 0;
+  margin: .25em 0 .25em;
+}
+body.lang-h h1 + .bopomofo {
+  display: table;
+}
 
 body.lang-t .nav-bg {
   background-color: #700;
@@ -9729,6 +9736,9 @@ input.iconic-circle {
 .result h1 div.stroke:hover {
   border: 1px solid #a00;
   background: #fff8f8;
+}
+.result .bopomofo {
+  display: none;
 }
 .result ul, .result ol {
   padding-left: 35px;
