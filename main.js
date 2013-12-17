@@ -1375,7 +1375,7 @@
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
       ruby = function(){
-        var ruby, rpy, i$, len$, yin, c;
+        var ruby, rpy, i$, len$, yin, span;
         if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>';
         } else {
@@ -1389,8 +1389,10 @@
         for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
           yin = rpy[i$];
           if (yin !== '') {
-            c = yin.match(/\-/g) ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"' : '';
-            rpy[i$] = '<rt' + c + '>' + yin + '</rt>';
+            span = yin.match(/\-/g)
+              ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
+              : yin.match(/^[^eēéěè].*r$/g) ? ' rbspan="2"' : '';
+            rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
         ruby += rpy.join('') + '</rtc>';
