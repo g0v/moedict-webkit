@@ -1473,7 +1473,7 @@
           text = text.replace(/([i])\u030d/g, "<span class='$1-030d'>$1\u030d</span>");
         }
       }
-      return text.replace(/\uFF0E/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
+      return text.replace(/[\uFF0E|\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
     }
     function groupBy(prop, xs){
       var x, pre, y;
