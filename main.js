@@ -1375,8 +1375,8 @@
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
       ruby = function(){
-        var ruby, rpinyin, i$, len$, yin, c;
-        if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)) {
+        var ruby, rpy, i$, len$, yin, c;
+        if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>';
         } else {
           ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
@@ -1385,15 +1385,16 @@
         }
         ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
         ruby += '<rtc hidden class="romanization">';
-        rpinyin = pinyin.replace(/[,\.]/g, '').split(' ');
-        for (i$ = 0, len$ = rpinyin.length; i$ < len$; ++i$) {
-          yin = rpinyin[i$];
+        rpy = pinyin.replace(/[,\.]/g, '').split(' ');
+        for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
+          yin = rpy[i$];
           if (yin !== '') {
             c = yin.match(/\-/g) ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"' : '';
-            rpinyin[i$] = '<rt' + c + '>' + yin + '</rt>';
+            rpy[i$] = '<rt' + c + '>' + yin + '</rt>';
           }
         }
-        return ruby += rpinyin.join('') + '</rtc>';
+        ruby += rpy.join('') + '</rtc>';
+        return ruby;
       }();
       cnSpecific = '';
       if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {

@@ -780,7 +780,7 @@ function render (json)
     pinyin.=replace /ɑ/g \a
 
     ruby = do ->
-      if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\W)$/)
+      if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
       else 
         ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
@@ -800,6 +800,7 @@ function render (json)
           rpy[i$] = '<rt' + c + '>' + yin + '</rt>'
 
       ruby += rpy.join('') + '</rtc>'
+      return ruby
 
     cn-specific = ''
     cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
