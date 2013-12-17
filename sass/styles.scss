@@ -376,14 +376,13 @@ input.iconic-circle {
     line-height: 1.5;
     h1 {
         @include kai-fonts;
-        border-bottom: 1px dotted #ddd;
+        border-bottom: 1px dotted $border-color;
         margin: -.25em 0 .5em;
         padding-bottom: .3em;
 
         &[itemprop="name"] {
             margin-top: .25em;
         }
-
         div.stroke {
             display: inline;
             cursor: pointer;
@@ -415,7 +414,7 @@ hruby {
     }
 }
 
-body.lang-h .ui-tooltip .bopomofo {
+body .ui-tooltip .bopomofo {
     display: none;
 }
 
@@ -1116,11 +1115,17 @@ span {
         font-size: 75%;
     }
     .title {
-        margin: 0;
-        padding: 0;
+        border-bottom: 1px dotted $border-color;
+        margin: -.25em 0 .25em;
+        padding: .25em;
         font-size: 130%;
-        line-height: 120%;
-        .playAudio { display: none !important }
+        line-height: 1.2;
+        .playAudio {
+            display: none !important
+        }
+        .lang-h & {
+            border-bottom: 0;
+        }
     }
     .example {
         display: none;

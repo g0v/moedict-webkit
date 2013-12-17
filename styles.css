@@ -9721,7 +9721,7 @@ input.iconic-circle {
 }
 .result h1 {
   font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-  border-bottom: 1px dotted #ddd;
+  border-bottom: 1px dotted #dddddd;
   margin: -.25em 0 .5em;
   padding-bottom: .3em;
 }
@@ -9755,7 +9755,7 @@ hruby rb[annotation]:after {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
 
-body.lang-h .ui-tooltip .bopomofo {
+body .ui-tooltip .bopomofo {
   display: none;
 }
 
@@ -10422,13 +10422,17 @@ span a {
   font-size: 75%;
 }
 .ui-tooltip .title {
-  margin: 0;
-  padding: 0;
+  border-bottom: 1px dotted #dddddd;
+  margin: -.25em 0 .25em;
+  padding: .25em;
   font-size: 130%;
-  line-height: 120%;
+  line-height: 1.2;
 }
 .ui-tooltip .title .playAudio {
   display: none !important;
+}
+.lang-h .ui-tooltip .title {
+  border-bottom: 0;
 }
 .ui-tooltip .example {
   display: none;
