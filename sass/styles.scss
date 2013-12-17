@@ -176,6 +176,15 @@ body.lang-h {
     .iconic-circle { background: #474; }
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
+
+    h1 {
+        border-bottom: 0;
+        margin: .25em 0 .25em;
+    
+        & + .bopomofo {
+            display: table;
+        }
+    }
 }
 
 body.lang-t {
@@ -384,6 +393,9 @@ input.iconic-circle {
                 background: #fff8f8;
             }
         }
+    }
+    .bopomofo {
+        display: none;
     }
     ul, ol {
         padding-left: 35px;
