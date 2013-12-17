@@ -794,10 +794,12 @@ function render (json)
 
       for yin in rpy
         unless yin == ''
-          c = if yin.match(/\-/g)
+          span = if yin.match(/\-/g) # 閩南語羅馬字分詞
               then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
+              else if yin.match(/^[^eēéěè].*r$/g) # 國語兒化音
+              then ' rbspan="2"'
               else ''
-          rpy[i$] = '<rt' + c + '>' + yin + '</rt>'
+          rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
 
       ruby += rpy.join('') + '</rtc>'
       return ruby
