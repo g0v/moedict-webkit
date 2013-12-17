@@ -780,6 +780,8 @@ function render (json)
     pinyin.=replace /ɑ/g \a
 
     ruby = do ->
+      if LANG is \h
+        return
       if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
       else 
@@ -794,11 +796,13 @@ function render (json)
 
       for yin in rpy
         unless yin == ''
-          span = if yin.match(/\-/g) # 閩南語羅馬字分詞
-              then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
-              else if yin.match(/^[^eēéěè].*r$/g) # 國語兒化音
-              then ' rbspan="2"'
-              else ''
+          span = if LANG is \t && yin.match(/\-/g) # 閩南語羅馬字分詞
+                 then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
+                 else if LANG is \c && yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g) # /c/典，按元音群分詞
+                 then ' rbspan="'+ yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g).length + '"'
+                 else if yin.match(/^[^eēéěè].*r$/g) # 國語兒化音
+                 then ' rbspan="2"'
+                 else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
 
       ruby += rpy.join('') + '</rtc>'
