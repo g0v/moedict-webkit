@@ -796,12 +796,17 @@ function render (json)
 
       for yin in rpy
         unless yin == ''
-          span = if LANG is \t && yin.match(/\-/g) # 閩南語羅馬字分詞
+          span = # 閩南語羅馬字分詞
+                 if LANG is \t && yin.match(/\-/g)
                  then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
-                 else if LANG is \c && yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g) # /c/典，按元音群分詞
-                 then ' rbspan="'+ yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g).length + '"'
-                 else if yin.match(/^[^eēéěè].*r$/g) # 國語兒化音
+
+                 # 國語兒化音
+                 else if yin.match(/^[^eēéěè].*r$/g)
                  then ' rbspan="2"'
+
+                 # /c/典，按元音群分詞
+                 else if LANG is \c && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) 
+                 then ' rbspan="'+ yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
 

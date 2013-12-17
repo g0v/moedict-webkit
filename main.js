@@ -1394,9 +1394,9 @@
           if (yin !== '') {
             span = LANG === 't' && yin.match(/\-/g)
               ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
-              : LANG === 'c' && yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g)
-                ? ' rbspan="' + yin.match(/[aāáăàeēéěèiīíǐìoōóŏòuūúŭùüǖǘǚǜ]+/g).length + '"'
-                : yin.match(/^[^eēéěè].*r$/g) ? ' rbspan="2"' : '';
+              : yin.match(/^[^eēéěè].*r$/g)
+                ? ' rbspan="2"'
+                : LANG === 'c' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
