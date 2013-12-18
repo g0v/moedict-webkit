@@ -1,5 +1,6 @@
 require! fs
 LTM-regexes = {}
+
 for let lang in <[ a t h c ]>
   err, json <- fs.read-file "#lang/lenToRegex.json"
   try
@@ -147,6 +148,11 @@ require(\zappajs) ->
     png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
 
+    TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
+    SYM-OF = {'!': \t, ':': \h, '~': \c}
+    LANG = 'a'
+    LANG = SYM-OF[@text.slice(0, 1)] if @text is /^[!~:]/
+
     html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant', manifest:"manifest.appcache"} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
@@ -167,9 +173,10 @@ require(\zappajs) ->
       t += " (#{ @english })" if @english
       t ||= @text
       t = t.slice(1) if t is /^[!~:]/
-      title "#t - 萌典"
-      meta name:"og:title" content:"#t - 萌典"
-      meta name:"twitter:title" content:"#t - 萌典"
+      Title = "#t - #{ TITLE-OF[LANG] }萌典"
+      title Title
+      meta name:"og:title" content:Title
+      meta name:"twitter:title" content:Title
       meta property:"og:description" content:def
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
@@ -184,9 +191,9 @@ require(\zappajs) ->
           idx = 0
           (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
             meta itemprop:"image" content:og-image
-            h1 {itemprop:\name}, "<a href='/#h#word'>#word"
-            div {itemprop:\articleBody}, -> for {d, t, b} in (@h || {d:[{f: @t}]})
-              p trim(b || t)
+            h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
+            div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
+              p trim(b || t || T || "#P".replace(/\u20DE/g ' '))
               ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
                 s = if s then "<br>似:[#s]" else ''
                 a = if a then "<br>反:[#a]" else ''

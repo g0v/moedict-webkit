@@ -9,6 +9,7 @@ $ ->
 
 const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
+const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
@@ -395,7 +396,7 @@ window.do-load = ->
       if "#{location.hash}" isnt hash => try history.pushState null, null, hash
         catch => location.replace hash
       location.search = '' if location.search is /^\?q=/
-    try document.title = "#it - 萌典"
+    try document.title = "#it - #{ TITLE-OF[LANG] }萌典"
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
     if isMobile
