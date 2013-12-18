@@ -485,6 +485,7 @@ window.do-load = ->
     return true
 
   fill-json = (part, id, cb=set-html) ->
+    title = $.parseJSON part .t
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
@@ -500,7 +501,7 @@ window.do-load = ->
     else if part is /^\[/
       html = render-list part, id
     else
-      html = render $.parseJSON part
+      html = render $.parseJSON(part), title
     html.=replace /(.)\u20DD/g          "<span class='part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
@@ -733,7 +734,6 @@ function render-strokes (terms, id)
 function render-list (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
-  title = "<h1 itemprop='name' style='padding-bottom: 10px'>#id</h1>"
   title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿 and not terms
@@ -754,7 +754,7 @@ function http
   return "http://#it" unless location.protocol is \https:
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 
-function render (json)
+function render (json, t)
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
@@ -783,11 +783,17 @@ function render (json)
     ruby = do ->
       if LANG is \h
         return
-      if title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
-        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>'
-      else 
-        ruby = '<rbc>' + title.replace( />([^<]+)/g, (_m, _ci) ->
-          return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
+
+      _h = "#{HASH-OF[LANG]}"
+
+      if t.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
+        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
+      else
+        ruby = '<rbc>' + t.replace( /`([^`~]+)~/g, (_m, _ci, o, s) ->
+          ci = _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
+          return if ( _ci.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/) )
+                 then '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
+                 else '<a href="' + _h + _ci + '">' + ci + '</a>'
         ) + '</rbc>'
 
       ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
@@ -802,11 +808,11 @@ function render (json)
                  then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
 
                  # 國語兒化音
-                 else if yin.match(/^[^eēéěè].*r$/g)
+                 else if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
                  then ' rbspan="2"'
 
-                 # /c/典，按元音群分詞
-                 else if LANG is \c && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) 
+                 # 兩岸詞典，按元音群分詞
+                 else if LANG != \t && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) 
                  then ' rbspan="'+ yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
