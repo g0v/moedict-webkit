@@ -865,8 +865,9 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, hasXrefs, tgtLang, ref$, words, word;
+      var title, h, html, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
+      title = $.parseJSON(part).t;
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
@@ -893,7 +894,7 @@
       } else if (/^\[/.exec(part)) {
         html = renderList(part, id);
       } else {
-        html = render($.parseJSON(part));
+        html = render($.parseJSON(part), title);
       }
       html = html.replace(/(.)\u20DD/g, "<span class='part-of-speech'>$1</span>");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
@@ -1314,7 +1315,7 @@
     var h, title;
     h = HASHOF[LANG];
     id = replace$.call(id, /^[@=]/, '');
-    title = "<h1 itemprop='name' style='padding-bottom: 10px'>" + id + "</h1>";
+    title = "<h1 itemprop='name'>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
     if (id === '字詞紀錄簿' && !terms) {
       terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）";
@@ -1341,7 +1342,7 @@
       return httpMap[x] || xs;
     });
   }
-  function render(json){
+  function render(json, t){
     var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
@@ -1375,15 +1376,20 @@
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
       ruby = function(){
-        var ruby, rpy, i$, len$, yin, span;
+        var _h, ruby, rpy, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
-        if (title.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)) {
-          ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div></rbc>';
+        _h = HASHOF[LANG] + "";
+        if (t.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)) {
+          ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
-          ruby = '<rbc>' + title.replace(/>([^<]+)/g, function(_m, _ci){
-            return '>' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>');
+          ruby = '<rbc>' + t.replace(/`([^`~]+)~/g, function(_m, _ci, o, s){
+            var ci;
+            ci = _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>');
+            return _ci.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
+              ? '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
+              : '<a href="' + _h + _ci + '">' + ci + '</a>';
           }) + '</rbc>';
         }
         ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
@@ -1394,9 +1400,9 @@
           if (yin !== '') {
             span = LANG === 't' && yin.match(/\-/g)
               ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
-              : yin.match(/^[^eēéěè].*r$/g)
+              : LANG !== 't' && yin.match(/^[^eēéěè].*r$/g)
                 ? ' rbspan="2"'
-                : LANG === 'c' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
+                : LANG !== 't' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
