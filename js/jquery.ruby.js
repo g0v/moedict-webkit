@@ -252,7 +252,7 @@ var rubies,
 			.replace(eval('/(' + tone + ')/g'), '')
 			.replace(eval('/(' + yj + '[\u0358\u030D]?)/g'), '')
 
-		length = (yin) ? yin.match(/./g).length : 0
+		length = (yin) ? yin.length : 0
 
 		diao = 	( zy.match(/(\u02D9)/) )					? '\u02D9' : 
 				( zy.match(/(\u02CA)/) )					? '\u02CA' : 
