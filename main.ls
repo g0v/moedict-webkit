@@ -734,6 +734,7 @@ function render-list (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
   title = "<h1 itemprop='name' style='padding-bottom: 10px'>#id</h1>"
+  title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿 and not terms
     terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）"

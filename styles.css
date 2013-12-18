@@ -9728,6 +9728,9 @@ input.iconic-circle {
 .result h1[itemprop="name"] {
   margin-top: .25em;
 }
+.result h1[style] {
+  line-height: 2;
+}
 .result h1 div.stroke {
   display: inline;
   cursor: pointer;
