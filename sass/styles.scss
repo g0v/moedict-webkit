@@ -386,6 +386,52 @@ input.iconic-circle {
         &[style] {
             line-height: 2;
         }
+        small.youyin,
+        small.bianyin {
+            @include fonts;
+            color: #888;
+            display: inline-block;
+            font-size: .45em;
+            letter-spacing: .125em;
+            line-height: 1;
+            margin-left: .25em;
+        }
+        small.bianyin {
+            // posi
+            display: block;
+            margin: .75em 0 0 2em;
+            position: relative;
+
+            // typo
+            letter-spacing: 0;
+            line-height: 1.2;
+
+            span {
+                display: block;
+
+                &:last-of-type {
+                    margin: .25em 0 0 -.1em;
+                }
+            }
+
+            &:before {
+                // posi
+                display: inline-block;
+                left: -1.75em;
+                padding: 4px 3px 5px 4px;
+                position: absolute;
+
+                // typo
+                content: '變';
+                color: #fff;
+                font-size: 15px;
+                line-height: 1;
+
+                // style
+                background: $primary-color;
+                border-radius: 4px;
+            }
+        }
         div.stroke {
             display: inline;
             cursor: pointer;

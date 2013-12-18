@@ -773,12 +773,27 @@ function render (json, t)
     bopomofo ?= trs2bpmf "#pinyin"
     # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
-    bopomofo = bopomofo.replace(/([，、；。－—])/g, '')
-    bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ')
-    bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ')
     bopomofo -= /<[^>]*>/g unless LANG is \c
+
+    youyin = if bopomofo is /（[語|讀|又]音）/
+             then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
+    bianyin = if bopomofo is /(變)/
+              then bopomofo.replace /.*\(變\)​(.*)/, '$1'
+              else ''
+    bianyin .=  replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+
+    bopomofo .= replace /([，、；。－—])/g, '' 
+    bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
+    bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
+    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /\(變\).*/, ''
+
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
+
+    bianyin2 = if pinyin is /(變)/
+              then pinyin.replace /.*\(變\)​(.*)/, '$1'
+              else ''
+    pinyin .= replace /\(變\).*/, ''
 
     ruby = do ->
       if LANG is \h
@@ -794,7 +809,6 @@ function render (json, t)
                  then '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
                  else '<a href="' + _h + _ci + '">' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>') + '</a>'
         ) + '</rbc>'
-
       ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
       ruby += '<rtc class="romanization">'
 
@@ -853,6 +867,14 @@ function render (json, t)
             class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'><meta
             itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
             itemprop="contentURL" content="#mp3" /></i>
+        """ else ''
+
+        if youyin then """
+          <small class='youyin'>#youyin</small>
+        """ else ''
+
+        if bianyin then """
+          <small class='bianyin'><span class='pinyin'>#bianyin2</span><span class='bpmf'>#bianyin</span></small>
         """ else ''
       }#{
         if english then "<span lang='en' class='english'>#english</span>" else ''
