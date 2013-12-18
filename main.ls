@@ -430,9 +430,15 @@ window.do-load = ->
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
     $ \#result .html html .ruby!
+    $('#result h1 rb[word-order]')
+    .on \mouseover, ->
+      _i = $ this .attr \word-order
+      $('#result h1 rb[word-order=' + _i + ']').addClass \hovered
+    .on \mouseout ->
+      $('#result h1 rb').removeClass \hovered
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
-
+ 
     cache-loading := no
 
     vclick = if isMobile then \touchstart else \click
@@ -461,7 +467,7 @@ window.do-load = ->
       open: ->
         $('.ui-tooltip-content h1').ruby!
       content: (cb) ->
-        id = $(@).text!
+        id = $(@).attr \href .replace /^#[!|:|~]?/, ''
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -785,7 +791,7 @@ function render (json, t)
     bopomofo .= replace /[，、；。－—,.;]/g, '' 
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
-    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /[\(變\)​|\/].*/, ''
+    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /\(變\)​\/.*/, '' .replace /\/.*/, ''
 
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
@@ -793,9 +799,11 @@ function render (json, t)
     bianyin2 = if pinyin is /[變|\/]/
               then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
               else ''
-    
-    pinyin .= replace /[,.;]/g, ''
-    pinyin .= replace /[\(變\)​|\/].*/, ''
+
+    if LANG isnt \h
+      pinyin .= replace /[,.;]/g, ''
+      pinyin .= replace /\(變\)​.*/, ''
+      pinyin .= replace /\/.*/, ''
 
     ruby = do ->
       if LANG is \h
@@ -806,10 +814,12 @@ function render (json, t)
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
       else
+        order = 0
         ruby = '<rbc>' + t.replace( /`([^`~]+)~/g, (_m, _ci, o, s) ->
+          order += 1
           return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/ )
                  then '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
-                 else '<a href="' + _h + _ci + '">' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>') + '</a>'
+                 else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word-order="' + order + '"><a href="' + _h + _ci + '">$1</a></rb>')
         ) + '</rbc>'
       ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
       ruby += '<rtc class="romanization">'
@@ -823,17 +833,14 @@ function render (json, t)
                  then ' rbspan="'+ (yin.match /\-/g .length+1) + '"'
 
                  # 國語兒化音
-                 # else if LANG != \t && yin is /^[^eēéěè].*r$/g
-                 # then ' rbspan="1"'
+                 else if LANG != \t && yin is /^[^eēéěè].*r$/g
+                 then ' rbspan="2"'
 
                  # 兩岸詞典，按元音群計算字數
                  else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g
                  then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g .length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
-          rpy[i$] += # 國語兒化音（暫時）
-                     if LANG != \t and yin is /^[^eēéěè].*r$/g
-                     then '<rt></rt>'
 
       ruby += rpy.join ''
       ruby += '</rtc>'
@@ -873,9 +880,7 @@ function render (json, t)
 
         if youyin then """
           <small class='youyin'>#youyin</small>
-        """ else ''
-
-        if bianyin then """
+        """ else if bianyin then """
           <small class='bianyin'><span class='pinyin'>#bianyin2</span><span class='bpmf'>#bianyin</span></small>
         """ else ''
       }#{

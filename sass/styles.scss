@@ -364,7 +364,6 @@ input.iconic-circle {
     }
 }
 
-
 .result {
     background: #fff;
     border: 1px solid hsl(0,1%,83%);
@@ -386,6 +385,66 @@ input.iconic-circle {
         &[style] {
             line-height: 2;
         }
+        div.stroke {
+            display: inline;
+            cursor: pointer;
+            border: 1px solid white;
+            &:hover {
+                border: 1px solid #a00;
+                background: #fff8f8;
+            }
+        }
+        a:hover,
+        rb.hovered {
+            background: #ddd;
+            color: #0070A3;
+            outline: 1px solid hsl(197,96%,70%);
+            @include box-sizing(content-box);
+        }
+
+        rb.hovered {
+            background: #ddd;
+            border: 1px solid hsl(197,96%,70%);
+            border-left: 0;
+            border-right: 0;
+            line-height: 1.2;
+            outline: 0;
+
+            a {
+                color: #0070A3;
+                outline: 0;
+            }
+
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+    }
+    .bopomofo {
+        display: none;
+    }
+    ul, ol {
+        padding-left: 35px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin: 0 !important;
+    }
+    li {
+        line-height: 1.5;
+    }
+}
+
+hruby {
+    rb[annotation]:before,
+    rb[annotation]:after {
+        @include en-fonts;
+    }
+}
+
+.result,
+.ui-tooltip {
+    h1 {
         small.youyin,
         small.bianyin {
             @include fonts;
@@ -394,7 +453,7 @@ input.iconic-circle {
             font-size: .45em;
             letter-spacing: .125em;
             line-height: 1;
-            margin-left: .25em;
+            margin: 0 0 0 .25em;
         }
         small.bianyin {
             // posi
@@ -436,39 +495,17 @@ input.iconic-circle {
                 }
             }
         }
-        div.stroke {
-            display: inline;
-            cursor: pointer;
-            border: 1px solid white;
-            &:hover {
-                border: 1px solid #a00;
-                background: #fff8f8;
-            }
-        }
+    }
+}
+
+body .ui-tooltip {
+    h1 small.youyin {
+        display: block;
+        margin-top: .25em;
     }
     .bopomofo {
         display: none;
     }
-    ul, ol {
-        padding-left: 35px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        margin: 0 !important;
-    }
-    li {
-        line-height: 1.5;
-    }
-}
-
-hruby {
-    rb[annotation]:before,
-    rb[annotation]:after {
-        @include en-fonts;
-    }
-}
-
-body .ui-tooltip .bopomofo {
-    display: none;
 }
 
 input.query {
