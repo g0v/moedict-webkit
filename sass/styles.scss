@@ -430,6 +430,10 @@ input.iconic-circle {
                 // style
                 background: $primary-color;
                 border-radius: 4px;
+
+                body.lang-t & {
+                    content: '又'
+                }
             }
         }
         div.stroke {

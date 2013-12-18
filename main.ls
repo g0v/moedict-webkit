@@ -777,23 +777,25 @@ function render (json, t)
 
     youyin = if bopomofo is /（[語|讀|又]音）/
              then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
-    bianyin = if bopomofo is /(變)/
-              then bopomofo.replace /.*\(變\)​(.*)/, '$1'
+    bianyin = if bopomofo is /[變|\/]/
+              then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
               else ''
     bianyin .=  replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
-    bopomofo .= replace /([，、；。－—])/g, '' 
+    bopomofo .= replace /[，、；。－—,.;]/g, '' 
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
-    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /\(變\).*/, ''
+    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /[\(變\)​|\/].*/, ''
 
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
 
-    bianyin2 = if pinyin is /(變)/
-              then pinyin.replace /.*\(變\)​(.*)/, '$1'
+    bianyin2 = if pinyin is /[變|\/]/
+              then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
               else ''
-    pinyin .= replace /\(變\).*/, ''
+    
+    pinyin .= replace /[,.;]/g, ''
+    pinyin .= replace /[\(變\)​|\/].*/, ''
 
     ruby = do ->
       if LANG is \h

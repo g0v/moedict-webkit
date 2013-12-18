@@ -1371,16 +1371,17 @@
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
       youyin = /（[語|讀|又]音）/.exec(bopomofo) ? bopomofo.replace(/（([語|讀|又]音)）.*/, '$1') : void 8;
-      bianyin = /(變)/.exec(bopomofo) ? bopomofo.replace(/.*\(變\)​(.*)/, '$1') : '';
+      bianyin = /[變|\/]/.exec(bopomofo) ? bopomofo.replace(/.*[\(變\)​|\/](.*)/, '$1') : '';
       bianyin = bianyin.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
-      bopomofo = bopomofo.replace(/([，、；。－—])/g, '');
+      bopomofo = bopomofo.replace(/[，、；。－—,.;]/g, '');
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
-      bopomofo = bopomofo.replace(/（[語|讀|又]音）[\u200B]?/, '').replace(/\(變\).*/, '');
+      bopomofo = bopomofo.replace(/（[語|讀|又]音）[\u200B]?/, '').replace(/[\(變\)​|\/].*/, '');
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
-      bianyin2 = /(變)/.exec(pinyin) ? pinyin.replace(/.*\(變\)​(.*)/, '$1') : '';
-      pinyin = pinyin.replace(/\(變\).*/, '');
+      bianyin2 = /[變|\/]/.exec(pinyin) ? pinyin.replace(/.*[\(變\)​|\/](.*)/, '$1') : '';
+      pinyin = pinyin.replace(/[,.;]/g, '');
+      pinyin = pinyin.replace(/[\(變\)​|\/].*/, '');
       ruby = function(){
         var _h, ruby, rpy, i$, len$, yin, span;
         if (LANG === 'h') {

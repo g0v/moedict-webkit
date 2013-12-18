@@ -9766,6 +9766,9 @@ input.iconic-circle {
   background: #6b0000;
   border-radius: 4px;
 }
+body.lang-t .result h1 small.bianyin:before {
+  content: "又";
+}
 .result h1 div.stroke {
   display: inline;
   cursor: pointer;
