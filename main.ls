@@ -808,14 +808,16 @@ function render (json, t)
                  then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
 
                  # 國語兒化音
-                 else if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
-                 then ' rbspan="2"'
+                 # else if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
+                 # then ' rbspan="1"'
 
                  # 兩岸詞典，按元音群分詞
                  else if LANG != \t && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) 
                  then ' rbspan="'+ yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
+          rpy[i$] += if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
+                     then '<rt></rt>'
 
       ruby += rpy.join('') + '</rtc>'
       return ruby

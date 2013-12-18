@@ -1400,10 +1400,9 @@
           if (yin !== '') {
             span = LANG === 't' && yin.match(/\-/g)
               ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
-              : LANG !== 't' && yin.match(/^[^eēéěè].*r$/g)
-                ? ' rbspan="2"'
-                : LANG !== 't' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
+              : LANG !== 't' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
+            rpy[i$] += LANG !== 't' && yin.match(/^[^eēéěè].*r$/g) ? '<rt></rt>' : void 8;
           }
         }
         ruby += rpy.join('') + '</rtc>';
