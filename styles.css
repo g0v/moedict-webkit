@@ -9731,6 +9731,41 @@ input.iconic-circle {
 .result h1[style] {
   line-height: 2;
 }
+.result h1 small.youyin,
+.result h1 small.bianyin {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  color: #888;
+  display: inline-block;
+  font-size: .45em;
+  letter-spacing: .125em;
+  line-height: 1;
+  margin-left: .25em;
+}
+.result h1 small.bianyin {
+  display: block;
+  margin: .75em 0 0 2em;
+  position: relative;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.result h1 small.bianyin span {
+  display: block;
+}
+.result h1 small.bianyin span:last-of-type {
+  margin: .25em 0 0 -.1em;
+}
+.result h1 small.bianyin:before {
+  display: inline-block;
+  left: -1.75em;
+  padding: 4px 3px 5px 4px;
+  position: absolute;
+  content: '變';
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+  background: #6b0000;
+  border-radius: 4px;
+}
 .result h1 div.stroke {
   display: inline;
   cursor: pointer;
