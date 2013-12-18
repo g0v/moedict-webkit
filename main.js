@@ -1380,32 +1380,31 @@
         if (LANG === 'h') {
           return;
         }
-        _h = HASHOF[LANG] + "";
-        if (t.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)) {
+        _h = HASHOF[LANG];
+        if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
           ruby = '<rbc>' + t.replace(/`([^`~]+)~/g, function(_m, _ci, o, s){
-            var ci;
-            ci = _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>');
-            return _ci.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
+            return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(_ci)
               ? '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
-              : '<a href="' + _h + _ci + '">' + ci + '</a>';
+              : '<a href="' + _h + _ci + '">' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>') + '</a>';
           }) + '</rbc>';
         }
-        ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
-        ruby += '<rtc hidden class="romanization">';
+        ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+        ruby += '<rtc class="romanization">';
         rpy = pinyin.replace(/[,\.]/g, '').split(' ');
         for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
           yin = rpy[i$];
           if (yin !== '') {
-            span = LANG === 't' && yin.match(/\-/g)
+            span = LANG === 't' && /\-/g.exec(yin)
               ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
-              : LANG !== 't' && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
+              : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
-            rpy[i$] += LANG !== 't' && yin.match(/^[^eēéěè].*r$/g) ? '<rt></rt>' : void 8;
+            rpy[i$] += LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin) ? '<rt></rt>' : void 8;
           }
         }
-        ruby += rpy.join('') + '</rtc>';
+        ruby += rpy.join('');
+        ruby += '</rtc>';
         return ruby;
       }();
       cnSpecific = '';

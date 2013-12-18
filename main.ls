@@ -784,42 +784,43 @@ function render (json, t)
       if LANG is \h
         return
 
-      _h = "#{HASH-OF[LANG]}"
+      _h = HASH-OF[LANG]
 
-      if t.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/)
+      if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
       else
         ruby = '<rbc>' + t.replace( /`([^`~]+)~/g, (_m, _ci, o, s) ->
-          ci = _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>')
-          return if ( _ci.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/) )
+          return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/ )
                  then '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
-                 else '<a href="' + _h + _ci + '">' + ci + '</a>'
+                 else '<a href="' + _h + _ci + '">' + _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb>$1</rb>') + '</a>'
         ) + '</rbc>'
 
-      ruby += '<rtc hidden class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-      ruby += '<rtc hidden class="romanization">'
+      ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+      ruby += '<rtc class="romanization">'
 
-      rpy = pinyin.replace(/[,\.]/g, '').split(' ')
+      rpy = pinyin.replace /[,\.]/g, '' .split ' '
 
       for yin in rpy
         unless yin == ''
-          span = # 閩南語羅馬字分詞
-                 if LANG is \t && yin.match(/\-/g)
-                 then ' rbspan="'+ (yin.match(/\-/g).length+1) + '"'
+          span = # 閩南語典，按隔音符計算字數
+                 if LANG is \t and yin is /\-/g
+                 then ' rbspan="'+ (yin.match /\-/g .length+1) + '"'
 
                  # 國語兒化音
-                 # else if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
+                 # else if LANG != \t && yin is /^[^eēéěè].*r$/g
                  # then ' rbspan="1"'
 
-                 # 兩岸詞典，按元音群分詞
-                 else if LANG != \t && yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g) 
-                 then ' rbspan="'+ yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"'
+                 # 兩岸詞典，按元音群計算字數
+                 else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g
+                 then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g .length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
-          rpy[i$] += if LANG != \t && yin.match(/^[^eēéěè].*r$/g)
+          rpy[i$] += # 國語兒化音（暫時）
+                     if LANG != \t and yin is /^[^eēéěè].*r$/g
                      then '<rt></rt>'
 
-      ruby += rpy.join('') + '</rtc>'
+      ruby += rpy.join ''
+      ruby += '</rtc>'
       return ruby
 
     cn-specific = ''
