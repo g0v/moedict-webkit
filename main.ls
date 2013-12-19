@@ -430,12 +430,21 @@ window.do-load = ->
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
     $ \#result .html html .ruby!
-    $('#result h1 rb[word-order]')
-    .on \mouseover, ->
-      _i = $ this .attr \word-order
-      $('#result h1 rb[word-order=' + _i + ']').addClass \hovered
-    .on \mouseout ->
-      $('#result h1 rb').removeClass \hovered
+
+    $('#result h1 rb[word]') .each ->
+      _h = HASH-OF[LANG]
+      _i = $ this .attr 'word-order'
+      _ci = $ this .attr 'word'
+      $ this .wrap $('<a/>').attr({
+        'word-order': _i
+        'href': _h + _ci
+      })
+      .on 'mouseover' ->
+        _i = $ this .attr 'word-order'
+        $('#result h1 a[word-order=' + _i + ']').addClass \hovered
+      .on 'mouseout' ->
+        $('#result h1 a') .removeClass 'hovered'
+
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
  
@@ -809,18 +818,16 @@ function render (json, t)
       if LANG is \h
         return
 
-      _h = HASH-OF[LANG]
-
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
       else
         order = 0
-        ruby = '<rbc>' + t.replace( /`([^`~]+)~/g, (_m, _ci, o, s) ->
+        ruby = '<rbc>' + t.replace( /([^`~]+)/g, (_m, _ci, o, s) ->
           order += 1
           return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/ )
-                 then '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
-                 else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word-order="' + order + '"><a href="' + _h + _ci + '">$1</a></rb>')
-        ) + '</rbc>'
+                 then '<rb word="' + _ci + '">' + _ci + '</rb>'
+                 else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
+        ).replace(/([`~])/g, '') + '</rbc>'
       ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
       ruby += '<rtc class="romanization">'
 

@@ -395,30 +395,13 @@ input.iconic-circle {
             }
         }
         a:hover,
-        rb.hovered {
+        a.hovered {
             background: #ddd;
             color: #0070A3;
             outline: 1px solid hsl(197,96%,70%);
-            @include box-sizing(content-box);
         }
 
-        rb.hovered {
-            background: #ddd;
-            border: 1px solid hsl(197,96%,70%);
-            border-left: 0;
-            border-right: 0;
-            line-height: 1.2;
-            outline: 0;
-
-            a {
-                color: #0070A3;
-                outline: 0;
-            }
-
-            &:before,
-            &:after {
-                display: none;
-            }
+        a.hovered {
         }
     }
     .bopomofo {

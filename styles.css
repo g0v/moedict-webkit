@@ -9741,28 +9741,10 @@ input.iconic-circle {
   background: #fff8f8;
 }
 .result h1 a:hover,
-.result h1 rb.hovered {
+.result h1 a.hovered {
   background: #ddd;
   color: #0070A3;
   outline: 1px solid #69d2fc;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-.result h1 rb.hovered {
-  background: #ddd;
-  border: 1px solid #69d2fc;
-  border-left: 0;
-  border-right: 0;
-  line-height: 1.2;
-  outline: 0;
-}
-.result h1 rb.hovered a {
-  color: #0070A3;
-  outline: 0;
-}
-.result h1 rb.hovered:before, .result h1 rb.hovered:after {
-  display: none;
 }
 .result .bopomofo {
   display: none;
