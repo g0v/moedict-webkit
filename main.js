@@ -924,7 +924,7 @@
       html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
       html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
-      html = html.replace(RegExp('(>[^<]*)' + id, 'g'), "$1<b>" + id + "</b>");
+      html = html.replace(RegExp('(>[^<]*)' + id + '(?!</(?:h1|rb)>)', 'g'), "$1<b>" + id + "</b>");
       html = html.replace(/¹/g, '<sup>1</sup>');
       html = html.replace(/²/g, '<sup>2</sup>');
       html = html.replace(/³/g, '<sup>3</sup>');
