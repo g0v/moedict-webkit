@@ -398,7 +398,8 @@ input.iconic-circle {
         a.hovered {
             background: #ddd;
             color: #0070A3;
-            outline: 1px solid hsl(197,96%,70%);
+            border-radius: 4px;
+            outline: none; // 1px solid hsl(197,96%,70%);
         }
     }
     .bopomofo {
@@ -419,6 +420,7 @@ hruby {
     rb[annotation]:before,
     rb[annotation]:after {
         @include en-fonts;
+        font-weight: normal;
     }
 }
 
@@ -499,6 +501,9 @@ hruby {
 }
 
 body .ui-tooltip {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
     h1 small.youyin {
         display: block;
         margin-top: .25em;
