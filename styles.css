@@ -9765,9 +9765,13 @@ hruby rb[annotation]:after {
 }
 
 .result h1 small.youyin,
-.result h1 small.bianyin,
+.result h1 small.alternative,
+.result h1 + div small.youyin,
+.result h1 + div small.alternative,
 .ui-tooltip h1 small.youyin,
-.ui-tooltip h1 small.bianyin {
+.ui-tooltip h1 small.alternative,
+.ui-tooltip h1 + div small.youyin,
+.ui-tooltip h1 + div small.alternative {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   color: #888;
   display: inline-block;
@@ -9776,39 +9780,63 @@ hruby rb[annotation]:after {
   line-height: 1;
   margin: 0 0 0 .25em;
 }
-.result h1 small.bianyin,
-.ui-tooltip h1 small.bianyin {
+.result h1 small.alternative,
+.result h1 + div small.alternative,
+.ui-tooltip h1 small.alternative,
+.ui-tooltip h1 + div small.alternative {
   display: block;
   margin: .75em 0 0 2em;
   position: relative;
   letter-spacing: 0;
   line-height: 1.2;
 }
-.result h1 small.bianyin span,
-.ui-tooltip h1 small.bianyin span {
+.result h1 small.alternative span,
+.result h1 + div small.alternative span,
+.ui-tooltip h1 small.alternative span,
+.ui-tooltip h1 + div small.alternative span {
   display: block;
   font-size: .8em;
 }
-.result h1 small.bianyin span:last-of-type,
-.ui-tooltip h1 small.bianyin span:last-of-type {
+.result h1 small.alternative span:last-of-type,
+.result h1 + div small.alternative span:last-of-type,
+.ui-tooltip h1 small.alternative span:last-of-type,
+.ui-tooltip h1 + div small.alternative span:last-of-type {
   margin: .25em 0 0 -.1em;
 }
-.result h1 small.bianyin:before,
-.ui-tooltip h1 small.bianyin:before {
+.result h1 small.alternative:before,
+.result h1 + div small.alternative:before,
+.ui-tooltip h1 small.alternative:before,
+.ui-tooltip h1 + div small.alternative:before {
   display: inline-block;
   left: -1.85em;
   padding: 4px 3px 5px 4px;
   position: absolute;
   content: '變';
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1;
   background: #6b0000;
   border-radius: 4px;
 }
-body.lang-t .result h1 small.bianyin:before, body.lang-t
-.ui-tooltip h1 small.bianyin:before {
+body.lang-t .result h1 small.alternative:before, body.lang-t
+.result h1 + div small.alternative:before, body.lang-t
+.ui-tooltip h1 small.alternative:before, body.lang-t
+.ui-tooltip h1 + div small.alternative:before {
   content: "又";
+}
+.result h1 + div small.cn-specific,
+.ui-tooltip h1 + div small.cn-specific {
+  font-size: 1em;
+}
+.result h1 + div small.cn-specific:before,
+.ui-tooltip h1 + div small.cn-specific:before {
+  content: '陸';
+  left: -28px;
+}
+.result h1 + div small.cn-specific span,
+.ui-tooltip h1 + div small.cn-specific span {
+  border-bottom: 0 !important;
+  float: none !important;
 }
 
 body .ui-tooltip h1 small.youyin {
@@ -10078,6 +10106,10 @@ span .tone {
   line-height: 1;
 }
 
+.part-of-speech {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+
 .fw_def {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
@@ -10335,10 +10367,6 @@ body.lang-c h1[data-title] {
 }
 body.lang-c .bopomofo {
   display: block;
-}
-body.lang-c .bopomofo .bpmf,
-body.lang-c .bopomofo .pinyin {
-  display: none;
 }
 body.lang-c .specific {
   background: #66c;

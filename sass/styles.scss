@@ -424,9 +424,10 @@ hruby {
 
 .result,
 .ui-tooltip {
-    h1 {
+    h1,
+    h1 + div {
         small.youyin,
-        small.bianyin {
+        small.alternative {
             @include fonts;
             color: #888;
             display: inline-block;
@@ -435,7 +436,7 @@ hruby {
             line-height: 1;
             margin: 0 0 0 .25em;
         }
-        small.bianyin {
+        small.alternative {
             // posi
             display: block;
             margin: .75em 0 0 2em;
@@ -464,7 +465,7 @@ hruby {
                 // typo
                 content: '變';
                 color: #fff;
-                font-size: 15px;
+                font-size: 14px;
                 line-height: 1;
 
                 // style
@@ -474,6 +475,23 @@ hruby {
                 body.lang-t & {
                     content: '又'
                 }
+            }
+        }
+    }
+
+    h1 + div {
+
+        small.cn-specific {
+            font-size: 1em;
+
+            &:before {
+                content: '陸';
+                left: -28px;
+            }
+
+            span {
+                border-bottom: 0 !important;
+                float: none !important;
             }
         }
     }
@@ -749,6 +767,10 @@ span .tone {
     padding: 2px;
     font-size: 100%;
     line-height: 1;
+}
+
+.part-of-speech {
+    @include fonts;
 }
 
 .fw_def {
@@ -1039,7 +1061,7 @@ body.lang-c {
 
         .bpmf,
         .pinyin {
-            display: none;
+            //display: none;
         }
     }
     .specific {
