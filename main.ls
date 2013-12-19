@@ -786,7 +786,6 @@ function render (json, t)
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
       """
     bopomofo ?= trs2bpmf "#pinyin"
-    # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
@@ -892,6 +891,12 @@ function render (json, t)
           #title
         """
         }#{
+        if youyin then """
+          <small class='youyin'>#youyin</small>
+        """ else if alternative then """
+          <small class='alternative'><span class='pinyin'>#alternative2</span><span class='bopomofo'>#alternative</span></small>
+        """ else ''
+      }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
@@ -906,12 +911,6 @@ function render (json, t)
             itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
-
-        if youyin then """
-          <small class='youyin'>#youyin</small>
-        """ else if alternative then """
-          <small class='alternative'><span class='pinyin'>#alternative2</span><span class='bopomofo'>#alternative</span></small>
-        """ else ''
       }#{
         if english then "<span lang='en' class='english'>#english</span>" else ''
       }#{
@@ -920,7 +919,7 @@ function render (json, t)
       <div class="bopomofo">
       #{
         if alt? then """
-          <div class="cn">
+          <div lang="zh-Hans" class="cn-specific">
             <span class='xref part-of-speech'>简</span>
             <span class='xref'>#{ alt - /<[^>]*>/g }</span>
           </div>
@@ -931,6 +930,8 @@ function render (json, t)
             <span class='pinyin'>#pinyin</span>
             <span class='bopomofo'>#bopomofo</span>
           </small>
+        """ else if LANG is \h then """
+          <span class='pinyin'>#pinyin</span>
         """ else ''
       }
       </div>
