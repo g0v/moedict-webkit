@@ -400,9 +400,6 @@ input.iconic-circle {
             color: #0070A3;
             outline: 1px solid hsl(197,96%,70%);
         }
-
-        a.hovered {
-        }
     }
     .bopomofo {
         display: none;
@@ -450,6 +447,7 @@ hruby {
 
             span {
                 display: block;
+                font-size: .8em;
 
                 &:last-of-type {
                     margin: .25em 0 0 -.1em;
@@ -459,7 +457,7 @@ hruby {
             &:before {
                 // posi
                 display: inline-block;
-                left: -1.75em;
+                left: -1.85em;
                 padding: 4px 3px 5px 4px;
                 position: absolute;
 
@@ -1033,6 +1031,17 @@ body.lang-h {
 }
 
 body.lang-c {
+    h1[data-title] {
+        border-bottom: 0;
+    }
+    .bopomofo {
+        display: block;
+
+        .bpmf,
+        .pinyin {
+            display: none;
+        }
+    }
     .specific {
         background: #66c;
         margin-left: 5px;

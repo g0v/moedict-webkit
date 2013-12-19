@@ -9787,6 +9787,7 @@ hruby rb[annotation]:after {
 .result h1 small.bianyin span,
 .ui-tooltip h1 small.bianyin span {
   display: block;
+  font-size: .8em;
 }
 .result h1 small.bianyin span:last-of-type,
 .ui-tooltip h1 small.bianyin span:last-of-type {
@@ -9795,7 +9796,7 @@ hruby rb[annotation]:after {
 .result h1 small.bianyin:before,
 .ui-tooltip h1 small.bianyin:before {
   display: inline-block;
-  left: -1.75em;
+  left: -1.85em;
   padding: 4px 3px 5px 4px;
   position: absolute;
   content: '變';
@@ -10329,6 +10330,16 @@ body.lang-h .bopomofo .part-of-speech {
   width: auto;
 }
 
+body.lang-c h1[data-title] {
+  border-bottom: 0;
+}
+body.lang-c .bopomofo {
+  display: block;
+}
+body.lang-c .bopomofo .bpmf,
+body.lang-c .bopomofo .pinyin {
+  display: none;
+}
 body.lang-c .specific {
   background: #66c;
   margin-left: 5px;
