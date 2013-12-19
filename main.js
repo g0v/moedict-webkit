@@ -1412,7 +1412,7 @@
           order = 0;
           ruby = '<rbc>' + t.replace(/([^`~]+)/g, function(_m, _ci, o, s){
             order += 1;
-            return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(_ci)
+            return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/.exec(_ci)
               ? '<rb word="' + _ci + '">' + _ci + '</rb>'
               : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>');
           }).replace(/([`~])/g, '') + '</rbc>';
@@ -1424,7 +1424,7 @@
           yin = rpy[i$];
           if (yin !== '') {
             span = LANG === 't' && /\-/g.exec(yin)
-              ? ' rbspan="' + (yin.match(/\-/g).length + 1) + '"'
+              ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
                 ? ' rbspan="2"'
                 : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
