@@ -824,7 +824,7 @@ function render (json, t)
         order = 0
         ruby = '<rbc>' + t.replace( /([^`~]+)/g, (_m, _ci, o, s) ->
           order += 1
-          return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/ )
+          return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
                  then '<rb word="' + _ci + '">' + _ci + '</rb>'
                  else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
         ).replace(/([`~])/g, '') + '</rbc>'
@@ -837,7 +837,7 @@ function render (json, t)
         unless yin == ''
           span = # 閩南語典，按隔音符計算字數
                  if LANG is \t and yin is /\-/g
-                 then ' rbspan="'+ (yin.match /\-/g .length+1) + '"'
+                 then ' rbspan="'+ (yin.match /[\-]+/g .length+1) + '"'
 
                  # 國語兒化音
                  else if LANG != \t && yin is /^[^eēéěè].*r$/g
