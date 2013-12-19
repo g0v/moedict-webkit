@@ -862,8 +862,8 @@ function render (json, t)
       ruby += '</rtc>'
       return ruby
 
-    cn-specific = ''
-    cn-specific = \cn if bopomofo is /陸/ #and bopomofo isnt /<br>/
+    #cn-specific = ''
+    #cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
 
     if LANG is \c 
       if bopomofo is /<br>/
