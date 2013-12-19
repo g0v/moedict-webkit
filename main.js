@@ -1363,7 +1363,7 @@
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
     result = ls(heteronyms, function(arg$){
-      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, specific_to, alt, youyin, bianyin, bianyin2, ruby, cnSpecific, basename, mp3;
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, specific_to, alt, youyin, alternative, alternative2, ruby, cnSpecific, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants, specific_to = arg$.specific_to, alt = arg$.alt;
@@ -1386,26 +1386,40 @@
       if (LANG !== 'c') {
         bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
       }
-      youyin = /（[語|讀|又]音）/.exec(bopomofo) ? bopomofo.replace(/（([語|讀|又]音)）.*/, '$1') : void 8;
-      bianyin = /[變|\/]/.exec(bopomofo) ? bopomofo.replace(/.*[\(變\)​|\/](.*)/, '$1') : '';
-      bianyin = bianyin.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
+      pinyin = pinyin.replace(/ɡ/g, 'g');
+      pinyin = pinyin.replace(/ɑ/g, 'a');
+      youyin = /^（[語|讀|又]音）/.exec(bopomofo) ? bopomofo.replace(/（([語|讀|又]音)）.*/, '$1') : void 8;
+      alternative = /[變|\/]/.exec(bopomofo)
+        ? bopomofo.replace(/.*[\(變\)​|\/](.*)/, '$1')
+        : /.+（又音）.+/.exec(bopomofo) ? bopomofo.replace(/.+（又音）/, '') : '';
+      alternative = alternative.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
+      alternative2 = /[變|\/]/.exec(pinyin)
+        ? pinyin.replace(/.*[\(變\)​|\/](.*)/, '$1')
+        : /.+（又音）.+/.exec(bopomofo) ? function(){
+          var _py, i$, to$, i;
+          _py = pinyin.split(' ');
+          for (i$ = 0, to$ = _py.length / 2 - 1; i$ <= to$; ++i$) {
+            i = i$;
+            _py.shift();
+          }
+          return _py.join(' ');
+        }() : '';
       bopomofo = bopomofo.replace(/[，、；。－—,.;]/g, '');
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
-      bopomofo = bopomofo.replace(/（[語|讀|又]音）[\u200B]?/, '').replace(/\(變\)​\/.*/, '').replace(/\/.*/, '');
-      pinyin = pinyin.replace(/ɡ/g, 'g');
-      pinyin = pinyin.replace(/ɑ/g, 'a');
-      bianyin2 = /[變|\/]/.exec(pinyin) ? pinyin.replace(/.*[\(變\)​|\/](.*)/, '$1') : '';
-      if (LANG !== 'h') {
-        pinyin = pinyin.replace(/[,.;]/g, '');
-        pinyin = pinyin.replace(/\(變\)​.*/, '');
-        pinyin = pinyin.replace(/\/.*/, '');
-      }
       ruby = function(){
-        var ruby, order, rpy, i$, len$, yin, span;
+        var p, b, ruby, order, rpy, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
+        p = pinyin.replace(/[,.;]/g, '');
+        p = p.replace(/\(變\)​.*/, '');
+        p = p.replace(/\/.*/, '');
+        p = p.replace(/<br>.*/, '');
+        b = bopomofo.replace(/（[語|讀|又]音）[\u200B]?/, '');
+        b = b.replace(/\(變\)​\/.*/, '');
+        b = b.replace(/\/.*/, '');
+        b = b.replace(/<br>.*/, '');
         if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
@@ -1417,9 +1431,9 @@
               : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>');
           }).replace(/([`~])/g, '') + '</rbc>';
         }
-        ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+        ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
         ruby += '<rtc class="romanization">';
-        rpy = pinyin.replace(/[,\.]/g, '').split(' ');
+        rpy = p.replace(/[,\.]/g, '').split(' ');
         for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
           yin = rpy[i$];
           if (yin !== '') {
@@ -1427,7 +1441,7 @@
               ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
                 ? ' rbspan="2"'
-                : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
+                : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
@@ -1436,19 +1450,31 @@
         return ruby;
       }();
       cnSpecific = '';
-      if (/陸/.exec(bopomofo) && !/<br>/.test(bopomofo)) {
+      if (/陸/.exec(bopomofo)) {
         cnSpecific = 'cn';
+      }
+      if (LANG === 'c') {
+        if (/<br>/.exec(bopomofo)) {
+          pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '');
+          bopomofo = bopomofo.replace(/.*<br>/, '').replace(/陸./, '');
+          bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
+        } else {
+          pinyin = '';
+          bopomofo = '';
+        }
+      } else if (LANG === 'h') {
+        bopomofo = '';
       }
       if (!/</.test(title)) {
         title = "<div class='stroke' title='筆順動畫'>" + title + "</div>";
       }
-      return "    <!-- STAR -->\n    <meta itemprop=\"image\" content=\"" + encodeURIComponent(replace$.call(h(title), /<[^>]+>/g, '')) + ".png\" />\n    <meta itemprop=\"name\" content=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\" />\n    " + charHtml + "\n    <h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">\n      " + (LANG !== 'h'
+      return "<!-- STAR -->\n<meta itemprop=\"image\" content=\"" + encodeURIComponent(replace$.call(h(title), /<[^>]+>/g, '')) + ".png\" />\n<meta itemprop=\"name\" content=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\" />\n" + charHtml + "\n<h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">\n  " + (LANG !== 'h'
         ? "<ruby class=\"rightangle\">" + ruby + "</ruby>"
         : "" + title) + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
         : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '', youyin
         ? "<small class='youyin'>" + youyin + "</small>"
-        : bianyin ? "<small class='bianyin'><span class='pinyin'>" + bianyin2 + "</span><span class='bpmf'>" + bianyin + "</span></small>" : '') + (english ? "<span lang='en' class='english'>" + english + "</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>" + (bopomofo ? "<div class='bopomofo " + cnSpecific + "'>" + (pinyin ? "<span class='pinyin'>" + h(pinyin) + "</span>" : '') + "<span class='bpmf'>" + h(bopomofo) + "</span>" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + "</div>" : '') + "<div class=\"entry\" itemprop=\"articleBody\">\n    " + ls(groupBy('type', definitions.slice()), function(defs){
+        : alternative ? "<small class='alternative'><span class='pinyin'>" + alternative2 + "</span><span class='bopomofo'>" + alternative + "</span></small>" : '') + (english ? "<span lang='en' class='english'>" + english + "</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>\n<div class=\"bopomofo\">\n" + (alt != null ? "<div class=\"cn\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + (bopomofo ? "<small class=\"alternative cn-specific\">\n  <span class='pinyin'>" + pinyin + "</span>\n  <span class='bopomofo'>" + bopomofo + "</span>\n</small>" : '') + "\n</div>\n<div class=\"entry\" itemprop=\"articleBody\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;
         return "<div class=\"entry-item\">\n" + ((ref$ = defs[0]) != null && ref$.type ? (function(){
           var i$, ref$, len$, results$ = [];
@@ -1474,7 +1500,7 @@
             return "<span class='link'>" + h(it) + "</span>";
           }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n</p></li>";
         }) + "</ol></div>";
-      }) + "\n    " + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n    " + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n    </div>";
+      }) + "\n" + (synonyms ? "<span class='synonyms'><span class='part-of-speech'>似</span> " + h((replace$.call(synonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (antonyms ? "<span class='antonyms'><span class='part-of-speech'>反</span> " + h((replace$.call(antonyms, /^,/, '')).replace(/,/g, '、')) + "</span>" : '') + "\n" + (variants ? "<span class='variants'><span class='part-of-speech'>異</span> " + h(variants.replace(/,/g, '、')) + "</span>" : '') + "\n</div>";
     });
     return result + "" + (translation ? "<div class='xrefs'><span class='translation'>" + ('English' in translation ? "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>" + ((join$.call(translation.English, ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')) + "</span></div>" : '') + "" + ('francais' in translation ? "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>" + join$.call(translation.francais, ', ') + "</span></div>" : '') + "" + ('Deutsch' in translation ? "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>" + join$.call(translation.Deutsch, ', ') + "</span></div>" : '') + "</span></div>" : '');
     function expandDef(def){

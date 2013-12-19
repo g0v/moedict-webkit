@@ -789,34 +789,44 @@ function render (json, t)
     # bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
     bopomofo -= /<[^>]*>/g unless LANG is \c
+    pinyin.=replace /ɡ/g \g
+    pinyin.=replace /ɑ/g \a
 
-    youyin = if bopomofo is /（[語|讀|又]音）/
+    youyin = if bopomofo is /^（[語|讀|又]音）/
              then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
-    bianyin = if bopomofo is /[變|\/]/
-              then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
+    alternative = if bopomofo is /[變|\/]/
+                  then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
+                  else if bopomofo is /.+（又音）.+/
+                  then bopomofo.replace /.+（又音）/, ''
+                  else ''
+    alternative .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    alternative2 = if pinyin is /[變|\/]/
+              then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
+              else if bopomofo is /.+（又音）.+/
+              then do ->
+                _py = pinyin.split ' '
+                for i from 0 to _py.length/2-1
+                    _py.shift()
+                return _py.join ' '
               else ''
-    bianyin .=  replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
 
     bopomofo .= replace /[，、；。－—,.;]/g, '' 
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
-    bopomofo .= replace /（[語|讀|又]音）[\u200B]?/, '' .replace /\(變\)​\/.*/, '' .replace /\/.*/, ''
 
-    pinyin.=replace /ɡ/g \g
-    pinyin.=replace /ɑ/g \a
-
-    bianyin2 = if pinyin is /[變|\/]/
-              then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
-              else ''
-
-    if LANG isnt \h
-      pinyin .= replace /[,.;]/g, ''
-      pinyin .= replace /\(變\)​.*/, ''
-      pinyin .= replace /\/.*/, ''
 
     ruby = do ->
       if LANG is \h
         return
+
+      p = pinyin.replace /[,.;]/g, ''
+      p .= replace /\(變\)​.*/, ''
+      p .= replace /\/.*/, ''
+      p .= replace /<br>.*/, ''
+      b = bopomofo.replace /（[語|讀|又]音）[\u200B]?/, ''
+      b .= replace /\(變\)​\/.*/, ''
+      b .= replace /\/.*/, ''
+      b .= replace /<br>.*/, ''
 
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
@@ -828,10 +838,10 @@ function render (json, t)
                  then '<rb word="' + _ci + '">' + _ci + '</rb>'
                  else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
         ).replace(/([`~])/g, '') + '</rbc>'
-      ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+      ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
       ruby += '<rtc class="romanization">'
 
-      rpy = pinyin.replace /[,\.]/g, '' .split ' '
+      rpy = p.replace /[,\.]/g, '' .split ' '
 
       for yin in rpy
         unless yin == ''
@@ -844,8 +854,8 @@ function render (json, t)
                  then ' rbspan="2"'
 
                  # 兩岸詞典，按元音群計算字數
-                 else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g
-                 then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóŏòuūúǔùüǖǘǚǜ]+/g .length + '"'
+                 else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
+                 then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
                  else ''
           rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
 
@@ -854,7 +864,19 @@ function render (json, t)
       return ruby
 
     cn-specific = ''
-    cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
+    cn-specific = \cn if bopomofo is /陸/ #and bopomofo isnt /<br>/
+
+    if LANG is \c 
+      if bopomofo is /<br>/
+        pinyin .= replace /.*<br>/ '' .replace /陸./ '' 
+        bopomofo .= replace /.*<br>/ '' .replace /陸./ '' 
+        bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+      else
+        pinyin = ''
+        bopomofo = ''
+    else if LANG is \h
+      bopomofo = ''
+
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """
@@ -887,24 +909,32 @@ function render (json, t)
 
         if youyin then """
           <small class='youyin'>#youyin</small>
-        """ else if bianyin then """
-          <small class='bianyin'><span class='pinyin'>#bianyin2</span><span class='bpmf'>#bianyin</span></small>
+        """ else if alternative then """
+          <small class='alternative'><span class='pinyin'>#alternative2</span><span class='bopomofo'>#alternative</span></small>
         """ else ''
       }#{
         if english then "<span lang='en' class='english'>#english</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1>#{
-        if bopomofo then "<div class='bopomofo #cn-specific'>#{
-            if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
-    <div class="cn">
-      <span class='xref part-of-speech'>简</span>
-      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
-    </div>
-  """ else ''}
-            </div>" else ''
-      }<div class="entry" itemprop="articleBody">
+      }</h1>
+      <div class="bopomofo">
+      #{
+        if alt? then """
+          <div class="cn">
+            <span class='xref part-of-speech'>简</span>
+            <span class='xref'>#{ alt - /<[^>]*>/g }</span>
+          </div>
+        """ else ''
+      }#{
+        if bopomofo then """
+          <small class="alternative cn-specific">
+            <span class='pinyin'>#pinyin</span>
+            <span class='bopomofo'>#bopomofo</span>
+          </small>
+        """ else ''
+      }
+      </div>
+      <div class="entry" itemprop="articleBody">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
         #{ if defs.0?type
