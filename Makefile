@@ -1,5 +1,6 @@
 run ::
 	node ./static-here.js 8888 | lsc -cw main.ls server.ls | jade -Pw *.jade | compass watch
+	#sass --watch sass:.
 
 upload ::
 	rsync -avzP main.* styles.css index.html js moe0:code/

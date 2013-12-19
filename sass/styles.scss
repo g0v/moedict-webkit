@@ -90,13 +90,13 @@ body {
     }
 }
 
-.cn {
+div.cn-specific {
     background: #eeeeff;
     border-radius: 10px;
     &.bopomofo {
         padding-top: 3px;
         border-top: 5px solid white;
-        .cn {
+        .cn-specific {
             border-top: 1px solid #eee;
         }
     }
@@ -123,7 +123,10 @@ body {
         @include fonts;
     }
     .english {
-        display: inline;
+        color: #777;
+        display: inline-block;
+        font-size: .65em;
+        line-height: 1;
     }
 }
 
@@ -173,6 +176,15 @@ body.lang-h {
     .iconic-circle { background: #474; }
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
+
+    h1 {
+        border-bottom: 0;
+        margin: .25em 0 .25em;
+    
+        & + .bopomofo {
+            display: table;
+        }
+    }
 }
 
 body.lang-t {
@@ -363,6 +375,16 @@ input.iconic-circle {
     line-height: 1.5;
     h1 {
         @include kai-fonts;
+        border-bottom: 1px dotted $border-color;
+        margin: -.25em 0 .5em;
+        padding-bottom: .3em;
+
+        &[itemprop="name"] {
+            margin-top: .25em;
+        }
+        &[style] {
+            line-height: 2;
+        }
         div.stroke {
             display: inline;
             cursor: pointer;
@@ -372,6 +394,15 @@ input.iconic-circle {
                 background: #fff8f8;
             }
         }
+        a:hover,
+        a.hovered {
+            background: #ddd;
+            color: #0070A3;
+            outline: 1px solid hsl(197,96%,70%);
+        }
+    }
+    .bopomofo {
+        display: none;
     }
     ul, ol {
         padding-left: 35px;
@@ -384,8 +415,97 @@ input.iconic-circle {
     }
 }
 
-body.lang-h .ui-tooltip .bopomofo {
-    display: none;
+hruby {
+    rb[annotation]:before,
+    rb[annotation]:after {
+        @include en-fonts;
+    }
+}
+
+.result,
+.ui-tooltip {
+    h1,
+    h1 + div {
+        small.youyin,
+        small.alternative {
+            @include fonts;
+            color: #888;
+            display: inline-block;
+            font-size: .45em;
+            letter-spacing: .125em;
+            line-height: 1;
+            margin: 0 0 0 .25em;
+        }
+        small.alternative {
+            // posi
+            display: block;
+            margin: .75em 0 0 2em;
+            position: relative;
+
+            // typo
+            letter-spacing: 0;
+            line-height: 1.2;
+
+            span {
+                display: block;
+                border-bottom: 0 !important;
+                font-size: .8em;
+
+                &:last-of-type {
+                    margin: .25em 0 0 -.1em;
+                }
+            }
+
+            &:before {
+                // posi
+                display: inline-block;
+                left: -1.85em;
+                padding: 4px 3px 5px 4px;
+                position: absolute;
+
+                // typo
+                content: '變';
+                color: #fff;
+                font-size: 14px;
+                line-height: 1;
+
+                // style
+                background: $primary-color;
+                border-radius: 4px;
+
+                body.lang-t & {
+                    content: '又'
+                }
+            }
+        }
+    }
+
+    h1 + div {
+
+        small.cn-specific {
+            font-size: 1em;
+
+            &:before {
+                content: '陸';
+                left: -28px;
+            }
+
+            span {
+                border-bottom: 0 !important;
+                float: none !important;
+            }
+        }
+    }
+}
+
+body .ui-tooltip {
+    h1 small.youyin {
+        display: block;
+        margin-top: .25em;
+    }
+    .bopomofo {
+        display: none;
+    }
 }
 
 input.query {
@@ -648,6 +768,10 @@ span .tone {
     padding: 2px;
     font-size: 100%;
     line-height: 1;
+}
+
+.part-of-speech {
+    @include fonts;
 }
 
 .fw_def {
@@ -930,6 +1054,17 @@ body.lang-h {
 }
 
 body.lang-c {
+    h1[data-title] {
+        border-bottom: 0;
+    }
+    .bopomofo {
+        display: block;
+
+        .bpmf,
+        .pinyin {
+            //display: none;
+        }
+    }
     .specific {
         background: #66c;
         margin-left: 5px;
@@ -1085,11 +1220,17 @@ span {
         font-size: 75%;
     }
     .title {
-        margin: 0;
-        padding: 0;
+        border-bottom: 1px dotted $border-color;
+        margin: -.25em 0 .25em;
+        padding: .25em;
         font-size: 130%;
-        line-height: 120%;
-        .playAudio { display: none !important }
+        line-height: 1.2;
+        .playAudio {
+            display: none !important
+        }
+        .lang-h & {
+            border-bottom: 0;
+        }
     }
     .example {
         display: none;
@@ -1219,7 +1360,7 @@ canvas {
     background: white;
     position: absolute;
     right: 42px;
-    top: 122px;
+    top: 113px;
     &:hover {
         background: #ccc !important;
     }
