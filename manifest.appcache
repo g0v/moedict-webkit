@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Thu Dec 19 17:45:30 CST 2013
+# Thu Dec 19 18:08:39 CST 2013
 
 CACHE:
 
@@ -44,6 +44,7 @@ favicon.ico
 js/jquery-1.9.1.min.js
 js/jquery-ui-1.10.2.custom.min.js
 js/jquery.hoverIntent.js
+js/jquery.ruby.js
 js/bootstrap/dropdown.js
 js/simp-trad.js
 js/howler.js
