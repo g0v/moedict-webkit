@@ -9403,15 +9403,15 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: FontAwesome;
 }
 
-.cn {
+div.cn-specific {
   background: #eeeeff;
   border-radius: 10px;
 }
-.cn.bopomofo {
+div.cn-specific.bopomofo {
   padding-top: 3px;
   border-top: 5px solid white;
 }
-.cn.bopomofo .cn {
+div.cn-specific.bopomofo .cn-specific {
   border-top: 1px solid #eee;
 }
 

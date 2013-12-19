@@ -90,13 +90,13 @@ body {
     }
 }
 
-.cn {
+div.cn-specific {
     background: #eeeeff;
     border-radius: 10px;
     &.bopomofo {
         padding-top: 3px;
         border-top: 5px solid white;
-        .cn {
+        .cn-specific {
             border-top: 1px solid #eee;
         }
     }
