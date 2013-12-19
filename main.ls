@@ -430,10 +430,25 @@ window.do-load = ->
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    $ \#result .html html
+    $ \#result .html html .ruby!
+
+    $('#result h1 rb[word]') .each ->
+      _h = HASH-OF[LANG]
+      _i = $ this .attr 'word-order'
+      _ci = $ this .attr 'word'
+      $ this .wrap $('<a/>').attr({
+        'word-order': _i
+        'href': _h + _ci
+      })
+      .on 'mouseover' ->
+        _i = $ this .attr 'word-order'
+        $('#result h1 a[word-order=' + _i + ']').addClass \hovered
+      .on 'mouseout' ->
+        $('#result h1 a') .removeClass 'hovered'
+
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
-
+ 
     cache-loading := no
 
     vclick = if isMobile then \touchstart else \click
@@ -458,8 +473,11 @@ window.do-load = ->
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
-      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a, content: (cb) ->
-        id = $(@).text!
+      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a,
+      open: ->
+        $('.ui-tooltip-content h1').ruby!
+      content: (cb) ->
+        id = $(@).attr \href .replace /^#[!|:|~]?/, ''
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -483,6 +501,7 @@ window.do-load = ->
     return true
 
   fill-json = (part, id, cb=set-html) ->
+    title = $.parseJSON part .t
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
@@ -498,7 +517,7 @@ window.do-load = ->
     else if part is /^\[/
       html = render-list part, id
     else
-      html = render $.parseJSON part
+      html = render $.parseJSON(part), title
     html.=replace /(.)\u20DD/g          "<span class='part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
@@ -731,7 +750,7 @@ function render-strokes (terms, id)
 function render-list (terms, id)
   h = HASH-OF[LANG]
   id -= /^[@=]/
-  title = "<h1 itemprop='name' style='padding-bottom: 10px'>#id</h1>"
+  title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿 and not terms
     terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）"
@@ -751,7 +770,7 @@ function http
   return "http://#it" unless location.protocol is \https:
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 
-function render (json)
+function render (json, t)
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
@@ -768,12 +787,96 @@ function render (json)
         </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
       """
     bopomofo ?= trs2bpmf "#pinyin"
-    bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+
     bopomofo -= /<[^>]*>/g unless LANG is \c
     pinyin.=replace /ɡ/g \g
     pinyin.=replace /ɑ/g \a
-    cn-specific = ''
-    cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
+
+    youyin = if bopomofo is /^（[語|讀|又]音）/
+             then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
+    alternative = if bopomofo is /[變|\/]/
+                  then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
+                  else if bopomofo is /.+（又音）.+/
+                  then bopomofo.replace /.+（又音）/, ''
+                  else ''
+    alternative .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    alternative2 = if pinyin is /[變|\/]/
+              then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
+              else if bopomofo is /.+（又音）.+/
+              then do ->
+                _py = pinyin.split ' '
+                for i from 0 to _py.length/2-1
+                    _py.shift()
+                return _py.join ' '
+              else ''
+
+    bopomofo .= replace /[，、；。－—,.;]/g, '' 
+    bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
+    bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
+
+
+    ruby = do ->
+      if LANG is \h
+        return
+
+      p = pinyin.replace /[,.;]/g, ''
+      p .= replace /\(變\)​.*/, ''
+      p .= replace /\/.*/, ''
+      p .= replace /<br>.*/, ''
+      b = bopomofo.replace /（[語|讀|又]音）[\u200B]?/, ''
+      b .= replace /\(變\)​\/.*/, ''
+      b .= replace /\/.*/, ''
+      b .= replace /<br>.*/, ''
+
+      if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
+        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
+      else
+        order = 0
+        ruby = '<rbc>' + t.replace( /([^`~]+)/g, (_m, _ci, o, s) ->
+          order += 1
+          return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
+                 then '<rb word="' + _ci + '">' + _ci + '</rb>'
+                 else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
+        ).replace(/([`~])/g, '') + '</rbc>'
+      ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+      ruby += '<rtc class="romanization">'
+
+      rpy = p.replace /[,\.]/g, '' .split ' '
+
+      for yin in rpy
+        unless yin == ''
+          span = # 閩南語典，按隔音符計算字數
+                 if LANG is \t and yin is /\-/g
+                 then ' rbspan="'+ (yin.match /[\-]+/g .length+1) + '"'
+
+                 # 國語兒化音
+                 else if LANG != \t && yin is /^[^eēéěè].*r$/g
+                 then ' rbspan="2"'
+
+                 # 兩岸詞典，按元音群計算字數
+                 else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
+                 then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
+                 else ''
+          rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
+
+      ruby += rpy.join ''
+      ruby += '</rtc>'
+      return ruby
+
+    #cn-specific = ''
+    #cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
+
+    if LANG is \c 
+      if bopomofo is /<br>/
+        pinyin .= replace /.*<br>/ '' .replace /陸./ '' 
+        bopomofo .= replace /.*<br>/ '' .replace /陸./ '' 
+        bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+      else
+        pinyin = ''
+        bopomofo = ''
+    else if LANG is \h
+      bopomofo = ''
+
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
     """
@@ -781,7 +884,20 @@ function render (json)
       <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
       <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
       #char-html
-      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">#{ h title }#{
+      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">
+        #{
+        unless LANG is \h then """
+          <ruby class="rightangle">#ruby</ruby>
+        """ else """
+          #title
+        """
+        }#{
+        if youyin then """
+          <small class='youyin'>#youyin</small>
+        """ else if alternative then """
+          <small class='alternative'><span class='pinyin'>#alternative2</span><span class='bopomofo'>#alternative</span></small>
+        """ else ''
+      }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
@@ -797,20 +913,30 @@ function render (json)
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
       }#{
-        if english then "<span class='english'>(#english)</span>" else ''
+        if english then "<span lang='en' class='english'>#english</span>" else ''
       }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1>#{
-        if bopomofo then "<div class='bopomofo #cn-specific'>#{
-            if pinyin then "<span class='pinyin'>#{ h pinyin }</span>" else ''
-          }<span class='bpmf'>#{ h bopomofo }</span>#{ if alt? then """
-    <div class="cn">
-      <span class='xref part-of-speech'>简</span>
-      <span class='xref'>#{ alt - /<[^>]*>/g }</span>
-    </div>
-  """ else ''}
-            </div>" else ''
-      }<div class="entry" itemprop="articleBody">
+      }</h1>
+      <div class="bopomofo">
+      #{
+        if alt? then """
+          <div lang="zh-Hans" class="cn-specific">
+            <span class='xref part-of-speech'>简</span>
+            <span class='xref'>#{ alt - /<[^>]*>/g }</span>
+          </div>
+        """ else ''
+      }#{
+        if bopomofo then """
+          <small class="alternative cn-specific">
+            <span class='pinyin'>#pinyin</span>
+            <span class='bopomofo'>#bopomofo</span>
+          </small>
+        """ else if LANG is \h then """
+          <span class='pinyin'>#pinyin</span>
+        """ else ''
+      }
+      </div>
+      <div class="entry" itemprop="articleBody">
       #{ls groupBy(\type definitions.slice!), (defs) ->
         """<div class="entry-item">
         #{ if defs.0?type
@@ -877,7 +1003,7 @@ function render (json)
         text.=replace /([aieou])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
       else
         text.=replace /([i])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
-    text.replace(/\uFF0E/g '\u00B7')
+    text.replace(/[\uFF0E|\u2022]/g '\u00B7')
         .replace(/\u223C/g '\uFF0D')
         .replace(/\u0358/g '\u030d')
   function groupBy (prop, xs)

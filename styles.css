@@ -7247,6 +7247,236 @@ td.visible-print {
   unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
 }
 
+hruby {
+  display: inline;
+  line-height: 2;
+}
+
+/* ==========================================================================
+ * 隱藏`<rp>`
+ * Hide `<rp>`
+ * ========================================================================== */
+hruby rp {
+  display: none;
+}
+
+/* ==========================================================================
+ * 隱藏的`<copy>`元素，利於複製貼上
+ * Invisible `<copy>` elements for copy-and-paste
+ * ========================================================================== */
+hruby copy {
+  display: inline-block;
+  opacity: 0;
+  text-indent: -9999999px;
+  height: 0;
+  width: 0;
+}
+
+/* ==========================================================================
+ * 小字標注
+ * Annotations
+ * ========================================================================== */
+hruby rb[annotation] {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+}
+hruby rb[annotation]:before {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  left: -200%;
+  position: absolute;
+  top: -0.5em;
+  vertical-align: middle;
+  -moz-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  transform: scale(0.55);
+  height: 1em;
+  width: 500%;
+  content: attr(annotation);
+  line-height: 1.5;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* ==========================================================================
+ * 複合式小字標注
+ * Complex annotations
+ * ========================================================================== */
+hruby[complex] rb[annotation][order="1"]:before {
+  top: -0.5em;
+}
+hruby[complex] rb[annotation][order="2"]:before {
+  bottom: -0.25em;
+  top: auto;
+}
+
+/* ==========================================================================
+ * 拼、注音直角共同顯示
+ * Complex right-angle ruby for Romanization & Zhuyin
+ * ========================================================================== */
+hruby[rightangle] rb[annotation]:before {
+  bottom: -0.25em;
+  top: auto;
+  margin-left: -0.3em;
+  line-height: 1;
+}
+
+/* ==========================================================================
+ * 國語注音、台灣方言音符號
+ * Zhuyin
+ * ========================================================================== */
+hruby rb[zhuyin] {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+  width: 1.65em;
+}
+hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -moz-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  transform: scale(0.55);
+  height: 2.7em;
+  width: 0.8em;
+  -moz-text-emphasis: none;
+  -webkit-text-emphasis: none;
+  text-emphasis: none;
+  -moz-text-emphasis-position: under;
+  -webkit-text-emphasis-position: under;
+  text-emphasis-position: under;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 0.9;
+  text-indent: 0;
+  text-decoration: none;
+}
+hruby rb[zhuyin]:before {
+  content: attr(yin);
+  line-height: 0.9;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hruby rb[zhuyin][diao]:after {
+  right: -0.6em;
+  width: 1em;
+  content: attr(diao);
+}
+hruby rb[zhuyin][length="1"]:before {
+  margin-top: 0.25em;
+}
+hruby rb[zhuyin][length="1"]:after {
+  margin-top: -0.35em;
+}
+hruby rb[zhuyin][length="2"]:before {
+  margin-top: -0.15em;
+}
+hruby rb[zhuyin][length="2"]:after {
+  margin-top: 0.125em;
+}
+hruby rb[zhuyin][length="3"]:before {
+  margin-top: -0.4em;
+}
+hruby rb[zhuyin][length="3"]:after {
+  margin-top: 0.25em;
+}
+hruby rb[zhuyin][diao="˙"]:after {
+  right: -0.275em;
+}
+hruby rb[zhuyin][diao="˙"][length="1"]:after {
+  margin-top: 0;
+}
+hruby rb[zhuyin][diao="˙"][length="2"]:after {
+  margin-top: -0.25em;
+}
+hruby rb[zhuyin][diao="˙"][length="3"]:after {
+  margin-top: -0.55em;
+}
+hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
+  -moz-transform: scale(0.6);
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+  margin-right: -0.15em;
+}
+hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after {
+  margin-right: -0.2em;
+  margin-top: 0.55em;
+}
+
+/* ==========================================================================
+ * Retina Display
+ * ========================================================================== */
+/* ==========================================================================
+ * Optimised for Moedict
+ * ========================================================================== */
+hruby[rightangle] rb[annotation]:before {
+  -moz-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+  bottom: -0.3em;
+  color: #666666;
+}
+hruby rb[zhuyin] {
+  width: 1.5em;
+}
+hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
+  top: 0.15em;
+  -moz-transform: scale(0.33);
+  -webkit-transform: scale(0.33);
+  transform: scale(0.33);
+  line-height: 0.9;
+  color: #666666;
+}
+hruby rb[zhuyin][diao]:after {
+  right: -0.4em;
+  top: 0;
+}
+hruby rb[zhuyin][length="1"]:before {
+  margin-top: -0.1em;
+}
+hruby rb[zhuyin][length="1"]:after {
+  margin-top: -0.1em;
+}
+hruby rb[zhuyin][length="2"]:before {
+  margin-top: -0.25em;
+}
+hruby rb[zhuyin][length="2"]:after {
+  margin-top: 0.1em;
+}
+hruby rb[zhuyin][length="3"]:before {
+  line-height: 0.8;
+}
+hruby rb[zhuyin][length="3"]:after {
+  margin-top: 0.15em;
+}
+hruby rb[zhuyin][diao="˙"]:after {
+  right: -0.2em;
+}
+hruby rb[zhuyin][diao="˙"][length="1"]:after {
+  margin-top: -0.05em;
+}
+hruby rb[zhuyin][diao="˙"][length="2"]:after {
+  margin-top: -0.2em;
+}
+hruby rb[zhuyin][diao="˙"][length="3"]:after {
+  margin-top: -0.35em;
+}
+hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
+  margin-right: -0.1em;
+}
+hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after {
+  margin-right: -0.1em;
+  margin-top: 0.25em;
+}
+
 /*!
  *  Font Awesome 3.2.1
  *  the iconic font designed for Bootstrap
@@ -9173,15 +9403,15 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: FontAwesome;
 }
 
-.cn {
+div.cn-specific {
   background: #eeeeff;
   border-radius: 10px;
 }
-.cn.bopomofo {
+div.cn-specific.bopomofo {
   padding-top: 3px;
   border-top: 5px solid white;
 }
-.cn.bopomofo .cn {
+div.cn-specific.bopomofo .cn-specific {
   border-top: 1px solid #eee;
 }
 
@@ -9207,7 +9437,10 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
-  display: inline;
+  color: #777;
+  display: inline-block;
+  font-size: .65em;
+  line-height: 1;
 }
 
 .bopomofo, .radical {
@@ -9263,6 +9496,13 @@ body.lang-h .iconic-color {
 }
 body.lang-h #query-box {
   background-color: #EFFBEF;
+}
+body.lang-h h1 {
+  border-bottom: 0;
+  margin: .25em 0 .25em;
+}
+body.lang-h h1 + .bopomofo {
+  display: table;
 }
 
 body.lang-t .nav-bg {
@@ -9481,6 +9721,15 @@ input.iconic-circle {
 }
 .result h1 {
   font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  border-bottom: 1px dotted #dddddd;
+  margin: -.25em 0 .5em;
+  padding-bottom: .3em;
+}
+.result h1[itemprop="name"] {
+  margin-top: .25em;
+}
+.result h1[style] {
+  line-height: 2;
 }
 .result h1 div.stroke {
   display: inline;
@@ -9490,6 +9739,15 @@ input.iconic-circle {
 .result h1 div.stroke:hover {
   border: 1px solid #a00;
   background: #fff8f8;
+}
+.result h1 a:hover,
+.result h1 a.hovered {
+  background: #ddd;
+  color: #0070A3;
+  outline: 1px solid #69d2fc;
+}
+.result .bopomofo {
+  display: none;
 }
 .result ul, .result ol {
   padding-left: 35px;
@@ -9501,7 +9759,92 @@ input.iconic-circle {
   line-height: 1.5;
 }
 
-body.lang-h .ui-tooltip .bopomofo {
+hruby rb[annotation]:before,
+hruby rb[annotation]:after {
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+}
+
+.result h1 small.youyin,
+.result h1 small.alternative,
+.result h1 + div small.youyin,
+.result h1 + div small.alternative,
+.ui-tooltip h1 small.youyin,
+.ui-tooltip h1 small.alternative,
+.ui-tooltip h1 + div small.youyin,
+.ui-tooltip h1 + div small.alternative {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  color: #888;
+  display: inline-block;
+  font-size: .45em;
+  letter-spacing: .125em;
+  line-height: 1;
+  margin: 0 0 0 .25em;
+}
+.result h1 small.alternative,
+.result h1 + div small.alternative,
+.ui-tooltip h1 small.alternative,
+.ui-tooltip h1 + div small.alternative {
+  display: block;
+  margin: .75em 0 0 2em;
+  position: relative;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.result h1 small.alternative span,
+.result h1 + div small.alternative span,
+.ui-tooltip h1 small.alternative span,
+.ui-tooltip h1 + div small.alternative span {
+  display: block;
+  border-bottom: 0 !important;
+  font-size: .8em;
+}
+.result h1 small.alternative span:last-of-type,
+.result h1 + div small.alternative span:last-of-type,
+.ui-tooltip h1 small.alternative span:last-of-type,
+.ui-tooltip h1 + div small.alternative span:last-of-type {
+  margin: .25em 0 0 -.1em;
+}
+.result h1 small.alternative:before,
+.result h1 + div small.alternative:before,
+.ui-tooltip h1 small.alternative:before,
+.ui-tooltip h1 + div small.alternative:before {
+  display: inline-block;
+  left: -1.85em;
+  padding: 4px 3px 5px 4px;
+  position: absolute;
+  content: '變';
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  background: #6b0000;
+  border-radius: 4px;
+}
+body.lang-t .result h1 small.alternative:before, body.lang-t
+.result h1 + div small.alternative:before, body.lang-t
+.ui-tooltip h1 small.alternative:before, body.lang-t
+.ui-tooltip h1 + div small.alternative:before {
+  content: "又";
+}
+.result h1 + div small.cn-specific,
+.ui-tooltip h1 + div small.cn-specific {
+  font-size: 1em;
+}
+.result h1 + div small.cn-specific:before,
+.ui-tooltip h1 + div small.cn-specific:before {
+  content: '陸';
+  left: -28px;
+}
+.result h1 + div small.cn-specific span,
+.ui-tooltip h1 + div small.cn-specific span {
+  border-bottom: 0 !important;
+  float: none !important;
+}
+
+body .ui-tooltip h1 small.youyin {
+  display: block;
+  margin-top: .25em;
+}
+body .ui-tooltip .bopomofo {
   display: none;
 }
 
@@ -9764,6 +10107,10 @@ span .tone {
   line-height: 1;
 }
 
+.part-of-speech {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+
 .fw_def {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }
@@ -10016,6 +10363,12 @@ body.lang-h .bopomofo .part-of-speech {
   width: auto;
 }
 
+body.lang-c h1[data-title] {
+  border-bottom: 0;
+}
+body.lang-c .bopomofo {
+  display: block;
+}
 body.lang-c .specific {
   background: #66c;
   margin-left: 5px;
@@ -10168,13 +10521,17 @@ span a {
   font-size: 75%;
 }
 .ui-tooltip .title {
-  margin: 0;
-  padding: 0;
+  border-bottom: 1px dotted #dddddd;
+  margin: -.25em 0 .25em;
+  padding: .25em;
   font-size: 130%;
-  line-height: 120%;
+  line-height: 1.2;
 }
 .ui-tooltip .title .playAudio {
   display: none !important;
+}
+.lang-h .ui-tooltip .title {
+  border-bottom: 0;
 }
 .ui-tooltip .example {
   display: none;
@@ -10302,7 +10659,7 @@ canvas {
   background: white;
   position: absolute;
   right: 42px;
-  top: 122px;
+  top: 113px;
 }
 .iconic-color.star:hover {
   background: #ccc !important;
