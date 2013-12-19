@@ -765,12 +765,21 @@
         }
         html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>" : "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>");
         $('#result').html(html).ruby();
-        $('#result h1 rb[word-order]').on('mouseover', function(){
-          var _i;
+        $('#result h1 rb[word]').each(function(){
+          var _h, _i, _ci;
+          _h = HASHOF[LANG];
           _i = $(this).attr('word-order');
-          return $('#result h1 rb[word-order=' + _i + ']').addClass('hovered');
-        }).on('mouseout', function(){
-          return $('#result h1 rb').removeClass('hovered');
+          _ci = $(this).attr('word');
+          return $(this).wrap($('<a/>').attr({
+            'word-order': _i,
+            'href': _h + _ci
+          })).on('mouseover', function(){
+            var _i;
+            _i = $(this).attr('word-order');
+            return $('#result h1 a[word-order=' + _i + ']').addClass('hovered');
+          }).on('mouseout', function(){
+            return $('#result h1 a').removeClass('hovered');
+          });
         });
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
@@ -1393,21 +1402,20 @@
         pinyin = pinyin.replace(/\/.*/, '');
       }
       ruby = function(){
-        var _h, ruby, order, rpy, i$, len$, yin, span;
+        var ruby, order, rpy, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
-        _h = HASHOF[LANG];
         if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
           order = 0;
-          ruby = '<rbc>' + t.replace(/`([^`~]+)~/g, function(_m, _ci, o, s){
+          ruby = '<rbc>' + t.replace(/([^`~]+)/g, function(_m, _ci, o, s){
             order += 1;
             return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(_ci)
-              ? '<rb><a href="' + _h + _ci + '">' + _ci + '</a></rb>'
-              : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word-order="' + order + '"><a href="' + _h + _ci + '">$1</a></rb>');
-          }) + '</rbc>';
+              ? '<rb word="' + _ci + '">' + _ci + '</rb>'
+              : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>');
+          }).replace(/([`~])/g, '') + '</rbc>';
         }
         ruby += '<rtc class="zhuyin"><rt>' + bopomofo.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
         ruby += '<rtc class="romanization">';
