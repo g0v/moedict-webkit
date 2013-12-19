@@ -448,6 +448,7 @@ hruby {
 
             span {
                 display: block;
+                border-bottom: 0 !important;
                 font-size: .8em;
 
                 &:last-of-type {

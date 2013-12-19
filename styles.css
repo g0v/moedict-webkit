@@ -9795,6 +9795,7 @@ hruby rb[annotation]:after {
 .ui-tooltip h1 small.alternative span,
 .ui-tooltip h1 + div small.alternative span {
   display: block;
+  border-bottom: 0 !important;
   font-size: .8em;
 }
 .result h1 small.alternative span:last-of-type,
