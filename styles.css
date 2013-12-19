@@ -9744,7 +9744,8 @@ input.iconic-circle {
 .result h1 a.hovered {
   background: #ddd;
   color: #0070A3;
-  outline: 1px solid #69d2fc;
+  border-radius: 4px;
+  outline: none;
 }
 .result .bopomofo {
   display: none;
@@ -9762,6 +9763,7 @@ input.iconic-circle {
 hruby rb[annotation]:before,
 hruby rb[annotation]:after {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-weight: normal;
 }
 
 .result h1 small.youyin,
@@ -9840,6 +9842,11 @@ body.lang-t .result h1 small.alternative:before, body.lang-t
   float: none !important;
 }
 
+body .ui-tooltip {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
 body .ui-tooltip h1 small.youyin {
   display: block;
   margin-top: .25em;
