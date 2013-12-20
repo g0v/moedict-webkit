@@ -1369,7 +1369,7 @@
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
     result = ls(heteronyms, function(arg$){
-      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, specific_to, alt, youyin, alternative, alternative2, ruby, basename, mp3;
+      var id, audio_id, ref$, bopomofo, pinyin, trs, definitions, antonyms, synonyms, variants, specific_to, alt, youyin, bAlt, pAlt, ruby, basename, mp3;
       id = arg$.id, audio_id = (ref$ = arg$.audio_id) != null ? ref$ : id, bopomofo = arg$.bopomofo, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = (ref$ = arg$.trs) != null ? ref$ : '', definitions = (ref$ = arg$.definitions) != null
         ? ref$
         : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms, variants = arg$.variants, specific_to = arg$.specific_to, alt = arg$.alt;
@@ -1395,11 +1395,11 @@
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
       youyin = /^（[語|讀|又]音）/.exec(bopomofo) ? bopomofo.replace(/（([語|讀|又]音)）.*/, '$1') : void 8;
-      alternative = /[變|\/]/.exec(bopomofo)
+      bAlt = /[變|\/]/.exec(bopomofo)
         ? bopomofo.replace(/.*[\(變\)​|\/](.*)/, '$1')
         : /.+（又音）.+/.exec(bopomofo) ? bopomofo.replace(/.+（又音）/, '') : '';
-      alternative = alternative.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
-      alternative2 = /[變|\/]/.exec(pinyin)
+      bAlt = bAlt.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
+      pAlt = /[變|\/]/.exec(pinyin)
         ? pinyin.replace(/.*[\(變\)​|\/](.*)/, '$1')
         : /.+（又音）.+/.exec(bopomofo) ? function(){
           var _py, i$, to$, i;
@@ -1472,11 +1472,9 @@
       }
       return "<!-- STAR -->\n<meta itemprop=\"image\" content=\"" + encodeURIComponent(replace$.call(h(title), /<[^>]+>/g, '')) + ".png\" />\n<meta itemprop=\"name\" content=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\" />\n" + charHtml + "\n<h1 class='title' data-title=\"" + (replace$.call(h(title), /<[^>]+>/g, '')) + "\">\n  " + (LANG !== 'h'
         ? "<ruby class=\"rightangle\">" + ruby + "</ruby>"
-        : "" + title) + (youyin
-        ? "<small class='youyin'>" + youyin + "</small>"
-        : alternative ? "<small class='alternative'><span class='pinyin'>" + alternative2 + "</span><span class='bopomofo'>" + alternative + "</span></small>" : '') + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
+        : "" + title) + (youyin ? "<small class='youyin'>" + youyin + "</small>" : '') + (audio_id && (canPlayOgg() || canPlayMp3()) && (LANG === 't' && !(20000 < audio_id && audio_id < 50000)
         ? (basename = replace$.call(100000 + Number(audio_id), /^1/, ''), mp3 = http("t.moedict.tw/" + basename + ".ogg"))
-        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '') + (english ? "<span lang='en' class='english'>" + english + "</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>\n<div class=\"bopomofo\">\n" + (alt != null ? "<div lang=\"zh-Hans\" class=\"cn-specific\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + (bopomofo
+        : LANG === 'a' && (mp3 = http("a.moedict.tw/" + audio_id + ".ogg")), /opus$/.exec(mp3) && !canPlayOpus() && (mp3 = mp3.replace(/opus$/, 'ogg')), /(opus|ogg)$/.exec(mp3) && !canPlayOgg() && (mp3 = mp3.replace(/(opus|ogg)$/, 'mp3'))), mp3 ? "<i itemscope itemtype=\"http://schema.org/AudioObject\"\n  class='icon-play playAudio' onclick='window.playAudio(this, \"" + mp3 + "\")'><meta\n  itemprop=\"name\" content=\"" + (replace$.call(mp3, /^.*\//, '')) + "\" /><meta\n  itemprop=\"contentURL\" content=\"" + mp3 + "\" /></i>" : '') + (bAlt ? "<small class='alternative'><span class='pinyin'>" + pAlt + "</span><span class='bopomofo'>" + bAlt + "</span></small>" : '') + (english ? "<span lang='en' class='english'>" + english + "</span>" : '') + (specific_to ? "<span class='specific_to'>" + specific_to + "</span>" : '') + "</h1>\n  <div class=\"bopomofo\">\n" + (alt != null ? "<div lang=\"zh-Hans\" class=\"cn-specific\">\n  <span class='xref part-of-speech'>简</span>\n  <span class='xref'>" + (replace$.call(alt, /<[^>]*>/g, '')) + "</span>\n</div>" : '') + (bopomofo
         ? "<small class=\"alternative cn-specific\">\n  <span class='pinyin'>" + pinyin + "</span>\n  <span class='bopomofo'>" + bopomofo + "</span>\n</small>"
         : LANG === 'h' ? "<span class='pinyin'>" + pinyin + "</span>" : '') + "\n</div>\n<div class=\"entry\" itemprop=\"articleBody\">\n" + ls(groupBy('type', definitions.slice()), function(defs){
         var ref$, t;

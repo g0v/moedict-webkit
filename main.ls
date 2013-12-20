@@ -444,7 +444,7 @@ window.do-load = ->
         _i = $ this .attr 'word-order'
         $('#result h1 a[word-order=' + _i + ']').addClass \hovered
       .on 'mouseout' ->
-        $('#result h1 a') .removeClass 'hovered'
+        $('#result h1 a') .removeClass \hovered
 
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -794,13 +794,13 @@ function render (json, t)
 
     youyin = if bopomofo is /^（[語|讀|又]音）/
              then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
-    alternative = if bopomofo is /[變|\/]/
+    b-alt = if bopomofo is /[變|\/]/
                   then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
                   else if bopomofo is /.+（又音）.+/
                   then bopomofo.replace /.+（又音）/, ''
                   else ''
-    alternative .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
-    alternative2 = if pinyin is /[變|\/]/
+    b-alt .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
+    p-alt = if pinyin is /[變|\/]/
               then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
               else if bopomofo is /.+（又音）.+/
               then do ->
@@ -894,10 +894,8 @@ function render (json, t)
         }#{
         if youyin then """
           <small class='youyin'>#youyin</small>
-        """ else if alternative then """
-          <small class='alternative'><span class='pinyin'>#alternative2</span><span class='bopomofo'>#alternative</span></small>
         """ else ''
-      }#{
+        }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
@@ -912,12 +910,16 @@ function render (json, t)
             itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
-      }#{
+        }#{
+        if b-alt then """
+          <small class='alternative'><span class='pinyin'>#p-alt</span><span class='bopomofo'>#b-alt</span></small>
+        """ else ''
+        }#{
         if english then "<span lang='en' class='english'>#english</span>" else ''
-      }#{
+        }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }</h1>
-      <div class="bopomofo">
+        }</h1>
+        <div class="bopomofo">
       #{
         if alt? then """
           <div lang="zh-Hans" class="cn-specific">
