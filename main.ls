@@ -863,8 +863,8 @@ function render (json, t)
       ruby += '</rtc>'
       return ruby
 
-    #cn-specific = ''
-    #cn-specific = \cn if bopomofo is /陸/ and bopomofo isnt /<br>/
+    cn-specific = ''
+    cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
 
     if LANG is \c 
       if bopomofo is /<br>/
@@ -928,7 +928,7 @@ function render (json, t)
           </div>
         """ else ''
       }#{
-        if bopomofo then """
+        if cn-specific then """
           <small class="alternative cn-specific">
             <span class='pinyin'>#pinyin</span>
             <span class='bopomofo'>#bopomofo</span>
