@@ -814,7 +814,6 @@ function render (json, t)
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
 
-
     ruby = do ->
       if LANG is \h
         return
@@ -879,23 +878,23 @@ function render (json, t)
 
     unless title is /</
       title := "<div class='stroke' title='筆順動畫'>#title</div>"
+
     """
       <!-- STAR -->
       <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
       <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
       #char-html
       <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">
-        #{
+      #{
         unless LANG is \h then """
           <ruby class="rightangle">#ruby</ruby>
-        """ else """
-          #title
         """
-        }#{
+        else title
+      }#{
         if youyin then """
           <small class='youyin'>#youyin</small>
         """ else ''
-        }#{
+      }#{
         if audio_id and (can-play-ogg! or can-play-mp3!)
           if LANG is \t and not (20000 < audio_id < 50000)
             basename = (100000 + Number audio_id) - /^1/
@@ -910,16 +909,17 @@ function render (json, t)
             itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
             itemprop="contentURL" content="#mp3" /></i>
         """ else ''
-        }#{
+      }#{
         if b-alt then """
           <small class='alternative'><span class='pinyin'>#p-alt</span><span class='bopomofo'>#b-alt</span></small>
         """ else ''
-        }#{
+      }#{
         if english then "<span lang='en' class='english'>#english</span>" else ''
-        }#{
+      }#{
         if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-        }</h1>
-        <div class="bopomofo">
+      }
+      </h1>
+      <div class="bopomofo">
       #{
         if alt? then """
           <div lang="zh-Hans" class="cn-specific">
@@ -940,39 +940,59 @@ function render (json, t)
       </div>
       <div class="entry" itemprop="articleBody">
       #{ls groupBy(\type definitions.slice!), (defs) ->
-        """<div class="entry-item">
-        #{ if defs.0?type
-          [ "<span class='part-of-speech'>#t</span>" for t in defs.0.type / \, ] * '&nbsp;'
-        else '' }
-        <ol>
-        #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
-          """<li><p class='definition'>
-            <span class="def">#{
-              (h expand-def def).replace(
-                /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
-                '$1</span><span class="def">$2'
-              )
-            }</span>
-            #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
-            #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
-            #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
-            #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-              h((synonyms - /^,/).replace(/,/g '、'))
-            }</span>" else '' }
-            #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-              h((antonyms - /^,/).replace(/,/g '、'))
-            }</span>" else '' }
-        </p></li>"""}</ol></div>
-      """}
-      #{ if synonyms then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-        h((synonyms - /^,/).replace(/,/g '、'))
-      }</span>" else '' }
-      #{ if antonyms then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-        h((antonyms - /^,/).replace(/,/g '、'))
-      }</span>" else '' }
-      #{ if variants then "<span class='variants'><span class='part-of-speech'>異</span> #{
-        h(variants.replace(/,/g '、'))
-      }</span>" else '' }
+        """
+        <div class="entry-item">
+        #{
+          if defs.0?type
+          then [ "<span class='part-of-speech'>#t</span>" for t in defs.0.type / \, ] * '&nbsp;'
+          else ''
+        }
+          <ol>
+          #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
+          """
+            <li><p class='definition'>
+              <span class="def">
+              #{
+                (h expand-def def).replace(
+                  /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
+                  '$1</span><span class="def">$2'
+                )
+              }</span>
+              #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
+              #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
+              #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
+              #{
+                if synonyms
+                then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
+                  h((synonyms - /^,/).replace(/,/g '、'))
+                }</span>" else ''
+              }#{
+                if antonyms
+                then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
+                  h((antonyms - /^,/).replace(/,/g '、'))
+                }</span>" else ''
+              }
+            </p></li>
+          """
+          }
+          </ol></div>
+        """
+      }#{
+        if synonyms
+        then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
+          h((synonyms - /^,/).replace(/,/g '、'))
+        }</span>" else ''
+      }#{
+        if antonyms
+        then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
+          h((antonyms - /^,/).replace(/,/g '、'))
+        }</span>" else ''
+      }#{
+        if variants
+        then "<span class='variants'><span class='part-of-speech'>異</span> #{
+          h(variants.replace(/,/g '、'))
+        }</span>" else ''
+      }
       </div>
     """
   return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
