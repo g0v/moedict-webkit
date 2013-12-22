@@ -260,10 +260,10 @@ var rubies,
 				( zy.match(/(\u02CB)/) )					? '\u02CB' : 
 				( zy.match(/(\u02EA)/) )					? '\u02EA' : 
 				( zy.match(/(\u02EB)/) )					? '\u02EB' : 
-				( zy.match(/(\u31B4[\u0358\u030D]?)/) )		? '\u31B4\u030D' : 
-				( zy.match(/(\u31B5[\u0358\u030D]?)/) )		? '\u31B5\u030D' :
-				( zy.match(/(\u31B6[\u0358\u030D]?)/) )		? '\u31B6\u030D' :
-				( zy.match(/(\u31B7[\u0358\u030D]?)/) )		? '\u31B7\u030D' :
+				( zy.match(/(\u31B4[\u0358\u030D])/) )		? '\u31B4\u030D' : 
+				( zy.match(/(\u31B5[\u0358\u030D])/) )		? '\u31B5\u030D' :
+				( zy.match(/(\u31B6[\u0358\u030D])/) )		? '\u31B6\u030D' :
+				( zy.match(/(\u31B7[\u0358\u030D])/) )		? '\u31B7\u030D' :
 				( zy.match(/(\u31B4)/) )					? '\u31B4' : 
 				( zy.match(/(\u31B5)/) )					? '\u31B5' :
 				( zy.match(/(\u31B6)/) )					? '\u31B6' :
