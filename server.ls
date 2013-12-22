@@ -1,3 +1,4 @@
+#!/usr/bin/env lsc
 require! fs
 LTM-regexes = {}
 
@@ -211,30 +212,6 @@ require(\zappajs) ->
         img attrs
         uri = encodeURIComponent encodeURIComponent @text
         uri += suffix
-        form id:'frm' style:'''
-          top: 0;
-          right: 0;
-          background: rgba(200, 200, 200, 0.5);
-          border-radius: 5px;
-          padding: 5px 15px;
-          position: absolute;
-        ''', ->
-          select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
-            option value:'', \國語
-            option selected:(@text is /^!/), value:\!, \臺語
-            option selected:(@text is /^:/), value:\:, \客語
-          select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
-            optgroup label:'全字庫', ->
-              option value:'?font=kai', \楷書
-              option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
-              option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
-            optgroup label:'逢甲大學', ->
-              option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
-            optgroup label:'王漢宗', ->
-              for wt, font of @wt2font
-                option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
-          input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: word
-          button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
         div class:'share' style:'margin: 15px', ->
           a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
             i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
@@ -259,6 +236,30 @@ require(\zappajs) ->
               margin: 10px;
             ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part, title:part
           td -> a {style: 'color: #006', href}, expand-def def
+        form id:'frm' style:'''
+          top: 0;
+          right: 0;
+          background: rgba(200, 200, 200, 0.5);
+          border-radius: 5px;
+          padding: 5px 15px;
+          position: absolute;
+        ''', ->
+          select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
+            option value:'', \國語
+            option selected:(@text is /^!/), value:\!, \臺語
+            option selected:(@text is /^:/), value:\:, \客語
+          select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
+            optgroup label:'全字庫', ->
+              option value:'?font=kai', \楷書
+              option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
+              option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
+            optgroup label:'逢甲大學', ->
+              option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
+            optgroup label:'王漢宗', ->
+              for wt, font of @wt2font
+                option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
+          input id:'in' name:'in' class:'form-control' style:'width: auto; display: inline; width: 150px' autofocus:true size:10 onfocus:'this.select()' value: word
+          button id:'submit' type:'submit' class:'btn btn-default' onclick:"var x; if (x = document.getElementById('in').value) {location.href = document.getElementById('lang').value + encodeURIComponent(x.replace(/ /g, '\u3000').replace(/[\u0020-\u007E]/g, function(it){ return String.fromCharCode(it.charCodeAt(0) + 0xFEE0); })) + document.getElementById('font').value }; return false", -> i class:'icon-pencil'
 
 function text2dim (len)
   len <?= 50
