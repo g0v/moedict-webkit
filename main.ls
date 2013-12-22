@@ -181,7 +181,7 @@ window.do-load = ->
   else
     $('body').addClass \overflow-scrolling-true
     $('body').addClass "prefer-down-false"
-  $('#result').addClass "prefer-pinyin-#{ !!getPref \prefer-pinyin }"
+  $('#result').addClass "prefer-pinyin-true" # !!getPref \prefer-pinyin
 
   fontSize = getPref(\font-size) || 14
   $('body').bind \pinch (, {scale}) ->
@@ -420,6 +420,7 @@ window.do-load = ->
     return fill-bucket id, bucket, cb
 
   set-pinyin-bindings = ->
+    return
     $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind(\click).click ->
       val = !getPref \prefer-pinyin
       setPref \prefer-pinyin val
@@ -475,7 +476,7 @@ window.do-load = ->
     $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
-      +disabled, tooltipClass: "prefer-pinyin-#{ !!getPref \prefer-pinyin }", show: 100ms, hide: 100ms, items: \a,
+      +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
         $('.ui-tooltip-content h1').ruby!
       content: (cb) ->
