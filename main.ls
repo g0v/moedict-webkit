@@ -434,12 +434,13 @@ window.do-load = ->
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
     $ \#result .html html .ruby!
+    _pua!
 
     $('#result h1 rb[word]') .each ->
       _h = HASH-OF[LANG]
-      _i = $ this .attr 'word-order'
-      _ci = $ this .attr 'word'
-      $ this .wrap $('<a/>').attr({
+      _i = $ @ .attr 'word-order'
+      _ci = $ @ .attr 'word'
+      $ @ .wrap $('<a/>').attr({
         'word-order': _i
         'href': _h + _ci
       })
@@ -479,6 +480,7 @@ window.do-load = ->
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
         $('.ui-tooltip-content h1').ruby!
+        _pua!
       content: (cb) ->
         id = $(@).attr \href .replace /^#[!|:|~]?/, ''
         callLater ->
@@ -492,10 +494,33 @@ window.do-load = ->
         timeout: 250ms
         over: -> try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-    <- setTimeout _, 250ms
-    $('.ui-tooltip').remove!
-    <- setTimeout _, 250ms
-    $('.ui-tooltip').remove!
+    setTimeout _, 250ms ->
+      $('.ui-tooltip').remove!
+
+    function _pua
+      $('hruby rb[annotation]').each ->
+        a = $ @ .attr \annotation
+
+        if isDroidGap
+          a .= replace /([aeiou])\u030d/g (m, v) ->
+            return      if v is \a then \\uDB80\uDC61
+                   else if v is \e then \\uDB80\uDC65
+                   else if v is \i then \\uDB80\uDC69
+                   else if v is \o then \\uDB80\uDC6F
+                   else if v is \u then \\uDB80\uDC75
+        else
+          a .= replace /i\u030d/g \\uDB80\uDC69
+
+        $ @ .attr \annotation, a
+
+      $('hruby rb[diao]').each ->
+        d = $ @ .attr \diao
+        d .= replace /([\u31B4-\u31B7])[\u0358|\u030d]/g (m, j) ->
+          return      if j is \\u31B4 then \\uDB8C\uDDB4
+                 else if j is \\u31B5 then \\uDB8C\uDDB5
+                 else if j is \\u31B6 then \\uDB8C\uDDB6
+                 else if j is \\u31B7 then \\uDB8C\uDDB7
+        $ @ .attr \diao, d
 
   load-cache-html = ->
     html = htmlCache[LANG][it]
@@ -1025,9 +1050,9 @@ function render (json, t)
       text.=replace /(\u31B6)\u0358/g "<span class='u31b6-0358'>$1\u0358</span>"
       text.=replace /(\u31B7)\u0358/g "<span class='u31b7-0358'>$1\u0358</span>"
       if isDroidGap
-        text.=replace /([aieou])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
+        text.=replace /([aieou])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
       else
-        text.=replace /([i])\u030d/g "<span class='$1-030d'>$1\u030d</span>"
+        text.=replace /([i])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
     text.replace(/[\uFF0E|\u2022]/g '\u00B7')
         .replace(/\u223C/g '\uFF0D')
         .replace(/\u0358/g '\u030d')
