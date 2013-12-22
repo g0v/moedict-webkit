@@ -285,7 +285,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var cx, gcse, s, pollGsc, fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, ref$, len$, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, ref$, len$, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -308,24 +308,29 @@
       $('body').addClass('android');
     }
     if (!isCordova) {
-      cx = '007966820757635393756:sasf0rnevk4';
-      gcse = document.createElement('script');
-      gcse.type = 'text/javascript';
-      gcse.async = true;
-      gcse.src = (document.location.protocol === 'https:' ? 'https:' : 'http:') + "//www.google.com/cse/cse.js?cx=" + cx;
-      s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(gcse, s);
-      pollGsc = function(){
-        if (!$('.gsc-input').length) {
-          return setTimeout(pollGsc, 500);
-        }
-        $('.gsc-input').attr('placeholder', '全文檢索');
-        return isQuery = false;
-      };
-      setTimeout(pollGsc, 500);
+      setTimeout(function(){
+        var cx, gcse, s, pollGsc;
+        cx = '007966820757635393756:sasf0rnevk4';
+        gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol === 'https:' ? 'https:' : 'http:') + "//www.google.com/cse/cse.js?cx=" + cx;
+        s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+        pollGsc = function(){
+          if (!$('.gsc-input').length) {
+            return setTimeout(pollGsc, 500);
+          }
+          $('.gsc-input').attr('placeholder', '全文檢索');
+          return isQuery = false;
+        };
+        return setTimeout(pollGsc, 500);
+      }, 1);
     }
     if (!(isMobile || isApp || widthIsXs())) {
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      setTimeout(function(){
+        return !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");;
+      }, 1);
     }
     if (/Android\s*[12]\./.exec(navigator.userAgent)) {
       $('body').addClass('overflow-scrolling-false');

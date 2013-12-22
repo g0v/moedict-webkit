@@ -155,6 +155,7 @@ window.do-load = ->
   $('body').addClass \android if isDroidGap
 
   unless isCordova
+    <- setTimeout _, 1ms
     cx = '007966820757635393756:sasf0rnevk4';
     gcse = document.createElement('script')
     gcse.type = 'text/javascript'
@@ -171,6 +172,7 @@ window.do-load = ->
     setTimeout poll-gsc, 500ms
 
   unless isMobile or isApp or width-is-xs!
+    <- setTimeout _, 1ms
     ``!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");``
 
   if navigator.user-agent is /Android\s*[12]\./
