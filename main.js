@@ -339,7 +339,7 @@
       $('body').addClass('overflow-scrolling-true');
       $('body').addClass("prefer-down-false");
     }
-    $('#result').addClass("prefer-pinyin-" + !!getPref('prefer-pinyin'));
+    $('#result').addClass("prefer-pinyin-true");
     fontSize = getPref('font-size') || 14;
     $('body').bind('pinch', function(arg$, arg1$){
       var scale;
@@ -757,6 +757,7 @@
       return fillBucket(id, bucket, cb);
     };
     setPinyinBindings = function(){
+      return;
       return $('#result.prefer-pinyin-true .bopomofo .bpmf, #result.prefer-pinyin-false .bopomofo .pinyin').unbind('click').click(function(){
         var val;
         val = !getPref('prefer-pinyin');
@@ -840,7 +841,7 @@
         });
         $('#result a[href]:not(.xref)').tooltip({
           disabled: true,
-          tooltipClass: "prefer-pinyin-" + !!getPref('prefer-pinyin'),
+          tooltipClass: "prefer-pinyin-" + true,
           show: 100,
           hide: 100,
           items: 'a',
