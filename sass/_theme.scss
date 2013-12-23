@@ -1,5 +1,17 @@
 
 
+// webkit scrollbar
+.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
 body {
     @include hidpi('subtle_stripes', 'png');
     @include fonts;
@@ -17,6 +29,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+// ?!
 .rubber_stamp {
     font-size: 18px;
     line-height: 18px;
@@ -44,7 +57,7 @@ body {
     }
 }
 
-// navigation 
+// 導覽列
 .navbar {
     @include box-shadow(#1a1a1a 0 0 3px);
 }
@@ -81,18 +94,28 @@ body.lang-h {
         }
     }
 }
+
+#moedict.about .navbar-brand {
+    display: block;
+}
+.app .navbar-brand {
+    display: none;
+}
+
 body.lang-t {
     .nav-bg { background-color: #700; }
     .iconic-circle { background: #744; }
     .iconic-color { color: #744; }
     #query-box { background-color: #FBEFEF; }
 }
+
 body.lang-a {
     .nav-bg { background-color: #100; }
     .iconic-circle { background: #400; }
     .iconic-color { color: #400; }
     #query-box { background-color: #F3F0F0; }
 }
+
 body.lang-c {
     .nav-bg { background-color: #007; }
     .iconic-circle { background: #447; }
@@ -101,6 +124,9 @@ body.lang-c {
 }
 
 @media only screen and (max-width: 767px) {
+    .brand, #lookback input { display: none !important; }
+    .navbar-inner { padding: 0 !important; }
+
     body .navbar-inverse {
         opacity: 0.95
     }
@@ -108,8 +134,18 @@ body.lang-c {
     body .navbar {
         padding-left: 0;
     }
+
+    body .iconic-color.star {
+        right: 22px;
+        top: 162px;
+    }
+
+    body.cordova .iconic-color.star {
+        top: 167px !important;
+    }
 }
 
+// icons
 input.iconic-circle {
     padding: 0;
     margin-top: 16px !important;
@@ -133,13 +169,27 @@ input.iconic-circle {
     color: #1a1a1a;
 }
 
+.iconic-circle.stroke,
+.iconic-circle.star {
+    width: 32px;
+    height: 30px;
+    padding: 7px;
+    cursor: pointer !important;
+    &:hover {
+        background: #888 !important;
+    }
+}
+.iconic-color.star {
+    background: white;
+    position: absolute;
+    right: 42px;
+    top: 113px;
+    &:hover {
+        background: #ccc !important;
+    }
+}
 
-#moedict.about .navbar-brand {
-    display: block;
-}
-.app .navbar-brand {
-    display: none;
-}
+// ［app］清除鈕
 .erase-box {
     position: fixed;
     right: 0px;
@@ -148,6 +198,7 @@ input.iconic-circle {
     z-index: 50;
     font-size: 19px;
 }
+
 @media only screen and (min-width: 768px) {
     .erase-box {
         top: 72px;
@@ -156,6 +207,8 @@ input.iconic-circle {
         width: 24px;
     }
 }
+
+// ［app］上一頁
 .app .back-box {
     position: fixed;
     text-align: center;
@@ -165,6 +218,7 @@ input.iconic-circle {
     z-index: 50;
     font-size: 19px;
 }
+
 @media only screen and (min-width: 768px) {
     .app .back-box {
         top: 72px;
@@ -173,15 +227,32 @@ input.iconic-circle {
 }
 
 @media only screen and (max-width: 767px) {
-.app .query-box input {
-    position: fixed;
-    left: 40px;
-    top: 55px;
-    right: 10px;
-    width: auto;
-}
+    .app .query-box input {
+        position: fixed;
+        left: 40px;
+        top: 55px;
+        right: 10px;
+        width: auto;
+    }
 }
 
+// ?!
+input.back {
+    position: fixed;
+    display: none;
+    bottom: 0px;
+    left: 0px;
+    width: 60px;
+    height: 60px;
+}
+
+@media only screen and (min-width: 768px) {
+    input.back {
+        display: block;
+    }
+}
+
+// 搜尋框
 .query-box {
     width: 260px;
     //background-color: hsl(0,0%,97%);
@@ -213,200 +284,22 @@ input.iconic-circle {
     }
 }
 
-@media only screen and (max-width: 767px) {
-    .brand, #lookback input { display: none !important; }
-}
-@media only screen and (max-width: 767px) {
-    .navbar-inner { padding: 0 !important; }
-}
-
-@media only screen and (max-width: 767px) {
-    body .iconic-color.star {
-        right: 22px;
-        top: 162px;
-    }
-}
-@media only screen and (max-width: 767px) {
-    body.cordova .iconic-color.star {
-        top: 167px !important;
-    }
-}
-.iconic-color.star {
-    background: white;
-    position: absolute;
-    right: 42px;
-    top: 113px;
-    &:hover {
-        background: #ccc !important;
-    }
-}
-.iconic-circle.stroke, .star {
-    width: 32px;
-    height: 30px;
-    padding: 7px;
-    cursor: pointer !important;
-    &:hover {
-        background: #888 !important;
-    }
-}
-.cc0 {
-    line-height: 150%;
-    @include en-fonts;
-}
-
 @media print {
     .query-box { display: none; }
 }
 
-.dropdown-submenu {
-  > a { position: relative; }
-  > a:before {
-    font-size: 10px;
-    content: "▶";
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    line-height: 1em;
-    margin-top: -5px;
-  }
-}
-
-
-@media only screen and (min-width: 768px) {
-    .desktop ul.nav li:hover > ul.dropdown-menu {
-        display: block;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-  .dropdown-submenu:hover {
-    > .dropdown-menu {
-      display: block;
-      left: 100%;
-      top: 0;
-    }
-  }
-}
-
 @media only screen and (max-width: 767px) {
-    .dropdown .dropdown-submenu {
-        > .dropdown-menu { margin-left: 10%; }
-        > a:before { content: "▼"; }
-        .dropdown-menu > li > a { padding-left: .5em; }
+    body.overflow-scrolling-false .query-box input {
+        position: absolute !important;
+        top: 18px !important;
     }
 }
 
-
-@media only screen and (max-width: 767px) {
-    body #btn-starred {
-        position: absolute;
-        top: 2px;
-        right: 0px;
-        i {
-            display: block;
-            padding-right: 15px;
-            padding-left: 25px;
-        }
+body.overflow-scrolling-false {
+    .navbar-fixed-top, .erase-box, #query-box, .back-box {
+        position: absolute !important;
     }
 }
-
-@media only screen and (min-width: 768px) {
-    body #btn-starred {
-        i {
-            display: block;
-            padding-right: 5px;
-            padding-left: 5px;
-        }
-        padding-right: 0;
-        margin-right: 10px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    table.moetext tr {
-        display: table;
-        width: 100%;
-        td {
-            display: table-row;
-        }
-    }
-}
-@media only screen and (max-width: 767px) {
-    img.moedict {
-        margin-top: 0 !important;
-        margin-left: -12px !important;
-    }
-}
-
-body.overflow-scrolling-false .ui-autocomplete {
-    max-height: 10000px !important;
-    bottom: auto !important;
-    position: absolute !important;
-}
-
-.ui-autocomplete {
-    &.invisible {
-        display: none;
-    }
-    overflow: auto;
-    height: auto !important;
-    position: fixed !important;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-@media only screen and (min-width: 768px) {
-    .resize-btn.app-only {
-        left: auto !important;
-        right: 64px !important;
-        top: -4px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .ui-autocomplete.invisible {
-        display: block !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
-        display: none !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .ui-autocomplete {
-        bottom: 52px !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .ui-autocomplete.invisible {
-        visibility: visible !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .ui-autocomplete {
-        display: block !important;
-        top: 113px !important;
-        bottom: auto !important;
-        left: 19px !important;
-        width: 221px !important;
-        overflow: auto !important;
-        max-height: 80% !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    input.back {
-        display: block;
-    }
-}
-
 
 input.query {
     display: block;
@@ -422,13 +315,6 @@ input.query {
 
 ::-webkit-search-cancel-button {   /* select all "X" buttons in search inputs */
     -webkit-appearance: none;      /* hide the default "X" button */
-}
-
-.about .content {
-    margin: 15px; margin-bottom: 80px; background: white; padding: 20px;
-    border-radius: 10px;
-    font-size: 110%;
-    line-height: 150%;
 }
 
 @media only screen and (max-width: 767px) {
@@ -475,6 +361,59 @@ input.query {
     }
 }
 
+// 搜尋結果列表
+body.overflow-scrolling-false .ui-autocomplete {
+    max-height: 10000px !important;
+    bottom: auto !important;
+    position: absolute !important;
+}
+
+.ui-autocomplete {
+    &.invisible {
+        display: none;
+    }
+    overflow: auto;
+    height: auto !important;
+    position: fixed !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 768px) {
+    .resize-btn.app-only {
+        left: auto !important;
+        right: 64px !important;
+        top: -4px;
+    }
+
+    .ui-autocomplete.invisible {
+        display: block !important;
+    }
+
+    .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
+        display: none !important;
+    }
+
+    .ui-autocomplete {
+        //bottom: 52px !important;
+    }
+
+    .ui-autocomplete.invisible {
+        visibility: visible !important;
+    }
+
+    .ui-autocomplete {
+        display: block !important;
+        top: 113px !important;
+        bottom: auto !important;
+        left: 19px !important;
+        width: 221px !important;
+        overflow: auto !important;
+        max-height: 80% !important;
+    }
+}
+
 @media only screen and (max-width: 767px) {
     ul.ui-autocomplete {
         top: 100px !important;
@@ -489,23 +428,114 @@ input.query {
     }
 }
 
+.ui-menu-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
+  font-size: 19px;
+}
+
 body.lang-a.web #lookback {
     display: block !important;
 }
 
-.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 7px;
-}
-
-.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
-}
-
 .app .ui-autocomplete {
     max-height: 75% !important;
+}
+
+// 分類索引選單
+.dropdown-submenu {
+    > a { position: relative; }
+    > a:before {
+        font-size: 10px;
+        content: "▶";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        line-height: 1em;
+        margin-top: -5px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .desktop ul.nav li:hover > ul.dropdown-menu {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .dropdown-submenu:hover {
+        > .dropdown-menu {
+            display: block;
+            left: 100%;
+            top: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .dropdown .dropdown-submenu {
+        > .dropdown-menu { margin-left: 10%; }
+        > a:before { content: "▼"; }
+        .dropdown-menu > li > a { padding-left: .5em; }
+    }
+}
+
+// 字詞紀錄簿按鈕
+@media only screen and (max-width: 767px) {
+    body #btn-starred {
+        position: absolute;
+        top: 2px;
+        right: 0px;
+
+        i {
+            display: block;
+            padding-right: 15px;
+            padding-left: 25px;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    body #btn-starred {
+        padding-right: 0;
+        margin-right: 10px;
+
+
+        i {
+            display: block;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+    }
+}
+
+// ?!
+@media only screen and (max-width: 767px) {
+    table.moetext tr {
+        display: table;
+        width: 100%;
+
+        td {
+            display: table-row;
+        }
+    }
+}
+@media only screen and (max-width: 767px) {
+    img.moedict {
+        margin-top: 0 !important;
+        margin-left: -12px !important;
+    }
+}
+
+// 關於頁
+.about .content {
+    margin: 15px; margin-bottom: 80px; background: white; padding: 20px;
+    border-radius: 10px;
+    font-size: 110%;
+    line-height: 150%;
 }
 
 .about a {
@@ -513,28 +543,9 @@ body.lang-a.web #lookback {
     text-decoration: none;
 }
 
-#gcfbar {
-    padding: 0 !important;
-    position: fixed !important;
-    a {
-        color: #00a !important;
-    }
-}
-
-#gcfupdate {
-    margin: 5px;
-}
-
-#gcfclose {
-    margin: 3px;
-}
-
-.ui-menu-item {
-    border-bottom: 1px solid #ddd;
-}
-
-.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
-  font-size: 19px;
+.cc0 {
+    line-height: 1.5;
+    @include en-fonts;
 }
 
 img {
@@ -551,6 +562,51 @@ img {
     }
 }
 
+
+
+// ?!
+#gcfbar {
+    padding: 0 !important;
+    position: fixed !important;
+    a {
+        color: #00a !important;
+    }
+}
+
+#gcfupdate {
+    margin: 5px;
+}
+
+#gcfclose {
+    margin: 3px;
+}
+
+// ?!
+img {
+    &.info {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back, &.down {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back {
+        display: none;
+    }
+}
+
+.app img.down {
+    display: none;
+}
+
+// platform conditions
 .android {
     .info, .back {
         display: none !important;
@@ -587,7 +643,6 @@ img {
     display: inline-block !important;
 }
 
-
 .web-only {
     display: none !important;
 }
@@ -600,51 +655,6 @@ img {
     display: none !important;
 }
 
-img {
-    &.info {
-        position: fixed;
-        bottom: 0px;
-        right: 0px;
-        width: 60px;
-        height: 60px;
-    }
-    &.back, &.down {
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        width: 60px;
-        height: 60px;
-    }
-    &.back {
-        display: none;
-    }
-}
-
-.app img.down {
-    display: none;
-}
-
-input.back {
-    position: fixed;
-    display: none;
-    bottom: 0px;
-    left: 0px;
-    width: 60px;
-    height: 60px;
-}
-
-@media only screen and (max-width: 767px) {
-    body.overflow-scrolling-false .query-box input {
-        position: absolute !important;
-        top: 18px !important;
-    }
-}
-
-body.overflow-scrolling-false {
-    .navbar-fixed-top, .erase-box, #query-box, .back-box {
-        position: absolute !important;
-    }
-}
 
 
 
