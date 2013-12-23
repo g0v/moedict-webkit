@@ -591,6 +591,20 @@ body.lang-t .example, body.lang-h .example {
 .entry {
     padding-bottom: 5px;
     border-bottom: 1px ridge #dddddd;
+
+    
+    .result & .entry-item  {
+        // 如果只有一個解釋，不顯示為列表
+        >ol li:only-child {
+            list-style: none;
+            margin-left: -1.5em;
+        }
+        // 如果只有一個解釋，但前方有詞性
+        >.part-of-speech ~ ol li:only-child {
+            //list-style: square;
+            margin: -.5em 0 1.5em;
+        }
+    }
 }
 
 @media only screen and (max-width: 767px) {
