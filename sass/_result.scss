@@ -1,0 +1,775 @@
+
+
+@media only screen and (max-width: 767px) {
+    .results {
+        margin-top: 105px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .results {
+        margin-top: 65px;
+        margin-left: 280px;
+        margin-right: 20px;
+    }
+}
+
+.result {
+    background: #fff;
+    border: 1px solid hsl(0,1%,83%);
+    padding: 20px;
+    padding-top: 5px;
+    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+    margin-bottom: 20px;
+    font-size: 100%;
+    line-height: 1.5;
+}
+
+center {
+    padding: 15px;
+}
+
+// 筆順動畫
+svg {
+    border: 2px solid #a00;
+    background: white;
+    margin-left: 5px;
+    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+}
+canvas {
+    margin-left: 5px;
+    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+}
+
+// 拼、注音right-angle
+hruby {
+    rb[annotation]:before,
+    rb[annotation]:after {
+        @include en-fonts;
+        font-weight: normal;
+    }
+}
+
+// 條目或提示框之「標題」
+.result,
+.ui-tooltip {
+    // 條目標題
+    h1 {
+        // posi
+        margin: -.25em 0 .5em;
+        padding-bottom: .3em;
+        // typo
+        @include kai-fonts;
+        font-size: 200%;
+        line-height: 1;
+        font-weight: 501;
+        // style
+        border-bottom: 1px dotted $border-color;
+
+
+        // 避免換頁時，未right-angle化的標題上下跳動
+        &[style] {
+            line-height: 2;
+        }
+        // （部首）檢索頁標題（同上）
+        &[itemprop="name"] {
+            margin-top: .25em;
+        }
+        // 標題詞條連結hack
+        a:hover,
+        a.hovered {
+            background: #ddd;
+            color: #0070A3;
+            border-radius: 4px;
+            outline: none; // 1px solid hsl(197,96%,70%);
+        }
+        // 單字條目的筆順動畫按鈕
+        div.stroke {
+            display: inline;
+            cursor: pointer;
+            border: 1px solid white;
+            &:hover {
+                border: 1px solid #a00;
+                background: #fff8f8;
+            }
+        }
+        // 真人發音解釋
+        audio {
+            vertical-align: bottom;
+            margin-left: 20px;
+            width: 50px;
+        }
+        // 地區變體標示
+        .specific_to {
+            display: inline;
+            font-size: 40%;
+            position: absolute;
+            margin-top: 1.5em;
+            @include fonts;
+        }
+        // 條目原文（英）
+        .english {
+            color: #777;
+            display: inline-block;
+            font-size: .65em;
+            line-height: 1;
+        }
+    }
+    // 條目標題下方的拼、注音
+    //（目前僅在變音、客語條目有效）
+    .bopomofo {
+        display: none;
+    }
+    // 又音標示、變音（按鈕）框
+    h1,
+    h1 + div {
+        small.youyin,
+        small.alternative {
+            @include fonts;
+            color: #888;
+            display: inline-block;
+            font-size: .45em;
+            letter-spacing: .125em;
+            line-height: 1;
+            margin: 0 0 0 .25em;
+        }
+        small.alternative {
+            // posi
+            display: block;
+            margin: .75em 0 0 2em;
+            position: relative;
+
+            // typo
+            letter-spacing: 0;
+            line-height: 1.2;
+
+            span {
+                display: block;
+                border-bottom: 0 !important;
+                font-size: .8em;
+
+                &:last-of-type {
+                    margin: .25em 0 0 -.1em;
+                }
+            }
+
+            &:before {
+                // posi
+                display: inline-block;
+                left: -1.85em;
+                padding: 4px 3px 5px 4px;
+                position: absolute;
+
+                // typo
+                content: '變';
+                color: #fff;
+                font-size: 14px;
+                line-height: 1;
+
+                // style
+                background: $primary-color;
+                border-radius: 4px;
+
+                body.lang-t & {
+                    content: '又'
+                }
+            }
+        }
+    }
+    //如果是第二個以上之條目
+    div.entry ~ .radical {
+        margin-top: .4em;
+    }
+    // 陸音標示
+    h1 + div {
+        small.cn-specific {
+            font-size: 1em;
+
+            &:before {
+                content: '陸';
+                left: -28px;
+            }
+
+            span {
+                border-bottom: 0 !important;
+                float: none !important;
+            }
+        }
+    }
+}
+
+// 詞條連結
+.result a {
+    color: #000;
+    text-decoration: none;
+
+
+    &:hover, &:focus {
+        background: #ddd;
+        background-image: #ddd !important;
+        color: #0070A3;
+        outline: 1px solid hsl(197,96%,70%);
+    }
+    &.erase:hover, &.lang:hover {
+        background: #ddd;
+        outline: none !important;
+        border: none;
+        border-radius: 30px;
+    }
+}
+
+.part-of-speech a, .specific a {
+    &:hover, &:focus {
+        background: none !important;
+        color: inherit;
+        outline: none !important;
+    }
+}
+
+.part-of-speech a, .specific a {
+    color: white !important;
+
+    &:hover, &:focus {
+        color: white;
+        background: #aaf;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+}
+
+// 條目自我指涉
+span {
+    b {
+        font-weight: normal;
+        border-bottom: 1px solid $border-color !important;
+    }
+
+    a {
+        border: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    a:hover b, b:hover {
+        background: #f0f0f0;
+    }
+}
+
+// 發音、文字組件、原文（.english）
+.bopomofo,
+.radical {
+    font-weight: 501;
+}
+
+.radical {
+    float: right;
+    text-align: right;
+    padding-top: 5px;
+    .count {
+        font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace;
+    }
+    .glyph {
+        margin-right: 0.2em;
+        padding-bottom: 4px;
+        b {
+            border-bottom: none !important;
+            &:hover {
+                background: $primary-color;
+            }
+        }
+    }
+    .sym {
+        margin-left: 0.2em;
+        padding-right: 0.2em;
+    }
+}
+
+.bopomofo {
+    display: table;
+    margin-top: -14px;
+    padding-bottom: 5px;
+    margin-right: 24px;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 90%;
+    width: 100%;
+    border-bottom: 1px dotted $border-color;
+    word-break: normal !important;
+    padding-right: 34px;
+    .part-of-speech { margin: 0px 5px 0 5px }
+}
+
+div.cn-specific {
+    background: #eeeeff;
+    border-radius: 10px;
+    &.bopomofo {
+        padding-top: 3px;
+        border-top: 5px solid white;
+        .cn-specific {
+            border-top: 1px solid #eee;
+        }
+    }
+}
+
+body#moedict {
+    &.overflow-scrolling-false.lang-t .pinyin {
+        font-family: 'MOEDICT';
+    }
+    &.lang-t .pinyin {
+        // font-family: 'Segoe UI', 'Charis SIL', 'MOEDICT', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
+        @include en-fonts
+    }
+}
+
+.english {
+    word-break: normal !important;
+    @include en-fonts;
+    font-weight: normal;
+    font-size: 90%;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.pinyin {
+    @include en-fonts;
+    display: inline-block;
+    word-break: normal !important;
+}
+
+.bpmf {
+    @include kai-fonts;
+}
+
+/*.bopomofo {
+    .bpmf {
+        width: 65%;
+        display: inline-block;
+    }
+    .pinyin {
+        width: 35%;
+        display: inline-block;
+    }
+}*/
+
+span .tone {
+    position: relative;
+    float: right;
+    left: 10px;
+    top: -6px;
+    font-size: 120%;
+}
+
+body.overflow-scrolling-false, body.app {
+    .bpmf, input, button, select, textarea, .ui-widget, .results {
+        font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
+    }
+    .pinyin {
+        font-family: "Fira Sans OT", sans-serif !important;
+    }
+    .pinyin, .english, .fw_def, .bopomofo, .cc0,
+    hruby rb[annotation]:before {
+        text-rendering: auto !important;
+        font-feature-settings: normal !important;
+        -moz-font-feature-settings: normal !important;
+        -webkit-font-feature-settings: normal !important;
+    }
+}
+
+body.overflow-scrolling-true.web {
+    .pinyin, .english, .fw_def, .bopomofo, .cc0,
+    hruby rb[annotation]:before {
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "liga", "dlig", "kern" on;
+        -moz-font-feature-settings: "liga", "dlig", "kern" on;
+        -webkit-font-feature-settings: "liga", "dlig", "kern" on;
+    }
+}
+
+// （客語）條目拼音及發音按鈕
+.part-of-speech.playAudio {
+    background: $primary-color;
+    color: white;
+    font-size: 90%;
+    padding: 4px;
+    cursor: pointer;
+    line-height: 100%;
+    display: inline-block;
+}
+
+.audioBlock {
+    display: inline-block;
+    margin-top: 10px;
+    &.playing {
+        box-sizing: border-box;
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        margin-left: 12px;
+        padding-left: 10px;
+        padding-right: 7px;
+        border-radius: 5px;
+    }
+}
+.playAudio {
+    margin-left: 5px;
+    color: $primary-color;
+    font-size: 70%;
+    padding-left: 5px;
+    display: inline-block !important;
+    cursor: pointer;
+    line-height: 100%;
+}
+
+// 客語典標題列發音
+body.lang-h {
+    .bopomofo {
+        @include en-fonts;
+        .part-of-speech {
+            margin-right: 3px;
+            margin-left: 5px;
+            width: auto;
+        }
+    }
+}
+
+// 兩岸典標題列及發音
+body.lang-c {
+    h1[data-title] {
+        border-bottom: 0;
+    }
+    .bopomofo {
+        display: block;
+
+        .bpmf,
+        .pinyin {
+            //display: none;
+        }
+    }
+    .specific {
+        background: #66c;
+        margin-left: 5px;
+        border-radius: 1px;
+    }
+}
+
+// 詞性、部首、語言、地區標示
+.part-of-speech,
+.glyph,
+.fw_lang,
+.specific {
+    @include fonts;
+    color: white;
+    background-color: hsl(360,100%,21%);
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 100%;
+    line-height: 1;
+}
+
+// 英、法、德語
+.translation .fw_def {
+    @include en-fonts;
+    display: inline;
+    padding-left: 3.3ex;
+    font-size: 90%;
+    word-break: normal !important;
+    vertical-align: top;
+}
+
+.translation .fw_lang {
+    position: absolute;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+// 範例
+.example {
+    font-size: 92%;
+
+    // 閩、客語典中，例句下的國語解釋
+    .mandarin {
+        font-size: 90%;
+        text-align: left;
+        width: auto;
+
+        &:before { content: "（"; }
+        &:after  { content: "）"; }
+    }
+    // 閩、客語典中，例句下的發音
+    .ruby {
+        text-align: left;
+        display: inline-block;
+        width: auto;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+
+        .ruby .rb {
+            text-align: left;
+            display: inline-block;
+        }
+        .rt {
+            font-size: 70%;
+            clear: both;
+            width: auto;
+            text-align: left;
+        }
+    }
+}
+
+body.lang-t .example, body.lang-h .example {
+    font-size: 100%;
+    display: inline-block;
+    clear: both;
+    width: auto;
+    border: 1px solid $border-color;
+    padding: 3px;
+    background: #eee;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+}
+
+.example {
+    @include song-fonts;
+}
+.quote {
+    @include song-fonts;
+    clear: both;
+    display: block;
+    font-size: 92%;
+}
+
+.antonyms, .synonyms, .variants {
+    clear: both;
+    display: block;
+    font-size: 85%;
+    margin-top: 2px;
+}
+
+.xrefs {
+    border-top: 3px solid $border-color;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+}
+
+.xref-line {
+    padding: 10px;
+    border-bottom: 1px solid $border-color;
+    .part-of-speech {
+//        margin-right: 5px;
+    }
+    span:first-child {
+//        background-color: #006b00;
+    }
+}
+
+.link {
+    clear: both;
+    display: block;
+}
+
+.def {
+    clear: both;
+    display: block;
+    margin-bottom: 2pt;
+}
+
+.lang-t .example b, .lang-h .example b {
+    background: #ffd;
+    border-radius: 5px;
+}
+
+// 解釋
+.entry {
+    padding-bottom: 5px;
+    border-bottom: 1px ridge #dddddd;
+}
+
+@media only screen and (max-width: 767px) {
+    .entry-item {
+        @include clearfix;
+        >span.part-of-speech, >ol {
+            float: left;
+        }
+        >ol {
+            width: 100%;
+            padding-top: 0px;
+        }
+    }
+}
+
+// 提示框
+body .ui-tooltip {
+    // posi
+    margin-top: 0;
+    overflow: hidden;
+    padding-top: 0;
+    // size
+    max-height: 300px;
+    min-width: 300px;
+    width: 300px;
+    // typo
+    @include fonts;
+    word-break: break-all;
+    // style
+    background: #fffcfc !important;
+    border-top: 0;
+
+
+    // 閩語典中的發音提示框
+    &.bpmf {
+        font-size: 80%;
+        width: auto;
+        min-width: auto;
+        background: #f0f0f0;
+    }
+    // 又音標示微調
+    h1 small.youyin {
+        display: block;
+        margin-top: .25em;
+    }
+    // 
+    .bopomofo {
+        display: none;
+        margin: 0px;
+        padding: 0px;
+        font-size: 75%;
+    }
+    // 條列解釋
+    ul, ol {
+        padding-left: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin: 0 !important;
+
+        li {
+            // posi
+            margin: 0 !important;
+            margin-left: 1.5em !important;
+            padding: 0 !important;
+            // typo
+            @include fonts;
+            line-height: 1.35;
+
+
+            .part-of-speech {
+                position: relative;
+                left: 0px;
+            }
+            // 如果只有一個解釋，不顯示為列表 
+            &:only-child {
+                list-style: none;
+                margin-left: .75em !important;
+            }
+        }
+    }
+    // 有詞性在前時的條列解釋
+    .part-of-speech + ol li {
+        margin-left: 3em !important;
+
+        &:first-child {
+            margin-top: -.75em !important;
+        }
+
+        &:first-child:only-child {
+            margin-left: 1.5em !important;
+        }
+    }
+    .entry .part-of-speech {
+        position: absolute;
+        left: 7px;
+    }
+    .ol, .definition {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .entry {
+        border-bottom: none;
+        font-size: 80%;
+    }
+    .title {
+        border-bottom: 1px dotted $border-color;
+        margin: -.25em 0 .25em;
+        padding: .25em;
+        font-size: 130%;
+        line-height: 1.2;
+        .playAudio {
+            display: none !important
+        }
+        .lang-h & {
+            border-bottom: 0;
+        }
+    }
+    .xrefs,
+    .example,
+    .quote,
+    .antonyms,
+    .synonyms,
+    .variants,
+    .radical {
+        display: none;
+    }
+}
+
+// 閩語提示框調整
+body.lang-t .ui-tooltip .example {
+    display: none;
+}
+
+// 客語提示框調整
+body.lang-h .ui-tooltip {
+    .title {
+        border-bottom: 1px dotted $grayLight;
+        line-height: 1.4
+    }
+
+    .bopomofo {
+        display: none;
+    }
+}
+
+// ?!
+a.stroke-char {
+    font-size: 120%;
+    padding: 0.2em !important;
+    line-height: 180%;
+}
+.stroke-list {
+}
+.stroke-count {
+    width: 1.6em;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    background-color: hsl(360,100%,21%);
+    border-radius: 4px;
+    padding: 2px;
+    line-height: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
