@@ -10652,7 +10652,7 @@ body.lang-t .example, body.lang-h .example {
   margin-left: -1.5em;
 }
 .result .entry .entry-item > .part-of-speech ~ ol li:only-child {
-  margin: -.5em 0 1.5em;
+  margin: -.25em 0 1.5em;
 }
 
 @media only screen and (max-width: 767px) {
