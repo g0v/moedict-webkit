@@ -1,0 +1,144 @@
+
+// Twitter
+#timeline iframe {
+    height: 100% !important;
+    border-radius: 8px;
+    border-top: 1px solid #ddd !important;
+}
+
+// Google全文檢索
+body.lang-t, body.lang-h, body.lang-c {
+    li#gcse {
+        display: block;
+        @include transition(opacity 0.25s ease-in-out);
+        @include opacity(0);
+    }
+}
+
+body li#gcse {
+    @include transition(opacity 0.25s ease-in-out);
+    margin-top: 12px !important;
+    margin-bottom: -12px !important;
+    vertical-align: top !important;
+    position: absolute;
+    right: 190px;
+}
+
+@media only screen and (max-width: 767px) {
+    body li#gcse {
+        top: 0;
+        right: 40px;
+        > span {
+            width: 120px;
+        }
+    }
+}
+#gcse > span {
+    display: inline-block;
+    height: 24px;
+    width: 200px;
+    margin-bottom: -5px;
+    .gsc-control-cse {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        .gsc-search-button {
+            display: none;
+        }
+        .gscb_a {
+            vertical-align: middle;
+        }
+        .gs-spelling {
+            @include fonts;
+            margin-bottom: 5px;
+            a {
+                visibility: hidden;
+                em {
+                    visibility: visible;
+                }
+            }
+        }
+        .gsc-result {
+            padding: 0;
+        }
+        .gsc-results-wrapper-overlay {
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            border-radius: 10px;
+        }
+        .gsc-modal-background-image {
+            opacity: 0.8;
+            background: black;
+        }
+        .gsc-input-box {
+            height: 27px !important;
+            border-radius: 2px;
+        }
+        .gsc-input {
+            @include fonts;
+            font-size: 15px !important;
+            vertical-align: top;
+        }
+        .gsc-url-top, .gsc-above-wrapper-area, .gsc-table-cell-thumbnail {
+            display: none;
+        }
+        .gsc-thumbnail-inside {
+            padding: 0 !important;
+        }
+        .gs-snippet {
+            @include fonts;
+            padding-top: 1px !important;
+            padding-left: 4px !important;
+            padding-bottom: 10px !important;
+        }
+        div.gs-title {
+            text-decoration: underline !important;
+            text-decoration-color: #aaf !important;
+        }
+        a.gs-title {
+            font-size: 16px !important;
+            display: block !important;
+            padding-left: 2px !important;
+            border-left: 2px solid white !important;
+            text-decoration: underline !important;
+            text-decoration-color: #aaf !important;
+            margin-top: -1px !important;
+            &:hover, &:focus {
+                border-left: 2px solid #00f !important;
+            }
+            b:last-child {
+                display: inline-block;
+                margin-left: -10px;
+                background: white;
+                color: white;
+            }
+        }
+        .gsc-cursor-page {
+            padding: 15px !important;
+            cursor: pointer !important;
+            &:only-child {
+                display: none !important;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
