@@ -602,7 +602,7 @@ body.lang-t .example, body.lang-h .example {
         // 如果只有一個解釋，但前方有詞性
         >.part-of-speech ~ ol li:only-child {
             //list-style: square;
-            margin: -.5em 0 1.5em;
+            margin: -.25em 0 1.5em;
         }
     }
 }
