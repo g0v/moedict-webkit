@@ -511,7 +511,9 @@ window.do-load = ->
         else
           a .= replace /i\u030d/g \\uDB80\uDC69
 
-        $ @ .attr \annotation, a
+        if a is /(<span[^<]*<\/span>)/
+          $(RegExp.$1).appendTo $(\<span/> class: \specific_to).appendTo $(@).parents('h1')
+        $ @ .attr \annotation, a - /<span[^<]*<\/span>/g
 
       $('hruby rb[diao]').each ->
         d = $ @ .attr \diao
@@ -854,6 +856,7 @@ function render (json, t)
       b .= replace /\(變\)​\/.*/, ''
       b .= replace /\/.*/, ''
       b .= replace /<br>.*/, ''
+      b -= /.\u20DF/g
 
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'

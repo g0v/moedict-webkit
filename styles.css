@@ -9433,7 +9433,7 @@ div.cn-specific.bopomofo .cn-specific {
   display: inline;
   font-size: 40%;
   position: absolute;
-  margin-top: 1ex;
+  margin-top: 2.5ex;
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .title .english {
