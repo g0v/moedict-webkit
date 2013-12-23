@@ -9621,11 +9621,11 @@ body.lang-c #query-box {
 
   body .iconic-color.star {
     right: 22px;
-    top: 162px;
+    top: 151px;
   }
 
   body.cordova .iconic-color.star {
-    top: 167px !important;
+    top: 158px !important;
   }
 }
 input.iconic-circle {
@@ -9653,14 +9653,14 @@ input.iconic-circle {
 }
 
 .iconic-circle.stroke,
-.iconic-circle.star {
+.star {
   width: 32px;
   height: 30px;
   padding: 7px;
   cursor: pointer !important;
 }
 .iconic-circle.stroke:hover,
-.iconic-circle.star:hover {
+.star:hover {
   background: #888 !important;
 }
 
@@ -10646,6 +10646,13 @@ body.lang-t .example, body.lang-h .example {
 .entry {
   padding-bottom: 5px;
   border-bottom: 1px ridge #dddddd;
+}
+.result .entry .entry-item > ol li:only-child {
+  list-style: none;
+  margin-left: -1.5em;
+}
+.result .entry .entry-item > .part-of-speech ~ ol li:only-child {
+  margin: -.5em 0 1.5em;
 }
 
 @media only screen and (max-width: 767px) {
