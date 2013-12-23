@@ -495,7 +495,11 @@ body.lang-c {
         font-size: 90%;
         text-align: left;
         width: auto;
+        display: inline-block;
+        margin-left: 1em;
+        text-indent: -1em;
 
+        * { text-indent: 0; }
         &:before { content: "（"; }
         &:after  { content: "）"; }
     }

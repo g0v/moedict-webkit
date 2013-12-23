@@ -10556,6 +10556,12 @@ body.lang-c .specific {
   font-size: 90%;
   text-align: left;
   width: auto;
+  display: inline-block;
+  margin-left: 1em;
+  text-indent: -1em;
+}
+.example .mandarin * {
+  text-indent: 0;
 }
 .example .mandarin:before {
   content: "（";
