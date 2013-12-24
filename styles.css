@@ -9384,6 +9384,74 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
   src: url('fonts/MOEDICT.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 
+.vowel-030d,
+.jiao-0358 {
+  position: relative;
+  color: transparent;
+}
+.vowel-030d:before,
+.jiao-0358:before {
+  left: 0;
+  position: absolute;
+  color: black;
+}
+
+.u31bX {
+  margin-right: 1ex;
+}
+
+.i-030d:before {
+  content: "󰁩";
+}
+
+.a-030d:before {
+  content: "󰁡";
+}
+
+.e-030d:before {
+  content: "󰁥";
+}
+
+.o-030d:before {
+  content: "󰁯";
+}
+
+.u-030d:before {
+  content: "󰁵";
+}
+
+.u31b4-0358:before {
+  content: "󳆴";
+}
+
+.u31b5-0358:before {
+  content: "󳆵";
+}
+
+.u31b6-0358:before {
+  content: "󳆶";
+}
+
+.u31b7-0358:before {
+  content: "󳆷";
+}
+
+.punct {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
 body {
   background-image: url('images/subtle_stripes.png');
   font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
@@ -9403,54 +9471,10 @@ body [class^="icon-"], body [class*=" icon-"] {
   font-family: FontAwesome;
 }
 
-div.cn-specific {
-  background: #eeeeff;
-  border-radius: 10px;
-}
-div.cn-specific.bopomofo {
-  padding-top: 3px;
-  border-top: 5px solid white;
-}
-div.cn-specific.bopomofo .cn-specific {
-  border-top: 1px solid #eee;
-}
-
 .ebas {
   font-family: EBAS, serif;
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
-}
-
-.title {
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-  font-size: 200%;
-  line-height: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-weight: 501;
-}
-.title .specific_to {
-  display: inline;
-  font-size: 40%;
-  position: absolute;
-  margin-top: 2.5ex;
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-.title .english {
-  color: #777;
-  display: inline-block;
-  font-size: .65em;
-  line-height: 1;
-}
-
-.bopomofo, .radical {
-  font-weight: 501;
-}
-
-h1 audio {
-  vertical-align: bottom;
-  margin-left: 20px;
-  width: 50px;
 }
 
 .rubber_stamp {
@@ -9485,6 +9509,32 @@ h1 audio {
   box-shadow: #1a1a1a 0 0 3px;
 }
 
+.nav-bg {
+  height: 50px;
+}
+
+.navbar-inverse {
+  background-image: url('images/leather.jpg');
+  border-bottom: 1px solid #3c1816;
+  opacity: 0.9;
+}
+@media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  .navbar-inverse {
+    background-image: url('images/leather_x2.jpg');
+    -webkit-background-size: 400px 219px;
+    -moz-background-size: 400px 219px;
+    background-size: 400px 219px;
+  }
+}
+
+.navbar-fixed-top .navbar-inner {
+  padding: 0 20px;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
+  background-color: rgba(48, 19, 18, 0.7);
+}
+
 body.lang-h .nav-bg {
   background-color: #070;
 }
@@ -9503,6 +9553,14 @@ body.lang-h h1 {
 }
 body.lang-h h1 + .bopomofo {
   display: table;
+}
+
+#moedict.about .navbar-brand {
+  display: block;
+}
+
+.app .navbar-brand {
+  display: none;
 }
 
 body.lang-t .nav-bg {
@@ -9544,35 +9602,30 @@ body.lang-c #query-box {
   background-color: #EFEFFB;
 }
 
-.nav-bg {
-  height: 50px;
-}
-
-.navbar-inverse {
-  background-image: url('images/leather.jpg');
-  border-bottom: 1px solid #3c1816;
-  opacity: 0.9;
-}
-@media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
-  .navbar-inverse {
-    background-image: url('images/leather_x2.jpg');
-    -webkit-background-size: 400px 219px;
-    -moz-background-size: 400px 219px;
-    background-size: 400px 219px;
-  }
-}
-
-.navbar-fixed-top .navbar-inner {
-  padding: 0 20px;
-}
-
-.navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
-  background-color: rgba(48, 19, 18, 0.7);
-}
-
 @media only screen and (max-width: 767px) {
+  .brand, #lookback input {
+    display: none !important;
+  }
+
+  .navbar-inner {
+    padding: 0 !important;
+  }
+
   body .navbar-inverse {
     opacity: 0.95;
+  }
+
+  body .navbar {
+    padding-left: 0;
+  }
+
+  body .iconic-color.star {
+    right: 22px;
+    top: 151px;
+  }
+
+  body.cordova .iconic-color.star {
+    top: 158px !important;
   }
 }
 input.iconic-circle {
@@ -9599,17 +9652,26 @@ input.iconic-circle {
   color: #1a1a1a;
 }
 
-@media only screen and (max-width: 767px) {
-  body .navbar {
-    padding-left: 0;
-  }
+.iconic-circle.stroke,
+.star {
+  width: 32px;
+  height: 30px;
+  padding: 7px;
+  cursor: pointer !important;
 }
-#moedict.about .navbar-brand {
-  display: block;
+.iconic-circle.stroke:hover,
+.star:hover {
+  background: #888 !important;
 }
 
-.app .navbar-brand {
-  display: none;
+.iconic-color.star {
+  background: white;
+  position: absolute;
+  right: 42px;
+  top: 113px;
+}
+.iconic-color.star:hover {
+  background: #ccc !important;
 }
 
 .erase-box {
@@ -9654,6 +9716,20 @@ input.iconic-circle {
     width: auto;
   }
 }
+input.back {
+  position: fixed;
+  display: none;
+  bottom: 0px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+}
+
+@media only screen and (min-width: 768px) {
+  input.back {
+    display: block;
+  }
+}
 .query-box {
   width: 260px;
   position: fixed;
@@ -9681,16 +9757,349 @@ input.iconic-circle {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+@media print {
+  .query-box {
+    display: none;
+  }
+}
 @media only screen and (max-width: 767px) {
-  .brand, #lookback input {
+  body.overflow-scrolling-false .query-box input {
+    position: absolute !important;
+    top: 18px !important;
+  }
+}
+body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
+  position: absolute !important;
+}
+
+input.query {
+  display: block;
+  font-size: 1.2em;
+  width: 100%;
+  height: 1.8em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.app input.query {
+  padding-right: 32px;
+}
+
+::-webkit-search-cancel-button {
+  /* select all "X" buttons in search inputs */
+  -webkit-appearance: none;
+  /* hide the default "X" button */
+}
+
+@media only screen and (max-width: 767px) {
+  * .navbar-nav {
+    margin: 4px;
+  }
+
+  * .navbar-nav .open .dropdown-menu > li > a {
+    line-height: 1.5;
+    border-bottom: 1px solid #999;
+  }
+
+  .info {
+    display: none;
+  }
+
+  .erase, .lang {
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .erase, .lang {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 280px;
+    width: 60px;
+    height: 60px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  #query-box {
+    right: auto;
+    width: 100%;
+    top: 40px;
+    height: 65px;
+    bottom: auto !important;
+    padding: 15px;
+    padding-bottom: 3px;
+  }
+}
+body.overflow-scrolling-false .ui-autocomplete {
+  max-height: 10000px !important;
+  bottom: auto !important;
+  position: absolute !important;
+}
+
+.ui-autocomplete {
+  overflow: auto;
+  height: auto !important;
+  position: fixed !important;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ui-autocomplete.invisible {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .resize-btn.app-only {
+    left: auto !important;
+    right: 64px !important;
+    top: -4px;
+  }
+
+  .ui-autocomplete.invisible {
+    display: block !important;
+  }
+
+  .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
     display: none !important;
   }
-}
-@media only screen and (max-width: 767px) {
-  .navbar-inner {
-    padding: 0 !important;
+
+  .ui-autocomplete.invisible {
+    visibility: visible !important;
+  }
+
+  .ui-autocomplete {
+    display: block !important;
+    top: 113px !important;
+    bottom: auto !important;
+    left: 19px !important;
+    width: 221px !important;
+    overflow: auto !important;
+    max-height: 80% !important;
   }
 }
+@media only screen and (max-width: 767px) {
+  ul.ui-autocomplete {
+    top: 100px !important;
+    height: auto !important;
+    max-height: 75% !important;
+  }
+}
+.ui-autocomplete li a {
+  font-size: 90%;
+}
+
+.ui-menu-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
+  font-size: 19px;
+}
+
+body.lang-a.web #lookback {
+  display: block !important;
+}
+
+.app .ui-autocomplete {
+  max-height: 75% !important;
+}
+
+.dropdown-submenu > a {
+  position: relative;
+}
+.dropdown-submenu > a:before {
+  font-size: 10px;
+  content: "▶";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  line-height: 1em;
+  margin-top: -5px;
+}
+
+@media only screen and (min-width: 768px) {
+  .desktop ul.nav li:hover > ul.dropdown-menu {
+    display: block;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    left: 100%;
+    top: 0;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .dropdown .dropdown-submenu > .dropdown-menu {
+    margin-left: 10%;
+  }
+  .dropdown .dropdown-submenu > a:before {
+    content: "▼";
+  }
+  .dropdown .dropdown-submenu .dropdown-menu > li > a {
+    padding-left: .5em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  body #btn-starred {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+  }
+  body #btn-starred i {
+    display: block;
+    padding-right: 15px;
+    padding-left: 25px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body #btn-starred {
+    padding-right: 0;
+    margin-right: 10px;
+  }
+  body #btn-starred i {
+    display: block;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  table.moetext tr {
+    display: table;
+    width: 100%;
+  }
+  table.moetext tr td {
+    display: table-row;
+  }
+}
+@media only screen and (max-width: 767px) {
+  img.moedict {
+    margin-top: 0 !important;
+    margin-left: -12px !important;
+  }
+}
+.about .content {
+  margin: 15px;
+  margin-bottom: 80px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 110%;
+  line-height: 150%;
+}
+
+.about a {
+  text-decoration: none;
+}
+
+.cc0 {
+  line-height: 1.5;
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+}
+
+img.logo {
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 0px #999999;
+  max-height: 100px;
+  max-width: 100px;
+}
+img.quit {
+  position: fixed;
+  top: 10pt;
+  right: 10pt;
+}
+
+#gcfbar {
+  padding: 0 !important;
+  position: fixed !important;
+}
+#gcfbar a {
+  color: #00a !important;
+}
+
+#gcfupdate {
+  margin: 5px;
+}
+
+#gcfclose {
+  margin: 3px;
+}
+
+img.info {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 60px;
+  height: 60px;
+}
+img.back, img.down {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+}
+img.back {
+  display: none;
+}
+
+.app img.down {
+  display: none;
+}
+
+.android .info, .android .back {
+  display: none !important;
+  right: -999px !important;
+  bottom: -999px !important;
+}
+
+.desktop .mobile-only {
+  display: none !important;
+}
+
+.cordova-only {
+  display: none !important;
+}
+
+.cordova .cordova-only {
+  display: block !important;
+}
+
+.app-only {
+  display: none !important;
+}
+
+.app .app-only {
+  display: block !important;
+}
+
+.web-inline-only {
+  display: none !important;
+}
+
+.web .web-inline-only {
+  display: inline-block !important;
+}
+
+.web-only {
+  display: none !important;
+}
+
+.web .web-only {
+  display: block !important;
+}
+
+.app #opening {
+  display: none !important;
+}
+
 @media only screen and (max-width: 767px) {
   .results {
     margin-top: 105px;
@@ -9719,45 +10128,23 @@ input.iconic-circle {
   font-size: 100%;
   line-height: 1.5;
 }
-.result h1 {
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-  border-bottom: 1px dotted #dddddd;
-  margin: -.25em 0 .5em;
-  padding-bottom: .3em;
+
+center {
+  padding: 15px;
 }
-.result h1[itemprop="name"] {
-  margin-top: .25em;
+
+svg {
+  border: 2px solid #a00;
+  background: white;
+  margin-left: 5px;
+  -webkit-box-shadow: #d4d4d4 0 3px 3px;
+  box-shadow: #d4d4d4 0 3px 3px;
 }
-.result h1[style] {
-  line-height: 2;
-}
-.result h1 div.stroke {
-  display: inline;
-  cursor: pointer;
-  border: 1px solid white;
-}
-.result h1 div.stroke:hover {
-  border: 1px solid #a00;
-  background: #fff8f8;
-}
-.result h1 a:hover,
-.result h1 a.hovered {
-  background: #ddd;
-  color: #0070A3;
-  border-radius: 4px;
-  outline: none;
-}
-.result .bopomofo {
-  display: none;
-}
-.result ul, .result ol {
-  padding-left: 35px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: 0 !important;
-}
-.result li {
-  line-height: 1.5;
+
+canvas {
+  margin-left: 5px;
+  -webkit-box-shadow: #d4d4d4 0 3px 3px;
+  box-shadow: #d4d4d4 0 3px 3px;
 }
 
 hruby rb[annotation]:before,
@@ -9766,6 +10153,69 @@ hruby rb[annotation]:after {
   font-weight: normal;
 }
 
+.result h1,
+.ui-tooltip h1 {
+  margin: -.25em 0 .5em;
+  padding-bottom: .3em;
+  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  font-size: 200%;
+  line-height: 1;
+  font-weight: 501;
+  border-bottom: 1px dotted #dddddd;
+}
+.result h1[style],
+.ui-tooltip h1[style] {
+  line-height: 2;
+}
+.result h1[itemprop="name"],
+.ui-tooltip h1[itemprop="name"] {
+  margin-top: .25em;
+}
+.result h1 a:hover,
+.result h1 a.hovered,
+.ui-tooltip h1 a:hover,
+.ui-tooltip h1 a.hovered {
+  background: #ddd;
+  color: #0070A3;
+  border-radius: 4px;
+  outline: none;
+}
+.result h1 div.stroke,
+.ui-tooltip h1 div.stroke {
+  display: inline;
+  cursor: pointer;
+  border: 1px solid white;
+}
+.result h1 div.stroke:hover,
+.ui-tooltip h1 div.stroke:hover {
+  border: 1px solid #a00;
+  background: #fff8f8;
+}
+.result h1 audio,
+.ui-tooltip h1 audio {
+  vertical-align: bottom;
+  margin-left: 20px;
+  width: 50px;
+}
+.result h1 .specific_to,
+.ui-tooltip h1 .specific_to {
+  display: inline;
+  font-size: 40%;
+  position: absolute;
+  margin-top: 2.5ex;
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+}
+.result h1 .english,
+.ui-tooltip h1 .english {
+  color: #777;
+  display: inline-block;
+  font-size: .65em;
+  line-height: 1;
+}
+.result .bopomofo,
+.ui-tooltip .bopomofo {
+  display: none;
+}
 .result h1 small.youyin,
 .result h1 small.alternative,
 .result h1 + div small.youyin,
@@ -9827,6 +10277,10 @@ body.lang-t .result h1 small.alternative:before, body.lang-t
 .ui-tooltip h1 + div small.alternative:before {
   content: "又";
 }
+.result div.entry ~ .radical,
+.ui-tooltip div.entry ~ .radical {
+  margin-top: .4em;
+}
 .result h1 + div small.cn-specific,
 .ui-tooltip h1 + div small.cn-specific {
   font-size: 1em;
@@ -9840,49 +10294,6 @@ body.lang-t .result h1 small.alternative:before, body.lang-t
 .ui-tooltip h1 + div small.cn-specific span {
   border-bottom: 0 !important;
   float: none !important;
-}
-
-body .ui-tooltip {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-body .ui-tooltip h1 small.youyin {
-  display: block;
-  margin-top: .25em;
-}
-body .ui-tooltip .bopomofo {
-  display: none;
-}
-
-input.query {
-  display: block;
-  font-size: 1.2em;
-  width: 100%;
-  height: 1.8em;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.app input.query {
-  padding-right: 32px;
-}
-
-::-webkit-search-cancel-button {
-  /* select all "X" buttons in search inputs */
-  -webkit-appearance: none;
-  /* hide the default "X" button */
-}
-
-.about .content {
-  margin: 15px;
-  margin-bottom: 80px;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 110%;
-  line-height: 150%;
 }
 
 .result a {
@@ -9908,15 +10319,6 @@ input.query {
   outline: none !important;
 }
 
-.radical {
-  float: right;
-  text-align: right;
-  padding-top: 5px;
-}
-.radical .count {
-  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace;
-}
-
 .part-of-speech a, .specific a {
   color: white !important;
 }
@@ -9927,61 +10329,47 @@ input.query {
   border-radius: 5px;
 }
 
-center {
-  padding: 15px;
+span b {
+  font-weight: normal;
+  border-bottom: 1px solid #dddddd !important;
+}
+span a {
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+span a:hover b, span b:hover {
+  background: #f0f0f0;
 }
 
-@media only screen and (max-width: 767px) {
-  * .navbar-nav {
-    margin: 4px;
-  }
+.bopomofo,
+.radical {
+  font-weight: 501;
+}
 
-  * .navbar-nav .open .dropdown-menu > li > a {
-    line-height: 1.5;
-    border-bottom: 1px solid #999;
-  }
+.radical {
+  float: right;
+  text-align: right;
+  padding-top: 5px;
+}
+.radical .count {
+  font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace;
+}
+.radical .glyph {
+  margin-right: 0.2em;
+  padding-bottom: 4px;
+}
+.radical .glyph b {
+  border-bottom: none !important;
+}
+.radical .glyph b:hover {
+  background: #6b0000;
+}
+.radical .sym {
+  margin-left: 0.2em;
+  padding-right: 0.2em;
+}
 
-  .info {
-    display: none;
-  }
-
-  .erase, .lang {
-    display: block;
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    width: 60px;
-    height: 60px;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .erase, .lang {
-    display: block;
-    position: fixed;
-    top: 0px;
-    left: 280px;
-    width: 60px;
-    height: 60px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  #query-box {
-    right: auto;
-    width: 100%;
-    top: 40px;
-    height: 65px;
-    bottom: auto !important;
-    padding: 15px;
-    padding-bottom: 3px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  ul.ui-autocomplete {
-    top: 100px !important;
-    height: auto !important;
-    max-height: 75% !important;
-  }
-}
 .bopomofo {
   display: table;
   margin-top: -14px;
@@ -9997,6 +10385,18 @@ center {
 }
 .bopomofo .part-of-speech {
   margin: 0px 5px 0 5px;
+}
+
+div.cn-specific {
+  background: #eeeeff;
+  border-radius: 10px;
+}
+div.cn-specific.bopomofo {
+  padding-top: 3px;
+  border-top: 5px solid white;
+}
+div.cn-specific.bopomofo .cn-specific {
+  border-top: 1px solid #eee;
 }
 
 body#moedict.overflow-scrolling-false.lang-t .pinyin {
@@ -10016,57 +10416,25 @@ body#moedict.lang-t .pinyin {
 }
 
 .pinyin {
-  word-break: normal !important;
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
   display: inline-block;
+  word-break: normal !important;
 }
 
 .bpmf {
   font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 
-.prefer-pinyin-false .bopomofo .bpmf {
-  text-align: left;
-  vertical-align: top;
-}
-
-.prefer-pinyin-true .bopomofo .pinyin {
-  text-align: left;
-  vertical-align: top;
-}
-.prefer-pinyin-true .bopomofo .bpmf {
-  text-align: right;
-  vertical-align: top;
-  cursor: w-resize;
-}
-
-.prefer-pinyin-false .bopomofo .pinyin {
-  text-align: right;
-  vertical-align: top;
-  cursor: w-resize;
-}
-
-.bopomofo .bpmf {
-  width: 65%;
-  display: inline-block;
-}
-.bopomofo .pinyin {
-  width: 35%;
-  display: inline-block;
-}
-
-.prefer-pinyin-true .bopomofo .pinyin {
-  float: left;
-}
-
-.prefer-pinyin-false .bopomofo .pinyin {
-  float: right;
-}
-
-.prefer-pinyin-true .bopomofo .bpmf:hover, .prefer-pinyin-false .bopomofo .pinyin:hover {
-  background: #ffe;
-}
-
+/*.bopomofo {
+    .bpmf {
+        width: 65%;
+        display: inline-block;
+    }
+    .pinyin {
+        width: 35%;
+        display: inline-block;
+    }
+}*/
 span .tone {
   position: relative;
   float: right;
@@ -10075,290 +10443,61 @@ span .tone {
   font-size: 120%;
 }
 
-.radical .glyph {
-  margin-right: 0.2em;
-  padding-bottom: 4px;
-}
-.radical .glyph b {
-  border-bottom: none !important;
-}
-.radical .glyph b:hover {
-  background: #6b0000;
-}
-.radical .sym {
-  margin-left: 0.2em;
-  padding-right: 0.2em;
-}
-
-.translation .fw_def {
-  display: inline;
-  padding-left: 3.3ex;
-  font-size: 90%;
-  word-break: normal !important;
-  vertical-align: top;
-}
-
-.translation .fw_lang {
-  /*    font-family: "Ubuntu Mono", Menlo, Monaco, Consolas, 'American Typewriter', 'Courier New', monospace; */
-  position: absolute;
-  display: inline-block;
-  padding-bottom: 3px;
-}
-
-.part-of-speech, .glyph, .fw_lang, .specific {
-  color: white;
-  background-color: #6b0000;
-  border-radius: 4px;
-  padding: 2px;
-  font-size: 100%;
-  line-height: 1;
-}
-
-.part-of-speech {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
-.fw_def {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
-}
-
-img.logo {
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px 0px #999999;
-  max-height: 100px;
-  max-width: 100px;
-}
-img.quit {
-  position: fixed;
-  top: 10pt;
-  right: 10pt;
-}
-
-.android .info, .android .back {
-  display: none !important;
-  right: -999px !important;
-  bottom: -999px !important;
-}
-
-.desktop .mobile-only {
-  display: none !important;
-}
-
-.cordova-only {
-  display: none !important;
-}
-
-.cordova .cordova-only {
-  display: block !important;
-}
-
-.app-only {
-  display: none !important;
-}
-
-.app .app-only {
-  display: block !important;
-}
-
-.web-inline-only {
-  display: none !important;
-}
-
-.web .web-inline-only {
-  display: inline-block !important;
-}
-
-.web-only {
-  display: none !important;
-}
-
-.web .web-only {
-  display: block !important;
-}
-
-.app #opening {
-  display: none !important;
-}
-
-img.info {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  width: 60px;
-  height: 60px;
-}
-img.back, img.down {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  width: 60px;
-  height: 60px;
-}
-img.back {
-  display: none;
-}
-
-.app img.down {
-  display: none;
-}
-
-input.back {
-  position: fixed;
-  display: none;
-  bottom: 0px;
-  left: 0px;
-  width: 60px;
-  height: 60px;
-}
-
-@media only screen and (max-width: 767px) {
-  body.overflow-scrolling-false .query-box input {
-    position: absolute !important;
-    top: 18px !important;
-  }
-}
-body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
-  position: absolute !important;
-}
-
 body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results {
   font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
 }
 body.overflow-scrolling-false .pinyin, body.app .pinyin {
   font-family: "Fira Sans OT", sans-serif !important;
 }
-body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0, body.app .pinyin, body.app .english, body.app .fw_def, body.app .bopomofo, body.app .cc0 {
+body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0,
+body.overflow-scrolling-false hruby rb[annotation]:before, body.app .pinyin, body.app .english, body.app .fw_def, body.app .bopomofo, body.app .cc0,
+body.app hruby rb[annotation]:before {
   text-rendering: auto !important;
   font-feature-settings: normal !important;
   -moz-font-feature-settings: normal !important;
   -webkit-font-feature-settings: normal !important;
 }
 
-body.overflow-scrolling-true.web .pinyin, body.overflow-scrolling-true.web .english, body.overflow-scrolling-true.web .fw_def, body.overflow-scrolling-true.web .bopomofo, body.overflow-scrolling-true.web .cc0 {
+body.overflow-scrolling-true.web .pinyin, body.overflow-scrolling-true.web .english, body.overflow-scrolling-true.web .fw_def, body.overflow-scrolling-true.web .bopomofo, body.overflow-scrolling-true.web .cc0,
+body.overflow-scrolling-true.web hruby rb[annotation]:before {
   text-rendering: optimizeLegibility;
   font-feature-settings: "liga", "dlig", "kern" on;
   -moz-font-feature-settings: "liga", "dlig", "kern" on;
   -webkit-font-feature-settings: "liga", "dlig", "kern" on;
 }
 
-body.overflow-scrolling-false .ui-autocomplete {
-  max-height: 10000px !important;
-  bottom: auto !important;
-  position: absolute !important;
+.part-of-speech.playAudio {
+  background: #6b0000;
+  color: white;
+  font-size: 90%;
+  padding: 4px;
+  cursor: pointer;
+  line-height: 100%;
+  display: inline-block;
 }
 
-.ui-autocomplete {
-  overflow: auto;
-  height: auto !important;
-  position: fixed !important;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+.audioBlock {
+  display: inline-block;
+  margin-top: 10px;
+}
+.audioBlock.playing {
   box-sizing: border-box;
-}
-.ui-autocomplete.invisible {
-  display: none;
-}
-
-@media only screen and (min-width: 768px) {
-  .resize-btn.app-only {
-    left: auto !important;
-    right: 64px !important;
-    top: -4px;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .ui-autocomplete.invisible {
-    display: block !important;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
-    display: none !important;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .ui-autocomplete {
-    bottom: 52px !important;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .ui-autocomplete.invisible {
-    visibility: visible !important;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .ui-autocomplete {
-    display: block !important;
-    top: 113px !important;
-    bottom: auto !important;
-    left: 19px !important;
-    width: 221px !important;
-    overflow: auto !important;
-    max-height: 80% !important;
-  }
-}
-@media only screen and (min-width: 768px) {
-  input.back {
-    display: block;
-  }
-}
-.ui-autocomplete li a {
-  font-size: 90%;
+  border: 1px solid #6b0000;
+  color: #6b0000;
+  margin-left: 12px;
+  padding-left: 10px;
+  padding-right: 7px;
+  border-radius: 5px;
 }
 
-body.lang-a.web #lookback {
-  display: block !important;
-}
-
-.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
-}
-
-.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
-}
-
-.app .ui-autocomplete {
-  max-height: 75% !important;
-}
-
-.example {
-  font-size: 92%;
-}
-.example .mandarin:before {
-  content: "（";
-}
-.example .ruby .ruby .rb {
-  text-align: left;
-  display: inline-block;
-}
-.example .ruby .rt {
+.playAudio {
+  margin-left: 5px;
+  color: #6b0000;
   font-size: 70%;
-  clear: both;
-  width: auto;
-  text-align: left;
-}
-.example .mandarin {
-  font-size: 90%;
-  text-align: left;
-  width: auto;
-}
-.example .mandarin:after {
-  content: '）';
-}
-.example .ruby {
-  text-align: left;
-  display: inline-block;
-  width: auto;
-  -ms-word-break: break-all;
-  word-break: break-all;
-  word-break: break-word;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
+  padding-left: 5px;
+  display: inline-block !important;
+  cursor: pointer;
+  line-height: 100%;
 }
 
 body.lang-h .bopomofo {
@@ -10380,6 +10519,76 @@ body.lang-c .specific {
   background: #66c;
   margin-left: 5px;
   border-radius: 1px;
+}
+
+.part-of-speech,
+.glyph,
+.fw_lang,
+.specific {
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  color: white;
+  background-color: #6b0000;
+  border-radius: 4px;
+  padding: 2px;
+  font-size: 100%;
+  line-height: 1;
+}
+
+.translation .fw_def {
+  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  display: inline;
+  padding-left: 3.3ex;
+  font-size: 90%;
+  word-break: normal !important;
+  vertical-align: top;
+}
+
+.translation .fw_lang {
+  position: absolute;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+.example {
+  font-size: 92%;
+}
+.example .mandarin {
+  font-size: 90%;
+  text-align: left;
+  width: auto;
+  display: inline-block;
+  margin-left: 1em;
+  text-indent: -1em;
+}
+.example .mandarin * {
+  text-indent: 0;
+}
+.example .mandarin:before {
+  content: "（";
+}
+.example .mandarin:after {
+  content: "）";
+}
+.example .ruby {
+  text-align: left;
+  display: inline-block;
+  width: auto;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+.example .ruby .ruby .rb {
+  text-align: left;
+  display: inline-block;
+}
+.example .ruby .rt {
+  font-size: 70%;
+  clear: both;
+  width: auto;
+  text-align: left;
 }
 
 body.lang-t .example, body.lang-h .example {
@@ -10440,26 +10649,16 @@ body.lang-t .example, body.lang-h .example {
   border-radius: 5px;
 }
 
-span b {
-  font-weight: normal;
-  border-bottom: 1px solid #dddddd !important;
-}
-span a:hover b, span b:hover {
-  background: #f0f0f0;
-}
-span a {
-  border: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.about a {
-  text-decoration: none;
-}
-
 .entry {
   padding-bottom: 5px;
   border-bottom: 1px ridge #dddddd;
+}
+.result .entry .entry-item > ol li:only-child {
+  list-style: none;
+  margin-left: -1.5em;
+}
+.result .entry .entry-item > .part-of-speech ~ ol li:only-child {
+  margin: -.25em 0 1.5em;
 }
 
 @media only screen and (max-width: 767px) {
@@ -10480,67 +10679,99 @@ span a {
     padding-top: 0px;
   }
 }
-.ui-tooltip {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-  background: #fffcfc !important;
+body .ui-tooltip {
+  margin-top: 0;
+  overflow: hidden;
+  padding-top: 0;
+  max-height: 300px;
   min-width: 300px;
   width: 300px;
-  max-height: 300px;
-  overflow: hidden;
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   word-break: break-all;
+  background: #fffcfc !important;
+  border-top: 0;
 }
-.ui-tooltip.bpmf {
+body .ui-tooltip.bpmf {
   font-size: 80%;
   width: auto;
   min-width: auto;
   background: #f0f0f0;
 }
-.ui-tooltip .xrefs {
+body .ui-tooltip h1 small.youyin {
+  display: block;
+  margin-top: .25em;
+}
+body .ui-tooltip .bopomofo {
   display: none;
-}
-.ui-tooltip .entry .part-of-speech {
-  position: absolute;
-  left: 7px;
-}
-.ui-tooltip li {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-  margin: 0 !important;
-  margin-left: -18px !important;
-  margin-top: 5px;
-  line-height: 1.35 !important;
-  padding: 0 !important;
-}
-.ui-tooltip li .part-of-speech {
-  position: relative;
-  left: 0px;
-}
-.ui-tooltip .ol, .ui-tooltip .definition {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.ui-tooltip .entry {
-  border-bottom: none;
-  font-size: 80%;
-}
-.ui-tooltip .bopomofo {
   margin: 0px;
   padding: 0px;
   font-size: 75%;
 }
-.ui-tooltip .title {
+body .ui-tooltip ul, body .ui-tooltip ol {
+  padding-left: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0 !important;
+}
+body .ui-tooltip ul li, body .ui-tooltip ol li {
+  margin: 0 !important;
+  margin-left: 1.5em !important;
+  padding: 0 !important;
+  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", "Lantinghei TC", "Heiti TC", "黑體-繁",  "Microsoft Jhenghei", "微軟正黑體", "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
+  line-height: 1.35;
+}
+body .ui-tooltip ul li .part-of-speech, body .ui-tooltip ol li .part-of-speech {
+  position: relative;
+  left: 0px;
+}
+body .ui-tooltip ul li .part-of-speech.regional, body .ui-tooltip ol li .part-of-speech.regional {
+  position: static;
+}
+body .ui-tooltip ul li:only-child, body .ui-tooltip ol li:only-child {
+  list-style: none;
+  margin-left: .75em !important;
+}
+body .ui-tooltip .part-of-speech + ol li {
+  margin-left: 3em !important;
+}
+body .ui-tooltip .part-of-speech + ol li:first-child {
+  margin-top: -.75em !important;
+}
+body .ui-tooltip .part-of-speech + ol li:first-child:only-child {
+  margin-left: 1.5em !important;
+}
+body .ui-tooltip .entry .part-of-speech {
+  position: absolute;
+  left: 7px;
+}
+body .ui-tooltip .ol, body .ui-tooltip .definition {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+body .ui-tooltip .entry {
+  border-bottom: none;
+  font-size: 80%;
+}
+body .ui-tooltip .title {
   border-bottom: 1px dotted #dddddd;
   margin: -.25em 0 .25em;
   padding: .25em;
   font-size: 130%;
   line-height: 1.2;
 }
-.ui-tooltip .title .playAudio {
+body .ui-tooltip .title .playAudio {
   display: none !important;
 }
-.lang-h .ui-tooltip .title {
+.lang-h body .ui-tooltip .title {
   border-bottom: 0;
 }
-.ui-tooltip .example {
+body .ui-tooltip .xrefs,
+body .ui-tooltip .example,
+body .ui-tooltip .quote,
+body .ui-tooltip .antonyms,
+body .ui-tooltip .synonyms,
+body .ui-tooltip .variants,
+body .ui-tooltip .radical {
   display: none;
 }
 
@@ -10548,78 +10779,14 @@ body.lang-t .ui-tooltip .example {
   display: none;
 }
 
-.ui-tooltip .quote, .ui-tooltip .antonyms, .ui-tooltip .synonyms, .ui-tooltip .variants, .ui-tooltip .radical {
+body.lang-h .ui-tooltip .title {
+  border-bottom: 1px dotted #dddddd;
+  line-height: 1.4;
+}
+body.lang-h .ui-tooltip .bopomofo {
   display: none;
 }
 
-#gcfbar {
-  padding: 0 !important;
-  position: fixed !important;
-}
-#gcfbar a {
-  color: #00a !important;
-}
-
-#gcfupdate {
-  margin: 5px;
-}
-
-#gcfclose {
-  margin: 3px;
-}
-
-.punct {
-  white-space: nowrap;
-  display: inline-block;
-}
-
-.ui-menu-item {
-  border-bottom: 1px solid #ddd;
-}
-
-.part-of-speech.playAudio {
-  background: #6b0000;
-  color: white;
-  font-size: 90%;
-  padding: 4px;
-  cursor: pointer;
-  line-height: 100%;
-  display: inline-block;
-}
-
-.audioBlock {
-  display: inline-block;
-  margin-top: 10px;
-}
-.audioBlock.playing {
-  box-sizing: border-box;
-  border: 1px solid #6b0000;
-  color: #6b0000;
-  margin-left: 12px;
-  padding-left: 10px;
-  padding-right: 7px;
-  border-radius: 5px;
-}
-
-.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
-  font-size: 19px;
-}
-
-.playAudio {
-  margin-left: 5px;
-  color: #6b0000;
-  font-size: 70%;
-  padding-left: 5px;
-  display: inline-block !important;
-  cursor: pointer;
-  line-height: 100%;
-}
-
-@media only screen and (min-width: 768px) {
-  .desktop ul.nav li:hover > ul.dropdown-menu {
-    display: block;
-  }
-}
 a.stroke-char {
   font-size: 120%;
   padding: 0.2em !important;
@@ -10637,183 +10804,6 @@ a.stroke-char {
   line-height: 1;
 }
 
-svg {
-  border: 2px solid #a00;
-  background: white;
-  margin-left: 5px;
-  -webkit-box-shadow: #d4d4d4 0 3px 3px;
-  box-shadow: #d4d4d4 0 3px 3px;
-}
-
-canvas {
-  margin-left: 5px;
-  -webkit-box-shadow: #d4d4d4 0 3px 3px;
-  box-shadow: #d4d4d4 0 3px 3px;
-}
-
-@media only screen and (max-width: 767px) {
-  body .iconic-color.star {
-    right: 22px;
-    top: 162px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  body.cordova .iconic-color.star {
-    top: 167px !important;
-  }
-}
-.iconic-color.star {
-  background: white;
-  position: absolute;
-  right: 42px;
-  top: 113px;
-}
-.iconic-color.star:hover {
-  background: #ccc !important;
-}
-
-.iconic-circle.stroke, .star {
-  width: 32px;
-  height: 30px;
-  padding: 7px;
-  cursor: pointer !important;
-}
-.iconic-circle.stroke:hover, .star:hover {
-  background: #888 !important;
-}
-
-.cc0 {
-  line-height: 150%;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
-}
-
-@media print {
-  .query-box {
-    display: none;
-  }
-}
-.dropdown-submenu > a {
-  position: relative;
-}
-.dropdown-submenu > a:before {
-  font-size: 10px;
-  content: "▶";
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  line-height: 1em;
-  margin-top: -5px;
-}
-
-@media only screen and (min-width: 768px) {
-  .dropdown-submenu:hover > .dropdown-menu {
-    display: block;
-    left: 100%;
-    top: 0;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .dropdown .dropdown-submenu > .dropdown-menu {
-    margin-left: 10%;
-  }
-  .dropdown .dropdown-submenu > a:before {
-    content: "▼";
-  }
-  .dropdown .dropdown-submenu .dropdown-menu > li > a {
-    padding-left: .5em;
-  }
-}
-.vowel-030d,
-.jiao-0358 {
-  position: relative;
-  color: transparent;
-}
-.vowel-030d:before,
-.jiao-0358:before {
-  left: 0;
-  position: absolute;
-  color: #000;
-}
-
-.i-030d:before {
-  content: "󰁩";
-}
-
-.a-030d:before {
-  content: "󰁡";
-}
-
-.e-030d:before {
-  content: "󰁥";
-}
-
-.o-030d:before {
-  content: "󰁯";
-}
-
-.u-030d:before {
-  content: "󰁵";
-}
-
-.u31b4-0358:before {
-  content: "󳆴";
-}
-
-.u31b5-0358:before {
-  content: "󳆵";
-}
-
-.u31b6-0358:before {
-  content: "󳆶";
-}
-
-.u31b7-0358:before {
-  content: "󳆷";
-}
-
-.u31bX {
-  margin-right: 1ex;
-}
-
-@media only screen and (max-width: 767px) {
-  body #btn-starred {
-    position: absolute;
-    top: 2px;
-    right: 0px;
-  }
-  body #btn-starred i {
-    display: block;
-    padding-right: 15px;
-    padding-left: 25px;
-  }
-}
-@media only screen and (min-width: 768px) {
-  body #btn-starred {
-    padding-right: 0;
-    margin-right: 10px;
-  }
-  body #btn-starred i {
-    display: block;
-    padding-right: 5px;
-    padding-left: 5px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  table.moetext tr {
-    display: table;
-    width: 100%;
-  }
-  table.moetext tr td {
-    display: table-row;
-  }
-}
-@media only screen and (max-width: 767px) {
-  img.moedict {
-    margin-top: 0 !important;
-    margin-left: -12px !important;
-  }
-}
 #timeline iframe {
   height: 100% !important;
   border-radius: 8px;

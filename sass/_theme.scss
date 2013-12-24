@@ -1,0 +1,675 @@
+
+
+// webkit scrollbar
+.ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+.ios ::-webkit-scrollbar-thumb, .web ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+body {
+    @include hidpi('subtle_stripes', 'png');
+    @include fonts;
+    input, button, select, textarea, .ui-widget { @include fonts; }
+
+    [class^="icon-"], [class*=" icon-"] {
+        font-family: FontAwesome;
+    }
+}
+
+// 小篆
+.ebas {
+    font-family: EBAS, serif;
+    font-smooth: always;
+    -webkit-font-smoothing: antialiased;
+}
+
+// ?!
+.rubber_stamp {
+    font-size: 18px;
+    line-height: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: red;
+    float: left;
+    padding: 2px;
+    border-radius: 3px;
+    position: relative;
+    background: $primary-color;
+    opacity: 0.8;
+    color: white;
+    margin-bottom: 40px;
+    &:hover {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: auto;
+        min-height:100%;
+        top: -10px;
+        left: -10px;
+        padding: 10px;
+        background: url(/images/noise.png) repeat;
+    }
+}
+
+// 導覽列
+.navbar {
+    @include box-shadow(#1a1a1a 0 0 3px);
+}
+.nav-bg {
+    height: 50px;
+}
+
+.navbar-inverse {
+    @include hidpi('leather', 'jpg');
+    border-bottom: 1px solid hsl(3,46%,16%);
+    opacity: 0.9;
+}
+
+.navbar-fixed-top .navbar-inner {
+    padding: 0 20px;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
+    background-color: hsla(3,46%,13%, 0.7);
+}
+
+body.lang-h {
+    .nav-bg { background-color: #070; }
+    .iconic-circle { background: #474; }
+    .iconic-color { color: #474; }
+    #query-box { background-color: #EFFBEF; }
+
+    h1 {
+        border-bottom: 0;
+        margin: .25em 0 .25em;
+    
+        & + .bopomofo {
+            display: table;
+        }
+    }
+}
+
+#moedict.about .navbar-brand {
+    display: block;
+}
+.app .navbar-brand {
+    display: none;
+}
+
+body.lang-t {
+    .nav-bg { background-color: #700; }
+    .iconic-circle { background: #744; }
+    .iconic-color { color: #744; }
+    #query-box { background-color: #FBEFEF; }
+}
+
+body.lang-a {
+    .nav-bg { background-color: #100; }
+    .iconic-circle { background: #400; }
+    .iconic-color { color: #400; }
+    #query-box { background-color: #F3F0F0; }
+}
+
+body.lang-c {
+    .nav-bg { background-color: #007; }
+    .iconic-circle { background: #447; }
+    .iconic-color { color: #447; }
+    #query-box { background-color: #EFEFFB; }
+}
+
+@media only screen and (max-width: 767px) {
+    .brand, #lookback input { display: none !important; }
+    .navbar-inner { padding: 0 !important; }
+
+    body .navbar-inverse {
+        opacity: 0.95
+    }
+
+    body .navbar {
+        padding-left: 0;
+    }
+
+    body .iconic-color.star {
+        right: 22px;
+        top: 151px;
+    }
+
+    body.cordova .iconic-color.star {
+        top: 158px !important; //!! unsure
+    }
+}
+
+// icons
+input.iconic-circle {
+    padding: 0;
+    margin-top: 16px !important;
+    display: block;
+}
+.iconic-circle, .iconic-color {
+    border-radius: 4px;
+    background: black;
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.navbar .ironic-circle {
+    background-color: #fff;
+    color: #1a1a1a;
+}
+
+.iconic-circle.stroke,
+.star {
+    width: 32px;
+    height: 30px;
+    padding: 7px;
+    cursor: pointer !important;
+    &:hover {
+        background: #888 !important;
+    }
+}
+.iconic-color.star {
+    background: white;
+    position: absolute;
+    right: 42px;
+    top: 113px;
+    &:hover {
+        background: #ccc !important;
+    }
+}
+
+// ［app］清除鈕
+.erase-box {
+    position: fixed;
+    right: 0px;
+    top: 62px;
+    width: 40px;
+    z-index: 50;
+    font-size: 19px;
+}
+
+@media only screen and (min-width: 768px) {
+    .erase-box {
+        top: 72px;
+        right: auto;
+        left: 215px;
+        width: 24px;
+    }
+}
+
+// ［app］上一頁
+.app .back-box {
+    position: fixed;
+    text-align: center;
+    left: 0px;
+    top: 62px;
+    width: 40px;
+    z-index: 50;
+    font-size: 19px;
+}
+
+@media only screen and (min-width: 768px) {
+    .app .back-box {
+        top: 72px;
+        width: 24px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .app .query-box input {
+        position: fixed;
+        left: 40px;
+        top: 55px;
+        right: 10px;
+        width: auto;
+    }
+}
+
+// ?!
+input.back {
+    position: fixed;
+    display: none;
+    bottom: 0px;
+    left: 0px;
+    width: 60px;
+    height: 60px;
+}
+
+@media only screen and (min-width: 768px) {
+    input.back {
+        display: block;
+    }
+}
+
+// 搜尋框
+.query-box {
+    width: 260px;
+    //background-color: hsl(0,0%,97%);
+    //background-color: #fff;
+    //background-color: hsl(203,11%,85%);
+    position: fixed;
+    border-right: 1px solid hsl(0,0%,83%);
+    border-right: 1px solid hsl(360,1%,83%);
+    top: 45px;
+    bottom: 0;
+    z-index: 9;
+    padding: 20px;
+    @include box-sizing(border-box);
+
+    img {
+        position: absolute;
+        bottom: -220px;
+        right: 0;
+        //opacity: 0.5;
+        //z-index: -1;
+
+        @include transition(all 0.3s ease-in-out);
+        &:hover {
+            bottom: -30px;
+        }
+    }
+    li a {
+        background-color: rgba(255,255,255,.8);
+    }
+}
+
+@media print {
+    .query-box { display: none; }
+}
+
+@media only screen and (max-width: 767px) {
+    body.overflow-scrolling-false .query-box input {
+        position: absolute !important;
+        top: 18px !important;
+    }
+}
+
+body.overflow-scrolling-false {
+    .navbar-fixed-top, .erase-box, #query-box, .back-box {
+        position: absolute !important;
+    }
+}
+
+input.query {
+    display: block;
+    font-size: 1.2em;
+    width: 100%;
+    height: 1.8em;
+    @include box-sizing(border-box);
+}
+
+.app input.query {
+    padding-right: 32px;
+}
+
+::-webkit-search-cancel-button {   /* select all "X" buttons in search inputs */
+    -webkit-appearance: none;      /* hide the default "X" button */
+}
+
+@media only screen and (max-width: 767px) {
+    * .navbar-nav {
+        margin: 4px;
+    }
+    * .navbar-nav .open .dropdown-menu > li > a {
+        line-height: 1.5;
+        border-bottom: 1px solid #999;
+    }
+    .info {
+        display: none;
+    }
+    .erase, .lang {
+        display: block;
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .erase, .lang {
+        display: block;
+        position: fixed;
+        top: 0px;
+        left: 280px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #query-box {
+        right: auto;
+        width: 100%;
+        top: 40px;
+        height: 65px;
+        bottom: auto !important;
+        padding: 15px;
+        padding-bottom: 3px;
+    }
+}
+
+// 搜尋結果列表
+body.overflow-scrolling-false .ui-autocomplete {
+    max-height: 10000px !important;
+    bottom: auto !important;
+    position: absolute !important;
+}
+
+.ui-autocomplete {
+    &.invisible {
+        display: none;
+    }
+    overflow: auto;
+    height: auto !important;
+    position: fixed !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 768px) {
+    .resize-btn.app-only {
+        left: auto !important;
+        right: 64px !important;
+        top: -4px;
+    }
+
+    .ui-autocomplete.invisible {
+        display: block !important;
+    }
+
+    .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
+        display: none !important;
+    }
+
+    .ui-autocomplete {
+        //bottom: 52px !important;
+    }
+
+    .ui-autocomplete.invisible {
+        visibility: visible !important;
+    }
+
+    .ui-autocomplete {
+        display: block !important;
+        top: 113px !important;
+        bottom: auto !important;
+        left: 19px !important;
+        width: 221px !important;
+        overflow: auto !important;
+        max-height: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    ul.ui-autocomplete {
+        top: 100px !important;
+        height: auto !important;
+        max-height: 75% !important;
+    }
+}
+
+.ui-autocomplete li {
+    a {
+        font-size: 90%;
+    }
+}
+
+.ui-menu-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.nav, .dropdown, .dropdown .dropdown-menu, #query-box {
+  font-size: 19px;
+}
+
+body.lang-a.web #lookback {
+    display: block !important;
+}
+
+.app .ui-autocomplete {
+    max-height: 75% !important;
+}
+
+// 分類索引選單
+.dropdown-submenu {
+    > a { position: relative; }
+    > a:before {
+        font-size: 10px;
+        content: "▶";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        line-height: 1em;
+        margin-top: -5px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .desktop ul.nav li:hover > ul.dropdown-menu {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .dropdown-submenu:hover {
+        > .dropdown-menu {
+            display: block;
+            left: 100%;
+            top: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .dropdown .dropdown-submenu {
+        > .dropdown-menu { margin-left: 10%; }
+        > a:before { content: "▼"; }
+        .dropdown-menu > li > a { padding-left: .5em; }
+    }
+}
+
+// 字詞紀錄簿按鈕
+@media only screen and (max-width: 767px) {
+    body #btn-starred {
+        position: absolute;
+        top: 2px;
+        right: 0px;
+
+        i {
+            display: block;
+            padding-right: 15px;
+            padding-left: 25px;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    body #btn-starred {
+        padding-right: 0;
+        margin-right: 10px;
+
+
+        i {
+            display: block;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+    }
+}
+
+// ?!
+@media only screen and (max-width: 767px) {
+    table.moetext tr {
+        display: table;
+        width: 100%;
+
+        td {
+            display: table-row;
+        }
+    }
+}
+@media only screen and (max-width: 767px) {
+    img.moedict {
+        margin-top: 0 !important;
+        margin-left: -12px !important;
+    }
+}
+
+// 關於頁
+.about .content {
+    margin: 15px; margin-bottom: 80px; background: white; padding: 20px;
+    border-radius: 10px;
+    font-size: 110%;
+    line-height: 150%;
+}
+
+.about a {
+    // border-bottom: 1px ridge #0070a3;
+    text-decoration: none;
+}
+
+.cc0 {
+    line-height: 1.5;
+    @include en-fonts;
+}
+
+img {
+    &.logo {
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px 0px #999999;
+        max-height: 100px;
+        max-width: 100px;
+    }
+    &.quit {
+        position: fixed;
+        top: 10pt;
+        right: 10pt;
+    }
+}
+
+
+
+// ?!
+#gcfbar {
+    padding: 0 !important;
+    position: fixed !important;
+    a {
+        color: #00a !important;
+    }
+}
+
+#gcfupdate {
+    margin: 5px;
+}
+
+#gcfclose {
+    margin: 3px;
+}
+
+// ?!
+img {
+    &.info {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back, &.down {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+    }
+    &.back {
+        display: none;
+    }
+}
+
+.app img.down {
+    display: none;
+}
+
+// platform conditions
+.android {
+    .info, .back {
+        display: none !important;
+        right: -999px !important;
+        bottom: -999px !important;
+    }
+}
+
+.desktop .mobile-only {
+    display: none !important;
+}
+
+.cordova-only {
+    display: none !important;
+}
+
+.cordova .cordova-only {
+    display: block !important;
+}
+
+.app-only {
+    display: none !important;
+}
+
+.app .app-only {
+    display: block !important;
+}
+
+.web-inline-only {
+    display: none !important;
+}
+
+.web .web-inline-only {
+    display: inline-block !important;
+}
+
+.web-only {
+    display: none !important;
+}
+
+.web .web-only {
+    display: block !important;
+}
+
+.app #opening {
+    display: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
