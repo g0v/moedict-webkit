@@ -903,7 +903,12 @@
             } else {
               a = a.replace(/i\u030d/g, '\uDB80\uDC69');
             }
-            return $(this).attr('annotation', a);
+            if (/(<span[^<]*<\/span>)/.exec(a)) {
+              $(RegExp.$1).appendTo($('<span/>', {
+                'class': 'specific_to'
+              }).appendTo($(this).parents('h1')));
+            }
+            return $(this).attr('annotation', replace$.call(a, /<span[^<]*<\/span>/g, ''));
           });
           return $('hruby rb[diao]').each(function(){
             var d;
@@ -1472,6 +1477,7 @@
         b = b.replace(/\(變\)​\/.*/, '');
         b = b.replace(/\/.*/, '');
         b = b.replace(/<br>.*/, '');
+        b = replace$.call(b, /.\u20DF/g, '');
         if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
