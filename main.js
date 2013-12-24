@@ -969,7 +969,7 @@
       } else {
         html = render($.parseJSON(part), title);
       }
-      html = html.replace(/(.)\u20DD/g, "<span class='part-of-speech'>$1</span>");
+      html = html.replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span>");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
       html = html.replace(/(.)\u20DF/g, "<span class='specific'>$1</span>");
       html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");

@@ -10724,6 +10724,9 @@ body .ui-tooltip ul li .part-of-speech, body .ui-tooltip ol li .part-of-speech {
   position: relative;
   left: 0px;
 }
+body .ui-tooltip ul li .part-of-speech.regional, body .ui-tooltip ol li .part-of-speech.regional {
+  position: static;
+}
 body .ui-tooltip ul li:only-child, body .ui-tooltip ol li:only-child {
   list-style: none;
   margin-left: .75em !important;

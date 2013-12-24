@@ -677,10 +677,14 @@ body .ui-tooltip {
             @include fonts;
             line-height: 1.35;
 
-
+            // 詞性置左
             .part-of-speech {
                 position: relative;
                 left: 0px;
+                // 內文[臺][陸]置於行內原處
+                &.regional {
+                    position: static;
+                }
             }
             // 如果只有一個解釋，不顯示為列表 
             &:only-child {
