@@ -7292,6 +7292,7 @@ hruby rb[annotation]:before {
   vertical-align: middle;
   -moz-transform: scale(0.55);
   -webkit-transform: scale(0.55);
+  -ms-transform: scale(0.55);
   transform: scale(0.55);
   height: 1em;
   width: 500%;
@@ -7344,6 +7345,7 @@ hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
   top: 0;
   -moz-transform: scale(0.55);
   -webkit-transform: scale(0.55);
+  -ms-transform: scale(0.55);
   transform: scale(0.55);
   height: 2.7em;
   width: 0.8em;
@@ -7403,6 +7405,7 @@ hruby rb[zhuyin][diao="˙"][length="3"]:after {
 hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
   -moz-transform: scale(0.6);
   -webkit-transform: scale(0.6);
+  -ms-transform: scale(0.6);
   transform: scale(0.6);
   margin-right: -0.15em;
 }
@@ -7420,6 +7423,7 @@ hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby 
 hruby[rightangle] rb[annotation]:before {
   -moz-transform: scale(0.4);
   -webkit-transform: scale(0.4);
+  -ms-transform: scale(0.4);
   transform: scale(0.4);
   bottom: -0.3em;
   color: #666666;
@@ -7431,6 +7435,7 @@ hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
   top: 0.15em;
   -moz-transform: scale(0.33);
   -webkit-transform: scale(0.33);
+  -ms-transform: scale(0.33);
   transform: scale(0.33);
   line-height: 0.9;
   color: #666666;
