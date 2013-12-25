@@ -7,16 +7,11 @@
 }
 
 // Google全文檢索
-body.lang-t, body.lang-h, body.lang-c {
-    li#gcse {
-        display: block;
-        @include transition(opacity 0.25s ease-in-out);
-        @include opacity(0);
-    }
+li#gcse span {
+    display: none;
 }
 
 body li#gcse {
-    @include transition(opacity 0.25s ease-in-out);
     margin-top: 12px !important;
     margin-bottom: -12px !important;
     vertical-align: top !important;
