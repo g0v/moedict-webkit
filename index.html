@@ -53,8 +53,12 @@
           </ul>
         </li>
         <li id="btn-starred"><a style="padding-left: 5px; padding-right: 5px" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
-        <li id="gcse"><span>
-            <gcse:search></gcse:search></span></li>
+        <li id="gcse"><span class="lang-a-only">
+            <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot;"></gcse:search></span>
+          <!-- span.lang-t-only: gcse:search(webSearchQueryAddition='+"台語萌典" -"兩岸萌典" -"客語萌典"')-->
+          <!-- span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典"')--><span class="lang-c-only">
+            <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot;"></gcse:search></span>
+        </li>
         <!--if !IE-->
         <li>
           <form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none; margin: 0; padding: 0" class="back">

@@ -84,6 +84,7 @@ body.lang-h {
     .iconic-circle { background: #474; }
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
+    #gcse .lang-h-only { display: inline-block !important }
 
     h1 {
         border-bottom: 0;
@@ -107,6 +108,7 @@ body.lang-t {
     .iconic-circle { background: #744; }
     .iconic-color { color: #744; }
     #query-box { background-color: #FBEFEF; }
+    #gcse .lang-t-only { display: inline-block !important }
 }
 
 body.lang-a {
@@ -114,6 +116,7 @@ body.lang-a {
     .iconic-circle { background: #400; }
     .iconic-color { color: #400; }
     #query-box { background-color: #F3F0F0; }
+    #gcse .lang-a-only { display: inline-block !important }
 }
 
 body.lang-c {
@@ -121,6 +124,7 @@ body.lang-c {
     .iconic-circle { background: #447; }
     .iconic-color { color: #447; }
     #query-box { background-color: #EFEFFB; }
+    #gcse .lang-c-only { display: inline-block !important }
 }
 
 @media only screen and (max-width: 767px) {
