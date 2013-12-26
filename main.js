@@ -40,6 +40,11 @@
   STARRED = res$;
   window.isCordova = isCordova = !/^https?:/.test(document.URL);
   isQuery = /^\?q=/.exec(location.search);
+  if (/\?_escaped_fragment_=(.+)/.exec(location.search)) {
+    isQuery = true;
+    MOEID = decodeURIComponent(RegExp.$1);
+    LANG = 't';
+  }
   isDroidGap = isCordova && /android_asset/.exec(location.href);
   isDeviceReady = !isCordova;
   if (DEBUGGING) {
@@ -1321,7 +1326,7 @@
         ? char
         : SIMPTRAD[idx + 1];
     }
-    return rv;
+    return rv.replace(/台([北中南東灣語])/g, '臺$1');
   }
   function renderRadical(char){
     var idx;
