@@ -24,9 +24,9 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ
-      dd: 草木初生的芽。
+      dd 草木初生的芽。
       dt: a(href='典') 典 ㄉㄧㄢˇ
-      dd: 可作為依據或模範的書。
+      dd 可作為依據或模範的書。
     .nav-bg.navbar-fixed-top
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
@@ -66,7 +66,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li#gcse
           span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典"')
           // span.lang-t-only: gcse:search(webSearchQueryAddition='+"台語萌典" -"兩岸萌典" -"客語萌典"')
-          // span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典"')
+          span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典"')
           span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典"')
         //if !IE
         li
