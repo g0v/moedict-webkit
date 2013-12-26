@@ -187,8 +187,9 @@ require(\zappajs) ->
       if not @segments
         h = ''
         h = @text.slice(0, 1) if @text is /^[!~:]/
+        h = "%21" if h is \!
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          script "location.href = 'https://www.moedict.tw/##{ @text }'" unless @isCLI
+          script "location.href = 'https://www.moedict.tw/##h#word'" unless @isCLI
           idx = 0
           (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
             meta itemprop:"image" content:og-image
