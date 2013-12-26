@@ -87,7 +87,7 @@ catch
   <- $
   $ \#F9868 .html '&#xF9868;'
   $ \#loading .text \載入中，請稍候…
-  if document.URL is /http:\/\/(?:www.)?moedict.tw/i
+  if document.URL is /^http:\/\/(?:www.)?moedict.tw/i
     url = "https://www.moedict.tw/"
     url += location.hash if location.hash is /^#./
     location.replace url
@@ -399,7 +399,13 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if "#{location.hash}" isnt hash => try history.pushState null, null, hash
+      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i
+        page = hash.slice 1
+        if "#{location.pathname}" isnt "/#page"
+          try history.pushState null, null, page
+          catch => location.replace hash if "#{location.hash}" isnt hash
+      else if "#{location.hash}" isnt hash
+        try history.pushState null, null, hash
         catch => location.replace hash
       location.search = '' if location.search is /^\?q=/
     try document.title = "#it - #{ TITLE-OF[LANG] }萌典"

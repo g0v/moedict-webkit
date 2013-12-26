@@ -178,7 +178,7 @@
       var url;
       $('#F9868').html('&#xF9868;');
       $('#loading').text('載入中，請稍候…');
-      if (/http:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
+      if (/^http:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
         url = "https://www.moedict.tw/";
         if (/^#./.exec(location.hash)) {
           url += location.hash;
@@ -700,7 +700,7 @@
     }
     htmlCache = res$;
     fetch = function(it){
-      var hash, e;
+      var hash, page, e;
       if (!it) {
         return;
       }
@@ -712,7 +712,19 @@
       setPref('prev-id', prevId);
       hash = HASHOF[LANG] + "" + it;
       if (!isQuery) {
-        if (location.hash + "" !== hash) {
+        if (/^https:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
+          page = hash.slice(1);
+          if (location.pathname + "" !== "/" + page) {
+            try {
+              history.pushState(null, null, page);
+            } catch (e$) {
+              e = e$;
+              if (location.hash + "" !== hash) {
+                location.replace(hash);
+              }
+            }
+          }
+        } else if (location.hash + "" !== hash) {
           try {
             history.pushState(null, null, hash);
           } catch (e$) {
