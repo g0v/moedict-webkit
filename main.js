@@ -477,6 +477,9 @@
           return false;
         });
       }
+      window.onpopstate = function(){
+        return grokVal(decodeURIComponent((location.pathname + "").slice(1)));
+      };
       if ($('#result h1').length) {
         return setHtml($('#result').html());
       }
@@ -548,6 +551,7 @@
       };
       try {
         grokVal(decode(location.hash.substr(1)));
+        return true;
       } catch (e$) {}
       return false;
     };
@@ -712,11 +716,15 @@
       setPref('prev-id', prevId);
       hash = HASHOF[LANG] + "" + it;
       if (!isQuery) {
-        if (/^https:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
+        if (/^https:\/\/(?:www.)?moedict.tw/i.exec(document.URL) || true) {
           page = hash.slice(1);
-          if (location.pathname + "" !== "/" + page) {
+          if (decodeURIComponent(location.pathname) + "" !== "/" + page) {
             try {
-              history.pushState(null, null, page);
+              if ((location.hash + "").length > 1) {
+                history.replaceState(null, null, page);
+              } else {
+                history.pushState(null, null, page);
+              }
             } catch (e$) {
               e = e$;
               if (location.hash + "" !== hash) {
