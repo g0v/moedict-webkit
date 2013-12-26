@@ -268,6 +268,8 @@ window.do-load = ->
         val ||= $(@).text!
         window.grok-val val
         return false
+    window.onpopstate = -> grok-val decodeURIComponent "#{location.pathname}".slice(1)
+
     return set-html $(\#result).html! if $('#result h1').length
     return if window.grok-hash!
     if isCordova
@@ -305,7 +307,9 @@ window.do-load = ->
       it = decodeURIComponent it if it is /%/
       it = decodeURIComponent escape it if escape(it) is /%[A-Fa-f]/
       return it
-    try grok-val decode location.hash.substr 1
+    try
+      grok-val decode location.hash.substr 1
+      return true
     return false
 
   window.fill-query = fill-query = ->
@@ -399,10 +403,12 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i
+      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i or true
         page = hash.slice 1
-        if "#{location.pathname}" isnt "/#page"
-          try history.pushState null, null, page
+        if "#{decodeURIComponent location.pathname}" isnt "/#page"
+          try if "#{location.hash}".length > 1
+            history.replaceState null, null, page
+          else => history.pushState null, null, page
           catch => location.replace hash if "#{location.hash}" isnt hash
       else if "#{location.hash}" isnt hash
         try history.pushState null, null, hash
