@@ -15,6 +15,10 @@ STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
 isQuery = location.search is /^\?q=/
+if location.search is /\?_escaped_fragment_=(.+)/
+  isQuery = true
+  MOE-ID = decodeURIComponent RegExp.$1
+  LANG = \t
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
@@ -737,7 +741,7 @@ function b2g (str='')
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
     rv += if idx % 2 then char else SIMP-TRAD[idx + 1]
-  return rv
+  return rv.replace(/台([北中南東灣語])/g '臺$1')
 
 function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
