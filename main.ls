@@ -65,12 +65,12 @@ GET = (url, data, onSuccess, dataType) ->
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
   return onSuccess(that) if CACHED[url]
-
   # setPref "GET #url", it if url is /^[a-z]\/.+\.json$/
+  dataType ?= \text
   success = -> onSuccess(CACHED[url] = it)
   error = -> onSuccess(CACHED[url] = that) if getPref "GET #url"
-  beforeSend = -> it.override-mime-type 'text/plain; charset=UTF-8'
-  $.ajax { url, data, success, error, beforeSend }
+  beforeSend = -> it.override-mime-type 'text/plain; charset=UTF-8' if dataType is \text
+  $.ajax { url, data, dataType, success, error, beforeSend }
 
 try
   throw unless isCordova and not DEBUGGING
