@@ -478,7 +478,12 @@
         });
       }
       window.onpopstate = function(){
-        return grokVal(decodeURIComponent((location.pathname + "").slice(1)));
+        var state;
+        state = decodeURIComponent((location.pathname + "").slice(1));
+        if (!/\S/.test(state)) {
+          return grokHash();
+        }
+        return grokVal(state);
       };
       if ($('#result h1').length) {
         return setHtml($('#result').html());
@@ -496,7 +501,7 @@
     window.grokVal = grokVal = function(val){
       var lang, prevVal;
       stopAudio();
-      if (/</.exec(val)) {
+      if (/</.exec(val) || /^\s+$/.exec(val)) {
         return;
       }
       if ((val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {
@@ -550,7 +555,7 @@
         return it;
       };
       try {
-        grokVal(decode(location.hash.substr(1)));
+        grokVal(decode((location.hash + "").replace(/^#+/, '')));
         return true;
       } catch (e$) {}
       return false;
@@ -726,7 +731,7 @@
                 history.pushState(null, null, page);
               }
             } else {
-              if (location.hash + "" !== hash) {
+              if ((location.hash + "").replace(/^#/, '') !== page) {
                 location.replace(hash);
               }
             }

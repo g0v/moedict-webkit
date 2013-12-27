@@ -21,7 +21,7 @@ def-of = (lang, title, cb) ->
   for {d} in payload?h || [] => for {f, l} in d => def += (f || l)
   cb(trim def)
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
+const HASH-OF = {a: \#, t: \##!, h: \#:, c: \#~}
 
 const wt2font = {
   wt071: \HanWangShinSuMedium
@@ -187,7 +187,7 @@ require(\zappajs) ->
       if not @segments
         h = ''
         h = @text.slice(0, 1) if @text is /^[!~:]/
-        h = "%21" if h is \!
+        h = "#!" if h is \!
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
           script "location.href = 'https://www.moedict.tw/##h#word'" unless @isCLI
           idx = 0

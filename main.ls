@@ -268,7 +268,10 @@ window.do-load = ->
         val ||= $(@).text!
         window.grok-val val
         return false
-    window.onpopstate = -> grok-val decodeURIComponent "#{location.pathname}".slice(1)
+    window.onpopstate = ->
+      state = decodeURIComponent "#{location.pathname}".slice(1)
+      return grok-hash! unless state is /\S/
+      grok-val state
 
     return set-html $(\#result).html! if $('#result h1').length
     return if window.grok-hash!
@@ -280,7 +283,7 @@ window.do-load = ->
 
   window.grok-val = grok-val = (val) ->
     stop-audio!
-    return if val is /</
+    return if val is /</ or val is /^\s+$/
     if val in <[ !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
@@ -308,7 +311,7 @@ window.do-load = ->
       it = decodeURIComponent escape it if escape(it) is /%[A-Fa-f]/
       return it
     try
-      grok-val decode location.hash.substr 1
+      grok-val decode("#{location.hash}" - /^#+/)
       return true
     return false
 
@@ -410,7 +413,7 @@ window.do-load = ->
             if "#{location.hash}".length > 1
               history.replaceState null, null, page
             else => history.pushState null, null, page
-          else => location.replace hash if "#{location.hash}" isnt hash
+          else => location.replace hash if ("#{location.hash}" - /^#/) isnt page
       else if "#{location.hash}" isnt hash
         try history.pushState null, null, hash
         catch => location.replace hash
