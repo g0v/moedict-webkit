@@ -10708,6 +10708,9 @@ body .ui-tooltip {
   background: #fffcfc !important;
   border-top: 0;
 }
+body .ui-tooltip h1[data-title] {
+  border-bottom: 1px solid #eeeeee !important;
+}
 body .ui-tooltip.bpmf {
   font-size: 80%;
   width: auto;

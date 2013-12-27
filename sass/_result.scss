@@ -641,7 +641,10 @@ body .ui-tooltip {
     background: #fffcfc !important;
     border-top: 0;
 
-
+    // 標題底部分隔線
+    h1[data-title] {
+        border-bottom: 1px solid $grayLighter !important;
+    }
     // 閩語典中的發音提示框
     &.bpmf {
         font-size: 80%;
