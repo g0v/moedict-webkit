@@ -135,6 +135,7 @@
     if (that = CACHED[url]) {
       return onSuccess(that);
     }
+    dataType == null && (dataType = 'text');
     success = function(it){
       return onSuccess(CACHED[url] = it);
     };
@@ -145,11 +146,14 @@
       }
     };
     beforeSend = function(it){
-      return it.overrideMimeType('text/plain; charset=UTF-8');
+      if (dataType === 'text') {
+        return it.overrideMimeType('text/plain; charset=UTF-8');
+      }
     };
     return $.ajax({
       url: url,
       data: data,
+      dataType: dataType,
       success: success,
       error: error,
       beforeSend: beforeSend
