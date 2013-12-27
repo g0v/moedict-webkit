@@ -1498,19 +1498,20 @@
           }
           return _py.join(' ');
         }() : '';
-      bopomofo = bopomofo.replace(/[，、；。－—,.;]/g, '');
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       ruby = function(){
-        var p, b, ruby, order, rpy, i$, len$, yin, span;
+        var p, b, ruby, order, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
-        p = pinyin.replace(/[,.;]/g, '');
+        p = pinyin.replace(/[,\.;]\s?/g, ' ');
         p = p.replace(/\(變\)​.*/, '');
         p = p.replace(/\/.*/, '');
         p = p.replace(/<br>.*/, '');
-        b = bopomofo.replace(/（[語|讀|又]音）[\u200B]?/, '');
+        p = p.split(' ');
+        b = bopomofo.replace(/\s?[，、；。－—,\.;]\s?/g, ' ');
+        b = b.replace(/（[語|讀|又]音）[\u200B]?/, '');
         b = b.replace(/\(變\)​\/.*/, '');
         b = b.replace(/\/.*/, '');
         b = b.replace(/<br>.*/, '');
@@ -1528,19 +1529,18 @@
         }
         ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
         ruby += '<rtc class="romanization">';
-        rpy = p.replace(/[,\.]/g, '').split(' ');
-        for (i$ = 0, len$ = rpy.length; i$ < len$; ++i$) {
-          yin = rpy[i$];
+        for (i$ = 0, len$ = p.length; i$ < len$; ++i$) {
+          yin = p[i$];
           if (yin !== '') {
             span = LANG === 't' && /\-/g.exec(yin)
               ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
                 ? ' rbspan="2"'
                 : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
-            rpy[i$] = '<rt' + span + '>' + yin + '</rt>';
+            p[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
-        ruby += rpy.join('');
+        ruby += p.join('');
         ruby += '</rtc>';
         return ruby;
       }();
