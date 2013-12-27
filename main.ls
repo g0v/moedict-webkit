@@ -840,8 +840,9 @@ function render (json, t)
     bopomofo ?= trs2bpmf "#pinyin"
 
     bopomofo -= /<[^>]*>/g unless LANG is \c
-    pinyin.=replace /ɡ/g \g
-    pinyin.=replace /ɑ/g \a
+    pinyin .= replace /ɡ/g \g
+    pinyin .= replace /ɑ/g \a
+    pinyin .= replace /，/g ', '
 
     youyin = if bopomofo is /^（[語|讀|又]音）/
              then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
@@ -869,7 +870,7 @@ function render (json, t)
       if LANG is \h
         return
 
-      p = pinyin.replace /[,\.;]\s?/g, ' '
+      p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
       p .= replace /\(變\)​.*/, ''
       p .= replace /\/.*/, ''
       p .= replace /<br>.*/, ''
@@ -920,7 +921,7 @@ function render (json, t)
 
     if LANG is \c 
       if bopomofo is /<br>/
-        pinyin .= replace /.*<br>/ '' .replace /陸./ '' 
+        pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /([,\.;])/g '$1 '
         bopomofo .= replace /.*<br>/ '' .replace /陸./ '' 
         bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
       else
