@@ -716,17 +716,16 @@
       setPref('prev-id', prevId);
       hash = HASHOF[LANG] + "" + it;
       if (!isQuery) {
-        if (/^https:\/\/(?:www.)?moedict.tw/i.exec(document.URL) || true) {
+        if (/^https:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
           page = hash.slice(1);
           if (decodeURIComponent(location.pathname) + "" !== "/" + page) {
-            try {
+            if (history.replaceState) {
               if ((location.hash + "").length > 1) {
                 history.replaceState(null, null, page);
               } else {
                 history.pushState(null, null, page);
               }
-            } catch (e$) {
-              e = e$;
+            } else {
               if (location.hash + "" !== hash) {
                 location.replace(hash);
               }
@@ -892,6 +891,7 @@
         $('#result a[href]:not(.xref)').hoverIntent({
           timeout: 250,
           over: function(){
+            $('.ui-tooltip').remove();
             try {
               return $(this).tooltip('open');
             } catch (e$) {}
@@ -904,8 +904,15 @@
         });
         partialize$.apply(this, [
           setTimeout, [
-            void 8, 250, function(){
-              return $('.ui-tooltip').remove();
+            void 8, 125, function(){
+              $('.ui-tooltip').remove();
+              return partialize$.apply(this, [
+                setTimeout, [
+                  void 8, 125, function(){
+                    return $('.ui-tooltip').remove();
+                  }
+                ], [0]
+              ]);
             }
           ], [0]
         ]);

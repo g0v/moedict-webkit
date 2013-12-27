@@ -403,13 +403,14 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i or true
+      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i
         page = hash.slice 1
         if "#{decodeURIComponent location.pathname}" isnt "/#page"
-          try if "#{location.hash}".length > 1
-            history.replaceState null, null, page
-          else => history.pushState null, null, page
-          catch => location.replace hash if "#{location.hash}" isnt hash
+          if history.replaceState
+            if "#{location.hash}".length > 1
+              history.replaceState null, null, page
+            else => history.pushState null, null, page
+          else => location.replace hash if "#{location.hash}" isnt hash
       else if "#{location.hash}" isnt hash
         try history.pushState null, null, hash
         catch => location.replace hash
@@ -508,10 +509,11 @@ window.do-load = ->
     }
     $('#result a[href]:not(.xref)').hoverIntent do
         timeout: 250ms
-        over: -> try $(@).tooltip \open
+        over: -> $('.ui-tooltip').remove! ; try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-    setTimeout _, 250ms ->
+    setTimeout _, 125ms ->
       $('.ui-tooltip').remove!
+      setTimeout _, 125ms -> $('.ui-tooltip').remove!
 
     function _pua
       $('hruby rb[annotation]').each ->
