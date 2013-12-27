@@ -1482,6 +1482,7 @@
       }
       pinyin = pinyin.replace(/ɡ/g, 'g');
       pinyin = pinyin.replace(/ɑ/g, 'a');
+      pinyin = pinyin.replace(/，/g, ', ');
       youyin = /^（[語|讀|又]音）/.exec(bopomofo) ? bopomofo.replace(/（([語|讀|又]音)）.*/, '$1') : void 8;
       bAlt = /[變|\/]/.exec(bopomofo)
         ? bopomofo.replace(/.*[\(變\)​|\/](.*)/, '$1')
@@ -1505,7 +1506,7 @@
         if (LANG === 'h') {
           return;
         }
-        p = pinyin.replace(/[,\.;]\s?/g, ' ');
+        p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
         p = p.replace(/\(變\)​.*/, '');
         p = p.replace(/\/.*/, '');
         p = p.replace(/<br>.*/, '');
@@ -1550,7 +1551,7 @@
       }
       if (LANG === 'c') {
         if (/<br>/.exec(bopomofo)) {
-          pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '');
+          pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '').replace(/([,\.;])/g, '$1 ');
           bopomofo = bopomofo.replace(/.*<br>/, '').replace(/陸./, '');
           bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
         } else {
