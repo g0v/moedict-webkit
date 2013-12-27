@@ -861,7 +861,7 @@ function render (json, t)
                 return _py.join ' '
               else ''
 
-    bopomofo .= replace /[，、；。－—,.;]/g, '' 
+    #bopomofo .= replace /\s?[，、；。－—,.;]\s?/g, ' ' 
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
 
@@ -869,11 +869,14 @@ function render (json, t)
       if LANG is \h
         return
 
-      p = pinyin.replace /[,.;]/g, ''
+      p = pinyin.replace /[,\.;]\s?/g, ' '
       p .= replace /\(變\)​.*/, ''
       p .= replace /\/.*/, ''
       p .= replace /<br>.*/, ''
-      b = bopomofo.replace /（[語|讀|又]音）[\u200B]?/, ''
+      p .= split ' '
+
+      b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
+      b .= replace /（[語|讀|又]音）[\u200B]?/, ''
       b .= replace /\(變\)​\/.*/, ''
       b .= replace /\/.*/, ''
       b .= replace /<br>.*/, ''
@@ -892,9 +895,7 @@ function render (json, t)
       ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
       ruby += '<rtc class="romanization">'
 
-      rpy = p.replace /[,\.]/g, '' .split ' '
-
-      for yin in rpy
+      for yin in p
         unless yin == ''
           span = # 閩南語典，按隔音符計算字數
                  if LANG is \t and yin is /\-/g
@@ -908,9 +909,9 @@ function render (json, t)
                  else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
                  then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
                  else ''
-          rpy[i$] = '<rt' + span + '>' + yin + '</rt>'
+          p[i$] = '<rt' + span + '>' + yin + '</rt>'
 
-      ruby += rpy.join ''
+      ruby += p.join ''
       ruby += '</rtc>'
       return ruby
 
