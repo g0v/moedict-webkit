@@ -921,8 +921,8 @@ function render (json, t)
 
     if LANG is \c 
       if bopomofo is /<br>/
-        pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /([,\.;])/g '$1 '
-        bopomofo .= replace /.*<br>/ '' .replace /陸./ '' 
+        pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
+        bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，。；])\s?/g '$1'
         bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
       else
         pinyin = ''

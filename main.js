@@ -1555,8 +1555,8 @@
       }
       if (LANG === 'c') {
         if (/<br>/.exec(bopomofo)) {
-          pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '').replace(/([,\.;])/g, '$1 ');
-          bopomofo = bopomofo.replace(/.*<br>/, '').replace(/陸./, '');
+          pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '').replace(/\s?([,\.;])\s?/g, '$1 ');
+          bopomofo = bopomofo.replace(/.*<br>/, '').replace(/陸./, '').replace(/\s?([，。；])\s?/g, '$1');
           bopomofo = bopomofo.replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ');
         } else {
           pinyin = '';
