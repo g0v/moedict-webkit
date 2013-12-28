@@ -835,7 +835,6 @@ function http
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 
 function render (json)
-  t = json.title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~' .replace /<[^>]+>/g ''
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)
@@ -876,13 +875,15 @@ function render (json)
                 return _py.join ' '
               else ''
 
-    #bopomofo .= replace /\s?[，、；。－—,.;]\s?/g, ' ' 
     bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
     bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
 
     ruby = do ->
       if LANG is \h
         return
+
+      t = title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~'
+      t -= /<[^>]+>/g
 
       b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
       b .= replace /（[語|讀|又]音）[\u200B]?/, ''
@@ -894,12 +895,10 @@ function render (json)
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
         ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
       else
-        order = 0
-        ruby = '<rbc>' + t.replace( /([^`~]+)/g, (_m, _ci, o, s) ->
-          order += 1
-          return if ( _ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
-                 then '<rb word="' + _ci + '">' + _ci + '</rb>'
-                 else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
+        ruby = '<rbc>' + t.replace( /([^`~]+)/g, (m, ci, o, s) ->
+          return if ( ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
+                 then '<rb word="' + ci + '">' + ci + '</rb>'
+                 else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
         ).replace(/([`~])/g, '') + '</rbc>'
 
       p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '

@@ -1488,8 +1488,7 @@
     });
   }
   function render(json){
-    var t, title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
-    t = json.title.replace(/<a[^>]+>/g, '`').replace(/<\/a>/g, '~').replace(/<[^>]+>/g, '');
+    var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
     result = ls(heteronyms, function(arg$){
@@ -1538,10 +1537,12 @@
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       ruby = function(){
-        var b, ruby, order, p, i$, len$, yin, span;
+        var t, b, ruby, p, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
+        t = title.replace(/<a[^>]+>/g, '`').replace(/<\/a>/g, '~');
+        t = replace$.call(t, /<[^>]+>/g, '');
         b = bopomofo.replace(/\s?[，、；。－—,\.;]\s?/g, ' ');
         b = b.replace(/（[語|讀|又]音）[\u200B]?/, '');
         b = b.replace(/\(變\)​\/.*/, '');
@@ -1551,12 +1552,10 @@
         if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
         } else {
-          order = 0;
-          ruby = '<rbc>' + t.replace(/([^`~]+)/g, function(_m, _ci, o, s){
-            order += 1;
-            return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/.exec(_ci)
-              ? '<rb word="' + _ci + '">' + _ci + '</rb>'
-              : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>');
+          ruby = '<rbc>' + t.replace(/([^`~]+)/g, function(m, ci, o, s){
+            return /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/.exec(ci)
+              ? '<rb word="' + ci + '">' + ci + '</rb>'
+              : ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>');
           }).replace(/([`~])/g, '') + '</rbc>';
         }
         p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
