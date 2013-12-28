@@ -12,6 +12,7 @@ const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
+LRU = {[key, getPref("lru-#key") || ""] for key of HASH-OF}
 
 window.isCordova = isCordova = document.URL isnt /^https?:/
 isQuery = location.search is /^\?q=/
@@ -65,9 +66,18 @@ GET = (url, data, onSuccess, dataType) ->
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
   return onSuccess(that) if CACHED[url]
-  # setPref "GET #url", it if url is /^[a-z]\/.+\.json$/
   dataType ?= \text
-  success = -> onSuccess(CACHED[url] = it)
+  success = ->
+    if url is /^[a-z]\/([^-a-z@=].+)\.json$/
+      key = "\"#{ decodeURIComponent RegExp.$1 }\"\n"
+      LRU[LANG] = key + (LRU[LANG] -= "#key")
+      lru = LRU[LANG] / '\n'
+      if lru.length > 50
+        rmPref "GET #LANG/#{encodeURIComponent(lru.pop!slice(1, -1))}.json" unless isCordova
+        LRU[LANG] = (lru * '\n') + '\n'
+      setPref "lru-#LANG" LRU[LANG]
+      setPref "GET #url" it unless isCordova
+    onSuccess(CACHED[url] = it)
   error = -> onSuccess(CACHED[url] = that) if getPref "GET #url"
   beforeSend = -> it.override-mime-type 'text/plain; charset=UTF-8' if dataType is \text
   $.ajax { url, data, dataType, success, error, beforeSend }
@@ -99,6 +109,7 @@ catch
 
 function setPref (k, v) => try localStorage?setItem(k, JSON?stringify(v))
 function getPref (k) => try $.parseJSON(localStorage?getItem(k) ? \null)
+function rmPref (k) => try localStorage?removeItem(k)
 
 var playing, player, seq
 seq = 0
@@ -803,11 +814,14 @@ function render-list (terms, id)
   id -= /^[@=]/
   title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
-  if id is \字詞紀錄簿 and not terms
-    terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）"
+  if id is \字詞紀錄簿
+    terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）" unless terms
   terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>" if terms is /^";/
   terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href='#{h}$1'>$1</a></td><td><a href='#{h}$2'>$2</a></td></tr>"""
   terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
+  if id is \字詞紀錄簿 and LRU[LANG]
+    terms += "<br><h3>最近查閱過的字詞</h3>\n"
+    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
   return "#title<div class='list'>#terms</div>"
 
 http-map =

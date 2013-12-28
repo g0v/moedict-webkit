@@ -86,6 +86,7 @@ require(\zappajs) ->
     err, json <~ fs.readFile("#lang/#val.json")
     isWord = not err
     err = true if @query.font
+    err = false if val is '=*'
     isBot = @query.bot or @request.headers['user-agent'] is /\b(?:Google|Twitterbot)\b/
     payload = if err then {} else try JSON.parse(json)
     payload = null if payload instanceof Array
