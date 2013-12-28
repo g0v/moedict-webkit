@@ -10033,22 +10033,6 @@ img.quit {
   right: 10pt;
 }
 
-#gcfbar {
-  padding: 0 !important;
-  position: fixed !important;
-}
-#gcfbar a {
-  color: #00a !important;
-}
-
-#gcfupdate {
-  margin: 5px;
-}
-
-#gcfclose {
-  margin: 3px;
-}
-
 img.info {
   position: fixed;
   bottom: 0px;
