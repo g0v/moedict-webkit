@@ -552,7 +552,6 @@ window.do-load = ->
     return true
 
   fill-json = (part, id, cb=set-html) ->
-    title = $.parseJSON part .t
     while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
       part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
@@ -568,7 +567,8 @@ window.do-load = ->
     else if part is /^\[/
       html = render-list part, id
     else
-      html = render $.parseJSON(part), title
+      parsed = $.parseJSON part
+      html = render parsed, (parsed.title - /<[^>]+>/g)
     html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
