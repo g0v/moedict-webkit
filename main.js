@@ -1538,15 +1538,10 @@
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       ruby = function(){
-        var p, b, ruby, order, i$, len$, yin, span;
+        var b, ruby, order, p, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
-        p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
-        p = p.replace(/\(變\)​.*/, '');
-        p = p.replace(/\/.*/, '');
-        p = p.replace(/<br>.*/, '');
-        p = p.split(' ');
         b = bopomofo.replace(/\s?[，、；。－—,\.;]\s?/g, ' ');
         b = b.replace(/（[語|讀|又]音）[\u200B]?/, '');
         b = b.replace(/\(變\)​\/.*/, '');
@@ -1564,8 +1559,11 @@
               : _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>');
           }).replace(/([`~])/g, '') + '</rbc>';
         }
-        ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
-        ruby += '<rtc class="romanization">';
+        p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
+        p = p.replace(/\(變\)​.*/, '');
+        p = p.replace(/\/.*/, '');
+        p = p.replace(/<br>.*/, '');
+        p = p.split(' ');
         for (i$ = 0, len$ = p.length; i$ < len$; ++i$) {
           yin = p[i$];
           if (yin !== '') {
@@ -1577,6 +1575,8 @@
             p[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
         }
+        ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+        ruby += '<rtc class="romanization">';
         ruby += p.join('');
         ruby += '</rtc>';
         return ruby;
