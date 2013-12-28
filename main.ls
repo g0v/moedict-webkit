@@ -884,12 +884,6 @@ function render (json, t)
       if LANG is \h
         return
 
-      p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
-      p .= replace /\(變\)​.*/, ''
-      p .= replace /\/.*/, ''
-      p .= replace /<br>.*/, ''
-      p .= split ' '
-
       b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
       b .= replace /（[語|讀|又]音）[\u200B]?/, ''
       b .= replace /\(變\)​\/.*/, ''
@@ -907,8 +901,12 @@ function render (json, t)
                  then '<rb word="' + _ci + '">' + _ci + '</rb>'
                  else _ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + _ci + '" word-order="' + order + '">$1</rb>')
         ).replace(/([`~])/g, '') + '</rbc>'
-      ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-      ruby += '<rtc class="romanization">'
+
+      p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
+      p .= replace /\(變\)​.*/, ''
+      p .= replace /\/.*/, ''
+      p .= replace /<br>.*/, ''
+      p .= split ' '
 
       for yin in p
         unless yin == ''
@@ -926,6 +924,8 @@ function render (json, t)
                  else ''
           p[i$] = '<rt' + span + '>' + yin + '</rt>'
 
+      ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+      ruby += '<rtc class="romanization">'
       ruby += p.join ''
       ruby += '</rtc>'
       return ruby
