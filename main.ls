@@ -578,8 +578,7 @@ window.do-load = ->
     else if part is /^\[/
       html = render-list part, id
     else
-      parsed = $.parseJSON part
-      html = render parsed, (parsed.title - /<[^>]+>/g)
+      html = render $.parseJSON part
     html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span>"
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
@@ -835,7 +834,8 @@ function http
   return "http://#it" unless location.protocol is \https:
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 
-function render (json, t)
+function render (json)
+  t = json.title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~' .replace /<[^>]+>/g ''
   { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
   char-html = if radical then "<div class='radical'><span class='glyph'>#{
     render-radical(radical - /<\/?a[^>]*>/g)

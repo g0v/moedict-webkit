@@ -1005,7 +1005,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, parsed, hasXrefs, tgtLang, ref$, words, word;
+      var h, html, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -1033,8 +1033,7 @@
       } else if (/^\[/.exec(part)) {
         html = renderList(part, id);
       } else {
-        parsed = $.parseJSON(part);
-        html = render(parsed, replace$.call(parsed.title, /<[^>]+>/g, ''));
+        html = render($.parseJSON(part));
       }
       html = html.replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span>");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
@@ -1488,8 +1487,9 @@
       return httpMap[x] || xs;
     });
   }
-  function render(json, t){
-    var title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
+  function render(json){
+    var t, title, english, heteronyms, radical, translation, nrsCount, sCount, py, charHtml, result;
+    t = json.title.replace(/<a[^>]+>/g, '`').replace(/<\/a>/g, '~').replace(/<[^>]+>/g, '');
     title = json.title, english = json.english, heteronyms = json.heteronyms, radical = json.radical, translation = json.translation, nrsCount = json.non_radical_stroke_count, sCount = json.stroke_count, py = json.pinyin;
     charHtml = radical ? "<div class='radical'><span class='glyph'>" + renderRadical(replace$.call(radical, /<\/?a[^>]*>/g, '')) + "</span><span class='count'><span class='sym'>+</span>" + nrsCount + "</span><span class='count'> = " + sCount + "</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" : "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>";
     result = ls(heteronyms, function(arg$){
