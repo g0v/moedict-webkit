@@ -979,9 +979,8 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var title, h, html, hasXrefs, tgtLang, ref$, words, word;
+      var h, html, parsed, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
-      title = $.parseJSON(part).t;
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
       }
@@ -1008,7 +1007,8 @@
       } else if (/^\[/.exec(part)) {
         html = renderList(part, id);
       } else {
-        html = render($.parseJSON(part), title);
+        parsed = $.parseJSON(part);
+        html = render(parsed, replace$.call(parsed.title, /<[^>]+>/g, ''));
       }
       html = html.replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span>");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
