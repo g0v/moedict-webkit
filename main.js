@@ -16,7 +16,7 @@
   });
   HASHOF = {
     a: '#',
-    t: '#!',
+    t: "#'",
     h: '#:',
     c: '#~'
   };
@@ -534,13 +534,13 @@
       if (/</.exec(val) || /^\s+$/.exec(val)) {
         return;
       }
-      if ((val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {
+      if ((val === '\'=諺語' || val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {
         setTimeout(function(){
           return $('#query').autocomplete('search');
         }, 500);
       }
       lang = 'a';
-      if (/^!/.exec(val + "")) {
+      if (/^['!]/.exec(val + "")) {
         lang = 't';
         val = val.substr(1);
       }
@@ -593,7 +593,7 @@
     window.fillQuery = fillQuery = function(it){
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
-      title = replace$.call(title, /^[:!~]/, '');
+      title = replace$.call(title, /^[':!~]/, '');
       if (/^</.exec(title)) {
         return;
       }
@@ -911,7 +911,7 @@
           },
           content: function(cb){
             var id;
-            id = $(this).attr('href').replace(/^#[!|:|~]?/, '');
+            id = $(this).attr('href').replace(/^#['!:~]?/, '');
             callLater(function(){
               if (htmlCache[LANG][id]) {
                 cb(htmlCache[LANG][id]);
@@ -1016,16 +1016,16 @@
       });
       h = HASHOF[LANG];
       part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
-        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
+        return "<span class='punct'>" + pre + "<a href=\\\"" + h + word + "\\\">" + word + "</a>" + post + "</span>";
       });
       part = part.replace(/([「【『（《])`([^~]+)~/g, function(arg$, pre, word){
-        return "<span class='punct'>" + pre + "<a href='" + h + word + "'>" + word + "</a></span>";
+        return "<span class='punct'>" + pre + "<a href=\\\"" + h + word + "\\\">" + word + "</a></span>";
       });
       part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, post){
-        return "<span class='punct'><a href='" + h + word + "'>" + word + "</a>" + post + "</span>";
+        return "<span class='punct'><a href=\\\"" + h + word + "\\\">" + word + "</a>" + post + "</span>";
       });
       part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href='" + h + word + "'>" + word + "</a>";
+        return "<a href=\\\"" + h + word + "\\\">" + word + "</a>";
       });
       part = part.replace(/([)）])/g, "$1\u200B");
       if (/^\[\s*\[/.exec(part)) {
@@ -1040,7 +1040,7 @@
       html = html.replace(/(.)\u20DF/g, "<span class='specific'>$1</span>");
       html = html.replace(/(.)\u20E3/g, "<span class='variant'>$1</span>");
       html = html.replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "");
-      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href='" + h + "$1'>$1</a>");
+      html = html.replace(/<a>([^<]+)<\/a>/g, "<a href=\"" + h + "$1\">$1</a>");
       html = html.replace(RegExp('(>[^<]*)' + id + '(?!</(?:h1|rb)>)', 'g'), "$1<b>" + id + "</b>");
       html = html.replace(/¹/g, '<sup>1</sup>');
       html = html.replace(/²/g, '<sup>2</sup>');
@@ -1072,12 +1072,12 @@
           if (/`/.exec(word)) {
             results$.push(word.replace(/`([^~]+)~/g, fn$));
           } else {
-            results$.push("<a class='xref' href='" + h + word + "'>" + word + "</a>");
+            results$.push("<a class='xref' href=\"" + h + word + "\">" + word + "</a>");
           }
         }
         return results$;
         function fn$(arg$, word){
-          return "<a class='xref' href='" + h + word + "'>" + word + "</a>";
+          return "<a class='xref' href=\"" + h + word + "\">" + word + "</a>";
         }
       }
     };
@@ -1398,7 +1398,7 @@
     if (LANG !== 'a') {
       return char;
     }
-    return "<a title='部首檢索' class='xref' style='color: white' href='#@" + char + "'> " + char + "</a>";
+    return "<a title='部首檢索' class='xref' style='color: white' href=\"#@" + char + "\"> " + char + "</a>";
   }
   function canPlayMp3(){
     var a;
@@ -1432,7 +1432,7 @@
       title = "<h1 itemprop='name'>部首表</h1>";
       h += '@';
     } else {
-      title = "<h1 itemprop='name'>" + id + " <a class='xref' href='#@' title='部首表'>部</a></h1>";
+      title = "<h1 itemprop='name'>" + id + " <a class='xref' href=\"#@\" title='部首表'>部</a></h1>";
     }
     rows = $.parseJSON(terms);
     list = '';
@@ -1443,7 +1443,7 @@
         list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
         for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
           ch = chars[j$];
-          list += "<a class='stroke-char' href='" + h + ch + "'>" + ch + "</a> ";
+          list += "<a class='stroke-char' href=\"" + h + ch + "\">" + ch + "</a> ";
         }
         list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
       }
@@ -1464,11 +1464,11 @@
     if (/^";/.exec(terms)) {
       terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
     }
-    terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href='" + h + "$1'>$1</a></td><td><a href='" + h + "$2'>$2</a></td></tr>");
-    terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href='" + h + "$1'>$1</a></span>");
+    terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
+    terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     if (id === '字詞紀錄簿' && LRU[LANG]) {
       terms += "<br><h3>最近查閱過的字詞</h3>\n";
-      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href='" + h + "$1'>$1</a></span>");
+      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     }
     return title + "<div class='list'>" + terms + "</div>";
   }
@@ -1669,7 +1669,7 @@
           text = text.replace(/([i])\u030d/g, "<span class='vowel-030d $1-030d'>$1\u030d</span>");
         }
       }
-      return text.replace(/[\uFF0E|\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
+      return text.replace(/[\uFF0E\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d');
     }
     function groupBy(prop, xs){
       var x, pre, y;

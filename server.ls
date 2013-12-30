@@ -21,7 +21,7 @@ def-of = (lang, title, cb) ->
   for {d} in payload?h || [] => for {f, l} in d => def += (f || l)
   cb(trim def)
 
-const HASH-OF = {a: \#, t: \##!, h: \#:, c: \#~}
+const HASH-OF = {a: \#, t: \#', h: \#:, c: \#~}
 
 const wt2font = {
   wt071: \HanWangShinSuMedium
@@ -57,7 +57,7 @@ require(\zappajs) ->
   @get '/:text.png': ->
     @response.type \image/png
     font = font-of @query.font
-    text2png(@params.text.replace(/^[!~:]/, ''), font).pipe @response
+    text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
@@ -66,7 +66,7 @@ require(\zappajs) ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     lang = \a
-    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^['!]/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
@@ -80,7 +80,7 @@ require(\zappajs) ->
     png-suffix = '.png'
     png-suffix += "?font=#{ @query.font }" if @query.font
     lang = \a
-    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^['!]/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
@@ -93,7 +93,7 @@ require(\zappajs) ->
     payload ?= { t: val }
     payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
 
-    chars = text.replace(/^[!~:]/, '')
+    chars = text.replace(/^['!~:]/, '')
     chars.=slice(0, 50)
     png-file = "png/#chars.#font.png"
     if fs.existsSync png-file
@@ -148,12 +148,12 @@ require(\zappajs) ->
     suffix = png-suffix.slice(4)
     suffix = '' if suffix is '?font=kai' and not @isWord
     png-suffix.=replace /\?font=kai$/ ''
-    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^[!~:]/, '') }#png-suffix"
+    og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^['!~:]/, '') }#png-suffix"
 
     TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
-    SYM-OF = {'!': \t, ':': \h, '~': \c}
+    SYM-OF = {'!': \t, ':': \h, '~': \c, "'": \t}
     LANG = 'a'
-    LANG = SYM-OF[@text.slice(0, 1)] if @text is /^[!~:]/
+    LANG = SYM-OF[@text.slice(0, 1)] if @text is /^['!~:]/
 
     html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant', manifest:"manifest.appcache"} -> head ->
       meta charset:\utf-8
@@ -174,7 +174,7 @@ require(\zappajs) ->
       #   meta 'http-equiv':"refresh" content:"0;url=https://www.moedict.tw/##{ @text }"
       t += " (#{ @english })" if @english
       t ||= @text
-      t = t.slice(1) if t is /^[!~:]/
+      t = t.slice(1) if t is /^['!~:]/
       Title = "#t - #{ TITLE-OF[LANG] }萌典"
       title Title
       meta name:"og:title" content:Title
@@ -184,13 +184,13 @@ require(\zappajs) ->
       link href:'/styles.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
       base target:\_blank
-      word = @text.replace(/^[!~:]/ '')
+      word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
         h = ''
-        h = @text.slice(0, 1) if @text is /^[!~:]/
-        h = "#!" if h is \!
+        h = @text.slice(0, 1) if @text is /^['!~:]/
+        h = \' if h is \!
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          script "location.href = 'https://www.moedict.tw/##h#word'" unless @isCLI
+          script "location.href = \"https://www.moedict.tw/##h#word\"" unless @isCLI
           idx = 0
           (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
             meta itemprop:"image" content:og-image
@@ -217,7 +217,7 @@ require(\zappajs) ->
         div class:'share' style:'margin: 15px', ->
           a class:'share-f btn btn-default' title:'Facebook 分享' style:'margin-right: 10px; background: #3B579D; color: white' 'href':"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
             i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
-          a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^[!~:]/, '') }", ->
+          a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^['!~:]/, '') }", ->
             i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
           a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
             i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
@@ -248,7 +248,7 @@ require(\zappajs) ->
         ''', ->
           select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
             option value:'', \國語
-            option selected:(@text is /^!/), value:\!, \臺語
+            option selected:(@text is /^['!]/), value:\', \臺語
             option selected:(@text is /^:/), value:\:, \客語
           select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
             optgroup label:'全字庫', ->

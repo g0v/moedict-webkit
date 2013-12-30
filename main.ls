@@ -7,7 +7,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: \#!, h: \#:, c: \#~}
+const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
 
@@ -295,11 +295,11 @@ window.do-load = ->
   window.grok-val = grok-val = (val) ->
     stop-audio!
     return if val is /</ or val is /^\s+$/
-    if val in <[ !=諺語 :=諺語 ]> and not width-is-xs!
+    if val in <[ '=諺語 !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
     lang = \a
-    if "#val" is /^!/ => lang = \t; val.=substr 1
+    if "#val" is /^['!]/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
@@ -328,7 +328,7 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
-    title -= /^[:!~]/
+    title -= /^[':!~]/
     return if title is /^</
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
@@ -513,7 +513,7 @@ window.do-load = ->
         $('.ui-tooltip-content h1').ruby!
         _pua!
       content: (cb) ->
-        id = $(@).attr \href .replace /^#[!|:|~]?/, ''
+        id = $(@).attr \href .replace /^#['!:~]?/, ''
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -568,10 +568,10 @@ window.do-load = ->
     part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
     part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
     h = HASH-OF[LANG]
-    part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href='#h#word'>#word</a>#post</span>"
-    part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href='#h#word'>#word</a></span>"
-    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href='#h#word'>#word</a>#post</span>"
-    part.=replace /`([^~]+)~/g (, word) -> "<a href='#h#word'>#word</a>"
+    part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a>#post</span>"
+    part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a></span>"
+    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#h#word\\\">#word</a>#post</span>"
+    part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#word\\\">#word</a>"
     part.=replace /([)）])/g "$1\u200B"
     if part is /^\[\s*\[/
       html = render-strokes part, id
@@ -584,7 +584,7 @@ window.do-load = ->
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
     html.=replace //<a[^<]+>#id<\/a>//g "#id"
-    html.=replace //<a>([^<]+)</a>//g   "<a href='#{h}$1'>$1</a>"
+    html.=replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
     html.=replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
     html.=replace(/¹/g \<sup>1</sup>)
     html.=replace(/²/g \<sup>2</sup>)
@@ -606,9 +606,9 @@ window.do-load = ->
       html += (for word in words
         h = HASH-OF[tgt-lang]
         if word is /`/
-          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href='#h#word'>#word</a>"
+          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href=\"#h#word\">#word</a>"
         else
-          "<a class='xref' href='#h#word'>#word</a>"
+          "<a class='xref' href=\"#h#word\">#word</a>"
       ) * \、
       html += '</span></div>'
     html += '</div>' if has-xrefs
@@ -774,7 +774,7 @@ function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
   char = CJK-RADICALS[idx+1] unless idx % 2
   return char unless LANG is \a
-  return "<a title='部首檢索' class='xref' style='color: white' href='\#@#char'> #char</a>"
+  return "<a title='部首檢索' class='xref' style='color: white' href=\"\#@#char\"> #char</a>"
 
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
@@ -798,13 +798,13 @@ function render-strokes (terms, id)
     title = "<h1 itemprop='name'>部首表</h1>"
     h += '@'
   else
-    title = "<h1 itemprop='name'>#id <a class='xref' href='#\@' title='部首表'>部</a></h1>"
+    title = "<h1 itemprop='name'>#id <a class='xref' href=\"#\@\" title='部首表'>部</a></h1>"
   rows = $.parseJSON terms
   list = ''
   for chars, strokes in rows | chars?length
     list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
     for ch in chars
-      list += "<a class='stroke-char' href='#h#ch'>#ch</a> "
+      list += "<a class='stroke-char' href=\"#h#ch\">#ch</a> "
     list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
   return "#title<div class='list'>#list</div>"
 
@@ -816,11 +816,11 @@ function render-list (terms, id)
   if id is \字詞紀錄簿
     terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）" unless terms
   terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>" if terms is /^";/
-  terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href='#{h}$1'>$1</a></td><td><a href='#{h}$2'>$2</a></td></tr>"""
-  terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
+  terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
+  terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   if id is \字詞紀錄簿 and LRU[LANG]
     terms += "<br><h3>最近查閱過的字詞</h3>\n"
-    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href='#{h}$1'>$1</a></span>")
+    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   return "#title<div class='list'>#terms</div>"
 
 http-map =
@@ -1092,7 +1092,7 @@ function render (json)
         text.=replace /([aieou])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
       else
         text.=replace /([i])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
-    text.replace(/[\uFF0E|\u2022]/g '\u00B7')
+    text.replace(/[\uFF0E\u2022]/g '\u00B7')
         .replace(/\u223C/g '\uFF0D')
         .replace(/\u0358/g '\u030d')
   function groupBy (prop, xs)
