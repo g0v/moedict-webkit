@@ -955,7 +955,7 @@
           $('hruby rb[annotation]').each(function(){
             var a;
             a = $(this).attr('annotation');
-            if (isDroidGap) {
+            if (isDroidGap || isChrome) {
               a = a.replace(/([aeiou])\u030d/g, function(m, v){
                 return v === 'a'
                   ? '\uDB80\uDC61'
@@ -1663,7 +1663,7 @@
         text = text.replace(/(\u31B5)\u0358/g, "<span class='u31b5-0358'>$1\u0358</span>");
         text = text.replace(/(\u31B6)\u0358/g, "<span class='u31b6-0358'>$1\u0358</span>");
         text = text.replace(/(\u31B7)\u0358/g, "<span class='u31b7-0358'>$1\u0358</span>");
-        if (isDroidGap) {
+        if (isDroidGap || isChrome) {
           text = text.replace(/([aieou])\u030d/g, "<span class='vowel-030d $1-030d'>$1\u030d</span>");
         } else {
           text = text.replace(/([i])\u030d/g, "<span class='vowel-030d $1-030d'>$1\u030d</span>");
