@@ -1,21 +1,15 @@
 
 
 @include font-face("Fira Sans OT", font-files(
-    "FiraSansOT-Regular.woff", woff
-,   "FiraSansOT-Regular.otf", opentype
-,   "FiraSansOT-Regular.ttf", truetype
+    "FiraSansOT-Regular.ttf", truetype
 ), "FiraSansOT-Regular.eot");
 
 @include font-face("EBAS", font-files(
-    "EBAS-Subset.woff", woff
-,   "EBAS-Subset.otf", opentype
-,   "EBAS-Subset.ttf", truetype
+    "EBAS-Subset.ttf", truetype
 ), "EBAS-Subset.eot");
 
 @include font-face("MOEDICT", font-files(
-    "MOEDICT.woff", woff
-,   "MOEDICT.otf", opentype
-,   "MOEDICT.ttf", truetype
+    "MOEDICT.ttf", truetype
 ), "MOEDICT.eot");
 
 @mixin kai-fonts {

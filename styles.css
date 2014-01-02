@@ -9374,19 +9374,19 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 @font-face {
   font-family: "Fira Sans OT";
   src: url('fonts/FiraSansOT-Regular.eot');
-  src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
+  src: url('fonts/FiraSansOT-Regular.eot?#iefix') format('eot'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: "EBAS";
   src: url('fonts/EBAS-Subset.eot');
-  src: url('fonts/EBAS-Subset.eot?#iefix') format('eot'), url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
+  src: url('fonts/EBAS-Subset.eot?#iefix') format('eot'), url('fonts/EBAS-Subset.ttf') format('truetype');
 }
 
 @font-face {
   font-family: "MOEDICT";
   src: url('fonts/MOEDICT.eot');
-  src: url('fonts/MOEDICT.eot?#iefix') format('eot'), url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
+  src: url('fonts/MOEDICT.eot?#iefix') format('eot'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 
 .vowel-030d,
