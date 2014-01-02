@@ -533,7 +533,7 @@ window.do-load = ->
       $('hruby rb[annotation]').each ->
         a = $ @ .attr \annotation
 
-        if isDroidGap
+        if isDroidGap or isChrome
           a .= replace /([aeiou])\u030d/g (m, v) ->
             return      if v is \a then \\uDB80\uDC61
                    else if v is \e then \\uDB80\uDC65
@@ -1088,7 +1088,7 @@ function render (json)
       text.=replace /(\u31B5)\u0358/g "<span class='u31b5-0358'>$1\u0358</span>"
       text.=replace /(\u31B6)\u0358/g "<span class='u31b6-0358'>$1\u0358</span>"
       text.=replace /(\u31B7)\u0358/g "<span class='u31b7-0358'>$1\u0358</span>"
-      if isDroidGap
+      if isDroidGap or isChrome
         text.=replace /([aieou])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
       else
         text.=replace /([i])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
