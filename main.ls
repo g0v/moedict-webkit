@@ -714,7 +714,7 @@ function init-autocomplete
       term = "，" if term is \=諺語 and LANG is \h
       $('iframe').fadeOut \fast
       return cb [] unless term.length
-      return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;]/
+      return cb [] unless term is /[^\u0000-\u00FF]/ or term is /[-,;0-9]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')

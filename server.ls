@@ -113,10 +113,10 @@ require(\zappajs) ->
         part = parts.pop!
         def <- def-of lang, part
         href = "https://www.moedict.tw/#{ HASH-OF[lang] }#part" if def
-        if part is "９７２"
+        if part is /^[9９][7７][2２]$/
           href = "http://ly.g0v.tw/bills/1150L15359"
           def = \擬具「民法親屬編、繼承編部分條文修正草案」，請審議案。
-        else if part is "１３３"
+        else if part is /^[1１][3３][3３]$/
           href = "http://law.moj.gov.tw/LawClass/LawSingle.aspx?Pcode=A0000001&FLNO=133"
           def = \被選舉人得由原選舉區依法罷免之。
         segments.unshift {def, part, href}
@@ -303,6 +303,7 @@ function text2png (text, font)
       offset = if ch is /[\u3000\uFF01-\uFF5E]/ then 0.17 else 0.23
       x = (margin + idx * 360)
       y = (padding + row - offset) * 375
+      x += 90 if ch is /[0-9a-zA-Z]/
       if font is /ShuoWen/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 50
         y += 45

@@ -1295,7 +1295,7 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;]/.exec(term))) {
+        if (!(/[^\u0000-\u00FF]/.exec(term) || /[-,;0-9]/.exec(term))) {
           return cb([]);
         }
         if (widthIsXs() && !/[「」。，?.*_% ]/.test(term)) {
