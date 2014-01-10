@@ -11,27 +11,19 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link href="styles.css" rel="stylesheet">
     <link href="css/cupertino/jquery-ui-1.10.2.custom.css" rel="stylesheet">
-    <!--if !IE-->
-    <script src="cordova.js" data-cfasync="true"></script>
-    <!-- <![endif]-->
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
-    <script src="js/jquery.hoverIntent.js"></script>
-    <script src="js/jquery.ruby.js"></script>
-    <script src="js/bootstrap/dropdown.js"></script>
-    <script src="js/simp-trad.js" charset="utf-8"></script>
-    <script src="main.js" charset="utf-8"></script>
   </head>
   <body id="moedict" onhashchange="grokHash()" itemscope itemtype="http://schema.org/ScholarlyArticle" class="main">
     <noscript>
-      <main>
-        <dl>
-          <dt><a href="萌">萌 ㄇㄥˊ</a></dt>
-          <dd>草木初生的芽。</dd>
-          <dt><a href="典">典 ㄉㄧㄢˇ</a></dt>
-          <dd>可作為依據或模範的書。</dd>
-        </dl>
-      </main>
+      <center style="position: absolute; width: 95%">
+        <main>
+          <dl>
+            <dt><a href="萌">萌 ㄇㄥˊ</a></dt>
+            <dd>草木初生的芽。</dd>
+            <dt><a href="典">典 ㄉㄧㄢˇ</a></dt>
+            <dd>可作為依據或模範的書。</dd>
+          </dl>
+        </main>
+      </center>
     </noscript>
     <div class="nav-bg navbar-fixed-top"></div>
     <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
@@ -74,7 +66,7 @@
         <li style="position: absolute; top: 2px; left: 8em; padding: 3px; margin-left: 30px;" class="resize-btn cordova-only"><a style="padding-left: 5px; padding-right: 5px" href="#" onclick="adjustFontSize(1); return false"><i class="icon-resize-full"></i></a></li>
       </ul>
       <ul class="nav pull-right hidden-xs">
-        <li><a href="#" onclick="pressAbout(); return false" title="關於本站"><span class="iconic-circle"><i class="icon-info"></i></span></a></li>
+        <li><a href="about.html" onclick="pressAbout(); return false" title="關於本站"><span class="iconic-circle"><i class="icon-info"></i></span></a></li>
       </ul>
       <ul class="nav pull-right hidden-xs">
         <li style="display: inline-block" class="web-inline-only"><a href="https://twitter.com/moedict" target="_blank" title="萌典 Twitter" style="color: #ccc"><i class="icon-twitter-sign"></i></a></li>
@@ -95,5 +87,15 @@
       <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
     </div><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
     <div id="moe" style="display: none"></div>
+    <!--if !IE-->
+    <script src="cordova.js" data-cfasync="true"></script>
+    <!-- <![endif]-->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="js/jquery.hoverIntent.js"></script>
+    <script src="js/jquery.ruby.js"></script>
+    <script src="js/bootstrap/dropdown.js"></script>
+    <script src="js/simp-trad.js" charset="utf-8"></script>
+    <script src="main.js" charset="utf-8"></script>
   </body>
 </html>

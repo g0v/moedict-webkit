@@ -10,23 +10,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     link(rel='apple-touch-icon', href='icon.png')
     link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
     link(href='styles.css', rel='stylesheet')
-    //if !IE
-    script(src='cordova.js', data-cfasync='true')
-    script(src='js/jquery-1.9.1.min.js')
-    script.
-        if (! /^https?:/.test(document.URL)) { $(function(){
-            $('body').addClass('app');
-            $('body').removeClass('web');
-            $('body').on("click", "a.home", function(){
-                if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
-            });
-            $('body').on("click", "a[target]", function(){
-                var href = $(this).attr('href');
-                window.open(href, '_system');
-                return false;
-            });
-        }); };
-    // <![endif]
   body#moedict.about.web
     .navbar.navbar-inverse.navbar-fixed-top
       a.navbar-brand.brand.ebas.home(href='./') 萌典
@@ -124,3 +107,20 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       a#opensearch.btn.btn-default.btn-info(onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false")
         i.icon.icon-plus-sign
         |  加入搜尋列
+    //if !IE
+    script(src='cordova.js', data-cfasync='true')
+    script(src='js/jquery-1.9.1.min.js')
+    script.
+        if (! /^https?:/.test(document.URL)) { $(function(){
+            $('body').addClass('app');
+            $('body').removeClass('web');
+            $('body').on("click", "a.home", function(){
+                if (history.length > 1) { history.go(-1); return false; } else { location.href = './' }
+            });
+            $('body').on("click", "a[target]", function(){
+                var href = $(this).attr('href');
+                window.open(href, '_system');
+                return false;
+            });
+        }); };
+    // <![endif]
