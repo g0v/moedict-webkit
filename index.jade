@@ -11,18 +11,8 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
     link(href='styles.css', rel='stylesheet')
     link(href='css/cupertino/jquery-ui-1.10.2.custom.css', rel='stylesheet')
-    //if !IE
-    script(src='cordova.js', data-cfasync='true')
-    // <![endif]
-    script(src='js/jquery-1.9.1.min.js')
-    script(src='js/jquery-ui-1.10.2.custom.min.js')
-    script(src='js/jquery.hoverIntent.js')
-    script(src='js/jquery.ruby.js')
-    script(src='js/bootstrap/dropdown.js')
-    script(src='js/simp-trad.js', charset='utf-8')
-    script(src='main.js', charset='utf-8')
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
-    noscript: main: dl
+    noscript: center(style='position: absolute; width: 95%'): main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ
       dd 草木初生的芽。
       dt: a(href='典') 典 ㄉㄧㄢˇ
@@ -86,7 +76,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             i.icon-resize-full
       ul.nav.pull-right.hidden-xs
         li
-          a(href='#', onclick='pressAbout(); return false', title='關於本站')
+          a(href='about.html', onclick='pressAbout(); return false', title='關於本站')
             span.iconic-circle: i.icon-info
       ul.nav.pull-right.hidden-xs
         li.web-inline-only(style='display: inline-block')
@@ -135,3 +125,13 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     a.erase-box.mobile-only(href='#', onclick='pressErase(); return false')
       i.icon-remove-sign(style='color: #c0c0c0', title='清除搜尋框')
     #moe(style='display: none')
+    //if !IE
+    script(src='cordova.js', data-cfasync='true')
+    // <![endif]
+    script(src='js/jquery-1.9.1.min.js')
+    script(src='js/jquery-ui-1.10.2.custom.min.js')
+    script(src='js/jquery.hoverIntent.js')
+    script(src='js/jquery.ruby.js')
+    script(src='js/bootstrap/dropdown.js')
+    script(src='js/simp-trad.js', charset='utf-8')
+    script(src='main.js', charset='utf-8')
