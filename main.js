@@ -1989,6 +1989,19 @@
       complete: cb
     });
   }
+  $(document).on('ready', function(){
+    return $('.result').on('click', 'a[for="starred-record--history"]', function(){
+      $('.result nav li.active').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('.starred-record--fav').hide();
+      return $('.starred-record--history').show();
+    }).on('click', 'a[for="starred-record--fav"]', function(){
+      $('.result nav li.active').removeClass('active');
+      $(this).parent('li').addClass('active');
+      $('.starred-record--fav').show();
+      return $('.starred-record--history').hide();
+    });
+  });
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
