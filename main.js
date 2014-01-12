@@ -1375,7 +1375,7 @@
     });
   }
   trs_lookup = function(term, cb){
-    return GET("http://su-lip.magistry.fr/lookup/trs/" + term, function(data){
+    return GET("https://www.moedict.tw/lookup/trs/" + term, function(data){
       return cb(split$.call(data, '|'));
     });
   };
