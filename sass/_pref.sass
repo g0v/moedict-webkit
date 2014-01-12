@@ -25,7 +25,7 @@
 
 		+ button.close
 			position: absolute
-			right: .75em
+			right: .5em
 			top: .5em
 	ul
 		// box
@@ -49,6 +49,8 @@
 
 			&:last-child
 				margin-bottom: .35em
+			&.option-romanization
+				display: none
 			label
 				// box
 				display: block
@@ -57,11 +59,16 @@
 				// style
 				text-shadow: 1px 1px 0 rgba(#eee, .7)
 			button
+				// posi
 				float: none
 				margin-top: -.4em
+				// style
+				border-radius: 4px !important
 	span.fa
 		font-size: .8em
 		vertical-align: top
+	.btn-info
+		margin: -.5em 0 1em
 	.btn-primary
 		// posi
 		bottom: 60px

@@ -10293,7 +10293,7 @@ img.back {
 }
 #user-pref h4 + button.close {
   position: absolute;
-  right: 0.75em;
+  right: 0.5em;
   top: 0.5em;
 }
 #user-pref ul {
@@ -10316,6 +10316,9 @@ img.back {
 #user-pref > ul li.btn-group:last-child {
   margin-bottom: 0.35em;
 }
+#user-pref > ul li.btn-group.option-romanization {
+  display: none;
+}
 #user-pref > ul li.btn-group label {
   display: block;
   font-weight: normal;
@@ -10324,10 +10327,14 @@ img.back {
 #user-pref > ul li.btn-group button {
   float: none;
   margin-top: -0.4em;
+  border-radius: 4px !important;
 }
 #user-pref span.fa {
   font-size: 0.8em;
   vertical-align: top;
+}
+#user-pref .btn-info {
+  margin: -0.5em 0 1em;
 }
 #user-pref .btn-primary {
   bottom: 60px;

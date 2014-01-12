@@ -149,13 +149,41 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             li.divider(role="presentation")
             li 
               a(href="#") 關閉
-        li.btn-group
-          label 客語注音
+        li
+          button.btn.btn-info(type="button") 拼注音進階選項
+        li.btn-group.option-romanization
+          label 國語拼音
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-           | 預設 <span class="caret"></span>
+           | 漢語拼音 <span class="caret"></span>
           ul.dropdown-menu
             li
-              a.active(href="#") 預設
+              a.active(href="#") 漢語拼音
+            li.divider(role="presentation")
+            li
+              a(href="#") 威妥瑪拼音
+            li 
+              a(href="#") 國音二式
+            li 
+              a(href="#") 通用拼音
+        li.btn-group.option-romanization
+          label 閩南語拼音
+          button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
+           | 臺灣閩南語羅馬字 <span class="caret"></span>
+          ul.dropdown-menu
+            li
+              a.active(href="#") 臺灣閩南語羅馬字
+            li.divider(role="presentation")
+            li
+              a(href="#") 白話字
+            li 
+              a(href="#") 通用拼音
+        li.btn-group.option-romanization
+          label 客語發音
+          button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
+           | 預設<small>（全部顯示）</small> <span class="caret"></span>
+          ul.dropdown-menu
+            li
+              a.active(href="#") 預設<small>（全部顯示）</small>
             li.divider(role="presentation")
             li
               a(href="#") 四縣
@@ -181,11 +209,12 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             li.divider(role="presentation")
             li
               a(href="#") 關閉<small>（將清除所有紀錄）</small>
+          button.btn.btn-danger.btn-sm(type="button") 清除
         li.btn-group
           label
-            | 搜尋「簡
+            | 「簡
             span.fa.icon-long-arrow-right
-            | 繁」轉換
+            | 繁」搜尋轉換
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
             | 避開通同字及異體字 <span class="caret"></span>
           ul.dropdown-menu
