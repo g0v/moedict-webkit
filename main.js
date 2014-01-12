@@ -1375,7 +1375,6 @@
     });
   }
   trs_lookup = function(term, cb){
-    console.log("looking for " + term + " as TRS");
     return GET("http://su-lip.magistry.fr/lookup/trs/" + term, function(data){
       return cb(split$.call(data, '|'));
     });
