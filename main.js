@@ -213,7 +213,7 @@
     $(function(){
       var url;
       $('#F9868').html('&#xF9868;');
-      $('#loading').text('載入中，請稍候…');
+      $('#loading').text('載入中，請稍候……');
       if (/^http:\/\/(?:www.)?moedict.tw/i.exec(document.URL)) {
         url = "https://www.moedict.tw/";
         if (/^#./.exec(location.hash)) {

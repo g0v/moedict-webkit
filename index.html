@@ -44,7 +44,7 @@
             <li role="presentation"><a href="#~@" class="lang-option c c-idiom">…部首表</a></li>
           </ul>
         </li>
-        <li id="btn-starred"><a style="padding-left: 5px; padding-right: 5px" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
+        <li id="btn-starred"><a style="padding-left: 5px; padding-right: 5px" title="字詞紀錄簿" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
         <li id="gcse"><span class="lang-a-only">
             <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
             <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
@@ -85,6 +85,60 @@
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
       <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
+    </div>
+    <div id="user-pref">
+      <h4>偏好設定</h4>
+      <button type="button" aria-hidden="true" class="close">&times;</button>
+      <ul>
+        <li class="btn-group">
+          <label>條目注音顯示方式</label>
+          <button type="button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">直角共同顯示 <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="active">直角共同顯示</a></li>
+            <li><a href="#">只顯示注音符號<small>（方言音）</small></a></li>
+            <li><a href="#">只顯示羅馬拼音</a></li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="#">置於條目名稱下方</a></li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="#">關閉</a></li>
+          </ul>
+        </li>
+        <li class="btn-group">
+          <label>客語注音</label>
+          <button type="button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">預設 <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="active">預設</a></li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="#">四縣</a></li>
+            <li><a href="#">海陸</a></li>
+            <li><a href="#">大埔</a></li>
+            <li><a href="#">饒平</a></li>
+            <li><a href="#">詔安</a></li>
+          </ul>
+        </li>
+        <li class="btn-group">
+          <label>字詞查閱紀錄</label>
+          <button type="button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">50筆 <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="active">50筆</a></li>
+            <li><a href="#">30筆</a></li>
+            <li><a href="#">15筆</a></li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="#">關閉<small>（將清除所有紀錄）</small></a></li>
+          </ul>
+        </li>
+        <li class="btn-group">
+          <label>搜尋「簡<span class="fa icon-long-arrow-right"></span>繁」轉換</label>
+          <button type="button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">避開通同字及異體字 <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="active">避開通同字及異體字</a></li>
+            <li><a href="#">完全轉換</a></li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="#">關閉</a></li>
+          </ul>
+        </li>
+      </ul>
+      <button type="button" class="btn btn-primary btn-block">關閉</button>
     </div><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
     <div id="moe" style="display: none"></div>
     <!--if !IE-->
