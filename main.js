@@ -1405,11 +1405,13 @@
   };
   alter_input = function(ev){
     var char, offset, txt, newtxt;
+    if (LANG !== 't') {
+      return;
+    }
     char = convert_zhuyin(ev.keyCode);
     ev.preventDefault();
     offset = $('#query')[0].selectionStart;
     offset == null && (offset = 1);
-    console.log(offset);
     txt = $('#query').val();
     newtxt = txt.substring(0, offset) + char + txt.substring(offset, txt.length);
     $('#query').val(newtxt);
@@ -1429,21 +1431,21 @@
     case 36:
       return "＄";
     case 37:
-      return "％";
+      return "%";
     case 94:
       return "︿";
     case 38:
       return "＆";
     case 42:
-      return "＊";
+      return "*";
     case 40:
-      return "（";
+      return "(";
     case 41:
-      return "）";
+      return ")";
     case 95:
-      return "—";
+      return "_";
     case 43:
-      return "＋";
+      return "+";
     case 96:
       return "⋯";
     case 49:
@@ -1491,9 +1493,9 @@
     case 80:
       return "p";
     case 123:
-      return "『";
+      return "{";
     case 125:
-      return "』";
+      return "}";
     case 113:
       return "ㄆ";
     case 119:
@@ -1515,9 +1517,9 @@
     case 112:
       return "ㄣ";
     case 91:
-      return "「";
+      return "[";
     case 93:
-      return "」";
+      return "]";
     case 65:
       return "a";
     case 83:
@@ -1581,7 +1583,7 @@
     case 62:
       return "。";
     case 63:
-      return "？";
+      return "?";
     case 122:
       return "ㄈ";
     case 120:

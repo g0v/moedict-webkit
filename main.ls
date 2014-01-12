@@ -255,7 +255,6 @@ window.do-load = ->
   init = ->
     # input zhuyin if taigi
     $ \#query .keypress alter_input
-    
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
     $ \#query .on \click ->
@@ -785,11 +784,12 @@ zhuyin_lookup = (term,cb) ->
 
 
 alter_input = (ev) ->
+      return unless LANG is \t
       char = convert_zhuyin ev.keyCode
       ev.preventDefault!
       offset = ($ \#query )[0].selectionStart 
       offset ? offset = 1
-      console.log offset 
+      #console.log offset 
       txt = $ \#query .val!
       newtxt = txt.substring(0,offset) + char + txt.substring(offset,txt.length)
       $ \#query .val newtxt
@@ -806,14 +806,14 @@ convert_zhuyin = (chr) ->
       | 64 => "＠"
       | 35 => "＃"
       | 36 => "＄"
-      | 37 => "％"
+      | 37 => "%"
       | 94 => "︿"
       | 38 => "＆"
-      | 42 => "＊"
-      | 40 => "（"
-      | 41 => "）"
-      | 95 => "—"
-      | 43 => "＋"
+      | 42 => "*"
+      | 40 => "("
+      | 41 => ")"
+      | 95 => "_"
+      | 43 => "+"
       | 96 => "⋯"
       | 49 => "ㄅ"
       | 50 => "ㄉ"
@@ -837,8 +837,8 @@ convert_zhuyin = (chr) ->
       | 73 => "i"
       | 79 => "o"
       | 80 => "p"
-      | 123 => "『"
-      | 125 => "』"
+      | 123 => "{"
+      | 125 => "}"
       | 113 => "ㄆ"
       | 119 => "ㄊ"
       | 101 => "ㄍ"
@@ -849,8 +849,8 @@ convert_zhuyin = (chr) ->
       | 105 => "ㄛ"
       | 111 => "ㄟ"
       | 112 => "ㄣ"
-      | 91 => "「"
-      | 93 => "」"
+      | 91 => "["
+      | 93 => "]"
       | 65 => "a"
       | 83 => "s"
       | 68 => "d"
@@ -882,7 +882,7 @@ convert_zhuyin = (chr) ->
       | 77 => "m"
       | 60 => "，"
       | 62 => "。"
-      | 63 => "？"
+      | 63 => "?"
       | 122 => "ㄈ"
       | 120 => "ㄌ"
       | 99 => "ㄏ"
