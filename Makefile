@@ -1,5 +1,5 @@
 run ::
-	node ./static-here.js 8888 | lsc -cw main.ls server.ls | jade -Pw *.jade | compass watch
+	node ./static-here.js 8888 | lsc -dcw main.ls server.ls | jade -Pw *.jade | compass watch
 	#sass --watch sass:.
 
 upload ::
