@@ -155,7 +155,7 @@ require(\zappajs) ->
     LANG = 'a'
     LANG = SYM-OF[@text.slice(0, 1)] if @text is /^['!~:]/
 
-    html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant', manifest:"manifest.appcache"} -> head ->
+    html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant'} -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
