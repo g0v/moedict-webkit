@@ -1485,14 +1485,17 @@
       }
       terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>") + "</ul></div>";
     }
-    if (/^";/.exec(terms)) {
-      terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
-      terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
-    }
     if (id === '字詞紀錄簿' && LRU[LANG]) {
       terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>';
       terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>");
       terms += "</ul></div>";
+    }
+    if (/^";/.exec(terms)) {
+      terms = "<table><tr><th><span class='part-of-speech'>臺</span></th><th><span class='part-of-speech'>陸</span></th></tr>" + terms + "</table>";
+      terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
+    }
+    if (/^"/.exec(terms)) {
+      terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>") + '</ul>';
     }
     return title + "<div class='list'>" + terms + "</div>";
   }

@@ -835,13 +835,20 @@ function render-list (terms, id)
     title = $ \#starred-record .html!
     terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>" unless terms
     terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + "</ul></div>"
-  if terms is /^";/
-    terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
-    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
+
   if id is \字詞紀錄簿 and LRU[LANG]
     terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>'
     terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>")
     terms += "</ul></div>"
+
+  # 兩岸詞典・同實異名列表
+  if terms is /^";/
+    terms = "<table><tr><th><span class='part-of-speech'>臺</span></th><th><span class='part-of-speech'>陸</span></th></tr>#terms</table>"
+    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
+
+  # 一般列表
+  if terms is /^"/
+    terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + '</ul>'
   return "#title<div class='list'>#terms</div>"
 
 http-map =
