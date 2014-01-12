@@ -253,6 +253,9 @@ window.do-load = ->
     callLater -> navigator.app.exit-app!
 
   init = ->
+    # input zhuyin if taigi
+    $ \#query .keypress alter_input
+    
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
     $ \#query .on \focus -> @select!
     $ \#query .on \click ->
@@ -729,6 +732,7 @@ function init-autocomplete
       $('iframe').fadeOut \fast
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
+      return zhuyin_lookup(term, cb) unless LANG isnt \t or term is /[^\u3100-\u312D]/ or term is /[,;0-9]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -774,6 +778,124 @@ function init-autocomplete
       #return cb ((results.join(',') - /"/g) / ',')
 
 trs_lookup = (term,cb) -> GET("https://www.moedict.tw/lookup/trs/#{term}",((data)-> cb (data / '|' )) )
+
+zhuyin_lookup = (term,cb) ->
+      console.log("looking for #{term} as TRS")
+      GET("http://su-lip.magistry.fr/lookup/zhuyin/#{term}",((data)-> cb (data / '|' )) )
+
+
+alter_input = (ev) ->
+      char = convert_zhuyin ev.keyCode
+      ev.preventDefault!
+      offset = ($ \#query )[0].selectionStart 
+      offset ? offset = 1
+      console.log offset 
+      txt = $ \#query .val!
+      newtxt = txt.substring(0,offset) + char + txt.substring(offset,txt.length)
+      $ \#query .val newtxt
+      ($ \#query )[0].selectionStart = offset + 1
+      ($ \#query )[0].selectionEnd = offset + 1
+
+
+
+
+convert_zhuyin = (chr) ->
+      switch chr 
+      | 126 => "～"
+      | 33 => "！"
+      | 64 => "＠"
+      | 35 => "＃"
+      | 36 => "＄"
+      | 37 => "％"
+      | 94 => "︿"
+      | 38 => "＆"
+      | 42 => "＊"
+      | 40 => "（"
+      | 41 => "）"
+      | 95 => "—"
+      | 43 => "＋"
+      | 96 => "⋯"
+      | 49 => "ㄅ"
+      | 50 => "ㄉ"
+      | 51 => "ˇ"
+      | 52 => "ˋ"
+      | 53 => "ㄓ"
+      | 54 => "ˊ"
+      | 55 => "˙"
+      | 56 => "ㄚ"
+      | 57 => "ㄞ"
+      | 48 => "ㄢ"
+      | 45 => "ㄦ"
+      | 61 => "＝"
+      | 81 => "q"
+      | 87 => "w"
+      | 69 => "e"
+      | 82 => "r"
+      | 84 => "t"
+      | 89 => "y"
+      | 85 => "u"
+      | 73 => "i"
+      | 79 => "o"
+      | 80 => "p"
+      | 123 => "『"
+      | 125 => "』"
+      | 113 => "ㄆ"
+      | 119 => "ㄊ"
+      | 101 => "ㄍ"
+      | 114 => "ㄐ"
+      | 116 => "ㄔ"
+      | 121 => "ㄗ"
+      | 117 => "ㄧ"
+      | 105 => "ㄛ"
+      | 111 => "ㄟ"
+      | 112 => "ㄣ"
+      | 91 => "「"
+      | 93 => "」"
+      | 65 => "a"
+      | 83 => "s"
+      | 68 => "d"
+      | 70 => "f"
+      | 71 => "g"
+      | 72 => "h"
+      | 74 => "j"
+      | 75 => "k"
+      | 76 => "l"
+      | 58 => "："
+      | 34 => "；"
+      | 97 => "ㄇ"
+      | 115 => "ㄋ"
+      | 100 => "ㄎ"
+      | 102 => "ㄑ"
+      | 103 => "ㄕ"
+      | 104 => "ㄘ"
+      | 106 => "ㄨ"
+      | 107 => "ㄜ"
+      | 108 => "ㄠ"
+      | 59 => "ㄤ"
+      | 39 => "、"
+      | 90 => "z"
+      | 88 => "x"
+      | 67 => "c"
+      | 86 => "v"
+      | 66 => "b"
+      | 78 => "n"
+      | 77 => "m"
+      | 60 => "，"
+      | 62 => "。"
+      | 63 => "？"
+      | 122 => "ㄈ"
+      | 120 => "ㄌ"
+      | 99 => "ㄏ"
+      | 118 => "ㄒ"
+      | 98 => "ㄖ"
+      | 110 => "ㄙ"
+      | 109 => "ㄩ"
+      | 44 => "ㄝ"
+      | 46 => "ㄡ"
+      | 47 => "ㄥ"
+      | 32 => " "
+      | 13 => ""
+      | otherwhise => ""
 
 
 const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉儿⼊入⼋八⼌冂⼍冖⼎冫⼏几⼐凵⼑刀⼒力⼓勹⼔匕⼕匚⼖匸⼗十⼘卜⼙卩⼚厂⼛厶⼜又⼝口⼞囗⼟土⼠士⼡夂⼢夊⼣夕⼤大⼥女⼦子⼧宀⼨寸⼩小⼪尢⼫尸⼬屮⼭山⼮巛⼯工⼰己⼱巾⼲干⼳幺⼴广⼵廴⼶廾⼷弋⼸弓⼹彐⼺彡⼻彳⼼心⼽戈⼾戶⼿手⽀支⽁攴⽂文⽃斗⽄斤⽅方⽆无⽇日⽈曰⽉月⽊木⽋欠⽌止⽍歹⽎殳⽏毋⽐比⽑毛⽒氏⽓气⽔水⽕火⽖爪⽗父⽘爻⽙爿⺦丬⽚片⽛牙⽜牛⽝犬⽞玄⽟玉⽠瓜⽡瓦⽢甘⽣生⽤用⽥田⽦疋⽧疒⽨癶⽩白⽪皮⽫皿⽬目⽭矛⽮矢⽯石⽰示⽱禸⽲禾⽳穴⽴立⽵竹⽶米⽷糸⺰纟⽸缶⽹网⽺羊⽻羽⽼老⽽而⽾耒⽿耳⾀聿⾁肉⾂臣⾃自⾄至⾅臼⾆舌⾇舛⾈舟⾉艮⾊色⾋艸⾌虍⾍虫⾎血⾏行⾐衣⾑襾⾒見⻅见⾓角⾔言⻈讠⾕谷⾖豆⾗豕⾘豸⾙貝⻉贝⾚赤⾛走⾜足⾝身⾞車⻋车⾟辛⾠辰⾡辵⻌辶⾢邑⾣酉⾤釆⾥里⾦金⻐钅⾧長⻓长⾨門⻔门⾩阜⾪隶⾫隹⾬雨⾭靑⾮非⾯面⾰革⾱韋⻙韦⾲韭⾳音⾴頁⻚页⾵風⻛风⾶飛⻜飞⾷食⻠饣⾸首⾹香⾺馬⻢马⾻骨⾼高⾽髟⾾鬥⾿鬯⿀鬲⿁鬼⿂魚⻥鱼⻦鸟⿃鳥⿄鹵⻧卤⿅鹿⿆麥⻨麦⿇麻⿈黃⻩黄⿉黍⿊黑⿋黹⿌黽⻪黾⿍鼎⿎鼓⿏鼠⿐鼻⿑齊⻬齐⿒齒⻮齿⿓龍⻰龙⿔龜⻳龟⿕龠'
