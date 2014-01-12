@@ -53,6 +53,7 @@ js/gl-matrix-min.js
 js/sax.js
 js/jquery.strokeWords.js
 js/raphael.js
+js/prelude-browser-min.js
 
 # image files
 images/leather.jpg

@@ -1,6 +1,8 @@
 const DEBUGGING = off
 const STANDALONE = false
 
+{map} = require('prelude-ls')
+
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
