@@ -276,12 +276,34 @@ window.do-load = ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
       return false
 
-    $ \body .on \click '#btn-starred' ->
+    $ \body 
+    .on \click '#btn-starred' ->
       if $(\#query).val! is '=*'
         window.press-back!
       else
         grok-val("#{HASH-OF[LANG]}=*" - /^#/)
       return false
+
+    .on \click '#btn-pref' (e) ->
+      e.preventDefault!
+      $ \#user-pref .slideToggle!
+
+    .on \click '#user-pref .btn-close' ->
+      $ \#user-pref .slideUp!
+
+    .on \click 'a\[for="starred-record--history"\]' ->
+      $ '.result nav li.active' .removeClass \active
+      $ this .parent \li .addClass \active
+      $ \.starred-record--fav .hide!
+      $ \.starred-record--history .show!
+
+    .on \click 'a\[for="starred-record--fav"\]' ->
+      $ '.result nav li.active' .removeClass \active
+      $ this .parent \li .addClass \active
+      $ \.starred-record--fav .show!
+      $ \.starred-record--history .hide!
+
+
 
     unless \onhashchange of window
       $ \body .on \click \a ->
@@ -1249,19 +1271,3 @@ function getScript (src, cb)
     cache: yes
     crossDomain: yes
     complete: cb
-
-
-$ document .on \ready ->
-  $ \.result
-  .on \click 'a\[for="starred-record--history"\]' ->
-    $ '.result nav li.active' .removeClass \active
-    $ this .parent \li .addClass \active
-    $ \.starred-record--fav .hide!
-    $ \.starred-record--history .show!
-  .on \click 'a\[for="starred-record--fav"\]' ->
-    $ '.result nav li.active' .removeClass \active
-    $ this .parent \li .addClass \active
-    $ \.starred-record--fav .show!
-    $ \.starred-record--history .hide!
-
-

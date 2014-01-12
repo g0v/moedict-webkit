@@ -10275,10 +10275,22 @@ img.back {
   display: none !important;
 }
 
+#btn-starred {
+  margin-left: -0.5em !important;
+}
+
+#btn-pref {
+  margin-left: -1.5em !important;
+}
+#btn-pref a {
+  margin-top: -1px !important;
+}
+
 #user-pref {
   position: fixed;
   top: 45px;
   z-index: 110;
+  display: none;
   height: 100%;
   width: 260px;
   padding: 0.25em 1em;

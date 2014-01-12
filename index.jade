@@ -51,8 +51,11 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             li(role='presentation')
               a.lang-option.c.c-idiom(href='#~@') …部首表
         li#btn-starred
-          a(style='padding-left: 5px; padding-right: 5px', title='字詞紀錄簿', href='#=*')
+          a(title='字詞紀錄簿', href='#=*')
             i.icon-bookmark-empty
+        li#btn-pref
+          a(title='偏好設定', href='#')
+            i.icon-cogs
         li#gcse
           span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
           span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
@@ -130,7 +133,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         a.twitter-timeline(data-chrome='transparent noheader',data-lang='zh-TW',href="https://twitter.com/moedict",data-widget-id="410481400710578176")
     #user-pref()
       h4 偏好設定
-      button.close(type="button" aria-hidden="true") &times;
+      button.close.btn-close(type="button" aria-hidden="true") &times;
       ul
         li.btn-group
           label 條目注音顯示方式
@@ -225,7 +228,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             li.divider(role="presentation")
             li
               a(href="#") 關閉
-      button.btn.btn-primary.btn-block(type="button") 關閉
+      button.btn.btn-primary.btn-block.btn-close(type="button") 關閉
     a.back-box.app-only(href='#', onclick='pressBack(); return false')
       i.icon-chevron-left(style='color: #6B0000')
     a.erase-box.mobile-only(href='#', onclick='pressErase(); return false')
