@@ -1296,7 +1296,7 @@
         if (!term.length) {
           return cb([]);
         }
-        if (!(/[^\u0000-\u00FF]/.exec(term) || (LANG !== 't' && /[-,;0-9]/.exec(term)))) {
+        if (!(LANG !== 't' || /[^\u0000-\u00FF]/.exec(term) || /[,;0-9]/.exec(term))) {
           return trs_lookup(term, cb);
         }
         if (widthIsXs() && !/[「」。，?.*_% ]/.test(term)) {
