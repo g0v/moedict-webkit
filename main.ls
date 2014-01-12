@@ -832,15 +832,16 @@ function render-list (terms, id)
   title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿
-    terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）" unless terms
+    title = $ \#starred-record .html!
+    terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>" unless terms
+    terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + "</ul></div>"
   if terms is /^";/
     terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
     terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
-  else
-    terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   if id is \字詞紀錄簿 and LRU[LANG]
-    terms += "<br><h3>最近查閱過的字詞</h3>\n"
-    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
+    terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>'
+    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>")
+    terms += "</ul></div>"
   return "#title<div class='list'>#terms</div>"
 
 http-map =

@@ -1479,19 +1479,20 @@
     title = "<h1 itemprop='name'>" + id + "</h1>";
     terms = replace$.call(terms, /^[^"]*/, '');
     if (id === '字詞紀錄簿') {
+      title = $('#starred-record').html();
       if (!terms) {
-        terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）";
+        terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>";
       }
+      terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>") + "</ul></div>";
     }
     if (/^";/.exec(terms)) {
       terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
       terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
-    } else {
-      terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     }
     if (id === '字詞紀錄簿' && LRU[LANG]) {
-      terms += "<br><h3>最近查閱過的字詞</h3>\n";
-      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
+      terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>';
+      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>");
+      terms += "</ul></div>";
     }
     return title + "<div class='list'>" + terms + "</div>";
   }

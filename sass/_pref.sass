@@ -75,8 +75,34 @@
 		padding-left: .75em // !!!
 
 
+.starred-record--header
+	display: none
 
+	+ nav
+		margin-top: 1.5em
 
+		a:hover
+			outline: 0
+
+	~ div
+		// box
+		padding: 1.25em .5em 1em
+		// style
+		border: 1px solid #ddd
+		border-top: 0
+
+		h3
+			display: none
+		ul
+			list-style: square
+
+			.starred-record--none-msg
+				list-style: none
+				margin-left: -2em
+				color: #666
+
+				span.fa
+					color: #965
 
 
 
