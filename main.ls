@@ -107,7 +107,7 @@ try
 catch
   <- $
   $ \#F9868 .html '&#xF9868;'
-  $ \#loading .text \載入中，請稍候…
+  $ \#loading .text \載入中，請稍候……
   if document.URL is /^http:\/\/(?:www.)?moedict.tw/i
     url = "https://www.moedict.tw/"
     url += location.hash if location.hash is /^#./
