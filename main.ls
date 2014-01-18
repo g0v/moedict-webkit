@@ -1,5 +1,5 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/
-const DEBUGGING = (!isCordova and !!window.cordova?require) or yes
+const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
 {map} = require('prelude-ls')
@@ -15,7 +15,7 @@ const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
 
 HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 
-if isCordova
+if isCordova or DEBUGGING
   if STANDALONE
     HASH-OF = {"#STANDALONE": HASH-OF[STANDALONE]}
   else
@@ -47,7 +47,7 @@ XREF = {
   tv: {t: ''}
 }
 
-if isCordova
+if isCordova and STANDALONE isnt \c
   delete HASH-OF.c
   delete INDEX.c
   $ -> $('.nav .c').remove!
@@ -659,12 +659,14 @@ window.do-load = ->
     for lang in HASH-OF | lang isnt LANG => let lang
       GET "#lang/xref.json", (-> XREF[lang] = it), \text
 
-  GET "t/variants.json", (-> XREF.tv = {t: it}), \text
+  unless STANDALONE
+    GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang of HASH-OF | lang isnt \h => let lang
     GET "#lang/=.json", (->
       $ul = render-taxonomy lang, $.parseJSON it
       if STANDALONE
+        $('.nav .lang-option.c:first').parent!prevAll!remove!
         return $(".taxonomy.#lang").parent!replaceWith $ul.children!
       $(".taxonomy.#lang").after $ul
     ), \text
@@ -831,9 +833,11 @@ function render-list (terms, id)
   terms -= /^[^"]*/
   if id is \字詞紀錄簿
     terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）" unless terms
-  terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>" if terms is /^";/
-  terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
-  terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
+  if terms is /^";/
+    terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
+    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
+  else
+    terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   if id is \字詞紀錄簿 and LRU[LANG]
     terms += "<br><h3>最近查閱過的字詞</h3>\n"
     terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")

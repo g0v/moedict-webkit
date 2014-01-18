@@ -2,7 +2,7 @@
 (function(){
   var isCordova, DEBUGGING, ref$, STANDALONE, map, LANG, MOEID, XREFLABELOF, TITLEOF, HASHOF, STARRED, res$, key, LRU, isQuery, isDroidGap, isDeviceReady, isMobile, isApp, isWebKit, isGecko, isChrome, widthIsXs, entryHistory, INDEX, XREF, CACHED, addToLru, GET, e, playing, player, seq, getEl, callLater, MOE, trs_lookup, CJKRADICALS, SIMPTRAD, httpMap, Consonants, Vowels, Tones, re, C, V, LoadedScripts, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
   window.isCordova = isCordova = !/^https?:/.test(document.URL);
-  DEBUGGING = (!isCordova && !!((ref$ = window.cordova) != null && ref$.require)) || true;
+  DEBUGGING = !isCordova && !!((ref$ = window.cordova) != null && ref$.require);
   STANDALONE = window.STANDALONE || false;
   map = require('prelude-ls').map;
   LANG = STANDALONE || getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
@@ -35,7 +35,7 @@
     h: '#:',
     c: '#~'
   };
-  if (isCordova) {
+  if (isCordova || DEBUGGING) {
     if (STANDALONE) {
       HASHOF = (ref$ = {}, ref$[STANDALONE + ""] = HASHOF[STANDALONE], ref$);
     } else {
@@ -100,7 +100,7 @@
       t: ''
     }
   };
-  if (isCordova) {
+  if (isCordova && STANDALONE !== 'c') {
     delete HASHOF.c;
     delete INDEX.c;
     $(function(){
@@ -1152,11 +1152,13 @@
         }
       }
     }
-    GET("t/variants.json", function(it){
-      return XREF.tv = {
-        t: it
-      };
-    }, 'text');
+    if (!STANDALONE) {
+      GET("t/variants.json", function(it){
+        return XREF.tv = {
+          t: it
+        };
+      }, 'text');
+    }
     for (lang in HASHOF) {
       if (lang !== 'h') {
         results$.push((fn2$.call(this, lang)));
@@ -1189,6 +1191,7 @@
         var $ul;
         $ul = renderTaxonomy(lang, $.parseJSON(it));
         if (STANDALONE) {
+          $('.nav .lang-option.c:first').parent().prevAll().remove();
           return $(".taxonomy." + lang).parent().replaceWith($ul.children());
         }
         return $(".taxonomy." + lang).after($ul);
@@ -1482,9 +1485,10 @@
     }
     if (/^";/.exec(terms)) {
       terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
+      terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
+    } else {
+      terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     }
-    terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
-    terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     if (id === '字詞紀錄簿' && LRU[LANG]) {
       terms += "<br><h3>最近查閱過的字詞</h3>\n";
       terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");

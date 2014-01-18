@@ -19,6 +19,10 @@ body li#gcse {
     right: 120px;
 }
 
+body.web li#gcse {
+    right: 190px;
+}
+
 @media only screen and (max-width: 767px) {
     body li#gcse {
         top: 0;
