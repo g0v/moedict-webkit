@@ -180,7 +180,7 @@ window.do-load = ->
   $('body').addClass \desktop unless isMobile or isApp
   $('body').addClass \android if isDroidGap
 
-  unless isCordova
+  unless STANDALONE and isDroidGap
     <- setTimeout _, 1ms
     cx = '007966820757635393756:sasf0rnevk4';
     gcse = document.createElement('script')

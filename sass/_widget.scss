@@ -28,6 +28,11 @@ body li#gcse {
         }
     }
 }
+@media only screen and (max-width: 360px) {
+    body.cordova li#gcse > span {
+        width: 64px;
+    }
+}
 #gcse > span {
     display: inline-block;
     height: 24px;

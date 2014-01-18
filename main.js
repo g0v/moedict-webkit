@@ -353,7 +353,7 @@
     if (isDroidGap) {
       $('body').addClass('android');
     }
-    if (!isCordova) {
+    if (!(STANDALONE && isDroidGap)) {
       setTimeout(function(){
         var cx, gcse, s, pollGsc;
         cx = '007966820757635393756:sasf0rnevk4';
