@@ -1,5 +1,6 @@
-const DEBUGGING = off
-const STANDALONE = false
+window.isCordova = isCordova = document.URL isnt /^https?:/
+const DEBUGGING = (!isCordova and !!window.cordova?require)
+const STANDALONE = window.STANDALONE || false
 
 {map} = require('prelude-ls')
 
@@ -9,14 +10,20 @@ $ ->
   $('body').addClass("lang-#LANG")
   $('.lang-active').text $(".lang-option.#LANG:first").text!
 
-const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
+
+HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
+
+if isCordova
+  if STANDALONE
+    HASH-OF = {"#STANDALONE": HASH-OF[STANDALONE]}
+  else
+    delete HASH-OF.c
 
 STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 LRU = {[key, getPref("lru-#key") || ""] for key of HASH-OF}
 
-window.isCordova = isCordova = document.URL isnt /^https?:/
 isQuery = location.search is /^\?q=/
 if location.search is /\?_escaped_fragment_=(.+)/
   isQuery = true
@@ -64,6 +71,14 @@ function xref-of (id, src-lang=LANG)
   return rv
 
 CACHED = {}
+add-to-lru = ->
+  key = "\"#it\"\n"
+  LRU[LANG] = key + (LRU[LANG] -= "#key")
+  lru = LRU[LANG] / '\n'
+  if lru.length > 50
+    rmPref "GET #LANG/#{encodeURIComponent(lru.pop!slice(1, -1))}.json" unless isCordova
+    LRU[LANG] = (lru * '\n') + '\n'
+  setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
@@ -71,13 +86,7 @@ GET = (url, data, onSuccess, dataType) ->
   dataType ?= \text
   success = ->
     if url is /^[a-z]\/([^-a-z@=].+)\.json$/
-      key = "\"#{ decodeURIComponent RegExp.$1 }\"\n"
-      LRU[LANG] = key + (LRU[LANG] -= "#key")
-      lru = LRU[LANG] / '\n'
-      if lru.length > 50
-        rmPref "GET #LANG/#{encodeURIComponent(lru.pop!slice(1, -1))}.json" unless isCordova
-        LRU[LANG] = (lru * '\n') + '\n'
-      setPref "lru-#LANG" LRU[LANG]
+      add-to-lru decodeURIComponent RegExp.$1
       setPref "GET #url" it unless isCordova
     onSuccess(CACHED[url] = it)
   error = -> onSuccess(CACHED[url] = that) if getPref "GET #url"
@@ -634,6 +643,7 @@ window.do-load = ->
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
     part = part.slice(0, idx)
+    add-to-lru id
     fill-json part, id, cb
 
   if isCordova
