@@ -140,18 +140,13 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
            | 直角共同顯示 <span class="caret"></span>
           ul.dropdown-menu
-            li
-              a.active(href="#") 直角共同顯示
-            li 
-              a(href="#") 只顯示注音符號<small>（方言音）</small>
-            li 
-              a(href="#") 只顯示羅馬拼音
+            li: a.active(href="#") 直角共同顯示
+            li: a(href="#") 只顯示注音符號<small>（方言音）</small>
+            li: a(href="#") 只顯示羅馬拼音
             li.divider(role="presentation")
-            li 
-              a(href="#") 置於條目名稱下方
+            li: a(href="#") 置於條目名稱下方
             li.divider(role="presentation")
-            li 
-              a(href="#") 關閉
+            li: a(href="#") 關閉
         li
           button.btn.btn-info.btn-xs(type="button") 拼注音進階選項
         li.btn-group.option-romanization
@@ -159,27 +154,20 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
            | 漢語拼音 <span class="caret"></span>
           ul.dropdown-menu
-            li
-              a.active(href="#") 漢語拼音
+            li: a.active(href="#") 漢語拼音
             li.divider(role="presentation")
-            li
-              a(href="#") 威妥瑪拼音
-            li 
-              a(href="#") 國音二式
-            li 
-              a(href="#") 通用拼音
+            li: a(href="#") 威妥瑪拼音
+            li: a(href="#") 國音二式
+            li: a(href="#") 通用拼音
         li.btn-group.option-romanization
           label 閩南語拼音
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
            | 臺灣閩南語羅馬字 <span class="caret"></span>
           ul.dropdown-menu
-            li
-              a.active(href="#") 臺灣閩南語羅馬字
+            li: a.active(href="#") 臺灣閩南語羅馬字
             li.divider(role="presentation")
-            li
-              a(href="#") 白話字
-            li 
-              a(href="#") 通用拼音
+            li: a(href="#") 白話字
+            li: a(href="#") 通用拼音
         li.btn-group.option-romanization
           label 客語發音
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
@@ -188,30 +176,21 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
             li
               a.active(href="#") 預設<small>（全部顯示）</small>
             li.divider(role="presentation")
-            li
-              a(href="#") 四縣
-            li 
-              a(href="#") 海陸
-            li 
-              a(href="#") 大埔
-            li 
-              a(href="#") 饒平
-            li 
-              a(href="#") 詔安
+            li: a(href="#") 四縣
+            li: a(href="#") 海陸
+            li: a(href="#") 大埔
+            li: a(href="#") 饒平
+            li: a(href="#") 詔安
         li.btn-group
           label 字詞查閱紀錄
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
            | 50筆 <span class="caret"></span>
           ul.dropdown-menu
-            li
-              a.active(href="#") 50筆
-            li
-              a(href="#") 30筆
-            li
-              a(href="#") 15筆
+            li: a.active(href="#") 50筆
+            li: a(href="#") 30筆
+            li: a(href="#") 15筆
             li.divider(role="presentation")
-            li
-              a(href="#") 關閉<small>（將清除所有紀錄）</small>
+            li: a(href="#") 關閉<small>（將清除所有紀錄）</small>
           button.btn.btn-danger.btn-sm(type="button") 清除
         li.btn-group
           label
@@ -221,13 +200,10 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
             | 避開通同字及異體字 <span class="caret"></span>
           ul.dropdown-menu
-            li
-              a.active(href="#") 避開通同字及異體字
-            li
-              a(href="#") 完全轉換
+            li: a.active(href="#") 避開通同字及異體字
+            li: a(href="#") 完全轉換
             li.divider(role="presentation")
-            li
-              a(href="#") 關閉
+            li: a(href="#") 關閉
       button.btn.btn-primary.btn-block.btn-close(type="button") 關閉
     a.back-box.app-only(href='#', onclick='pressBack(); return false')
       i.icon-chevron-left(style='color: #6B0000')
