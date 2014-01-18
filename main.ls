@@ -1,5 +1,5 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/
-const DEBUGGING = (!isCordova and !!window.cordova?require)
+const DEBUGGING = (!isCordova and !!window.cordova?require) or yes
 const STANDALONE = window.STANDALONE || false
 
 {map} = require('prelude-ls')

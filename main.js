@@ -2,7 +2,7 @@
 (function(){
   var isCordova, DEBUGGING, ref$, STANDALONE, map, LANG, MOEID, XREFLABELOF, TITLEOF, HASHOF, STARRED, res$, key, LRU, isQuery, isDroidGap, isDeviceReady, isMobile, isApp, isWebKit, isGecko, isChrome, widthIsXs, entryHistory, INDEX, XREF, CACHED, addToLru, GET, e, playing, player, seq, getEl, callLater, MOE, trs_lookup, CJKRADICALS, SIMPTRAD, httpMap, Consonants, Vowels, Tones, re, C, V, LoadedScripts, split$ = ''.split, replace$ = ''.replace, join$ = [].join, slice$ = [].slice;
   window.isCordova = isCordova = !/^https?:/.test(document.URL);
-  DEBUGGING = !isCordova && !!((ref$ = window.cordova) != null && ref$.require);
+  DEBUGGING = (!isCordova && !!((ref$ = window.cordova) != null && ref$.require)) || true;
   STANDALONE = window.STANDALONE || false;
   map = require('prelude-ls').map;
   LANG = STANDALONE || getPref('lang') || (/twblg/.exec(document.URL) ? 't' : 'a');
