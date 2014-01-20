@@ -804,7 +804,8 @@ function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
   char = CJK-RADICALS[idx+1] unless idx % 2
   return char unless LANG in <[ a c ]>
-  return "<a title='部首檢索' class='xref' style='color: white' href=\"\#@#char\"> #char</a>"
+  h = HASH-OF[LANG]
+  return "<a title='部首檢索' class='xref' style='color: white' href=\"#h@#char\"> #char</a>"
 
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?

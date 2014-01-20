@@ -1425,7 +1425,7 @@
     return rv.replace(/台([北中南東灣語])/g, '臺$1');
   }
   function renderRadical(char){
-    var idx;
+    var idx, h;
     idx = CJKRADICALS.indexOf(char);
     if (!(idx % 2)) {
       char = CJKRADICALS[idx + 1];
@@ -1433,7 +1433,8 @@
     if (LANG !== 'a' && LANG !== 'c') {
       return char;
     }
-    return "<a title='部首檢索' class='xref' style='color: white' href=\"#@" + char + "\"> " + char + "</a>";
+    h = HASHOF[LANG];
+    return "<a title='部首檢索' class='xref' style='color: white' href=\"" + h + "@" + char + "\"> " + char + "</a>";
   }
   function canPlayMp3(){
     var a;
