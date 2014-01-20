@@ -493,8 +493,9 @@
         return $(this).css('position', 'fixed');
       });
       if (isApp) {
-        $('body').on('click', '#gcse a.gs-title', function(){
+        $('body').on('click', '#gcse a.gs-title', function(it){
           var val, url;
+          it.preventDefault();
           val = $('#gcse input:visible').val();
           url = $(this).data('ctorig') || replace$.call($(this).attr('href'), /^.*?q=/, '').replace(/&.*$/, '');
           setTimeout(function(){
@@ -1429,7 +1430,7 @@
     if (!(idx % 2)) {
       char = CJKRADICALS[idx + 1];
     }
-    if (LANG !== 'a') {
+    if (LANG !== 'a' && LANG !== 'c') {
       return char;
     }
     return "<a title='部首檢索' class='xref' style='color: white' href=\"#@" + char + "\"> " + char + "</a>";

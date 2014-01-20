@@ -273,6 +273,7 @@ window.do-load = ->
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
     if isApp => $ \body .on \click '#gcse a.gs-title' ->
+      it.preventDefault!
       val = $('#gcse input:visible').val!
       url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
       setTimeout (->
@@ -802,7 +803,7 @@ function b2g (str='')
 function render-radical (char)
   idx = CJK-RADICALS.index-of(char)
   char = CJK-RADICALS[idx+1] unless idx % 2
-  return char unless LANG is \a
+  return char unless LANG in <[ a c ]>
   return "<a title='部首檢索' class='xref' style='color: white' href=\"\#@#char\"> #char</a>"
 
 function can-play-mp3
