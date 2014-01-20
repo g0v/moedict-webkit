@@ -10836,11 +10836,11 @@ body.web li#gcse {
 }
 
 @media only screen and (max-width: 767px) {
-  body li#gcse {
+  body li#gcse, body.web li#gcse {
     top: 0;
     right: 40px;
   }
-  body li#gcse > span {
+  body li#gcse > span, body.web li#gcse > span {
     width: 120px;
   }
 }
