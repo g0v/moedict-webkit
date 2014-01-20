@@ -492,6 +492,19 @@
       $('body').on('hidden.bs.dropdown', '.navbar', function(){
         return $(this).css('position', 'fixed');
       });
+      if (isApp) {
+        $('body').on('click', '#gcse a.gs-title', function(){
+          var val, url;
+          val = $('#gcse input:visible').val();
+          url = $(this).data('ctorig') || replace$.call($(this).attr('href'), /^.*?q=/, '').replace(/&.*$/, '');
+          setTimeout(function(){
+            $('#gcse input:visible').val(val);
+            return grokVal(decodeHash(url = replace$.call(url, /^.*\//, '')));
+          }, 1);
+          $('.gsc-results-close-btn').click();
+          return false;
+        });
+      }
       $('body').on('click', 'li.dropdown-submenu > a', function(){
         if (widthIsXs()) {
           $(this).next('ul').slideToggle('fast');
@@ -581,22 +594,21 @@
       }
       return false;
     };
+    window.decodeHash = function(it){
+      if (/%/.exec(it)) {
+        it = decodeURIComponent(it);
+      }
+      if (/%[A-Fa-f]/.exec(escape(it))) {
+        it = decodeURIComponent(escape(it));
+      }
+      return it;
+    };
     window.grokHash = grokHash = function(){
-      var decode;
       if (!/^#./.test(location.hash)) {
         return false;
       }
-      decode = function(it){
-        if (/%/.exec(it)) {
-          it = decodeURIComponent(it);
-        }
-        if (/%[A-Fa-f]/.exec(escape(it))) {
-          it = decodeURIComponent(escape(it));
-        }
-        return it;
-      };
       try {
-        grokVal(decode((location.hash + "").replace(/^#+/, '')));
+        grokVal(decodeHash((location.hash + "").replace(/^#+/, '')));
         return true;
       } catch (e$) {}
       return false;

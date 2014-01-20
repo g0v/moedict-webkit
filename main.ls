@@ -272,6 +272,16 @@ window.do-load = ->
       $(@).fadeIn 0ms
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
+    if isApp => $ \body .on \click '#gcse a.gs-title' ->
+      val = $('#gcse input:visible').val!
+      url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
+      setTimeout (->
+        $('#gcse input:visible').val val
+        grok-val decode-hash(url -= /^.*\//)
+      ), 1ms
+      $ \.gsc-results-close-btn .click!
+      return false
+
     $ \body .on \click 'li.dropdown-submenu > a' ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
       return false
@@ -326,14 +336,15 @@ window.do-load = ->
     return true if val is prevVal
     return false
 
+  window.decode-hash = ->
+    it = decodeURIComponent it if it is /%/
+    it = decodeURIComponent escape it if escape(it) is /%[A-Fa-f]/
+    return it
+
   window.grok-hash = grok-hash = ->
     return false unless location.hash is /^#./
-    decode = ->
-      it = decodeURIComponent it if it is /%/
-      it = decodeURIComponent escape it if escape(it) is /%[A-Fa-f]/
-      return it
     try
-      grok-val decode("#{location.hash}" - /^#+/)
+      grok-val decode-hash("#{location.hash}" - /^#+/)
       return true
     return false
 
