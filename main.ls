@@ -602,7 +602,7 @@ window.do-load = ->
       html = render-list part, id
     else
       html = render $.parseJSON part
-    html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span>"
+    html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span> "
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
     html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
@@ -1051,8 +1051,12 @@ function render (json)
         }
           <ol>
           #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
-          """
-            <li><p class='definition'>
+          if def is /∥/
+            after-def = "<span style='margin-left: -22px'>#{ h(def - /.*∥/) }</span>"
+            def -= /∥.*/
+          """#{
+            if def is /^\s*\(\d+\)/ then '' else '<li>'
+          }<p class='definition'>
               <span class="def">
               #{
                 (h expand-def def).replace(
@@ -1074,7 +1078,8 @@ function render (json)
                   h((antonyms - /^,/).replace(/,/g '、'))
                 }</span>" else ''
               }
-            </p></li>
+            </p>
+            #{ after-def || '' }
           """
           }
           </ol></div>
@@ -1112,7 +1117,7 @@ function render (json)
     ).replace(
       /\{(\d)\}/g (_, num) -> String.fromCharCode(0x2775 + parseInt num)
     ).replace(
-      /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num)
+      /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num) + ' '
     ).replace(/\(/g, '（').replace(/\)/g, '）')
   function ls (entries=[], cb)
     [cb x for x in entries].join ""
