@@ -922,7 +922,9 @@ function render (json)
       b .= replace /（[語|讀|又]音）[\u200B]?/, ''
       b .= replace /\(變\)​\/.*/, ''
       b .= replace /\/.*/, ''
-      b .= replace /<br>.*/, ''
+      if b is /<br>陸/
+        cn-specific-bpmf = b - /.*<br>陸./
+      b .= replace /<br>(.*)/, ''
       b -= /.\u20DF/g
 
       if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
@@ -948,7 +950,7 @@ function render (json)
 
                  # 國語兒化音
                  else if LANG != \t && yin is /^[^eēéěè].*r$/g
-                 then ' rbspan="2"'
+                 then ((b = (cn-specific-bpmf || b)); ' rbspan="2"')
 
                  # 兩岸詞典，按元音群計算字數
                  else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g

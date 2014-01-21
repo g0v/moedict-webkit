@@ -1574,7 +1574,7 @@
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       ruby = function(){
-        var t, b, ruby, p, i$, len$, yin, span;
+        var t, b, cnSpecificBpmf, ruby, p, i$, len$, yin, span;
         if (LANG === 'h') {
           return;
         }
@@ -1584,7 +1584,10 @@
         b = b.replace(/（[語|讀|又]音）[\u200B]?/, '');
         b = b.replace(/\(變\)​\/.*/, '');
         b = b.replace(/\/.*/, '');
-        b = b.replace(/<br>.*/, '');
+        if (/<br>陸/.exec(b)) {
+          cnSpecificBpmf = replace$.call(b, /.*<br>陸./, '');
+        }
+        b = b.replace(/<br>(.*)/, '');
         b = replace$.call(b, /.\u20DF/g, '');
         if (/^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/.exec(t)) {
           ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>';
@@ -1606,7 +1609,7 @@
             span = LANG === 't' && /\-/g.exec(yin)
               ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
-                ? ' rbspan="2"'
+                ? (b = cnSpecificBpmf || b, ' rbspan="2"')
                 : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             p[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
