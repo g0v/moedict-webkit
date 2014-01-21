@@ -1052,7 +1052,7 @@ function render (json)
           <ol>
           #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
           if def is /∥/
-            after-def = "<span style='margin-left: -22px'>#{ h(def - /.*∥/) }</span>"
+            after-def = "<div style='margin: 0 0 21px -27px'>#{ h(def - /.*∥/) }</div>"
             def -= /∥.*/
           """#{
             if def is /^\s*\(\d+\)/ then '' else '<li>'
