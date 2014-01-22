@@ -1574,7 +1574,7 @@
       bopomofo = bopomofo.replace(/([^ ])(ㄦ)/g, '$1 $2').replace(/([ ]?[\u3000][ ]?)/g, ' ');
       bopomofo = bopomofo.replace(/([ˇˊˋ˪˫])[ ]?/g, '$1 ').replace(/([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 ');
       ruby = function(){
-        var t, b, cnSpecificBpmf, ruby, p, i$, len$, yin, span;
+        var t, b, cnSpecificBpmf, ruby, p, i$, len$, yin, span, cns, tws;
         if (LANG === 'h') {
           return;
         }
@@ -1609,7 +1609,7 @@
             span = LANG === 't' && /\-/g.exec(yin)
               ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
-                ? (b = cnSpecificBpmf || b, ' rbspan="2"')
+                ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b, b = join$.call(tws, ' ')), ' rbspan="2"')
                 : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             p[i$] = '<rt' + span + '>' + yin + '</rt>';
           }

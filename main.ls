@@ -950,7 +950,14 @@ function render (json)
 
                  # 國語兒化音
                  else if LANG != \t && yin is /^[^eēéěè].*r$/g
-                 then ((b = (cn-specific-bpmf || b)); ' rbspan="2"')
+                 then
+                   if cn-specific-bpmf
+                     cns = cn-specific-bpmf / /\s+/
+                     tws = b / /\s+/
+                     tws[*-2] = cns[*-2]
+                     b-alt := b
+                     b = tws * ' '
+                   ' rbspan="2"'
 
                  # 兩岸詞典，按元音群計算字數
                  else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
