@@ -1662,7 +1662,7 @@
             ? ref$
             : [], antonyms = arg$.antonyms, synonyms = arg$.synonyms;
           if (/∥/.exec(def)) {
-            afterDef = "<div style='margin: 0 0 21px -42px'>" + h(replace$.call(def, /^[^∥]+/, '')) + "</div>";
+            afterDef = "<div style='margin: 0 0 22px -44px'>" + h(replace$.call(def, /^[^∥]+/, '')) + "</div>";
             def = replace$.call(def, /∥.*/, '');
           }
           return (/^\s*\(\d+\)|[:：]<\/span>$/.exec(def) ? '' : '<li><p ') + "<p class='definition' " + (/[:：]<\/span>$/.exec(def) ? 'style="margin-left: -28px"' : '') + ">\n    <span class=\"def\">\n    " + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){
