@@ -955,7 +955,7 @@ function render (json)
                      cns = cn-specific-bpmf / /\s+/
                      tws = b / /\s+/
                      tws[*-2] = cns[*-2]
-                     b-alt := b
+                     b-alt := b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ')
                      b = tws * ' '
                    ' rbspan="2"'
 
