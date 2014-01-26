@@ -173,15 +173,33 @@ var rubies,
 		})
 
 		$(node).find('rtc:not(.zhuyin)')
-		.hide()
 		.each(function(t){
 			var c = 0,
 				rtc = $(this),
 				rbc = $(this).prevAll('rbc'),
-				len = $(this).find('rt').length,
+				len = $(this).find('rt').length || $(this).nextAll('rt').length,
 				data = []
 
 			$(this).find('rt')
+			.each(function(h){
+				var anno 	= $(this).html(),
+					rbspan 	= $(this).attr('rbspan') || 1,
+					i		= c
+
+				c += Number(rbspan)
+
+				data[h] = {
+					'annotation': anno,
+					'order': (t==0) ? '1' : '2'
+				}
+
+				for ( var j=i; j<c; j++ ) {
+					rbc.find('rb[index]')
+					.eq(j).attr({ 'set': h })
+				}
+			})
+
+			$(this).nextAll('rt')
 			.each(function(h){
 				var anno 	= $(this).html(),
 					rbspan 	= $(this).attr('rbspan') || 1,
@@ -221,6 +239,7 @@ var rubies,
 				)
 			}
 		})
+                .remove()
 
 		$(node).find('rb')
 		//.after(' ')
@@ -323,7 +342,7 @@ var rubies,
 
 				$(this).find('ruby').each(function() {
 					var html = $(this).html(),
-						hruby = document.createElement('hruby')
+                                            hruby = document.createElement('hruby')
 
 					// 羅馬拼音（在不支援`<ruby>`的瀏覽器下）
 					if ( !_test_for_ruby() && 
@@ -380,10 +399,8 @@ var rubies,
 						// 拼音、注音直角顯示
 						} else if ( $(this).hasClass('rightangle') ) {
 							attr.rightangle = 'rightangle'
-
 							// 國語注音、台灣方言音符號
 							$(this).find('rtc.zhuyin')
-							.hide()
 							.each(function(){
 								var t = $(this).prevAll('rbc'),
 									c, len, data
@@ -391,9 +408,15 @@ var rubies,
 								$(this).find('rt')
 								.each(function(i){
 									var rb = t.find('rb:not([annotation])').eq(i)
-									_apply_ruby_zhuyin(this, rb)
+									if($(this).html()) { _apply_ruby_zhuyin(this, rb )}
+								})
+								$(this).nextAll('rt')
+								.each(function(i){
+									var rb = t.find('rb:not([annotation])').eq(i)
+									if($(this).html()) { _apply_ruby_zhuyin(this, rb )}
 								})
 							})
+                                                        .hide()
 
 							// 羅馬拼音或文字註記
 							_apply_ruby_annotation(this)
@@ -406,7 +429,7 @@ var rubies,
 								   $(this).hasClass("rightangle")
 						}).replaceWith(
 							$(hruby)
-							.html( $(this).html() )
+							.html( $(this).html().replace(/(.*<\/rbc>).*/, '$1'))
 							//.attr('generic', _get_generic_family(this))
 							.attr(attr)
 						)
