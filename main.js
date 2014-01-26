@@ -520,10 +520,17 @@
         }
         return false;
       });
-      if (!('onhashchange' in window)) {
-        $('body').on('click', 'a', function(){
+      if (isCordova || !'onhashchange' in window) {
+        $('#result, .dropdown-menu').on('click', 'a[href^=#]', function(){
           var val;
           val = $(this).attr('href');
+          if (val === '#') {
+            return true;
+          }
+          if ($('.dropdown.open').length) {
+            $('.navbar').css('position', 'fixed');
+            $('.dropdown.open').removeClass('open');
+          }
           if (val) {
             val = replace$.call(val, /.*\#/, '');
           }
@@ -1666,7 +1673,6 @@
             def = replace$.call(def, /∥.*/, '');
           }
           isColonDef = LANG === 'c' && /[:：]<\/span>$/.exec(def) && !any(function(it){
-            console.log(/^\s*\(\d+\)/.exec(it.def));
             return !!(/^\s*\(\d+\)/.exec(it.def));
           }, defs);
           return (/^\s*\(\d+\)/.exec(def) || isColonDef ? '' : '<li>') + "<p class='definition' " + (isColonDef ? 'style="margin-left: -28px"' : '') + ">\n    <span class=\"def\">\n    " + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){

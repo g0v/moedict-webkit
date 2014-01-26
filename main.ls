@@ -294,9 +294,13 @@ window.do-load = ->
         grok-val("#{HASH-OF[LANG]}=*" - /^#/)
       return false
 
-    unless \onhashchange of window
-      $ \body .on \click \a ->
+    if isCordova or not \onhashchange of window
+      $ '#result, .dropdown-menu' .on \click 'a[href^=#]' ->
         val = $(@).attr(\href)
+        return true if val is \#
+        if $('.dropdown.open').length
+          $ \.navbar .css \position \fixed
+          $ \.dropdown.open .removeClass \open
         val -= /.*\#/ if val
         val ||= $(@).text!
         window.grok-val val
@@ -1062,7 +1066,6 @@ function render (json)
             after-def = "<div style='margin: 0 0 22px -44px'>#{ h(def - /^[^∥]+/ ) }</div>"
             def -= /∥.*/
           is-colon-def = LANG is \c and (def is /[:：]<\/span>$/) and not(any (->
-            console.log it.def is /^\s*\(\d+\)/
             !!(it.def is /^\s*\(\d+\)/)
           ), defs) 
           """#{
