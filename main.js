@@ -493,9 +493,9 @@
         return $(this).css('position', 'fixed');
       });
       if (isApp) {
-        $('body').on('click', '#gcse a.gs-title', function(it){
+        $('body').on('touchstart', '#gcse a.gs-title', function(){
           var val, url;
-          it.preventDefault();
+          $(this).removeAttr('href');
           val = $('#gcse input:visible').val();
           url = $(this).data('ctorig') || replace$.call($(this).attr('href'), /^.*?q=/, '').replace(/&.*$/, '');
           setTimeout(function(){

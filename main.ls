@@ -272,16 +272,17 @@ window.do-load = ->
       $(@).fadeIn 0ms
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
-    if isApp => $ \body .on \click '#gcse a.gs-title' ->
-      it.preventDefault!
-      val = $('#gcse input:visible').val!
-      url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
-      setTimeout (->
-        $('#gcse input:visible').val val
-        grok-val decode-hash(url -= /^.*\//)
-      ), 1ms
-      $ \.gsc-results-close-btn .click!
-      return false
+    if isApp =>
+      $ \body .on \touchstart '#gcse a.gs-title' ->
+        $(@).removeAttr \href
+        val = $('#gcse input:visible').val!
+        url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
+        setTimeout (->
+          $('#gcse input:visible').val val
+          grok-val decode-hash(url -= /^.*\//)
+        ), 1ms
+        $ \.gsc-results-close-btn .click!
+        return false
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!

@@ -37,6 +37,9 @@ body.web li#gcse {
         width: 64px;
     }
 }
+body.cordova li#gcse > span .gsc-control-cse a.gs-title {
+    display: inline-block !important;
+}
 #gcse > span {
     display: inline-block;
     height: 24px;
