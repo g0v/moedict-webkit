@@ -181,6 +181,7 @@ window.do-load = ->
   $('body').addClass \android if isDroidGap
 
   unless STANDALONE and isDroidGap
+    window.IS_GOOGLE_AFS_IFRAME_ = true
     <- setTimeout _, 1ms
     cx = '007966820757635393756:sasf0rnevk4';
     gcse = document.createElement('script')
