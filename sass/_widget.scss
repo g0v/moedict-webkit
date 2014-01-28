@@ -7,25 +7,28 @@
 }
 
 // Google全文檢索
-li#gcse span {
-    display: none;
+body #gcse > span {
+    display: inline-block;
+    position: absolute;
+    margin-top: -100px;
 }
 
-body li#gcse {
+body #gcse {
     margin-top: 12px !important;
     margin-bottom: -12px !important;
     vertical-align: top !important;
-    position: absolute;
+    position: fixed;
     right: 120px;
+    top: 0;
+    z-index: 100002;
 }
 
-body.web li#gcse {
+body.web #gcse {
     right: 190px;
 }
 
 @media only screen and (max-width: 767px) {
-    body li#gcse, body.web li#gcse {
-        top: 0;
+    body #gcse, body.web #gcse {
         right: 40px;
         > span {
             width: 120px;
@@ -33,12 +36,24 @@ body.web li#gcse {
     }
 }
 @media only screen and (max-width: 360px) {
-    body.cordova li#gcse > span {
+    body.cordova #gcse > span {
         width: 64px;
     }
 }
-body.cordova li#gcse > span .gsc-control-cse a.gs-title {
+body.cordova #gcse > span .gsc-control-cse a.gs-title {
     display: inline-block !important;
+}
+body.cordova #gcse > span .gsc-results-wrapper-overlay {
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 100003 !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    visibility: visibility !important;
 }
 #gcse > span {
     display: inline-block;

@@ -53,11 +53,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li#btn-starred
           a(style='padding-left: 5px; padding-right: 5px', href='#=*')
             i.icon-bookmark-empty
-        li#gcse
-          span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
         //if !IE
         li
           form#lookback.back(target='_blank', accept-charset='big5', action='http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh', style='display: none; margin: 0; padding: 0')
@@ -88,7 +83,11 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.web-inline-only(style='display: inline-block')
           a(href='https://itunes.apple.com/tw/app/meng-dian/id599429224', target='_blank', title='App Store 下載', style='color: #ccc')
             i.icon-apple
-                          
+    #gcse
+      span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
     .results
       #strokes(style='display: none')
       #result.result
