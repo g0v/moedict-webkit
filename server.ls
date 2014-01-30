@@ -105,7 +105,7 @@ require(\zappajs) ->
     <~ png.pipe(png-stream).on \close
     if err
       chunk = val - /[`~]/g
-      for re in LTM-regexes[lang]
+      for re in LTM-regexes[lang] ? []
         chunk.=replace(re, -> escape "`#it~")
       parts = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
       segments = []
