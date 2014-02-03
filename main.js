@@ -664,20 +664,36 @@
     window.pressLang = function(lang, id){
       lang == null && (lang = '');
       id == null && (id = '');
+      if (STANDALONE) {
+        return;
+      }
       prevId = null;
       prevVal = null;
-      LANG = lang || (function(){
-        switch (LANG) {
-        case 'a':
-          return 't';
-        case 't':
-          return 'h';
-        case 'h':
-          return 'c';
-        case 'c':
-          return 'a';
-        }
-      }());
+      if (HASHOF.c) {
+        LANG = lang || (function(){
+          switch (LANG) {
+          case 'a':
+            return 't';
+          case 't':
+            return 'h';
+          case 'h':
+            return 'c';
+          case 'c':
+            return 'a';
+          }
+        }());
+      } else {
+        LANG = lang || (function(){
+          switch (LANG) {
+          case 'a':
+            return 't';
+          case 't':
+            return 'h';
+          case 'h':
+            return 'a';
+          }
+        }());
+      }
       $('#query').val('');
       $('.ui-autocomplete li').remove();
       $('iframe').fadeIn('fast');

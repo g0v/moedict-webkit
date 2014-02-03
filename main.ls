@@ -378,9 +378,13 @@ window.do-load = ->
 
   prevId = prevVal = null
   window.press-lang = (lang='', id='') ->
+    return if STANDALONE
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+    if HASH-OF.c
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+    else
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
