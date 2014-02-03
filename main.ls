@@ -236,7 +236,11 @@ window.do-load = ->
       try $(\#query).autocomplete \close
       return
     return if cache-loading
-    entryHistory.pop!
+    window.press-quit! if isDroidGap and entryHistory.length <= 1
+    cur = entryHistory[*-1]
+    while entryHistory[*-1] is cur
+      entryHistory.pop!
+      window.press-quit! if isDroidGap and entryHistory.length < 1
     token = Math.random!
     cache-loading := token
     setTimeout (-> cache-loading := no if cache-loading is token), 10000ms
@@ -251,7 +255,7 @@ window.do-load = ->
 
   window.press-quit = ->
     stop-audio!
-    callLater -> navigator.app.exit-app!
+    navigator.app.exit-app!
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
@@ -307,7 +311,8 @@ window.do-load = ->
         val ||= $(@).text!
         window.grok-val val
         return false
-    window.onpopstate = ->
+    unless isDroidGap => window.onpopstate = ->
+      return window.press-back! if isDroidGap
       state = decodeURIComponent "#{location.pathname}".slice(1)
       return grok-hash! unless state is /\S/
       grok-val state
