@@ -9794,7 +9794,7 @@ input.back {
     top: 18px !important;
   }
 }
-body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box {
+body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box, body.overflow-scrolling-false #gcse {
   position: absolute !important;
 }
 

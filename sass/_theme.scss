@@ -300,9 +300,10 @@ input.back {
 }
 
 body.overflow-scrolling-false {
-    .navbar-fixed-top, .erase-box, #query-box, .back-box {
+    .navbar-fixed-top, .erase-box, #query-box, .back-box, #gcse {
         position: absolute !important;
     }
+    // TODO: Scrolling in gcse results
 }
 
 input.query {

@@ -374,7 +374,7 @@
         return setTimeout(pollGsc, 500);
       }, 1);
     }
-    if (!(isMobile || isApp || widthIsXs())) {
+    if (!(isApp || widthIsXs())) {
       setTimeout(function(){
         return !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");;
       }, 1);
@@ -415,7 +415,7 @@
       return $('.erase-box').hide();
     };
     window.pressBack = pressBack = function(){
-      var token;
+      var cur, token;
       stopAudio();
       if (isDroidGap && !$('.ui-autocomplete').hasClass('invisible') && widthIsXs()) {
         try {
@@ -426,7 +426,16 @@
       if (cacheLoading) {
         return;
       }
-      entryHistory.pop();
+      if (isDroidGap && entryHistory.length <= 1) {
+        window.pressQuit();
+      }
+      cur = entryHistory[entryHistory.length - 1];
+      while (entryHistory[entryHistory.length - 1] === cur) {
+        entryHistory.pop();
+        if (isDroidGap && entryHistory.length < 1) {
+          window.pressQuit();
+        }
+      }
       token = Math.random();
       cacheLoading = token;
       setTimeout(function(){
@@ -452,9 +461,7 @@
     } catch (e$) {}
     window.pressQuit = function(){
       stopAudio();
-      return callLater(function(){
-        return navigator.app.exitApp();
-      });
+      return navigator.app.exitApp();
     };
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -540,14 +547,19 @@
           return false;
         });
       }
-      window.onpopstate = function(){
-        var state;
-        state = decodeURIComponent((location.pathname + "").slice(1));
-        if (!/\S/.test(state)) {
-          return grokHash();
-        }
-        return grokVal(state);
-      };
+      if (!isDroidGap) {
+        window.onpopstate = function(){
+          var state;
+          if (isDroidGap) {
+            return window.pressBack();
+          }
+          state = decodeURIComponent((location.pathname + "").slice(1));
+          if (!/\S/.test(state)) {
+            return grokHash();
+          }
+          return grokVal(state);
+        };
+      }
       if ($('#result h1').length) {
         return setHtml($('#result').html());
       }
@@ -904,7 +916,7 @@
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
         cacheLoading = false;
-        vclick = isMobile ? 'touchstart' : 'click';
+        vclick = isMobile ? 'touchstart click' : 'click';
         $('.results .star').on(vclick, function(){
           var key;
           key = "\"" + prevId + "\"\n";

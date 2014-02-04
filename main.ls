@@ -198,7 +198,7 @@ window.do-load = ->
       isQuery := no
     setTimeout poll-gsc, 500ms
 
-  unless isMobile or isApp or width-is-xs!
+  unless isApp or width-is-xs!
     <- setTimeout _, 1ms
     ``!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");``
 
@@ -524,7 +524,7 @@ window.do-load = ->
  
     cache-loading := no
 
-    vclick = if isMobile then \touchstart else \click
+    vclick = if isMobile then 'touchstart click' else \click
     $ '.results .star' .on vclick, ->
       key = "\"#prevId\"\n"
       if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
