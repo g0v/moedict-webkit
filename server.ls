@@ -262,7 +262,7 @@ require(\zappajs) ->
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
             optgroup label:'逢甲大學', ->
               option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
-            optgroup label:'cwTeX', ->
+            optgroup label:'cwTeX-Q', style:'font-family: Helvetica, sans-serif', ->
               option selected:(png-suffix is '.png?font=cwming'), value:\?font=cwming, \明體
               option selected:(png-suffix is '.png?font=cwhei'), value:\?font=cwhei, \黑體
               option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
