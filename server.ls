@@ -50,6 +50,11 @@ font-of = ->
   return 'TW-Sung' if it is /sung/i
   return 'EBAS' if it is /ebas/i
   return 'ShuoWen' if it is /shuowen/i
+  return 'cwTeXQMing' if it is /cwming/i
+  return 'cwTeXQHei' if it is /cwhei/i
+  return 'cwTeXQYuan' if it is /cwyuan/i
+  return 'cwTeXQKai' if it is /cwkai/i
+  return 'cwTeXQFangsong' if it is /cwfangsong/i
   return wt2font[it] || 'TW-Kai'
 
 <- fs.mkdir \png
@@ -257,6 +262,12 @@ require(\zappajs) ->
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
             optgroup label:'逢甲大學', ->
               option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
+            optgroup label:'cwTeX', ->
+              option selected:(png-suffix is '.png?font=cwming'), value:\?font=cwming, \明體
+              option selected:(png-suffix is '.png?font=cwhei'), value:\?font=cwhei, \黑體
+              option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
+              option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
+              option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
@@ -307,6 +318,9 @@ function text2png (text, font)
       if font is /ShuoWen/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 50
         y += 45
+      if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        x += 15
+        y += 15
       ctx.fillText ch, x, y
       idx++
     row++
