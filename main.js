@@ -145,7 +145,7 @@
     key = "\"" + it + "\"\n";
     LRU[LANG] = key + (LRU[LANG] = replace$.call(LRU[LANG], key + "", ''));
     lru = split$.call(LRU[LANG], '\n');
-    if (lru.length > 50) {
+    if (lru.length > 5000) {
       if (!isCordova) {
         rmPref("GET " + LANG + "/" + encodeURIComponent(lru.pop().slice(1, -1)) + ".json");
       }
@@ -527,6 +527,24 @@
           grokVal((HASHOF[LANG] + "=*").replace(/^#/, ''));
         }
         return false;
+      });
+      $('body').on('click', '#btn-clear-lru', function(){
+        var lru, i$, len$, word;
+        if (!confirm("確定要清除瀏覽紀錄？")) {
+          return;
+        }
+        $('#lru').prevAll('br').remove();
+        $('#lru').nextAll().remove();
+        $('#lru').fadeOut('fast');
+        if (!isCordova) {
+          lru = split$.call(LRU[LANG], '\n');
+          for (i$ = 0, len$ = lru.length; i$ < len$; ++i$) {
+            word = lru[i$];
+            rmPref("GET " + LANG + "/" + encodeURIComponent(word.slice(1, -1)) + ".json");
+          }
+        }
+        LRU[LANG] = [];
+        return setPref("lru-" + LANG, '');
       });
       if (isCordova || !'onhashchange' in window) {
         $('#result, .dropdown-menu').on('click', 'a[href^=#]', function(){
@@ -1530,7 +1548,7 @@
     terms = replace$.call(terms, /^[^"]*/, '');
     if (id === '字詞紀錄簿') {
       if (!terms) {
-        terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）";
+        terms += "<p class='bg-info'>（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）</p>";
       }
     }
     if (/^";/.exec(terms)) {
@@ -1540,7 +1558,9 @@
       terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     }
     if (id === '字詞紀錄簿' && LRU[LANG]) {
-      terms += "<br><h3>最近查閱過的字詞</h3>\n";
+      terms += "<br><h3 id='lru'>最近查閱過的字詞";
+      terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>";
+      terms += "</h3>\n";
       terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
     }
     return title + "<div class='list'>" + terms + "</div>";

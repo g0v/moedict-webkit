@@ -75,7 +75,7 @@ add-to-lru = ->
   key = "\"#it\"\n"
   LRU[LANG] = key + (LRU[LANG] -= "#key")
   lru = LRU[LANG] / '\n'
-  if lru.length > 50
+  if lru.length > 5000
     rmPref "GET #LANG/#{encodeURIComponent(lru.pop!slice(1, -1))}.json" unless isCordova
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
@@ -300,6 +300,18 @@ window.do-load = ->
         grok-val("#{HASH-OF[LANG]}=*" - /^#/)
       return false
 
+    $ \body .on \click '#btn-clear-lru' ->
+      return unless confirm("確定要清除瀏覽紀錄？")
+      $('#lru').prevAll('br')remove!
+      $('#lru').nextAll!remove!
+      $('#lru').fadeOut \fast
+      unless isCordova
+        lru = LRU[LANG] / '\n'
+        for word in lru
+          rmPref "GET #LANG/#{encodeURIComponent(word.slice(1, -1))}.json"
+      LRU[LANG] = []
+      setPref "lru-#LANG" ''
+
     if isCordova or not \onhashchange of window
       $ '#result, .dropdown-menu' .on \click 'a[href^=#]' ->
         val = $(@).attr(\href)
@@ -521,7 +533,6 @@ window.do-load = ->
 
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
- 
     cache-loading := no
 
     vclick = if isMobile then 'touchstart click' else \click
@@ -860,14 +871,16 @@ function render-list (terms, id)
   title = "<h1 itemprop='name'>#id</h1>"
   terms -= /^[^"]*/
   if id is \字詞紀錄簿
-    terms += "（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）" unless terms
+    terms += "<p class='bg-info'>（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）</p>" unless terms
   if terms is /^";/
     terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
     terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
   else
     terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   if id is \字詞紀錄簿 and LRU[LANG]
-    terms += "<br><h3>最近查閱過的字詞</h3>\n"
+    terms += "<br><h3 id='lru'>最近查閱過的字詞"
+    terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>"
+    terms += "</h3>\n"
     terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
   return "#title<div class='list'>#terms</div>"
 
@@ -989,7 +1002,7 @@ function render (json)
     cn-specific = ''
     cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
 
-    if LANG is \c 
+    if LANG is \c
       if bopomofo is /<br>/
         pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
         bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，。；])\s?/g '$1'
@@ -1078,7 +1091,7 @@ function render (json)
             def -= /∥.*/
           is-colon-def = LANG is \c and (def is /[:：]<\/span>$/) and not(any (->
             !!(it.def is /^\s*\(\d+\)/)
-          ), defs) 
+          ), defs)
           """#{
             if def is /^\s*\(\d+\)/ or is-colon-def => ''
             else => '<li>'
