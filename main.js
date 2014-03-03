@@ -936,7 +936,8 @@
         cacheLoading = false;
         vclick = isMobile ? 'touchstart click' : 'click';
         $('.results .star').on(vclick, function(){
-          var key;
+          var $star, key;
+          $star = $(this).hide();
           key = "\"" + prevId + "\"\n";
           if ($(this).hasClass('icon-star-empty')) {
             STARRED[LANG] = key + STARRED[LANG];
@@ -946,7 +947,8 @@
           $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
           $('#btn-starred').fadeOut('fast', function(){
             return $(this).css('background', '#ddd').fadeIn(function(){
-              return $(this).css('background', 'transparent');
+              $(this).css('background', 'transparent');
+              return $star.fadeIn('fast');
             });
           });
           return setPref("starred-" + LANG, STARRED[LANG]);

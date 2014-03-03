@@ -537,10 +537,14 @@ window.do-load = ->
 
     vclick = if isMobile then 'touchstart click' else \click
     $ '.results .star' .on vclick, ->
+      $star = $(@)hide!
       key = "\"#prevId\"\n"
       if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
-      $(\#btn-starred).fadeOut \fast -> $(@).css(\background \#ddd)fadeIn -> $(@).css(\background \transparent)
+      $(\#btn-starred).fadeOut \fast ->
+        $(@).css(\background \#ddd)fadeIn ->
+          $(@).css(\background \transparent)
+          $star.fadeIn \fast
       setPref "starred-#LANG" STARRED[LANG]
 
     $ '.results .stroke' .on vclick, ->
