@@ -188,6 +188,7 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
+      link rel:'publisher' href:'https://plus.google.com/+MoedictTw-g0v'
       base target:\_blank
       word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
