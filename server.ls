@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-require! fs
+require! <[ fs ]>
 LTM-regexes = {}
 
 for let lang in <[ a t h c ]>
@@ -58,7 +58,7 @@ font-of = ->
   return wt2font[it] || 'TW-Kai'
 
 <- fs.mkdir \png
-require(\zappajs) ->
+require(\zappajs) {+disable_io} ->
   @get '/:text.png': ->
     @response.type \image/png
     font = font-of @query.font
