@@ -2,7 +2,7 @@ window.isCordova = isCordova = document.URL isnt /^https?:/
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
-{any, map} = require('prelude-ls')
+{any, map, fold} = require('prelude-ls')
 
 LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
@@ -788,9 +788,17 @@ function init-autocomplete
       return cb (map (- /"/g), results)
       #return cb ((results.join(',') - /"/g) / ',')
 
-LookupURL = if (isCordova or document.URL is /^https:\/\/(?:www.)?moedict.tw/i) then "/lookup" else \http://su-lip.magistry.fr/lookup
-trs_lookup = (term,cb) -> GET("#LookupURL/trs/#{term}",((data)-> cb (data / '|' )) )
-zhuyin_lookup = (term,cb) -> GET("#LookupURL/zhuyin/#{term}",((data)-> cb (data / '|' )) )
+
+format_autocomplete = (data) ->
+  console.log data
+  fold ( (acc,line) ->
+    acc.push(line["sound"])
+    acc.concat(line["hanji"])), [] data
+
+
+LookupURL = if (isCordova or document.URL is /^https:\/\/(?:www.)?moedict.tw/i) then "/lookup" else \http://localhost:8080/lookup
+trs_lookup = (term,cb) -> GET("#LookupURL/trs/#{term}",((data)-> cb (format_autocomplete (eval data) )) )
+zhuyin_lookup = (term,cb) -> GET("#LookupURL/fuzzy/zhuyin/3/#{term}",((data)-> cb (format_autocomplete (eval data))) ) 
 
 alter_input = (ev) ->
       return unless (LANG is \t) 
