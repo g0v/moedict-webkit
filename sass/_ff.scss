@@ -1,19 +1,16 @@
 
 
 @include font-face("Fira Sans OT", font-files(
-    "FiraSansOT-Regular.eot", truetype
-,   "FiraSansOT-Regular.ttf", truetype
-), "FiraSansOT-Regular.eot");
+   "FiraSansOT-Regular.ttf", truetype
+));
 
 @include font-face("EBAS", font-files(
-    "EBAS-Subset.eot", truetype
-,   "EBAS-Subset.ttf", truetype
-), "EBAS-Subset.eot");
+   "EBAS-Subset.ttf", truetype
+));
 
 @include font-face("MOEDICT", font-files(
-    "MOEDICT.eot", truetype
-,   "MOEDICT.ttf", truetype
-), "MOEDICT.eot");
+   "MOEDICT.ttf", truetype
+));
 
 @font-face {
   font-family: "MOEDICT-IOS-KAI";
