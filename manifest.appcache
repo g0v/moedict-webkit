@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Tue Mar 11 02:51:40 CST 2014
+# Sat May 10 03:10:10 CST 2014
 
 CACHE:
 
@@ -28,7 +28,7 @@ t/xref.json
 t/variants.json
 
 # css files
-css/cupertino/jquery-ui-1.10.2.custom.css
+css/cupertino/jquery-ui-1.10.4.custom.css
 
 # font files (use the .ttf form for portability)
 fonts/EBAS-Subset.ttf
@@ -41,8 +41,8 @@ about.html
 favicon.ico
 
 # JS files
-js/jquery-1.9.1.min.js
-js/jquery-ui-1.10.2.custom.min.js
+js/jquery-1.11.1.min.js
+js/jquery-ui-1.10.4.custom.min.js
 js/jquery.hoverIntent.js
 js/jquery.ruby.js
 js/bootstrap/dropdown.js
@@ -87,6 +87,9 @@ images/icon.png
 
 # cordova specific
 cordova.js
+
+# iOS specific
+private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf
 
 FALLBACK:
 
