@@ -10,7 +10,8 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link href="styles.css" rel="stylesheet">
-    <link href="css/cupertino/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+    <link href="css/cupertino/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <link href="https://plus.google.com/+MoedictTw-g0v" rel="publisher">
   </head>
   <body id="moedict" onhashchange="grokHash()" itemscope itemtype="http://schema.org/ScholarlyArticle" class="main">
     <noscript>
@@ -46,11 +47,6 @@
         </li>
         <li id="btn-starred"><a title="字詞紀錄簿" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
         <li id="btn-pref"><a title="偏好設定" href="#"><i class="icon-cogs"></i></a></li>
-        <li id="gcse"><span class="lang-a-only">
-            <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
-            <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
-            <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-            <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></li>
         <!--if !IE-->
         <li>
           <form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none; margin: 0; padding: 0" class="back">
@@ -75,6 +71,11 @@
         <li style="display: inline-block" class="web-inline-only"><a href="https://itunes.apple.com/tw/app/meng-dian/id599429224" target="_blank" title="App Store 下載" style="color: #ccc"><i class="icon-apple"></i></a></li>
       </ul>
     </nav>
+    <div id="gcse"><span class="lang-a-only">
+        <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
+        <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
+        <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
+        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
     <div class="results">
       <div id="strokes" style="display: none"></div>
       <div id="result" class="result">
@@ -179,8 +180,8 @@
     <!--if !IE-->
     <script src="cordova.js" data-cfasync="true"></script>
     <!-- <![endif]-->
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="js/jquery.hoverIntent.js"></script>
     <script src="js/jquery.ruby.js"></script>
     <script src="js/bootstrap/dropdown.js"></script>

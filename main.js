@@ -145,7 +145,7 @@
     key = "\"" + it + "\"\n";
     LRU[LANG] = key + (LRU[LANG] = replace$.call(LRU[LANG], key + "", ''));
     lru = split$.call(LRU[LANG], '\n');
-    if (lru.length > 50) {
+    if (lru.length > 5000) {
       if (!isCordova) {
         rmPref("GET " + LANG + "/" + encodeURIComponent(lru.pop().slice(1, -1)) + ".json");
       }
@@ -354,6 +354,7 @@
       $('body').addClass('android');
     }
     if (!(STANDALONE && isDroidGap)) {
+      window.IS_GOOGLE_AFS_IFRAME_ = true;
       setTimeout(function(){
         var cx, gcse, s, pollGsc;
         cx = '007966820757635393756:sasf0rnevk4';
@@ -373,7 +374,7 @@
         return setTimeout(pollGsc, 500);
       }, 1);
     }
-    if (!(isMobile || isApp || widthIsXs())) {
+    if (!(isApp || widthIsXs())) {
       setTimeout(function(){
         return !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");;
       }, 1);
@@ -414,7 +415,7 @@
       return $('.erase-box').hide();
     };
     window.pressBack = pressBack = function(){
-      var token;
+      var cur, token;
       stopAudio();
       if (isDroidGap && !$('.ui-autocomplete').hasClass('invisible') && widthIsXs()) {
         try {
@@ -425,7 +426,16 @@
       if (cacheLoading) {
         return;
       }
-      entryHistory.pop();
+      if (isDroidGap && entryHistory.length <= 1) {
+        window.pressQuit();
+      }
+      cur = entryHistory[entryHistory.length - 1];
+      while (entryHistory[entryHistory.length - 1] === cur) {
+        entryHistory.pop();
+        if (isDroidGap && entryHistory.length < 1) {
+          window.pressQuit();
+        }
+      }
       token = Math.random();
       cacheLoading = token;
       setTimeout(function(){
@@ -451,9 +461,7 @@
     } catch (e$) {}
     window.pressQuit = function(){
       stopAudio();
-      return callLater(function(){
-        return navigator.app.exitApp();
-      });
+      return navigator.app.exitApp();
     };
     init = function(){
       $('#query').keyup(lookup).change(lookup).keypress(lookup).keydown(lookup).on('input', lookup);
@@ -493,9 +501,9 @@
         return $(this).css('position', 'fixed');
       });
       if (isApp) {
-        $('body').on('click', '#gcse a.gs-title', function(it){
+        $('body').on('touchstart', '#gcse a.gs-title', function(){
           var val, url;
-          it.preventDefault();
+          $(this).removeAttr('href');
           val = $('#gcse input:visible').val();
           url = $(this).data('ctorig') || replace$.call($(this).attr('href'), /^.*?q=/, '').replace(/&.*$/, '');
           setTimeout(function(){
@@ -536,9 +544,37 @@
         return $('.starred-record--history').hide();
       });
       if (!('onhashchange' in window)) {
-        $('body').on('click', 'a', function(){
+        $('body').on('click', 'a', function(){});
+      }
+      $('body').on('click', '#btn-clear-lru', function(){
+        var lru, i$, len$, word;
+        if (!confirm("確定要清除瀏覽紀錄？")) {
+          return;
+        }
+        $('#lru').prevAll('br').remove();
+        $('#lru').nextAll().remove();
+        $('#lru').fadeOut('fast');
+        if (!isCordova) {
+          lru = split$.call(LRU[LANG], '\n');
+          for (i$ = 0, len$ = lru.length; i$ < len$; ++i$) {
+            word = lru[i$];
+            rmPref("GET " + LANG + "/" + encodeURIComponent(word.slice(1, -1)) + ".json");
+          }
+        }
+        LRU[LANG] = [];
+        return setPref("lru-" + LANG, '');
+      });
+      if (isCordova || !'onhashchange' in window) {
+        $('#result, .dropdown-menu').on('click', 'a[href^=#]', function(){
           var val;
           val = $(this).attr('href');
+          if (val === '#') {
+            return true;
+          }
+          if ($('.dropdown.open').length) {
+            $('.navbar').css('position', 'fixed');
+            $('.dropdown.open').removeClass('open');
+          }
           if (val) {
             val = replace$.call(val, /.*\#/, '');
           }
@@ -547,14 +583,19 @@
           return false;
         });
       }
-      window.onpopstate = function(){
-        var state;
-        state = decodeURIComponent((location.pathname + "").slice(1));
-        if (!/\S/.test(state)) {
-          return grokHash();
-        }
-        return grokVal(state);
-      };
+      if (!isDroidGap) {
+        window.onpopstate = function(){
+          var state;
+          if (isDroidGap) {
+            return window.pressBack();
+          }
+          state = decodeURIComponent((location.pathname + "").slice(1));
+          if (!/\S/.test(state)) {
+            return grokHash();
+          }
+          return grokVal(state);
+        };
+      }
       if ($('#result h1').length) {
         return setHtml($('#result').html());
       }
@@ -671,20 +712,36 @@
     window.pressLang = function(lang, id){
       lang == null && (lang = '');
       id == null && (id = '');
+      if (STANDALONE) {
+        return;
+      }
       prevId = null;
       prevVal = null;
-      LANG = lang || (function(){
-        switch (LANG) {
-        case 'a':
-          return 't';
-        case 't':
-          return 'h';
-        case 'h':
-          return 'c';
-        case 'c':
-          return 'a';
-        }
-      }());
+      if (HASHOF.c) {
+        LANG = lang || (function(){
+          switch (LANG) {
+          case 'a':
+            return 't';
+          case 't':
+            return 'h';
+          case 'h':
+            return 'c';
+          case 'c':
+            return 'a';
+          }
+        }());
+      } else {
+        LANG = lang || (function(){
+          switch (LANG) {
+          case 'a':
+            return 't';
+          case 't':
+            return 'h';
+          case 'h':
+            return 'a';
+          }
+        }());
+      }
       $('#query').val('');
       $('.ui-autocomplete li').remove();
       $('iframe').fadeIn('fast');
@@ -895,9 +952,10 @@
         $('#result .part-of-speech a').attr('href', null);
         setPinyinBindings();
         cacheLoading = false;
-        vclick = isMobile ? 'touchstart' : 'click';
+        vclick = isMobile ? 'touchstart click' : 'click';
         $('.results .star').on(vclick, function(){
-          var key;
+          var $star, key;
+          $star = $(this).hide();
           key = "\"" + prevId + "\"\n";
           if ($(this).hasClass('icon-star-empty')) {
             STARRED[LANG] = key + STARRED[LANG];
@@ -907,7 +965,8 @@
           $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
           $('#btn-starred').fadeOut('fast', function(){
             return $(this).css('background', '#ddd').fadeIn(function(){
-              return $(this).css('background', 'transparent');
+              $(this).css('background', 'transparent');
+              return $star.fadeIn('fast');
             });
           });
           return setPref("starred-" + LANG, STARRED[LANG]);
@@ -1628,7 +1687,7 @@
             span = LANG === 't' && /\-/g.exec(yin)
               ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
               : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
-                ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b, b = join$.call(tws, ' ')), ' rbspan="2"')
+                ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ'), b = join$.call(tws, ' ')), ' rbspan="2"')
                 : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
             p[i$] = '<rt' + span + '>' + yin + '</rt>';
           }
@@ -1685,7 +1744,6 @@
             def = replace$.call(def, /∥.*/, '');
           }
           isColonDef = LANG === 'c' && /[:：]<\/span>$/.exec(def) && !any(function(it){
-            console.log(/^\s*\(\d+\)/.exec(it.def));
             return !!(/^\s*\(\d+\)/.exec(it.def));
           }, defs);
           return (/^\s*\(\d+\)/.exec(def) || isColonDef ? '' : '<li>') + "<p class='definition' " + (isColonDef ? 'style="margin-left: -28px"' : '') + ">\n    <span class=\"def\">\n    " + h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1</span><span class="def">$2') + "</span>\n    " + ls(example, function(it){

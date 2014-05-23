@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-require! fs
+require! <[ fs ]>
 LTM-regexes = {}
 
 for let lang in <[ a t h c ]>
@@ -50,11 +50,22 @@ font-of = ->
   return 'TW-Sung' if it is /sung/i
   return 'EBAS' if it is /ebas/i
   return 'ShuoWen' if it is /shuowen/i
+  return 'cwTeXQMing' if it is /cwming/i
+  return 'cwTeXQHei' if it is /cwhei/i
+  return 'cwTeXQYuan' if it is /cwyuan/i
+  return 'cwTeXQKai' if it is /cwkai/i
+  return 'cwTeXQFangsong' if it is /cwfangsong/i
   return wt2font[it] || 'TW-Kai'
 
+iconv = require \iconv-lite
+fix-mojibake = ->
+  return it unless /^[\u0080-\u00FF]/.test it
+  return iconv.decode iconv.encode(it, \latin1), \utf8
+
 <- fs.mkdir \png
-require(\zappajs) ->
+require(\zappajs) {+disable_io} ->
   @get '/:text.png': ->
+    @params.text = fix-mojibake @params.text
     @response.type \image/png
     font = font-of @query.font
     text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
@@ -63,6 +74,7 @@ require(\zappajs) ->
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
   @get '/:text/:idx': ->
+    @params.text = fix-mojibake @params.text
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     lang = \a
@@ -74,6 +86,7 @@ require(\zappajs) ->
     payload = { layout: 'layout', text, +isBot, +isCLI, png-suffix: '.png', wt2font, font2name, -isWord, idx:@params.idx } <<< payload
     @render index: payload
   @get '/:text': ->
+    @params.text = fix-mojibake @params.text
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
@@ -105,7 +118,7 @@ require(\zappajs) ->
     <~ png.pipe(png-stream).on \close
     if err
       chunk = val - /[`~]/g
-      for re in LTM-regexes[lang]
+      for re in LTM-regexes[lang] ? []
         chunk.=replace(re, -> escape "`#it~")
       parts = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
       segments = []
@@ -183,6 +196,7 @@ require(\zappajs) ->
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
+      link rel:'publisher' href:'https://plus.google.com/+MoedictTw-g0v'
       base target:\_blank
       word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
@@ -257,6 +271,12 @@ require(\zappajs) ->
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
             optgroup label:'逢甲大學', ->
               option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
+            optgroup label:'cwTeX Q', style:'font-family: Helvetica, sans-serif', ->
+              option selected:(png-suffix is '.png?font=cwming'), value:\?font=cwming, \明體
+              option selected:(png-suffix is '.png?font=cwhei'), value:\?font=cwhei, \黑體
+              option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
+              option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
+              option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
@@ -307,6 +327,9 @@ function text2png (text, font)
       if font is /ShuoWen/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 50
         y += 45
+      if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        x += 15
+        y += 15
       ctx.fillText ch, x, y
       idx++
     row++

@@ -75,7 +75,7 @@ add-to-lru = ->
   key = "\"#it\"\n"
   LRU[LANG] = key + (LRU[LANG] -= "#key")
   lru = LRU[LANG] / '\n'
-  if lru.length > 50
+  if lru.length > 5000
     rmPref "GET #LANG/#{encodeURIComponent(lru.pop!slice(1, -1))}.json" unless isCordova
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
@@ -181,6 +181,7 @@ window.do-load = ->
   $('body').addClass \android if isDroidGap
 
   unless STANDALONE and isDroidGap
+    window.IS_GOOGLE_AFS_IFRAME_ = true
     <- setTimeout _, 1ms
     cx = '007966820757635393756:sasf0rnevk4';
     gcse = document.createElement('script')
@@ -197,7 +198,7 @@ window.do-load = ->
       isQuery := no
     setTimeout poll-gsc, 500ms
 
-  unless isMobile or isApp or width-is-xs!
+  unless isApp or width-is-xs!
     <- setTimeout _, 1ms
     ``!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");``
 
@@ -235,7 +236,11 @@ window.do-load = ->
       try $(\#query).autocomplete \close
       return
     return if cache-loading
-    entryHistory.pop!
+    window.press-quit! if isDroidGap and entryHistory.length <= 1
+    cur = entryHistory[*-1]
+    while entryHistory[*-1] is cur
+      entryHistory.pop!
+      window.press-quit! if isDroidGap and entryHistory.length < 1
     token = Math.random!
     cache-loading := token
     setTimeout (-> cache-loading := no if cache-loading is token), 10000ms
@@ -250,7 +255,7 @@ window.do-load = ->
 
   window.press-quit = ->
     stop-audio!
-    callLater -> navigator.app.exit-app!
+    navigator.app.exit-app!
 
   init = ->
     $ \#query .keyup lookup .change lookup .keypress lookup .keydown lookup .on \input lookup
@@ -272,16 +277,17 @@ window.do-load = ->
       $(@).fadeIn 0ms
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
-    if isApp => $ \body .on \click '#gcse a.gs-title' ->
-      it.preventDefault!
-      val = $('#gcse input:visible').val!
-      url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
-      setTimeout (->
-        $('#gcse input:visible').val val
-        grok-val decode-hash(url -= /^.*\//)
-      ), 1ms
-      $ \.gsc-results-close-btn .click!
-      return false
+    if isApp =>
+      $ \body .on \touchstart '#gcse a.gs-title' ->
+        $(@).removeAttr \href
+        val = $('#gcse input:visible').val!
+        url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
+        setTimeout (->
+          $('#gcse input:visible').val val
+          grok-val decode-hash(url -= /^.*\//)
+        ), 1ms
+        $ \.gsc-results-close-btn .click!
+        return false
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
@@ -314,16 +320,35 @@ window.do-load = ->
       $ \.starred-record--fav .show!
       $ \.starred-record--history .hide!
 
-
-
     unless \onhashchange of window
       $ \body .on \click \a ->
+#=======
+    $ \body .on \click '#btn-clear-lru' ->
+      return unless confirm("確定要清除瀏覽紀錄？")
+      $('#lru').prevAll('br')remove!
+      $('#lru').nextAll!remove!
+      $('#lru').fadeOut \fast
+      unless isCordova
+        lru = LRU[LANG] / '\n'
+        for word in lru
+          rmPref "GET #LANG/#{encodeURIComponent(word.slice(1, -1))}.json"
+      LRU[LANG] = []
+      setPref "lru-#LANG" ''
+
+    if isCordova or not \onhashchange of window
+      $ '#result, .dropdown-menu' .on \click 'a[href^=#]' ->
+#>>>>>>> master
         val = $(@).attr(\href)
+        return true if val is \#
+        if $('.dropdown.open').length
+          $ \.navbar .css \position \fixed
+          $ \.dropdown.open .removeClass \open
         val -= /.*\#/ if val
         val ||= $(@).text!
         window.grok-val val
         return false
-    window.onpopstate = ->
+    unless isDroidGap => window.onpopstate = ->
+      return window.press-back! if isDroidGap
       state = decodeURIComponent "#{location.pathname}".slice(1)
       return grok-hash! unless state is /\S/
       grok-val state
@@ -394,9 +419,13 @@ window.do-load = ->
 
   prevId = prevVal = null
   window.press-lang = (lang='', id='') ->
+    return if STANDALONE
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+    if HASH-OF.c
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+    else
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
@@ -528,15 +557,18 @@ window.do-load = ->
 
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
- 
     cache-loading := no
 
-    vclick = if isMobile then \touchstart else \click
+    vclick = if isMobile then 'touchstart click' else \click
     $ '.results .star' .on vclick, ->
+      $star = $(@)hide!
       key = "\"#prevId\"\n"
       if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
-      $(\#btn-starred).fadeOut \fast -> $(@).css(\background \#ddd)fadeIn -> $(@).css(\background \transparent)
+      $(\#btn-starred).fadeOut \fast ->
+        $(@).css(\background \#ddd)fadeIn ->
+          $(@).css(\background \transparent)
+          $star.fadeIn \fast
       setPref "starred-#LANG" STARRED[LANG]
 
     $ '.results .stroke' .on vclick, ->
@@ -884,6 +916,7 @@ function render-list (terms, id)
   # 一般列表
   if terms is /^"/
     terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + '</ul>'
+
   return "#title<div class='list'>#terms</div>"
 
 http-map =
@@ -985,7 +1018,7 @@ function render (json)
                      cns = cn-specific-bpmf / /\s+/
                      tws = b / /\s+/
                      tws[*-2] = cns[*-2]
-                     b-alt := b
+                     b-alt := b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ')
                      b = tws * ' '
                    ' rbspan="2"'
 
@@ -1004,7 +1037,7 @@ function render (json)
     cn-specific = ''
     cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
 
-    if LANG is \c 
+    if LANG is \c
       if bopomofo is /<br>/
         pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
         bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，。；])\s?/g '$1'
@@ -1092,9 +1125,8 @@ function render (json)
             after-def = "<div style='margin: 0 0 22px -44px'>#{ h(def - /^[^∥]+/ ) }</div>"
             def -= /∥.*/
           is-colon-def = LANG is \c and (def is /[:：]<\/span>$/) and not(any (->
-            console.log it.def is /^\s*\(\d+\)/
             !!(it.def is /^\s*\(\d+\)/)
-          ), defs) 
+          ), defs)
           """#{
             if def is /^\s*\(\d+\)/ or is-colon-def => ''
             else => '<li>'

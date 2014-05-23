@@ -10,7 +10,8 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     link(rel='apple-touch-icon', href='icon.png')
     link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
     link(href='styles.css', rel='stylesheet')
-    link(href='css/cupertino/jquery-ui-1.10.2.custom.css', rel='stylesheet')
+    link(href='css/cupertino/jquery-ui-1.10.4.custom.css', rel='stylesheet')
+    link(href='https://plus.google.com/+MoedictTw-g0v', rel='publisher')
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: center(style='position: absolute; width: 95%'): main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ
@@ -56,11 +57,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li#btn-pref
           a(title='偏好設定', href='#')
             i.icon-cogs
-        li#gcse
-          span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-          span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
         //if !IE
         li
           form#lookback.back(target='_blank', accept-charset='big5', action='http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh', style='display: none; margin: 0; padding: 0')
@@ -91,7 +87,11 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.web-inline-only(style='display: inline-block')
           a(href='https://itunes.apple.com/tw/app/meng-dian/id599429224', target='_blank', title='App Store 下載', style='color: #ccc')
             i.icon-apple
-                          
+    #gcse
+      span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
     .results
       #strokes(style='display: none')
       #result.result
@@ -213,8 +213,8 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     //if !IE
     script(src='cordova.js', data-cfasync='true')
     // <![endif]
-    script(src='js/jquery-1.9.1.min.js')
-    script(src='js/jquery-ui-1.10.2.custom.min.js')
+    script(src='js/jquery-1.11.1.min.js')
+    script(src='js/jquery-ui-1.10.4.custom.min.js')
     script(src='js/jquery.hoverIntent.js')
     script(src='js/jquery.ruby.js')
     script(src='js/bootstrap/dropdown.js')

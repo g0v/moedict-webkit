@@ -87,6 +87,28 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           a(target='_blank', href='https://github.com/mozilla/Fira/blob/master/LICENSE') SIL Open Font 1.1
           |  授權。
       p
+        a(target='_blank', href='https://www.moedict.tw/%E5%AD%97%E5%9C%96%E5%88%86%E4%BA%AB') 字圖分享
+        | 功能使用下列來源之中文字型：
+      ul
+        li
+          a(target='_blank', href='http://www.cns11643.gov.tw/AIDB/download.do?name=%E5%AD%97%E5%9E%8B%E4%B8%8B%E8%BC%89') 中文全字庫
+          | 採用 
+          a(target='_blank', href='https://creativecommons.org/licenses/by-nd/3.0/tw/deed.zh_TW') CC BY-ND 3.0 台灣
+          | 授權。
+        li
+          a(target='_blank', href='http://www.cl.fcu.edu.tw/') 逢甲大學中文系
+          | 採用「不涉及商業行為使用」授權。
+        li
+          a(target='_blank', href='https://code.google.com/p/cwtex-q-fonts/') cwTeX Q 
+          | 採用 
+          a(target='_blank', href='https://www.gnu.org/licenses/old-licenses/gpl-2.0.html') GPL 2.0 
+          | 授權。
+        li
+          a(target='_blank', href='https://code.google.com/p/cwtex-q-fonts/') 王漢宗自由字型
+          | 採用 
+          a(target='_blank', href='https://www.gnu.org/licenses/old-licenses/gpl-2.0.html') GPL 2.0 
+          | 授權。
+      p
         | 感謝 
         a(target='_blank', href='http://g0v.tw') #g0v.tw
         |  頻道內所有協助開發的朋友們。
@@ -109,7 +131,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         |  加入搜尋列
     //if !IE
     script(src='cordova.js', data-cfasync='true')
-    script(src='js/jquery-1.9.1.min.js')
+    script(src='js/jquery-1.11.1.min.js')
     script.
         if (! /^https?:/.test(document.URL)) { $(function(){
             $('body').addClass('app');
