@@ -9922,11 +9922,6 @@ body.lang-a.web #lookback {
 }
 
 @media only screen and (min-width: 768px) {
-  .desktop ul.nav li:hover > ul.dropdown-menu {
-    display: block;
-  }
-}
-@media only screen and (min-width: 768px) {
   .dropdown-submenu:hover > .dropdown-menu {
     display: block;
     left: 100%;
