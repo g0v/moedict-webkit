@@ -53,7 +53,7 @@ if isCordova and STANDALONE isnt \c
   $ -> $('.nav .c').remove!
 
 # Return an object of all matched with {key: [words]}.
-function xref-of (id, src-lang=LANG)
+function xref-of (id, src-lang=LANG, tgt-lang-only)
   rv = {}
   if typeof XREF[src-lang] is \string
     parsed = {}
@@ -62,12 +62,14 @@ function xref-of (id, src-lang=LANG)
       parsed[tgt-lang.slice(-1)] = words if words
     XREF[src-lang] = parsed
   for tgt-lang, words of XREF[src-lang]
+    continue if tgt-lang-only and tgt-lang isnt tgt-lang-only
     idx = words.indexOf('"' + id + '":')
     rv[tgt-lang] = if idx < 0 then [] else
       part = words.slice(idx + id.length + 4);
       idx = part.indexOf \"
       part.=slice 0 idx
       [ x || id for x in part / \, ]
+    return rv[tgt-lang] if tgt-lang-only
   return rv
 
 CACHED = {}
@@ -698,7 +700,7 @@ window.do-load = ->
   else
     GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
-    for lang in HASH-OF | lang isnt LANG => let lang
+    for let lang of HASH-OF | lang isnt LANG
       GET "#lang/xref.json", (-> XREF[lang] = it), \text
 
   unless STANDALONE
@@ -800,10 +802,10 @@ function init-autocomplete
         regex = "\"#regex\""
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
-      results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
+      results ||= xref-of(term, (if LANG is \a then \t else \a), LANG)
       if LANG is \h and term is \我
         results.unshift \𠊎
-      if LANG is \t => for v in xref-of(term, \tv).t.reverse!
+      if LANG is \t => for v in xref-of(term, \tv, \t).reverse!
         results.unshift v unless v in results
       return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length
       return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length

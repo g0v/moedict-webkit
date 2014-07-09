@@ -107,7 +107,7 @@
       return $('.nav .c').remove();
     });
   }
-  function xrefOf(id, srcLang){
+  function xrefOf(id, srcLang, tgtLangOnly){
     var rv, parsed, i$, ref$, len$, chunk, ref1$, tgtLang, words, idx, part, x;
     srcLang == null && (srcLang = LANG);
     rv = {};
@@ -124,10 +124,16 @@
     }
     for (tgtLang in ref$ = XREF[srcLang]) {
       words = ref$[tgtLang];
+      if (tgtLangOnly && tgtLang !== tgtLangOnly) {
+        continue;
+      }
       idx = words.indexOf('"' + id + '":');
       rv[tgtLang] = idx < 0
         ? []
         : (part = words.slice(idx + id.length + 4), idx = part.indexOf('"'), part = part.slice(0, idx), (fn$()));
+      if (tgtLangOnly) {
+        return rv[tgtLang];
+      }
     }
     return rv;
     function fn$(){
@@ -331,7 +337,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, ref$, len$, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -1214,10 +1220,9 @@
         INDEX[LANG] = it;
         return initAutocomplete();
       }, 'text');
-      for (i$ = 0, len$ = (ref$ = HASHOF).length; i$ < len$; ++i$) {
-        lang = ref$[i$];
-        if (lang !== LANG) {
-          (fn1$.call(this, lang));
+      for (i$ in HASHOF) {
+        if (i$ !== LANG) {
+          (fn1$.call(this, i$));
         }
       }
     }
@@ -1424,12 +1429,12 @@
         try {
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
-        results || (results = xrefOf(term, LANG === 'a' ? 't' : 'a')[LANG]);
+        results || (results = xrefOf(term, LANG === 'a' ? 't' : 'a', LANG));
         if (LANG === 'h' && term === '我') {
           results.unshift('𠊎');
         }
         if (LANG === 't') {
-          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').t.reverse()).length; i$ < len$; ++i$) {
+          for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv', 't').reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];
             if (!in$(v, results)) {
               results.unshift(v);
