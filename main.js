@@ -1425,6 +1425,9 @@
           results = INDEX[LANG].match(RegExp(b2g(regex) + '', 'g'));
         } catch (e$) {}
         results || (results = xrefOf(term, LANG === 'a' ? 't' : 'a')[LANG]);
+        if (LANG === 'h' && term === '我') {
+          results.unshift('𠊎');
+        }
         if (LANG === 't') {
           for (i$ = 0, len$ = (ref$ = xrefOf(term, 'tv').t.reverse()).length; i$ < len$; ++i$) {
             v = ref$[i$];

@@ -801,6 +801,8 @@ function init-autocomplete
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
       results ||= xref-of(term, if LANG is \a then \t else \a)[LANG]
+      if LANG is \h and term is \我
+        results.unshift \𠊎
       if LANG is \t => for v in xref-of(term, \tv).t.reverse!
         results.unshift v unless v in results
       return cb ["▶找不到。建議收錄？"] if LANG is \c and not results?length
