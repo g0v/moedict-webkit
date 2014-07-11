@@ -3,7 +3,7 @@ run ::
 	#sass --watch sass:.
 
 manifest ::
-	perl -pi -e 's/# [A-Z].*\\n/# @{[`date`]}/m' manifest.appcache
+	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
 
 upload ::
 	rsync -avzP main.* styles.css index.html js moe0:code/

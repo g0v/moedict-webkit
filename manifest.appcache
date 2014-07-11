@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Fri Jul 11 17:03:00 CST 2014
+# Sat Jul 12 02:21:07 CST 2014
 
 CACHE:
 
@@ -40,8 +40,8 @@ fonts/MOEDICT.ttf
 about.html
 favicon.ico
 
-# JS files
-js/jquery-1.11.1.min.js
+# js files
+js/jquery-2.1.1.min.js
 js/jquery-ui-1.10.4.custom.min.js
 js/jquery.hoverIntent.js
 js/jquery.ruby.js
