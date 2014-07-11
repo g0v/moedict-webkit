@@ -129,9 +129,9 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       a#opensearch.btn.btn-default.btn-info(onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false")
         i.icon.icon-plus-sign
         |  加入搜尋列
-    //if !IE
+    | <!--[if gt IE 8]><!-->
     script(src='cordova.js', data-cfasync='true')
-    script(src='js/jquery-1.11.1.min.js')
+    script(src='js/jquery-2.1.1.min.js')
     script.
         if (! /^https?:/.test(document.URL)) { $(function(){
             $('body').addClass('app');
@@ -145,4 +145,4 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
                 return false;
             });
         }); };
-    // <![endif]
+    | <!--<![endif]-->

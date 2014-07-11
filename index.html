@@ -25,7 +25,12 @@
           </dl>
         </main>
       </center>
-    </noscript>
+    </noscript><!--[if lte IE 8]>
+    <style>body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }</style>
+    <div id="result" style="position: absolute; top: 10%; left: 10%; right: 10%" class="result">
+      <p><br>很抱歉，我們不支援 Internet Explorer 8 以下的版本。請改用&nbsp;<a href="https://www.mozilla.org/firefox/" class="icon-external-link">&nbsp;Firefox</a>&nbsp;或&nbsp;<a href="https://www.google.com/chrome/browser/" class="icon-external-link">&nbsp;Chrome</a>&nbsp;瀏覽器。</p>
+      <p>Sorry, Internet Explorer 8 and earlier versions are not supported.</p>
+    </div><![endif]-->
     <div class="nav-bg navbar-fixed-top"></div>
     <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header"><a href="./" class="navbar-brand brand ebas">萌典</a></div>
@@ -87,17 +92,15 @@
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
       <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
     </div><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
-    <div id="moe" style="display: none"></div>
-    <!--if !IE-->
+    <div id="moe" style="display: none"></div><!--[if gt IE 8]><!-->
     <script src="cordova.js" data-cfasync="true"></script>
-    <!-- <![endif]-->
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="js/jquery.hoverIntent.js"></script>
     <script src="js/jquery.ruby.js"></script>
     <script src="js/bootstrap/dropdown.js"></script>
     <script src="js/simp-trad.js" charset="utf-8"></script>
     <script src="js/prelude-browser-min.js"></script>
-    <script src="main.js" charset="utf-8"></script>
+    <script src="main.js" charset="utf-8"></script><!--<![endif]-->
   </body>
 </html>

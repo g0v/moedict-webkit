@@ -18,6 +18,18 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       dd 草木初生的芽。
       dt: a(href='典') 典 ㄉㄧㄢˇ
       dd 可作為依據或模範的書。
+    | <!--[if lte IE 8]>
+    style body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }
+    #result.result(style='position: absolute; top: 10%; left: 10%; right: 10%')
+      p
+        br
+        | 很抱歉，我們不支援 Internet Explorer 8 以下的版本。請改用&nbsp;
+        a.icon-external-link(href="https://www.mozilla.org/firefox/") &nbsp;Firefox
+        | &nbsp;或&nbsp;
+        a.icon-external-link(href="https://www.google.com/chrome/browser/") &nbsp;Chrome
+        | &nbsp;瀏覽器。
+      p Sorry, Internet Explorer 8 and earlier versions are not supported.
+    | <![endif]-->
     .nav-bg.navbar-fixed-top
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
@@ -125,10 +137,9 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     a.erase-box.mobile-only(href='#', onclick='pressErase(); return false')
       i.icon-remove-sign(style='color: #c0c0c0', title='清除搜尋框')
     #moe(style='display: none')
-    //if !IE
+    | <!--[if gt IE 8]><!-->
     script(src='cordova.js', data-cfasync='true')
-    // <![endif]
-    script(src='js/jquery-1.11.1.min.js')
+    script(src='js/jquery-2.1.1.min.js')
     script(src='js/jquery-ui-1.10.4.custom.min.js')
     script(src='js/jquery.hoverIntent.js')
     script(src='js/jquery.ruby.js')
@@ -136,3 +147,4 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     script(src='js/simp-trad.js', charset='utf-8')
     script(src='js/prelude-browser-min.js')
     script(src='main.js', charset='utf-8')
+    | <!--<![endif]-->
