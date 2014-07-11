@@ -2,6 +2,9 @@ run ::
 	node ./static-here.js 8888 | lsc -cw main.ls server.ls | jade -Pw *.jade | compass watch
 	#sass --watch sass:.
 
+manifest ::
+	perl -pi -e 's/# [A-Z].*\\n/# @{[`date`]}/m' manifest.appcache
+
 upload ::
 	rsync -avzP main.* styles.css index.html js moe0:code/
 	rsync -avzP main.* styles.css index.html js moe1:code/
