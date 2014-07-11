@@ -204,12 +204,11 @@ require(\zappajs) {+disable_io} ->
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          script "if (!(/MSIE\\s+[678]/.exec(navigator.userAgent))) { location.href = \"https://www.moedict.tw/##h#word\" }" unless @isCLI
           idx = 0
-          (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
+          (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
             meta itemprop:"image" content:og-image
             h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
-            div {itemprop:\articleBody, style:'background: #eee'}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
+            div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
               p trim(b || t || T || "#P".replace(/\u20DE/g ' '))
               ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
                 s = if s then "<br>似:[#s]" else ''
@@ -217,6 +216,7 @@ require(\zappajs) {+disable_io} ->
                 dl ->
                   dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
                   dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.href = \"https://www.moedict.tw/##h#word\" }" unless @isCLI
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word
