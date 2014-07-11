@@ -204,7 +204,7 @@ require(\zappajs) {+disable_io} ->
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          script "location.href = \"https://www.moedict.tw/##h#word\"" unless @isCLI
+          script "if (!(/MSIE\s+[678]/.exec(navigator.userAgent))) { location.href = \"https://www.moedict.tw/##h#word\" }" unless @isCLI
           idx = 0
           (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
             meta itemprop:"image" content:og-image
