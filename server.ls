@@ -55,6 +55,13 @@ font-of = ->
   return 'cwTeXQYuan' if it is /cwyuan/i
   return 'cwTeXQKai' if it is /cwkai/i
   return 'cwTeXQFangsong' if it is /cwfangsong/i
+  return 'SourceHanSansTWHKExtraLight' if it is /srcx/i
+  return 'SourceHanSansTWHKLight' if it is /srcl/i
+  return 'SourceHanSansTWHKNormal' if it is /srcn/i
+  return 'SourceHanSansTWHKRegular' if it is /srcr/i
+  return 'SourceHanSansTWHKMedium' if it is /srcm/i
+  return 'SourceHanSansTWHKBold' if it is /srcb/i
+  return 'SourceHanSansTWHKHeavy' if it is /srch/i
   return wt2font[it] || 'TW-Kai'
 
 iconv = require \iconv-lite
@@ -68,6 +75,7 @@ require(\zappajs) {+disable_io} ->
     @params.text = fix-mojibake @params.text
     @response.type \image/png
     font = font-of @query.font
+    console.log font
     text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
@@ -277,6 +285,14 @@ require(\zappajs) {+disable_io} ->
               option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
               option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
               option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
+            optgroup label:'思源黑體', ->
+              option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \極細
+              option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcx, \細體
+              option selected:(png-suffix is '.png?font=srcn'), value:\?font=srcx, \標準
+              option selected:(png-suffix is '.png?font=srcr'), value:\?font=srcx, \正黑
+              option selected:(png-suffix is '.png?font=srcm'), value:\?font=srcx, \中黑
+              option selected:(png-suffix is '.png?font=srcb'), value:\?font=srcx, \粗體
+              option selected:(png-suffix is '.png?font=srch'), value:\?font=srcx, \極粗
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
@@ -330,6 +346,8 @@ function text2png (text, font)
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15
         y += 15
+      if font is /SourceHanSans/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        y += 30
       ctx.fillText ch, x, y
       idx++
     row++
