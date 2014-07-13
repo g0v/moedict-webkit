@@ -75,7 +75,6 @@ require(\zappajs) {+disable_io} ->
     @params.text = fix-mojibake @params.text
     @response.type \image/png
     font = font-of @query.font
-    console.log font
     text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
@@ -287,12 +286,12 @@ require(\zappajs) {+disable_io} ->
               option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
             optgroup label:'思源黑體', ->
               option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \極細
-              option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcx, \細體
-              option selected:(png-suffix is '.png?font=srcn'), value:\?font=srcx, \標準
-              option selected:(png-suffix is '.png?font=srcr'), value:\?font=srcx, \正黑
-              option selected:(png-suffix is '.png?font=srcm'), value:\?font=srcx, \中黑
-              option selected:(png-suffix is '.png?font=srcb'), value:\?font=srcx, \粗體
-              option selected:(png-suffix is '.png?font=srch'), value:\?font=srcx, \極粗
+              option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcl, \細體
+              option selected:(png-suffix is '.png?font=srcn'), value:\?font=srcn, \標準
+              option selected:(png-suffix is '.png?font=srcr'), value:\?font=srcr, \正黑
+              option selected:(png-suffix is '.png?font=srcm'), value:\?font=srcm, \中黑
+              option selected:(png-suffix is '.png?font=srcb'), value:\?font=srcb, \粗體
+              option selected:(png-suffix is '.png?font=srch'), value:\?font=srch, \極粗
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
