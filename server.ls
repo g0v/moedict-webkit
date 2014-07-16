@@ -327,11 +327,11 @@ function text2png (text, font)
       ctx.font = "355px #font"
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
-        ctx.font = '355px TWBLG'
+        ctx.font = "355px #font, SourceHanSansTWHKRegular, TWBLG"
         ch += text.0
         text.=slice 1
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/ # combining
-        ctx.font = '355px Arial Unicode MS'
+        ctx.font = "355px Arial Unicode MS, #font"
         ch += text.0
         text.=slice 1
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
