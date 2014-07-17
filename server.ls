@@ -285,13 +285,13 @@ require(\zappajs) {+disable_io} ->
               option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
               option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
             optgroup label:'思源黑體', ->
-              option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \極細
+              option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \特細
               option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcl, \細體
               option selected:(png-suffix is '.png?font=srcn'), value:\?font=srcn, \標準
               option selected:(png-suffix is '.png?font=srcr'), value:\?font=srcr, \正黑
               option selected:(png-suffix is '.png?font=srcm'), value:\?font=srcm, \中黑
               option selected:(png-suffix is '.png?font=srcb'), value:\?font=srcb, \粗體
-              option selected:(png-suffix is '.png?font=srch'), value:\?font=srch, \極粗
+              option selected:(png-suffix is '.png?font=srch'), value:\?font=srch, \特粗
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
