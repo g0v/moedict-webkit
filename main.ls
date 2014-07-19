@@ -488,7 +488,7 @@ window.do-load = ->
       $('#result div, #result span, #result h1:not(:first)').hide!
       $('#result h1:first').text(it - /^[@=]/).show!
     else
-      $('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
+      #$('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
       $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
@@ -510,13 +510,16 @@ window.do-load = ->
       $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
       callLater set-pinyin-bindings
 
-  set-html = (html) -> callLater ->
+  set-html = (html) ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
 
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    $ \#result .html html .ruby!
+    React.View.result.setProps { html, type: \html }, bind-html-actions
+
+  bind-html-actions = ->
+    $ \#result .ruby!
     _pua!
 
     $('#result h1 rb[word]') .each ->
@@ -631,7 +634,8 @@ window.do-load = ->
     if part is /^\[\s*\[/
       html = render-strokes part, id
     else if part is /^\[/
-      html = render-list part, id
+      React.View.result.setProps { id, type: \list, terms: part, h: HASH-OF[LANG], lru: LRU[LANG] }, bind-html-actions
+      return
     else
       html = render $.parseJSON part
     html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span> "
