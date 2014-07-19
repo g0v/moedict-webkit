@@ -870,12 +870,6 @@
           href: $(this).data('href').replace(/__TEXT__/, prevId) + encodeURIComponent(encodeURIComponent(hash.substr(1)))
         });
       });
-      if (isMobile) {
-        $('#result div, #result span, #result h1:not(:first)').hide();
-        $('#result h1:first').text(replace$.call(it, /^[@=]/, '')).show();
-      } else {
-        window.scrollTo(0, 0);
-      }
       if (loadCacheHtml(it)) {
         return;
       }
@@ -922,8 +916,16 @@
     };
     bindHtmlActions = function(){
       var vclick;
+      $('.ui-tooltip').remove();
+      setTimeout(function(){
+        $('.ui-tooltip').remove();
+        return setTimeout(function(){
+          return $('.ui-tooltip').remove();
+        }, 125);
+      }, 125);
       $('#result').ruby();
       _pua();
+      window.scrollTo(0, 0);
       $('#result h1 rb[word]').each(function(){
         var _h, _i, _ci;
         _h = HASHOF[LANG];
@@ -1026,20 +1028,6 @@
           } catch (e$) {}
         }
       });
-      partialize$.apply(this, [
-        setTimeout, [
-          void 8, 125, function(){
-            $('.ui-tooltip').remove();
-            return partialize$.apply(this, [
-              setTimeout, [
-                void 8, 125, function(){
-                  return $('.ui-tooltip').remove();
-                }
-              ], [0]
-            ]);
-          }
-        ], [0]
-      ]);
       function _pua(){
         $('hruby rb[annotation]').each(function(){
           var a;
@@ -2101,16 +2089,5 @@
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
-  }
-  function partialize$(f, args, where){
-    var context = this;
-    return function(){
-      var params = slice$.call(arguments), i,
-          len = params.length, wlen = where.length,
-          ta = args ? args.concat() : [], tw = where ? where.concat() : [];
-      for(i = 0; i < len; ++i) { ta[tw[0]] = params[i]; tw.shift(); }
-      return len < wlen && len ?
-        partialize$.apply(context, [f, ta, tw]) : f.apply(context, ta);
-    };
   }
 }).call(this);

@@ -484,13 +484,7 @@ window.do-load = ->
     try document.title = "#it - #{ TITLE-OF[LANG] }萌典"
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
-    if isMobile
-      $('#result div, #result span, #result h1:not(:first)').hide!
-      $('#result h1:first').text(it - /^[@=]/).show!
-    else
-      #$('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
-      # $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
-      window.scroll-to 0 0
+
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌 and LANG is \a
     return load-json it
@@ -519,8 +513,16 @@ window.do-load = ->
     React.View.result.setProps { html, type: \html }, bind-html-actions
 
   bind-html-actions = ->
+    do
+      $('.ui-tooltip').remove!
+      <- setTimeout _, 125ms
+      $('.ui-tooltip').remove!
+      <- setTimeout _, 125ms
+      $('.ui-tooltip').remove!
+
     $ \#result .ruby!
     _pua!
+    window.scroll-to 0 0
 
     $('#result h1 rb[word]') .each ->
       _h = HASH-OF[LANG]
@@ -581,11 +583,10 @@ window.do-load = ->
     }
     $('#result a[href]:not(.xref)').hoverIntent do
         timeout: 250ms
-        over: -> $('.ui-tooltip').remove! ; try $(@).tooltip \open
+        over: ->
+          $('.ui-tooltip').remove!
+          try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-    setTimeout _, 125ms ->
-      $('.ui-tooltip').remove!
-      setTimeout _, 125ms -> $('.ui-tooltip').remove!
 
     function _pua
       $('hruby rb[annotation]').each ->
