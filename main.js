@@ -874,7 +874,6 @@
         $('#result div, #result span, #result h1:not(:first)').hide();
         $('#result h1:first').text(replace$.call(it, /^[@=]/, '')).show();
       } else {
-        $('#result h1:first').text(replace$.call(it, /^[@=]/, '')).css('visibility', 'visible');
         window.scrollTo(0, 0);
       }
       if (loadCacheHtml(it)) {

@@ -489,7 +489,7 @@ window.do-load = ->
       $('#result h1:first').text(it - /^[@=]/).show!
     else
       #$('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
-      $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
+      # $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
       window.scroll-to 0 0
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌 and LANG is \a

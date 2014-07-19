@@ -1,9 +1,12 @@
 {p, a, h1, div, main, span} = React.DOM
 
+inline = (props = {}, ...args) ->
+  div ({ style: { display: \inline } } <<< props), ...args
+
 Result = React.createClass render: ->
   switch @props.type
   | \list => List @props
-  | \html => div { dangerouslySetInnerHTML: { __html: @props.html } }
+  | \html => inline { dangerouslySetInnerHTML: { __html: @props.html } }
   | _     => div {}
 
 List = React.createClass do
@@ -26,13 +29,13 @@ List = React.createClass do
         t = t.1
         span { style: { clear: \both display: \block visibility: \visible } },
           '\u00B7', a { href: "#h#t" } t
-      return main {}, ...[title, ...list]
+      return inline {}, ...[title, ...list]
     if id is \字詞紀錄簿 and lru
       terms += "<br><h3 id='lru'>最近查閱過的字詞"
       terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>"
       terms += "</h3>\n"
       terms += lru.replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
-    return div {}, title, div { dangerouslySetInnerHTML: { __html: terms } }
+    return inline {}, title, div { dangerouslySetInnerHTML: { __html: terms } }
 
 $ ->
   React{}.View.result = React.renderComponent Result!, $(\#result).0
