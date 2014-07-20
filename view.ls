@@ -1,13 +1,13 @@
 {p, i, a, h1, div, main, span, br, h3, table, tr, td, th, input} = React.DOM
 
-inline = (props = {}, ...args) ->
+div-inline = (props = {}, ...args) ->
   div ({ style: { display: \inline } } <<< props), ...args
 
-Result = React.createClass render: ->
-  switch @props.type
-  | \list => List @props
-  | \html => inline { dangerouslySetInnerHTML: { __html: @props.html } }
-  | _     => div {}
+Result = React.createClass do
+  render: -> switch @props.type
+    | \list => List @props
+    | \html => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
+    | _     => div {}
 
 List = React.createClass do
   render: ->
@@ -50,7 +50,7 @@ List = React.createClass do
           value: \清除, style: { marginLeft: \10px }
         }
       list ++= str-to-list lru
-    return inline {}, ...list
+    return div-inline {}, ...list
 
 $ ->
   React{}.View.result = React.renderComponent Result!, $(\#result).0
