@@ -17,6 +17,13 @@
       switch (this.props.type) {
       case 'list':
         return List(this.props);
+      case 'spin':
+        return divInline({
+          style: {
+            marginTop: '19px',
+            marginLeft: '1px'
+          }
+        }, h1({}, this.props.id));
       case 'html':
         return divInline({
           dangerouslySetInnerHTML: {

@@ -487,6 +487,7 @@ window.do-load = ->
 
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌 and LANG is \a
+    React.View.result.setProps { id: it, type: \spin }
     return load-json it
 
   load-json = (id, cb) ->

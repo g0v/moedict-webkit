@@ -876,6 +876,10 @@
       if (it === '萌' && LANG === 'a') {
         return fillJson(MOE, '萌');
       }
+      React.View.result.setProps({
+        id: it,
+        type: 'spin'
+      });
       return loadJson(it);
     };
     loadJson = function(id, cb){

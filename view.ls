@@ -6,6 +6,7 @@ div-inline = (props = {}, ...args) ->
 Result = React.createClass do
   render: -> switch @props.type
     | \list => List @props
+    | \spin => div-inline { style: { marginTop: \19px, marginLeft: \1px } }, h1 {} @props.id
     | \html => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
     | _     => div {}
 
