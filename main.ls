@@ -487,7 +487,7 @@ window.do-load = ->
 
     return if load-cache-html it
     return fill-json MOE, \萌 if it is \萌 and LANG is \a
-    React.View.result.setProps { id: it, type: \spin }
+    React.View.result.setProps { id: it, type: \spin } unless isApp
     return load-json it
 
   load-json = (id, cb) ->
@@ -633,13 +633,20 @@ window.do-load = ->
     part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#h#word\\\">#word</a>#post</span>"
     part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#word\\\">#word</a>"
     part.=replace /([)）])/g "$1\u200B"
+
+    reactProps = null
     if part is /^\[\s*\[/
-      html = render-strokes part, id
+      reactProps = { id, type: \radical, terms: part, h: HASH-OF[LANG] }
     else if part is /^\[/
-      React.View.result.setProps { id, type: \list, terms: part, h: HASH-OF[LANG], lru: LRU[LANG] }, bind-html-actions
-      return
+      reactProps = { id, type: \list, terms: part, h: HASH-OF[LANG], lru: LRU[LANG] }
     else
       html = render $.parseJSON part
+
+    if reactProps
+      if cb === set-html
+        return React.View.result.setProps reactProps, bind-html-actions
+      return cb React.renderComponentToString React.View.Result(reactProps)
+
     html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span> "
     html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
@@ -870,23 +877,6 @@ function can-play-opus
   return CACHED.can-play-opus if CACHED.can-play-opus?
   a = document.createElement \audio
   CACHED.can-play-opus = !!(a.canPlayType?('audio/ogg; codecs="opus"') - /^no$/)
-
-function render-strokes (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  if id is /^\s*$/
-    title = "<h1 itemprop='name'>部首表</h1>"
-    h += '@'
-  else
-    title = "<h1 itemprop='name'>#id <a class='xref' href=\"#\@\" title='部首表'>部</a></h1>"
-  rows = $.parseJSON terms
-  list = ''
-  for chars, strokes in rows | chars?length
-    list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
-    for ch in chars
-      list += "<a class='stroke-char' href=\"#h#ch\">#ch</a> "
-    list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
-  return "#title<div class='list'>#list</div>"
 
 http-map =
   a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com

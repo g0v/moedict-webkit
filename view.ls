@@ -1,14 +1,40 @@
-{p, i, a, h1, div, main, span, br, h3, table, tr, td, th, input} = React.DOM
+{p, i, a, h1, div, main, span, br, h3, table, tr, td, th, input, hr} = React.DOM
 
-div-inline = (props = {}, ...args) ->
-  div ({ style: { display: \inline } } <<< props), ...args
+withProperties = (tag, def-props={}) ->
+  (props = {}, ...args) ->
+    tag ({} <<< def-props <<< props), ...args
+
+div-inline = div `withProperties` { style: { display: \inline } }
+h1-name    = h1  `withProperties` { itemProp: \name }
 
 Result = React.createClass do
   render: -> switch @props.type
-    | \list => List @props
-    | \spin => div-inline { style: { marginTop: \19px, marginLeft: \1px } }, h1 {} @props.id
-    | \html => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
-    | _     => div {}
+    | \list    => List @props
+    | \radical => Radical @props
+    | \spin    => div-inline { style: { marginTop: \19px, marginLeft: \1px } }, h1 {} @props.id
+    | \html    => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
+    | _        => div {}
+
+Radical = React.createClass do
+  render: ->
+    {terms, id, h} = @props
+    id -= /^[@=]/
+    if id is /\S/
+      title = h1-name {}, "#id ", a { className: \xref, href: \#, title: \部首表 }, \部
+    else
+      h += '@'
+      title = h1-name {}, \部首表
+    rows = $.parseJSON terms
+    list = []
+    for chars, strokes in rows | chars?length
+      chs = []
+      for ch in chars
+        chs ++= a { className: \stroke-char, href: "#h#ch" }, ch
+        chs ++= ' '
+      list ++= span { className: \stroke-count }, strokes
+      list ++= span { className: \stroke-list }, chs
+      list ++= hr { style: { margin: 0, padding: 0, height: 0 } }
+    return div-inline {}, title, div { className: \list }, ...list
 
 List = React.createClass do
   render: ->
@@ -17,7 +43,7 @@ List = React.createClass do
 
     id -= /^[@=]/
     terms -= /^[^"]*/
-    list = [ h1 { itemProp: \name } id ]
+    list = [ h1-name {}, id ]
 
     if id is \字詞紀錄簿 and not terms
       const btn = i { className: \icon-star-empty }
@@ -54,4 +80,5 @@ List = React.createClass do
     return div-inline {}, ...list
 
 $ ->
-  React{}.View.result = React.renderComponent Result!, $(\#result).0
+  React{}.View.Result = Result
+  React.View.result = React.renderComponent Result!, $(\#result).0

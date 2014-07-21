@@ -876,10 +876,12 @@
       if (it === '萌' && LANG === 'a') {
         return fillJson(MOE, '萌');
       }
-      React.View.result.setProps({
-        id: it,
-        type: 'spin'
-      });
+      if (!isApp) {
+        React.View.result.setProps({
+          id: it,
+          type: 'spin'
+        });
+      }
       return loadJson(it);
     };
     loadJson = function(id, cb){
@@ -1085,7 +1087,7 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, html, hasXrefs, tgtLang, ref$, words, word;
+      var h, reactProps, html, hasXrefs, tgtLang, ref$, words, word;
       cb == null && (cb = setHtml);
       while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
         part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
@@ -1108,19 +1110,30 @@
         return "<a href=\\\"" + h + word + "\\\">" + word + "</a>";
       });
       part = part.replace(/([)）])/g, "$1\u200B");
+      reactProps = null;
       if (/^\[\s*\[/.exec(part)) {
-        html = renderStrokes(part, id);
+        reactProps = {
+          id: id,
+          type: 'radical',
+          terms: part,
+          h: HASHOF[LANG]
+        };
       } else if (/^\[/.exec(part)) {
-        React.View.result.setProps({
+        reactProps = {
           id: id,
           type: 'list',
           terms: part,
           h: HASHOF[LANG],
           lru: LRU[LANG]
-        }, bindHtmlActions);
-        return;
+        };
       } else {
         html = render($.parseJSON(part));
+      }
+      if (reactProps) {
+        if (deepEq$(cb, setHtml, '===')) {
+          return React.View.result.setProps(reactProps, bindHtmlActions);
+        }
+        return cb(React.renderComponentToString(React.View.Result(reactProps)));
       }
       html = html.replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span> ");
       html = html.replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>");
@@ -1534,57 +1547,6 @@
     }
     a = document.createElement('audio');
     return CACHED.canPlayOpus = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="opus"') : void 8, /^no$/, ''));
-  }
-  function renderStrokes(terms, id){
-    var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
-    h = HASHOF[LANG];
-    id = replace$.call(id, /^[@=]/, '');
-    if (/^\s*$/.exec(id)) {
-      title = "<h1 itemprop='name'>部首表</h1>";
-      h += '@';
-    } else {
-      title = "<h1 itemprop='name'>" + id + " <a class='xref' href=\"#@\" title='部首表'>部</a></h1>";
-    }
-    rows = $.parseJSON(terms);
-    list = '';
-    for (i$ = 0, len$ = rows.length; i$ < len$; ++i$) {
-      strokes = i$;
-      chars = rows[i$];
-      if (chars != null && chars.length) {
-        list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
-        for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
-          ch = chars[j$];
-          list += "<a class='stroke-char' href=\"" + h + ch + "\">" + ch + "</a> ";
-        }
-        list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
-      }
-    }
-    return title + "<div class='list'>" + list + "</div>";
-  }
-  function renderList(terms, id){
-    var h, title;
-    h = HASHOF[LANG];
-    id = replace$.call(id, /^[@=]/, '');
-    title = "<h1 itemprop='name'>" + id + "</h1>";
-    terms = replace$.call(terms, /^[^"]*/, '');
-    if (id === '字詞紀錄簿') {
-      if (!terms) {
-        terms += "<p class='bg-info'>（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）</p>";
-      }
-    }
-    if (/^";/.exec(terms)) {
-      terms = "<table border=1 bordercolor=#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>" + terms + "</table>";
-      terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
-    } else {
-      terms = terms.replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
-    }
-    if (id === '字詞紀錄簿' && LRU[LANG]) {
-      terms += "<br><h3 id='lru'>最近查閱過的字詞";
-      terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>";
-      terms += "</h3>\n";
-      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<span style='clear: both; display: block'>\u00B7 <a href=\"" + h + "$1\">$1</a></span>");
-    }
-    return title + "<div class='list'>" + terms + "</div>";
   }
   httpMap = {
     a: '203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com',
@@ -2093,5 +2055,89 @@
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
+  }
+  function deepEq$(x, y, type){
+    var toString = {}.toString, hasOwnProperty = {}.hasOwnProperty,
+        has = function (obj, key) { return hasOwnProperty.call(obj, key); };
+    var first = true;
+    return eq(x, y, []);
+    function eq(a, b, stack) {
+      var className, length, size, result, alength, blength, r, key, ref, sizeB;
+      if (a == null || b == null) { return a === b; }
+      if (a.__placeholder__ || b.__placeholder__) { return true; }
+      if (a === b) { return a !== 0 || 1 / a == 1 / b; }
+      className = toString.call(a);
+      if (toString.call(b) != className) { return false; }
+      switch (className) {
+        case '[object String]': return a == String(b);
+        case '[object Number]':
+          return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
+        case '[object Date]':
+        case '[object Boolean]':
+          return +a == +b;
+        case '[object RegExp]':
+          return a.source == b.source &&
+                 a.global == b.global &&
+                 a.multiline == b.multiline &&
+                 a.ignoreCase == b.ignoreCase;
+      }
+      if (typeof a != 'object' || typeof b != 'object') { return false; }
+      length = stack.length;
+      while (length--) { if (stack[length] == a) { return true; } }
+      stack.push(a);
+      size = 0;
+      result = true;
+      if (className == '[object Array]') {
+        alength = a.length;
+        blength = b.length;
+        if (first) { 
+          switch (type) {
+          case '===': result = alength === blength; break;
+          case '<==': result = alength <= blength; break;
+          case '<<=': result = alength < blength; break;
+          }
+          size = alength;
+          first = false;
+        } else {
+          result = alength === blength;
+          size = alength;
+        }
+        if (result) {
+          while (size--) {
+            if (!(result = size in a == size in b && eq(a[size], b[size], stack))){ break; }
+          }
+        }
+      } else {
+        if ('constructor' in a != 'constructor' in b || a.constructor != b.constructor) {
+          return false;
+        }
+        for (key in a) {
+          if (has(a, key)) {
+            size++;
+            if (!(result = has(b, key) && eq(a[key], b[key], stack))) { break; }
+          }
+        }
+        if (result) {
+          sizeB = 0;
+          for (key in b) {
+            if (has(b, key)) { ++sizeB; }
+          }
+          if (first) {
+            if (type === '<<=') {
+              result = size < sizeB;
+            } else if (type === '<==') {
+              result = size <= sizeB
+            } else {
+              result = size === sizeB;
+            }
+          } else {
+            first = false;
+            result = size === sizeB;
+          }
+        }
+      }
+      stack.pop();
+      return result;
+    }
   }
 }).call(this);
