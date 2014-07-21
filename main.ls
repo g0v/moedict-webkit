@@ -888,25 +888,6 @@ function render-strokes (terms, id)
     list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
   return "#title<div class='list'>#list</div>"
 
-function render-list (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  title = "<h1 itemprop='name'>#id</h1>"
-  terms -= /^[^"]*/
-  if id is \字詞紀錄簿
-    terms += "<p class='bg-info'>（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）</p>" unless terms
-  if terms is /^";/
-    terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
-    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
-  else
-    terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
-  if id is \字詞紀錄簿 and LRU[LANG]
-    terms += "<br><h3 id='lru'>最近查閱過的字詞"
-    terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>"
-    terms += "</h3>\n"
-    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
-  return "#title<div class='list'>#terms</div>"
-
 http-map =
   a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com
   h: \a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com
