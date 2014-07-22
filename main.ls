@@ -515,7 +515,7 @@ window.do-load = ->
       $('.ui-tooltip').remove!
 
     $ \#result .ruby!
-    #_pua!
+    _pua!
     window.scroll-to 0 0
 
     $('#result h1 rb[word]') .each ->
