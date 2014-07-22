@@ -566,7 +566,7 @@ window.do-load = ->
       $('#result .playAudio').on \touchstart -> $(@).click! if $(@).hasClass('icon-play')
       return
 
-    $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
+    $('#result .trs.pinyin').tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
@@ -586,7 +586,8 @@ window.do-load = ->
         timeout: 250ms
         over: ->
           $('.ui-tooltip').remove!
-          try $(@).tooltip \open
+          unless $(\#loading).length
+            try $(@).tooltip \open
         out: -> try $(@).tooltip \close
 
     function _pua

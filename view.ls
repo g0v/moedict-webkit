@@ -18,7 +18,7 @@ Result = React.createClass do
     | \term    => Term @props
     | \list    => List @props
     | \radical => RadicalTable @props
-    | \spin    => div-inline { style: { marginTop: \19px, marginLeft: \1px } }, h1 {} @props.id
+    | \spin    => div-inline { id: \loading, style: { marginTop: \19px, marginLeft: \1px } }, h1 {} @props.id
     | \html    => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
     | _        => div {}
 
@@ -338,7 +338,8 @@ can-play-ogg = -> no
 can-play-opus = -> no
 function h (it)
   id = CurrentId
-  it.replace(/[\uFF0E\u2022]/g '\u00B7').replace(/\u223C/g '\uFF0D').replace(/\u0358/g '\u030d')
+  it += '</span></span></span></span>' if it is /\uFFF9/
+  res = it.replace(/[\uFF0E\u2022]/g '\u00B7').replace(/\u223C/g '\uFF0D').replace(/\u0358/g '\u030d')
     .replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span> "
     .replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     .replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
@@ -346,7 +347,15 @@ function h (it)
     .replace //<a[^<]+>#id<\/a>//g "#id"
     .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
     .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
-    .replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
+    .replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
+    .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
+    .replace(/\uFFFB$/, '')
+    .replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">')
+    .replace(/<span class="rt mandarin">\s*<\//g '</')
+    .replace /(<span class="rt trs pinyin")>\s*([^<]+)/g, (_, pre, trs) -> """
+      #pre title="#{ trs2bpmf \t trs }">#trs
+    """
+  return res
 
 untag = (- /<[^>]*>/g)
 

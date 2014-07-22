@@ -995,9 +995,7 @@
         });
         return;
       }
-      $('#result .trs.pinyin').each(function(){
-        return $(this).attr('title', trs2bpmf($(this).text()));
-      }).tooltip({
+      $('#result .trs.pinyin').tooltip({
         tooltipClass: 'bpmf'
       });
       $('#result a[href]:not(.xref)').tooltip({
@@ -1028,9 +1026,11 @@
         timeout: 250,
         over: function(){
           $('.ui-tooltip').remove();
-          try {
-            return $(this).tooltip('open');
-          } catch (e$) {}
+          if (!$('#loading').length) {
+            try {
+              return $(this).tooltip('open');
+            } catch (e$) {}
+          }
         },
         out: function(){
           try {

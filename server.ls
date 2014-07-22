@@ -1,6 +1,7 @@
 #!/usr/bin/env lsc
 require! <[ fs ]>
 LTM-regexes = {}
+index-html = fs.read-file-sync \index.html
 
 for let lang in <[ a t h c ]>
   err, json <- fs.read-file "#lang/lenToRegex.json"
