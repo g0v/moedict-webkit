@@ -453,5 +453,5 @@ if module?
 else $ ->
   React{}.View.Result = Result
   React.View.decodeLangPart = decodeLangPart
-  unless $('#result > div[data-react-checksum]').length
+  unless window.PRERENDER_LANG
     React.View.result = React.renderComponent Result!, $(\#result).0

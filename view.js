@@ -1001,7 +1001,7 @@
     $(function(){
       (React.View || (React.View = {})).Result = Result;
       React.View.decodeLangPart = decodeLangPart;
-      if (!$('#result > div[data-react-checksum]').length) {
+      if (!window.PRERENDER_LANG) {
         return React.View.result = React.renderComponent(Result(), $('#result')[0]);
       }
     });
