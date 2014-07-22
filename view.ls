@@ -29,7 +29,7 @@ Term = React.createClass do
     a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
     $char = if radical
       div { className: \radical },
-        RadicalGlyph { char: radical - /<\/?a[^>]*>/g }
+        RadicalGlyph { H, char: radical - /<\/?a[^>]*>/g }
         span { className: \count },
           span { className: \sym }, \+
           nrs-count
@@ -121,7 +121,7 @@ Heteronym = React.createClass do
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
-      ...$char
+      $char
       h1 { className: \title, 'data-title': t }, ...list
       div { className: \bopomofo },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
@@ -269,7 +269,7 @@ const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉�
 
 RadicalGlyph = React.createClass do
   render: ->
-    {char, h} = @props
+    {char, H} = @props
     idx = CJK-RADICALS.index-of(char)
     char = CJK-RADICALS[idx+1] unless idx % 2
     #return char unless LANG in <[ a c ]>

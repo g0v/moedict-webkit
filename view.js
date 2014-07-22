@@ -69,6 +69,7 @@
         ? div({
           className: 'radical'
         }, RadicalGlyph({
+          H: H,
           char: replace$.call(radical, /<\/?a[^>]*>/g, '')
         }), span({
           className: 'count'
@@ -294,58 +295,52 @@
           className: 'specific_to'
         }, specific_to));
       }
-      return divInline.apply(null, [
-        {}, meta({
-          itemProp: 'image',
-          content: encodeURIComponent(t) + ".png"
-        }), meta({
-          itemProp: 'name',
-          content: t
-        })
-      ].concat(
-        slice$.call($char), [
-          h1.apply(null, [{
-            className: 'title',
-            'data-title': t
-          }].concat(slice$.call(list))), div({
-            className: 'bopomofo'
-          }, alt != null ? div({
-            lang: 'zh-Hans',
-            className: 'cn-specific'
-          }, span({
-            className: 'xref part-of-speech'
-          }, '简'), span({
-            className: 'xref'
-          }, untag(alt))) : void 8, cnSpecific
-            ? small({
-              className: 'alternative cn-specific'
-            }, span({
-              className: 'pinyin'
-            }, pinyin), span({
-              className: 'bopomofo'
-            }, bopomofo))
-            : LANG === 'h' ? span.apply(null, [{
-              className: 'pinyin'
-            }].concat(slice$.call(pinyinList))) : void 8), div.apply(null, [{
-            className: 'entry',
-            itemProp: 'articleBody'
-          }].concat((function(){
-            var i$, ref$, len$, results$ = [];
-            for (i$ = 0, len$ = (ref$ = groupBy('type', definitions.slice())).length; i$ < len$; ++i$) {
-              defs = ref$[i$];
-              results$.push(DefinitionList({
-                LANG: LANG,
-                H: H,
-                defs: defs,
-                synonyms: synonyms,
-                antonyms: antonyms,
-                variants: variants
-              }));
-            }
-            return results$;
-          }())))
-        ]
-      ));
+      return divInline({}, meta({
+        itemProp: 'image',
+        content: encodeURIComponent(t) + ".png"
+      }), meta({
+        itemProp: 'name',
+        content: t
+      }), $char, h1.apply(null, [{
+        className: 'title',
+        'data-title': t
+      }].concat(slice$.call(list))), div({
+        className: 'bopomofo'
+      }, alt != null ? div({
+        lang: 'zh-Hans',
+        className: 'cn-specific'
+      }, span({
+        className: 'xref part-of-speech'
+      }, '简'), span({
+        className: 'xref'
+      }, untag(alt))) : void 8, cnSpecific
+        ? small({
+          className: 'alternative cn-specific'
+        }, span({
+          className: 'pinyin'
+        }, pinyin), span({
+          className: 'bopomofo'
+        }, bopomofo))
+        : LANG === 'h' ? span.apply(null, [{
+          className: 'pinyin'
+        }].concat(slice$.call(pinyinList))) : void 8), div.apply(null, [{
+        className: 'entry',
+        itemProp: 'articleBody'
+      }].concat((function(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = groupBy('type', definitions.slice())).length; i$ < len$; ++i$) {
+          defs = ref$[i$];
+          results$.push(DefinitionList({
+            LANG: LANG,
+            H: H,
+            defs: defs,
+            synonyms: synonyms,
+            antonyms: antonyms,
+            variants: variants
+          }));
+        }
+        return results$;
+      }()))));
     }
   });
   decorateRuby = function(arg$){
@@ -588,8 +583,8 @@
   CJKRADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉儿⼊入⼋八⼌冂⼍冖⼎冫⼏几⼐凵⼑刀⼒力⼓勹⼔匕⼕匚⼖匸⼗十⼘卜⼙卩⼚厂⼛厶⼜又⼝口⼞囗⼟土⼠士⼡夂⼢夊⼣夕⼤大⼥女⼦子⼧宀⼨寸⼩小⼪尢⼫尸⼬屮⼭山⼮巛⼯工⼰己⼱巾⼲干⼳幺⼴广⼵廴⼶廾⼷弋⼸弓⼹彐⼺彡⼻彳⼼心⼽戈⼾戶⼿手⽀支⽁攴⽂文⽃斗⽄斤⽅方⽆无⽇日⽈曰⽉月⽊木⽋欠⽌止⽍歹⽎殳⽏毋⽐比⽑毛⽒氏⽓气⽔水⽕火⽖爪⽗父⽘爻⽙爿⺦丬⽚片⽛牙⽜牛⽝犬⽞玄⽟玉⽠瓜⽡瓦⽢甘⽣生⽤用⽥田⽦疋⽧疒⽨癶⽩白⽪皮⽫皿⽬目⽭矛⽮矢⽯石⽰示⽱禸⽲禾⽳穴⽴立⽵竹⽶米⽷糸⺰纟⽸缶⽹网⽺羊⽻羽⽼老⽽而⽾耒⽿耳⾀聿⾁肉⾂臣⾃自⾄至⾅臼⾆舌⾇舛⾈舟⾉艮⾊色⾋艸⾌虍⾍虫⾎血⾏行⾐衣⾑襾⾒見⻅见⾓角⾔言⻈讠⾕谷⾖豆⾗豕⾘豸⾙貝⻉贝⾚赤⾛走⾜足⾝身⾞車⻋车⾟辛⾠辰⾡辵⻌辶⾢邑⾣酉⾤釆⾥里⾦金⻐钅⾧長⻓长⾨門⻔门⾩阜⾪隶⾫隹⾬雨⾭靑⾮非⾯面⾰革⾱韋⻙韦⾲韭⾳音⾴頁⻚页⾵風⻛风⾶飛⻜飞⾷食⻠饣⾸首⾹香⾺馬⻢马⾻骨⾼高⾽髟⾾鬥⾿鬯⿀鬲⿁鬼⿂魚⻥鱼⻦鸟⿃鳥⿄鹵⻧卤⿅鹿⿆麥⻨麦⿇麻⿈黃⻩黄⿉黍⿊黑⿋黹⿌黽⻪黾⿍鼎⿎鼓⿏鼠⿐鼻⿑齊⻬齐⿒齒⻮齿⿓龍⻰龙⿔龜⻳龟⿕龠';
   RadicalGlyph = React.createClass({
     render: function(){
-      var ref$, char, h, idx;
-      ref$ = this.props, char = ref$.char, h = ref$.h;
+      var ref$, char, H, idx;
+      ref$ = this.props, char = ref$.char, H = ref$.H;
       idx = CJKRADICALS.indexOf(char);
       if (!(idx % 2)) {
         char = CJKRADICALS[idx + 1];
