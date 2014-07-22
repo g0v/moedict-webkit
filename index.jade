@@ -30,6 +30,33 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         | &nbsp;瀏覽器。
       p Sorry, Internet Explorer 8 and earlier versions are not supported.
     | <![endif]-->
+    .results
+      #strokes(style='display: none')
+      #result.result
+        center(style='font-size: 30px; margin-top: 40px; margin-bottom: 40px')
+          span#loading
+          br
+          br
+          img.logo(title='〔萌典〕', src='images/icon.png', width='100')
+          br
+          br
+          span#F9868(style='font-family: "MOEDICT"; margin-botom: 40px')
+          i.icon-spinner
+      a#sendback.btn.btn-default.small(title='送回編修', style='margin-left: 50%; display: none; background: #333333; color: white', href='mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：', target='_blank') 送回編修
+      // a.visible-xs.pull-left.ebas(href='about.html', title='關於本站', onclick='pressAbout(); return false') 萌典
+      a.visible-xs.pull-left.ebas.btn.btn-default(href='#', onclick='pressAbout(); return false', title='關於本站', style='float: left; margin-top: -10px; margin-left: 5px; margin-bottom: 5px')
+        span.iconic-circle: i.icon-info
+        span  萌典
+      .share(style='float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px')
+        a#share-f.btn.btn-default.small(title='Facebook 分享', style='background: #3B579D; color: white', data-href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
+          i.icon-share &nbsp;
+          i.icon-facebook
+        a#share-t.btn.btn-default.small(title='Twitter 分享', style='background: #00ACED; color: white', data-href='https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
+          i.icon-share &nbsp;
+          i.icon-twitter
+        a#share-g.btn.btn-default.small(title='Google+ 分享', style='background: #D95C5C; color: white', data-href='https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
+          i.icon-share &nbsp;
+          i.icon-google-plus
     .nav-bg.navbar-fixed-top
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
@@ -101,33 +128,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
       span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
       span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-    .results
-      #strokes(style='display: none')
-      #result.result
-        center(style='font-size: 30px; margin-top: 40px; margin-bottom: 40px')
-          span#loading
-          br
-          br
-          img.logo(title='〔萌典〕', src='images/icon.png', width='100')
-          br
-          br
-          span#F9868(style='font-family: "MOEDICT"; margin-botom: 40px')
-          i.icon-spinner
-      a#sendback.btn.btn-default.small(title='送回編修', style='margin-left: 50%; display: none; background: #333333; color: white', href='mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：', target='_blank') 送回編修
-      // a.visible-xs.pull-left.ebas(href='about.html', title='關於本站', onclick='pressAbout(); return false') 萌典
-      a.visible-xs.pull-left.ebas.btn.btn-default(href='#', onclick='pressAbout(); return false', title='關於本站', style='float: left; margin-top: -10px; margin-left: 5px; margin-bottom: 5px')
-        span.iconic-circle: i.icon-info
-        span  萌典
-      .share(style='float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px')
-        a#share-f.btn.btn-default.small(title='Facebook 分享', style='background: #3B579D; color: white', data-href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
-          i.icon-share &nbsp;
-          i.icon-facebook
-        a#share-t.btn.btn-default.small(title='Twitter 分享', style='background: #00ACED; color: white', data-href='https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
-          i.icon-share &nbsp;
-          i.icon-twitter
-        a#share-g.btn.btn-default.small(title='Google+ 分享', style='background: #D95C5C; color: white', data-href='https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
-          i.icon-share &nbsp;
-          i.icon-google-plus
     #query-box.query-box
       input#query.query(type='search', style='display: none', autofocus='', autocomplete='off', placeholder='請輸入欲查詢的字詞')
       #timeline.hidden-xs(style='position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px')
