@@ -873,7 +873,7 @@
       if (loadCacheHtml(it)) {
         return;
       }
-      React.View.result.setProps({
+      React.View.result.replaceProps({
         id: it,
         type: 'spin'
       });
@@ -913,7 +913,7 @@
         });
       }
       html = html.replace('<!-- STAR -->', ~STARRED[LANG].indexOf("\"" + prevId + "\"") ? "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>" : "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>");
-      return React.View.result.setProps({
+      return React.View.result.replaceProps({
         html: html,
         type: 'html'
       }, bindHtmlActions);
@@ -1028,11 +1028,12 @@
       $('#result a[href]:not(.xref)').hoverIntent({
         timeout: 250,
         over: function(){
+          var this$ = this;
           return setTimeout(function(){
             $('.ui-tooltip').remove();
             if (!$('#loading').length) {
               try {
-                return $(this).tooltip('open');
+                return $(this$).tooltip('open');
               } catch (e$) {}
             }
           }, 50);
@@ -1136,7 +1137,7 @@
         }, $.parseJSON(part));
       }
       if (cb === setHtml) {
-        return React.View.result.setProps(reactProps, bindHtmlActions);
+        return React.View.result.replaceProps(reactProps, bindHtmlActions);
       }
       return cb(React.renderComponentToString(React.View.Result(reactProps)));
     };

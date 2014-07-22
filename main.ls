@@ -486,7 +486,7 @@ window.do-load = ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
 
     return if load-cache-html it
-    React.View.result.setProps { id: it, type: \spin } # unless isApp
+    React.View.result.replaceProps { id: it, type: \spin } # unless isApp
     return fill-json MOE, \萌 if it is \萌 and LANG is \a
     return load-json it
 
@@ -510,7 +510,7 @@ window.do-load = ->
     html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
       then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
       else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    React.View.result.setProps { html, type: \html }, bind-html-actions
+    React.View.result.replaceProps { html, type: \html }, bind-html-actions
 
   bind-html-actions = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
@@ -587,7 +587,7 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').hoverIntent do
         timeout: 250ms
         over: ->
-          <- setTimeout _, 50ms
+          <~ setTimeout _, 50ms
           $('.ui-tooltip').remove!
           unless $(\#loading).length
             try $(@).tooltip \open
@@ -637,7 +637,7 @@ window.do-load = ->
       xrefs = [ { lang, words } for lang, words of xref-of id | words.length ]
       reactProps = { id, xrefs, LANG, type: \term, H: HASH-OF[LANG] } <<< $.parseJSON part
     if cb is set-html
-      return React.View.result.setProps reactProps, bind-html-actions
+      return React.View.result.replaceProps reactProps, bind-html-actions
     return cb React.renderComponentToString React.View.Result(reactProps)
 
   fill-bucket = (id, bucket, cb) ->
