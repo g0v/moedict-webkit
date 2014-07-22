@@ -144,7 +144,6 @@ require(\zappajs) {+disable_io} ->
     payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
     chars = text.replace(/^['!~:]/, '')
     chars.=slice(0, 50)
-    /*
     png-file = "png/#chars.#font.png"
     if fs.existsSync png-file
       png = fs.createReadStream \/dev/null
@@ -153,7 +152,6 @@ require(\zappajs) {+disable_io} ->
       png = text2png(chars, font)
       png-stream = fs.createWriteStream png-file
     <~ png.pipe(png-stream).on \close
-    */
     if err
       chunk = val - /[`~]/g
       for re in LTM-regexes[lang] ? []

@@ -307,11 +307,9 @@
       }), $char, h1.apply(null, [{
         className: 'title',
         'data-title': t,
-        style: H[0] === '#'
-          ? {}
-          : {
-            visibility: 'hidden'
-          }
+        style: {
+          visibility: 'hidden'
+        }
       }].concat(slice$.call(list))), bopomofo ? div({
         className: "bopomofo " + cnSpecific
       }, alt != null ? div({

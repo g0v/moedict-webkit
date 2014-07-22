@@ -925,6 +925,7 @@
       }, 125);
       $('#result').ruby();
       _pua();
+      $('#result h1').css('visibility', 'visible');
       window.scrollTo(0, 0);
       $('#result h1 rb[word]').each(function(){
         var _h, _i, _ci;

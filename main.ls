@@ -516,6 +516,7 @@ window.do-load = ->
 
     $ \#result .ruby!
     _pua!
+    $ '#result h1' .css \visibility \visible
     window.scroll-to 0 0
 
     $('#result h1 rb[word]') .each ->

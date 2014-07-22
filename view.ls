@@ -123,7 +123,7 @@ Heteronym = React.createClass do
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
       $char
-      h1 { className: \title, 'data-title': t, style: if H.0 is \# then {} else { visibility: \hidden } }, ...list
+      h1 { className: \title, 'data-title': t, style: { visibility: \hidden } }, ...list
       if bopomofo then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简

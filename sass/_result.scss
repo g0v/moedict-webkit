@@ -60,6 +60,8 @@ hruby {
 .ui-tooltip {
     // 條目標題
     h1 {
+        visibility: visible !important;
+
         // posi
         margin: -.25em 0 .5em;
         padding-bottom: .3em;
