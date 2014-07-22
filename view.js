@@ -306,7 +306,12 @@
         content: t
       }), $char, h1.apply(null, [{
         className: 'title',
-        'data-title': t
+        'data-title': t,
+        style: H[0] === '#'
+          ? {}
+          : {
+            visibility: 'hidden'
+          }
       }].concat(slice$.call(list))), bopomofo ? div({
         className: "bopomofo " + cnSpecific
       }, alt != null ? div({
@@ -959,7 +964,7 @@
     D: '"dialects"',
     S: '"specific_to"'
   };
-  decodeLangPart = function(LANG, part){
+  decodeLangPart = function(LANGORH, part){
     var H;
     part == null && (part = '');
     while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
@@ -969,7 +974,7 @@
     part = part.replace(/"([hbpdcnftrelsaqETAVCDS_=])":/g, function(arg$, k){
       return keyMap[k] + ':';
     });
-    H = HASHOF[LANG];
+    H = HASHOF[LANGORH] || LANGORH;
     part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
       return "<span class='punct'>" + pre + "<a href=\\\"" + H + word + "\\\">" + word + "</a>" + post + "</span>";
     });
@@ -995,8 +1000,10 @@
   } else {
     $(function(){
       (React.View || (React.View = {})).Result = Result;
-      React.View.result = React.renderComponent(Result(), $('#result')[0]);
-      return React.View.decodeLangPart = decodeLangPart;
+      React.View.decodeLangPart = decodeLangPart;
+      if (!$('#result > div[data-react-checksum]').length) {
+        return React.View.result = React.renderComponent(Result(), $('#result')[0]);
+      }
     });
   }
   function import$(obj, src){

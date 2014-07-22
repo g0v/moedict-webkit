@@ -4,7 +4,7 @@ const STANDALONE = window.STANDALONE || false
 
 {any, map} = require('prelude-ls')
 
-LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
+LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
@@ -37,6 +37,7 @@ isApp = true if isCordova or try window.locationbar?visible is false
 isWebKit = navigator.userAgent is /WebKit/
 isGecko = navigator.userAgent is /\bGecko\/\b/
 isChrome = navigator.userAgent is /\bChrome\/\b/
+isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '', c: '' }
@@ -331,7 +332,7 @@ window.do-load = ->
       return grok-hash! unless state is /\S/
       grok-val state
 
-    return set-html $(\#result).html! if $('#result h1').length
+    return if isPrerendered
     return if window.grok-hash!
     if isCordova
       fill-query MOE-ID
@@ -351,9 +352,7 @@ window.do-load = ->
     if "#val" is /^~/ => lang = \c; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
-      LANG := LANG
-      prevVal = ''
-      return window.press-lang lang, val
+      return setTimeout (-> window.press-lang lang, val), 1ms
     val = b2g val
     return true if val is prevVal
     $ \#query .show!
@@ -395,7 +394,7 @@ window.do-load = ->
     lookup title
     return true
 
-  prevId = prevVal = null
+  prevId = prevVal = window.PRERENDER_ID
   window.press-lang = (lang='', id='') ->
     return if STANDALONE
     prevId := null
@@ -469,7 +468,7 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i
+      if isPrerendered or document.URL is /^https:\/\/(?:www.)?moedict.tw/i
         page = hash.slice 1
         if "#{decodeURIComponent location.pathname}" isnt "/#page"
           if history.replaceState
@@ -485,10 +484,11 @@ window.do-load = ->
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
 
-    return if load-cache-html it
-    React.View.result.replaceProps { id: it, type: \spin } # unless isApp
-    return fill-json MOE, \萌 if it is \萌 and LANG is \a
-    return load-json it
+    id = it
+    React.View.result?replaceProps { id, type: \spin }
+    <~ setTimeout _, 1ms
+    return fill-json MOE, \萌 if id is \萌 and LANG is \a
+    return load-json id
 
   load-json = (id, cb) ->
     return fill-json("[#{ STARRED[LANG] }]", '字詞紀錄簿', cb) if id is /^=\*/
@@ -505,14 +505,7 @@ window.do-load = ->
       $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
       callLater set-pinyin-bindings
 
-  set-html = (html) ->
-    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
-    html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
-      then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
-      else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    React.View.result.replaceProps { html, type: \html }, bind-html-actions
-
-  bind-html-actions = ->
+  window.bind-html-actions = bind-html-actions = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
     do
       $('.ui-tooltip').remove!
@@ -522,7 +515,7 @@ window.do-load = ->
       $('.ui-tooltip').remove!
 
     $ \#result .ruby!
-    _pua!
+    #_pua!
     window.scroll-to 0 0
 
     $('#result h1 rb[word]') .each ->
@@ -620,13 +613,7 @@ window.do-load = ->
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
 
-  load-cache-html = ->
-    html = htmlCache[LANG][it]
-    return false unless html
-    set-html html
-    return true
-
-  fill-json = (part, id, cb=set-html) ->
+  fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
     reactProps = null
     if part is /^\[\s*\[/
@@ -636,9 +623,9 @@ window.do-load = ->
     else
       xrefs = [ { lang, words } for lang, words of xref-of id | words.length ]
       reactProps = { id, xrefs, LANG, type: \term, H: HASH-OF[LANG] } <<< $.parseJSON part
-    if cb is set-html
-      return React.View.result.replaceProps reactProps, bind-html-actions
-    return cb React.renderComponentToString React.View.Result(reactProps)
+    return cb React.renderComponentToString React.View.Result(reactProps) if cb
+    return React.View.result?replaceProps reactProps, bind-html-actions if React.View.result
+    React.View.result = React.renderComponent React.View.Result(reactProps), $(\#result).0, bind-html-actions
 
   fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"

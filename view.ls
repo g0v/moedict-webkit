@@ -123,7 +123,7 @@ Heteronym = React.createClass do
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
       $char
-      h1 { className: \title, 'data-title': t }, ...list
+      h1 { className: \title, 'data-title': t, style: if H.0 is \# then {} else { visibility: \hidden } }, ...list
       if bopomofo then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
@@ -435,12 +435,12 @@ const keyMap = {
   T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
   S: \"specific_to"
 }
-decodeLangPart = (LANG, part='') ->
+decodeLangPart = (LANG-OR-H, part='') ->
   while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
   part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
   part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
-  H = HASH-OF[LANG]
+  H = HASH-OF[LANG-OR-H] || LANG-OR-H
   part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a>#post</span>"
   part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a></span>"
   part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#H#word\\\">#word</a>#post</span>"
@@ -452,5 +452,6 @@ if module?
   module?.exports = { Result, decodeLangPart }
 else $ ->
   React{}.View.Result = Result
-  React.View.result = React.renderComponent Result!, $(\#result).0
   React.View.decodeLangPart = decodeLangPart
+  unless $('#result > div[data-react-checksum]').length
+    React.View.result = React.renderComponent Result!, $(\#result).0
