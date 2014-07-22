@@ -242,7 +242,7 @@ require(\zappajs) {+disable_io} ->
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
         id = trim @t
-        return text """<script>location = "/##h#word"</script>""" if id.0 is \@
+        return text """<script>location = "/##h#word"</script>""" if id.0 in <[ @ = ]>
         fill-props = ~>
           props.id = id
           props.xrefs = @xrefs
