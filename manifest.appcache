@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# Sat Jul 12 02:21:07 CST 2014
+# Wed Jul 23 00:23:45 CST 2014
 
 CACHE:
 
 # core App files
 index.html
 main.js
+view.js
 styles.css
 
 # core JSON files
@@ -45,6 +46,7 @@ js/jquery-2.1.1.min.js
 js/jquery-ui-1.10.4.custom.min.js
 js/jquery.hoverIntent.js
 js/jquery.ruby.js
+js/react.min.js
 js/bootstrap/dropdown.js
 js/simp-trad.js
 js/howler.js

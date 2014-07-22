@@ -60,6 +60,8 @@ hruby {
 .ui-tooltip {
     // 條目標題
     h1 {
+        visibility: visible !important;
+
         // posi
         margin: -.25em 0 .5em;
         padding-bottom: .3em;
@@ -426,6 +428,12 @@ body.overflow-scrolling-true.web {
 
 // 客語典標題列發音
 body.lang-h {
+    h1 {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
     .bopomofo {
         @include en-fonts;
         .part-of-speech {

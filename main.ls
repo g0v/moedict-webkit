@@ -4,7 +4,7 @@ const STANDALONE = window.STANDALONE || false
 
 {any, map} = require('prelude-ls')
 
-LANG = STANDALONE || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
+LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
@@ -37,6 +37,7 @@ isApp = true if isCordova or try window.locationbar?visible is false
 isWebKit = navigator.userAgent is /WebKit/
 isGecko = navigator.userAgent is /\bGecko\/\b/
 isChrome = navigator.userAgent is /\bChrome\/\b/
+isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '', c: '' }
@@ -331,7 +332,7 @@ window.do-load = ->
       return grok-hash! unless state is /\S/
       grok-val state
 
-    return set-html $(\#result).html! if $('#result h1').length
+    return if isPrerendered
     return if window.grok-hash!
     if isCordova
       fill-query MOE-ID
@@ -351,9 +352,7 @@ window.do-load = ->
     if "#val" is /^~/ => lang = \c; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
-      LANG := LANG
-      prevVal = ''
-      return window.press-lang lang, val
+      return setTimeout (-> window.press-lang lang, val), 1ms
     val = b2g val
     return true if val is prevVal
     $ \#query .show!
@@ -395,7 +394,7 @@ window.do-load = ->
     lookup title
     return true
 
-  prevId = prevVal = null
+  prevId = prevVal = window.PRERENDER_ID
   window.press-lang = (lang='', id='') ->
     return if STANDALONE
     prevId := null
@@ -469,7 +468,7 @@ window.do-load = ->
     setPref \prev-id prevId
     hash = "#{ HASH-OF[LANG] }#it"
     unless isQuery
-      if document.URL is /^https:\/\/(?:www.)?moedict.tw/i
+      if isPrerendered or document.URL is /^https:\/\/(?:www.)?moedict.tw/i
         page = hash.slice 1
         if "#{decodeURIComponent location.pathname}" isnt "/#page"
           if history.replaceState
@@ -484,16 +483,12 @@ window.do-load = ->
     try document.title = "#it - #{ TITLE-OF[LANG] }萌典"
     $('.share .btn').each ->
       $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent hash.substr(1)
-    if isMobile
-      $('#result div, #result span, #result h1:not(:first)').hide!
-      $('#result h1:first').text(it - /^[@=]/).show!
-    else
-      $('#result div, #result span, #result h1:not(:first)').css \visibility \hidden
-      $('#result h1:first').text(it - /^[@=]/).css \visibility \visible
-      window.scroll-to 0 0
-    return if load-cache-html it
-    return fill-json MOE, \萌 if it is \萌 and LANG is \a
-    return load-json it
+
+    id = it
+    React.View.result?replaceProps { id, type: \spin }
+    <~ setTimeout _, 1ms
+    return fill-json MOE, \萌 if id is \萌 and LANG is \a
+    return load-json id
 
   load-json = (id, cb) ->
     return fill-json("[#{ STARRED[LANG] }]", '字詞紀錄簿', cb) if id is /^=\*/
@@ -510,14 +505,19 @@ window.do-load = ->
       $('#result').removeClass "prefer-pinyin-#{!val}" .addClass "prefer-pinyin-#val"
       callLater set-pinyin-bindings
 
-  set-html = (html) -> callLater ->
+  window.bind-html-actions = bind-html-actions = ->
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
+    do
+      $('.ui-tooltip').remove!
+      <- setTimeout _, 125ms
+      $('.ui-tooltip').remove!
+      <- setTimeout _, 125ms
+      $('.ui-tooltip').remove!
 
-    html.=replace '<!-- STAR -->' if ~STARRED[LANG].indexOf("\"#prevId\"")
-      then "<a class='star iconic-color icon-star' title='已加入記錄簿'></a>"
-      else "<a class='star iconic-color icon-star-empty' title='加入字詞記錄簿'></a>"
-    $ \#result .html html .ruby!
+    $ \#result .ruby!
     _pua!
+    $ '#result h1' .css \visibility \visible
+    window.scroll-to 0 0
 
     $('#result h1 rb[word]') .each ->
       _h = HASH-OF[LANG]
@@ -554,13 +554,15 @@ window.do-load = ->
       window.scroll-to 0 0
       strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
 
+    $ '.results .playAudio' .click ->
+      window.playAudio @, $(@).find("meta[itemprop='contentURL']").attr('content')
 
     if isCordova and not DEBUGGING
       try navigator.splashscreen.hide!
       $('#result .playAudio').on \touchstart -> $(@).click! if $(@).hasClass('icon-play')
       return
 
-    $('#result .trs.pinyin').each(-> $(@).attr \title trs2bpmf $(@).text!).tooltip tooltipClass: \bpmf
+    $('#result .trs.pinyin').tooltip tooltipClass: \bpmf
 
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
@@ -578,11 +580,12 @@ window.do-load = ->
     }
     $('#result a[href]:not(.xref)').hoverIntent do
         timeout: 250ms
-        over: -> $('.ui-tooltip').remove! ; try $(@).tooltip \open
+        over: ->
+          <~ setTimeout _, 50ms
+          $('.ui-tooltip').remove!
+          unless $(\#loading).length
+            try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-    setTimeout _, 125ms ->
-      $('.ui-tooltip').remove!
-      setTimeout _, 125ms -> $('.ui-tooltip').remove!
 
     function _pua
       $('hruby rb[annotation]').each ->
@@ -611,73 +614,19 @@ window.do-load = ->
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
 
-  load-cache-html = ->
-    html = htmlCache[LANG][it]
-    return false unless html
-    set-html html
-    return true
-
-  fill-json = (part, id, cb=set-html) ->
-    while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
-      part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
-    part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
-    h = HASH-OF[LANG]
-    part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a>#post</span>"
-    part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a></span>"
-    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#h#word\\\">#word</a>#post</span>"
-    part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#word\\\">#word</a>"
-    part.=replace /([)）])/g "$1\u200B"
+  fill-json = (part, id, cb) ->
+    part = React.View.decodeLangPart LANG, part
+    reactProps = null
     if part is /^\[\s*\[/
-      html = render-strokes part, id
+      reactProps = { id, type: \radical, terms: part, H: HASH-OF[LANG] }
     else if part is /^\[/
-      html = render-list part, id
+      reactProps = { id, type: \list, terms: part, H: HASH-OF[LANG], LRU: LRU[LANG] }
     else
-      html = render $.parseJSON part
-    html.=replace /(.)\u20DD/g          "<span class='regional part-of-speech'>$1</span> "
-    html.=replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
-    html.=replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
-    html.=replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
-    html.=replace //<a[^<]+>#id<\/a>//g "#id"
-    html.=replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
-    html.=replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
-    html.=replace(/¹/g \<sup>1</sup>)
-    html.=replace(/²/g \<sup>2</sup>)
-    html.=replace(/³/g \<sup>3</sup>)
-    html.=replace(/⁴/g \<sup>4</sup>)
-    html.=replace(/⁵/g \<sup>5</sup>)
-    html.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">').replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g '</')
-
-    has-xrefs = false
-    for tgt-lang, words of xref-of id | words.length
-      html += '<div class="xrefs">' unless has-xrefs++
-      html += """
-          <div class="xref-line">
-              <span class='xref part-of-speech'>#{
-                XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[tgt-lang]
-              }</span>
-              <span class='xref' itemprop='citation'>
-      """
-      html += (for word in words
-        h = HASH-OF[tgt-lang]
-        if word is /`/
-          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href=\"#h#word\">#word</a>"
-        else
-          "<a class='xref' href=\"#h#word\">#word</a>"
-      ) * \、
-      html += '</span></div>'
-    html += '</div>' if has-xrefs
-    cb(htmlCache[LANG][id] = html)
-    return
-
-  keyMap = {
-    h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
-    c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
-    t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
-    a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id" E: \"english"
-    T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
-    S: \"specific_to"
-  }
+      xrefs = [ { lang, words } for lang, words of xref-of id | words.length ]
+      reactProps = { id, xrefs, LANG, type: \term, H: HASH-OF[LANG] } <<< $.parseJSON part
+    return cb React.renderComponentToString React.View.Result(reactProps) if cb
+    return React.View.result?replaceProps reactProps, bind-html-actions if React.View.result
+    React.View.result = React.renderComponent React.View.Result(reactProps), $(\#result).0, bind-html-actions
 
   fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"
@@ -831,7 +780,6 @@ trs_lookup = (term,cb) ->
   data.=replace /[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it]
   cb( data / '|' )
 
-const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉儿⼊入⼋八⼌冂⼍冖⼎冫⼏几⼐凵⼑刀⼒力⼓勹⼔匕⼕匚⼖匸⼗十⼘卜⼙卩⼚厂⼛厶⼜又⼝口⼞囗⼟土⼠士⼡夂⼢夊⼣夕⼤大⼥女⼦子⼧宀⼨寸⼩小⼪尢⼫尸⼬屮⼭山⼮巛⼯工⼰己⼱巾⼲干⼳幺⼴广⼵廴⼶廾⼷弋⼸弓⼹彐⼺彡⼻彳⼼心⼽戈⼾戶⼿手⽀支⽁攴⽂文⽃斗⽄斤⽅方⽆无⽇日⽈曰⽉月⽊木⽋欠⽌止⽍歹⽎殳⽏毋⽐比⽑毛⽒氏⽓气⽔水⽕火⽖爪⽗父⽘爻⽙爿⺦丬⽚片⽛牙⽜牛⽝犬⽞玄⽟玉⽠瓜⽡瓦⽢甘⽣生⽤用⽥田⽦疋⽧疒⽨癶⽩白⽪皮⽫皿⽬目⽭矛⽮矢⽯石⽰示⽱禸⽲禾⽳穴⽴立⽵竹⽶米⽷糸⺰纟⽸缶⽹网⽺羊⽻羽⽼老⽽而⽾耒⽿耳⾀聿⾁肉⾂臣⾃自⾄至⾅臼⾆舌⾇舛⾈舟⾉艮⾊色⾋艸⾌虍⾍虫⾎血⾏行⾐衣⾑襾⾒見⻅见⾓角⾔言⻈讠⾕谷⾖豆⾗豕⾘豸⾙貝⻉贝⾚赤⾛走⾜足⾝身⾞車⻋车⾟辛⾠辰⾡辵⻌辶⾢邑⾣酉⾤釆⾥里⾦金⻐钅⾧長⻓长⾨門⻔门⾩阜⾪隶⾫隹⾬雨⾭靑⾮非⾯面⾰革⾱韋⻙韦⾲韭⾳音⾴頁⻚页⾵風⻛风⾶飛⻜飞⾷食⻠饣⾸首⾹香⾺馬⻢马⾻骨⾼高⾽髟⾾鬥⾿鬯⿀鬲⿁鬼⿂魚⻥鱼⻦鸟⿃鳥⿄鹵⻧卤⿅鹿⿆麥⻨麦⿇麻⿈黃⻩黄⿉黍⿊黑⿋黹⿌黽⻪黾⿍鼎⿎鼓⿏鼠⿐鼻⿑齊⻬齐⿒齒⻮齿⿓龍⻰龙⿔龜⻳龟⿕龠'
 
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
@@ -842,13 +790,6 @@ function b2g (str='')
     idx = SIMP-TRAD.index-of(char)
     rv += if idx % 2 then char else SIMP-TRAD[idx + 1]
   return rv.replace(/台([北中南東灣語])/g '臺$1')
-
-function render-radical (char)
-  idx = CJK-RADICALS.index-of(char)
-  char = CJK-RADICALS[idx+1] unless idx % 2
-  return char unless LANG in <[ a c ]>
-  h = HASH-OF[LANG]
-  return "<a title='部首檢索' class='xref' style='color: white' href=\"#h@#char\"> #char</a>"
 
 function can-play-mp3
   return CACHED.can-play-mp3 if CACHED.can-play-mp3?
@@ -865,42 +806,6 @@ function can-play-opus
   a = document.createElement \audio
   CACHED.can-play-opus = !!(a.canPlayType?('audio/ogg; codecs="opus"') - /^no$/)
 
-function render-strokes (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  if id is /^\s*$/
-    title = "<h1 itemprop='name'>部首表</h1>"
-    h += '@'
-  else
-    title = "<h1 itemprop='name'>#id <a class='xref' href=\"#\@\" title='部首表'>部</a></h1>"
-  rows = $.parseJSON terms
-  list = ''
-  for chars, strokes in rows | chars?length
-    list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
-    for ch in chars
-      list += "<a class='stroke-char' href=\"#h#ch\">#ch</a> "
-    list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
-  return "#title<div class='list'>#list</div>"
-
-function render-list (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  title = "<h1 itemprop='name'>#id</h1>"
-  terms -= /^[^"]*/
-  if id is \字詞紀錄簿
-    terms += "<p class='bg-info'>（請按詞條右方的 <i class='icon-star-empty'></i> 按鈕，即可將字詞加到這裡。）</p>" unless terms
-  if terms is /^";/
-    terms = "<table border=1 bordercolor=\#ccc><tr><td><span class='part-of-speech'>臺</span></td><td><span class='part-of-speech'>陸</span></td></tr>#terms</table>"
-    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
-  else
-    terms.=replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
-  if id is \字詞紀錄簿 and LRU[LANG]
-    terms += "<br><h3 id='lru'>最近查閱過的字詞"
-    terms += "<input type='button' id='btn-clear-lru' class='btn-default btn btn-tiny' value='清除' style='margin-left: 10px'>"
-    terms += "</h3>\n"
-    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<span style='clear: both; display: block'>\u00B7 <a href=\"#{h}$1\">$1</a></span>")
-  return "#title<div class='list'>#terms</div>"
-
 http-map =
   a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com
   h: \a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com
@@ -911,322 +816,6 @@ http-map =
 function http
   return "http://#it" unless location.protocol is \https:
   return "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
-
-function render (json)
-  { title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py } = json
-  char-html = if radical then "<div class='radical'><span class='glyph'>#{
-    render-radical(radical - /<\/?a[^>]*>/g)
-  }</span><span class='count'><span class='sym'>+</span>#{ nrs-count }</span><span class='count'> = #{ s-count }</span>&nbsp;<a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>" else "<div class='radical'><a class='iconic-circle stroke icon-pencil' title='筆順動畫' style='color: white'></a></div>"
-  result = ls heteronyms, ({id, audio_id=id, bopomofo, pinyin=py, trs='', definitions=[], antonyms, synonyms, variants, specific_to, alt}) ->
-    pinyin ?= trs
-    pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
-    if audio_id and LANG is \h
-      pinyin.=replace /(.)\u20DE/g (_, $1) ->
-        variant = " 四海大平安".indexOf($1)
-        mp3 = http "h.moedict.tw/#{variant}-#audio_id.ogg"
-        mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
-        """
-        </span><span class="audioBlock"><div onclick='window.playAudio(this, \"#mp3\")' class='icon-play playAudio part-of-speech'>#{$1}</div>
-      """
-    bopomofo ?= trs2bpmf "#pinyin"
-
-    bopomofo -= /<[^>]*>/g unless LANG is \c
-    pinyin .= replace /ɡ/g \g
-    pinyin .= replace /ɑ/g \a
-    pinyin .= replace /，/g ', '
-
-    youyin = if bopomofo is /^（[語|讀|又]音）/
-             then bopomofo.replace /（([語|讀|又]音)）.*/, '$1'
-    b-alt = if bopomofo is /[變|\/]/
-                  then bopomofo.replace /.*[\(變\)​|\/](.*)/, '$1'
-                  else if bopomofo is /.+（又音）.+/
-                  then bopomofo.replace /.+（又音）/, ''
-                  else ''
-    b-alt .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
-    p-alt = if pinyin is /[變|\/]/
-              then pinyin.replace /.*[\(變\)​|\/](.*)/, '$1'
-              else if bopomofo is /.+（又音）.+/
-              then do ->
-                _py = pinyin.split ' '
-                for i from 0 to _py.length/2-1
-                    _py.shift()
-                return _py.join ' '
-              else ''
-
-    bopomofo .= replace /([^ ])(ㄦ)/g, '$1 $2' .replace /([ ]?[\u3000][ ]?)/g, ' '
-    bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
-
-    ruby = do ->
-      if LANG is \h
-        return
-
-      t = title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~'
-      t -= /<[^>]+>/g
-
-      b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
-      b .= replace /（[語|讀|又]音）[\u200B]?/, ''
-      b .= replace /\(變\)​\/.*/, ''
-      b .= replace /\/.*/, ''
-      if b is /<br>陸/
-        cn-specific-bpmf = b - /.*<br>陸./
-      b .= replace /<br>(.*)/, ''
-      b -= /.\u20DF/g
-
-      if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
-        ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
-      else
-        ruby = '<rbc>' + t.replace( /([^`~]+)/g, (m, ci, o, s) ->
-          return if ( ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
-                 then '<rb word="' + ci + '">' + ci + '</rb>'
-                 else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
-        ).replace(/([`~])/g, '') + '</rbc>'
-
-      p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
-      p .= replace /\(變\)​.*/, ''
-      p .= replace /\/.*/, ''
-      p .= replace /<br>.*/, ''
-      p .= split ' '
-
-      for yin in p
-        unless yin == ''
-          span = # 閩南語典，按隔音符計算字數
-                 if LANG is \t and yin is /\-/g
-                 then ' rbspan="'+ (yin.match /[\-]+/g .length+1) + '"'
-
-                 # 國語兒化音
-                 else if LANG != \t && yin is /^[^eēéěè].*r$/g
-                 then
-                   if cn-specific-bpmf
-                     cns = cn-specific-bpmf / /\s+/
-                     tws = b / /\s+/
-                     tws[*-2] = cns[*-2]
-                     b-alt := b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ')
-                     b = tws * ' '
-                   ' rbspan="2"'
-
-                 # 兩岸詞典，按元音群計算字數
-                 else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
-                 then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
-                 else ''
-          p[i$] = '<rt' + span + '>' + yin + '</rt>'
-
-      ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-      ruby += '<rtc class="romanization">'
-      ruby += p.join ''
-      ruby += '</rtc>'
-      return ruby
-
-    cn-specific = ''
-    cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
-
-    if LANG is \c
-      if bopomofo is /<br>/
-        pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
-        bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，。；])\s?/g '$1'
-        bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
-      else
-        pinyin = ''
-        bopomofo = ''
-    else if LANG is \h
-      bopomofo = ''
-
-    unless title is /</
-      title := "<div class='stroke' title='筆順動畫'>#title</div>"
-
-    """
-      <!-- STAR -->
-      <meta itemprop="image" content="#{ encodeURIComponent(h(title) - /<[^>]+>/g) }.png" />
-      <meta itemprop="name" content="#{ h(title) - /<[^>]+>/g }" />
-      #char-html
-      <h1 class='title' data-title="#{ h(title) - /<[^>]+>/g }">
-      #{
-        unless LANG is \h then """
-          <ruby class="rightangle">#ruby</ruby>
-        """
-        else title
-      }#{
-        if youyin then """
-          <small class='youyin'>#youyin</small>
-        """ else ''
-      }#{
-        if audio_id and (can-play-ogg! or can-play-mp3!)
-          if LANG is \t and not (20000 < audio_id < 50000)
-            basename = (100000 + Number audio_id) - /^1/
-            mp3 = http "t.moedict.tw/#basename.ogg"
-          else if LANG is \a
-            mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
-          mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
-          mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
-        if mp3 then """
-          <i itemscope itemtype="http://schema.org/AudioObject"
-            class='icon-play playAudio' onclick='window.playAudio(this, \"#mp3\")'><meta
-            itemprop="name" content="#{ mp3 - /^.*\// }" /><meta
-            itemprop="contentURL" content="#mp3" /></i>
-        """ else ''
-      }#{
-        if b-alt then """
-          <small class='alternative'><span class='pinyin'>#p-alt</span><span class='bopomofo'>#b-alt</span></small>
-        """ else ''
-      }#{
-        if english then "<span lang='en' class='english'>#english</span>" else ''
-      }#{
-        if specific_to then "<span class='specific_to'>#specific_to</span>" else ''
-      }
-      </h1>
-      <div class="bopomofo">
-      #{
-        if alt? then """
-          <div lang="zh-Hans" class="cn-specific">
-            <span class='xref part-of-speech'>简</span>
-            <span class='xref'>#{ alt - /<[^>]*>/g }</span>
-          </div>
-        """ else ''
-      }#{
-        if cn-specific then """
-          <small class="alternative cn-specific">
-            <span class='pinyin'>#pinyin</span>
-            <span class='bopomofo'>#bopomofo</span>
-          </small>
-        """ else if LANG is \h then """
-          <span class='pinyin'>#pinyin</span>
-        """ else ''
-      }
-      </div>
-      <div class="entry" itemprop="articleBody">
-      #{ls groupBy(\type definitions.slice!), (defs) ->
-        """
-        <div class="entry-item">
-        #{
-          if defs.0?type
-          then [ "<span class='part-of-speech'>#t</span>" for t in defs.0.type / \, ] * '&nbsp;'
-          else ''
-        }
-          <ol>
-          #{ls defs, ({ type, def, quote=[], example=[], link=[], antonyms, synonyms }) ->
-          if def is /∥/
-            after-def = "<div style='margin: 0 0 22px -44px'>#{ h(def - /^[^∥]+/ ) }</div>"
-            def -= /∥.*/
-          is-colon-def = LANG is \c and (def is /[:：]<\/span>$/) and not(any (->
-            !!(it.def is /^\s*\(\d+\)/)
-          ), defs)
-          """#{
-            if def is /^\s*\(\d+\)/ or is-colon-def => ''
-            else => '<li>'
-          }<p class='definition' #{
-            if is-colon-def then 'style="margin-left: -28px"' else ''
-          }>
-              <span class="def">
-              #{
-                (h expand-def def).replace(
-                  /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
-                  '$1</span><span class="def">$2'
-                )
-              }</span>
-              #{ ls example, -> "<span class='example'>#{ h it }</span></span>" }
-              #{ ls quote,   -> "<span class='quote'>#{   h it }</span>" }
-              #{ ls link,    -> "<span class='link'>#{    h it }</span>" }
-              #{
-                if synonyms
-                then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-                  h((synonyms - /^,/).replace(/,/g '、'))
-                }</span>" else ''
-              }#{
-                if antonyms
-                then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-                  h((antonyms - /^,/).replace(/,/g '、'))
-                }</span>" else ''
-              }
-            </p>
-            #{ after-def || '' }
-          """
-          }
-          </ol></div>
-        """
-      }#{
-        if synonyms
-        then "<span class='synonyms'><span class='part-of-speech'>似</span> #{
-          h((synonyms - /^,/).replace(/,/g '、'))
-        }</span>" else ''
-      }#{
-        if antonyms
-        then "<span class='antonyms'><span class='part-of-speech'>反</span> #{
-          h((antonyms - /^,/).replace(/,/g '、'))
-        }</span>" else ''
-      }#{
-        if variants
-        then "<span class='variants'><span class='part-of-speech'>異</span> #{
-          h(variants.replace(/,/g '、'))
-        }</span>" else ''
-      }
-      </div>
-    """
-  return "#result#{ if translation then "<div class='xrefs'><span class='translation'>
-    #{ if \English of translation then "<div class='xref-line'><span class='fw_lang'>英</span><span class='fw_def'>#{ (translation.English * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g }</span></div>" else '' }
-    #{ if \francais of translation then "<div class='xref-line'><span class='fw_lang'>法</span><span class='fw_def'>#{ translation.francais * ', ' }</span></div>" else '' }
-    #{ if \Deutsch of translation then "<div class='xref-line'><span class='fw_lang'>德</span><span class='fw_def'>#{ translation.Deutsch * ', ' }</span></div>" else '' }
-  </span></div>" else '' }"
-  function expand-def (def)
-    def.replace(
-      /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
-        String.fromCharCode(0x327F + parseInt num)
-      }#{ if char then "#char\u20DE" else '' }"
-    ).replace(
-      /<(\d)>/g (_, num) -> String.fromCharCode(0x327F + parseInt num)
-    ).replace(
-      /\{(\d)\}/g (_, num) -> String.fromCharCode(0x2775 + parseInt num)
-    ).replace(
-      /[（(](\d)[)）]/g (_, num) -> String.fromCharCode(0x2789 + parseInt num) + ' '
-    ).replace(/\(/g, '（').replace(/\)/g, '）')
-  function ls (entries=[], cb)
-    [cb x for x in entries].join ""
-  function h (text='')
-    if LANG is \t
-      text.=replace /([\u31B4-\u31B7])([^\u0358])/g "<span class='u31bX'>$1</span>$2"
-      text.=replace /(\u31B4)\u0358/g "<span class='u31b4-0358'>$1\u0358</span>"
-      text.=replace /(\u31B5)\u0358/g "<span class='u31b5-0358'>$1\u0358</span>"
-      text.=replace /(\u31B6)\u0358/g "<span class='u31b6-0358'>$1\u0358</span>"
-      text.=replace /(\u31B7)\u0358/g "<span class='u31b7-0358'>$1\u0358</span>"
-      if isDroidGap or isChrome
-        text.=replace /([aieou])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
-      else
-        text.=replace /([i])\u030d/g "<span class='vowel-030d $1-030d'>$1\u030d</span>"
-    text.replace(/[\uFF0E\u2022]/g '\u00B7')
-        .replace(/\u223C/g '\uFF0D')
-        .replace(/\u0358/g '\u030d')
-  function groupBy (prop, xs)
-    return [xs] if xs.length <= 1
-    x = xs.shift!
-    x[prop] ?= ''
-    pre = [x]
-    while xs.length
-      y = xs.0
-      y[prop] ?= ''
-      break unless x[prop] is y[prop]
-      pre.push xs.shift!
-    return [pre] unless xs.length
-    return [pre, ...groupBy(prop, xs)]
-
-
-const Consonants = { p:\ㄅ b:\ㆠ ph:\ㄆ m:\ㄇ t:\ㄉ th:\ㄊ n:\ㄋ l:\ㄌ k:\ㄍ g:\ㆣ kh:\ㄎ ng:\ㄫ h:\ㄏ tsi:\ㄐ ji:\ㆢ tshi:\ㄑ si:\ㄒ ts:\ㄗ j:\ㆡ tsh:\ㄘ s:\ㄙ }
-const Vowels = { a:\ㄚ an: \ㄢ ang: \ㄤ ann:\ㆩ oo:\ㆦ onn:\ㆧ o:\ㄜ e:\ㆤ enn:\ㆥ ai:\ㄞ ainn:\ㆮ au:\ㄠ aunn:\ㆯ am:\ㆰ om:\ㆱ m:\ㆬ ong:\ㆲ ng:\ㆭ i:\ㄧ inn:\ㆪ u:\ㄨ unn:\ㆫ ing:\ㄧㄥ in:\ㄧㄣ un:\ㄨㄣ }
-const Tones = { p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" "\u0300":\˪ "\u0301":\ˋ "\u0302":\ˊ "\u0304":\˫ "\u030d":\$ }
-re = -> [k for k of it].sort((x, y) -> y.length - x.length).join \|
-const C = re Consonants
-const V = re Vowels
-function trs2bpmf (trs)
-  return ' ' if LANG is \h # TODO
-  return trs if LANG is \a
-  trs.replace(/[A-Za-z\u0300-\u030d]+/g ->
-    tone = ''
-    it.=toLowerCase!
-    it.=replace //([\u0300-\u0302\u0304\u030d])// -> tone := Tones[it]; ''
-    it.=replace //^(tsh?|[sj])i// '$1ii'
-    it.=replace //ok$// 'ook'
-    it.=replace //^(#C)((?:#V)+[ptkh]?)$// -> Consonants[&1] + &2
-    it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''
-    it.=replace //(#V)//g -> Vowels[it]
-    it + (tone || '\uFFFD')
-  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
 
 # draw.coffee from zh-stroke-data by @c9s
 $ ->

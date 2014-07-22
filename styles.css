@@ -10131,6 +10131,7 @@ hruby rb[annotation]:after {
 
 .result h1,
 .ui-tooltip h1 {
+  visibility: visible !important;
   margin: -.25em 0 .5em;
   padding-bottom: .3em;
   font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "MOEDICT-IOS-KAI", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
@@ -10476,6 +10477,12 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
   line-height: 100%;
 }
 
+body.lang-h h1 {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 body.lang-h .bopomofo {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }

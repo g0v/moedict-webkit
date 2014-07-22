@@ -2,8 +2,20 @@
 require! <[ fs ]>
 LTM-regexes = {}
 
+index-body = fs.read-file-sync \index.html
+index-body -= /^[\s\S]*<\/head>/
+index-body -= /<\/html>/
+index-body -= /<noscript>[\s\S]*<\/noscript>/
+index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
+
+React = require \react
+{Result, decodeLangPart} = require \./view.js
+XREF = {}
+
 for let lang in <[ a t h c ]>
-  err, json <- fs.read-file "#lang/lenToRegex.json"
+  json = fs.read-file-sync "#lang/xref.json"
+  XREF[lang] = JSON.parse json
+  json = fs.read-file-sync "#lang/lenToRegex.json"
   try
     {lenToRegex} = JSON.parse json
     lens = []
@@ -12,6 +24,13 @@ for let lang in <[ a t h c ]>
       lenToRegex[len] = new RegExp lenToRegex[len], \g
     lens.sort (a, b) -> b - a
     LTM-regexes[lang] = [ lenToRegex[len] for len in lens ]
+
+function xref-of (id, src-lang)
+  rv = {}
+  part = XREF[src-lang][id]
+  for tgt-lang, words of XREF[src-lang] | words[id]
+    rv[tgt-lang] = [ x || id for x in words[id] / \, ]
+  return rv
 
 trim = -> (it ? '').replace /[`~]/g ''
 def-of = (lang, title, cb) ->
@@ -76,9 +95,20 @@ require(\zappajs) {+disable_io} ->
     @response.type \image/png
     font = font-of @query.font
     text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
+  @get '/': -> @response.type \text/html; @response.sendfile \index.html
+  @get '/index.html': -> @response.type \text/html; @response.sendfile \index.html
+  @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/cordova.js': -> @response.type \application/json; @response.send ''
+  @get '/css/:path/:file.css': -> @response.type \text/css; @response.sendfile "css/#{@params.path}/#{@params.file}.css"
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
+  @get '/images/:file.jpg': -> @response.type \image/jpeg; @response.sendfile "images/#{@params.file}.jpg"
+  @get '/:path/:file.json': -> @response.type \application/json; @response.sendfile "#{@params.path}/#{@params.file}.json"
+  @get '/js/:path/:file.js': -> @response.type \application/javascript; @response.sendfile "js/#{@params.path}/#{@params.file}.js"
+  @get '/js/:file.js': -> @response.type \application/javascript; @response.sendfile "js/#{@params.file}.js"
+  @get '/:file.js': -> @response.type \application/javascript; @response.sendfile "#{@params.file}.js"
+  @get '/fonts/:file.ttf': -> @response.type \application/x-font-ttf; @response.sendfile "fonts/#{@params.file}.ttf"
   @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
   @get '/:text/:idx': ->
     @params.text = fix-mojibake @params.text
@@ -112,7 +142,6 @@ require(\zappajs) {+disable_io} ->
     payload = null if payload instanceof Array
     payload ?= { t: val }
     payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
-
     chars = text.replace(/^['!~:]/, '')
     chars.=slice(0, 50)
     png-file = "png/#chars.#font.png"
@@ -143,7 +172,8 @@ require(\zappajs) {+disable_io} ->
         iter!
       else @render index: payload <<< { segments }
     else
-      @render index: payload
+      xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
+      @render index: payload <<< { index-body, React, Result, decodeLangPart, json, xrefs }
 
   @view index: ->
     expand-def = (def) ->
@@ -202,14 +232,36 @@ require(\zappajs) {+disable_io} ->
       meta property:"og:description" content:def
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
+      link href:'/css/cupertino/jquery-ui-1.10.4.custom.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
       link rel:'publisher' href:'https://plus.google.com/+MoedictTw-g0v'
-      base target:\_blank
+      base target:\_blank if @segments
       word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
         h = ''
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
+        id = trim @t
+        return text """<script>location = "/##h#word"</script>""" if id.0 is \@
+        fill-props = ~>
+          props.id = id
+          props.xrefs = @xrefs
+          props.LANG = LANG
+          props.H = h
+          props.type = \term
+        props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
+        fill-props!
+        text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
+        text @index-body.replace '<!-- RESULT -->', @React.renderComponentToString @Result props
+        props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
+        fill-props!
+        props.H = "##h"
+        text """<script>$(function(){
+          React.View.result = React.renderComponent(React.View.Result(#{
+            JSON.stringify props,,2
+          }), $('\#result')[0], window.bindHtmlActions);
+        })</script>"""
+        /*
         body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
           idx = 0
           (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
@@ -223,7 +275,8 @@ require(\zappajs) {+disable_io} ->
                 dl ->
                   dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
                   dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.href = \"https://www.moedict.tw/##h#word\" }" unless @isCLI
+          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.hash = "##h#word\" }" unless @isCLI
+          */
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word
