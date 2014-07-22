@@ -1025,12 +1025,14 @@
       $('#result a[href]:not(.xref)').hoverIntent({
         timeout: 250,
         over: function(){
-          $('.ui-tooltip').remove();
-          if (!$('#loading').length) {
-            try {
-              return $(this).tooltip('open');
-            } catch (e$) {}
-          }
+          return setTimeout(function(){
+            $('.ui-tooltip').remove();
+            if (!$('#loading').length) {
+              try {
+                return $(this).tooltip('open');
+              } catch (e$) {}
+            }
+          }, 50);
         },
         out: function(){
           try {

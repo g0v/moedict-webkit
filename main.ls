@@ -585,6 +585,7 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').hoverIntent do
         timeout: 250ms
         over: ->
+          <- setTimeout _, 50ms
           $('.ui-tooltip').remove!
           unless $(\#loading).length
             try $(@).tooltip \open
