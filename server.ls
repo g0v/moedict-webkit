@@ -98,6 +98,7 @@ require(\zappajs) {+disable_io} ->
   @get '/': -> @response.type \text/html; @response.sendfile \index.html
   @get '/index.html': -> @response.type \text/html; @response.sendfile \index.html
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/cordova.js': -> @response.type \application/json; @response.send ''
   @get '/css/:path/:file.css': -> @response.type \text/css; @response.sendfile "css/#{@params.path}/#{@params.file}.css"
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
