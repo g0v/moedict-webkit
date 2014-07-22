@@ -984,6 +984,9 @@
         window.scrollTo(0, 0);
         return strokeWords(replace$.call($('h1:first').data('title'), /[（(].*/, ''));
       });
+      $('.results .playAudio').click(function(){
+        return window.playAudio(this, $(this).find("meta[itemprop='contentURL']").attr('content'));
+      });
       if (isCordova && !DEBUGGING) {
         try {
           navigator.splashscreen.hide();

@@ -175,6 +175,7 @@
           var i$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
             word = ref$[i$];
+            word = replace$.call(word, /[`~]/g, '');
             results$.push(a({
               className: 'xref',
               href: H + "" + word
@@ -187,7 +188,7 @@
   });
   Heteronym = React.createClass({
     render: function(){
-      var ref$, $char, H, LANG, title, english, id, audio_id, ref1$, bopomofo, trs, py, pinyin, definitions, antonyms, synonyms, variants, specific_to, alt, re, pinyinList, t, variant, mp3, __html, titleRuby, youyin, bAlt, pAlt, cnSpecific, list, defs;
+      var ref$, $char, H, LANG, title, english, id, audio_id, ref1$, bopomofo, trs, py, pinyin, definitions, antonyms, synonyms, variants, specific_to, alt, re, pinyinList, t, variant, mp3, __html, titleRuby, youyin, bAlt, pAlt, cnSpecific, list, basename, defs;
       ref$ = this.props, $char = ref$.$char, H = ref$.H, LANG = ref$.LANG, title = ref$.title, english = ref$.english, id = ref$.id, audio_id = (ref1$ = ref$.audio_id) != null ? ref1$ : id, bopomofo = ref$.bopomofo, trs = (ref1$ = ref$.trs) != null ? ref1$ : '', py = ref$.py, pinyin = (ref1$ = ref$.pinyin) != null
         ? ref1$
         : py || trs || '', definitions = (ref1$ = ref$.definitions) != null
@@ -205,9 +206,14 @@
           pinyinList = pinyinList.concat(span({
             className: 'audioBlock'
           }, div({
-            className: 'icon-play playAudio part-of-speech',
-            onClick: fn$
-          }, t[1])));
+            className: 'icon-play playAudio part-of-speech'
+          }, meta({
+            itemProp: 'name',
+            content: replace$.call(mp3, /^.*\//, '')
+          }), meta({
+            itemProp: 'contentURL',
+            content: mp3
+          }), t[1])));
           __html = t[2].replace(/¹/g, '<sup>1</sup>').replace(/²/g, '<sup>2</sup>').replace(/³/g, '<sup>3</sup>').replace(/⁴/g, '<sup>4</sup>').replace(/⁵/g, '<sup>5</sup>');
           pinyinList = pinyinList.concat(span({
             dangerouslySetInnerHTML: {
@@ -239,6 +245,34 @@
         list = list.concat(small({
           className: 'youyin'
         }, youyin));
+      }
+      mp3 = '';
+      if (audio_id && (canPlayOgg() || canPlayMp3())) {
+        if (LANG === 't' && !(20000 < audio_id && audio_id < 50000)) {
+          basename = replace$.call(100000 + Number(audio_id), /^1/, '');
+          mp3 = http("t.moedict.tw/" + basename + ".ogg");
+        } else if (LANG === 'a') {
+          mp3 = http("a.moedict.tw/" + audio_id + ".ogg");
+        }
+        if (/opus$/.exec(mp3) && !canPlayOpus()) {
+          mp3 = mp3.replace(/opus$/, 'ogg');
+        }
+        if (/(opus|ogg)$/.exec(mp3) && !canPlayOgg()) {
+          mp3 = mp3.replace(/(opus|ogg)$/, 'mp3');
+        }
+      }
+      if (mp3) {
+        list = list.concat(i({
+          itemScope: true,
+          itemType: 'http://schema.org/AudioObject',
+          className: 'icon-play playAudio'
+        }, meta({
+          itemProp: 'name',
+          content: replace$.call(mp3, /^.*\//, '')
+        }), meta({
+          itemProp: 'contentURL',
+          content: mp3
+        })));
       }
       if (bAlt) {
         list = list.concat(small({
@@ -312,9 +346,6 @@
           }())))
         ]
       ));
-      function fn$(it){
-        return window.playAudio(it.target, mp3);
-      }
     }
   });
   decorateRuby = function(arg$){

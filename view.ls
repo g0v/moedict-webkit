@@ -65,6 +65,7 @@ XRefs = React.createClass do
         nbsp
         span { className: 'xref', itemProp: \citation },
           ...intersperse \、, for word in words
+            word -= /[`~]/g
             a { className: \xref, href: "#H#word" } word
 
 Heteronym = React.createClass do
@@ -81,7 +82,9 @@ Heteronym = React.createClass do
         mp3 = http "h.moedict.tw/#{variant}-#audio_id.ogg"
         mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         pinyin-list ++= span { className: \audioBlock },
-          div { className: 'icon-play playAudio part-of-speech', onClick: -> window.playAudio(it.target, mp3) },
+          div { className: 'icon-play playAudio part-of-speech' },
+            meta { itemProp: \name, content: mp3 - /^.*\// }
+            meta { itemProp: \contentURL, content: mp3 }
             t.1
         __html = t.2.replace(/¹/g \<sup>1</sup>).replace(/²/g \<sup>2</sup>).replace(/³/g \<sup>3</sup>)
                     .replace(/⁴/g \<sup>4</sup>).replace(/⁵/g \<sup>5</sup>)
@@ -97,6 +100,18 @@ Heteronym = React.createClass do
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
     list ++= small { className: \youyin } youyin if youyin
+    mp3 = ''
+    if audio_id and (can-play-ogg! or can-play-mp3!)
+      if LANG is \t and not (20000 < audio_id < 50000)
+        basename = (100000 + Number audio_id) - /^1/
+        mp3 = http "t.moedict.tw/#basename.ogg"
+      else if LANG is \a
+        mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
+      mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
+      mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
+    if mp3 => list ++= i { +itemScope, itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
+      meta { itemProp: \name, content: mp3 - /^.*\// }
+      meta { itemProp: \contentURL, content: mp3 }
     if b-alt
       list ++= small { className: \alternative },
         span { className: \pinyin } p-alt

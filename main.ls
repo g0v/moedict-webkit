@@ -560,6 +560,8 @@ window.do-load = ->
       window.scroll-to 0 0
       strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
 
+    $ '.results .playAudio' .click ->
+      window.playAudio @, $(@).find("meta[itemprop='contentURL']").attr('content')
 
     if isCordova and not DEBUGGING
       try navigator.splashscreen.hide!
