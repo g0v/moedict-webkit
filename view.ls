@@ -1,7 +1,8 @@
+React ?= require \react
 {p, i, a, h1, div, main, span, br, h3, table,
 tr, td, th, input, hr, meta, ol, li, ruby, small} = React.DOM
 
-{any, map} = require('prelude-ls')
+{any, map} = require \prelude-ls
 
 withProperties = (tag, def-props={}) ->
   (props = {}, ...args) ->
@@ -401,6 +402,8 @@ function trs2bpmf (LANG, trs)
     it + (tone || '\uFFFD')
   ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
 
-$ ->
+if module?
+  module?.exports = { Result }
+else $ ->
   React{}.View.Result = Result
   React.View.result = React.renderComponent Result!, $(\#result).0
