@@ -428,6 +428,12 @@ body.overflow-scrolling-true.web {
 
 // 客語典標題列發音
 body.lang-h {
+    h1 {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
     .bopomofo {
         @include en-fonts;
         .part-of-speech {

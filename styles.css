@@ -10477,6 +10477,12 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
   line-height: 100%;
 }
 
+body.lang-h h1 {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 body.lang-h .bopomofo {
   font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
 }

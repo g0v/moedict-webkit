@@ -124,14 +124,14 @@ Heteronym = React.createClass do
       meta { itemProp: \name, content: t }
       $char
       h1 { className: \title, 'data-title': t, style: { visibility: \hidden } }, ...list
-      if bopomofo then div { className: "bopomofo #cn-specific" },
+      if bopomofo or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
           span { className: \xref }, untag alt
         if cn-specific and pinyin and bopomofo then small { className: 'alternative cn-specific' },
           span { className: \pinyin } pinyin
           span { className: \bopomofo } bopomofo
-        else if LANG is \h then
+        if pinyin-list then
           span { className: \pinyin } ...pinyin-list
       div { className: \entry, itemProp: \articleBody },
         ...for defs in groupBy(\type definitions.slice!)

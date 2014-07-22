@@ -310,7 +310,7 @@
         style: {
           visibility: 'hidden'
         }
-      }].concat(slice$.call(list))), bopomofo ? div({
+      }].concat(slice$.call(list))), bopomofo || pinyinList ? div({
         className: "bopomofo " + cnSpecific
       }, alt != null ? div({
         lang: 'zh-Hans',
@@ -319,17 +319,15 @@
         className: 'xref part-of-speech'
       }, '简'), span({
         className: 'xref'
-      }, untag(alt))) : void 8, cnSpecific && pinyin && bopomofo
-        ? small({
-          className: 'alternative cn-specific'
-        }, span({
-          className: 'pinyin'
-        }, pinyin), span({
-          className: 'bopomofo'
-        }, bopomofo))
-        : LANG === 'h' ? span.apply(null, [{
-          className: 'pinyin'
-        }].concat(slice$.call(pinyinList))) : void 8) : void 8, div.apply(null, [{
+      }, untag(alt))) : void 8, cnSpecific && pinyin && bopomofo ? small({
+        className: 'alternative cn-specific'
+      }, span({
+        className: 'pinyin'
+      }, pinyin), span({
+        className: 'bopomofo'
+      }, bopomofo)) : void 8, pinyinList ? span.apply(null, [{
+        className: 'pinyin'
+      }].concat(slice$.call(pinyinList))) : void 8) : void 8, div.apply(null, [{
         className: 'entry',
         itemProp: 'articleBody'
       }].concat((function(){
