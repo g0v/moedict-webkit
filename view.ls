@@ -137,11 +137,13 @@ Heteronym = React.createClass do
         ...for defs in groupBy(\type definitions.slice!)
           DefinitionList { LANG, H, defs, synonyms, antonyms, variants }
 
-decorate-ruby = ({ LANG, title, bopomofo, py, pinyin=py, trs }) ->
+decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   pinyin ?= trs
   pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
+  pinyin ||= ''
   bopomofo ?= trs2bpmf LANG, "#pinyin"
   bopomofo -= /<[^>]*>/g unless LANG is \c
+  bopomofo ||= ''
   pinyin .= replace /ɡ/g \g
   pinyin .= replace /ɑ/g \a
   pinyin .= replace /，/g ', '
