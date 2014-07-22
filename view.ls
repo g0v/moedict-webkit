@@ -1,4 +1,4 @@
-React ?= require \react
+React = window?React || require \react
 {p, i, a, h1, div, main, span, br, h3, table,
 tr, td, th, input, hr, meta, ol, li, ruby, small} = React.DOM
 
@@ -24,7 +24,7 @@ Result = React.createClass do
 
 Term = React.createClass do
   render: ->
-    { LANG, H, title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
+    { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
     CurrentId := @props.id # Used in h()
     a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
     $char = if radical
@@ -402,8 +402,30 @@ function trs2bpmf (LANG, trs)
     it + (tone || '\uFFFD')
   ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
 
+const keyMap = {
+  h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
+  c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
+  t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
+  a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id" E: \"english"
+  T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
+  S: \"specific_to"
+}
+decodeLangPart = (LANG, part='') ->
+  while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
+    part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
+  part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
+  part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
+  H = HASH-OF[LANG]
+  part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a>#post</span>"
+  part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a></span>"
+  part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#H#word\\\">#word</a>#post</span>"
+  part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#H#word\\\">#word</a>"
+  part.=replace /([)）])/g "$1\u200B"
+  return part
+
 if module?
-  module?.exports = { Result }
+  module?.exports = { Result, decodeLangPart }
 else $ ->
   React{}.View.Result = Result
   React.View.result = React.renderComponent Result!, $(\#result).0
+  React.View.decodeLangPart = decodeLangPart

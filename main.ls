@@ -623,17 +623,7 @@ window.do-load = ->
     return true
 
   fill-json = (part, id, cb=set-html) ->
-    while part is /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/
-      part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
-    part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
-    part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
-    h = HASH-OF[LANG]
-    part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a>#post</span>"
-    part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#h#word\\\">#word</a></span>"
-    part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#h#word\\\">#word</a>#post</span>"
-    part.=replace /`([^~]+)~/g (, word) -> "<a href=\\\"#h#word\\\">#word</a>"
-    part.=replace /([)）])/g "$1\u200B"
-
+    part = React.View.decodeLangPart LANG, part
     reactProps = null
     if part is /^\[\s*\[/
       reactProps = { id, type: \radical, terms: part, H: HASH-OF[LANG] }
@@ -642,42 +632,9 @@ window.do-load = ->
     else
       xrefs = [ { lang, words } for lang, words of xref-of id | words.length ]
       reactProps = { id, xrefs, LANG, type: \term, H: HASH-OF[LANG] } <<< $.parseJSON part
-
     if cb is set-html
       return React.View.result.setProps reactProps, bind-html-actions
     return cb React.renderComponentToString React.View.Result(reactProps)
-
-    html = ''
-    has-xrefs = false
-    for tgt-lang, words of xref-of id | words.length
-      html += '<div class="xrefs">' unless has-xrefs++
-      html += """
-          <div class="xref-line">
-              <span class='xref part-of-speech'>#{
-                XREF-LABEL-OF["#LANG#tgt-lang"] || XREF-LABEL-OF[tgt-lang]
-              }</span>
-              <span class='xref' itemprop='citation'>
-      """
-      html += (for word in words
-        h = HASH-OF[tgt-lang]
-        if word is /`/
-          word.replace /`([^~]+)~/g (, word) -> "<a class='xref' href=\"#h#word\">#word</a>"
-        else
-          "<a class='xref' href=\"#h#word\">#word</a>"
-      ) * \、
-      html += '</span></div>'
-    html += '</div>' if has-xrefs
-    cb(htmlCache[LANG][id] = html)
-    return
-
-  keyMap = {
-    h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
-    c: \"stroke_count" n: \"non_radical_stroke_count" f: \"def"
-    t: \"title" r: \"radical" e: \"example" l: \"link" s: \"synonyms"
-    a: \"antonyms" q: \"quote" _: \"id" '=': \"audio_id" E: \"english"
-    T: \"trs" A: \"alt" V: \"vernacular", C: \"combined" D: \"dialects"
-    S: \"specific_to"
-  }
 
   fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"

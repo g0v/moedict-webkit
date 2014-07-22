@@ -337,7 +337,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, bindHtmlActions, loadCacheHtml, fillJson, keyMap, fillBucket, lang, i$, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, setHtml, bindHtmlActions, loadCacheHtml, fillJson, fillBucket, lang, i$, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -1091,29 +1091,9 @@
       return true;
     };
     fillJson = function(part, id, cb){
-      var h, reactProps, xrefs, res$, lang, ref$, words, html, hasXrefs, tgtLang, word;
+      var reactProps, xrefs, res$, lang, ref$, words;
       cb == null && (cb = setHtml);
-      while (/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/.exec(part)) {
-        part = part.replace(/"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/, '"辨\u20DE 似\u20DE $1"');
-      }
-      part = part.replace(/"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g, '"$1\u20DE $2"');
-      part = part.replace(/"([hbpdcnftrelsaqETAVCDS_=])":/g, function(arg$, k){
-        return keyMap[k] + ':';
-      });
-      h = HASHOF[LANG];
-      part = part.replace(/([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, pre, word, post){
-        return "<span class='punct'>" + pre + "<a href=\\\"" + h + word + "\\\">" + word + "</a>" + post + "</span>";
-      });
-      part = part.replace(/([「【『（《])`([^~]+)~/g, function(arg$, pre, word){
-        return "<span class='punct'>" + pre + "<a href=\\\"" + h + word + "\\\">" + word + "</a></span>";
-      });
-      part = part.replace(/`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g, function(arg$, word, post){
-        return "<span class='punct'><a href=\\\"" + h + word + "\\\">" + word + "</a>" + post + "</span>";
-      });
-      part = part.replace(/`([^~]+)~/g, function(arg$, word){
-        return "<a href=\\\"" + h + word + "\\\">" + word + "</a>";
-      });
-      part = part.replace(/([)）])/g, "$1\u200B");
+      part = React.View.decodeLangPart(LANG, part);
       reactProps = null;
       if (/^\[\s*\[/.exec(part)) {
         reactProps = {
@@ -1154,64 +1134,6 @@
         return React.View.result.setProps(reactProps, bindHtmlActions);
       }
       return cb(React.renderComponentToString(React.View.Result(reactProps)));
-      html = '';
-      hasXrefs = false;
-      for (tgtLang in ref$ = xrefOf(id)) {
-        words = ref$[tgtLang];
-        if (words.length) {
-          if (!hasXrefs++) {
-            html += '<div class="xrefs">';
-          }
-          html += "<div class=\"xref-line\">\n    <span class='xref part-of-speech'>" + (XREFLABELOF[LANG + "" + tgtLang] || XREFLABELOF[tgtLang]) + "</span>\n    <span class='xref' itemprop='citation'>";
-          html += (fn$()).join('、');
-          html += '</span></div>';
-        }
-      }
-      if (hasXrefs) {
-        html += '</div>';
-      }
-      cb(htmlCache[LANG][id] = html);
-      function fn$(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = words).length; i$ < len$; ++i$) {
-          word = ref$[i$];
-          h = HASHOF[tgtLang];
-          if (/`/.exec(word)) {
-            results$.push(word.replace(/`([^~]+)~/g, fn$));
-          } else {
-            results$.push("<a class='xref' href=\"" + h + word + "\">" + word + "</a>");
-          }
-        }
-        return results$;
-        function fn$(arg$, word){
-          return "<a class='xref' href=\"" + h + word + "\">" + word + "</a>";
-        }
-      }
-    };
-    keyMap = {
-      h: '"heteronyms"',
-      b: '"bopomofo"',
-      p: '"pinyin"',
-      d: '"definitions"',
-      c: '"stroke_count"',
-      n: '"non_radical_stroke_count"',
-      f: '"def"',
-      t: '"title"',
-      r: '"radical"',
-      e: '"example"',
-      l: '"link"',
-      s: '"synonyms"',
-      a: '"antonyms"',
-      q: '"quote"',
-      _: '"id"',
-      '=': '"audio_id"',
-      E: '"english"',
-      T: '"trs"',
-      A: '"alt"',
-      V: '"vernacular"',
-      C: '"combined"',
-      D: '"dialects"',
-      S: '"specific_to"'
     };
     fillBucket = function(id, bucket, cb){
       return GET("p" + LANG + "ck/" + bucket + ".txt", function(raw){
