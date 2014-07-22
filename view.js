@@ -234,7 +234,7 @@
         ? ruby({
           className: 'rightangle',
           dangerouslySetInnerHTML: {
-            __html: titleRuby
+            __html: h(titleRuby)
           }
         })
         : span({
@@ -292,8 +292,11 @@
       }
       if (specific_to) {
         list = list.concat(span({
-          className: 'specific_to'
-        }, specific_to));
+          className: 'specific_to',
+          dangerouslySetInnerHTML: {
+            __html: h(specific_to)
+          }
+        }));
       }
       return divInline({}, meta({
         itemProp: 'image',
@@ -304,8 +307,8 @@
       }), $char, h1.apply(null, [{
         className: 'title',
         'data-title': t
-      }].concat(slice$.call(list))), div({
-        className: 'bopomofo'
+      }].concat(slice$.call(list))), bopomofo ? div({
+        className: "bopomofo " + cnSpecific
       }, alt != null ? div({
         lang: 'zh-Hans',
         className: 'cn-specific'
@@ -313,7 +316,7 @@
         className: 'xref part-of-speech'
       }, '简'), span({
         className: 'xref'
-      }, untag(alt))) : void 8, cnSpecific
+      }, untag(alt))) : void 8, cnSpecific && pinyin && bopomofo
         ? small({
           className: 'alternative cn-specific'
         }, span({
@@ -323,7 +326,7 @@
         }, bopomofo))
         : LANG === 'h' ? span.apply(null, [{
           className: 'pinyin'
-        }].concat(slice$.call(pinyinList))) : void 8), div.apply(null, [{
+        }].concat(slice$.call(pinyinList))) : void 8) : void 8, div.apply(null, [{
         className: 'entry',
         itemProp: 'articleBody'
       }].concat((function(){
@@ -467,7 +470,8 @@
           d = ref$[i$];
           results$.push(Definition(import$({
             H: H,
-            LANG: LANG
+            LANG: LANG,
+            defs: defs
           }, d)));
         }
         return results$;
@@ -511,8 +515,8 @@
   }
   Definition = React.createClass({
     render: function(it){
-      var ref$, LANG, type, def, antonyms, synonyms, $afterDef, isColonDef, defString, list, res$, i$, len$, key, style, wrapper;
-      ref$ = this.props, LANG = ref$.LANG, type = ref$.type, def = ref$.def, antonyms = ref$.antonyms, synonyms = ref$.synonyms;
+      var ref$, LANG, type, def, defs, antonyms, synonyms, $afterDef, isColonDef, defString, list, res$, i$, len$, key, style, wrapper;
+      ref$ = this.props, LANG = ref$.LANG, type = ref$.type, def = ref$.def, defs = ref$.defs, antonyms = ref$.antonyms, synonyms = ref$.synonyms;
       if (/∥/.exec(def)) {
         $afterDef = div({
           style: {

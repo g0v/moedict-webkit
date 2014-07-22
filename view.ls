@@ -95,7 +95,7 @@ Heteronym = React.createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { className: \rightangle, dangerouslySetInnerHTML: { __html: title-ruby } }
+      ruby { className: \rightangle, dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
@@ -117,17 +117,18 @@ Heteronym = React.createClass do
         span { className: \pinyin } p-alt
         span { className: \bopomofo } b-alt
     list ++= span { lang: \en, className: \english } english if english
-    list ++= span { className: \specific_to } specific_to if specific_to
+    list ++= span { className: \specific_to, dangerouslySetInnerHTML: { __html: h specific_to } } if specific_to
+
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
       $char
       h1 { className: \title, 'data-title': t }, ...list
-      div { className: \bopomofo },
+      if bopomofo then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
           span { className: \xref }, untag alt
-        if cn-specific then small { className: 'alternative cn-specific' },
+        if cn-specific and pinyin and bopomofo then small { className: 'alternative cn-specific' },
           span { className: \pinyin } pinyin
           span { className: \bopomofo } bopomofo
         else if LANG is \h then
@@ -229,7 +230,7 @@ DefinitionList = React.createClass do
       list ++= intersperse nbsp, for t in defs.0.type.split \,
         span { className: \part-of-speech }, untag t
     list ++= ol {}, ...for d in defs
-      Definition { H, LANG } <<< d
+      Definition { H, LANG, defs } <<< d
     list ++= decorate-nyms @props
     return div { className: \entry-item }, ...list
 
@@ -246,7 +247,7 @@ function decorate-nyms (props)
 
 Definition = React.createClass do
   render: ->
-    {LANG, type, def, antonyms, synonyms} = @props
+    {LANG, type, def, defs, antonyms, synonyms} = @props
     if def is /∥/
       $after-def = div { style: { margin: "0 0 22px -44px" }, dangerouslySetInnerHTML: { __html: h(def - /^[^∥]+/) } }
       def -= /∥.*/
