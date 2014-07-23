@@ -122,8 +122,20 @@ require(\zappajs) {+disable_io} ->
     payload = if err then {} else try JSON.parse(json)
     payload = { layout: 'layout', text, +isBot, +isCLI, png-suffix: '.png', wt2font, font2name, -isWord, idx:@params.idx } <<< payload
     @render index: payload
-  @get '/:text': ->
+  @get '/:text.json': ->
     @params.text = fix-mojibake @params.text
+    @response.type \application/json
+    val = @params.text
+    lang = \a
+    if "#val" is /^['!]/ => lang = \t; val.=substr 1
+    if "#val" is /^:/ => lang = \h; val.=substr 1
+    if "#val" is /^~/ => lang = \c; val.=substr 1
+    err, json <~ fs.readFile("#lang/#val.json")
+    return @response.status 404 if err
+    props = JSON.parse(decodeLangPart lang, (json || '{}').toString!)
+    props.xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
+    @response.json(props)
+  @get '/:text': ->
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
