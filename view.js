@@ -350,12 +350,12 @@
   decorateRuby = function(arg$){
     var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, t, b, cnSpecificBpmf, ruby, p, i$, len$, idx, yin, span, cns, tws;
     LANG = arg$.LANG, title = (ref$ = arg$.title) != null ? ref$ : '', bopomofo = arg$.bopomofo, py = arg$.py, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = arg$.trs;
-    pinyin == null && (pinyin = trs);
+    pinyin == null && (pinyin = trs != null ? trs : '');
     if (LANG !== 'c') {
       pinyin = replace$.call(pinyin, /<[^>]*>/g, '').replace(/（.*）/, '');
     }
     pinyin || (pinyin = '');
-    bopomofo == null && (bopomofo = trs2bpmf(LANG, pinyin + ""));
+    bopomofo == null && (bopomofo = (ref$ = trs2bpmf(LANG, pinyin + "")) != null ? ref$ : '');
     if (LANG !== 'c') {
       bopomofo = replace$.call(bopomofo, /<[^>]*>/g, '');
     }

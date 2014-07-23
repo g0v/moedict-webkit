@@ -138,10 +138,10 @@ Heteronym = React.createClass do
           DefinitionList { LANG, H, defs, synonyms, antonyms, variants }
 
 decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
-  pinyin ?= trs
+  pinyin ?= trs ? ''
   pinyin = (pinyin - /<[^>]*>/g - /（.*）/) unless LANG is \c
   pinyin ||= ''
-  bopomofo ?= trs2bpmf LANG, "#pinyin"
+  bopomofo ?= trs2bpmf(LANG, "#pinyin") ? ''
   bopomofo -= /<[^>]*>/g unless LANG is \c
   bopomofo ||= ''
   pinyin .= replace /ɡ/g \g
