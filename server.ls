@@ -242,7 +242,6 @@ require(\zappajs) {+disable_io} ->
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
         id = trim @t
-        return text """<script>location = "/##h#word"</script>""" if id.0 in <[ @ = ]>
 
         if @idx => return body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
           idx = 0
@@ -265,8 +264,12 @@ require(\zappajs) {+disable_io} ->
           props.LANG = LANG
           props.H = h
           props.type = \term
-        props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
-        fill-props!
+        props = {}
+        if (@json || '').toString! is /^\[\s*\[/
+          props = { id, type: \radical, terms: (@json || '').toString!, H: h }
+        else
+          props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
+          fill-props!
         text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
         text @index-body.replace '<!-- RESULT -->', @React.renderComponentToString @Result props
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)

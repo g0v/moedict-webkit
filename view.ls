@@ -288,7 +288,10 @@ RadicalTable = React.createClass do
     else
       H += '@'
       title = h1-name {}, \部首表
-    rows = $.parseJSON terms
+    if $?
+      rows = $.parseJSON terms
+    else
+      rows = JSON.parse terms
     list = []
     for chars, strokes in rows | chars?length
       chs = []

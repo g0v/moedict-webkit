@@ -623,7 +623,11 @@
         H += '@';
         title = h1Name({}, '部首表');
       }
-      rows = $.parseJSON(terms);
+      if (typeof $ != 'undefined' && $ !== null) {
+        rows = $.parseJSON(terms);
+      } else {
+        rows = JSON.parse(terms);
+      }
       list = [];
       for (i$ = 0, len$ = rows.length; i$ < len$; ++i$) {
         strokes = i$;
