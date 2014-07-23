@@ -243,6 +243,22 @@ require(\zappajs) {+disable_io} ->
         h = \' if h is \!
         id = trim @t
         return text """<script>location = "/##h#word"</script>""" if id.0 in <[ @ = ]>
+
+        if @idx => return body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
+          idx = 0
+          (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
+            meta itemprop:"image" content:og-image
+            h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
+            div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
+              p trim(b || t || T || "#P".replace(/\u20DE/g ' '))
+              ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
+                s = if s then "<br>似:[#s]" else ''
+                a = if a then "<br>反:[#a]" else ''
+                dl ->
+                  dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+                  dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.hash = \"##h#word\" }" unless @isCLI
+
         fill-props = ~>
           props.id = id
           props.xrefs = @xrefs
@@ -261,22 +277,6 @@ require(\zappajs) {+disable_io} ->
             JSON.stringify props,,2
           }), $('\#result')[0], window.bindHtmlActions);
         })</script>"""
-        /*
-        body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          idx = 0
-          (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
-            meta itemprop:"image" content:og-image
-            h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
-            div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
-              p trim(b || t || T || "#P".replace(/\u20DE/g ' '))
-              ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
-                s = if s then "<br>似:[#s]" else ''
-                a = if a then "<br>反:[#a]" else ''
-                dl ->
-                  dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-                  dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
-          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.hash = "##h#word\" }" unless @isCLI
-          */
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word
