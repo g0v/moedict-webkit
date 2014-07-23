@@ -131,7 +131,7 @@ require(\zappajs) {+disable_io} ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
-    return @response.status 404 if err
+    return @response.send(404, error: "Segmentation not yet supported in JSON") if err
     props = JSON.parse(decodeLangPart lang, (json || '{}').toString!)
     props.xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
     @response.json(props)
