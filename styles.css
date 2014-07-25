@@ -10934,3 +10934,7 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
 #gcse > span .gsc-control-cse .gsc-cursor-page:only-child {
   display: none !important;
 }
+
+body {
+  font-size: 14pt;
+}

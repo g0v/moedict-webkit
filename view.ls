@@ -106,7 +106,7 @@ Heteronym = React.createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { className: \rightangle, dangerouslySetInnerHTML: { __html: h title-ruby } }
+      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: \rightangle, dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
@@ -134,7 +134,7 @@ Heteronym = React.createClass do
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
       $char
-      h1 { className: \title, 'data-title': t, style: { visibility: \hidden } }, ...list
+      h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
@@ -219,8 +219,8 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
     p[idx] = "<rt#span>#yin</rt>"
-  ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-  ruby += '<rtc class="romanization">'
+  ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+  ruby += '<rtc style="display: none" class="romanization">'
   ruby += p.join ''
   ruby += '</rtc>'
   if LANG is \c

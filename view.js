@@ -269,6 +269,11 @@
       }
       list = [titleRuby
         ? ruby({
+          style: {
+            display: 'inline-block',
+            marginTop: '20px',
+            marginBottom: '17px'
+          },
           className: 'rightangle',
           dangerouslySetInnerHTML: {
             __html: h(titleRuby)
@@ -343,10 +348,7 @@
         content: t
       }), $char, h1.apply(null, [{
         className: 'title',
-        'data-title': t,
-        style: {
-          visibility: 'hidden'
-        }
+        'data-title': t
       }].concat(slice$.call(list))), bopomofo || pinyinList ? div({
         className: "bopomofo " + cnSpecific
       }, alt != null ? div({
@@ -463,8 +465,8 @@
         p[idx] = "<rt" + span + ">" + yin + "</rt>";
       }
     }
-    ruby += '<rtc class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
-    ruby += '<rtc class="romanization">';
+    ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
+    ruby += '<rtc style="display: none" class="romanization">';
     ruby += p.join('');
     ruby += '</rtc>';
     if (LANG === 'c') {

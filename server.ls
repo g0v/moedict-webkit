@@ -287,9 +287,10 @@ require(\zappajs) {+disable_io} ->
         fill-props!
         props.H = "##h"
         text """<script>$(function(){
-          React.View.result = React.renderComponent(React.View.Result(#{
-            JSON.stringify props,,2
-          }), $('\#result')[0], window.bindHtmlActions);
+          window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
+          React.View.result = React.renderComponent(React.View.Result(
+            window.PRERENDER_JSON
+          ), $('\#result')[0], window.bindHtmlActions);
         })</script>"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
