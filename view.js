@@ -53,7 +53,7 @@
   });
   Term = React.createClass({
     render: function(){
-      var ref$, LANG, H, ref1$, title, english, heteronyms, radical, translation, nrsCount, sCount, py, xrefs, aStroke, $char, list, res$, i$, len$, props;
+      var ref$, LANG, H, ref1$, title, english, heteronyms, radical, translation, nrsCount, sCount, py, xrefs, aStroke, $char, list, res$, i$, len$, key, props;
       ref$ = this.props, LANG = ref$.LANG, H = (ref1$ = ref$.H) != null
         ? ref1$
         : HASHOF[LANG], title = ref$.title, english = ref$.english, heteronyms = ref$.heteronyms, radical = ref$.radical, translation = ref$.translation, nrsCount = ref$.non_radical_stroke_count, sCount = ref$.stroke_count, py = ref$.pinyin, xrefs = ref$.xrefs;
@@ -83,8 +83,10 @@
         }, aStroke);
       res$ = [];
       for (i$ = 0, len$ = heteronyms.length; i$ < len$; ++i$) {
+        key = i$;
         props = heteronyms[i$];
         res$.push(Heteronym(import$({
+          key: key,
           $char: $char,
           H: H,
           LANG: LANG,
@@ -136,6 +138,7 @@
           var text, this$ = this;
           text = untag((join$.call(translation[key], ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, ''));
           return div({
+            key: key,
             className: 'xref-line'
           }, span({
             className: 'fw_lang'
@@ -150,22 +153,24 @@
     },
     onClick: function(val, text){
       var syn, utt, u;
-      syn = window.speechSynthesis;
-      utt = window.SpeechSynthesisUtterance;
-      u = new utt(replace$.call(text, /\([A-Z]\)/g, '').replace(/[^\u0000-\u00FF]/g, ''));
-      u.lang = (function(){
-        switch (val) {
-        case '英':
-          return 'en-US';
-        case '法':
-          return 'fr-FR';
-        case '德':
-          return 'de-DE';
-        }
-      }());
-      u.volume = 1.0;
-      u.rate = 1.1;
-      return syn.speak(u);
+      try {
+        syn = window.speechSynthesis;
+        utt = window.SpeechSynthesisUtterance;
+        u = new utt(replace$.call(text, /\([A-Z]\)/g, '').replace(/[^\u0000-\u00FF]/g, ''));
+        u.lang = (function(){
+          switch (val) {
+          case '英':
+            return 'en-US';
+          case '法':
+            return 'fr-FR';
+          case '德':
+            return 'de-DE';
+          }
+        }());
+        u.volume = 1.0;
+        u.rate = 1.1;
+        return syn.speak(u);
+      } catch (e$) {}
     }
   });
   HASHOF = {
@@ -193,6 +198,7 @@
           ref1$ = ref$[i$], lang = ref1$.lang, words = ref1$.words;
           H = HASHOF[lang];
           results$.push(div({
+            key: lang,
             className: 'xref-line'
           }, span({
             className: 'xref part-of-speech'
@@ -208,6 +214,7 @@
             word = ref$[i$];
             word = replace$.call(word, /[`~]/g, '');
             results$.push(a({
+              key: word,
               className: 'xref',
               href: H + "" + word
             }, word));
@@ -219,7 +226,7 @@
   });
   Heteronym = React.createClass({
     render: function(){
-      var ref$, $char, H, LANG, title, english, id, audio_id, ref1$, bopomofo, trs, py, pinyin, definitions, antonyms, synonyms, variants, specific_to, alt, re, pinyinList, t, variant, mp3, __html, titleRuby, youyin, bAlt, pAlt, cnSpecific, list, basename, defs;
+      var ref$, $char, H, LANG, title, english, id, audio_id, ref1$, bopomofo, trs, py, pinyin, definitions, antonyms, synonyms, variants, specific_to, alt, re, pinyinList, t, variant, mp3, __html, titleRuby, youyin, bAlt, pAlt, cnSpecific, list, basename, key, defs;
       ref$ = this.props, $char = ref$.$char, H = ref$.H, LANG = ref$.LANG, title = ref$.title, english = ref$.english, id = ref$.id, audio_id = (ref1$ = ref$.audio_id) != null ? ref1$ : id, bopomofo = ref$.bopomofo, trs = (ref1$ = ref$.trs) != null ? ref1$ : '', py = ref$.py, pinyin = (ref1$ = ref$.pinyin) != null
         ? ref1$
         : py || trs || '', definitions = (ref1$ = ref$.definitions) != null
@@ -363,8 +370,10 @@
       }].concat((function(){
         var i$, ref$, len$, results$ = [];
         for (i$ = 0, len$ = (ref$ = groupBy('type', definitions.slice())).length; i$ < len$; ++i$) {
+          key = i$;
           defs = ref$[i$];
           results$.push(DefinitionList({
+            key: key,
             LANG: LANG,
             H: H,
             defs: defs,
@@ -482,15 +491,17 @@
   };
   DefinitionList = React.createClass({
     render: function(){
-      var ref$, H, LANG, defs, list, t, d;
+      var ref$, H, LANG, defs, list, key, t, d;
       ref$ = this.props, H = ref$.H, LANG = ref$.LANG, defs = ref$.defs;
       list = [];
       if ((ref$ = defs[0]) != null && ref$.type) {
         list = list.concat(intersperse(nbsp, (function(){
           var i$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = defs[0].type.split(',')).length; i$ < len$; ++i$) {
+            key = i$;
             t = ref$[i$];
             results$.push(span({
+              key: key,
               className: 'part-of-speech'
             }, untag(t)));
           }
@@ -500,8 +511,10 @@
       list = list.concat(ol.apply(null, [{}].concat((function(){
         var i$, ref$, len$, results$ = [];
         for (i$ = 0, len$ = (ref$ = defs).length; i$ < len$; ++i$) {
+          key = i$;
           d = ref$[i$];
           results$.push(Definition(import$({
+            key: key,
             H: H,
             LANG: LANG,
             defs: defs
@@ -528,6 +541,7 @@
       if (props[key]) {
         list = list.concat(span.apply(null, [
           {
+            key: key,
             className: key
           }, span({
             className: 'part-of-speech'
@@ -540,6 +554,7 @@
       var results$ = [];
       while (t = re.exec(props[key])) {
         results$.push(a({
+          key: t[1],
           href: props.H + "" + t[1]
         }, t[1]));
       }
@@ -567,8 +582,10 @@
       defString = h(expandDef(def)).replace(/([：。」])([\u278A-\u2793\u24eb-\u24f4])/g, '$1\uFFFC$2');
       res$ = [];
       for (i$ = 0, len$ = (ref$ = defString.split('\uFFFC')).length; i$ < len$; ++i$) {
+        key = i$;
         it = ref$[i$];
         res$.push(span({
+          key: key,
           className: 'def',
           dangerouslySetInnerHTML: {
             __html: h(it)
@@ -576,10 +593,9 @@
         }));
       }
       list = res$;
-      for (i$ = 0, len$ = (ref$ = ['example', 'quote', 'link']).length; i$ < len$; ++i$) {
-        key = ref$[i$];
-        if (this.props[key]) {
-          list = list.concat((fn$.call(this)));
+      for (i$ = 0, len$ = ['example', 'quote', 'link'].length; i$ < len$; ++i$) {
+        if (this.props[['example', 'quote', 'link'][i$]]) {
+          (fn$.call(this, ['example', 'quote', 'link'][i$]));
         }
       }
       list = list.concat(decorateNyms(this.props));
@@ -602,18 +618,19 @@
         className: 'definition',
         style: style
       }].concat(slice$.call(list))));
-      function fn$(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = this.props[key]).length; i$ < len$; ++i$) {
-          it = ref$[i$];
-          results$.push(span({
-            className: key,
-            dangerouslySetInnerHTML: {
+      function fn$(key){
+        var idx, it;
+        list = list.concat((function(){
+          var i$, ref$, len$, ref1$, ref2$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = this.props[key]).length; i$ < len$; ++i$) {
+            idx = i$;
+            it = ref$[i$];
+            results$.push(span((ref1$ = {}, ref1$[ref2$ = key + "." + idx] = ref2$, ref1$.className = key, ref1$.dangerouslySetInnerHTML = {
               __html: h(it)
-            }
-          }));
-        }
-        return results$;
+            }, ref1$)));
+          }
+          return results$;
+        }.call(this)));
       }
     }
   });
@@ -667,6 +684,7 @@
           for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
             ch = chars[j$];
             chs = chs.concat(a({
+              key: ch,
               className: 'stroke-char',
               href: H + "" + ch
             }, ch));
@@ -734,6 +752,7 @@
             for (i$ = 0, len$ = (ref$ = ['臺', '陸']).length; i$ < len$; ++i$) {
               it = ref$[i$];
               results$.push(th({
+                key: it,
                 width: 200
               }, span({
                 className: 'part-of-speech'
@@ -745,6 +764,7 @@
           var results$ = [];
           while (t = re.exec(terms)) {
             results$.push(tr.apply(null, [{
+              key: t[1],
               style: {
                 borderTop: '1px solid #ccc'
               }

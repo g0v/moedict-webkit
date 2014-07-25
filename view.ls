@@ -36,8 +36,8 @@ Term = React.createClass do
         span { className: \count }, " = #s-count"
         nbsp, a-stroke
     else div { className: \radical }, a-stroke
-    list = for props in heteronyms
-      Heteronym { $char, H, LANG, title, py, english } <<< props
+    list = for props, key in heteronyms
+      Heteronym { key, $char, H, LANG, title, py, english } <<< props
     list ++= XRefs { LANG, xrefs } if xrefs?length
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
@@ -48,10 +48,10 @@ Translations = React.createClass do
     div { className: \xrefs }, span { className: \translation },
       ...for let key, val of { English: \英, francais: \法, Deutsch: \德 } | translation[key]
         text = untag((translation[key] * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g)
-        div { className: \xref-line },
+        div { key, className: \xref-line },
           span { className: \fw_lang }, val
           span { className: \fw_def, onClick: ~> @onClick val, text }, text
-  onClick: (val, text) ->
+  onClick: (val, text) -> try
     syn = window.speechSynthesis
     utt = window.SpeechSynthesisUtterance
     u = new utt(text - /\([A-Z]\)/g - /[^\u0000-\u00FF]/g)
@@ -70,14 +70,14 @@ XRefs = React.createClass do
     { LANG, xrefs } = @props
     div { className: \xrefs }, ...for { lang, words } in xrefs
       H = HASH-OF[lang]
-      div { className: \xref-line },
+      div { key: lang, className: \xref-line },
         span { className: 'xref part-of-speech' },
           XREF-LABEL-OF["#LANG#lang"] || XREF-LABEL-OF[lang]
         nbsp
         span { className: 'xref', itemProp: \citation },
           ...intersperse \、, for word in words
             word -= /[`~]/g
-            a { className: \xref, href: "#H#word" } word
+            a { key: word, className: \xref, href: "#H#word" } word
 
 Heteronym = React.createClass do
   render: ->
@@ -145,8 +145,8 @@ Heteronym = React.createClass do
         if pinyin-list then
           span { className: \pinyin } ...pinyin-list
       div { className: \entry, itemProp: \articleBody },
-        ...for defs in groupBy(\type definitions.slice!)
-          DefinitionList { LANG, H, defs, synonyms, antonyms, variants }
+        ...for defs, key in groupBy(\type definitions.slice!)
+          DefinitionList { key, LANG, H, defs, synonyms, antonyms, variants }
 
 decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   pinyin ?= trs ? ''
@@ -240,10 +240,10 @@ DefinitionList = React.createClass do
     { H, LANG, defs } = @props
     list = []
     if defs.0?type
-      list ++= intersperse nbsp, for t in defs.0.type.split \,
-        span { className: \part-of-speech }, untag t
-    list ++= ol {}, ...for d in defs
-      Definition { H, LANG, defs } <<< d
+      list ++= intersperse nbsp, for t, key in defs.0.type.split \,
+        span { key, className: \part-of-speech }, untag t
+    list ++= ol {}, ...for d, key in defs
+      Definition { key, H, LANG, defs } <<< d
     list ++= decorate-nyms @props
     return div { className: \entry-item }, ...list
 
@@ -251,11 +251,11 @@ function decorate-nyms (props)
   list = []
   re = />([^,<]+)</g
   for key, val of { synonyms: \似, antonyms: \反, variants: \異 } | props[key]
-    list ++= span { className: key },
+    list ++= span { key, className: key },
       span { className: \part-of-speech }, val
       nbsp
       ...intersperse \、, while t = re.exec(props[key])
-        a { href: "#{ props.H }#{ t.1 }" }, t.1
+        a { key: t.1, href: "#{ props.H }#{ t.1 }" }, t.1
   return list
 
 Definition = React.createClass do
@@ -268,11 +268,11 @@ Definition = React.createClass do
     def-string = h(expand-def def).replace do
       /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
       '$1\uFFFC$2'
-    list = for it in def-string.split '\uFFFC'
-      span { className: \def, dangerouslySetInnerHTML: { __html: h it } }
-    for key in <[ example quote link ]> | @props[key]
-      list ++= for it in @props[key]
-        span { className: key, dangerouslySetInnerHTML: { __html: h it } }
+    list = for it, key in def-string.split '\uFFFC'
+      span { key, className: \def, dangerouslySetInnerHTML: { __html: h it } }
+    for let key in <[ example quote link ]> | @props[key]
+      list ++= for it, idx in @props[key]
+        span { "#key.#idx", className: key, dangerouslySetInnerHTML: { __html: h it } }
     list ++= decorate-nyms @props
     list ++= $after-def if $after-def
     style = if is-colon-def then { marginLeft: \-28px } else {}
@@ -307,7 +307,7 @@ RadicalTable = React.createClass do
     for chars, strokes in rows | chars?length
       chs = []
       for ch in chars
-        chs ++= a { className: \stroke-char, href: "#H#ch" }, ch
+        chs ++= a { key: ch, className: \stroke-char, href: "#H#ch" }, ch
         chs ++= ' '
       list ++= span { className: \stroke-count }, strokes
       list ++= span { className: \stroke-list }, chs
@@ -338,9 +338,9 @@ List = React.createClass do
       re = /";([^;"]+);([^;"]+)"[^"]*/g
       list ++= table {},
         tr {}, ...for it in <[ 臺 陸 ]>
-          th { width: 200 }, span { className: \part-of-speech } it
+          th { key: it, width: 200 }, span { className: \part-of-speech } it
         ...while t = re.exec(terms)
-          tr { style: { borderTop: '1px solid #ccc' } },
+          tr { key: t.1, style: { borderTop: '1px solid #ccc' } },
             ...for it in [ t.1, t.2 ]
               td {}, a { href: "#H#it" } it
     else
