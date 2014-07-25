@@ -27,8 +27,7 @@ for let lang in <[ a t h c ]>
 
 function xref-of (id, src-lang)
   rv = {}
-  part = XREF[src-lang][id]
-  for tgt-lang, words of XREF[src-lang] | words[id]
+  for tgt-lang, words of XREF[src-lang] | words[id]?
     rv[tgt-lang] = [ x || id for x in words[id] / \, ]
   return rv
 
