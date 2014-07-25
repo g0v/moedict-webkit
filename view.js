@@ -110,32 +110,62 @@
   });
   Translations = React.createClass({
     render: function(){
-      var translation, key, val;
+      var translation;
       translation = this.props.translation;
       return div({
         className: 'xrefs'
       }, span.apply(null, [{
         className: 'translation'
       }].concat((function(){
-        var ref$, results$ = [];
-        for (key in ref$ = {
+        var i$, results$ = [];
+        for (i$ in {
           English: '英',
           francais: '法',
           Deutsch: '德'
         }) {
-          val = ref$[key];
-          if (translation[key]) {
-            results$.push(div({
-              className: 'xref-line'
-            }, span({
-              className: 'fw_lang'
-            }, val), span({
-              className: 'fw_def'
-            }, untag((join$.call(translation[key], ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, '')))));
+          if (translation[i$]) {
+            results$.push((fn$.call(this, i$, {
+          English: '英',
+          francais: '法',
+          Deutsch: '德'
+        }[i$])));
           }
         }
         return results$;
-      }()))));
+        function fn$(key, val){
+          var text, this$ = this;
+          text = untag((join$.call(translation[key], ', ')).replace(/, CL:.*/g, '').replace(/\|(?:<\/?a[^>*]>|[^[,.(])+/g, ''));
+          return div({
+            className: 'xref-line'
+          }, span({
+            className: 'fw_lang'
+          }, val), span({
+            className: 'fw_def',
+            onClick: function(){
+              return this$.onClick(val, text);
+            }
+          }, text));
+        }
+      }.call(this)))));
+    },
+    onClick: function(val, text){
+      var syn, utt, u;
+      syn = window.speechSynthesis;
+      utt = window.SpeechSynthesisUtterance;
+      u = new utt(replace$.call(text, /\([A-Z]\)/g, '').replace(/[^\u0000-\u00FF]/g, ''));
+      u.lang = (function(){
+        switch (val) {
+        case '英':
+          return 'en-US';
+        case '法':
+          return 'fr-FR';
+        case '德':
+          return 'de-DE';
+        }
+      }());
+      u.volume = 1.0;
+      u.rate = 1.1;
+      return syn.speak(u);
     }
   });
   HASHOF = {

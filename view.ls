@@ -46,11 +46,22 @@ Translations = React.createClass do
   render: ->
     {translation} = @props
     div { className: \xrefs }, span { className: \translation },
-      ...for key, val of { English: \英, francais: \法, Deutsch: \德 } | translation[key]
+      ...for let key, val of { English: \英, francais: \法, Deutsch: \德 } | translation[key]
+        text = untag((translation[key] * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g)
         div { className: \xref-line },
           span { className: \fw_lang }, val
-          span { className: \fw_def },
-            untag((translation[key] * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g)
+          span { className: \fw_def, onClick: ~> @onClick val, text }, text
+  onClick: (val, text) ->
+    syn = window.speechSynthesis
+    utt = window.SpeechSynthesisUtterance
+    u = new utt(text - /\([A-Z]\)/g - /[^\u0000-\u00FF]/g)
+    u.lang = switch val
+      | \英 => \en-US
+      | \法 => \fr-FR
+      | \德 => \de-DE
+    u.volume = 1.0
+    u.rate = 1.1
+    syn.speak u
 
 const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
