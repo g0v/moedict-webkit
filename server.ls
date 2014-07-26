@@ -5,9 +5,9 @@ LTM-regexes = {}
 index-body = fs.read-file-sync \index.html
 index-body -= /^[\s\S]*<\/head>/
 index-body -= /<\/html>/
-index-body -= /<noscript>[\s\S]*<\/noscript>/
+index-body -= /<noscript>[\s\S]*<\/noscript>/g
+index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
 index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
-#index-body.=replace /<div id="dropdown"><\/div>/ '<!-- DROPDOWN -->'
 
 React = require \react
 {Result, decodeLangPart} = require \./view.js

@@ -43,7 +43,7 @@
     h: '#:',
     c: '#~'
   };
-  if (isCordova || DEBUGGING) {
+  if ((isCordova || DEBUGGING) && !window.ALL_LANGUAGES) {
     if (STANDALONE) {
       HASHOF = (ref$ = {}, ref$[STANDALONE + ""] = HASHOF[STANDALONE], ref$);
     } else {
@@ -109,7 +109,7 @@
       t: ''
     }
   };
-  if (isCordova && STANDALONE !== 'c') {
+  if (isCordova && STANDALONE !== 'c' && !window.ALL_LANGUAGES) {
     delete HASHOF.c;
     delete INDEX.c;
     $(function(){

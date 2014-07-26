@@ -20,6 +20,7 @@
     "prelude-ls": "1.1.1"
   },
   "devDependencies": {
-    "LiveScript": "1.1.1"
+    "LiveScript": "1.1.1",
+    "gulp-uglifyjs": "^0.4.2"
   }
 }

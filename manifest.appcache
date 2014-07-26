@@ -42,20 +42,15 @@ about.html
 favicon.ico
 
 # js files
-js/jquery-2.1.1.min.js
-js/jquery-ui-1.10.4.custom.min.js
-js/jquery.hoverIntent.js
-js/jquery.ruby.js
-js/react.min.js
-js/bootstrap/dropdown.js
-js/simp-trad.js
+js/deps.js
+
+# optional deps
 js/howler.js
 js/raf.min.js
 js/gl-matrix-min.js
 js/sax.js
 js/jquery.strokeWords.js
 js/raphael.js
-js/prelude-browser-min.js
 
 # image files
 images/leather.jpg

@@ -21,7 +21,7 @@ const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
 
 HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 
-if isCordova or DEBUGGING
+if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   if STANDALONE
     HASH-OF = {"#STANDALONE": HASH-OF[STANDALONE]}
   else
@@ -54,7 +54,7 @@ XREF = {
   tv: {t: ''}
 }
 
-if isCordova and STANDALONE isnt \c
+if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
   delete HASH-OF.c
   delete INDEX.c
   $ -> $('.nav .c').remove!
