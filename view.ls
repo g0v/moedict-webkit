@@ -426,9 +426,9 @@ List = React.createClass do
       re = /";([^;"]+);([^;"]+)"[^"]*/g
       list ++= table {},
         tr {}, ...for it in <[ 臺 陸 ]>
-          th { key: it, width: 200 }, span { className: \part-of-speech } it
+          th { width: 200 }, span { className: \part-of-speech } it
         ...while t = re.exec(terms)
-          tr { key: t.1, style: { borderTop: '1px solid #ccc' } },
+          tr { style: { borderTop: '1px solid #ccc' } },
             ...for it in [ t.1, t.2 ]
               td {}, a { href: "#H#it" } it
     else

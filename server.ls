@@ -102,6 +102,7 @@ require(\zappajs) {+disable_io} ->
   @get '/cordova.js': -> @response.type \application/json; @response.send ''
   @get '/css/:path/:file.css': -> @response.type \text/css; @response.sendfile "css/#{@params.path}/#{@params.file}.css"
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/favicon.ico': -> @response.type \image/vnd.microsoft.icon; @response.sendfile \favicon.ico
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
   @get '/images/:file.jpg': -> @response.type \image/jpeg; @response.sendfile "images/#{@params.file}.jpg"
@@ -137,6 +138,7 @@ require(\zappajs) {+disable_io} ->
     props.xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
     @response.json(props)
   @get '/:text': ->
+    return @response.redirect "##{ @params.text }" if @params.text is /^[~:!]?=\*/
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
@@ -280,6 +282,8 @@ require(\zappajs) {+disable_io} ->
         props = {}
         if (@json || '').toString! is /^\[\s*\[/
           props = { id, type: \radical, terms: (@json || '').toString!, H: h }
+        else if (@json || '').toString! is /^\[/
+          props = { id, type: \list, terms: (@json || ''), H: h }
         else
           props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
           fill-props!

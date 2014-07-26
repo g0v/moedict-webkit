@@ -1071,7 +1071,6 @@
             for (i$ = 0, len$ = (ref$ = ['臺', '陸']).length; i$ < len$; ++i$) {
               it = ref$[i$];
               results$.push(th({
-                key: it,
                 width: 200
               }, span({
                 className: 'part-of-speech'
@@ -1083,7 +1082,6 @@
           var results$ = [];
           while (t = re.exec(terms)) {
             results$.push(tr.apply(null, [{
-              key: t[1],
               style: {
                 borderTop: '1px solid #ccc'
               }
