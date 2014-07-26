@@ -7,9 +7,11 @@ index-body -= /^[\s\S]*<\/head>/
 index-body -= /<\/html>/
 index-body -= /<noscript>[\s\S]*<\/noscript>/
 index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
+#index-body.=replace /<div id="dropdown"><\/div>/ '<!-- DROPDOWN -->'
 
 React = require \react
 {Result, decodeLangPart} = require \./view.js
+
 XREF = {}
 
 for let lang in <[ a t h c ]>
@@ -282,7 +284,10 @@ require(\zappajs) {+disable_io} ->
           props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
           fill-props!
         text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
-        text @index-body.replace '<!-- RESULT -->', @React.renderComponentToString @Result props
+        html = @index-body
+        html.=replace('<!-- RESULT -->', @React.renderComponentToString @Result props)
+        #html.=replace('<!-- DROPDOWN -->', @React.renderComponentToString @DropDown!)
+        text html
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
         fill-props!
         props.H = "##h"

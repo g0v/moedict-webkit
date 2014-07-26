@@ -1,6 +1,6 @@
 React = window?React || require \react
 {p, i, a, h1, div, main, span, br, h3, table,
-tr, td, th, input, hr, meta, ol, li, ruby, small} = React.DOM
+tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
 
@@ -12,6 +12,36 @@ div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
 nbsp       = '\u00A0'
 CurrentId  = null
+
+Taxonomy = React.createClass do
+  render: ->
+    {lang} = @props
+    li { className: \dropdown-submenu },
+      a { className: "#lang taxonomy", }, \…分類索引
+
+MenuItem = React.createClass do
+  render: ->
+    {lang, href, children} = @props
+    role = \menuitem if children.0 is \…
+    li { role: \presentation },
+      a { className: "#lang lang-option#{ if role then '' else " #lang\-idiom"}", role, href }, children
+
+DropDown = React.createClass do
+  render: -> ul { className: \dropdown-menu, role: \navigation },
+    MenuItem { lang: \a, href: \#萌 }, \國語辭典
+    Taxonomy { lang: \a }
+    MenuItem { lang: \a, href: \#@ }, \…部首表
+
+    MenuItem { lang: \t, href: \#! }, \臺灣閩南語
+    Taxonomy { lang: \t }
+    MenuItem { lang: \t, href: \#!=諺語 }, \…諺語
+
+    MenuItem { lang: \h, href: \#: }, \臺灣客家語
+    MenuItem { lang: \h, href: \#:=諺語 }, \…諺語
+
+    MenuItem { lang: \c, href: \#~ }, \兩岸詞典
+    Taxonomy { lang: \c }
+    MenuItem { lang: \c, href: \#~@ }, \…部首表
 
 Result = React.createClass do
   render: -> switch @props.type
@@ -465,9 +495,11 @@ decodeLangPart = (LANG-OR-H, part='') ->
   return part
 
 if module?
-  module?.exports = { Result, decodeLangPart }
-else $ ->
+  module?.exports = { Result, DropDown, decodeLangPart }
+else
   React{}.View.Result = Result
+  React.View.DropDown = DropDown
   React.View.decodeLangPart = decodeLangPart
   unless window.PRERENDER_LANG
+    <- $
     React.View.result = React.renderComponent Result!, $(\#result).0

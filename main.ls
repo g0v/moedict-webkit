@@ -8,7 +8,9 @@ LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
-  $('.lang-active').text $(".lang-option.#LANG:first").text!
+  React.renderComponent React.View.DropDown!, $(\#dropdown).0, ->
+    $('ul.dropdown-menu').unwrap!
+    $('.lang-active').text $(".lang-option.#LANG:first").text!
 
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}

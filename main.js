@@ -14,7 +14,10 @@
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
-    return $('.lang-active').text($(".lang-option." + LANG + ":first").text());
+    return React.renderComponent(React.View.DropDown(), $('#dropdown')[0], function(){
+      $('ul.dropdown-menu').unwrap();
+      return $('.lang-active').text($(".lang-option." + LANG + ":first").text());
+    });
   });
   XREFLABELOF = {
     a: '華',
