@@ -291,12 +291,12 @@ require(\zappajs) {+disable_io} ->
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
         fill-props!
         props.H = "##h"
-        text """<script>$(function(){
+        text """<!--[if gt IE 8]><!--><script>$(function(){
           window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
           React.View.result = React.renderComponent(React.View.Result(
             window.PRERENDER_JSON
           ), $('\#result')[0], window.bindHtmlActions);
-        })</script>"""
+        })</script><!--<![endif]-->"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word
