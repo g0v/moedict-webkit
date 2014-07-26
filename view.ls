@@ -1,5 +1,5 @@
 React = window?React || require \react
-{p, i, a, h1, div, main, span, br, h3, table,
+{p, i, a, b, form, h1, div, main, span, br, h3, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
@@ -12,6 +12,65 @@ div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
 nbsp       = '\u00A0'
 CurrentId  = null
+
+const share-buttons = [
+  { id: \f, icon: \facebook, label: \Facebook, background: \#3B579D, href: \https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F }
+  { id: \t, icon: \twitter, label: \Twitter, background: \#00ACED, href: \https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F }
+  { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
+]
+
+Links = React.createClass do
+  render: -> div {},
+    a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
+      div { className: \share, style: { float: \right, marginTop: \-10px, marginRight: \5px, marginBottom: \15px } },
+        ...for { id, icon, label, background, href } in share-buttons
+          a { id: "share-#id", className: "btn btn-default small", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
+            i { className: \icon-share } nbsp
+            i { className: "icon-#icon" }
+
+Nav = React.createClass do
+  render: -> nav { className: 'navbar navbar-inverse navbar-fixed-top', role: \navigation },
+    div { className: \navbar-header },
+      a { className: 'navbar-brand brand ebas', href: \./ }, \萌典
+    ul { className: 'nav navbar-nav' },
+      li { className: \dropdown },
+        a { className: \dropdown-toggle, href: \#, 'data-toggle': \dropdown },
+          i { className: \icon-book }, nbsp
+          span { className: \lang-active, style: { margin: 0, padding: 0 }, itemProp: \articleSection }, \國語辭典
+          b { className: \caret }
+        DropDown {},
+      li { id: \btn-starred },
+        a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
+          i { className: \icon-bookmark-empty }
+      li {},
+        form { id: \lookback, className: \back, target: \_blank, acceptCharset: \big5, action: \http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh, style: { display: \none, margin: 0, padding: 0 } },
+          input { type: \hidden, name: \idx, value: \dict.idx }
+          input { type: \hidden, name: \fld, value: \1 }
+          input { type: \hidden, name: \imgFont, value: \1 }
+          input { type: \hidden, name: \cat, value: '' }
+          input { id: \cond, type: \hidden, name: \cond, value: '^萌$' }
+          input { className: \iconic-circle, type: \submit, value: \反, title: \反查來源（教育部國語辭典）, style: { fontFamily: \EBAS, marginTop: \12px, borderRadius: \20px, border: \0px } }
+      li { className: 'resize-btn app-only', style: { position: \absolute, top: \2px, left: \8em, padding: \3px } },
+        a { style: { paddingLeft: \5px, paddingRight: \5px, marginRight: \30px }, href: \#, onClick: -> adjustFontSize -1 },
+          i { className: \icon-resize-small }
+      li { className: 'resize-btn app-only', style: { position: \absolute, top: \2px, left: \8em, padding: \3px, marginLeft: \30px } },
+        a { style: { paddingLeft: \5px, paddingRight: \5px}, href: \#, onClick: -> adjustFontSize 1 },
+          i { className: \icon-resize-full }
+    ul { className: 'nav pull-right hidden-xs' },
+      li {},
+        a { href: \about.html, title: \關於本站, onClick: -> pressAbout! },
+          span { className: \iconic-circle },
+            i { className: \icon-info }
+    ul { className: 'nav pull-right hidden-xs' },
+      li { className: \web-inline-only, style: { display: \inline-block } },
+        a { href: \https://twitter.com/moedict, target: \_blank, title: '萌典 Twitter', style: { color: \#ccc } },
+          i { className: \icon-twitter-sign }
+      li { className: \web-inline-only, style: { display: \inline-block } },
+        a { href: \https://play.google.com/store/apps/details?id=org.audreyt.dict.moe, target: \_blank, title: 'Google Play 下載', style: { color: \#ccc } },
+          i { className: \icon-android }
+      li { className: \web-inline-only, style: { display: \inline-block } },
+        a { href: \https://itunes.apple.com/tw/app/meng-dian/id599429224, target: \_blank, title: 'App Store 下載', style: { color: \#ccc } },
+          i { className: \icon-apple }
 
 Taxonomy = React.createClass do
   render: ->
@@ -279,13 +338,12 @@ DefinitionList = React.createClass do
 
 function decorate-nyms (props)
   list = []
-  re = />([^,<]+)</g
   for key, val of { synonyms: \似, antonyms: \反, variants: \異 } | props[key]
     list ++= span { key, className: key },
       span { className: \part-of-speech }, val
       nbsp
-      ...intersperse \、, while t = re.exec(props[key])
-        a { key: t.1, href: "#{ props.H }#{ t.1 }" }, t.1
+      ...intersperse \、, for __html in props[key] / \,
+        span { dangerouslySetInnerHTML: { __html } }
   return list
 
 Definition = React.createClass do
@@ -495,9 +553,11 @@ decodeLangPart = (LANG-OR-H, part='') ->
   return part
 
 if module?
-  module?.exports = { Result, DropDown, decodeLangPart }
+  module?.exports = { Result, DropDown, Nav, Links, decodeLangPart }
 else
   React{}.View.Result = Result
+  React.View.Nav = Nav
+  React.View.Links = Links
   React.View.DropDown = DropDown
   React.View.decodeLangPart = decodeLangPart
   unless window.PRERENDER_LANG

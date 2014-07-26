@@ -8,9 +8,13 @@ LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
-  React.renderComponent React.View.DropDown!, $(\#dropdown).0, ->
-    $('ul.dropdown-menu').unwrap!
+  React.renderComponent React.View.Links!, $(\#links).0
+  React.renderComponent React.View.Nav!, $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
+    if navigator.userAgent is /MSIE|Trident/
+      $('#lookback').remove!
+    else
+      $('#lookback').attr \accept-charset \big5
 
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}

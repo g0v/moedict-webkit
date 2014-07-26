@@ -35,42 +35,11 @@
       <div id="strokes" style="display: none"></div>
       <div id="result" class="result">
         <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px"><span id="loading"></span><br><br><img title="〔萌典〕" src="images/icon.png" width="100" class="logo"><br><br><span id="F9868" style="font-family: &quot;MOEDICT&quot;; margin-botom: 40px"></span><i class="icon-spinner"></i></center>
-      </div><a id="sendback" title="送回編修" style="margin-left: 50%; display: none; background: #333333; color: white" href="mailto:xldictionary@gmail.com?subject=編修建議&amp;body=出處及定義：" target="_blank" class="btn btn-default small">送回編修</a>
-      <!-- a.visible-xs.pull-left.ebas(href='about.html', title='關於本站', onclick='pressAbout(); return false') 萌典--><a href="#" onclick="pressAbout(); return false" title="關於本站" style="float: left; margin-top: -10px; margin-left: 5px; margin-bottom: 5px" class="visible-xs pull-left ebas btn btn-default"><span class="iconic-circle"><i class="icon-info"></i></span><span> 萌典</span></a>
-      <div style="float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px" class="share"><a id="share-f" title="Facebook 分享" style="background: #3B579D; color: white" data-href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-facebook"></i></a><a id="share-t" title="Twitter 分享" style="background: #00ACED; color: white" data-href="https://twitter.com/share?text=__TEXT__&amp;url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-twitter"></i></a><a id="share-g" title="Google+ 分享" style="background: #D95C5C; color: white" data-href="https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-google-plus"></i></a></div>
+      </div>
+      <div id="links"></div>
     </div>
     <div class="nav-bg navbar-fixed-top"></div>
-    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-header"><a href="./" class="navbar-brand brand ebas">萌典</a></div>
-      <ul class="nav navbar-nav">
-        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-book">&nbsp;</i><span style="margin: 0; padding: 0;" itemprop="articleSection" class="lang-active">國語辭典</span><b class="caret"></b></a>
-          <div id="dropdown"></div>
-        </li>
-        <li id="btn-starred"><a style="padding-left: 5px; padding-right: 5px" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
-        <!--if !IE-->
-        <li>
-          <form id="lookback" target="_blank" accept-charset="big5" action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style="display: none; margin: 0; padding: 0" class="back">
-            <input type="hidden" name="idx" value="dict.idx">
-            <input type="hidden" name="fld" value="1">
-            <input type="hidden" name="imgFont" value="1">
-            <input type="hidden" name="cat" value="">
-            <input id="cond" type="hidden" name="cond" value="^萌$">
-            <input type="submit" value="反" title="反查來源（教育部國語辭典）" style="font-family: EBAS; margin-top: 12px; border-radius: 20px; border: 0px;" class="iconic-circle">
-          </form>
-        </li>
-        <!-- <![endif]-->
-        <li style="position: absolute; top: 2px; left: 8em; padding: 3px" class="resize-btn app-only"><a style="padding-left: 5px; padding-right: 5px; margin-right: 30px" href="#" onclick="adjustFontSize(-1); return false"><i class="icon-resize-small"></i></a></li>
-        <li style="position: absolute; top: 2px; left: 8em; padding: 3px; margin-left: 30px;" class="resize-btn app-only"><a style="padding-left: 5px; padding-right: 5px" href="#" onclick="adjustFontSize(1); return false"><i class="icon-resize-full"></i></a></li>
-      </ul>
-      <ul class="nav pull-right hidden-xs">
-        <li><a href="about.html" onclick="pressAbout(); return false" title="關於本站"><span class="iconic-circle"><i class="icon-info"></i></span></a></li>
-      </ul>
-      <ul class="nav pull-right hidden-xs">
-        <li style="display: inline-block" class="web-inline-only"><a href="https://twitter.com/moedict" target="_blank" title="萌典 Twitter" style="color: #ccc"><i class="icon-twitter-sign"></i></a></li>
-        <li style="display: inline-block" class="web-inline-only"><a href="https://play.google.com/store/apps/details?id=org.audreyt.dict.moe" target="_blank" title="Google Play 下載" style="color: #ccc"><i class="icon-android"></i></a></li>
-        <li style="display: inline-block" class="web-inline-only"><a href="https://itunes.apple.com/tw/app/meng-dian/id599429224" target="_blank" title="App Store 下載" style="color: #ccc"><i class="icon-apple"></i></a></li>
-      </ul>
-    </nav>
+    <div id="nav"></div>
     <div id="gcse"><span class="lang-a-only">
         <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
         <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">

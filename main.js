@@ -14,9 +14,14 @@
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
-    return React.renderComponent(React.View.DropDown(), $('#dropdown')[0], function(){
-      $('ul.dropdown-menu').unwrap();
-      return $('.lang-active').text($(".lang-option." + LANG + ":first").text());
+    React.renderComponent(React.View.Links(), $('#links')[0]);
+    return React.renderComponent(React.View.Nav(), $('#nav')[0], function(){
+      $('.lang-active').text($(".lang-option." + LANG + ":first").text());
+      if (/MSIE|Trident/.exec(navigator.userAgent)) {
+        return $('#lookback').remove();
+      } else {
+        return $('#lookback').attr('accept-charset', 'big5');
+      }
     });
   });
   XREFLABELOF = {
