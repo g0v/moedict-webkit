@@ -126,7 +126,7 @@ Term = React.createClass do
         nbsp, a-stroke
     else div { className: \radical }, a-stroke
     list = for props, key in heteronyms
-      Heteronym { key, $char, H, LANG, title, py, english } <<< props
+      Heteronym { key, $char, H, LANG, title, py, english, CurrentId } <<< props
     list ++= XRefs { LANG, xrefs } if xrefs?length
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
@@ -168,9 +168,18 @@ XRefs = React.createClass do
             word -= /[`~]/g
             a { key: word, className: \xref, href: "#H#word" } word
 
+Star = React.createClass do
+  getDefaultProps: -> { STARRED: window?STARRED || {} }
+  render: ->
+    { CurrentId, STARRED, LANG } = @props
+    return i {} unless STARRED[LANG]?
+    if ~STARRED[LANG].indexOf("\"#CurrentId\"")
+      return i { className: "star iconic-color icon-star", title: \已加入記錄簿 }
+    return i { className: "star iconic-color icon-star-empty", title: \加入字詞記錄簿 }
+
 Heteronym = React.createClass do
   render: ->
-    { $char, H, LANG, title, english,
+    { CurrentId, key, $char, H, LANG, title, english,
     id, audio_id=id, bopomofo, trs='', py, pinyin=py||trs||'',
     definitions=[], antonyms, synonyms, variants, specific_to, alt
     } = @props
@@ -191,7 +200,6 @@ Heteronym = React.createClass do
         pinyin-list ++= span { dangerouslySetInnerHTML: { __html } }
 
     title = "<div class='stroke' title='筆順動畫'>#title</div>" unless title is /</
-    # <!-- STAR -->
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
@@ -222,6 +230,8 @@ Heteronym = React.createClass do
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
+      if key is 0 then # Only display Star for the first entry
+        Star { CurrentId, LANG }
       $char
       h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or pinyin-list then div { className: "bopomofo #cn-specific" },

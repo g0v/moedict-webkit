@@ -27,7 +27,7 @@ if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   else
     delete HASH-OF.c
 
-STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
+window.STARRED = STARRED = {[key, getPref("starred-#key") || ""] for key of HASH-OF}
 LRU = {[key, getPref("lru-#key") || ""] for key of HASH-OF}
 
 isQuery = location.search is /^\?q=/
@@ -547,7 +547,12 @@ window.do-load = ->
     $ '.results .star' .on vclick, ->
       $star = $(@)hide!
       key = "\"#prevId\"\n"
-      if $(@).hasClass \icon-star-empty then STARRED[LANG] = key + STARRED[LANG] else STARRED[LANG] -= "#key"
+      if $(@).hasClass \icon-star-empty
+        STARRED[LANG] = key + STARRED[LANG]
+        $(@).attr \title \已加入記錄簿
+      else
+        STARRED[LANG] -= "#key"
+        $(@).attr \title \加入字詞記錄簿
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
       $(\#btn-starred).fadeOut \fast ->
         $(@).css(\background \#ddd)fadeIn ->
