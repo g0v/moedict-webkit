@@ -122,10 +122,6 @@ hruby {
             line-height: 1;
         }
     }
-    // 隱藏星號按鈕
-    .star {
-        display: none;
-    }
 
     // 條目標題下方的拼、注音
     //（目前僅在變音、客語條目有效）
@@ -752,7 +748,8 @@ body .ui-tooltip {
     .antonyms,
     .synonyms,
     .variants,
-    .radical {
+    .radical,
+    .star {
         display: none;
     }
 }

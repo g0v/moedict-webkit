@@ -10189,10 +10189,6 @@ hruby rb[annotation]:after {
   font-size: .65em;
   line-height: 1;
 }
-.result .star,
-.ui-tooltip .star {
-  display: none;
-}
 .result .bopomofo,
 .ui-tooltip .bopomofo {
   display: none;
@@ -10759,7 +10755,8 @@ body .ui-tooltip .quote,
 body .ui-tooltip .antonyms,
 body .ui-tooltip .synonyms,
 body .ui-tooltip .variants,
-body .ui-tooltip .radical {
+body .ui-tooltip .radical,
+body .ui-tooltip .star {
   display: none;
 }
 
