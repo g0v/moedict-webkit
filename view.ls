@@ -22,6 +22,9 @@ const share-buttons = [
 Links = React.createClass do
   render: -> div {},
     a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
+    a { className: 'visible-xs pull-left ebas btn btn-default', href: \#, title: \關於本站, style: { float: \left, marginTop: \-10px, marginLeft: \5px, marginBottom: \5px }, onClick: -> pressAbout! },
+      span { className: \iconic-circle }, i { className: \icon-info }
+      span {}, nbsp, \萌典
     div { className: \share, style: { float: \right, marginTop: \-10px, marginRight: \5px, marginBottom: \15px } },
       ...for { id, icon, label, background, href } in share-buttons
         a { id: "share-#id", className: "btn btn-default small", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },

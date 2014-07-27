@@ -59,7 +59,24 @@
         },
         href: 'mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：',
         target: '_blank'
-      }, '送回編修'), div.apply(null, [{
+      }, '送回編修'), a({
+        className: 'visible-xs pull-left ebas btn btn-default',
+        href: '#',
+        title: '關於本站',
+        style: {
+          float: 'left',
+          marginTop: '-10px',
+          marginLeft: '5px',
+          marginBottom: '5px'
+        },
+        onClick: function(){
+          return pressAbout();
+        }
+      }, span({
+        className: 'iconic-circle'
+      }, i({
+        className: 'icon-info'
+      })), span({}, nbsp, '萌典')), div.apply(null, [{
         className: 'share',
         style: {
           float: 'right',
