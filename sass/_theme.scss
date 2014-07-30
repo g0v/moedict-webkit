@@ -179,6 +179,7 @@ input.iconic-circle {
     height: 30px;
     padding: 7px;
     cursor: pointer !important;
+    z-index: 999;
     &:hover {
         background: #888 !important;
     }
