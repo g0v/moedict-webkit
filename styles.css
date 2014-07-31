@@ -9655,7 +9655,7 @@ input.iconic-circle {
   height: 30px;
   padding: 7px;
   cursor: pointer !important;
-  z-index: 999;
+  z-index: 8;
 }
 .iconic-circle.stroke:hover,
 .star:hover {
@@ -9707,9 +9707,9 @@ input.iconic-circle {
 }
 @media only screen and (max-width: 767px) {
   .app .query-box input {
-    position: fixed;
+    position: absolute;
     left: 40px;
-    top: 55px;
+    top: 18px;
     right: 10px;
     width: auto;
   }
@@ -10104,6 +10104,10 @@ img.back {
   margin-bottom: 20px;
   font-size: 100%;
   line-height: 1.5;
+  overflow-x: hidden;
+}
+.result li {
+  overflow-x: auto;
 }
 
 center {

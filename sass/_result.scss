@@ -28,6 +28,11 @@
     margin-bottom: 20px;
     font-size: 100%;
     line-height: 1.5;
+    overflow-x: hidden;
+    li {
+        overflow-x: auto;
+    }
+
 }
 
 center {
