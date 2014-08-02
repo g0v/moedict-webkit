@@ -85,7 +85,7 @@ UserPref = React.createClass do
     ul {},
       PrefList { phonetics }, \條目注音顯示方式,
         [ \rightangle \直角共同顯示 ]
-        [ \bopomofo   \只顯示注音符號, small {}, \（方言音） ]
+        [ \bopomofo   \只顯示注音符號 ] # , small {}, \（方言音） ]
         [ \pinyin     \只顯示羅馬拼音 ]
         [] # li {}, a {}, \置於條目名稱下方
         [ \none       \關閉 ] /*
