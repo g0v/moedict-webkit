@@ -36,14 +36,18 @@ PrefList = React.createClass do
       attr = $(@).data('annotation')
       $(@).attr('annotation', attr) if attr
     restore-zhuyin = -> $('rb[zhuyin]').each ->
-      attr = $(@).data('annotation')
-      $(@).attr('annotation', attr) if attr
-    # bopomofo 改用 zhuyin 元素
+      zhuyin = $(@).data('zhuyin')
+      yin = $(@).data('yin')
+      diao = $(@).data('diao')
+      $(@).attr({ yin, zhuyin, diao }) if zhuyin
+    clear-pinyin = -> $('rb[order]').attr('annotation', '')
+    clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
+    # new-ruby branch: bopomofo 改用 zhuyin 元素
     switch it
-      | \rightangle => restore-pinyin! restore-zhuyin!
-      | \bopomofo   => $('rb[order]').attr('annotation', '')
-      | \pinyin     => $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
-      | \none       => $('rb[order]').attr('annotation', ''); $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
+      | \rightangle => restore-pinyin!; restore-zhuyin!
+      | \bopomofo   => clear-pinyin!; restore-zhuyin!
+      | \pinyin     => restore-pinyin!; clear-zhuyin!
+      | \none       => clear-pinyin!; clear-zhuyin!
   render: ->
     [ lbl, ...items ] = @props.children
     { key, selected=items.0.0 } = @state

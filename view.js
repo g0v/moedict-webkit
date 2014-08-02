@@ -58,7 +58,7 @@
       }
     },
     phoneticsChanged: function(it){
-      var restorePinyin, restoreZhuyin;
+      var restorePinyin, restoreZhuyin, clearPinyin, clearZhuyin;
       $('rb[order]').each(function(){
         var attr;
         attr = $(this).attr('annotation');
@@ -90,31 +90,42 @@
       };
       restoreZhuyin = function(){
         return $('rb[zhuyin]').each(function(){
-          var attr;
-          attr = $(this).data('annotation');
-          if (attr) {
-            return $(this).attr('annotation', attr);
+          var zhuyin, yin, diao;
+          zhuyin = $(this).data('zhuyin');
+          yin = $(this).data('yin');
+          diao = $(this).data('diao');
+          if (zhuyin) {
+            return $(this).attr({
+              yin: yin,
+              zhuyin: zhuyin,
+              diao: diao
+            });
           }
+        });
+      };
+      clearPinyin = function(){
+        return $('rb[order]').attr('annotation', '');
+      };
+      clearZhuyin = function(){
+        return $('rb[zhuyin]').attr({
+          yin: '',
+          zhuyin: '',
+          diao: ''
         });
       };
       switch (it) {
       case 'rightangle':
-        return restorePinyin()(restoreZhuyin());
+        restorePinyin();
+        return restoreZhuyin();
       case 'bopomofo':
-        return $('rb[order]').attr('annotation', '');
+        clearPinyin();
+        return restoreZhuyin();
       case 'pinyin':
-        return $('rb[zhuyin]').attr({
-          yin: '',
-          zhuyin: '',
-          diao: ''
-        });
+        restorePinyin();
+        return clearZhuyin();
       case 'none':
-        $('rb[order]').attr('annotation', '');
-        return $('rb[zhuyin]').attr({
-          yin: '',
-          zhuyin: '',
-          diao: ''
-        });
+        clearPinyin();
+        return clearZhuyin();
       }
     },
     render: function(){
