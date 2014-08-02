@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# Sat May 10 03:46:15 CST 2014
+# Fri Aug  1 02:45:56 CST 2014
 
 CACHE:
 
 # core App files
 index.html
 main.js
+view.js
 styles.css
 
 # core JSON files
@@ -40,20 +41,16 @@ fonts/MOEDICT.ttf
 about.html
 favicon.ico
 
-# JS files
-js/jquery-1.11.1.min.js
-js/jquery-ui-1.10.4.custom.min.js
-js/jquery.hoverIntent.js
-js/jquery.ruby.js
-js/bootstrap/dropdown.js
-js/simp-trad.js
+# js files
+js/deps.js
+
+# optional deps
 js/howler.js
 js/raf.min.js
 js/gl-matrix-min.js
 js/sax.js
 js/jquery.strokeWords.js
 js/raphael.js
-js/prelude-browser-min.js
 
 # image files
 images/leather.jpg

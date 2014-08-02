@@ -1,11 +1,9 @@
 // compass config
-$legacy-support-for-ie: false;
-$experimental-support-for-opera: false;
 $support-for-original-webkit-gradients: false;
 
 // bootstrap
 $screen-small: 1px;
-$baseFontSize: 16px;
+$baseFontSize: 14pt;
 $baseBorderRadius: 0;
 $bodyBackground: hsl(0,3%,95%);
 
@@ -62,4 +60,4 @@ $primary-color: #6B0000;
 
 
 
-
+body { font-size: 14pt }

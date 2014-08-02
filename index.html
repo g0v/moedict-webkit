@@ -12,6 +12,11 @@
     <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible">
     <meta name="keywords" content="詞典,辭典,國語,臺語,台語,客語,兩岸,g0v">
     <meta name="description" content="共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link href="styles.css" rel="stylesheet">
+    <link href="css/cupertino/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <link href="https://plus.google.com/+MoedictTw-g0v" rel="publisher">
   </head>
   <body id="moedict" onhashchange="grokHash()" itemscope itemtype="http://schema.org/ScholarlyArticle" class="main">
     <noscript>
@@ -75,7 +80,12 @@
         <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
         <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
         <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
+        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div><!--[if lte IE 8]>
+    <style>body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }</style>
+    <div id="result" style="position: absolute; top: 10%; left: 10%; right: 10%" class="result">
+      <p><br>很抱歉，我們不支援 Internet Explorer 8 以下的版本。請改用&nbsp;<a href="https://www.mozilla.org/firefox/" class="icon-external-link">&nbsp;Firefox</a>&nbsp;或&nbsp;<a href="https://www.google.com/chrome/browser/" class="icon-external-link">&nbsp;Chrome</a>&nbsp;瀏覽器。</p>
+      <p>Sorry, Internet Explorer 8 and earlier versions are not supported.</p>
+    </div><![endif]-->
     <div class="results">
       <div id="strokes" style="display: none"></div>
       <div id="result" class="result">
@@ -92,7 +102,15 @@
       </template><a id="sendback" title="送回編修" style="margin-left: 50%; display: none; background: #333333; color: white" href="mailto:xldictionary@gmail.com?subject=編修建議&amp;body=出處及定義：" target="_blank" class="btn btn-default small">送回編修</a>
       <!-- a.visible-xs.pull-left.ebas(href='about.html', title='關於本站', onclick='pressAbout(); return false') 萌典--><a href="#" onclick="pressAbout(); return false" title="關於本站" style="float: left; margin-top: -10px; margin-left: 5px; margin-bottom: 5px" class="visible-xs pull-left ebas btn btn-default"><span class="iconic-circle"><i class="icon-info"></i></span><span> 萌典</span></a>
       <div style="float: right; margin-top: -10px; margin-right: 5px; margin-bottom: 15px" class="share"><a id="share-f" title="Facebook 分享" style="background: #3B579D; color: white" data-href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-facebook"></i></a><a id="share-t" title="Twitter 分享" style="background: #00ACED; color: white" data-href="https://twitter.com/share?text=__TEXT__&amp;url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-twitter"></i></a><a id="share-g" title="Google+ 分享" style="background: #D95C5C; color: white" data-href="https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" target="_blank" class="btn btn-default small"><i class="icon-share">&nbsp;</i><i class="icon-google-plus"></i></a></div>
+      <div id="links"></div>
     </div>
+    <div class="nav-bg navbar-fixed-top"></div>
+    <div id="nav"></div>
+    <div id="gcse"><span class="lang-a-only">
+        <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
+        <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
+        <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
+        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
       <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
@@ -176,17 +194,10 @@
       </ul>
       <button type="button" class="btn btn-primary btn-block btn-close">關閉</button>
     </div><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
-    <div id="moe" style="display: none"></div>
-    <!--if !IE-->
-    <script src="cordova.js" data-cfasync="true"></script>
-    <!-- <![endif]-->
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="js/jquery.hoverIntent.js"></script>
-    <script src="js/jquery.ruby.js"></script>
-    <script src="js/bootstrap/dropdown.js"></script>
-    <script src="js/simp-trad.js" charset="utf-8"></script>
-    <script src="js/prelude-browser-min.js"></script>
+    <div id="moe" style="display: none"></div><!--[if gt IE 8]><!-->
+    <script src="cordova.js" data-cfasync="true" charset="utf-8"></script>
+    <script src="js/deps.js" charset="utf-8"></script>
     <script src="main.js" charset="utf-8"></script>
+    <script src="view.js" charset="utf-8"></script><!--<![endif]-->
   </body>
 </html>

@@ -179,6 +179,7 @@ input.iconic-circle {
     height: 30px;
     padding: 7px;
     cursor: pointer !important;
+    z-index: 8;
     &:hover {
         background: #888 !important;
     }
@@ -232,9 +233,9 @@ input.iconic-circle {
 
 @media only screen and (max-width: 767px) {
     .app .query-box input {
-        position: fixed;
+        position: absolute;
         left: 40px;
-        top: 55px;
+        top: 18px;
         right: 10px;
         width: auto;
     }
@@ -461,12 +462,6 @@ body.lang-a.web #lookback {
         right: 10px;
         line-height: 1em;
         margin-top: -5px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .desktop ul.nav li:hover > ul.dropdown-menu {
-        display: block;
     }
 }
 

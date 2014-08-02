@@ -2,8 +2,22 @@
 require! <[ fs ]>
 LTM-regexes = {}
 
+index-body = fs.read-file-sync \index.html
+index-body -= /^[\s\S]*<\/head>/
+index-body -= /<\/html>/
+index-body -= /<noscript>[\s\S]*<\/noscript>/g
+index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
+index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
+
+React = require \react
+{Result, decodeLangPart} = require \./view.js
+
+XREF = {}
+
 for let lang in <[ a t h c ]>
-  err, json <- fs.read-file "#lang/lenToRegex.json"
+  json = fs.read-file-sync "#lang/xref.json"
+  XREF[lang] = JSON.parse json
+  json = fs.read-file-sync "#lang/lenToRegex.json"
   try
     {lenToRegex} = JSON.parse json
     lens = []
@@ -12,6 +26,12 @@ for let lang in <[ a t h c ]>
       lenToRegex[len] = new RegExp lenToRegex[len], \g
     lens.sort (a, b) -> b - a
     LTM-regexes[lang] = [ lenToRegex[len] for len in lens ]
+
+function xref-of (id, src-lang)
+  rv = {}
+  for tgt-lang, words of XREF[src-lang] | words[id]?
+    rv[tgt-lang] = [ x || id for x in words[id] / \, ]
+  return rv
 
 trim = -> (it ? '').replace /[`~]/g ''
 def-of = (lang, title, cb) ->
@@ -55,6 +75,13 @@ font-of = ->
   return 'cwTeXQYuan' if it is /cwyuan/i
   return 'cwTeXQKai' if it is /cwkai/i
   return 'cwTeXQFangsong' if it is /cwfangsong/i
+  return 'SourceHanSansTWHKExtraLight' if it is /srcx/i
+  return 'SourceHanSansTWHKLight' if it is /srcl/i
+  return 'SourceHanSansTWHKNormal' if it is /srcn/i
+  return 'SourceHanSansTWHKRegular' if it is /srcr/i
+  return 'SourceHanSansTWHKMedium' if it is /srcm/i
+  return 'SourceHanSansTWHKBold' if it is /srcb/i
+  return 'SourceHanSansTWHKHeavy' if it is /srch/i
   return wt2font[it] || 'TW-Kai'
 
 iconv = require \iconv-lite
@@ -69,9 +96,21 @@ require(\zappajs) {+disable_io} ->
     @response.type \image/png
     font = font-of @query.font
     text2png(@params.text.replace(/^['!~:]/, ''), font).pipe @response
+  @get '/': -> @response.type \text/html; @response.sendfile \index.html
+  @get '/index.html': -> @response.type \text/html; @response.sendfile \index.html
   @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/cordova.js': -> @response.type \application/json; @response.send ''
+  @get '/css/:path/:file.css': -> @response.type \text/css; @response.sendfile "css/#{@params.path}/#{@params.file}.css"
+  @get '/styles.css': -> @response.type \text/css; @response.sendfile \styles.css
+  @get '/favicon.ico': -> @response.type \image/vnd.microsoft.icon; @response.sendfile \favicon.ico
   @get '/manifest.appcache': -> @response.type \text/cache-manifest; @response.sendfile \manifest.appcache
   @get '/images/:file.png': -> @response.type \image/png; @response.sendfile "images/#{@params.file}.png"
+  @get '/images/:file.jpg': -> @response.type \image/jpeg; @response.sendfile "images/#{@params.file}.jpg"
+  @get '/:path/:file.json': -> @response.type \application/json; @response.sendfile "#{@params.path}/#{@params.file}.json"
+  @get '/js/:path/:file.js': -> @response.type \application/javascript; @response.sendfile "js/#{@params.path}/#{@params.file}.js"
+  @get '/js/:file.js': -> @response.type \application/javascript; @response.sendfile "js/#{@params.file}.js"
+  @get '/:file.js': -> @response.type \application/javascript; @response.sendfile "#{@params.file}.js"
+  @get '/fonts/:file.ttf': -> @response.type \application/x-font-ttf; @response.sendfile "fonts/#{@params.file}.ttf"
   @get '/fonts/:file.woff': -> @response.type \application/x-font-woff; @response.sendfile "fonts/#{@params.file}.woff"
   @get '/:text/:idx': ->
     @params.text = fix-mojibake @params.text
@@ -85,8 +124,21 @@ require(\zappajs) {+disable_io} ->
     payload = if err then {} else try JSON.parse(json)
     payload = { layout: 'layout', text, +isBot, +isCLI, png-suffix: '.png', wt2font, font2name, -isWord, idx:@params.idx } <<< payload
     @render index: payload
-  @get '/:text': ->
+  @get '/:text.json': ->
     @params.text = fix-mojibake @params.text
+    @response.type \application/json
+    val = @params.text
+    lang = \a
+    if "#val" is /^['!]/ => lang = \t; val.=substr 1
+    if "#val" is /^:/ => lang = \h; val.=substr 1
+    if "#val" is /^~/ => lang = \c; val.=substr 1
+    err, json <~ fs.readFile("#lang/#val.json")
+    return @response.send(404, error: "Segmentation not yet supported in JSON") if err
+    props = JSON.parse(decodeLangPart lang, (json || '{}').toString!)
+    props.xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
+    @response.json(props)
+  @get '/:text': ->
+    return @response.redirect "##{ @params.text }" if @params.text is /^[~:!]?=\*/
     @response.type \text/html
     text = val = (@params.text - /.html$/)
     font = font-of @query.font
@@ -105,7 +157,6 @@ require(\zappajs) {+disable_io} ->
     payload = null if payload instanceof Array
     payload ?= { t: val }
     payload = { layout: 'layout', text, isBot, -isCLI, png-suffix, wt2font, font2name, isWord } <<< payload
-
     chars = text.replace(/^['!~:]/, '')
     chars.=slice(0, 50)
     png-file = "png/#chars.#font.png"
@@ -136,7 +187,8 @@ require(\zappajs) {+disable_io} ->
         iter!
       else @render index: payload <<< { segments }
     else
-      @render index: payload
+      xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
+      @render index: payload <<< { index-body, React, Result, decodeLangPart, json, xrefs }
 
   @view index: ->
     expand-def = (def) ->
@@ -195,18 +247,20 @@ require(\zappajs) {+disable_io} ->
       meta property:"og:description" content:def
       meta name:"description" content:def
       link href:'/styles.css' rel:'stylesheet'
+      link href:'/css/cupertino/jquery-ui-1.10.4.custom.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
       link rel:'publisher' href:'https://plus.google.com/+MoedictTw-g0v'
-      base target:\_blank
+      base target:\_blank if @segments
       word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
         h = ''
         h = @text.slice(0, 1) if @text is /^['!~:]/
         h = \' if h is \!
-        body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
-          script "location.href = \"https://www.moedict.tw/##h#word\"" unless @isCLI
+        id = trim @t
+
+        if @idx => return body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
           idx = 0
-          (if @isCLI then (-> div class:'result', it) else noscript) <| ~>
+          (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
             meta itemprop:"image" content:og-image
             h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
             div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
@@ -217,6 +271,36 @@ require(\zappajs) {+disable_io} ->
                 dl ->
                   dt -> h3 class:"#{ if ++idx is +@idx then 'alert alert-success' else '' }", "#{ expand-def f }#l".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
                   dd -> "#{ q.join('<br>') }#s#a".replace /`([^~]+)~/g (, word) -> "<a href='/#h#word'>#word</a>"
+          script "if (/MSIE\\s+[678]/.exec(navigator.userAgent)) { document.getElementById('result').setAttribute('class', 'result') } else { location.hash = \"##h#word\" }" unless @isCLI
+
+        fill-props = ~>
+          props.id = id
+          props.xrefs = @xrefs
+          props.LANG = LANG
+          props.H = h
+          props.type = \term
+        props = {}
+        if (@json || '').toString! is /^\[\s*\[/
+          props = { id, type: \radical, terms: (@json || '').toString!, H: h }
+        else if (@json || '').toString! is /^\[/
+          props = { id, type: \list, terms: (@json || ''), H: h }
+        else
+          props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
+          fill-props!
+        text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
+        html = @index-body
+        html.=replace('<!-- RESULT -->', @React.renderComponentToString @Result props)
+        #html.=replace('<!-- DROPDOWN -->', @React.renderComponentToString @DropDown!)
+        text html
+        props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
+        fill-props!
+        props.H = "##h"
+        text """<!--[if gt IE 8]><!--><script>$(function(){
+          window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
+          React.View.result = React.renderComponent(React.View.Result(
+            window.PRERENDER_JSON
+          ), $('\#result')[0], window.bindHtmlActions);
+        })</script><!--<![endif]-->"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word
@@ -277,6 +361,14 @@ require(\zappajs) {+disable_io} ->
               option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
               option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
               option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
+            optgroup label:'思源黑體', ->
+              option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \特細
+              option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcl, \細體
+              option selected:(png-suffix is '.png?font=srcn'), value:\?font=srcn, \標準
+              option selected:(png-suffix is '.png?font=srcr'), value:\?font=srcr, \正黑
+              option selected:(png-suffix is '.png?font=srcm'), value:\?font=srcm, \中黑
+              option selected:(png-suffix is '.png?font=srcb'), value:\?font=srcb, \粗體
+              option selected:(png-suffix is '.png?font=srch'), value:\?font=srch, \特粗
             optgroup label:'王漢宗', ->
               for wt, font of @wt2font
                 option selected:(png-suffix is ".png?font=#wt"), value:"?font=#wt", @font2name[font]
@@ -312,11 +404,11 @@ function text2png (text, font)
       ctx.font = "355px #font"
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
-        ctx.font = '355px TWBLG'
+        ctx.font = "355px #font, SourceHanSansTWHKRegular, TWBLG"
         ch += text.0
         text.=slice 1
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/ # combining
-        ctx.font = '355px Arial Unicode MS'
+        ctx.font = "355px Arial Unicode MS, #font"
         ch += text.0
         text.=slice 1
       drawBackground ctx, (margin + idx * 360), (10 + (padding + row - 1) * 375), 355
@@ -330,6 +422,8 @@ function text2png (text, font)
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15
         y += 15
+      if font is /SourceHanSans/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        y += 30
       ctx.fillText ch, x, y
       idx++
     row++

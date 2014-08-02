@@ -33,17 +33,14 @@ while (<STDIN>) {
     unless (-e "$lang/$file.json" and read_file("$lang/$file.json") eq $_) {
         write_file("$lang/$file.json", $_);
     }
-    if ($prepack{$bucket}) {
-        $prepack{$bucket} .= qq<\n,"$title":$_>
-    }
-    else {
-        $prepack{$bucket} = qq<{"$title":$_>;
-    }
+    push @{ $prepack{$bucket} }, qq<\n,"$title":$_>;
 }
 
 mkdir "p${lang}ck" unless -e "p${lang}ck";
 mkdir "ios/www/p${lang}ck" unless -e "ios/www/p${lang}ck";
 while (my ($k, $v) = each %prepack) {
+    $v = join '', sort @$v;
+    $v =~ s/\n,/{/;
     $v .= "\n}\n";
     write_file("p${lang}ck/$k.txt", $v);
 }

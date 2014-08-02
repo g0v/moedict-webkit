@@ -14,12 +14,20 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
     meta(name='keywords', content='詞典,辭典,國語,臺語,台語,客語,兩岸,g0v')
     meta(name='description', content='共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+
+    link(rel='apple-touch-icon', href='images/icon.png')
+    link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
+    link(href='styles.css', rel='stylesheet')
+    link(href='css/cupertino/jquery-ui-1.10.4.custom.css', rel='stylesheet')
+    link(href='https://plus.google.com/+MoedictTw-g0v', rel='publisher')
+
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: center(style='position: absolute; width: 95%'): main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ méng
       dd 草木初生的芽。
       dt: a(href='典') 典 ㄉㄧㄢˇ diǎn
       dd 可作為依據或模範的書。
+
     .nav-bg.navbar-fixed-top
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
@@ -94,6 +102,20 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
       span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
       span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+
+    | <!--[if lte IE 8]>
+    style body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }
+    #result.result(style='position: absolute; top: 10%; left: 10%; right: 10%')
+      p
+        br
+        | 很抱歉，我們不支援 Internet Explorer 8 以下的版本。請改用&nbsp;
+        a.icon-external-link(href="https://www.mozilla.org/firefox/") &nbsp;Firefox
+        | &nbsp;或&nbsp;
+        a.icon-external-link(href="https://www.google.com/chrome/browser/") &nbsp;Chrome
+        | &nbsp;瀏覽器。
+      p Sorry, Internet Explorer 8 and earlier versions are not supported.
+    | <![endif]-->
+
     .results
       #strokes(style='display: none')
       #result.result
@@ -129,6 +151,15 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         a#share-g.btn.btn-default.small(title='Google+ 分享', style='background: #D95C5C; color: white', data-href='https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F', target='_blank')
           i.icon-share &nbsp;
           i.icon-google-plus
+      #links
+    .nav-bg.navbar-fixed-top
+    #nav
+    #gcse
+      span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+
     #query-box.query-box
       input#query.query(type='search', style='display: none', autofocus='', autocomplete='off', placeholder='請輸入欲查詢的字詞')
       #timeline.hidden-xs(style='position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px')
@@ -212,14 +243,9 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     a.erase-box.mobile-only(href='#', onclick='pressErase(); return false')
       i.icon-remove-sign(style='color: #c0c0c0', title='清除搜尋框')
     #moe(style='display: none')
-    //if !IE
-    script(src='cordova.js', data-cfasync='true')
-    // <![endif]
-    script(src='js/jquery-1.11.1.min.js')
-    script(src='js/jquery-ui-1.10.4.custom.min.js')
-    script(src='js/jquery.hoverIntent.js')
-    script(src='js/jquery.ruby.js')
-    script(src='js/bootstrap/dropdown.js')
-    script(src='js/simp-trad.js', charset='utf-8')
-    script(src='js/prelude-browser-min.js')
+    | <!--[if gt IE 8]><!-->
+    script(src='cordova.js', data-cfasync='true', charset='utf-8')
+    script(src='js/deps.js', charset='utf-8')
     script(src='main.js', charset='utf-8')
+    script(src='view.js', charset='utf-8')
+    | <!--<![endif]-->

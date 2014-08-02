@@ -104,6 +104,11 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           a(target='_blank', href='https://www.gnu.org/licenses/old-licenses/gpl-2.0.html') GPL 2.0 
           | 授權。
         li
+          a(target='_blank', href='https://www.moedict.tw/fonts/truetype/SourceHanSansTWHK-1.000/') 思源黑體
+          | 採用 
+          a(target='_blank', href='https://www.apache.org/licenses/LICENSE-2.0') Apache 2.0 
+          | 授權。
+        li
           a(target='_blank', href='https://code.google.com/p/cwtex-q-fonts/') 王漢宗自由字型
           | 採用 
           a(target='_blank', href='https://www.gnu.org/licenses/old-licenses/gpl-2.0.html') GPL 2.0 
@@ -129,9 +134,9 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
       a#opensearch.btn.btn-default.btn-info(onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false")
         i.icon.icon-plus-sign
         |  加入搜尋列
-    //if !IE
+    | <!--[if gt IE 8]><!-->
     script(src='cordova.js', data-cfasync='true')
-    script(src='js/jquery-1.11.1.min.js')
+    script(src='js/jquery-2.1.1.min.js')
     script.
         if (! /^https?:/.test(document.URL)) { $(function(){
             $('body').addClass('app');
@@ -145,4 +150,4 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
                 return false;
             });
         }); };
-    // <![endif]
+    | <!--<![endif]-->
