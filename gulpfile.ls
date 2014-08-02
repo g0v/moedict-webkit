@@ -11,7 +11,7 @@ gulp.task \uglify ->
     js/bootstrap/dropdown.js
     js/simp-trad.js
     js/prelude-browser-min.js
-    js/react.min.js
+    js/react.js
   ]>).pipe(uglify!).pipe(gulp.dest \js)
 
 gulp.task \default <[ uglify ]>
