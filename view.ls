@@ -19,24 +19,67 @@ const share-buttons = [
   { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
 ]
 
-UserPref = React.createClass do
-  render: -> div {},
+PrefList = React.createClass do
+  getInitialState: ->
+    for own key, selected of @props | key isnt \children
+      return { key, selected }
+  phoneticsChanged: ->
+    $('rb[order]').each ->
+      attr = $(@).attr('annotation')
+      $(@).data('annotation', attr) if attr
+    $('rb[zhuyin]').each ->
+      zhuyin = $(@).attr('zhuyin')
+      yin = $(@).attr('yin')
+      diao = $(@).attr('diao')
+      $(@).data({ yin, zhuyin, diao }) if zhuyin
+    restore-pinyin = -> $('rb[order]').each ->
+      attr = $(@).data('annotation')
+      $(@).attr('annotation', attr) if attr
+    restore-zhuyin = -> $('rb[zhuyin]').each ->
+      attr = $(@).data('annotation')
+      $(@).attr('annotation', attr) if attr
+    # bopomofo 改用 zhuyin 元素
+    switch it
+      | \rightangle => restore-pinyin! restore-zhuyin!
+      | \bopomofo   => $('rb[order]').attr('annotation', '')
+      | \pinyin     => $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
+      | \none       => $('rb[order]').attr('annotation', ''); $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
+  render: ->
+    [ lbl, ...items ] = @props.children
+    { key, selected=items.0.0 } = @state
+    li { className: \btn-group },
+      label {}, lbl
+      button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+        ...for let [val, ...els] in items
+          if val is selected then els else ''
+        nbsp
+        span { className: \caret }
+      ul { className: \dropdown-menu },
+        ...for let [val, ...els] in items
+          if val then
+            li {}, a {
+              style: { cursor: \pointer }
+              className: if val is selected then \active else ''
+              onClick: ~>
+                @"#{key}Changed" val
+                @setState { selected: val }
+            }, ...els
+          else
+            li { className: \divider, role: \presentation }
+
+UserPref = React.createClass render: ->
+  { phonetics, simptrad } = @props
+  div {},
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
     ul {},
-      li { className: \btn-group },
-        label {}, \條目注音顯示方式
-        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
-          \直角共同顯示
-          span { className: \caret }
-        ul { className: \dropdown-menu },
-          li {}, a { className: \active }, \直角共同顯示
-          li {}, a {}, \只顯示注音符號, small {}, \（方言音）
-          li {}, a {}, \只顯示羅馬拼音
-          li { className: \divider, role: \presentation }
-          li {}, a {}, \置於條目名稱下方
-          li { className: \divider, role: \presentation }
-          li {}, a {}, \關閉
+      PrefList { phonetics }, \條目注音顯示方式,
+        [ \rightangle \直角共同顯示 ]
+        [ \bopomofo   \只顯示注音符號, small {}, \（方言音） ]
+        [ \pinyin     \只顯示羅馬拼音 ]
+        [] # li {}, a {}, \置於條目名稱下方
+        [ \none       \關閉 ]
+
       li { className: \btn-group },
         label {}, \字詞查閱紀錄
         button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
@@ -49,16 +92,12 @@ UserPref = React.createClass do
           li { className: \divider, role: \presentation }
           li {}, a {}, \關閉, small {}, \（將清除所有紀錄）
         button { className: 'btn btn-danger btn-sm', type: \button }, \清除
-      li { className: \btn-group },
-        label {}, \「簡→繁」搜尋轉換
-        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
-          \避開通同字及異體字
-          span { className: \caret }
-        ul { className: \dropdown-menu },
-          li {}, a { className: \active }, \避開通同字及異體字
-          li {}, a {}, \完全轉換
-          li { className: \divider, role: \presentation }
-          li {}, a {}, \關閉
+
+      PrefList { simptrad }, \「簡→繁」搜尋轉換,
+        [ \no-variants  \避開通同字及異體字 ]
+        [ \total        \完全轉換 ]
+        []
+        [ \none         \關閉 ]
     button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
 Links = React.createClass do
