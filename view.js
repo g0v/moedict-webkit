@@ -57,7 +57,13 @@
         }
       }
     },
-    phoneticsChanged: function(it){
+    componentDidMount: function(){
+      return this.phoneticsChanged();
+    },
+    componentDidUpdate: function(){
+      return this.phoneticsChanged();
+    },
+    phoneticsChanged: function(){
       var restorePinyin, restoreZhuyin, clearPinyin, clearZhuyin;
       $('rb[order]').each(function(){
         var attr;
@@ -113,7 +119,7 @@
           diao: ''
         });
       };
-      switch (it) {
+      switch (this.state.selected) {
       case 'rightangle':
         restorePinyin();
         return restoreZhuyin();
@@ -179,10 +185,14 @@
               },
               className: val === selected ? 'active' : '',
               onClick: function(){
-                this$[key + "Changed"](val);
-                return this$.setState({
+                var key$;
+                if (typeof localStorage != 'undefined' && localStorage !== null) {
+                  localStorage.setItem(key, val);
+                }
+                this$.setState({
                   selected: val
                 });
+                return typeof this$[key$ = key + "Changed"] === 'function' ? this$[key$]() : void 8;
               }
             }].concat(slice$.call(els))));
           } else {
@@ -196,6 +206,12 @@
     }
   });
   UserPref = React.createClass({
+    getDefaultProps: function(){
+      return {
+        simptrad: typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('simptrad') : void 8,
+        phonetics: typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('phonetics') : void 8
+      };
+    },
     render: function(){
       var ref$, phonetics, simptrad;
       ref$ = this.props, phonetics = ref$.phonetics, simptrad = ref$.simptrad;
@@ -205,27 +221,7 @@
         'aria-hidden': true
       }, '×'), ul({}, PrefList({
         phonetics: phonetics
-      }, '條目注音顯示方式', ['rightangle', '直角共同顯示'], ['bopomofo', '只顯示注音符號', small({}, '（方言音）')], ['pinyin', '只顯示羅馬拼音'], [], ['none', '關閉']), li({
-        className: 'btn-group'
-      }, label({}, '字詞查閱紀錄'), button({
-        className: 'btn btn-default btn-sm dropdown-toggle',
-        type: 'button',
-        'data-toggle': 'dropdown'
-      }, '50 筆', span({
-        className: 'caret'
-      })), ul({
-        className: 'dropdown-menu'
-      }, li({}, a({
-        className: 'active'
-      }, '50 筆')), li({}, a({}, '30 筆')), li({}, a({}, '15 筆')), li({
-        className: 'divider',
-        role: 'presentation'
-      }), li({}, a({}, '關閉', small({}, '（將清除所有紀錄）')))), button({
-        className: 'btn btn-danger btn-sm',
-        type: 'button'
-      }, '清除')), PrefList({
-        simptrad: simptrad
-      }, '「簡→繁」搜尋轉換', ['no-variants', '避開通同字及異體字'], ['total', '完全轉換'], [], ['none', '關閉'])), button({
+      }, '條目注音顯示方式', ['rightangle', '直角共同顯示'], ['bopomofo', '只顯示注音符號', small({}, '（方言音）')], ['pinyin', '只顯示羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
         type: 'button'
       }, '關閉'));

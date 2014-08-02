@@ -649,6 +649,8 @@ window.do-load = ->
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
 
+      React.renderComponent React.View.UserPref!, $(\#user-pref).0
+
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
     reactProps = null

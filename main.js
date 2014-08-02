@@ -1092,7 +1092,7 @@
           }
           return $(this).attr('annotation', replace$.call(a, /<span[^<]*<\/span>/g, ''));
         });
-        return $('hruby rb[diao]').each(function(){
+        $('hruby rb[diao]').each(function(){
           var d;
           d = $(this).attr('diao');
           d = d.replace(/([\u31B4-\u31B7])[\u0358|\u030d]/g, function(m, j){
@@ -1106,6 +1106,7 @@
           });
           return $(this).attr('diao', d);
         });
+        return React.renderComponent(React.View.UserPref(), $('#user-pref')[0]);
       }
       return _pua;
     };

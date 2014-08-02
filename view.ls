@@ -23,6 +23,8 @@ PrefList = React.createClass do
   getInitialState: ->
     for own key, selected of @props | key isnt \children
       return { key, selected }
+  componentDidMount: -> @phoneticsChanged!
+  componentDidUpdate: -> @phoneticsChanged!
   phoneticsChanged: ->
     $('rb[order]').each ->
       attr = $(@).attr('annotation')
@@ -43,7 +45,7 @@ PrefList = React.createClass do
     clear-pinyin = -> $('rb[order]').attr('annotation', '')
     clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
     # new-ruby branch: bopomofo 改用 zhuyin 元素
-    switch it
+    switch @state.selected
       | \rightangle => restore-pinyin!; restore-zhuyin!
       | \bopomofo   => clear-pinyin!; restore-zhuyin!
       | \pinyin     => restore-pinyin!; clear-zhuyin!
@@ -65,15 +67,19 @@ PrefList = React.createClass do
               style: { cursor: \pointer }
               className: if val is selected then \active else ''
               onClick: ~>
-                @"#{key}Changed" val
+                localStorage?setItem key, val
                 @setState { selected: val }
+                @"#{key}Changed"?!
             }, ...els
           else
             li { className: \divider, role: \presentation }
 
-UserPref = React.createClass render: ->
-  { phonetics, simptrad } = @props
-  div {},
+UserPref = React.createClass do
+  getDefaultProps: -> {
+    simptrad: localStorage?getItem \simptrad
+    phonetics: localStorage?getItem \phonetics
+  }
+  render: -> { phonetics, simptrad } = @props; div {},
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
     ul {},
@@ -82,8 +88,7 @@ UserPref = React.createClass render: ->
         [ \bopomofo   \只顯示注音符號, small {}, \（方言音） ]
         [ \pinyin     \只顯示羅馬拼音 ]
         [] # li {}, a {}, \置於條目名稱下方
-        [ \none       \關閉 ]
-
+        [ \none       \關閉 ] /*
       li { className: \btn-group },
         label {}, \字詞查閱紀錄
         button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
@@ -101,7 +106,7 @@ UserPref = React.createClass render: ->
         [ \no-variants  \避開通同字及異體字 ]
         [ \total        \完全轉換 ]
         []
-        [ \none         \關閉 ]
+        [ \none         \關閉 ] */
     button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
 Links = React.createClass do
