@@ -9,6 +9,7 @@ MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.renderComponent React.View.Links!, $(\#links).0
+  React.renderComponent React.View.UserPref!, $(\#user-pref).0
   React.renderComponent React.View.Nav!, $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
@@ -116,7 +117,7 @@ try
 catch
   <- $
   $ \#F9868 .html '&#xF9868;'
-  $ \#loading .text \載入中，請稍候…
+  $ \#loading .text \載入中，請稍候……
   if document.URL is /^http:\/\/(?:www.)?moedict.tw/i
     url = "https://www.moedict.tw/"
     url += location.hash if location.hash is /^#./
@@ -302,12 +303,35 @@ window.do-load = ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!
       return false
 
-    $ \body .on \click '#btn-starred' ->
+    $ \body
+    .on \click '#btn-starred' ->
       if $(\#query).val! is '=*'
         window.press-back!
       else
         grok-val("#{HASH-OF[LANG]}=*" - /^#/)
       return false
+
+    .on \click '#btn-pref' (e) ->
+      e.preventDefault!
+      $ \#user-pref .slideToggle!
+
+    .on \click '#user-pref .btn-close' ->
+      $ \#user-pref .slideUp!
+
+    .on \click 'a\[for="starred-record--history"\]' ->
+      $ '.result nav li.active' .removeClass \active
+      $ this .parent \li .addClass \active
+      $ \.starred-record--fav .hide!
+      $ \.starred-record--history .show!
+
+    .on \click 'a\[for="starred-record--fav"\]' ->
+      $ '.result nav li.active' .removeClass \active
+      $ this .parent \li .addClass \active
+      $ \.starred-record--fav .show!
+      $ \.starred-record--history .hide!
+
+    unless \onhashchange of window
+      $ \body .on \click \a ->
 
     $ \body .on \click '#btn-clear-lru' ->
       return unless confirm("確定要清除瀏覽紀錄？")
@@ -625,6 +649,8 @@ window.do-load = ->
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
 
+      React.renderComponent React.View.UserPref!, $(\#user-pref).0
+
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
     reactProps = null
@@ -816,6 +842,49 @@ function can-play-opus
   return CACHED.can-play-opus if CACHED.can-play-opus?
   a = document.createElement \audio
   CACHED.can-play-opus = !!(a.canPlayType?('audio/ogg; codecs="opus"') - /^no$/)
+
+function render-strokes (terms, id)
+  h = HASH-OF[LANG]
+  id -= /^[@=]/
+  if id is /^\s*$/
+    title = "<h1 itemprop='name'>部首表</h1>"
+    h += '@'
+  else
+    title = "<h1 itemprop='name'>#id <a class='xref' href=\"#\@\" title='部首表'>部</a></h1>"
+  rows = $.parseJSON terms
+  list = ''
+  for chars, strokes in rows | chars?length
+    list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
+    for ch in chars
+      list += "<a class='stroke-char' href=\"#h#ch\">#ch</a> "
+    list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
+  return "#title<div class='list'>#list</div>"
+
+function render-list (terms, id)
+  h = HASH-OF[LANG]
+  id -= /^[@=]/
+  title = "<h1 itemprop='name'>#id</h1>"
+  terms -= /^[^"]*/
+  if id is \字詞紀錄簿
+    title = $ \#starred-record .html!
+    terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>" unless terms
+    terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + "</ul></div>"
+
+  if id is \字詞紀錄簿 and LRU[LANG]
+    terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>'
+    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>")
+    terms += "</ul></div>"
+
+  # 兩岸詞典・同實異名列表
+  if terms is /^";/
+    terms = "<table><tr><th><span class='part-of-speech'>臺</span></th><th><span class='part-of-speech'>陸</span></th></tr>#terms</table>"
+    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
+
+  # 一般列表
+  if terms is /^"/
+    terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + '</ul>'
+
+  return "#title<div class='list'>#terms</div>"
 
 http-map =
   a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com

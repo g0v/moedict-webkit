@@ -1,5 +1,5 @@
 React = window?React || require \react
-{p, i, a, b, form, h1, div, main, span, br, h3, table, nav,
+{p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
@@ -18,6 +18,96 @@ const share-buttons = [
   { id: \t, icon: \twitter, label: \Twitter, background: \#00ACED, href: \https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F }
   { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
 ]
+
+PrefList = React.createClass do
+  getInitialState: ->
+    for own key, selected of @props | key isnt \children
+      return { key, selected }
+  componentDidMount: -> @phoneticsChanged!
+  componentDidUpdate: -> @phoneticsChanged!
+  phoneticsChanged: ->
+    $('rb[order]').each ->
+      attr = $(@).attr('annotation')
+      $(@).data('annotation', attr) if attr
+    $('rb[zhuyin]').each ->
+      zhuyin = $(@).attr('zhuyin')
+      yin = $(@).attr('yin')
+      diao = $(@).attr('diao')
+      $(@).data({ yin, zhuyin, diao }) if zhuyin
+    restore-pinyin = -> $('rb[order]').each ->
+      attr = $(@).data('annotation')
+      $(@).attr('annotation', attr) if attr
+    restore-zhuyin = -> $('rb[zhuyin]').each ->
+      zhuyin = $(@).data('zhuyin')
+      yin = $(@).data('yin')
+      diao = $(@).data('diao')
+      $(@).attr({ yin, zhuyin, diao }) if zhuyin
+    clear-pinyin = -> $('rb[order]').attr('annotation', '')
+    clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
+    # new-ruby branch: bopomofo 改用 zhuyin 元素
+    switch @state.selected
+      | \rightangle => restore-pinyin!; restore-zhuyin!
+      | \bopomofo   => clear-pinyin!; restore-zhuyin!
+      | \pinyin     => restore-pinyin!; clear-zhuyin!
+      | \none       => clear-pinyin!; clear-zhuyin!
+  render: ->
+    [ lbl, ...items ] = @props.children
+    { key, selected=items.0.0 } = @state
+    li { className: \btn-group },
+      label {}, lbl
+      button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+        ...for let [val, ...els] in items
+          if val is selected then els else ''
+        nbsp
+        span { className: \caret }
+      ul { className: \dropdown-menu },
+        ...for let [val, ...els] in items
+          if val then
+            li {}, a {
+              style: { cursor: \pointer }
+              className: if val is selected then \active else ''
+              onClick: ~>
+                localStorage?setItem key, val
+                @setState { selected: val }
+                @"#{key}Changed"?!
+            }, ...els
+          else
+            li { className: \divider, role: \presentation }
+
+UserPref = React.createClass do
+  getDefaultProps: -> {
+    simptrad: localStorage?getItem \simptrad
+    phonetics: localStorage?getItem \phonetics
+  }
+  render: -> { phonetics, simptrad } = @props; div {},
+    h4 {}, \偏好設定
+    button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
+    ul {},
+      PrefList { phonetics }, \條目注音顯示方式,
+        [ \rightangle \直角共同顯示 ]
+        [ \bopomofo   \只顯示注音符號, small {}, \（方言音） ]
+        [ \pinyin     \只顯示羅馬拼音 ]
+        [] # li {}, a {}, \置於條目名稱下方
+        [ \none       \關閉 ] /*
+      li { className: \btn-group },
+        label {}, \字詞查閱紀錄
+        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+          '50 筆'
+          span { className: \caret }
+        ul { className: \dropdown-menu },
+          li {}, a { className: \active }, '50 筆'
+          li {}, a {}, '30 筆'
+          li {}, a {}, '15 筆'
+          li { className: \divider, role: \presentation }
+          li {}, a {}, \關閉, small {}, \（將清除所有紀錄）
+        button { className: 'btn btn-danger btn-sm', type: \button }, \清除
+
+      PrefList { simptrad }, \「簡→繁」搜尋轉換,
+        [ \no-variants  \避開通同字及異體字 ]
+        [ \total        \完全轉換 ]
+        []
+        [ \none         \關閉 ] */
+    button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
 Links = React.createClass do
   render: -> div {},
@@ -45,6 +135,9 @@ Nav = React.createClass do
       li { id: \btn-starred },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-bookmark-empty }
+      li { id: \btn-pref },
+        a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
+          i { className: \icon-cogs }
       li {},
         form { id: \lookback, className: \back, target: \_blank, acceptCharset: \big5, action: \http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh, style: { display: \none, margin: 0, padding: 0 } },
           input { type: \hidden, name: \idx, value: \dict.idx }
@@ -572,6 +665,7 @@ else
   React.View.Nav = Nav
   React.View.Links = Links
   React.View.DropDown = DropDown
+  React.View.UserPref = UserPref
   React.View.decodeLangPart = decodeLangPart
   unless window.PRERENDER_LANG
     <- $
