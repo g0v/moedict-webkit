@@ -103,7 +103,7 @@
 
 html {
   font-size: 62.5%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -2461,7 +2461,6 @@ input[type="button"].btn-block {
   src: url("bootstrap/glyphicons-halflings-regular.eot");
   src: url("bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
-
 .glyphicon {
   position: relative;
   top: 1px;
@@ -4779,7 +4778,6 @@ a.thumbnail.active {
     background-position: 0 0;
   }
 }
-
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0;
@@ -4789,7 +4787,6 @@ a.thumbnail.active {
     background-position: 0 0;
   }
 }
-
 .progress {
   overflow: hidden;
   height: 20px;
@@ -4817,7 +4814,7 @@ a.thumbnail.active {
 
 .progress-striped .progress-bar {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
   background-size: 40px 40px;
 }
 
@@ -4831,7 +4828,7 @@ a.thumbnail.active {
 }
 .progress-striped .progress-bar-success {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 .progress-bar-info {
@@ -4839,7 +4836,7 @@ a.thumbnail.active {
 }
 .progress-striped .progress-bar-info {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 .progress-bar-warning {
@@ -4847,7 +4844,7 @@ a.thumbnail.active {
 }
 .progress-striped .progress-bar-warning {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 .progress-bar-danger {
@@ -4855,7 +4852,7 @@ a.thumbnail.active {
 }
 .progress-striped .progress-bar-danger {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 .media,
@@ -5891,7 +5888,7 @@ button.close {
   border-radius: 10px;
   cursor: pointer;
   background-color: #000 \9;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
 }
 .carousel-indicators .active {
   margin: 0;
@@ -5992,7 +5989,6 @@ button.close {
 @-ms-viewport {
   width: device-width;
 }
-
 .visible-xs, .visible-sm, .visible-md, .visible-lg {
   display: none !important;
 }
@@ -6559,13 +6555,11 @@ table {
   font-family: han-unicode-range;
   src: local(Arial), local("Droid Sans");
 }
-
 @font-face {
   font-family: han-unicode-range;
   src: local("Times New Roman"), local(Times), local("Droid Serif");
   unicode-range: U+270C;
 }
-
 /* ---------------------------------------
    四大字體集及標點
    ---
@@ -6580,29 +6574,24 @@ table {
   font-family: 'Han Heiti';
   src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Heiti';
   src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
 }
-
 @font-face {
   font-family: 'Han Heiti CNS';
   src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Heiti CNS';
   src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
 }
-
 @font-face {
   font-family: 'Han Heiti GB';
   src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
 }
-
 /* ----------------------------------------- 
  * 粗體
  * Bold
@@ -6612,33 +6601,28 @@ table {
   font-weight: 600;
   src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Heiti';
   font-weight: 600;
   src: local("YuGothic Bold"), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(YuGo-Bold), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
 }
-
 @font-face {
   font-family: 'Han Heiti CNS';
   font-weight: 600;
   src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Heiti CNS';
   font-weight: 600;
   src: local("YuGothic Bold"), local(YuGo-Bold), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
 }
-
 @font-face {
   font-family: 'Han Heiti GB';
   font-weight: 600;
   src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
 }
-
 /* ----------------------------------------- 
  * 解決Firefox不支援`unicode-range`及粗體調用問題
  * Solution to Firefox's `unicode-range`
@@ -6649,33 +6633,28 @@ table {
   src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Heiti';
   font-weight: 600;
   src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Heiti CNS';
   src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Heiti CNS';
   font-weight: 600;
   src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Heiti SC Medium"), local("Microsoft YaHei Bold"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Heiti GB';
   src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
   unicode-range: U+270C;
 }
-
 /* ---------------------------------------
    四大字體集・宋體（明朝體）
    ---
@@ -6685,29 +6664,24 @@ table {
   font-family: 'Han Songti';
   src: local("Songti SC"), local("Songti TC"), local(STSong), local("Lisong Pro"), local(SimSun), local(PMingLiU);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Songti';
   src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
 }
-
 @font-face {
   font-family: 'Han Songti CNS';
   src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local(PMingLiU), local(SimSun);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Songti CNS';
   src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro");
 }
-
 @font-face {
   font-family: 'Han Songti GB';
   src: local("Songti SC"), local(STSong), local(SimSun), local(PMingLiU);
 }
-
 /* ----------------------------------------- 
  * 粗體
  * Bold
@@ -6717,33 +6691,28 @@ table {
   font-weight: 600;
   src: local("STSongti SC Bold"), local("STSongti TC Bold"), local(STSongti-SC-Bold), local(STSongti-TC-Bold);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Songti';
   font-weight: 600;
   src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
 }
-
 @font-face {
   font-family: 'Han Songti CNS';
   font-weight: 600;
   src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Songti CNS';
   font-weight: 600;
   src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
 }
-
 @font-face {
   font-family: 'Han Songti GB';
   font-weight: 600;
   src: local("STSongti SC Bold"), local(STSongti-SC-Bold);
 }
-
 /* ----------------------------------------- 
  * 解決Firefox不支援`unicode-range`及粗體調用問題
  * Solution to Firefox's `unicode-range`
@@ -6754,33 +6723,28 @@ table {
   src: local("Songti SC"), local("Songti TC"), local(STSongti), local("Lisong Pro"), local("MS Mincho"), local(SimSun), local(PMingLiU);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Songti';
   font-weight: 600;
   src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Songti CNS';
   src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local("MS Mincho"), local(PMingLiU), local(SimSun);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Songti CNS';
   font-weight: 600;
   src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Han Songti GB';
   src: local("Songti SC"), local(STSong), local(SimSun);
   unicode-range: U+270C;
 }
-
 /* ---------------------------------------
    四大字體集・楷體
    ---
@@ -6790,25 +6754,21 @@ table {
   font-family: cursive;
   src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Kaiti';
   src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Kaiti CNS';
   src: local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Kaiti GB';
   src: local("Kaiti SC"), local(STKaiti), local(Kai), local(Kaiti), local(DFKai-SB);
 }
-
 /* ----------------------------------------- 
  * 粗體
  * Bold
@@ -6818,19 +6778,16 @@ table {
   font-weight: 600;
   src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
 }
-
 @font-face {
   font-family: 'Han Kaiti';
   font-weight: 600;
   src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
 }
-
 @font-face {
   font-family: 'Han Kaiti GB';
   font-weight: 600;
   src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
 }
-
 /* ---------------------------------------
    四大字體集・仿宋體
    ---
@@ -6841,19 +6798,16 @@ table {
   font-family: 'Han Fangsong';
   src: local(STFangsong), local(FangSong);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Fangsong CNS';
   src: local(STFangsong), local(FangSong);
 }
-
 @font-face {
   unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
   font-family: 'Han Fangsong GB';
   src: local(STFangsong), local(FangSong);
 }
-
 /* ---------------------------------------
    漢字標點
    ---
@@ -6879,49 +6833,41 @@ table {
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
   unicode-range: U+FF0E;
 }
-
 /* 間隔號（·）
    Middle dot
    --------------------------------------- */
@@ -6930,49 +6876,41 @@ table {
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
   unicode-range: U+00B7;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
   unicode-range: U+00B7;
 }
-
 /* 破折號（——）
    Em dash
    --------------------------------------- */
@@ -6981,61 +6919,51 @@ table {
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Yakumono Sans';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Yakumono Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
-
 /* 省略號（……）
    Ellipsis
    --------------------------------------- */
@@ -7044,61 +6972,51 @@ table {
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Yakumono Sans';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Yakumono Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
-
 /* 彎引號（“‘’”）
    Curve quotes
    --------------------------------------- */
@@ -7107,49 +7025,41 @@ table {
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
   unicode-range: U+201C-201D, U+2018-2019;
 }
-
 /* 着重號（●）
    Emphasis dots
    --------------------------------------- */
@@ -7158,49 +7068,41 @@ table {
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
   unicode-range: U+25CF;
 }
-
 /* ---------------------------------------
    進階版標點樣式修正
    ---
@@ -7225,61 +7127,51 @@ table {
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("MS Gothic");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU);
   unicode-range: U+3002, U+FF0C, U+3001;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU), local("MS Gothic");
   unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
   unicode-range: U+FF0D, U+FF0F, U+FF3C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local(STSongti-TC-Regular), local("Lisong Pro"), local("Heiti TC"), local(PMingLiU);
   unicode-range: U+3002, U+FF0C, U+3001;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
   unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local("MS Gothic");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Songti SC"), local(STSongti), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local("MS Mincho");
   unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
   unicode-range: U+FF0D, U+FF0F, U+FF3C;
 }
-
 /*
  * a. 引號（「『』」）
  *	Quotes
@@ -7293,37 +7185,31 @@ table {
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
   unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
 }
-
 /*
  * 解決Firefox不支援`Unicode-range`的問題
  * 
@@ -7335,49 +7221,41 @@ table {
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Serif';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 /* ---------------------------------------
    @mixin: 四大字體集
    ---
@@ -7409,13 +7287,11 @@ table {
   font-family: 'Latin Italic Serif';
   src: local("Georgia Italic"), local("Times New Roman Italic"), local(Georgia-Italic), local(TimesNewRomanPS-ItalicMT), local(Times-Italic);
 }
-
 @font-face {
   font-family: 'Latin Italic Serif';
   font-weight: 700;
   src: local("Georgia Bold Italic"), local("Times New Roman Bold Italic"), local(Georgia-BoldItalic), local(TimesNewRomanPS-BoldItalicMT), local(Times-Italic);
 }
-
 /* ---------------------------------------
 	 無襯線西文斜體
 	 ---
@@ -7425,13 +7301,11 @@ table {
   font-family: 'Latin Italic Sans';
   src: local("Helvetica Neue Italic"), local("Helvetica Oblique"), local("Arial Italic"), local(HelveticaNeue-Italic), local(Helvetica-LightOblique), local(Arial-ItalicMT);
 }
-
 @font-face {
   font-family: 'Latin Italic Sans';
   font-weight: 700;
   src: local("Helvetica Neue Bold Italic"), local("Helvetica Bold Oblique"), local("Arial Bold Italic"), local(HelveticaNeue-BoldItalic), local(Helvetica-BoldOblique), local(Arial-BoldItalicMT);
 }
-
 /* ---------------------------------------
    數字
    ---
@@ -7445,13 +7319,11 @@ table {
   font-family: 'Numeral TF Sans';
   src: local(Skia), local("Neutraface 2 Text"), local(Candara), local(Corbel);
 }
-
 @font-face {
   unicode-range: U+0030-0039;
   font-family: 'Numeral TF Serif';
   src: local(Georgia), local("Hoefler Text"), local("Big Caslon");
 }
-
 /* 等高數字
    Lining figures
    --------------------------------------- */
@@ -7460,13 +7332,11 @@ table {
   font-family: 'Numeral LF Sans';
   src: local("Helvetica Neue"), local(Helvetica), local(Arial);
 }
-
 @font-face {
   unicode-range: U+0030-0039;
   font-family: 'Numeral LF Serif';
   src: local(Palatino), local("Palatino Linotype"), local("Times New Roman");
 }
-
 /* ----------------------------------------- 
  * 解決Firefox不支援`unicode-range`的問題
  * Solution to Firefox's `unicode-range`
@@ -7477,25 +7347,21 @@ table {
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Numeral TF Serif';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Numeral LF Sans';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 @font-face {
   font-family: 'Numeral LF Serif';
   src: local("Lying to Firefox");
   unicode-range: U+270C;
 }
-
 /* ---------------------------------------
    注音符號
    ---
@@ -7511,19 +7377,16 @@ table {
   font-family: 'Zhuyin Kaiti';
   src: url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(PMingLiU);
 }
-
 @font-face {
   unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB;
   font-family: 'Zhuyin Heiti';
   src: local("Hiragino Sans GB"), local("Microsoft Jhenghei"), url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(PMingLiU), local(SimSun), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
 }
-
 @font-face {
   font-family: 'Zhuyin Heiti';
   src: local("Heiti TC"), local("Microsoft Jhenghei"), url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(PMingLiU), local(SimSun), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
   unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
 }
-
 hruby {
   display: inline;
   line-height: 2;
@@ -7793,7 +7656,6 @@ hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby 
   font-weight: normal;
   font-style: normal;
 }
-
 /* FONT AWESOME CORE
  * -------------------------- */
 [class^="icon-"],
@@ -8095,7 +7957,6 @@ a .icon-spin {
     -moz-transform: rotate(359deg);
   }
 }
-
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -8105,7 +7966,6 @@ a .icon-spin {
     -webkit-transform: rotate(359deg);
   }
 }
-
 @-o-keyframes spin {
   0% {
     -o-transform: rotate(0deg);
@@ -8115,7 +7975,6 @@ a .icon-spin {
     -o-transform: rotate(359deg);
   }
 }
-
 @-ms-keyframes spin {
   0% {
     -ms-transform: rotate(0deg);
@@ -8125,7 +7984,6 @@ a .icon-spin {
     -ms-transform: rotate(359deg);
   }
 }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -8135,7 +7993,6 @@ a .icon-spin {
     transform: rotate(359deg);
   }
 }
-
 /* Icon rotations and mirroring */
 .icon-rotate-90:before {
   -webkit-transform: rotate(90deg);
@@ -9652,22 +9509,18 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
   font-family: "Fira Sans OT";
   src: url('fonts/FiraSansOT-Regular.ttf') format('truetype');
 }
-
 @font-face {
   font-family: "EBAS";
   src: url('fonts/EBAS-Subset.ttf') format('truetype');
 }
-
 @font-face {
   font-family: "MOEDICT";
   src: url('fonts/MOEDICT.ttf') format('truetype');
 }
-
 @font-face {
   font-family: "MOEDICT-IOS-KAI";
   src: url("/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf") format("truetype");
 }
-
 .vowel-030d,
 .jiao-0358 {
   position: relative;
@@ -9743,9 +9596,9 @@ body {
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   body {
     background-image: url('images/subtle_stripes_x2.png');
-    -webkit-background-size: 40px 40px;
     -moz-background-size: 40px 40px;
     -o-background-size: 40px 40px;
+    -webkit-background-size: 40px 40px;
     background-size: 40px 40px;
   }
 }
@@ -9806,9 +9659,9 @@ body [class^="icon-"], body [class*=" icon-"] {
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   .navbar-inverse {
     background-image: url('images/leather_x2.jpg');
-    -webkit-background-size: 400px 219px;
     -moz-background-size: 400px 219px;
     -o-background-size: 400px 219px;
+    -webkit-background-size: 400px 219px;
     background-size: 400px 219px;
   }
 }
@@ -10382,12 +10235,18 @@ img.back {
   display: none !important;
 }
 
+#user-pref label {
+  width: 100% !important;
+  margin-top: 20px !important;
+}
+
 #btn-starred {
   margin-left: -0.5em !important;
 }
 
 #btn-pref {
-  margin-left: -1.5em !important;
+  margin-left: -5px !important;
+  margin-right: 10px !important;
 }
 #btn-pref a {
   margin-top: -1px !important;
@@ -10429,6 +10288,7 @@ img.back {
   padding-bottom: 0.5em;
 }
 #user-pref > ul li.btn-group {
+  width: 100%;
   display: block;
   margin-bottom: 0.75em;
 }
@@ -10441,6 +10301,7 @@ img.back {
 #user-pref > ul li.btn-group label {
   display: block;
   font-weight: normal;
+  margin-top: 5px;
   text-shadow: 1px 1px 0 rgba(238, 238, 238, 0.7);
 }
 #user-pref > ul li.btn-group button {

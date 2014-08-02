@@ -1,122 +1,128 @@
 
+#user-pref label
+  width: 100% !important
+  margin-top: 20px !important
 
 #btn-starred
-	margin-left: -.5em !important
+  margin-left: -.5em !important
 
 #btn-pref
-	margin-left: -1.5em !important
-	a
-		margin-top: -1px !important
+  margin-left: -5px !important
+  margin-right: 10px !important
+  a
+    margin-top: -1px !important
 
 
 #user-pref
-	// posi
-	position: fixed
-	top: 45px
-	z-index: 110
-	// box
-	display: none
-	height: 100%
-	width: 260px
-	padding: .25em 1em
-	// typo
-	font-size: .85em
-	// style
-	background-color: #d6cbbc
-	border-right: 1px solid darken(#d6cbbc, 7%)
+  // posi
+  position: fixed
+  top: 45px
+  z-index: 110
+  // box
+  display: none
+  height: 100%
+  width: 260px
+  padding: .25em 1em
+  // typo
+  font-size: .85em
+  // style
+  background-color: #d6cbbc
+  border-right: 1px solid darken(#d6cbbc, 7%)
 
-	h4
-		// posi
-		margin: 1.25em 0 .75em
-		// typo
-		font-weight: bold
-		// style
-		color: #634f3c
+  h4
+    // posi
+    margin: 1.25em 0 .75em
+    // typo
+    font-weight: bold
+    // style
+    color: #634f3c
 
-		+ button.close
-			position: absolute
-			right: .5em
-			top: .5em
-	ul
-		// box
-		list-style: none
-		padding: 0
-		// typo
-		font-size: inherit
+    + button.close
+      position: absolute
+      right: .5em
+      top: .5em
+  ul
+    // box
+    list-style: none
+    padding: 0
+    // typo
+    font-size: inherit
 
-		&.dropdown-menu li a.active
-			background-color: lighten(#428bca, 10%)
-			color: #fff
-	> ul
-		// posi
-		margin-bottom: .55em
-		// box
-		padding-bottom: .5em
+    &.dropdown-menu li a.active
+      background-color: lighten(#428bca, 10%)
+      color: #fff
+  > ul
+    // posi
+    margin-bottom: .55em
+    // box
+    padding-bottom: .5em
 
-		li.btn-group
-			display: block
-			margin-bottom: .75em
+    li.btn-group
+      width: 100%
+      display: block
+      margin-bottom: .75em
 
-			&:last-child
-				margin-bottom: .35em
-			&.option-romanization
-				display: none
-			label
-				// box
-				display: block
-				// typo
-				font-weight: normal
-				// style
-				text-shadow: 1px 1px 0 rgba(#eee, .7)
-			button
-				// posi
-				float: none
-				margin-top: -.4em
-				// style
-				border-radius: 4px !important
-	span.fa
-		font-size: .8em
-		vertical-align: top
-	.btn-info
-		margin: -.5em 0 1em
-	.btn-primary
-		// posi
-		bottom: 60px
-		left: .75em
-		position: absolute
-		// box
-		width: 90%
-		// typo
-		font-size: 1.1em
-		letter-spacing: .75em
-		padding-left: .75em // !!!
+      &:last-child
+        margin-bottom: .35em
+      &.option-romanization
+        display: none
+      label
+        // box
+        display: block
+        // typo
+        font-weight: normal
+        margin-top: 5px
+        // style
+        text-shadow: 1px 1px 0 rgba(#eee, .7)
+      button
+        // posi
+        float: none
+        margin-top: -.4em
+        // style
+        border-radius: 4px !important
+  span.fa
+    font-size: .8em
+    vertical-align: top
+  .btn-info
+    margin: -.5em 0 1em
+  .btn-primary
+    // posi
+    bottom: 60px
+    left: .75em
+    position: absolute
+    // box
+    width: 90%
+    // typo
+    font-size: 1.1em
+    letter-spacing: .75em
+    padding-left: .75em // !!!
 
 
 .starred-record--header
-	display: none
+  display: none
 
-	+ nav
-		margin-top: 1.5em
+  + nav
+    margin-top: 1.5em
 
-		a:hover
-			outline: 0
+    a:hover
+      outline: 0
 
-	~ div
-		// box
-		padding: 1.25em .5em 1em
-		// style
-		border: 1px solid #ddd
-		border-top: 0
+  ~ div
+    // box
+    padding: 1.25em .5em 1em
+    // style
+    border: 1px solid #ddd
+    border-top: 0
 
-		h3
-			display: none
-		ul
-			list-style: square
+    h3
+      display: none
+    ul
+      list-style: square
 
-			.starred-record--none-msg
-				list-style: none
-				margin-left: -2em
-				color: #666
+      .starred-record--none-msg
+        list-style: none
+        margin-left: -2em
+        color: #666
 
-				span.fa
-					color: #965
+        span.fa
+          color: #965

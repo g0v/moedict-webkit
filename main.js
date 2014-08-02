@@ -15,6 +15,7 @@
   $(function(){
     $('body').addClass("lang-" + LANG);
     React.renderComponent(React.View.Links(), $('#links')[0]);
+    React.renderComponent(React.View.UserPref(), $('#user-pref')[0]);
     return React.renderComponent(React.View.Nav(), $('#nav')[0], function(){
       $('.lang-active').text($(".lang-option." + LANG + ":first").text());
       if (/MSIE|Trident/.exec(navigator.userAgent)) {

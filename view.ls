@@ -1,5 +1,5 @@
 React = window?React || require \react
-{p, i, a, b, form, h1, div, main, span, br, h3, table, nav,
+{p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
@@ -18,6 +18,48 @@ const share-buttons = [
   { id: \t, icon: \twitter, label: \Twitter, background: \#00ACED, href: \https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F }
   { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
 ]
+
+UserPref = React.createClass do
+  render: -> div {},
+    h4 {}, \偏好設定
+    button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
+    ul {},
+      li { className: \btn-group },
+        label {}, \條目注音顯示方式
+        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+          \直角共同顯示
+          span { className: \caret }
+        ul { className: \dropdown-menu },
+          li {}, a { className: \active }, \直角共同顯示
+          li {}, a {}, \只顯示注音符號, small {}, \（方言音）
+          li {}, a {}, \只顯示羅馬拼音
+          li { className: \divider, role: \presentation }
+          li {}, a {}, \置於條目名稱下方
+          li { className: \divider, role: \presentation }
+          li {}, a {}, \關閉
+      li { className: \btn-group },
+        label {}, \字詞查閱紀錄
+        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+          '50 筆'
+          span { className: \caret }
+        ul { className: \dropdown-menu },
+          li {}, a { className: \active }, '50 筆'
+          li {}, a {}, '30 筆'
+          li {}, a {}, '15 筆'
+          li { className: \divider, role: \presentation }
+          li {}, a {}, \關閉, small {}, \（將清除所有紀錄）
+        button { className: 'btn btn-danger btn-sm', type: \button }, \清除
+      li { className: \btn-group },
+        label {}, \「簡→繁」搜尋轉換
+        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
+          \避開通同字及異體字
+          span { className: \caret }
+        ul { className: \dropdown-menu },
+          li {}, a { className: \active }, \避開通同字及異體字
+          li {}, a {}, \完全轉換
+          li { className: \divider, role: \presentation }
+          li {}, a {}, \關閉
+    button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
 Links = React.createClass do
   render: -> div {},
@@ -575,6 +617,7 @@ else
   React.View.Nav = Nav
   React.View.Links = Links
   React.View.DropDown = DropDown
+  React.View.UserPref = UserPref
   React.View.decodeLangPart = decodeLangPart
   unless window.PRERENDER_LANG
     <- $

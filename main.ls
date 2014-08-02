@@ -9,6 +9,7 @@ MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.renderComponent React.View.Links!, $(\#links).0
+  React.renderComponent React.View.UserPref!, $(\#user-pref).0
   React.renderComponent React.View.Nav!, $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
