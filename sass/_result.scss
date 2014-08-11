@@ -29,10 +29,12 @@
     font-size: 100%;
     line-height: 1.5;
     overflow-x: hidden;
-    li {
-        overflow-x: visible;
+    li table {
+        border: 0;
+        display: inline-block;
+        max-width: 100%;
+        overflow-x: auto;
     }
-
 }
 
 center {
