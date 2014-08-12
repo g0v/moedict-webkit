@@ -903,7 +903,7 @@
       }) : void 8, $char, h1.apply(null, [{
         className: 'title',
         'data-title': t
-      }].concat(slice$.call(list))), bopomofo || pinyinList ? div({
+      }].concat(slice$.call(list))), bopomofo || alt || pinyinList ? div({
         className: "bopomofo " + cnSpecific
       }, alt != null ? div({
         lang: 'zh-Hans',

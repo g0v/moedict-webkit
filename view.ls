@@ -330,7 +330,7 @@ Heteronym = React.createClass do
         Star { CurrentId, LANG }
       $char
       h1 { className: \title, 'data-title': t }, ...list
-      if bopomofo or pinyin-list then div { className: "bopomofo #cn-specific" },
+      if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
           span { className: \xref }, untag alt
