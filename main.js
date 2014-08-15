@@ -988,7 +988,7 @@
           $(this).attr('title', '加入字詞記錄簿');
         }
         $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
-        $('#btn-starred').fadeOut('fast', function(){
+        $('#btn-starred a').fadeOut('fast', function(){
           return $(this).css('background', '#ddd').fadeIn(function(){
             $(this).css('background', 'transparent');
             return $star.fadeIn('fast');

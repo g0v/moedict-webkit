@@ -578,7 +578,7 @@ window.do-load = ->
         STARRED[LANG] -= "#key"
         $(@).attr \title \加入字詞記錄簿
       $(@).toggleClass \icon-star-empty .toggleClass \icon-star
-      $(\#btn-starred).fadeOut \fast ->
+      $('#btn-starred a').fadeOut \fast ->
         $(@).css(\background \#ddd)fadeIn ->
           $(@).css(\background \transparent)
           $star.fadeIn \fast
