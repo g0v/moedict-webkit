@@ -10,7 +10,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   React.renderComponent React.View.Links!, $(\#links).0
   React.renderComponent React.View.UserPref!, $(\#user-pref).0
-  React.renderComponent React.View.Nav!, $(\#nav).0, ->
+  React.renderComponent React.View.Nav({STANDALONE}), $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
       $('#lookback').remove!
@@ -693,10 +693,10 @@ window.do-load = ->
     GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
   for lang of HASH-OF | lang isnt \h => let lang
+    return if STANDALONE and lang isnt STANDALONE
     GET "#lang/=.json", (->
       $ul = render-taxonomy lang, $.parseJSON it
       if STANDALONE
-        $('.nav .lang-option.c:first').parent!prevAll!remove!
         return $(".taxonomy.#lang").parent!replaceWith $ul.children!
       $(".taxonomy.#lang").after $ul
     ), \text

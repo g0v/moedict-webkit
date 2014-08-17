@@ -131,7 +131,7 @@ Nav = React.createClass do
           i { className: \icon-book }, nbsp
           span { className: \lang-active, style: { margin: 0, padding: 0 }, itemProp: \articleSection }, \國語辭典
           b { className: \caret }
-        DropDown {},
+        DropDown { STANDALONE: @props.STANDALONE },
       li { id: \btn-starred },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-bookmark-empty }
@@ -182,21 +182,24 @@ MenuItem = React.createClass do
       a { className: "#lang lang-option#{ if role then '' else " #lang\-idiom"}", role, href }, children
 
 DropDown = React.createClass do
-  render: -> ul { className: \dropdown-menu, role: \navigation },
-    MenuItem { lang: \a, href: \#萌 }, \國語辭典
-    Taxonomy { lang: \a }
-    MenuItem { lang: \a, href: \#@ }, \…部首表
-
-    MenuItem { lang: \t, href: \#! }, \臺灣閩南語
-    Taxonomy { lang: \t }
-    MenuItem { lang: \t, href: \#!=諺語 }, \…諺語
-
-    MenuItem { lang: \h, href: \#: }, \臺灣客家語
-    MenuItem { lang: \h, href: \#:=諺語 }, \…諺語
-
-    MenuItem { lang: \c, href: \#~ }, \兩岸詞典
-    Taxonomy { lang: \c }
-    MenuItem { lang: \c, href: \#~@ }, \…部首表
+  render: ->
+    list = []
+    if @props.STANDALONE isnt \c => list ++= [
+      MenuItem { lang: \a, href: \#萌 }, \國語辭典
+      Taxonomy { lang: \a }
+      MenuItem { lang: \a, href: \#@ }, \…部首表
+      MenuItem { lang: \t, href: \#! }, \臺灣閩南語
+      Taxonomy { lang: \t }
+      MenuItem { lang: \t, href: \#!=諺語 }, \…諺語
+      MenuItem { lang: \h, href: \#: }, \臺灣客家語
+      MenuItem { lang: \h, href: \#:=諺語 }, \…諺語
+    ]
+    list ++= [
+      MenuItem { lang: \c, href: \#~ }, \兩岸詞典
+      Taxonomy { lang: \c }
+      MenuItem { lang: \c, href: \#~@ }, \…部首表
+    ]
+    ul { className: \dropdown-menu, role: \navigation }, ...list
 
 Result = React.createClass do
   render: -> switch @props.type
