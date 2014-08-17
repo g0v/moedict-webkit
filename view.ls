@@ -111,7 +111,7 @@ UserPref = React.createClass do
 
 Links = React.createClass do
   render: -> div {},
-    a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
+    # a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
     a { className: 'visible-xs pull-left ebas btn btn-default', href: \#, title: \關於本站, style: { float: \left, marginTop: \-10px, marginLeft: \5px, marginBottom: \5px }, onClick: -> pressAbout! },
       span { className: \iconic-circle }, i { className: \icon-info }
       span {}, nbsp, \萌典
@@ -248,7 +248,7 @@ Translations = React.createClass do
       | \法 => \fr-FR
       | \德 => \de-DE
     u.volume = 1.0
-    u.rate = 1.1
+    u.rate = 1.0
     syn.speak u
 
 const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}

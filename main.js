@@ -632,7 +632,7 @@
     window.grokVal = grokVal = function(val){
       var lang;
       stopAudio();
-      if (/</.exec(val) || /^\s+$/.exec(val)) {
+      if (/</.exec(val) || /^\s+$/.exec(val) || /index.html/.exec(val)) {
         return;
       }
       if ((val === '\'=諺語' || val === '!=諺語' || val === ':=諺語') && !widthIsXs()) {

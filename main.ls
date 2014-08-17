@@ -372,7 +372,7 @@ window.do-load = ->
 
   window.grok-val = grok-val = (val) ->
     stop-audio!
-    return if val is /</ or val is /^\s+$/
+    return if val is /</ or val is /^\s+$/ or val is /index.html/
     if val in <[ '=諺語 !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
