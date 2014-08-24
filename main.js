@@ -1490,59 +1490,6 @@
     a = document.createElement('audio');
     return CACHED.canPlayOpus = !!(replace$.call(typeof a.canPlayType === 'function' ? a.canPlayType('audio/ogg; codecs="opus"') : void 8, /^no$/, ''));
   }
-  function renderStrokes(terms, id){
-    var h, title, rows, list, i$, len$, strokes, chars, j$, len1$, ch;
-    h = HASHOF[LANG];
-    id = replace$.call(id, /^[@=]/, '');
-    if (/^\s*$/.exec(id)) {
-      title = "<h1 itemprop='name'>部首表</h1>";
-      h += '@';
-    } else {
-      title = "<h1 itemprop='name'>" + id + " <a class='xref' href=\"#@\" title='部首表'>部</a></h1>";
-    }
-    rows = $.parseJSON(terms);
-    list = '';
-    for (i$ = 0, len$ = rows.length; i$ < len$; ++i$) {
-      strokes = i$;
-      chars = rows[i$];
-      if (chars != null && chars.length) {
-        list += "<span class='stroke-count'>" + strokes + "</span><span class='stroke-list'>";
-        for (j$ = 0, len1$ = chars.length; j$ < len1$; ++j$) {
-          ch = chars[j$];
-          list += "<a class='stroke-char' href=\"" + h + ch + "\">" + ch + "</a> ";
-        }
-        list += "</span><hr style='margin: 0; padding: 0; height: 0'>";
-      }
-    }
-    return title + "<div class='list'>" + list + "</div>";
-  }
-  function renderList(terms, id){
-    var h, title;
-    h = HASHOF[LANG];
-    id = replace$.call(id, /^[@=]/, '');
-    title = "<h1 itemprop='name'>" + id + "</h1>";
-    terms = replace$.call(terms, /^[^"]*/, '');
-    if (id === '字詞紀錄簿') {
-      title = $('#starred-record').html();
-      if (!terms) {
-        terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>";
-      }
-      terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>") + "</ul></div>";
-    }
-    if (id === '字詞紀錄簿' && LRU[LANG]) {
-      terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>';
-      terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>");
-      terms += "</ul></div>";
-    }
-    if (/^";/.exec(terms)) {
-      terms = "<table><tr><th><span class='part-of-speech'>臺</span></th><th><span class='part-of-speech'>陸</span></th></tr>" + terms + "</table>";
-      terms = terms.replace(/";([^;"]+);([^;"]+)"[^"]*/g, "<tr><td><a href=\"" + h + "$1\">$1</a></td><td><a href=\"" + h + "$2\">$2</a></td></tr>");
-    }
-    if (/^"/.exec(terms)) {
-      terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g, "<li><a href=\"" + h + "$1\">$1</a></li>") + '</ul>';
-    }
-    return title + "<div class='list'>" + terms + "</div>";
-  }
   httpMap = {
     a: '203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com',
     h: 'a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com',

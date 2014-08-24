@@ -843,49 +843,6 @@ function can-play-opus
   a = document.createElement \audio
   CACHED.can-play-opus = !!(a.canPlayType?('audio/ogg; codecs="opus"') - /^no$/)
 
-function render-strokes (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  if id is /^\s*$/
-    title = "<h1 itemprop='name'>部首表</h1>"
-    h += '@'
-  else
-    title = "<h1 itemprop='name'>#id <a class='xref' href=\"#\@\" title='部首表'>部</a></h1>"
-  rows = $.parseJSON terms
-  list = ''
-  for chars, strokes in rows | chars?length
-    list += "<span class='stroke-count'>#strokes</span><span class='stroke-list'>"
-    for ch in chars
-      list += "<a class='stroke-char' href=\"#h#ch\">#ch</a> "
-    list += "</span><hr style='margin: 0; padding: 0; height: 0'>"
-  return "#title<div class='list'>#list</div>"
-
-function render-list (terms, id)
-  h = HASH-OF[LANG]
-  id -= /^[@=]/
-  title = "<h1 itemprop='name'>#id</h1>"
-  terms -= /^[^"]*/
-  if id is \字詞紀錄簿
-    title = $ \#starred-record .html!
-    terms += "<li class='starred-record--none-msg'>點選詞條右方的<span class='fa icon-star-empty'>星號</span>按鈕，即可將字詞加到這裡。</li>" unless terms
-    terms = '<div class="starred-record--fav"><h3>我收藏的條目</h3><ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + "</ul></div>"
-
-  if id is \字詞紀錄簿 and LRU[LANG]
-    terms += '<div hidden class="starred-record--history"><h3>最近查閱過的字詞</h3>\n<ul>'
-    terms += LRU[LANG].replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>")
-    terms += "</ul></div>"
-
-  # 兩岸詞典・同實異名列表
-  if terms is /^";/
-    terms = "<table><tr><th><span class='part-of-speech'>臺</span></th><th><span class='part-of-speech'>陸</span></th></tr>#terms</table>"
-    terms.=replace /";([^;"]+);([^;"]+)"[^"]*/g """<tr><td><a href=\"#{h}$1\">$1</a></td><td><a href=\"#{h}$2\">$2</a></td></tr>"""
-
-  # 一般列表
-  if terms is /^"/
-    terms = '<ul>' + terms.replace(/"([^"]+)"[^"]*/g "<li><a href=\"#{h}$1\">$1</a></li>") + '</ul>'
-
-  return "#title<div class='list'>#terms</div>"
-
 http-map =
   a: \203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com
   h: \a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com
