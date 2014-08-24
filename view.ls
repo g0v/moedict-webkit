@@ -202,7 +202,7 @@ DropDown = React.createClass do
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
 Result = React.createClass do
-  render: -> switch @props.type
+  render: -> switch @props?type
     | \term    => Term @props
     | \list    => List @props
     | \radical => RadicalTable @props

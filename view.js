@@ -551,7 +551,8 @@
   });
   Result = React.createClass({
     render: function(){
-      switch (this.props.type) {
+      var ref$;
+      switch ((ref$ = this.props) != null && ref$.type) {
       case 'term':
         return Term(this.props);
       case 'list':
