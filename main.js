@@ -21,7 +21,7 @@
     }), $('#nav')[0], function(){
       $('.lang-active').text($(".lang-option." + LANG + ":first").text());
       if (/MSIE|Trident/.exec(navigator.userAgent)) {
-        return $('#lookback').remove();
+        return $('form[id=lookback]').remove();
       } else {
         return $('form[id=lookback]').attr('accept-charset', 'big5');
       }
@@ -707,7 +707,7 @@
       }
       $('#query').val(title);
       if (!isCordova) {
-        $('#cond').val("^" + title + "$");
+        $('form[id=lookback] input[id=cond]').val("^" + title + "$");
       }
       input = $('#query').get(0);
       if (isMobile) {
@@ -836,7 +836,9 @@
       if (prevId === id || replace$.call(id, /\(.*/, '') !== replace$.call(val, /\(.*/, '')) {
         return true;
       }
-      $('#cond').val("^" + title + "$");
+      if (!isCordova) {
+        $('form[id=lookback] input[id=cond]').val("^" + title + "$");
+      }
       hist = HASHOF[LANG].slice(1) + "" + title;
       if (!(entryHistory.length && entryHistory[entryHistory.length - 1] === hist)) {
         entryHistory.push(hist);

@@ -13,7 +13,7 @@ $ ->
   React.renderComponent React.View.Nav({STANDALONE}), $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
-      $('#lookback').remove!
+      $('form[id=lookback]').remove!
     else
       $('form[id=lookback]').attr \accept-charset \big5
 
@@ -413,7 +413,7 @@ window.do-load = ->
       $(\#query).autocomplete(\search)
       return
     $ \#query .val title
-    $ \#cond .val "^#{title}$" unless isCordova
+    $('form[id=lookback] input[id=cond]').val "^#{title}$" unless isCordova
     input = $ \#query .get 0
     if isMobile
       try $(\#query).autocomplete \close
@@ -479,7 +479,7 @@ window.do-load = ->
       return true unless Index.indexOf("\"#title\"") >= 0
     id = title
     return true if prevId is id or (id - /\(.*/) isnt (val - /\(.*/)
-    $ \#cond .val "^#{title}$"
+    $('form[id=lookback] input[id=cond]').val "^#{title}$" unless isCordova
     hist = "#{ HASH-OF[LANG].slice(1) }#title"
     entryHistory.push hist unless entryHistory.length and entryHistory[*-1] is hist
     if isApp or LANG isnt \a or title is /^[=@]/
