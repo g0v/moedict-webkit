@@ -15,7 +15,7 @@ $ ->
     if navigator.userAgent is /MSIE|Trident/
       $('#lookback').remove!
     else
-      $('#lookback').attr \accept-charset \big5
+      $('form[id=lookback]').attr \accept-charset \big5
 
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}

@@ -23,7 +23,7 @@
       if (/MSIE|Trident/.exec(navigator.userAgent)) {
         return $('#lookback').remove();
       } else {
-        return $('#lookback').attr('accept-charset', 'big5');
+        return $('form[id=lookback]').attr('accept-charset', 'big5');
       }
     });
   });
