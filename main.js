@@ -23,7 +23,10 @@
       if (/MSIE|Trident/.exec(navigator.userAgent)) {
         return $('form[id=lookback]').remove();
       } else {
-        return $('form[id=lookback]').attr('accept-charset', 'big5');
+        $('form[id=lookback]').attr('accept-charset', 'big5');
+        if (window.PRERENDER_ID) {
+          return $('form[id=lookback] input[id=cond]').val("^" + window.PRERENDER_ID + "$");
+        }
       }
     });
   });
