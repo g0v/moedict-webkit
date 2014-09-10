@@ -16,7 +16,9 @@ $ ->
       $('form[id=lookback]').remove!
     else
       $('form[id=lookback]').attr \accept-charset \big5
-      $('form[id=lookback] input[id=cond]').val "^#{window.PRERENDER_ID}$" if window.PRERENDER_ID
+      if window.PRERENDER_ID
+        $('form[id=lookback] input[id=cond]').val "^#{window.PRERENDER_ID}$"
+        $('#query').val window.PRERENDER_ID
 
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}

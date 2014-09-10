@@ -25,7 +25,8 @@
       } else {
         $('form[id=lookback]').attr('accept-charset', 'big5');
         if (window.PRERENDER_ID) {
-          return $('form[id=lookback] input[id=cond]').val("^" + window.PRERENDER_ID + "$");
+          $('form[id=lookback] input[id=cond]').val("^" + window.PRERENDER_ID + "$");
+          return $('#query').val(window.PRERENDER_ID);
         }
       }
     });
