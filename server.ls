@@ -75,13 +75,13 @@ font-of = ->
   return 'cwTeXQYuan' if it is /cwyuan/i
   return 'cwTeXQKai' if it is /cwkai/i
   return 'cwTeXQFangsong' if it is /cwfangsong/i
-  return 'SourceHanSansTWHKExtraLight' if it is /srcx/i
-  return 'SourceHanSansTWHKLight' if it is /srcl/i
-  return 'SourceHanSansTWHKNormal' if it is /srcn/i
-  return 'SourceHanSansTWHKRegular' if it is /srcr/i
-  return 'SourceHanSansTWHKMedium' if it is /srcm/i
-  return 'SourceHanSansTWHKBold' if it is /srcb/i
-  return 'SourceHanSansTWHKHeavy' if it is /srch/i
+  return 'SourceHanSansTWExtraLight' if it is /srcx/i
+  return 'SourceHanSansTWLight' if it is /srcl/i
+  return 'SourceHanSansTWNormal' if it is /srcn/i
+  return 'SourceHanSansTWRegular' if it is /srcr/i
+  return 'SourceHanSansTWMedium' if it is /srcm/i
+  return 'SourceHanSansTWBold' if it is /srcb/i
+  return 'SourceHanSansTWHeavy' if it is /srch/i
   return wt2font[it] || 'TW-Kai'
 
 iconv = require \iconv-lite
@@ -404,7 +404,7 @@ function text2png (text, font)
       ctx.font = "355px #font"
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
-        ctx.font = "355px #font, SourceHanSansTWHKRegular, TWBLG"
+        ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG"
         ch += text.0
         text.=slice 1
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/ # combining
