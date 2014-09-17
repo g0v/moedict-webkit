@@ -185,7 +185,7 @@ DropDown = React.createClass do
   render: ->
     list = []
     if @props.STANDALONE isnt \c => list ++= [
-      MenuItem { lang: \a, href: \#萌 }, \國語辭典
+      MenuItem { lang: \a, href: \## }, \國語辭典
       Taxonomy { lang: \a }
       MenuItem { lang: \a, href: \#@ }, \…部首表
       MenuItem { lang: \t, href: \#! }, \臺灣閩南語

@@ -429,7 +429,9 @@ window.do-load = ->
 
   prevId = prevVal = window.PRERENDER_ID
   window.press-lang = (lang='', id='') ->
+    id -= /#/g
     return if STANDALONE
+    return if lang is LANG and !id
     prevId := null
     prevVal := null
     if HASH-OF.c
@@ -441,6 +443,9 @@ window.do-load = ->
     $('iframe').fadeIn \fast
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
+    for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
+      id ||= words.0
+    id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"]/g, '')
     id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text

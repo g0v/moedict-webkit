@@ -509,7 +509,7 @@
         list = list.concat([
           MenuItem({
             lang: 'a',
-            href: '#萌'
+            href: '##'
           }, '國語辭典'), Taxonomy({
             lang: 'a'
           }), MenuItem({
