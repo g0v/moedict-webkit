@@ -600,7 +600,7 @@
             $('.dropdown.open').removeClass('open');
           }
           if (val) {
-            val = replace$.call(val, /.*\#/, '');
+            val = replace$.call(val, /[^#]*\#/, '');
           }
           val || (val = $(this).text());
           window.grokVal(val);

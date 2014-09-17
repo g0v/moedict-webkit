@@ -355,7 +355,7 @@ window.do-load = ->
         if $('.dropdown.open').length
           $ \.navbar .css \position \fixed
           $ \.dropdown.open .removeClass \open
-        val -= /.*\#/ if val
+        val -= /[^#]*\#/ if val
         val ||= $(@).text!
         window.grok-val val
         return false
