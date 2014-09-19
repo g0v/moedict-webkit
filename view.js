@@ -1021,7 +1021,7 @@
         yin = convertPinyin(yin);
         span = LANG === 't' && /\-/g.exec(yin)
           ? ' rbspan="' + (yin.match(/[\-]+/g).length + 1) + '"'
-          : LANG !== 't' && /^[^eēéěè].*r$/g.exec(yin)
+          : LANG !== 't' && /^[^eēéěè].*r\d?$/g.exec(yin)
             ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ'), b = join$.call(tws, ' ')), ' rbspan="2"')
             : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
         p[idx] = "<rt" + span + ">" + yin + "</rt>";
