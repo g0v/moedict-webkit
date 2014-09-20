@@ -1018,6 +1018,7 @@
         return setPref("starred-" + LANG, STARRED[LANG]);
       });
       $('.results .stroke').on(vclick, function(){
+        $('#historical-scripts').fadeIn();
         if ($('svg, canvas').length) {
           return $('#strokes').fadeOut('fast', function(){
             $('#strokes').html('');

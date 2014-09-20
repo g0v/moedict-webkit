@@ -907,7 +907,38 @@
       }), key === 0 ? Star({
         CurrentId: CurrentId,
         LANG: LANG
-      }) : void 8, $char, h1.apply(null, [{
+      }) : void 8, a({
+        style: {
+          position: 'absolute',
+          right: '41px',
+          top: '160px',
+          color: 'white',
+          cursor: 'pointer',
+          display: 'none'
+        },
+        id: 'historical-scripts',
+        className: 'part-of-speech',
+        title: '顯示歷代書體',
+        onClick: function(){
+          var i$, ref$, len$, ch, results$ = [];
+          $('#strokes iframe').remove();
+          for (i$ = 0, len$ = (ref$ = CurrentId).length; i$ < len$; ++i$) {
+            ch = ref$[i$];
+            results$.push($('#strokes').append($('<iframe />', {
+              src: "http://chinese-linguipedia.org/clk/searchclk/srch_history/main/" + encodeURIComponent(ch),
+              css: {
+                width: '1400px',
+                clear: 'both',
+                transform: 'scale(0.6)',
+                marginLeft: '-300px',
+                height: '250px',
+                marginTop: '-55px'
+              }
+            })));
+          }
+          return results$;
+        }
+      }, '歷代書體'), $char, h1.apply(null, [{
         className: 'title',
         'data-title': t
       }].concat(slice$.call(list))), bopomofo || alt || pinyinList ? div({

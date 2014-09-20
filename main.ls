@@ -594,6 +594,7 @@ window.do-load = ->
       setPref "starred-#LANG" STARRED[LANG]
 
     $ '.results .stroke' .on vclick, ->
+      $('#historical-scripts').fadeIn!
       return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
       window.scroll-to 0 0
       strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
