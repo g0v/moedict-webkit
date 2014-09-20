@@ -925,7 +925,7 @@
           for (i$ = 0, len$ = (ref$ = CurrentId).length; i$ < len$; ++i$) {
             ch = ref$[i$];
             results$.push($('#strokes').append($('<iframe />', {
-              src: "http://chinese-linguipedia.org/clk/searchclk/srch_history/main/" + encodeURIComponent(ch),
+              src: "https://www.moedict.tw/clk/searchclk/srch_history/main/" + encodeURIComponent(ch),
               css: {
                 width: '1400px',
                 clear: 'both',

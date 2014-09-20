@@ -354,7 +354,7 @@ Heteronym = React.createClass do
           $('#strokes iframe').remove!
           for ch in CurrentId
             $('#strokes').append($('<iframe />', {
-              src: "http://chinese-linguipedia.org/clk/searchclk/srch_history/main/#{ encodeURIComponent ch }"
+              src: "https://www.moedict.tw/clk/searchclk/srch_history/main/#{ encodeURIComponent ch }"
               css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-300px height: \250px marginTop: \-55px }
             })) } \歷代書體
       $char
