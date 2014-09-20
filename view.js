@@ -917,7 +917,7 @@
           display: 'none'
         },
         id: 'historical-scripts',
-        className: 'part-of-speech',
+        className: 'hidden-xs part-of-speech',
         title: '顯示歷代書體',
         onClick: function(){
           var i$, ref$, len$, ch, results$ = [];

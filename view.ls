@@ -348,7 +348,7 @@ Heteronym = React.createClass do
       a {
         style: { position: \absolute right: \41px top: \160px color: \white cursor: \pointer display: \none }
         id: 'historical-scripts'
-        className: \part-of-speech
+        className: 'hidden-xs part-of-speech'
         title: \顯示歷代書體
         onClick: ->
           $('#strokes iframe').remove!
