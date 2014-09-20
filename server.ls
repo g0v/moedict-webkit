@@ -133,7 +133,12 @@ require(\zappajs) {+disable_io} ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     err, json <~ fs.readFile("#lang/#val.json")
-    return @response.send(404, error: "Segmentation not yet supported in JSON") if err
+    if err
+      chunk = val - /[`~]/g
+      for re in LTM-regexes[lang] ? []
+        chunk.=replace(re, -> escape "`#it~")
+      terms = [ part for part in unescape(chunk).split(/[`~]+/) | part.length ]
+      return @response.json(404, { terms }) if err
     props = JSON.parse(decodeLangPart lang, (json || '{}').toString!)
     props.xrefs = [ { lang: l, words } for l, words of xref-of val, lang | words.length ]
     @response.json(props)
