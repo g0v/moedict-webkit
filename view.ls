@@ -457,8 +457,12 @@ function convert-pinyin (yin)
            .replace(/[īíǐì]/g, 'i')
            .replace(/[ūúǔù]/g, 'u')
            .replace(/[üǖǘǚǜ]/g, 'v')
+  r = ''
+  if yin is /r$/
+    r = 'r'
+    yin -= /r$/
   yin = PinYinMap[system][yin] || yin
-  return "#yin#tone"
+  return "#yin#r#tone"
 
 DefinitionList = React.createClass do
   render: ->

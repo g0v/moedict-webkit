@@ -1054,7 +1054,7 @@
     };
   };
   function convertPinyin(yin){
-    var system, y, tone;
+    var system, y, tone, r;
     if (!(typeof $ === 'function' && $('body').hasClass('lang-a'))) {
       return yin;
     }
@@ -1086,8 +1086,13 @@
       tone = 4;
     }
     yin = yin.replace(/[āáǎà]/g, 'a').replace(/[ōóǒò]/g, 'o').replace(/[ēéěè]/g, 'e').replace(/[īíǐì]/g, 'i').replace(/[ūúǔù]/g, 'u').replace(/[üǖǘǚǜ]/g, 'v');
+    r = '';
+    if (/r$/.exec(yin)) {
+      r = 'r';
+      yin = replace$.call(yin, /r$/, '');
+    }
     yin = PinYinMap[system][yin] || yin;
-    return yin + "" + tone;
+    return yin + "" + r + tone;
   }
   DefinitionList = React.createClass({
     render: function(){
