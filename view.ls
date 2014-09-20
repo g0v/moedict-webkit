@@ -349,13 +349,14 @@ Heteronym = React.createClass do
         style: { position: \absolute right: \41px top: \160px color: \white cursor: \pointer display: \none }
         id: 'historical-scripts'
         className: 'hidden-xs part-of-speech'
-        title: \顯示歷代書體
+        title: "字體e筆書寫：張炳煌教授\n字體選用：郭晉銓博士"
         onClick: ->
           $('#strokes iframe').remove!
           for ch in CurrentId
             $('#strokes').append($('<iframe />', {
               src: "https://www.moedict.tw/clk/searchclk/srch_history/main/#{ encodeURIComponent ch }"
-              css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-300px height: \250px marginTop: \-55px }
+              scrolling: \no
+              css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
             })) } \歷代書體
       $char
       h1 { className: \title, 'data-title': t }, ...list

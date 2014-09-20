@@ -918,7 +918,7 @@
         },
         id: 'historical-scripts',
         className: 'hidden-xs part-of-speech',
-        title: '顯示歷代書體',
+        title: "字體e筆書寫：張炳煌教授\n字體選用：郭晉銓博士",
         onClick: function(){
           var i$, ref$, len$, ch, results$ = [];
           $('#strokes iframe').remove();
@@ -926,13 +926,17 @@
             ch = ref$[i$];
             results$.push($('#strokes').append($('<iframe />', {
               src: "https://www.moedict.tw/clk/searchclk/srch_history/main/" + encodeURIComponent(ch),
+              scrolling: 'no',
               css: {
                 width: '1400px',
                 clear: 'both',
                 transform: 'scale(0.6)',
-                marginLeft: '-300px',
+                marginLeft: '-290px',
+                marginRight: '-290px',
                 height: '250px',
-                marginTop: '-55px'
+                marginTop: '-50px',
+                marginBottom: '-50px',
+                border: '0'
               }
             })));
           }
