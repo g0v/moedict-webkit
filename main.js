@@ -636,7 +636,8 @@
     window.grokVal = grokVal = function(val){
       var lang;
       stopAudio();
-      val = replace$.call(val, /[\\"~`]/g, '');
+      val = replace$.call(val, /[\\"]/g, '');
+      val = val.replace(/`(.+)~$/, '$1');
       if (/</.exec(val) || /^\s+$/.exec(val) || /index.html/.exec(val)) {
         return;
       }
