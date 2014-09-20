@@ -85,17 +85,17 @@ UserPref = React.createClass do
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
     ul {},
+      PrefList { pinyin_a }, \國語辭典拼音系統,
+        [ \HanYu      \漢語拼音 ]
+        [ \TongYong   \通用拼音 ] # , small {}, \（方言音） ]
+        [ \WadeGiles  \威妥瑪拼音 ]
+        [ \GuoYin     \國音二式 ]
       PrefList { phonetics }, \條目注音顯示方式,
         [ \rightangle \直角共同顯示 ]
         [ \bopomofo   \只顯示注音符號 ] # , small {}, \（方言音） ]
         [ \pinyin     \只顯示羅馬拼音 ]
         [] # li {}, a {}, \置於條目名稱下方
-        [ \none       \關閉 ]
-      PrefList { pinyin_a }, \國語辭典拼音系統,
-        [ \HanYu      \漢語拼音 ]
-        [ \TongYong   \通用拼音 ] # , small {}, \（方言音） ]
-        [ \GuoYin     \國音二式 ]
-        [ \WadeGiles  \威妥瑪拼音 ] /*
+        [ \none       \關閉 ] /*
       li { className: \btn-group },
         label {}, \字詞查閱紀錄
         button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },

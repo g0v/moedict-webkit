@@ -375,6 +375,7 @@ window.do-load = ->
 
   window.grok-val = grok-val = (val) ->
     stop-audio!
+    val -= /[\\"~`]/g
     return if val is /</ or val is /^\s+$/ or val is /index.html/
     if val in <[ '=諺語 !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
@@ -445,7 +446,7 @@ window.do-load = ->
     setPref \lang LANG
     for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
       id ||= words.0
-    id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"]/g, '')
+    id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '')
     id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text

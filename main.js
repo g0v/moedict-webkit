@@ -636,6 +636,7 @@
     window.grokVal = grokVal = function(val){
       var lang;
       stopAudio();
+      val = replace$.call(val, /[\\"~`]/g, '');
       if (/</.exec(val) || /^\s+$/.exec(val) || /index.html/.exec(val)) {
         return;
       }
@@ -782,7 +783,7 @@
           id || (id = words[0]);
         }
       }
-      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '').replace(/[\\"]/g, '') : void 8);
+      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '') : void 8);
       id || (id = {
         a: '萌',
         t: '發穎',

@@ -224,10 +224,10 @@
         type: 'button',
         'aria-hidden': true
       }, '×'), ul({}, PrefList({
-        phonetics: phonetics
-      }, '條目注音顯示方式', ['rightangle', '直角共同顯示'], ['bopomofo', '只顯示注音符號'], ['pinyin', '只顯示羅馬拼音'], [], ['none', '關閉']), PrefList({
         pinyin_a: pinyin_a
-      }, '國語辭典拼音系統', ['HanYu', '漢語拼音'], ['TongYong', '通用拼音'], ['GuoYin', '國音二式'], ['WadeGiles', '威妥瑪拼音'])), button({
+      }, '國語辭典拼音系統', ['HanYu', '漢語拼音'], ['TongYong', '通用拼音'], ['WadeGiles', '威妥瑪拼音'], ['GuoYin', '國音二式']), PrefList({
+        phonetics: phonetics
+      }, '條目注音顯示方式', ['rightangle', '直角共同顯示'], ['bopomofo', '只顯示注音符號'], ['pinyin', '只顯示羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
         type: 'button'
       }, '關閉'));
