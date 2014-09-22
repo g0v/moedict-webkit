@@ -1122,7 +1122,7 @@
     }
     yin = yin.replace(/[āáǎà]/g, 'a').replace(/[ōóǒò]/g, 'o').replace(/[ēéěè]/g, 'e').replace(/[īíǐì]/g, 'i').replace(/[ūúǔù]/g, 'u').replace(/[üǖǘǚǜ]/g, 'v');
     r = '';
-    if (/r$/.exec(yin)) {
+    if (/^[^eēéěè].*r/.exec(yin)) {
       r = 'r';
       yin = replace$.call(yin, /r$/, '');
     }

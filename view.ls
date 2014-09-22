@@ -478,7 +478,7 @@ function convert-pinyin (yin)
            .replace(/[ūúǔù]/g, 'u')
            .replace(/[üǖǘǚǜ]/g, 'v')
   r = ''
-  if yin is /r$/
+  if yin is /^[^eēéěè].*r/
     r = 'r'
     yin -= /r$/
   yin = PinYinMap[system][yin] || yin
