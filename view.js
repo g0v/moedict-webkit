@@ -1970,6 +1970,7 @@
       "tong": "t'ung",
       "zi": "tzu",
       "ci": "tz'u",
+      "yan": "yen",
       "ye": "yeh",
       "you": "yu",
       "yong": "yung",
