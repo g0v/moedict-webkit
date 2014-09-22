@@ -1790,7 +1790,6 @@
       "xue": "hsüeh",
       "xun": "hsün",
       "hong": "hung",
-      "yi": "i",
       "ran": "jan",
       "rang": "jang",
       "rao": "jao",
