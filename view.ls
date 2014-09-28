@@ -1,4 +1,6 @@
 React = window?React || require \react
+window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
+
 {p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
@@ -612,9 +614,10 @@ http-map =
   'stroke-json': \829091573dd46381a321-9e8a43b8d3436eaf4353af683c892840.ssl.cf1.rackcdn.com
   stroke: \/626a26a628fa127d6a25-47cac8eba79cfb787dbcc3e49a1a65f1.ssl.cf1.rackcdn.com
 
-http = -> "https://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
-can-play-mp3 = -> yes
-can-play-ogg = -> no
+http-map <<< window.moedictDesktop.voices if isMoedictDesktop
+http = -> "http#{if not isMoedictDesktop or it.match(/^([^.]+)\.[^\/]+/).1 not of window.moedictDesktop.voices then "s" else ""}://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
+can-play-mp3 = -> !isMoedictDesktop
+can-play-ogg = -> isMoedictDesktop
 can-play-opus = -> no
 function h (it)
   id = CurrentId

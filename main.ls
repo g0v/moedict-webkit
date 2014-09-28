@@ -1,4 +1,5 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/
+window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
