@@ -95,6 +95,8 @@ add-to-lru = ->
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
+  if LANG is \p
+    url .= toLowerCase!
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
   return onSuccess(that) if CACHED[url]
@@ -413,7 +415,10 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
-    title -= /^[':!~;]/
+    if LANG isnt \p
+      title -= /^[':!~;]/
+    else
+      title -= /^[:!~;]/
     return if title is /^</
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
@@ -621,6 +626,8 @@ window.do-load = ->
         _pua!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~;]?/, ''
+        if LANG is \p
+          id .= toLowerCase!
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -836,6 +843,7 @@ trs_lookup = (term,cb) ->
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
+  return str.toLowerCase! if LANG is \p
   return str unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')

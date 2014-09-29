@@ -195,6 +195,9 @@
   };
   GET = function(url, data, onSuccess, dataType){
     var ref$, that, success, error, beforeSend;
+    if (LANG === 'p') {
+      url = url.toLowerCase();
+    }
     if (data instanceof Function) {
       ref$ = [null, onSuccess, data], data = ref$[0], dataType = ref$[1], onSuccess = ref$[2];
     }
@@ -719,7 +722,11 @@
     window.fillQuery = fillQuery = function(it){
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
-      title = replace$.call(title, /^[':!~;]/, '');
+      if (LANG !== 'p') {
+        title = replace$.call(title, /^[':!~;]/, '');
+      } else {
+        title = replace$.call(title, /^[:!~;]/, '');
+      }
       if (/^</.exec(title)) {
         return;
       }
@@ -1087,6 +1094,9 @@
         content: function(cb){
           var id;
           id = $(this).attr('href').replace(/^#['!:~;]?/, '');
+          if (LANG === 'p') {
+            id = id.toLowerCase();
+          }
           callLater(function(){
             if (htmlCache[LANG][id]) {
               cb(htmlCache[LANG][id]);
@@ -1502,6 +1512,9 @@
   function b2g(str){
     var rv, i$, ref$, len$, char, idx;
     str == null && (str = '');
+    if (LANG === 'p') {
+      return str.toLowerCase();
+    }
     if (!((LANG === 'a' || LANG === 'c') && !/^@/.test(str))) {
       return str;
     }
