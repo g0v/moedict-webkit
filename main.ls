@@ -6,7 +6,7 @@ const STANDALONE = window.STANDALONE || false
 {any, map} = require('prelude-ls')
 
 LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \pangcah }[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im }[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.renderComponent React.View.Links!, $(\#links).0
@@ -53,11 +53,11 @@ width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { t: '', a: '', h: '', c: '', p: '' }
 XREF = {
-  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
-  a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
-  h: {a: '"發芽":"萌,萌芽"'}
+  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"', p: "ci'im" }
+  a: {t: '"萌":"發穎"' h: '"萌":"發芽"', p: "ci'im" }
+  h: {a: '"發芽":"萌,萌芽"', p: "ci'im"}
   tv: {t: ''}
-  p: {p: "ci'im"}
+  p: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"' h: '"萌":"發芽"'}
 }
 
 if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
@@ -451,7 +451,7 @@ window.do-load = ->
     for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '')
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \pangcah }[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im }[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text

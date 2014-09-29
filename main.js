@@ -14,7 +14,7 @@
     t: '發穎',
     h: '發芽',
     c: '萌',
-    p: 'pangcah'
+    p: 'ci\'im'
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -113,20 +113,25 @@
   };
   XREF = {
     t: {
-      a: '"發穎":"萌,抽芽,發芽,萌芽"'
+      a: '"發穎":"萌,抽芽,發芽,萌芽"',
+      p: "ci'im"
     },
     a: {
       t: '"萌":"發穎"',
-      h: '"萌":"發芽"'
+      h: '"萌":"發芽"',
+      p: "ci'im"
     },
     h: {
-      a: '"發芽":"萌,萌芽"'
+      a: '"發芽":"萌,萌芽"',
+      p: "ci'im"
     },
     tv: {
       t: ''
     },
     p: {
-      p: "ci'im"
+      a: '"發穎":"萌,抽芽,發芽,萌芽"',
+      t: '"萌":"發穎"',
+      h: '"萌":"發芽"'
     }
   };
   if (isCordova && STANDALONE !== 'c' && !window.ALL_LANGUAGES) {
@@ -805,7 +810,7 @@
         t: '發穎',
         h: '發芽',
         c: '萌',
-        p: 'pangcah'
+        p: 'ci\'im'
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
