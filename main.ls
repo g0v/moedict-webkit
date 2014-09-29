@@ -57,7 +57,7 @@ XREF = {
   a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
   h: {a: '"發芽":"萌,萌芽"'}
   tv: {t: ''}
-  p: {t: ''}
+  p: {p: "ci'im"}
 }
 
 if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
@@ -451,7 +451,7 @@ window.do-load = ->
     for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '')
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \pangcah }[LANG]
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text

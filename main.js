@@ -126,7 +126,7 @@
       t: ''
     },
     p: {
-      t: ''
+      p: "ci'im"
     }
   };
   if (isCordova && STANDALONE !== 'c' && !window.ALL_LANGUAGES) {
@@ -804,7 +804,8 @@
         a: '萌',
         t: '發穎',
         h: '發芽',
-        c: '萌'
+        c: '萌',
+        p: 'pangcah'
       }[LANG]);
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
