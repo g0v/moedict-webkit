@@ -18,9 +18,12 @@ deps ::
 	npm install webworker-threads
 
 amis ::
+	cd moedict-data-amis && python moedict.py
+	mv moedict-data-amis/dict-amis.json .
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
+	cp moedict-data-amis/index.json p/
 
 
 checkout ::
@@ -28,6 +31,7 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
+	-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
 	-git clone https://github.com/g0v/moedict-epub.git
 
 moedict-data :: checkout
