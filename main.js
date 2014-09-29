@@ -778,6 +778,10 @@
           case 'h':
             return 'c';
           case 'c':
+            break;
+          case 'c':
+            return 'p';
+          case 'p':
             return 'a';
           }
         }());
@@ -789,6 +793,8 @@
           case 't':
             return 'h';
           case 'h':
+            return 'p';
+          case 'p':
             return 'a';
           }
         }());
@@ -824,6 +830,7 @@
       $('body').removeClass("lang-a");
       $('body').removeClass("lang-h");
       $('body').removeClass("lang-c");
+      $('body').removeClass("lang-p");
       $('body').addClass("lang-" + LANG);
       $('#query').val(id);
       return window.doLookup(id);

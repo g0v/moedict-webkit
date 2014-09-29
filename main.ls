@@ -440,9 +440,9 @@ window.do-load = ->
     prevId := null
     prevVal := null
     if HASH-OF.c
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => \a
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => | \c => \p | \p => \a
     else
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \a
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \p | \p => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
@@ -459,6 +459,7 @@ window.do-load = ->
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-h")
     $('body').removeClass("lang-c")
+    $('body').removeClass("lang-p")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id
