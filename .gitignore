@@ -3,14 +3,17 @@
 a
 c
 h
+p
 t
 a.txt
 c.txt
 h.txt
+p.txt
 t.txt
 pack/
 pcck/
 phck/
+ppck/
 ptck/
 ios/MoeDict.xcodeproj/project.xcworkspace/xcuserdata
 fire_app_log.txt
@@ -34,6 +37,7 @@ translation-data/moe-translation.json
 moedict-data-csld/
 moedict-data-hakka/
 moedict-data-twblg/
+moedict-data-amis/
 moedict-data/
 moedict-epub/
 server.js
