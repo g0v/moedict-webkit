@@ -550,7 +550,10 @@
         }), MenuItem({
           lang: 'c',
           href: '#~@'
-        }, '…部首表')
+        }, '…部首表'), MenuItem({
+          lang: 'p',
+          href: '#;'
+        }, '阿美語')
       ]);
       return ul.apply(null, [{
         className: 'dropdown-menu',
@@ -714,14 +717,16 @@
     a: '#',
     t: "#'",
     h: '#:',
-    c: '#~'
+    c: '#~',
+    p: '#;'
   };
   XREFLABELOF = {
     a: '華',
     t: '閩',
     h: '客',
     c: '陸',
-    ca: '臺'
+    ca: '臺',
+    p: '阿'
   };
   XRefs = React.createClass({
     render: function(){
@@ -1475,8 +1480,14 @@
     if (/\uFFF9/.exec(it)) {
       it += '</span></span></span></span>';
     }
-    res = it.replace(/[\uFF0E\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d').replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span> ").replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>").replace(/(.)\u20DF/g, "<span class='specific'>$1</span>").replace(/(.)\u20E3/g, "<span class='variant'>$1</span>").replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "").replace(/<a>([^<]+)<\/a>/g, "<a href=\"" + h + "$1\">$1</a>").replace(RegExp('(>[^<]*)' + id + '(?!</(?:h1|rb)>)', 'g'), "$1<b>" + id + "</b>").replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB$/, '').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</').replace(/(<span class="rt trs pinyin")>\s*([^<]+)/g, function(_, pre, trs){
-      return "" + pre + " title=\"" + trs2bpmf('t', trs) + "\">" + trs;
+    res = it.replace(/[\uFF0E\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d').replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span> ").replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>").replace(/(.)\u20DF/g, "<span class='specific'>$1</span>").replace(/(.)\u20E3/g, "<span class='variant'>$1</span>").replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "").replace(/<a>([^<]+)<\/a>/g, "<a href=\"" + h + "$1\">$1</a>").replace(RegExp('(>[^<]*)' + id + '(?!</(?:h1|rb)>)', 'g'), "$1<b>" + id + "</b>");
+    if (typeof $ === 'function' && $('body').hasClass('lang-p')) {
+      res = res.replace(/\uFFF9/g, '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g, '</span><br><span class="amisenglish">').replace(/\uFFFB/g, '</span><br><span class="amismandarin">');
+    }
+    ({
+      'else': res = res.replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB$/, '').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</').replace(/(<span class="rt trs pinyin")>\s*([^<]+)/g, function(_, pre, trs){
+        return "" + pre + " title=\"" + trs2bpmf('t', trs) + "\">" + trs;
+      })
     });
     return res;
   }

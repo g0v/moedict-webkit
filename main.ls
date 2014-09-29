@@ -6,7 +6,7 @@ const STANDALONE = window.STANDALONE || false
 {any, map} = require('prelude-ls')
 
 LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \pangcah }[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.renderComponent React.View.Links!, $(\#links).0
@@ -21,10 +21,10 @@ $ ->
         $('form[id=lookback] input[id=cond]').val "^#{window.PRERENDER_ID}$"
         $('#query').val window.PRERENDER_ID
 
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
-const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \阿}
+const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸 p: \阿美}
 
-HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
+HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;' }
 
 if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   if STANDALONE
@@ -51,12 +51,13 @@ isChrome = navigator.userAgent is /\bChrome\/\b/
 isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '', c: '' }
+INDEX = { t: '', a: '', h: '', c: '', p: '' }
 XREF = {
   t: {a: '"發穎":"萌,抽芽,發芽,萌芽"'}
   a: {t: '"萌":"發穎"' h: '"萌":"發芽"' }
   h: {a: '"發芽":"萌,萌芽"'}
   tv: {t: ''}
+  p: {t: ''}
 }
 
 if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
@@ -386,6 +387,7 @@ window.do-load = ->
     if "#val" is /^['!]/ => lang = \t; val.=substr 1
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
+    if "#val" is /^;/ => lang = \p; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       return setTimeout (-> window.press-lang lang, val), 1ms
@@ -411,7 +413,7 @@ window.do-load = ->
 
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
-    title -= /^[':!~]/
+    title -= /^[':!~;]/
     return if title is /^</
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
@@ -617,7 +619,7 @@ window.do-load = ->
         $('.ui-tooltip-content h1').ruby!
         _pua!
       content: (cb) ->
-        id = $(@).attr \href .replace /^#['!:~]?/, ''
+        id = $(@).attr \href .replace /^#['!:~;]?/, ''
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]

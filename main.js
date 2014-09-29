@@ -13,7 +13,8 @@
     a: '萌',
     t: '發穎',
     h: '發芽',
-    c: '萌'
+    c: '萌',
+    p: 'pangcah'
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
@@ -39,19 +40,22 @@
     t: '閩',
     h: '客',
     c: '陸',
-    ca: '臺'
+    ca: '臺',
+    p: '阿'
   };
   TITLEOF = {
     a: '',
     t: '臺語',
     h: '客語',
-    c: '兩岸'
+    c: '兩岸',
+    p: '阿美'
   };
   HASHOF = {
     a: '#',
     t: "#'",
     h: '#:',
-    c: '#~'
+    c: '#~',
+    p: '#;'
   };
   if ((isCordova || DEBUGGING) && !window.ALL_LANGUAGES) {
     if (STANDALONE) {
@@ -104,7 +108,8 @@
     t: '',
     a: '',
     h: '',
-    c: ''
+    c: '',
+    p: ''
   };
   XREF = {
     t: {
@@ -118,6 +123,9 @@
       a: '"發芽":"萌,萌芽"'
     },
     tv: {
+      t: ''
+    },
+    p: {
       t: ''
     }
   };
@@ -662,6 +670,10 @@
         lang = 'c';
         val = val.substr(1);
       }
+      if (/^;/.exec(val + "")) {
+        lang = 'p';
+        val = val.substr(1);
+      }
       $('.lang-active').text($(".lang-option." + lang + ":first").text());
       if (lang !== LANG) {
         return setTimeout(function(){
@@ -702,7 +714,7 @@
     window.fillQuery = fillQuery = function(it){
       var title, input;
       title = replace$.call(decodeURIComponent(it), /[（(].*/, '');
-      title = replace$.call(title, /^[':!~]/, '');
+      title = replace$.call(title, /^[':!~;]/, '');
       if (/^</.exec(title)) {
         return;
       }
@@ -1061,7 +1073,7 @@
         },
         content: function(cb){
           var id;
-          id = $(this).attr('href').replace(/^#['!:~]?/, '');
+          id = $(this).attr('href').replace(/^#['!:~;]?/, '');
           callLater(function(){
             if (htmlCache[LANG][id]) {
               cb(htmlCache[LANG][id]);

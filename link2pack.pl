@@ -3,13 +3,14 @@ use utf8;
 use 5.008;
 use Encode;
 my $lang = shift;
-unless ($lang =~ /^[tahc]/ and not -t STDIN) {
+unless ($lang =~ /^[tahcp]/ and not -t STDIN) {
     die << '.';
 Please invoke this as one of:
     perl link2pack.pl a < a.txt
     perl link2pack.pl t < t.txt
     perl link2pack.pl h < h.txt
     perl link2pack.pl c < c.txt
+    perl link2pack.pl p < p.txt
 .
 }
 binmode STDIN, ':raw';
@@ -18,6 +19,7 @@ my %seen;
 mkdir $lang;
 mkdir "p${lang}ck";
 while (<STDIN>) {
+    print $_
     print STDERR "$.\n" unless $. % 10000;
     chomp;
     s/^(\d+) (\S+) // or die $_;

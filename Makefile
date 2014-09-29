@@ -17,6 +17,12 @@ upload ::
 deps ::
 	npm install webworker-threads
 
+amis ::
+	lsc json2prefix.ls p
+	lsc autolink.ls p > p.txt
+	perl link2pack.pl p < p.txt
+
+
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git

@@ -207,6 +207,7 @@ DropDown = React.createClass do
       MenuItem { lang: \c, href: \#~ }, \兩岸詞典
       Taxonomy { lang: \c }
       MenuItem { lang: \c, href: \#~@ }, \…部首表
+      MenuItem { lang: \p, href: '#;' }, \阿美語
     ]
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
@@ -260,8 +261,8 @@ Translations = React.createClass do
     u.rate = 1.0
     syn.speak u
 
-const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
+const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;'}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \阿}
 XRefs = React.createClass do
   render: ->
     { LANG, xrefs } = @props
@@ -630,7 +631,10 @@ function h (it)
     .replace //<a[^<]+>#id<\/a>//g "#id"
     .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
     .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
-    .replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
+  if $?('body').hasClass('lang-p') then
+    res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+  else:
+    res.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
     .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
     .replace(/\uFFFB$/, '')
     .replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">')
