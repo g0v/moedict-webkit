@@ -986,9 +986,9 @@ amisStemmer = (word) ->
     [\ka \an ]
     [\pi \an ]
     [\sa \en ] ]
-  inIndex = (w) -> 
+  inIndex = (w) ->
     myindex = INDEX[\p]
-    return (myindex.indexOf '"'+w+'"' isnt -1)
+    myindex.indexOf("\"#w\"") >= 0
   if inIndex word
     console.log myindex.indexOf '"'+word+'"'
     return word

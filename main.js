@@ -1737,7 +1737,7 @@
     inIndex = function(w){
       var myindex;
       myindex = INDEX['p'];
-      return myindex.indexOf('"' + w + '"' !== -1);
+      return myindex.indexOf("\"" + w + "\"") >= 0;
     };
     if (inIndex(word)) {
       console.log(myindex.indexOf('"' + word + '"'));
