@@ -627,7 +627,7 @@ window.do-load = ->
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~;]?/, ''
         if LANG is \p
-          id .= toLowerCase!
+          id = amisStemmer id
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -968,3 +968,59 @@ function getScript (src, cb)
     cache: yes
     crossDomain: yes
     complete: cb
+
+amisStemmer = (word) ->
+  var pre, suf, psw, index
+  prefix = [ \papipaka \nipipaka \pasasi \papipa \nipipa
+    \mipaka \saso \sasi \sapi \sapa \saka \piki \pasa \papi \pala
+    \pako \paki \paka \nipi \nika \nani \nama \misa \miki \mala
+    \kasa \hali \nai \sa \pi \pa \ni \na \mi \ma \ka \ci]
+  suffix = [ \ananay \to \ho \aw \en \ay \an ]
+  pre_suffix = [
+    [\nipaka \an ]
+    [\sapaka \aw ]
+    [\sapi \an ]
+    [\saka \an ]
+    [\sapi \aw ]
+    [\sapa \aw ]
+    [\ka \an ]
+    [\pi \an ]
+    [\sa \en ] ]
+  inIndex = (w) -> 
+    myindex = INDEX[\p]
+    return (myindex.indexOf '"'+w+'"' isnt -1)
+  if inIndex word
+    console.log myindex.indexOf '"'+word+'"'
+    return word
+  for [pre, suf] in pre_suffix
+    if word.startsWith pre and word.endsWith suf
+      psw = word.slice(pre.length, -suf.length)
+      if inIndex psw
+        return word
+  psw = w
+  for pre in prefix
+    if w.startsWith pre
+      psw = w.slice pre.length
+      if inIndex psw
+        return word
+        break
+  w = psw
+  for suf in suffix
+    if w.endsWith suf
+      psw = w.slice(0, -suf.length)
+      if inIndex psw
+        return word
+  dedupliction word
+
+
+dedupliction = (word) ->
+  if word.length >= 8
+    if word.slice(0, 4) == word.slice(4, 8)
+      return word.slice 4
+    if word.slice(0, 3) == word.slice(3, 6)
+      return word.slice 3
+  if word.length >= 10 and word.slice(2, 6) == word.slice(6,10)
+      return word.slice(0, 6)
+  if word.length >= 6 and word.slice(0, 2) == word.slice(2, 4)
+      return word.slice 2
+  word
