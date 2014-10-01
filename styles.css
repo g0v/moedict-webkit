@@ -11244,6 +11244,23 @@ a.stroke-char {
   line-height: 1;
 }
 
+body.lang-p .example {
+  font-size: 100%;
+  display: inline-block;
+  clear: both;
+  width: auto;
+  border: 1px solid #dddddd;
+  padding: 3px;
+  background: #eee;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  vertical-align: top;
+}
+
+body.lang-p .ui-tooltip .example {
+  display: none;
+}
+
 #timeline iframe {
   height: 100% !important;
   border-radius: 8px;
