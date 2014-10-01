@@ -1760,7 +1760,7 @@
         if (inIndex(psw)) {
           return psw;
         }
-        w = psw;
+        break;
       }
     }
     w = psw;

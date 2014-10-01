@@ -1004,7 +1004,8 @@ amisStemmer = (w) ->
       psw = w.slice pre.length
       if inIndex psw
         return psw
-      w = psw
+      break
+      #w = psw
   w = psw
   for suf in suffix
     if w.endsWith suf
