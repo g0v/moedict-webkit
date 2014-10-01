@@ -147,6 +147,10 @@ Nav = React.createClass do
       li { id: \btn-pref },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-cogs }
+      if isMoedictDesktop then
+        li { id: \btn-moedict-desktop-addons },
+          a { href: \https://racklin.github.io/moedict-desktop/addon.html, style: { paddingLeft: \5px, paddingRight: \5px }, alt: \下載擴充套件 },
+            i { className: \icon-download-alt }
       li {},
         form { id: \lookback, className: \back, target: \_blank, acceptCharset: \big5, action: \http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh, style: { display: \none, margin: 0, padding: 0 } },
           input { type: \hidden, name: \idx, value: \dict.idx }

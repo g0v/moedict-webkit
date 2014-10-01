@@ -339,7 +339,18 @@
         }
       }, i({
         className: 'icon-cogs'
-      }))), li({}, form({
+      }))), isMoedictDesktop ? li({
+        id: 'btn-moedict-desktop-addons'
+      }, a({
+        href: 'https://racklin.github.io/moedict-desktop/addon.html',
+        style: {
+          paddingLeft: '5px',
+          paddingRight: '5px'
+        },
+        alt: '下載擴充套件'
+      }, i({
+        className: 'icon-download-alt'
+      }))) : void 8, li({}, form({
         id: 'lookback',
         className: 'back',
         target: '_blank',
