@@ -172,8 +172,8 @@ Nav = React.createClass do
             i { className: \icon-info }
     ul { className: 'nav pull-right hidden-xs' },
       li { className: \web-inline-only, style: { display: \inline-block } },
-        a { href: \https://twitter.com/moedict, target: \_blank, title: '萌典 Twitter', style: { color: \#ccc } },
-          i { className: \icon-twitter-sign }
+        a { href: \https://racklin.github.io/moedict-desktop/download.html, target: \_blank, title: '桌面版下載（可離線使用）', style: { color: \#ccc } },
+          i { className: \icon-download-alt }
       li { className: \web-inline-only, style: { display: \inline-block } },
         a { href: \https://play.google.com/store/apps/details?id=org.audreyt.dict.moe, target: \_blank, title: 'Google Play 下載', style: { color: \#ccc } },
           i { className: \icon-android }
