@@ -47,6 +47,8 @@ offline :: moedict-data deps translation
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
+	cd moedict-data-amis && python moedict.py
+	ln -fs moedict-data-amis/dict-amis.json                dict-amis.json
 	lsc json2prefix.ls a
 	lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
@@ -59,6 +61,10 @@ offline :: moedict-data deps translation
 	-lsc json2prefix.ls c
 	-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
+	lsc json2prefix.ls p
+	lsc autolink.ls p > p.txt
+	perl link2pack.pl p < p.txt
+	ln -fs moedict-data-amis/index.json                    p/index.json
 	perl special2pack.pl
 
 csld ::
