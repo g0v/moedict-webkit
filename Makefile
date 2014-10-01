@@ -20,11 +20,11 @@ deps ::
 amis ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
 	cd moedict-data-amis && python moedict.py
-	mv moedict-data-amis/dict-amis.json .
+	ln -sf moedict-data-amis/dict-amis.json   dict-amis.json
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
-	cp moedict-data-amis/index.json p/
+	cp moedict-data-amis/index.json           p/index.json
 
 
 checkout ::
@@ -64,7 +64,7 @@ offline :: moedict-data deps translation
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
-	ln -fs moedict-data-amis/index.json                    p/index.json
+	cp moedict-data-amis/index.json                        p/index.json
 	perl special2pack.pl
 
 csld ::
