@@ -628,7 +628,7 @@ window.do-load = ->
         id = $(@).attr \href .replace /^#['!:~;]?/, ''
         if LANG is \p
           id = amisStemmer id
-          # run_test!		# unmark this line for amisStemmer test suit
+          # run_test!   # unmark this line for amisStemmer test suit
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -975,7 +975,7 @@ amisStemmer = (w) ->
   prefix = [ \papipaka \nipipaka \pasasi \papipa \nipipa
     \mipaka \saso \sasi \sapi \sapa \saka \piki \pasa \papi \pala
     \pako \paki \paka \nipi \nika \nani \nama \misa \miki \mala
-    \kasa \hali \nai \sa \pi \pa \ni \na \mi \ma \ka \ci]
+    \kasa \hali \nai \sa \na \ni \ma \mi \ka \ci \pa \pi \pa ]
   suffix = [ \ananay \to \ho \aw \en \ay \an ]
   pre_suffix = [
     [\nipaka \an ]
@@ -991,7 +991,7 @@ amisStemmer = (w) ->
     myindex = INDEX[\p]
     myindex.indexOf("\"#word\"") >= 0
   w .= toLowerCase!
-  if inIndex w
+  if inIndex w or w.length <= 4
     return w
   for [pre, suf] in pre_suffix
     if w.startsWith pre and w.endsWith suf
@@ -1004,7 +1004,7 @@ amisStemmer = (w) ->
       psw = w.slice pre.length
       if inIndex psw
         return psw
-      break
+      w = psw
   w = psw
   for suf in suffix
     if w.endsWith suf
