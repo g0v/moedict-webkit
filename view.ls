@@ -632,7 +632,10 @@ function h (it)
     .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
     .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
   if $?('body').hasClass('lang-p') then
-    res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+    if res.indexOf('\uFFF9\uFFFA') >= 0
+      res.=replace(/\uFFF9/g '').replace(/\uFFFA/g '<span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+    else
+      res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
   else:
     res.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
     .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
