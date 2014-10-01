@@ -974,7 +974,7 @@ amisStemmer = (w) ->
   var pre, suf, psw, index
   prefix = [ \papipaka \nipipaka \pasasi \papipa \nipipa
     \mipaka \saso \sasi \sapi \sapa \saka \piki \pasa \papi \pala
-    \pako \paki \paka \nipi \nika \nani \nama \misa \miki \mala
+    \pako \paki \paka \nipi \nika \nani \nama \misa \masa \miki \mala
     \kasa \hali \nai \sa \na \ni \ma \mi \ka \ci \pa \pi \pa ]
   suffix = [ \ananay \to \ho \aw \en \ay \an ]
   pre_suffix = [

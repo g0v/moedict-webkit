@@ -1731,7 +1731,7 @@
   }
   amisStemmer = function(w){
     var pre, suf, psw, index, prefix, suffix, pre_suffix, inIndex, i$, len$, ref$;
-    prefix = ['papipaka', 'nipipaka', 'pasasi', 'papipa', 'nipipa', 'mipaka', 'saso', 'sasi', 'sapi', 'sapa', 'saka', 'piki', 'pasa', 'papi', 'pala', 'pako', 'paki', 'paka', 'nipi', 'nika', 'nani', 'nama', 'misa', 'miki', 'mala', 'kasa', 'hali', 'nai', 'sa', 'na', 'ni', 'ma', 'mi', 'ka', 'ci', 'pa', 'pi', 'pa'];
+    prefix = ['papipaka', 'nipipaka', 'pasasi', 'papipa', 'nipipa', 'mipaka', 'saso', 'sasi', 'sapi', 'sapa', 'saka', 'piki', 'pasa', 'papi', 'pala', 'pako', 'paki', 'paka', 'nipi', 'nika', 'nani', 'nama', 'misa', 'masa', 'miki', 'mala', 'kasa', 'hali', 'nai', 'sa', 'na', 'ni', 'ma', 'mi', 'ka', 'ci', 'pa', 'pi', 'pa'];
     suffix = ['ananay', 'to', 'ho', 'aw', 'en', 'ay', 'an'];
     pre_suffix = [['nipaka', 'an'], ['sapaka', 'aw'], ['sapi', 'an'], ['saka', 'an'], ['sapi', 'aw'], ['sapa', 'aw'], ['ka', 'an'], ['pi', 'an'], ['sa', 'en']];
     inIndex = function(word){
