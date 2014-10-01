@@ -628,6 +628,7 @@ window.do-load = ->
         id = $(@).attr \href .replace /^#['!:~;]?/, ''
         if LANG is \p
           id = amisStemmer id
+          # run_test!		# unmark this line for amisStemmer test suit
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -969,7 +970,7 @@ function getScript (src, cb)
     crossDomain: yes
     complete: cb
 
-amisStemmer = (word) ->
+amisStemmer = (w) ->
   var pre, suf, psw, index
   prefix = [ \papipaka \nipipaka \pasasi \papipa \nipipa
     \mipaka \saso \sasi \sapi \sapa \saka \piki \pasa \papi \pala
@@ -986,41 +987,42 @@ amisStemmer = (word) ->
     [\ka \an ]
     [\pi \an ]
     [\sa \en ] ]
-  inIndex = (w) ->
+  inIndex = (word) ->
     myindex = INDEX[\p]
-    myindex.indexOf("\"#w\"") >= 0
-  if inIndex word
-    console.log myindex.indexOf '"'+word+'"'
-    return word
+    myindex.indexOf("\"#word\"") >= 0
+  w .= toLowerCase!
+  if inIndex w
+    return w
   for [pre, suf] in pre_suffix
-    if word.startsWith pre and word.endsWith suf
-      psw = word.slice(pre.length, -suf.length)
+    if w.startsWith pre and w.endsWith suf
+      psw = w.slice(pre.length, -suf.length)
       if inIndex psw
-        return word
+        return psw
   psw = w
   for pre in prefix
     if w.startsWith pre
       psw = w.slice pre.length
       if inIndex psw
-        return word
-        break
+        return psw
+      break
   w = psw
   for suf in suffix
     if w.endsWith suf
       psw = w.slice(0, -suf.length)
       if inIndex psw
-        return word
-  dedupliction word
+        return psw
+  dedupliction w
 
 
-dedupliction = (word) ->
-  if word.length >= 8
-    if word.slice(0, 4) == word.slice(4, 8)
-      return word.slice 4
-    if word.slice(0, 3) == word.slice(3, 6)
-      return word.slice 3
-  if word.length >= 10 and word.slice(2, 6) == word.slice(6,10)
-      return word.slice(0, 6)
-  if word.length >= 6 and word.slice(0, 2) == word.slice(2, 4)
-      return word.slice 2
-  word
+dedupliction = (w) ->
+  if w.length >= 8
+    if w.slice(0, 4) == w.slice(4, 8)
+      return w.slice 4
+    if w.slice(0, 3) == w.slice(3, 6)
+      return w.slice 3
+  if w.length >= 10 and w.slice(2, 6) == w.slice(6,10)
+      return w.slice(0, 6)
+  if w.length >= 6 and w.slice(0, 2) == w.slice(2, 4)
+      return w.slice 2
+  w
+
