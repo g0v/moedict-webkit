@@ -689,7 +689,7 @@ window.do-load = ->
     fill-json part, id, cb
 
   if isCordova
-    for lang of HASH-OF => let lang
+    for let lang of HASH-OF
       GET "#lang/xref.json", (-> XREF[lang] = it; init! if lang is LANG), \text
       p1 <- GET "#lang/index.1.json", _, \text
       p2 <- GET "#lang/index.2.json", _, \text
@@ -704,7 +704,7 @@ window.do-load = ->
   unless STANDALONE
     GET "t/variants.json", (-> XREF.tv = {t: it}), \text
 
-  for lang of HASH-OF | lang isnt \h => let lang
+  for let lang of HASH-OF | lang isnt \h
     return if STANDALONE and lang isnt STANDALONE
     GET "#lang/=.json", (->
       $ul = render-taxonomy lang, $.parseJSON it
@@ -919,10 +919,9 @@ $ ->
       color = "black"
       pathAttrs = { stroke: color, "stroke-width": 0, "stroke-linecap": "round", "fill": color }
       delay = 350ms
-      for outline in doc.getElementsByTagName 'Outline' => let
-        setTimeout (->
-          drawOutline(paper,outline,pathAttrs)
-        ), timeout += delay
+      for let outline in doc.getElementsByTagName 'Outline'
+        <- setTimeout _, timeout += delay
+        drawOutline(paper,outline,pathAttrs)
       cb (timeout + delay)
 
   window.strokeWords = (words) ->
