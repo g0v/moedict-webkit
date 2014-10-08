@@ -787,13 +787,14 @@
           id || (id = words[0]);
         }
       }
-      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '') : void 8);
+      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '') : void 8);
       id || (id = {
         a: '萌',
         t: '發穎',
         h: '發芽',
         c: '萌'
       }[LANG]);
+      id = replace$.call(id, /[\\"~`]/g, '');
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
           return XREF[LANG] = it;

@@ -448,8 +448,9 @@ window.do-load = ->
     setPref \lang LANG
     for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
       id ||= words.0
-    id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '')
+    id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '')
     id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
+    id -= /[\\"~`]/g
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
