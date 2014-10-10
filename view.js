@@ -453,14 +453,14 @@
           display: 'inline-block'
         }
       }, a({
-        href: 'https://twitter.com/moedict',
+        href: 'https://racklin.github.io/moedict-desktop/download.html',
         target: '_blank',
-        title: '萌典 Twitter',
+        title: '桌面版下載（可離線使用）',
         style: {
           color: '#ccc'
         }
       }, i({
-        className: 'icon-twitter-sign'
+        className: 'icon-download-alt'
       }))), li({
         className: 'web-inline-only',
         style: {

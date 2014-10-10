@@ -375,7 +375,7 @@
     return setTimeout(it, isMobile ? 10 : 1);
   };
   window.doLoad = function(){
-    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, bindHtmlActions, fillJson, fillBucket, lang, i$, results$ = [];
+    var fontSize, saveFontSize, cacheLoading, pressAbout, pressErase, pressBack, init, grokVal, grokHash, fillQuery, prevId, prevVal, bucketOf, lookup, doLookup, htmlCache, res$, key, fetch, loadJson, setPinyinBindings, bindHtmlActions, fillJson, fillBucket, i$, results$ = [];
     if (!isDeviceReady) {
       return;
     }
@@ -818,7 +818,7 @@
           id || (id = words[0]);
         }
       }
-      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '').replace(/[\\"~`]/g, '') : void 8);
+      id || (id = (ref$ = LRU[LANG]) != null ? ref$.replace(/[\\\n][\d\D]*/, '') : void 8);
       id || (id = {
         a: '萌',
         t: '發穎',
@@ -826,6 +826,7 @@
         c: '萌',
         p: 'ci\'im'
       }[LANG]);
+      id = replace$.call(id, /[\\"~`]/g, '');
       if (!isCordova) {
         GET(LANG + "/xref.json", function(it){
           return XREF[LANG] = it;
@@ -1235,8 +1236,8 @@
       });
     };
     if (isCordova) {
-      for (lang in HASHOF) {
-        (fn$.call(this, lang));
+      for (i$ in HASHOF) {
+        (fn$.call(this, i$));
       }
     } else {
       GET(LANG + "/xref.json", function(it){
@@ -1260,9 +1261,9 @@
         };
       }, 'text');
     }
-    for (lang in HASHOF) {
-      if (lang !== 'h') {
-        results$.push((fn2$.call(this, lang)));
+    for (i$ in HASHOF) {
+      if (i$ !== 'h') {
+        results$.push((fn2$.call(this, i$)));
       }
     }
     return results$;
@@ -1647,7 +1648,7 @@
       return fetchStrokeXml(utf8code, function(){
         return cb(timeout);
       }, function(doc){
-        var color, pathAttrs, delay, i$, ref$, len$, outline;
+        var color, pathAttrs, delay, i$, len$;
         window.scrollTo(0, 0);
         color = "black";
         pathAttrs = {
@@ -1657,9 +1658,8 @@
           "fill": color
         };
         delay = 350;
-        for (i$ = 0, len$ = (ref$ = doc.getElementsByTagName('Outline')).length; i$ < len$; ++i$) {
-          outline = ref$[i$];
-          (fn$.call(this, outline));
+        for (i$ = 0, len$ = doc.getElementsByTagName('Outline').length; i$ < len$; ++i$) {
+          (fn$.call(this, doc.getElementsByTagName('Outline')[i$]));
         }
         return cb(timeout + delay);
         function fn$(outline){
