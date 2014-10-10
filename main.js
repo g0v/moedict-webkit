@@ -5,6 +5,7 @@
   if (window.moedictDesktop) {
     window.isMoedictDesktop = isMoedictDesktop = true;
   }
+  window.STANDALONE = 'p';
   DEBUGGING = !isCordova && !!((ref$ = window.cordova) != null && ref$.require);
   STANDALONE = window.STANDALONE || false;
   ref$ = require('prelude-ls'), any = ref$.any, map = ref$.map;
