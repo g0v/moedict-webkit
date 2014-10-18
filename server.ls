@@ -9,7 +9,7 @@ index-body -= /<noscript>[\s\S]*<\/noscript>/g
 index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
 index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
 
-React = require \react
+React = require \./js/react.js
 {Result, decodeLangPart} = require \./view.js
 
 XREF = {}
@@ -294,15 +294,15 @@ require(\zappajs) {+disable_io} ->
           fill-props!
         text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
         html = @index-body
-        html.=replace('<!-- RESULT -->', @React.renderComponentToString @Result props)
-        #html.=replace('<!-- DROPDOWN -->', @React.renderComponentToString @DropDown!)
+        html.=replace('<!-- RESULT -->', @React.renderToString @Result props)
+        #html.=replace('<!-- DROPDOWN -->', @React.renderToString @DropDown!)
         text html
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
         fill-props!
         props.H = "##h"
         text """<!--[if gt IE 8]><!--><script>$(function(){
           window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
-          React.View.result = React.renderComponent(React.View.Result(
+          React.View.result = React.render(React.View.Result(
             window.PRERENDER_JSON
           ), $('\#result')[0], window.bindHtmlActions);
         })</script><!--<![endif]-->"""

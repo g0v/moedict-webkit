@@ -9,9 +9,9 @@ LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
-  React.renderComponent React.View.Links!, $(\#links).0
-  React.renderComponent React.View.UserPref!, $(\#user-pref).0
-  React.renderComponent React.View.Nav({STANDALONE}), $(\#nav).0, ->
+  React.render React.View.Links!, $(\#links).0
+  React.render React.View.UserPref!, $(\#user-pref).0
+  React.render React.View.Nav({STANDALONE}), $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
       $('form[id=lookback]').remove!
@@ -662,7 +662,7 @@ window.do-load = ->
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
 
-      React.renderComponent React.View.UserPref!, $(\#user-pref).0
+      React.render React.View.UserPref!, $(\#user-pref).0
 
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
@@ -674,9 +674,9 @@ window.do-load = ->
     else
       xrefs = [ { lang, words } for lang, words of xref-of id | words.length ]
       reactProps = { id, xrefs, LANG, type: \term, H: HASH-OF[LANG] } <<< $.parseJSON part
-    return cb React.renderComponentToString React.View.Result(reactProps) if cb
+    return cb React.renderToString React.View.Result(reactProps) if cb
     return React.View.result?replaceProps reactProps, bind-html-actions if React.View.result
-    React.View.result = React.renderComponent React.View.Result(reactProps), $(\#result).0, bind-html-actions
+    React.View.result = React.render React.View.Result(reactProps), $(\#result).0, bind-html-actions
 
   fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"

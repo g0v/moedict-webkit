@@ -17,9 +17,9 @@
   }[LANG];
   $(function(){
     $('body').addClass("lang-" + LANG);
-    React.renderComponent(React.View.Links(), $('#links')[0]);
-    React.renderComponent(React.View.UserPref(), $('#user-pref')[0]);
-    return React.renderComponent(React.View.Nav({
+    React.render(React.View.Links(), $('#links')[0]);
+    React.render(React.View.UserPref(), $('#user-pref')[0]);
+    return React.render(React.View.Nav({
       STANDALONE: STANDALONE
     }), $('#nav')[0], function(){
       $('.lang-active').text($(".lang-option." + LANG + ":first").text());
@@ -1133,7 +1133,7 @@
           });
           return $(this).attr('diao', d);
         });
-        return React.renderComponent(React.View.UserPref(), $('#user-pref')[0]);
+        return React.render(React.View.UserPref(), $('#user-pref')[0]);
       }
       return _pua;
     };
@@ -1177,12 +1177,12 @@
         }, $.parseJSON(part));
       }
       if (cb) {
-        return cb(React.renderComponentToString(React.View.Result(reactProps)));
+        return cb(React.renderToString(React.View.Result(reactProps)));
       }
       if (React.View.result) {
         return (ref$ = React.View.result) != null ? ref$.replaceProps(reactProps, bindHtmlActions) : void 8;
       }
-      return React.View.result = React.renderComponent(React.View.Result(reactProps), $('#result')[0], bindHtmlActions);
+      return React.View.result = React.render(React.View.Result(reactProps), $('#result')[0], bindHtmlActions);
     };
     fillBucket = function(id, bucket, cb){
       return GET("p" + LANG + "ck/" + bucket + ".txt", function(raw){

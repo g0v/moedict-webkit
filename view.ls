@@ -1,4 +1,4 @@
-React = window?React || require \react
+React = window?React || require \./js/react.js
 window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
 
 {p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
@@ -6,6 +6,7 @@ tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
 
+createClass = React.createFactory << React.createClass
 withProperties = (tag, def-props={}) ->
   (props = {}, ...args) ->
     tag ({} <<< def-props <<< props), ...args
@@ -21,7 +22,7 @@ const share-buttons = [
   { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
 ]
 
-PrefList = React.createClass do
+PrefList = createClass do
   getInitialState: ->
     for own key, selected of @props | key isnt \children
       return { key, selected }
@@ -77,7 +78,7 @@ PrefList = React.createClass do
           else
             li { className: \divider, role: \presentation }
 
-UserPref = React.createClass do
+UserPref = createClass do
   getDefaultProps: -> {
     simptrad: localStorage?getItem \simptrad
     phonetics: localStorage?getItem \phonetics
@@ -118,7 +119,7 @@ UserPref = React.createClass do
         [ \none         \關閉 ] */
     button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
-Links = React.createClass do
+Links = createClass do
   render: -> div {},
     # a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
     a { className: 'visible-xs pull-left ebas btn btn-default', href: \#, title: \關於本站, style: { float: \left, marginTop: \-10px, marginLeft: \5px, marginBottom: \5px }, onClick: -> pressAbout! },
@@ -130,7 +131,7 @@ Links = React.createClass do
           i { className: \icon-share } nbsp
           i { className: "icon-#icon" }
 
-Nav = React.createClass do
+Nav = createClass do
   render: -> nav { className: 'navbar navbar-inverse navbar-fixed-top', role: \navigation },
     div { className: \navbar-header },
       a { className: 'navbar-brand brand ebas', href: \./ }, \萌典
@@ -181,20 +182,20 @@ Nav = React.createClass do
         a { href: \https://itunes.apple.com/tw/app/meng-dian/id599429224, target: \_blank, title: 'App Store 下載', style: { color: \#ccc } },
           i { className: \icon-apple }
 
-Taxonomy = React.createClass do
+Taxonomy = createClass do
   render: ->
     {lang} = @props
     li { className: \dropdown-submenu },
       a { className: "#lang taxonomy", }, \…分類索引
 
-MenuItem = React.createClass do
+MenuItem = createClass do
   render: ->
     {lang, href, children} = @props
     role = \menuitem if children.0 is \…
     li { role: \presentation },
       a { className: "#lang lang-option#{ if role then '' else " #lang\-idiom"}", role, href }, children
 
-DropDown = React.createClass do
+DropDown = createClass do
   render: ->
     list = []
     if @props.STANDALONE isnt \c => list ++= [
@@ -214,7 +215,7 @@ DropDown = React.createClass do
     ]
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
-Result = React.createClass do
+Result = createClass do
   render: -> switch @props?type
     | \term    => Term @props
     | \list    => List @props
@@ -223,7 +224,7 @@ Result = React.createClass do
     | \html    => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
     | _        => div {}
 
-Term = React.createClass do
+Term = createClass do
   render: ->
     { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
     CurrentId := @props.id # Used in h()
@@ -243,7 +244,7 @@ Term = React.createClass do
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
 
-Translations = React.createClass do
+Translations = createClass do
   render: ->
     {translation} = @props
     div { className: \xrefs }, span { className: \translation },
@@ -266,7 +267,7 @@ Translations = React.createClass do
 
 const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
-XRefs = React.createClass do
+XRefs = createClass do
   render: ->
     { LANG, xrefs } = @props
     div { className: \xrefs }, ...for { lang, words } in xrefs
@@ -280,7 +281,7 @@ XRefs = React.createClass do
             word -= /[`~]/g
             a { key: word, className: \xref, href: "#H#word" } word
 
-Star = React.createClass do
+Star = createClass do
   getDefaultProps: -> { STARRED: window?STARRED || {} }
   render: ->
     { CurrentId, STARRED, LANG } = @props
@@ -289,7 +290,7 @@ Star = React.createClass do
       return i { className: "star iconic-color icon-star", title: \已加入記錄簿 }
     return i { className: "star iconic-color icon-star-empty", title: \加入字詞記錄簿 }
 
-Heteronym = React.createClass do
+Heteronym = createClass do
   render: ->
     { CurrentId, key, $char, H, LANG, title, english,
     id, audio_id=id, bopomofo, trs='', py, pinyin=py||trs||'',
@@ -490,7 +491,7 @@ function convert-pinyin (yin)
   yin = PinYinMap[system][yin] || yin
   return "#yin#r#tone"
 
-DefinitionList = React.createClass do
+DefinitionList = createClass do
   render: ->
     { H, LANG, defs } = @props
     list = []
@@ -512,7 +513,7 @@ function decorate-nyms (props)
         span { dangerouslySetInnerHTML: { __html } }
   return list
 
-Definition = React.createClass do
+Definition = createClass do
   render: ->
     {LANG, type, def, defs, antonyms, synonyms} = @props
     if def is /∥/
@@ -535,7 +536,7 @@ Definition = React.createClass do
 
 const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉儿⼊入⼋八⼌冂⼍冖⼎冫⼏几⼐凵⼑刀⼒力⼓勹⼔匕⼕匚⼖匸⼗十⼘卜⼙卩⼚厂⼛厶⼜又⼝口⼞囗⼟土⼠士⼡夂⼢夊⼣夕⼤大⼥女⼦子⼧宀⼨寸⼩小⼪尢⼫尸⼬屮⼭山⼮巛⼯工⼰己⼱巾⼲干⼳幺⼴广⼵廴⼶廾⼷弋⼸弓⼹彐⼺彡⼻彳⼼心⼽戈⼾戶⼿手⽀支⽁攴⽂文⽃斗⽄斤⽅方⽆无⽇日⽈曰⽉月⽊木⽋欠⽌止⽍歹⽎殳⽏毋⽐比⽑毛⽒氏⽓气⽔水⽕火⽖爪⽗父⽘爻⽙爿⺦丬⽚片⽛牙⽜牛⽝犬⽞玄⽟玉⽠瓜⽡瓦⽢甘⽣生⽤用⽥田⽦疋⽧疒⽨癶⽩白⽪皮⽫皿⽬目⽭矛⽮矢⽯石⽰示⽱禸⽲禾⽳穴⽴立⽵竹⽶米⽷糸⺰纟⽸缶⽹网⽺羊⽻羽⽼老⽽而⽾耒⽿耳⾀聿⾁肉⾂臣⾃自⾄至⾅臼⾆舌⾇舛⾈舟⾉艮⾊色⾋艸⾌虍⾍虫⾎血⾏行⾐衣⾑襾⾒見⻅见⾓角⾔言⻈讠⾕谷⾖豆⾗豕⾘豸⾙貝⻉贝⾚赤⾛走⾜足⾝身⾞車⻋车⾟辛⾠辰⾡辵⻌辶⾢邑⾣酉⾤釆⾥里⾦金⻐钅⾧長⻓长⾨門⻔门⾩阜⾪隶⾫隹⾬雨⾭靑⾮非⾯面⾰革⾱韋⻙韦⾲韭⾳音⾴頁⻚页⾵風⻛风⾶飛⻜飞⾷食⻠饣⾸首⾹香⾺馬⻢马⾻骨⾼高⾽髟⾾鬥⾿鬯⿀鬲⿁鬼⿂魚⻥鱼⻦鸟⿃鳥⿄鹵⻧卤⿅鹿⿆麥⻨麦⿇麻⿈黃⻩黄⿉黍⿊黑⿋黹⿌黽⻪黾⿍鼎⿎鼓⿏鼠⿐鼻⿑齊⻬齐⿒齒⻮齿⿓龍⻰龙⿔龜⻳龟⿕龠'
 
-RadicalGlyph = React.createClass do
+RadicalGlyph = createClass do
   render: ->
     {char, H} = @props
     idx = CJK-RADICALS.index-of(char)
@@ -544,7 +545,7 @@ RadicalGlyph = React.createClass do
     return span { className: \glyph },
       a { title: \部首檢索, className: \xref, href: "#H@#char" style: { color: \white } }, " #char"
 
-RadicalTable = React.createClass do
+RadicalTable = createClass do
   render: ->
     {terms, id, H} = @props
     id -= /^[@=]/
@@ -568,7 +569,7 @@ RadicalTable = React.createClass do
       list ++= hr { style: { margin: 0, padding: 0, height: 0 } }
     return div-inline {}, title, div { className: \list }, ...list
 
-List = React.createClass do
+List = createClass do
   render: ->
     {terms, id, H, LRU} = @props
     return div {} unless terms
@@ -730,7 +731,7 @@ else
   React.View.decodeLangPart = decodeLangPart
   unless window.PRERENDER_LANG
     <- $
-    React.View.result = React.renderComponent Result!, $(\#result).0
+    React.View.result = React.render Result!, $(\#result).0
 
 PinYinMap =
   "WadeGiles": {"zha":"cha","cha":"ch'a","zhai":"chai","chai":"ch'ai","zhan":"chan","chan":"ch'an","zhang":"chang","chang":"ch'ang","zhao":"chao","chao":"ch'ao","zhe":"che","che":"ch'e","zhei":"chei","zhen":"chen","chen":"ch'en","zheng":"cheng","cheng":"ch'eng","ji":"chi","qi":"ch'i","jia":"chia","qia":"ch'ia","jiang":"chiang","qiang":"ch'iang","jiao":"chiao","qiao":"ch'iao","jie":"chieh","qie":"ch'ieh","jian":"chien","qian":"ch'ien","zhi":"chih","chi":"ch'ih","jin":"chin","qin":"ch'in","jing":"ching","qing":"ch'ing","jiu":"chiu","qiu":"ch'iu","jiong":"chiung","qiong":"ch'iung","zhuo":"cho","chuo":"ch'o","zhou":"chou","chou":"ch'ou","zhu":"chu","chu":"ch'u","zhua":"chua","chua":"ch'ua","zhuai":"chuai","chuai":"ch'uai","zhuan":"chuan","chuan":"ch'uan","zhuang":"chuang","chuang":"ch'uang","zhui":"chui","chui":"ch'ui","zhun":"chun","chun":"ch'un","zhong":"chung","chong":"ch'ung","ju":"chü","qu":"ch'ü","juan":"chüan","quan":"ch'üan","jue":"chüeh","que":"ch'üeh","jun":"chün","qun":"ch'ün","er":"erh","he":"ho","xi":"hsi","xia":"hsia","xiang":"hsiang","xiao":"hsiao","xie":"hsieh","xian":"hsien","xin":"hsin","xing":"hsing","xiu":"hsiu","xiong":"hsiung","xu":"hsü","xuan":"hsüan","xue":"hsüeh","xun":"hsün","hong":"hung","ran":"jan","rang":"jang","rao":"jao","re":"je","ren":"jen","reng":"jeng","ri":"jih","ruo":"jo","rou":"jou","ru":"ju","ruan":"juan","rui":"jui","run":"jun","rong":"jung","ga":"ka","ka":"k'a","gai":"kai","kai":"k'ai","gan":"kan","kan":"k'an","gang":"kang","kang":"k'ang","gao":"kao","kao":"k'ao","gei":"kei","gen":"ken","ken":"k'en","geng":"keng","keng":"k'eng","ge":"ko","ke":"k'o","gou":"kou","kou":"k'ou","gu":"ku","ku":"k'u","gua":"kua","kua":"k'ua","guai":"kuai","kuai":"k'uai","guan":"kuan","kuan":"k'uan","guang":"kuang","kuang":"k'uang","gui":"kuei","kui":"k'uei","gun":"kun","kun":"k'un","gong":"kung","kong":"k'ung","guo":"kuo","kuo":"k'uo","lie":"lieh","lian":"lien","luo":"lo","long":"lung","lv":"lü","lve":"lüeh","lvn":"lün","mie":"mieh","mian":"mien","nie":"nieh","nian":"nien","nuo":"no","nong":"nung","nv":"nü","nve":"nüeh","ba":"pa","pa":"p'a","bai":"pai","pai":"p'ai","ban":"pan","pan":"p'an","bang":"pang","pang":"p'ang","bao":"pao","pao":"p'ao","bei":"pei","pei":"p'ei","ben":"pen","pen":"p'en","beng":"peng","peng":"p'eng","bi":"pi","pi":"p'i","biao":"piao","piao":"p'iao","bie":"pieh","pie":"p'ieh","bian":"pien","pian":"p'ien","bin":"pin","pin":"p'in","bing":"ping","ping":"p'ing","bo":"po","po":"p'o","pou":"p'ou","bu":"pu","pu":"p'u","shi":"shih","shong":"shung","suo":"so","si":"ssu","song":"sung","da":"ta","ta":"t'a","dai":"tai","tai":"t'ai","dan":"tan","tan":"t'an","dang":"tang","tang":"t'ang","dao":"tao","tao":"t'ao","de":"te","te":"t'e","dei":"tei","den":"ten","deng":"teng","teng":"t'eng","di":"ti","ti":"t'i","diang":"tiang","diao":"tiao","tiao":"t'iao","die":"tieh","tie":"t'ieh","dian":"tien","tian":"t'ien","ding":"ting","ting":"t'ing","diu":"tiu","duo":"to","tuo":"t'o","dou":"tou","tou":"t'ou","za":"tsa","ca":"ts'a","zai":"tsai","cai":"ts'ai","zan":"tsan","can":"ts'an","zang":"tsang","cang":"ts'ang","zao":"tsao","cao":"ts'ao","ze":"tse","ce":"ts'e","zei":"tsei","zen":"tsen","cen":"ts'en","zeng":"tseng","ceng":"ts'eng","zuo":"tso","cuo":"ts'o","zou":"tsou","cou":"ts'ou","zu":"tsu","cu":"ts'u","zuan":"tsuan","cuan":"ts'uan","zui":"tsui","cui":"ts'ui","zun":"tsun","cun":"ts'un","zong":"tsung","cong":"ts'ung","du":"tu","tu":"t'u","duan":"tuan","tuan":"t'uan","dui":"tui","tui":"t'ui","dun":"tun","tun":"t'un","dong":"tung","tong":"t'ung","zi":"tzu","ci":"tz'u","yan":"yen","ye":"yeh","you":"yu","yong":"yung","yu":"yü","yuan":"yüan","yue":"yüeh","yun":"yün"}

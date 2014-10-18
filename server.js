@@ -9,7 +9,7 @@
   indexBody = replace$.call(indexBody, /<noscript>[\s\S]*<\/noscript>/g, '');
   indexBody = replace$.call(indexBody, /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g, '');
   indexBody = indexBody.replace(/<center\b[\s\S]*<\/center>/, '<!-- RESULT -->');
-  React = require('react');
+  React = require('./js/react.js');
   ref$ = require('./view.js'), Result = ref$.Result, decodeLangPart = ref$.decodeLangPart;
   XREF = {};
   for (i$ = 0, len$ = (ref$ = ['a', 't', 'h', 'c']).length; i$ < len$; ++i$) {
@@ -791,12 +791,12 @@
                 }
                 text("<script>window.PRERENDER_LANG = '" + LANG + "'; window.PRERENDER_ID = '" + id + "';</script>");
                 html = this.indexBody;
-                html = html.replace('<!-- RESULT -->', this.React.renderComponentToString(this.Result(props)));
+                html = html.replace('<!-- RESULT -->', this.React.renderToString(this.Result(props)));
                 text(html);
                 props = JSON.parse(this.decodeLangPart(LANG, (this.json || '').toString()));
                 fillProps();
                 props.H = "#" + h;
-                text("<!--[if gt IE 8]><!--><script>$(function(){\n  window.PRERENDER_JSON = " + JSON.stringify(props, void 8, 2) + ";\n  React.View.result = React.renderComponent(React.View.Result(\n    window.PRERENDER_JSON\n  ), $('#result')[0], window.bindHtmlActions);\n})</script><!--<![endif]-->");
+                text("<!--[if gt IE 8]><!--><script>$(function(){\n  window.PRERENDER_JSON = " + JSON.stringify(props, void 8, 2) + ";\n  React.View.result = React.render(React.View.Result(\n    window.PRERENDER_JSON\n  ), $('#result')[0], window.bindHtmlActions);\n})</script><!--<![endif]-->");
                 return;
               }
               return body({
