@@ -90,6 +90,7 @@ UserPref = createClass do
     ul {},
       PrefList { pinyin_a }, \國語辭典拼音系統,
         [ \HanYu      \漢語拼音 ]
+        [ \HanYu-TongYong \漢語／通用並列 ]
         [ \TongYong   \通用拼音 ] # , small {}, \（方言音） ]
         [ \WadeGiles  \威妥瑪拼音 ]
         [ \GuoYin     \國音二式 ]
@@ -432,6 +433,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
   p .= split ' '
+  isHanYuToo = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
   for yin, idx in p | yin
     yin = convert-pinyin yin
     span = # 閩南語典，按隔音符計算字數
@@ -451,6 +453,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
+    yin = "#{ p[idx] }\n#yin" if isHanYuToo
     p[idx] = "<rt#span>#yin</rt>"
   ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
   ruby += '<rtc style="display: none" class="romanization">'
@@ -471,7 +474,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
 function convert-pinyin (yin)
   return yin unless $?('body').hasClass('lang-a')
   system = localStorage?getItem \pinyin_a
-  return yin unless system and PinYinMap[system]
+  return yin unless system and PinYinMap[system - /^HanYu-/]
   return [ convert-pinyin y for y in yin.split(/\s+/) ].join(' ') if yin is /\s/
   tone = 5
   tone = 1 if yin is /[āōēīūǖ]/
@@ -488,8 +491,16 @@ function convert-pinyin (yin)
   if yin is /^[^eēéěè].*r/
     r = 'r'
     yin -= /r$/
-  yin = PinYinMap[system][yin] || yin
-  return "#yin#r#tone"
+  yin = PinYinMap[system - /^HanYu-/][yin] || yin
+  match yin
+  | /a/   => yin.=replace /a/ "aāáǎàa"[tone]
+  | /o/   => yin.=replace /o/ "oōóǒòo"[tone]
+  | /e/   => yin.=replace /e/ "eēéěèe"[tone]
+  | /iu/  => yin.=replace /i/ "iīíǐìi"[tone]
+  | /u/   => yin.=replace /u/ "uūúǔùu"[tone]
+  | /i/   => yin.=replace /i/ "iīíǐìi"[tone]
+
+  return "#yin#r"
 
 DefinitionList = createClass do
   render: ->
