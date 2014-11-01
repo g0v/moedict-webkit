@@ -88,16 +88,16 @@ UserPref = createClass do
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
     ul {},
-      PrefList { pinyin_a }, \國語辭典拼音系統,
+      PrefList { pinyin_a }, \羅馬拼音顯示方式,
         [ \HanYu      \漢語拼音 ]
-        [ \HanYu-TongYong \漢語／通用並列 ]
-        [ \TongYong   \通用拼音 ] # , small {}, \（方言音） ]
+        [ \HanYu-TongYong \漢語華通共同顯示 ]
+        [ \TongYong   \華通拼音 ]
         [ \WadeGiles  \威妥瑪拼音 ]
         [ \GuoYin     \國音二式 ]
-      PrefList { phonetics }, \條目注音顯示方式,
-        [ \rightangle \直角共同顯示 ]
-        [ \bopomofo   \只顯示注音符號 ] # , small {}, \（方言音） ]
-        [ \pinyin     \只顯示羅馬拼音 ]
+      PrefList { phonetics }, \條目音標顯示方式,
+        [ \rightangle \注音拼音共同顯示 ]
+        [ \bopomofo   \注音符號 ] # , small {}, \（方言音） ]
+        [ \pinyin     \羅馬拼音 ]
         [] # li {}, a {}, \置於條目名稱下方
         [ \none       \關閉 ] /*
       li { className: \btn-group },
@@ -496,8 +496,9 @@ function convert-pinyin (yin)
   | /a/   => yin.=replace /a/ "aāáǎàa"[tone]
   | /o/   => yin.=replace /o/ "oōóǒòo"[tone]
   | /e/   => yin.=replace /e/ "eēéěèe"[tone]
-  | /iu/  => yin.=replace /i/ "iīíǐìi"[tone]
+  | /ui/  => yin.=replace /i/ "iīíǐìi"[tone]
   | /u/   => yin.=replace /u/ "uūúǔùu"[tone]
+  | /ü/   => yin.=replace /ü/ "üǖǘǚǜü"[tone]
   | /i/   => yin.=replace /i/ "iīíǐìi"[tone]
 
   return "#yin#r"

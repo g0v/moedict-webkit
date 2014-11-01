@@ -229,9 +229,9 @@
         'aria-hidden': true
       }, '×'), ul({}, PrefList({
         pinyin_a: pinyin_a
-      }, '國語辭典拼音系統', ['HanYu', '漢語拼音'], ['HanYu-TongYong', '漢語／通用並列'], ['TongYong', '通用拼音'], ['WadeGiles', '威妥瑪拼音'], ['GuoYin', '國音二式']), PrefList({
+      }, '羅馬拼音顯示方式', ['HanYu', '漢語拼音'], ['HanYu-TongYong', '漢語華通共同顯示'], ['TongYong', '華通拼音'], ['WadeGiles', '威妥瑪拼音'], ['GuoYin', '國音二式']), PrefList({
         phonetics: phonetics
-      }, '條目注音顯示方式', ['rightangle', '直角共同顯示'], ['bopomofo', '只顯示注音符號'], ['pinyin', '只顯示羅馬拼音'], [], ['none', '關閉'])), button({
+      }, '條目音標顯示方式', ['rightangle', '注音拼音共同顯示'], ['bopomofo', '注音符號'], ['pinyin', '羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
         type: 'button'
       }, '關閉'));
@@ -1154,11 +1154,14 @@
     case !/e/.test(ref$[0]):
       yin = yin.replace(/e/, "eēéěèe"[tone]);
       break;
-    case !/iu/.test(ref$[0]):
+    case !/ui/.test(ref$[0]):
       yin = yin.replace(/i/, "iīíǐìi"[tone]);
       break;
     case !/u/.test(ref$[0]):
       yin = yin.replace(/u/, "uūúǔùu"[tone]);
+      break;
+    case !/ü/.test(ref$[0]):
+      yin = yin.replace(/ü/, "üǖǘǚǜü"[tone]);
       break;
     case !/i/.test(ref$[0]):
       yin = yin.replace(/i/, "iīíǐìi"[tone]);
