@@ -82,18 +82,18 @@ UserPref = createClass do
   getDefaultProps: -> {
     simptrad: localStorage?getItem \simptrad
     phonetics: localStorage?getItem \phonetics
-    pinyin_a: localStorage?getItem \pinyin_a
+    pinyin_a: localStorage?getItem(\pinyin_a) || \HanYu
   }
   render: -> { phonetics, simptrad, pinyin_a } = @props; div {},
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
     ul {},
       PrefList { pinyin_a }, \羅馬拼音顯示方式,
-        [ \HanYu      \漢語拼音 ]
         [ \HanYu-TongYong \漢語華通共同顯示 ]
+        [ \HanYu      \漢語拼音 ]
         [ \TongYong   \華通拼音 ]
-        [ \WadeGiles  \威妥瑪拼音 ]
-        [ \GuoYin     \國音二式 ]
+        [ \WadeGiles  \威妥瑪式 ]
+        [ \GuoYin     \注音二式 ]
       PrefList { phonetics }, \條目音標顯示方式,
         [ \rightangle \注音拼音共同顯示 ]
         [ \bopomofo   \注音符號 ] # , small {}, \（方言音） ]
