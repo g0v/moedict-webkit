@@ -834,7 +834,7 @@ trs_lookup = (term,cb) ->
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
-  return str unless LANG in <[ a c ]> and str isnt /^@/
+  return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)

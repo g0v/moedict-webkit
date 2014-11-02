@@ -1479,7 +1479,7 @@
     var rv, i$, ref$, len$, char, idx;
     str == null && (str = '');
     if (!((LANG === 'a' || LANG === 'c') && !/^@/.test(str))) {
-      return str;
+      return str.replace(/台([北中南東灣語])/g, '臺$1');
     }
     rv = '';
     for (i$ = 0, len$ = (ref$ = split$.call(str, '')).length; i$ < len$; ++i$) {
