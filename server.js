@@ -518,7 +518,7 @@
       });
       return this.view({
         index: function(){
-          var expandDef, trim, def, i$, ref$, len$, d, j$, len1$, ref1$, f, l, pngSuffix, suffix, ogImage, TITLEOF, SYMOF, LANG;
+          var expandDef, trim, def, i$, ref$, len$, d, j$, len1$, ref1$, f, l, pngSuffix, suffix, ogImage, TITLEOF, SYMOF, LANG, attrs;
           expandDef = function(def){
             return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
               return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
@@ -577,11 +577,15 @@
           if (/^['!~:]/.exec(this.text)) {
             LANG = SYMOF[this.text.slice(0, 1)];
           }
-          return html({
+          attrs = {
             prefix: "og: http://ogp.me/ns#",
             lang: 'zh-Hant',
             'xml:lang': 'zh-Hant'
-          }, function(){
+          };
+          if (!(this.segments || this.idx)) {
+            attrs.manifest = 'manifest.appcache';
+          }
+          return html(attrs, function(){
             return head(function(){
               var len, ref$, w, t, Title, word, h, id, fillProps, props, html, this$ = this;
               meta({
