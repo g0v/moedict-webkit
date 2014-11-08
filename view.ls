@@ -344,7 +344,7 @@ Heteronym = createClass do
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
-      if key is 0 then # Only display Star for the first entry
+      if (key ? 0)  is 0 then # Only display Star for the first entry
         Star { CurrentId, LANG } /* a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \甲
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \篆
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \金

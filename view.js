@@ -915,7 +915,7 @@
       }), meta({
         itemProp: 'name',
         content: t
-      }), key === 0 ? Star({
+      }), (key != null ? key : 0) === 0 ? Star({
         CurrentId: CurrentId,
         LANG: LANG
       }) : void 8, a({
