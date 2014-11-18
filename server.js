@@ -520,7 +520,7 @@
         index: function(){
           var expandDef, trim, def, i$, ref$, len$, d, j$, len1$, ref1$, f, l, pngSuffix, suffix, ogImage, TITLEOF, SYMOF, LANG, attrs;
           expandDef = function(def){
-            return def.replace(/^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, function(_, num, char){
+            return def.replace(/^\s*<(\d)>\s*([介代副助動名歎嘆形連]?)/, function(_, num, char){
               return String.fromCharCode(0x327F + parseInt(num)) + "" + (char ? char + "\u20DE" : '');
             }).replace(/<(\d)>/g, function(_, num){
               return String.fromCharCode(0x327F + parseInt(num));

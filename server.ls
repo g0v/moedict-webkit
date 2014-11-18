@@ -198,7 +198,7 @@ require(\zappajs) {+disable_io} ->
   @view index: ->
     expand-def = (def) ->
       def.replace(
-        /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
+        /^\s*<(\d)>\s*([介代副助動名歎嘆形連]?)/, (_, num, char) -> "#{
           String.fromCharCode(0x327F + parseInt num)
         }#{ if char then "#char\u20DE" else '' }"
       ).replace(
