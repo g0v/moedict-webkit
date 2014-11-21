@@ -101,6 +101,7 @@ UserPref = createClass do
       if $?('body').hasClass('lang-t')
         PrefList { pinyin_t }, \羅馬拼音顯示方式,
           [ \TL         \臺羅拼音 ]
+          [ \DT         \臺通拼音 ]
           [ \POJ        \白話字   ]
       PrefList { phonetics }, \條目音標顯示方式,
         [ \rightangle \注音拼音共同顯示 ]
@@ -480,8 +481,17 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   return { ruby, youyin, b-alt, p-alt, cn-specific, pinyin, bopomofo }
 
 function convert-pinyin-t (yin)
-  system = localStorage?getItem \pinyin_t
-  return yin unless system is \POJ
+  system = localStorage?getItem(\pinyin_t) || \TL
+  return yin if system is \TL
+  if system is \DT
+    return yin.replace(/b/g, 'bh').replace(/p/g, 'b') # Consonants
+              .replace(/t/g, 'd').replace(/th/g, 't')
+              .replace(/kh/g, 'k').replace(/g/g, 'gh')
+              .replace(/tsh/g, 'c').replace(/ts/g, 'z')
+              .replace(/j/g, 'r')
+              .replace(/oo/g, 'OO').replace(/o/g, 'or').replace(/OO/g, 'o') # Vowels
+              # TODO: Tones
+              #.replace(/\u0300/g, '三').replace(/\u0301/g, '六')
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')
             .replace(/ts/g, 'ch')

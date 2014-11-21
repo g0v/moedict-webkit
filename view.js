@@ -235,7 +235,7 @@
         pinyin_a: pinyin_a
       }, '羅馬拼音顯示方式', ['HanYu-TongYong', '漢語華通共同顯示'], ['HanYu', '漢語拼音'], ['TongYong', '華通拼音'], ['WadeGiles', '威妥瑪式'], ['GuoYin', '注音二式']) : void 8, typeof $ == 'function' && $('body').hasClass('lang-t') ? PrefList({
         pinyin_t: pinyin_t
-      }, '羅馬拼音顯示方式', ['TL', '臺羅拼音'], ['POJ', '白話字']) : void 8, PrefList({
+      }, '羅馬拼音顯示方式', ['TL', '臺羅拼音'], ['DT', '臺通拼音'], ['POJ', '白話字']) : void 8, PrefList({
         phonetics: phonetics
       }, '條目音標顯示方式', ['rightangle', '注音拼音共同顯示'], ['bopomofo', '注音符號'], ['pinyin', '羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
@@ -1113,9 +1113,12 @@
   };
   function convertPinyinT(yin){
     var system;
-    system = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8;
-    if (system !== 'POJ') {
+    system = (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8) || 'TL';
+    if (system === 'TL') {
       return yin;
+    }
+    if (system === DT) {
+      return yin.replace(/b/g, 'bh').replace(/p/g, 'b').replace(/t/g, 'd').replace(/th/g, 't').replace(/kh/g, 'k').replace(/g/g, 'gh').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/oo/g, 'OO').replace(/o/g, 'or').replace(/OO/g, 'o');
     }
     return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1');
   }
