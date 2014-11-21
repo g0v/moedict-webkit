@@ -70,6 +70,9 @@
     pinyin_aChanged: function(){
       return location.reload();
     },
+    pinyin_tChanged: function(){
+      return location.reload();
+    },
     phoneticsChanged: function(){
       var restorePinyin, restoreZhuyin, clearPinyin, clearZhuyin;
       $('rb[order]').each(function(){
@@ -217,19 +220,22 @@
       return {
         simptrad: typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('simptrad') : void 8,
         phonetics: typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('phonetics') : void 8,
-        pinyin_a: (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8) || 'HanYu'
+        pinyin_a: (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8) || 'HanYu',
+        pinyin_t: (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8) || 'TL'
       };
     },
     render: function(){
-      var ref$, phonetics, simptrad, pinyin_a;
-      ref$ = this.props, phonetics = ref$.phonetics, simptrad = ref$.simptrad, pinyin_a = ref$.pinyin_a;
+      var ref$, phonetics, simptrad, pinyin_a, pinyin_t, langPref;
+      ref$ = this.props, phonetics = ref$.phonetics, simptrad = ref$.simptrad, pinyin_a = ref$.pinyin_a, pinyin_t = ref$.pinyin_t;
       return div({}, h4({}, '偏好設定'), button({
         className: 'close btn-close',
         type: 'button',
         'aria-hidden': true
-      }, '×'), ul({}, PrefList({
+      }, '×'), langPref = null, ul({}, typeof $ == 'function' && $('body').hasClass('lang-a') ? PrefList({
         pinyin_a: pinyin_a
-      }, '羅馬拼音顯示方式', ['HanYu-TongYong', '漢語華通共同顯示'], ['HanYu', '漢語拼音'], ['TongYong', '華通拼音'], ['WadeGiles', '威妥瑪式'], ['GuoYin', '注音二式']), PrefList({
+      }, '羅馬拼音顯示方式', ['HanYu-TongYong', '漢語華通共同顯示'], ['HanYu', '漢語拼音'], ['TongYong', '華通拼音'], ['WadeGiles', '威妥瑪式'], ['GuoYin', '注音二式']) : void 8, typeof $ == 'function' && $('body').hasClass('lang-t') ? PrefList({
+        pinyin_t: pinyin_t
+      }, '羅馬拼音顯示方式', ['TL', '臺羅拼音'], ['POJ', '白話字']) : void 8, PrefList({
         phonetics: phonetics
       }, '條目音標顯示方式', ['rightangle', '注音拼音共同顯示'], ['bopomofo', '注音符號'], ['pinyin', '羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
@@ -1105,8 +1111,19 @@
       bopomofo: bopomofo
     };
   };
+  function convertPinyinT(yin){
+    var system;
+    system = typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8;
+    if (system !== 'POJ') {
+      return yin;
+    }
+    return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1');
+  }
   function convertPinyin(yin){
     var system, y, tone, r, ref$;
+    if (typeof $ == 'function' && $('body').hasClass('lang-t')) {
+      return convertPinyinT(yin);
+    }
     if (!(typeof $ == 'function' && $('body').hasClass('lang-a'))) {
       return yin;
     }
@@ -1512,7 +1529,7 @@
       it += '</span></span></span></span>';
     }
     res = it.replace(/[\uFF0E\u2022]/g, '\u00B7').replace(/\u223C/g, '\uFF0D').replace(/\u0358/g, '\u030d').replace(/(.)\u20DD/g, "<span class='regional part-of-speech'>$1</span> ").replace(/(.)\u20DE/g, "</span><span class='part-of-speech'>$1</span><span>").replace(/(.)\u20DF/g, "<span class='specific'>$1</span>").replace(/(.)\u20E3/g, "<span class='variant'>$1</span>").replace(RegExp('<a[^<]+>' + id + '<\\/a>', 'g'), id + "").replace(/<a>([^<]+)<\/a>/g, "<a href=\"" + h + "$1\">$1</a>").replace(RegExp('(>[^<]*)' + id + '(?!</(?:h1|rb)>)', 'g'), "$1<b>" + id + "</b>").replace(/\uFFF9/g, '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">').replace(/\uFFFA/g, '</span><br><span class="rt trs pinyin">').replace(/\uFFFB$/, '').replace(/\uFFFB/g, '</span></span></span></span><br><span class="rt mandarin">').replace(/<span class="rt mandarin">\s*<\//g, '</').replace(/(<span class="rt trs pinyin")>\s*([^<]+)/g, function(_, pre, trs){
-      return "" + pre + " title=\"" + trs2bpmf('t', trs) + "\">" + trs;
+      return "" + pre + " title=\"" + trs2bpmf('t', trs) + "\">" + convertPinyinT(trs);
     });
     return res;
   }

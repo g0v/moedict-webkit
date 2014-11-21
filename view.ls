@@ -29,6 +29,7 @@ PrefList = createClass do
   componentDidMount: -> @phoneticsChanged!
   componentDidUpdate: -> @phoneticsChanged!
   pinyin_aChanged: -> location.reload!
+  pinyin_tChanged: -> location.reload!
   phoneticsChanged: ->
     $('rb[order]').each ->
       attr = $(@).attr('annotation')
@@ -83,17 +84,24 @@ UserPref = createClass do
     simptrad: localStorage?getItem \simptrad
     phonetics: localStorage?getItem \phonetics
     pinyin_a: localStorage?getItem(\pinyin_a) || \HanYu
+    pinyin_t: localStorage?getItem(\pinyin_t) || \TL
   }
-  render: -> { phonetics, simptrad, pinyin_a } = @props; div {},
+  render: -> { phonetics, simptrad, pinyin_a, pinyin_t } = @props; div {},
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
+    lang-pref = null
     ul {},
-      PrefList { pinyin_a }, \羅馬拼音顯示方式,
-        [ \HanYu-TongYong \漢語華通共同顯示 ]
-        [ \HanYu      \漢語拼音 ]
-        [ \TongYong   \華通拼音 ]
-        [ \WadeGiles  \威妥瑪式 ]
-        [ \GuoYin     \注音二式 ]
+      if $?('body').hasClass('lang-a')
+        PrefList { pinyin_a }, \羅馬拼音顯示方式,
+          [ \HanYu-TongYong \漢語華通共同顯示 ]
+          [ \HanYu      \漢語拼音 ]
+          [ \TongYong   \華通拼音 ]
+          [ \WadeGiles  \威妥瑪式 ]
+          [ \GuoYin     \注音二式 ]
+      if $?('body').hasClass('lang-t')
+        PrefList { pinyin_t }, \羅馬拼音顯示方式,
+          [ \TL         \臺羅拼音 ]
+          [ \POJ        \白話字   ]
       PrefList { phonetics }, \條目音標顯示方式,
         [ \rightangle \注音拼音共同顯示 ]
         [ \bopomofo   \注音符號 ] # , small {}, \（方言音） ]
@@ -471,7 +479,20 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     bopomofo = ''
   return { ruby, youyin, b-alt, p-alt, cn-specific, pinyin, bopomofo }
 
+function convert-pinyin-t (yin)
+  system = localStorage?getItem \pinyin_t
+  return yin unless system is \POJ
+  # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
+  return yin.replace(/oo/g, 'o\u0358')
+            .replace(/ts/g, 'ch')
+            .replace(/u([^\w\s]*)a/g, 'o$1a')
+            .replace(/u([^\w\s]*)e/g, 'o$1e')
+            .replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2')
+            .replace(/i([^\w\s]*)ng/g, 'e$1ng')
+            .replace(/nn($|[-\s])/g, 'ⁿ$1')
+
 function convert-pinyin (yin)
+  return convert-pinyin-t yin if $?('body').hasClass('lang-t')
   return yin unless $?('body').hasClass('lang-a')
   system = localStorage?getItem \pinyin_a
   return yin unless system and PinYinMap[system - /^HanYu-/]
@@ -653,7 +674,7 @@ function h (it)
     .replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">')
     .replace(/<span class="rt mandarin">\s*<\//g '</')
     .replace /(<span class="rt trs pinyin")>\s*([^<]+)/g, (_, pre, trs) -> """
-      #pre title="#{ trs2bpmf \t trs }">#trs
+      #pre title="#{ trs2bpmf \t trs }">#{ convert-pinyin-t trs }
     """
   return res
 
