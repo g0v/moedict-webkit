@@ -480,6 +480,16 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     bopomofo = ''
   return { ruby, youyin, b-alt, p-alt, cn-specific, pinyin, bopomofo }
 
+#p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" 
+const DT-Tones = {
+  "\u0300": "\u0302"  # 3
+  "\u0301": "\u0300"  # 2,6
+  "\u0302": "\u0306"  # 5
+  "\u0304": "\u0304"  "\u0305": "\u0305"  # 7
+  "\u0306": "\u0301"  # 9
+  "\u0307": ""        "\u030d": ""        # 8
+  "ah" : "ā" "ih" : "ī" "oh" : "ō" "uh" : "ū" "eh" : "ē" # 4
+}
 function convert-pinyin-t (yin)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
@@ -490,8 +500,8 @@ function convert-pinyin-t (yin)
               .replace(/tsh/g, 'c').replace(/ts/g, 'z')
               .replace(/j/g, 'r')
               .replace(/oo/g, 'OO').replace(/o/g, 'or').replace(/OO/g, 'o') # Vowels
-              # TODO: Tones
-              #.replace(/\u0300/g, '三').replace(/\u0301/g, '六')
+              .replace(//([\u0300-\u0302\u0304\u030d]|[aeiou]h)//g -> DT-Tones[it])
+              .replace(/--([aeiou])/g, '$1\u030A')
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')
             .replace(/ts/g, 'ch')
