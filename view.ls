@@ -447,8 +447,8 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   for yin, idx in p | yin
     yin = convert-pinyin yin
     span = # 閩南語典，按隔音符計算字數
-           if LANG is \t and yin is /\-/g
-           then ' rbspan="'+ (yin.match /[\-]+/g .length+1) + '"'
+           if LANG is \t and yin is /[-\u2011]/g
+           then ' rbspan="'+ (yin.match /[-\u2011]+/g .length+1) + '"'
            # 國語兒化音
            else if LANG != \t && yin is /^[^eēéěè].*r\d?$/g
            then
@@ -514,7 +514,7 @@ function convert-pinyin-t (yin)
               .replace(/K(\w)/g, 'G$1')
               .replace(/Tsh/g, 'c').replace(/Ts/g, 'z')
               .replace(/J/g, 'R')
-              .replace(/o([^\w\s]*)o/g, 'O$1O').replace(/o/g, 'or').replace(/O([^\w\s]*)O/g, 'o$1')
+              .replace(/o([^\w\s]*)o/g, 'O$1O').replace(/o([^\w\s]*)/g, 'o$1r').replace(/O([^\w\s]*)O/g, 'o$1')
               #.replace(/rn/g, 'n') # TODO: 用方音重轉
               .replace(//([\u0300-\u0302\u0304\u030d]|[aeiou]h)//g -> DT-Tones[it])
               .replace(/[-\u2011][-\u2011]([aeiou])/g, '$1\u030A')
@@ -524,6 +524,8 @@ function convert-pinyin-t (yin)
               .replace(/[-\u2011][-\u2011]ē/g, '\u2011\u2011e\u030A')
               .replace(/[-\u2011][-\u2011]ū/g, '\u2011\u2011u\u030A')
               .replace(/nn($|[-\s])/g, 'ⁿ$1')
+              .replace(/((?:\S*(?:\w[^\w\s]*)\u2011)+)(\w)/g, (_, $1, $2) ->
+                [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')
             .replace(/ts/g, 'ch')
@@ -534,6 +536,16 @@ function convert-pinyin-t (yin)
             .replace(/nn($|[-\s])/g, 'ⁿ$1')
             .replace(/([ie])r/g, '$1\u0358')
             .replace(/\u030B/g, "\u0306") # 9th tone
+
+
+const DT-Tones-Sandhi = {
+    "\u0300": ""              # 2,6 ->  1
+    "\u0332": "\u0300"        # 3   ->  2
+    "\u0306": "\u0304\u0331"  # 5   ->  3+7
+    "\u0304": "\u0305"        # 7   ->  3
+}
+function tone-sandhi (seg)
+  return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
 
 function convert-pinyin (yin)
   yin.=replace(/-/g '\u2011')
