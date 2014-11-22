@@ -510,6 +510,8 @@ function convert-pinyin-t (yin)
             .replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2')
             .replace(/i([^\w\s]*)ng/g, 'e$1ng')
             .replace(/nn($|[-\s])/g, 'ⁿ$1')
+            .replace(/([ie])r/g, '$1\u0358')
+            .replace(/\u030B/g, "\u0306") # 9th tone
 
 function convert-pinyin (yin)
   return convert-pinyin-t yin if $?('body').hasClass('lang-t')
