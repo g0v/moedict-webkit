@@ -443,7 +443,8 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
   p .= split ' '
-  isHanYuToo = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
+  isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
+  isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $?('body').hasClass('lang-t')
   for yin, idx in p | yin
     yin = convert-pinyin yin
     span = # 閩南語典，按隔音符計算字數
@@ -463,7 +464,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
-    yin = "#{ p[idx] }\n#yin" if isHanYuToo
+    yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if isParallel
     p[idx] = "<rt#span>#yin</rt>"
   ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
   ruby += '<rtc style="display: none" class="romanization">'
@@ -501,7 +502,7 @@ const DT-Tones = {
 function convert-pinyin-t (yin)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
-  if system is \DT
+  if system is /DT$/
     return yin.replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1') # Consonants
               .replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1')
               .replace(/kh(\w)/g, 'k$1').replace(/g(\w)/g, 'gh$1')

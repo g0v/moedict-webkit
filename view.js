@@ -1002,7 +1002,7 @@
     }
   });
   decorateRuby = function(arg$){
-    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, t, b, cnSpecificBpmf, ruby, p, isHanYuToo, i$, len$, idx, yin, span, cns, tws;
+    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, t, b, cnSpecificBpmf, ruby, p, isParallel, i$, len$, idx, yin, span, cns, tws;
     LANG = arg$.LANG, title = (ref$ = arg$.title) != null ? ref$ : '', bopomofo = arg$.bopomofo, py = arg$.py, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = arg$.trs;
     pinyin == null && (pinyin = trs != null ? trs : '');
     if (LANG !== 'c') {
@@ -1067,7 +1067,10 @@
     p = p.replace(/<br>.*/, '');
     p = p.split(' ');
     if (typeof $ == 'function' && $('body').hasClass('lang-a')) {
-      isHanYuToo = /^HanYu-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8);
+      isParallel = /^HanYu-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8);
+    }
+    if (typeof $ == 'function' && $('body').hasClass('lang-t')) {
+      isParallel = /^TL-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8);
     }
     for (i$ = 0, len$ = p.length; i$ < len$; ++i$) {
       idx = i$;
@@ -1079,8 +1082,8 @@
           : LANG !== 't' && /^[^eēéěè].*r\d?$/g.exec(yin)
             ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ'), b = join$.call(tws, ' ')), ' rbspan="2"')
             : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
-        if (isHanYuToo) {
-          yin = p[idx] + "\n" + yin;
+        if (isParallel) {
+          yin = p[idx].replace(/-/g, '\u2011') + "\n" + yin;
         }
         p[idx] = "<rt" + span + ">" + yin + "</rt>";
       }
@@ -1132,7 +1135,7 @@
     if (system === 'TL') {
       return yin;
     }
-    if (system === 'DT') {
+    if (/DT$/.exec(system)) {
       return yin.replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'k$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/B/g, 'Bh').replace(/P/g, 'B').replace(/Th(\w)/g, 'TH$1').replace(/T(\w)/g, 'D$1').replace(/TH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'K$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/Tsh/g, 'c').replace(/Ts/g, 'z').replace(/J/g, 'R').replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d]|[aeiou]h)/g, function(it){
         return DTTones[it];
       }).replace(/[-\u2011][-\u2011]([aeiou])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, function(_, $1, $2){
