@@ -1120,11 +1120,11 @@
     "\u0306": "\u0301",
     "\u0307": "",
     "\u030d": "",
-    "ah": "ā",
-    "ih": "ī",
-    "oh": "ō",
-    "uh": "ū",
-    "eh": "ē"
+    "ah": "a\u0304",
+    "ih": "i\u0304",
+    "oh": "o\u0304",
+    "uh": "u\u0304",
+    "eh": "e\u0304"
   };
   function convertPinyinT(yin){
     var system;
@@ -1133,9 +1133,9 @@
       return yin;
     }
     if (system === 'DT') {
-      return yin.replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'k$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/B/g, 'Bh').replace(/P/g, 'B').replace(/Th(\w)/g, 'TH$1').replace(/T(\w)/g, 'D$1').replace(/TH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'K$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/Tsh/g, 'c').replace(/Ts/g, 'z').replace(/J/g, 'R').replace(/o([^\w\s]*)o/g, 'O$1O').replace(/o([^\w\s]*)/g, 'o$1r').replace(/O([^\w\s]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d]|[aeiou]h)/g, function(it){
+      return yin.replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'k$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/B/g, 'Bh').replace(/P/g, 'B').replace(/Th(\w)/g, 'TH$1').replace(/T(\w)/g, 'D$1').replace(/TH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'K$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/Tsh/g, 'c').replace(/Ts/g, 'z').replace(/J/g, 'R').replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d]|[aeiou]h)/g, function(it){
         return DTTones[it];
-      }).replace(/[-\u2011][-\u2011]([aeiou])/g, '$1\u030A').replace(/[-\u2011][-\u2011]ā/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011]ō/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011]ī/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011]ē/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011]ū/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/((?:\S*(?:\w[^\w\s]*)\u2011)+)(\w)/g, function(_, $1, $2){
+      }).replace(/[-\u2011][-\u2011]([aeiou])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, function(_, $1, $2){
         var seg;
         return (function(){
           var i$, ref$, len$, results$ = [];
@@ -1153,9 +1153,12 @@
     "\u0300": "",
     "\u0332": "\u0300",
     "\u0306": "\u0304\u0331",
-    "\u0304": "\u0305"
+    "\u0304": "\u0332"
   };
   function toneSandhi(seg){
+    if (!/[\u0300\u0332\u0306\u0304]/.test(seg)) {
+      return seg.replace(/([aioue])/, '$1\u0304');
+    }
     return seg.replace(/([\u0300\u0332\u0306\u0304])/g, function(it){
       return DTTonesSandhi[it];
     });
