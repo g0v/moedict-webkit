@@ -235,7 +235,7 @@
         pinyin_a: pinyin_a
       }, '羅馬拼音顯示方式', ['HanYu-TongYong', '漢語華通共同顯示'], ['HanYu', '漢語拼音'], ['TongYong', '華通拼音'], ['WadeGiles', '威妥瑪式'], ['GuoYin', '注音二式']) : void 8, typeof $ == 'function' && $('body').hasClass('lang-t') ? PrefList({
         pinyin_t: pinyin_t
-      }, '羅馬拼音顯示方式', ['TL', '臺羅拼音'], ['DT', '臺通拼音'], ['POJ', '白話字']) : void 8, PrefList({
+      }, '羅馬拼音顯示方式', ['TL-DT', '臺羅臺通共同顯示'], ['TL', '臺羅拼音'], ['DT', '臺通拼音'], ['POJ', '白話字']) : void 8, PrefList({
         phonetics: phonetics
       }, '條目音標顯示方式', ['rightangle', '注音拼音共同顯示'], ['bopomofo', '注音符號'], ['pinyin', '羅馬拼音'], [], ['none', '關閉'])), button({
         className: 'btn btn-primary btn-block btn-close',
@@ -1112,7 +1112,7 @@
     };
   };
   DTTones = {
-    "\u0300": "\u0302",
+    "\u0300": "\u0332",
     "\u0301": "\u0300",
     "\u0302": "\u0306",
     "\u0304": "\u0304",
@@ -1133,14 +1133,15 @@
       return yin;
     }
     if (system === 'DT') {
-      return yin.replace(/b/g, 'bh').replace(/p/g, 'b').replace(/t/g, 'd').replace(/th/g, 't').replace(/kh/g, 'k').replace(/g/g, 'gh').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/oo/g, 'OO').replace(/o/g, 'or').replace(/OO/g, 'o').replace(/([\u0300-\u0302\u0304\u030d]|[aeiou]h)/g, function(it){
+      return yin.replace(/b/g, 'bh').replace(/p/g, 'b').replace(/th/g, 'TH').replace(/t/g, 'd').replace(/TH/g, 't').replace(/kh/g, 'k').replace(/g/g, 'gh').replace(/k/g, 'g').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/j/g, 'r').replace(/B/g, 'Bh').replace(/P/g, 'B').replace(/Th/g, 'TH').replace(/T/g, 'D').replace(/TH/g, 'T').replace(/Kh/g, 'K').replace(/G/g, 'Gh').replace(/K/g, 'G').replace(/Tsh/g, 'c').replace(/Ts/g, 'z').replace(/J/g, 'R').replace(/o([^\w\s]*)o/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d]|[aeiou]h)/g, function(it){
         return DTTones[it];
-      }).replace(/--([aeiou])/g, '$1\u030A');
+      }).replace(/--([aeiou])/g, '$1\u030A').replace(/--ā/g, '--a\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1');
     }
-    return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1');
+    return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/([ie])r/g, '$1\u0358').replace(/\u030B/g, "\u0306");
   }
   function convertPinyin(yin){
     var system, y, tone, r, ref$;
+    yin = yin.replace(/-/g, '\u2011');
     if (typeof $ == 'function' && $('body').hasClass('lang-t')) {
       return convertPinyinT(yin);
     }
