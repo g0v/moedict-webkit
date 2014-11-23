@@ -490,7 +490,6 @@ const DT-Tones = {
   "\u0304": "\u0304"  "\u0305": "\u0305"  # 7
   "\u0306": "\u0301"  # 9
   "\u0307": ""        "\u030d": ""        # 8
-  "ah" : "a\u0304" "ih" : "i\u0304" "oh" : "o\u0304" "uh" : "u\u0304" "eh" : "e\u0304" # 4
 }
 
 # ptk(4) 變高入 (1)
@@ -517,8 +516,9 @@ function convert-pinyin-t (yin)
               .replace(/J/g, 'R')
               .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
               #.replace(/rn/g, 'n') # TODO: 用方音重轉
-              .replace(//([\u0300-\u0302\u0304\u030d]|[aeiou]h)//g -> DT-Tones[it])
-              .replace(/[-\u2011][-\u2011]([aeiou])/g, '$1\u030A')
+              .replace(/([\u0300-\u0302\u0304\u030d])/g -> DT-Tones[it])
+              .replace(/([aeiou])([ptkh])/g, '$1\u0304$2')
+              .replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A')
               .replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A')
               .replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A')
               .replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A')
@@ -546,7 +546,14 @@ const DT-Tones-Sandhi = {
     "\u0304": "\u0332"        # 7   ->  3
 }
 function tone-sandhi (seg)
-  return seg.replace(/([aioue])/, '$1\u0304') if seg isnt /[\u0300\u0332\u0306\u0304]/
+  if seg is /[aeiou][hptk]/
+    return seg.replace(/([aioue])/, '$1\u0332') # 8 -> 3
+  if seg isnt /[\u0300\u0332\u0306\u0304]/
+    return seg.replace(/([aioue])/, '$1\u0304') # 1 -> 7
+  if seg is /[aeiou]\u0304[ptk]/
+    return seg.replace(/\u0304/, '')            # 4(ptk) -> 8
+  if seg is /[aeiou]\u0304[h]/
+    return seg.replace(/\u0304/, '\u0300')      # 4(h) -> 2
   return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
 
 function convert-pinyin (yin)
