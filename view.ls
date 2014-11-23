@@ -502,19 +502,21 @@ function convert-pinyin-t (yin)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
   if system is /DT$/
-    return yin.replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1') # Consonants
-              .replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1')
-              .replace(/kh(\w)/g, 'k$1').replace(/g(\w)/g, 'gh$1')
-              .replace(/k(\w)/g, 'g$1')
+    return yin.replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1') # Consonants
+              .replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1')
               .replace(/tsh/g, 'c').replace(/ts/g, 'z')
+              .replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1')
+              .replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1')
+              .replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1')
               .replace(/j/g, 'r')
-              .replace(/B/g, 'Bh').replace(/P/g, 'B') # Consonants
+              .replace(/Ph(\w)/, 'PH$1').replace(/B(\w)/g, 'Bh$1') # Consonants
+              .replace(/P(\w)/g, 'B$1').replace(/PH(\w)/g, 'P$1')
+              .replace(/tsh/g, 'c').replace(/ts/g, 'z')
               .replace(/Th(\w)/g, 'TH$1').replace(/T(\w)/g, 'D$1').replace(/TH(\w)/g, 'T$1')
-              .replace(/Kh(\w)/g, 'K$1').replace(/G(\w)/g, 'Gh$1')
-              .replace(/K(\w)/g, 'G$1')
-              .replace(/Tsh/g, 'c').replace(/Ts/g, 'z')
+              .replace(/Kh(\w)/g, 'KH$1').replace(/G(\w)/g, 'Gh$1')
+              .replace(/K(\w)/g, 'G$1').replace(/KH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
-              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
+              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
               #.replace(/rn/g, 'n') # TODO: 用方音重轉
               .replace(/([\u0300-\u0302\u0304\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])([ptkh])/g, '$1\u0304$2')
