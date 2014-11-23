@@ -7416,6 +7416,11 @@ hruby copy {
  * 小字標注
  * Annotations
  * ========================================================================== */
+.parallel hruby rb[annotation]:before {
+  line-height: 3.6em !important;
+  top: -0.63em !important;
+}
+
 hruby rb[annotation] {
   display: inline-block;
   position: relative;
@@ -10827,6 +10832,18 @@ body.lang-c .specific {
 
 .example {
   font-size: 92%;
+}
+.example .parallel .rb {
+  margin-top: 1em;
+}
+.example .parallel .rt {
+  display: block;
+  margin-top: 0.35em;
+}
+.example .parallel .upper {
+  display: block;
+  margin-top: -3.8em;
+  margin-bottom: 2em;
 }
 .example .mandarin {
   font-size: 90%;

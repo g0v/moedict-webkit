@@ -506,6 +506,22 @@ body.lang-c {
 .example {
     font-size: 92%;
 
+    // 雙拼音並排顯示
+    .parallel {
+        .rb {
+            margin-top: 1em;
+        }
+        .rt {
+            display: block;
+            margin-top: 0.35em;
+        }
+        .upper {
+            display: block;
+            margin-top: -3.8em;
+            margin-bottom: 2em;
+        }
+    }
+
     // 閩、客語典中，例句下的國語解釋
     .mandarin {
         font-size: 90%;

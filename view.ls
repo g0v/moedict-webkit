@@ -327,7 +327,7 @@ Heteronym = createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: \rightangle, dangerouslySetInnerHTML: { __html: h title-ruby } }
+      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
@@ -377,7 +377,9 @@ Heteronym = createClass do
               css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
             })) } \歷代書體
       $char
-      h1 { className: \title, 'data-title': t }, ...list
+      h1 { className: "title#{
+        if localStorage?getItem("pinyin_#LANG") is /-/ then ' parallel' else ''
+      }", 'data-title': t }, ...list
       if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
@@ -517,8 +519,7 @@ function convert-pinyin-t (yin)
               .replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1')
               .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
-              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
-              #.replace(/rn/g, 'n') # TODO: 用方音重轉
+              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
               .replace(/([\u0300-\u0302\u0304\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])([ptkh])/g, '$1\u0304$2')
               .replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A')
@@ -737,16 +738,20 @@ function h (it)
     .replace //<a[^<]+>#id<\/a>//g "#id"
     .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
     .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
-    .replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
+    .replace(/\uFFF9/g """
+      <span class="ruby#{
+        if localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""
+      }"><span class="rb"><span class="ruby"><span class="rb">
+    """)
     .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
     .replace(/\uFFFB$/, '')
     .replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">')
     .replace(/<span class="rt mandarin">\s*<\//g '</')
     .replace /(<span class="rt trs pinyin")>\s*([^<]+)/g, (_, pre, trs) -> """
       #pre title="#{ trs2bpmf \t trs }">#{
-        if localStorage?getItem(\pinyin_t) is "TL-DT" then "#{
+        if localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
           trs.replace(/-/g "\u2011")
-        }<br>" else ""
+        }</span>" else ""
       }#{ convert-pinyin-t trs }
     """
   return res
