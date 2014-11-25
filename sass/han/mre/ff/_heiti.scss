@@ -1,30 +1,34 @@
 
+/**
+ * The Four Typefaces: Heiti
+ *  四大字體集・黑體
+ */
 
-/* ---------------------------------------
-   四大字體集・黑體
-   ---
-   The Four Typefaces: Heiti (Gothic)
-   --------------------------------------- */
+// * 1. Recommended
+// * 2. CNS (適用台灣的舊字形或國字標準字形字體)
+// * 3. GB (中國國標)
 
+// 1
 @font-face {
 	font-family: 'Han Heiti';
 	src:
 		local('Hiragino Sans GB'),
 
-		local('Lantinghei TC'), 
+		local('Lantinghei TC'),
 		local('Lantinghei SC'),
 
-		local('Heiti SC'), 
+		local('Heiti SC'),
 		local('Heiti TC'),
 
 		local('Microsoft Yahei'),
 		local('Microsoft Jhenghei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Heiti';
 	src:
 		local(YuGothic),
@@ -32,8 +36,7 @@
 		local('Hiragino Kaku Gothic Pro');
 }
 
-
-// Han Heiti CNS 
+// 2
 @font-face {
 	font-family: 'Han Heiti CNS';
 	src:
@@ -47,20 +50,21 @@
 		local('Lantinghei SC'),
 		local('Microsoft Yahei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Heiti CNS';
 	src:
 		local(YuGothic),
 		local('Hiragino Kaku Gothic ProN'),
-		local('Hiragino Kaku Gothic Pro');
+		local('Hiragino Kaku Gothic Pro')
+  ;
 }
 
-
-// Han Heiti GB
+// 3
 @font-face {
 	font-family: 'Han Heiti GB';
 	src:
@@ -70,16 +74,12 @@
 
 		local('Microsoft Yahei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
 }
 
-
-
-/* ----------------------------------------- 
- * 粗體
- * Bold
- * ----------------------------------------- */
-
+/* Bold
+ */
 @font-face {
 	font-family: 'Han Heiti';
 	font-weight: 600;
@@ -87,24 +87,25 @@
 		local('Hiragino Sans GB W6'),
 		local(HiraginoSansGB-W6),
 
-		local('Lantinghei TC Demibold'), 
+		local('Lantinghei TC Demibold'),
 		local('Lantinghei SC Demibold'),
 		local(FZLTXHB--B51-0),
 		local(FZLTZHK--GBK1-0),
 
-		local('Heiti SC Medium'), 
+		local('Heiti SC Medium'),
 		local('Heiti TC Medium'),
 		local(STHeitiSC-Medium),
 		local(STHeitiTC-Medium),
 
-		local('Microsoft YaHei Bold'), 
+		local('Microsoft YaHei Bold'),
 		local('Microsoft Jhenghei Bold'),
 		local(MicrosoftYaHei-Bold),
-		local(MicrosoftJhengHeiBold);
+		local(MicrosoftJhengHeiBold)
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Heiti';
 	font-weight: 600;
 	src:
@@ -113,11 +114,11 @@
 		local('Hiragino Kaku Gothic Pro W6'),
 		local(YuGo-Bold),
 		local(HiraKakuProN-W6),
-		local(HiraKakuPro-W6);
+		local(HiraKakuPro-W6)
+  ;
 }
 
-
-// Han Heiti CNS (600)
+// 2
 @font-face {
 	font-family: 'Han Heiti CNS';
 	font-weight: 600;
@@ -125,7 +126,7 @@
 		local('Hiragino Sans GB W6'),
 		local(HiraginoSansGB-W6),
 
-		local('Lantinghei TC Demibold'), 
+		local('Lantinghei TC Demibold'),
 		local('Heiti TC Medium'),
 		local('Microsoft Jhenghei Bold'),
 		local(FZLTXHB--B51-0),
@@ -133,15 +134,16 @@
 		local(MicrosoftJhengHeiBold),
 
 		local('Lantinghei SC Demibold'),
-		local('Microsoft YaHei Bold'), 
-		local('Heiti SC Medium'), 
+		local('Microsoft YaHei Bold'),
+		local('Heiti SC Medium'),
 		local(FZLTZHK--GBK1-0),
 		local(STHeitiSC-Medium),
-		local(MicrosoftYaHei-Bold);
+		local(MicrosoftYaHei-Bold)
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Heiti CNS';
 	font-weight: 600;
 	src:
@@ -150,11 +152,11 @@
 		local('Hiragino Kaku Gothic ProN W6'),
 		local('Hiragino Kaku Gothic Pro W6'),
 		local(HiraKakuProN-W6),
-		local(HiraKakuPro-W6);
+		local(HiraKakuPro-W6)
+  ;
 }
 
-
-// Han Heiti GB (600)
+// 3
 @font-face {
 	font-family: 'Han Heiti GB';
 	font-weight: 600;
@@ -163,36 +165,33 @@
 		local(HiraginoSansGB-W6),
 
 		local('Lantinghei SC Demibold'),
-		local('Microsoft YaHei Bold'), 
-		local('Heiti SC Medium'), 
+		local('Microsoft YaHei Bold'),
+		local('Heiti SC Medium'),
 		local(FZLTZHK--GBK1-0),
 		local(STHeitiSC-Medium),
-		local(MicrosoftYaHei-Bold);
+		local(MicrosoftYaHei-Bold)
+  ;
 }
 
-
-
-/* ----------------------------------------- 
- * 解決Firefox不支援`unicode-range`及粗體調用問題
- * Solution to Firefox's `unicode-range`
- * and bold font issues
- * ----------------------------------------- */
-
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox
+ */
 @font-face {
 	font-family: 'Han Heiti';
 	src:
 		local('Hiragino Sans GB'),
 
-		local('Lantinghei TC'), 
+		local('Lantinghei TC'),
 		local('Lantinghei SC'),
 
-		local('Heiti SC'), 
+		local('Heiti SC'),
 		local('Heiti TC'),
 
 		local('Microsoft Yahei'),
 		local('Microsoft Jhenghei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
 	unicode-range: U+270C;
 }
 
@@ -203,39 +202,40 @@
 		local('Hiragino Sans GB W6'),
 		local(HiraginoSansGB-W6),
 
-		local('Lantinghei TC Demibold'), 
+		local('Lantinghei TC Demibold'),
 		local('Lantinghei SC Demibold'),
 		local(FZLTXHB--B51-0),
 		local(FZLTZHK--GBK1-0),
 
-		local('Heiti SC Medium'), 
+		local('Heiti SC Medium'),
 		local('Heiti TC Medium'),
 		local(STHeitiSC-Medium),
 		local(STHeitiTC-Medium),
 
-		local('Microsoft YaHei Bold'), 
+		local('Microsoft YaHei Bold'),
 		local('Microsoft Jhenghei Bold'),
 		local(MicrosoftYaHei-Bold),
-		local(MicrosoftJhengHeiBold);
-	unicode-range: U+270C;	
+		local(MicrosoftJhengHeiBold)
+  ;
+	unicode-range: U+270C;
 }
 
-
-// Han Heiti CNS
+// 2
 @font-face {
 	font-family: 'Han Heiti CNS';
 	src:
 		local('Hiragino Sans GB'),
 
-		local('Lantinghei TC'), 
+		local('Lantinghei TC'),
 		local('Heiti TC'),
 		local('Microsoft Jhenghei'),
 
-		local('Heiti SC'), 
+		local('Heiti SC'),
 		local('Lantinghei SC'),
 		local('Microsoft Yahei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
 	unicode-range: U+270C;
 }
 
@@ -246,24 +246,24 @@
 		local('Hiragino Sans GB W6'),
 		local(HiraginoSansGB-W6),
 
-		local('Lantinghei TC Demibold'), 
+		local('Lantinghei TC Demibold'),
 		local('Heiti TC Medium'),
 		local('Microsoft Jhenghei Bold'),
 		local(FZLTXHB--B51-0),
 		local(STHeitiTC-Medium),
 		local(MicrosoftJhengHeiBold),
-		 
+
 		local('Lantinghei SC Demibold'),
 		local('Heiti SC Medium'),
 		local('Microsoft YaHei Bold'),
 		local(FZLTZHK--GBK1-0),
 		local(STHeitiSC-Medium),
-		local(MicrosoftYaHei-Bold);
-	unicode-range: U+270C;	
+		local(MicrosoftYaHei-Bold)
+  ;
+	unicode-range: U+270C;
 }
 
-
-// Han Heiti GB
+// 3
 @font-face {
 	font-family: 'Han Heiti GB';
 	src:
@@ -273,25 +273,7 @@
 
 		local('Microsoft Yahei'),
 
-		local('Droid Sans Fallback');
+		local('Droid Sans Fallback')
+  ;
    unicode-range: U+270C;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

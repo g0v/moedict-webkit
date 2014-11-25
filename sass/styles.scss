@@ -7,7 +7,7 @@ $baseFontSize: 14pt;
 $baseBorderRadius: 0;
 $bodyBackground: hsl(0,3%,95%);
 
-// font-awesome
+// paths 
 $fontAwesomePath: "./fonts";
 
 $grayLight:             #ddd;
@@ -25,11 +25,13 @@ $primary-color: #6B0000;
 // for progress indicator of strokes
 @import "strokes";
 
-// CSS Reset
+// han.css
+$han-font-woff:  './fonts/MOEDICT.woff';
+$han-font-otf:   './fonts/MOEDICT.otf';
 @import "han";
-@import "font-awesome";
 
 // @font-face
+@import "font-awesome";
 @import "ff";
 
 // Unicode PUA and IDC glyphs

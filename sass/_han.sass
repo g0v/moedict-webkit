@@ -1,52 +1,16 @@
-@charset 'utf-8'
+@charset "utf-8"
 
-/* 
- * 漢字標準格式 v2.2.1
- * ---
- * Hanzi-optimised CSS Mode
- *
- *
- *
- * Lisence: MIT Lisence
- * Last Modified: 2013/12/05
- *
- */
+/*! 漢字標準格式 v3.0.0 | MIT License | css.hanzi.co */
+/*! Han: CSS typography framework optimised for Hanzi */
 
+@import han/var
+@import han/api
 
-// Imports all needed files
-// normalize.css
-@import 'han/normalize'
+@import han/hyu/normalize
+// @import han/locale
+@import han/hyu/const
+@import han/hyu/mixin
+@import han/hyu/hruby
 
-// CSS3 properties & mixin
-@import 'han/mixin'
-
-// `@font-face` configuration
-@import 'han/ff'
-
-// Language-based UA-style correction
-// @import 'han/main'
-
-// pure font configuration
-// @import 'han/fonts'
-
-// `<ruby>` for Zhuyin
-@import 'han/hruby'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@import han/typography
+// @import han/typeset

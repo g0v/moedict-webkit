@@ -17,7 +17,8 @@
     "webworker-threads": "0.5.x",
     "jade": "1.3.x",
     "react": "0.11.x",
-    "prelude-ls": "1.1.1"
+    "prelude-ls": "1.1.1",
+    "han-css": "3.0.0"
   },
   "devDependencies": {
     "LiveScript": "1.3.x",

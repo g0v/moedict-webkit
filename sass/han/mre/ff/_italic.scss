@@ -1,11 +1,7 @@
 
-
-/* ---------------------------------------
-	 襯線西文斜體
-	 ---
-	 Latin italic serif
-	 --------------------------------------- */
-
+/**
+ * Western Italic Serif
+ */
 @font-face {
 	font-family: 'Latin Italic Serif';
 	src:
@@ -15,7 +11,6 @@
 		local(TimesNewRomanPS-ItalicMT),
 		local(Times-Italic);
 }
-
 
 @font-face {
 	font-family: 'Latin Italic Serif';
@@ -28,13 +23,9 @@
 		local(Times-Italic);
 }
 
-
-/* ---------------------------------------
-	 無襯線西文斜體
-	 ---
-	 Latin italic sans-serif
-	 --------------------------------------- */
-
+/**
+ * Western italic sans-serif
+ */
 @font-face {
 	font-family: 'Latin Italic Sans';
 	src:
@@ -57,22 +48,3 @@
 		local(Helvetica-BoldOblique),
 		local(Arial-BoldItalicMT);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,11 +1,14 @@
 
+/**
+ * The Four Typefaces: Songti (serif)
+ * 四大字體集・宋體
+ */
 
-/* ---------------------------------------
-   四大字體集・宋體（明朝體）
-   ---
-   The Four Typefaces: Songti (Mincho)
-   --------------------------------------- */
+// * 1. Recommended
+// * 2. CNS (適用台灣的舊字形或國字標準字形字體)
+// * 3. GB (中國國標)
 
+// 1
 @font-face {
 	font-family: 'Han Songti';
 	src:
@@ -16,21 +19,22 @@
 		local('Lisong Pro'),
 
 		local(SimSun),
-		local(PMingLiU);
+		local(PMingLiU)
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Songti';
 	src:
 		local(YuMincho),
 		local('Hiragino Mincho ProN'),
 		local('Hiragino Mincho Pro'),
-		local('MS Mincho');
+		local('MS Mincho')
+  ;
 }
 
-
-// Han Songti CNS
+// 2
 @font-face {
 	font-family: 'Han Songti CNS';
 	src:
@@ -41,36 +45,35 @@
 		local(STSong),
 
 		local(PMingLiU),
-		local(SimSun);
+		local(SimSun)
+  ;
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Songti CNS';
 	src:
 		local(YuMincho),
 		local('Hiragino Mincho ProN'),
-		local('Hiragino Mincho Pro');
+		local('Hiragino Mincho Pro')
+  ;
 }
 
-
-// Han Songti GB
+// 3
 @font-face {
 	font-family: 'Han Songti GB';
 	src:
 		local('Songti SC'),
 		local(STSong),
 		local(SimSun),
-		local(PMingLiU);
+		local(PMingLiU)
+  ;
 }
 
+/* Bold
+ */
 
-
-/* ----------------------------------------- 
- * 粗體
- * Bold
- * ----------------------------------------- */
-
+// 1
 @font-face {
 	font-family: 'Han Songti';
 	font-weight: 600;
@@ -82,7 +85,7 @@
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Songti';
 	font-weight: 600;
 	src:
@@ -94,8 +97,7 @@
 		local(HiraMinPro-W6);
 }
 
-
-// Han Songti CNS
+// 2
 @font-face {
 	font-family: 'Han Songti CNS';
 	font-weight: 600;
@@ -107,7 +109,7 @@
 }
 
 @font-face {
-	@include range-CJK;
+	@include mre-range-cjk;
 	font-family: 'Han Songti CNS';
 	font-weight: 600;
 	src:
@@ -116,27 +118,23 @@
 		local('Hiragino Mincho Pro W6'),
 		local(YuMin-Demibold),
 		local(HiraMinProN-W6),
-		local(HiraMinPro-W6);
+		local(HiraMinPro-W6)
+  ;
 }
 
-
-// Han Songti GB
+// 3
 @font-face {
 	font-family: 'Han Songti GB';
 	font-weight: 600;
 	src:
 		local('STSongti SC Bold'),
-		local(STSongti-SC-Bold);
+		local(STSongti-SC-Bold)
+  ;
 }
 
-
-
-/* ----------------------------------------- 
- * 解決Firefox不支援`unicode-range`及粗體調用問題
- * Solution to Firefox's `unicode-range`
- * and bold font issues
- * ----------------------------------------- */
-
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox.
+ */
 @font-face {
 	font-family: 'Han Songti';
 	src:
@@ -148,7 +146,8 @@
 
 		local('MS Mincho'),
 		local(SimSun),
-		local(PMingLiU);
+		local(PMingLiU)
+  ;
 	unicode-range: U+270C;
 }
 
@@ -159,12 +158,11 @@
 		local('STSongti TC Bold'),
 		local('STSongti SC Bold'),
 		local(STSongti-TC-Bold),
-		local(STSongti-SC-Bold);
+		local(STSongti-SC-Bold)
+  ;
 	unicode-range: U+270C;
 }
 
-
-// Han Songti CNS
 @font-face {
 	font-family: 'Han Songti CNS';
 	src:
@@ -176,7 +174,8 @@
 
 		local('MS Mincho'),
 		local(PMingLiU),
-		local(SimSun);
+		local(SimSun)
+  ;
 	unicode-range: U+270C;
 }
 
@@ -187,36 +186,17 @@
 		local('STSongti TC Bold'),
 		local('STSongti SC Bold'),
 		local(STSongti-TC-Bold),
-		local(STSongti-SC-Bold);
+		local(STSongti-SC-Bold)
+  ;
 	unicode-range: U+270C;
 }
 
-
-// Han Songti GB
 @font-face {
 	font-family: 'Han Songti GB';
 	src:
 		local('Songti SC'),
 		local(STSong),
-		local(SimSun);
+		local(SimSun)
+  ;
 	unicode-range: U+270C;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

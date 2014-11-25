@@ -1,8 +1,7 @@
-JS_DEPS = js/jquery-2.1.1.min.js js/jquery-ui-1.10.4.custom.min.js js/jquery.hoverIntent.js js/jquery.ruby.js js/bootstrap/dropdown.js js/simp-trad.js js/prelude-browser-min.js js/phantomjs-shims.js js/console-polyfill.js js/es5-shim.js js/es5-sham.js js/react.min.js
+JS_DEPS = js/jquery-2.1.1.min.js js/jquery-ui-1.10.4.custom.min.js js/jquery.hoverIntent.js js/han.js js/bootstrap/dropdown.js js/simp-trad.js js/prelude-browser-min.js js/phantomjs-shims.js js/console-polyfill.js js/es5-shim.js js/es5-sham.js js/react.min.js
 
 run :: js/deps.js
 	node ./static-here.js 8888 | lsc -cw main.ls view.ls server.ls | jade -Pw *.jade | compass watch
-	#sass --watch sass:.
 
 js/deps.js :: $(JS_DEPS)
 	perl -e 'system(join(" ", "closure-compiler" => "--language_in=ES5" => map { ("--js", $$_) } @ARGV). " >> $@")' $(JS_DEPS) || cat $(JS_DEPS) > js/deps.js
