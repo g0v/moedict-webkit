@@ -80,7 +80,6 @@ hruby {
         // style
         border-bottom: 1px dotted $border-color;
 
-
         // 避免換頁時，未right-angle化的標題上下跳動
         &[style] {
             line-height: 2;
@@ -92,10 +91,11 @@ hruby {
         // 標題詞條連結hack
         a:hover,
         a.hovered {
-            background: #ddd;
-            color: #0070A3;
+            // style
+            background-color: #ddd;
             border-radius: 4px;
-            outline: none; // 1px solid hsl(197,96%,70%);
+            color: #0070A3;
+            outline: 0;
         }
         // 單字條目的筆順動畫按鈕
         div.stroke {
