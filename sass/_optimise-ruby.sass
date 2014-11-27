@@ -3,10 +3,18 @@ hruby
   rb[annotation]:before,
   rb zhuyin
     color: #666
+    z-index: 10
   rb[annotation]:before
     +hyu-scale( .4 ) 
     left: -190%
     overflow: visible
+
+  rb[annotation][order='1']:before
+    top: -.15em !important
+  rb[annotation][order='0']:before
+    bottom: -.4em !important
+    top: auto !important
+
   rb[zhuyin]
     width: 1.55em !important
 

@@ -958,7 +958,7 @@
           return results$;
         }
       }, '歷代書體'), $char, h1.apply(null, [{
-        className: "title" + (/-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem("pinyin_" + LANG) : void 8) ? ' parallel' : ''),
+        className: 'title',
         'data-title': t
       }].concat(slice$.call(list))), bopomofo || alt || pinyinList ? div({
         className: "bopomofo " + cnSpecific
@@ -1000,7 +1000,7 @@
     }
   });
   decorateRuby = function(arg$){
-    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, b, cnSpecificBpmf, ruby, rCjkCi, p, isParallel, i$, len$, idx, yin, span, cns, tws;
+    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, b, cnSpecificBpmf, ruby, rCjkCi, p, pUpper, isParallel, i$, len$, idx, yin, span, cns, tws;
     LANG = arg$.LANG, title = (ref$ = arg$.title) != null ? ref$ : '', bopomofo = arg$.bopomofo, py = arg$.py, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = arg$.trs;
     pinyin == null && (pinyin = trs != null ? trs : '');
     if (LANG !== 'c') {
@@ -1070,6 +1070,7 @@
     p = p.replace(/\/.*/, '');
     p = p.replace(/<br>.*/, '');
     p = p.split(' ');
+    pUpper = [];
     if (typeof $ == 'function' && $('body').hasClass('lang-a')) {
       isParallel = /^HanYu-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8);
     }
@@ -1086,9 +1087,7 @@
           : LANG !== 't' && /^[^eēéěè].*r\d?$/g.exec(yin)
             ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ'), b = join$.call(tws, ' ')), ' rbspan="2"')
             : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
-        if (isParallel) {
-          yin = p[idx].replace(/-/g, '\u2011') + "\n" + yin;
-        }
+        pUpper[idx] = isParallel ? "<rt" + span + ">" + p[idx] + "</rt>" : void 8;
         p[idx] = "<rt" + span + ">" + yin + "</rt>";
       }
     }
@@ -1096,6 +1095,11 @@
     ruby += '<rtc hidden class="romanization">';
     ruby += p.join('');
     ruby += '</rtc>';
+    if (isParallel) {
+      ruby += '<rtc hidden class="romanization">';
+      ruby += pUpper.join('');
+      ruby += '</rtc>';
+    }
     if (LANG === 'c') {
       if (/<br>/.exec(bopomofo)) {
         pinyin = pinyin.replace(/.*<br>/, '').replace(/陸./, '').replace(/\s?([,\.;])\s?/g, '$1 ');

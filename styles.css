@@ -1533,6 +1533,7 @@ hruby rb[annotation]:before {
 hruby rb[annotation]:before,
 hruby rb zhuyin {
   color: #666;
+  z-index: 10;
 }
 hruby rb[annotation]:before {
   -moz-transform: scale(0.4);
@@ -1541,6 +1542,13 @@ hruby rb[annotation]:before {
   transform: scale(0.4);
   left: -190%;
   overflow: visible;
+}
+hruby rb[annotation][order='1']:before {
+  top: -0.15em !important;
+}
+hruby rb[annotation][order='0']:before {
+  bottom: -0.4em !important;
+  top: auto !important;
 }
 hruby rb[zhuyin] {
   width: 1.55em !important;

@@ -380,9 +380,7 @@ Heteronym = createClass do
               css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
             })) } \歷代書體
       $char
-      h1 { className: "title#{
-        if localStorage?getItem("pinyin_#LANG") is /-/ then ' parallel' else ''
-      }", 'data-title': t }, ...list
+      h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
@@ -453,6 +451,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
   p .= split ' '
+  p-upper = [] 
   isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
   isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $?('body').hasClass('lang-t')
   for yin, idx in p | yin
@@ -474,12 +473,17 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
-    yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if isParallel
+    #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if 
+    p-upper[idx] = if isParallel then "<rt#span>#{p[idx]}</rt>"
     p[idx] = "<rt#span>#yin</rt>"
   ruby += '<rtc hidden class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
   ruby += '<rtc hidden class="romanization">'
   ruby += p.join ''
   ruby += '</rtc>'
+  if isParallel 
+    ruby += '<rtc hidden class="romanization">'
+    ruby += p-upper.join ''
+    ruby += '</rtc>'
   if LANG is \c
     if bopomofo is /<br>/
       pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
