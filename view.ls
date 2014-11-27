@@ -15,7 +15,7 @@ div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
 cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<])'
 r-cjk-one  = new RegExp "^#{cjk}$"
-r-cjk-g  = new RegExp cjk, \g
+r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -441,14 +441,13 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
       close-tag = \</a></rb>
-      open-tag + ci.split('').join("#close-tag#open-tag") + close-tag
+      ci .= replace r-cjk-g, "#{open-tag}$1#close-tag"
     # Deal with rare CJK not indexed, such as ○, 𤍤
     .replace new RegExp("<\/rb>(#cjk+)(<rb>)?", \g), ( mat, rare-cjk, x, open-tag ) ->
       open-tag = open-tag || ''
-      if r-cjk-one.test rare-cjk
-        "</rb><rb>#rare-cjk</rb>" + open-tag
-      else
-        "</rb><rb>" + rare-cjk.split('').join("</rb><rb>") + open-tag
+      close-tag = \</rb>
+      rare-cjk .= replace r-cjk-g, "<rb>$1#close-tag"
+      rare-cjk + open-tag
   p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''

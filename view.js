@@ -1056,14 +1056,13 @@
         var closeTag;
         openTag = "<rb>" + openTag + " word-id=\"" + offset + "\">";
         closeTag = '</a></rb>';
-        return openTag + ci.split('').join(closeTag + "" + openTag) + closeTag;
+        return ci = ci.replace(rCjkG, openTag + "$1" + closeTag);
       }).replace(new RegExp("</rb>(" + cjk + "+)(<rb>)?", 'g'), function(mat, rareCjk, x, openTag){
+        var closeTag;
         openTag = openTag || '';
-        if (rCjkOne.test(rareCjk)) {
-          return ("</rb><rb>" + rareCjk + "</rb>") + openTag;
-        } else {
-          return "</rb><rb>" + rareCjk.split('').join("</rb><rb>") + openTag;
-        }
+        closeTag = '</rb>';
+        rareCjk = rareCjk.replace(rCjkG, "<rb>$1" + closeTag);
+        return rareCjk + openTag;
       });
     }
     p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
