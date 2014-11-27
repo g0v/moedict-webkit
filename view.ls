@@ -34,30 +34,16 @@ PrefList = createClass do
   pinyin_aChanged: -> location.reload!
   pinyin_tChanged: -> location.reload!
   phoneticsChanged: ->
-    $('rb[order]').each ->
-      attr = $(@).attr('annotation')
-      $(@).data('annotation', attr) if attr
-    $('rb[zhuyin]').each ->
-      zhuyin = $(@).attr('zhuyin')
-      yin = $(@).attr('yin')
-      diao = $(@).attr('diao')
-      $(@).data({ yin, zhuyin, diao }) if zhuyin
-    restore-pinyin = -> $('rb[order]').each ->
-      attr = $(@).data('annotation')
-      $(@).attr('annotation', attr) if attr
-    restore-zhuyin = -> $('rb[zhuyin]').each ->
-      zhuyin = $(@).data('zhuyin')
-      yin = $(@).data('yin')
-      diao = $(@).data('diao')
-      $(@).attr({ yin, zhuyin, diao }) if zhuyin
-    clear-pinyin = -> $('rb[order]').attr('annotation', '')
-    clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
-    # new-ruby branch: bopomofo 改用 zhuyin 元素
+    $body = $ \body 
     switch @state.selected
-      | \rightangle => restore-pinyin!; restore-zhuyin!
-      | \bopomofo   => clear-pinyin!; restore-zhuyin!
-      | \pinyin     => restore-pinyin!; clear-zhuyin!
-      | \none       => clear-pinyin!; clear-zhuyin!
+      | \rightangle =>
+        $body.attr \data-ruby-pref, \both
+      | \bopomofo   => 
+        $body.attr \data-ruby-pref, \zhuyin 
+      | \pinyin     =>
+        $body.attr \data-ruby-pref, \pinyin
+      | \none       =>
+        $body.attr \data-ruby-pref, \none
   render: ->
     [ lbl, ...items ] = @props.children
     { key, selected=items.0.0 } = @state

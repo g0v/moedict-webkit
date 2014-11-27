@@ -26,4 +26,21 @@ hruby
       zhuyin
         top: .1em
 
+  // Preference
+  body[data-ruby-pref='pinyin'] &,
+  body[data-ruby-pref='none'] &
+    zhuyin
+      display: none
+    rb[zhuyin]
+      width: 1em !important
+    rb[annotation]:before
+      left: -160% !important
+  body[data-ruby-pref='zhuyin'] &,
+  body[data-ruby-pref='none'] &
+    rb[annotation][order]:before,
+    rb[annotation][order] rt
+      display: none
+  body[data-ruby-pref='none'] &,
+  body[data-ruby-pref='none'] & rb
+    line-height: 1.3 !important 
 

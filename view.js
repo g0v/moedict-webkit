@@ -77,74 +77,17 @@
       return location.reload();
     },
     phoneticsChanged: function(){
-      var restorePinyin, restoreZhuyin, clearPinyin, clearZhuyin;
-      $('rb[order]').each(function(){
-        var attr;
-        attr = $(this).attr('annotation');
-        if (attr) {
-          return $(this).data('annotation', attr);
-        }
-      });
-      $('rb[zhuyin]').each(function(){
-        var zhuyin, yin, diao;
-        zhuyin = $(this).attr('zhuyin');
-        yin = $(this).attr('yin');
-        diao = $(this).attr('diao');
-        if (zhuyin) {
-          return $(this).data({
-            yin: yin,
-            zhuyin: zhuyin,
-            diao: diao
-          });
-        }
-      });
-      restorePinyin = function(){
-        return $('rb[order]').each(function(){
-          var attr;
-          attr = $(this).data('annotation');
-          if (attr) {
-            return $(this).attr('annotation', attr);
-          }
-        });
-      };
-      restoreZhuyin = function(){
-        return $('rb[zhuyin]').each(function(){
-          var zhuyin, yin, diao;
-          zhuyin = $(this).data('zhuyin');
-          yin = $(this).data('yin');
-          diao = $(this).data('diao');
-          if (zhuyin) {
-            return $(this).attr({
-              yin: yin,
-              zhuyin: zhuyin,
-              diao: diao
-            });
-          }
-        });
-      };
-      clearPinyin = function(){
-        return $('rb[order]').attr('annotation', '');
-      };
-      clearZhuyin = function(){
-        return $('rb[zhuyin]').attr({
-          yin: '',
-          zhuyin: '',
-          diao: ''
-        });
-      };
+      var $body;
+      $body = $('body');
       switch (this.state.selected) {
       case 'rightangle':
-        restorePinyin();
-        return restoreZhuyin();
+        return $body.attr('data-ruby-pref', 'both');
       case 'bopomofo':
-        clearPinyin();
-        return restoreZhuyin();
+        return $body.attr('data-ruby-pref', 'zhuyin');
       case 'pinyin':
-        restorePinyin();
-        return clearZhuyin();
+        return $body.attr('data-ruby-pref', 'pinyin');
       case 'none':
-        clearPinyin();
-        return clearZhuyin();
+        return $body.attr('data-ruby-pref', 'none');
       }
     },
     render: function(){
