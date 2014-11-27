@@ -19,16 +19,15 @@ $primary-color: #6B0000;
 @import "compass/css3";
 @import "hidpi";
 
+// han.css 
+@import "han";
+@import "optimise-ruby";
+
 // Core variables and mixins
 @import "bootstrap/bootstrap";
 
 // for progress indicator of strokes
 @import "strokes";
-
-// han.css
-$han-font-woff:  './fonts/han.woff';
-$han-font-otf:   './fonts/han.otf';
-@import "han";
 
 // @font-face
 @import "font-awesome";
@@ -45,21 +44,5 @@ $han-font-otf:   './fonts/han.otf';
 // Twitter timeline and Google Search Index
 @import "widget";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body { font-size: 14pt }
+

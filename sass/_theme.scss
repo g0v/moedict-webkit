@@ -309,6 +309,7 @@ body.overflow-scrolling-false {
 
 input.query {
     display: block;
+    border: 1px solid $border-color;
     font-size: 1.2em;
     width: 100%;
     height: 1.8em;

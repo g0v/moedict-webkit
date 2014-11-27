@@ -1,0 +1,21 @@
+
+hruby
+  rb[annotation]:before,
+  rb zhuyin
+    color: #666
+  rb[annotation]:before
+    +hyu-scale( .4 ) 
+    left: -190%
+    overflow: visible
+  rb[zhuyin]
+    width: 1.55em !important
+
+    zhuyin
+      +hyu-scale( .4 )
+      right: .05em !important
+    &[length='2'],
+    &[length='3']
+      zhuyin
+        top: .1em
+
+
