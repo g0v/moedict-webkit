@@ -1057,7 +1057,7 @@
         hide: 100,
         items: 'a',
         open: function(){
-          return Han($('.ui-tooltip-content h1')[0]).substCombLigaWithPUA().renderRuby();
+          return Han($('.ui-tooltip-content')[0]).substCombLigaWithPUA().renderRuby();
         },
         content: function(cb){
           var id;

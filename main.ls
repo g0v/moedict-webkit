@@ -620,7 +620,7 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        Han $('.ui-tooltip-content h1')[0]
+        Han $('.ui-tooltip-content')[0]
         .subst-comb-liga-with-PUA!
         .render-ruby!
       content: (cb) ->
