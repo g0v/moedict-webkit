@@ -548,32 +548,37 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   window.bind-html-actions = bind-html-actions = ->
+    $result = $ \#result
+    $h1 = $result.find \h1
+    $tooltip = $ '.ui-tooltip'
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
     do
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
       <- setTimeout _, 125ms
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
       <- setTimeout _, 125ms
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
 
-    $ \#result .ruby!
-    _pua!
-    $ '#result h1' .css \visibility \visible
+    Han $result.0
+    .subst-comb-liga-with-PUA!
+    .render-ruby!
     window.scroll-to 0 0
-
-    $('#result h1 rb[word]') .each ->
-      _h = HASH-OF[LANG]
-      _i = $ @ .attr 'word-order'
-      _ci = $ @ .attr 'word'
-      $ @ .wrap $('<a/>').attr({
-        'word-order': _i
-        'href': _h + _ci
-      })
-      .on 'mouseover' ->
-        _i = $ this .attr 'word-order'
-        $('#result h1 a[word-order=' + _i + ']').addClass \hovered
-      .on 'mouseout' ->
-        $('#result h1 a') .removeClass \hovered
+    $h1
+    .css \visibility \visible
+      .find 'a[word-id]'
+      .each ->
+        html = @.cloneNode().outerHTML
+        ci = document.createTextNode $(@).text!
+        $rb = $ @ .offset-parent!
+        $rb.wrap html 
+        $rb.0.replaceChild ci, @
+      .end!
+    .on \mouseover, 'a[word-id]' !->
+      $it = $ @
+      i = $it.attr \word-id
+      $it.parents \h1 .find 'a[word-id=' + i + ']' .addClass \hovered
+    .on \mouseout, 'a.hovered' !->
+      $h1.find \a .removeClass \hovered
 
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -615,8 +620,9 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        $('.ui-tooltip-content h1').ruby!
-        _pua!
+        Han $('.ui-tooltip-content h1')[0]
+        .subst-comb-liga-with-PUA!
+        .render-ruby!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~]?/, ''
         callLater ->
@@ -635,6 +641,7 @@ window.do-load = ->
             try $(@).tooltip \open
         out: -> try $(@).tooltip \close
 
+    # TODO: delete this 
     function _pua
       $('hruby rb[annotation]').each ->
         a = $ @ .attr \annotation

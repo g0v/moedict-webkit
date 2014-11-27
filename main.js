@@ -964,39 +964,39 @@
       });
     };
     window.bindHtmlActions = bindHtmlActions = function(){
-      var vclick;
+      var $result, $h1, $tooltip, vclick;
+      $result = $('#result');
+      $h1 = $result.find('h1');
+      $tooltip = $('.ui-tooltip');
       if ($('svg, canvas').length && !$('body').hasClass('autodraw')) {
         $('#strokes').fadeOut('fast', function(){
           $('#strokes').html('');
           return window.scrollTo(0, 0);
         });
       }
-      $('.ui-tooltip').remove();
+      $tooltip.remove();
       setTimeout(function(){
-        $('.ui-tooltip').remove();
+        $tooltip.remove();
         return setTimeout(function(){
-          return $('.ui-tooltip').remove();
+          return $tooltip.remove();
         }, 125);
       }, 125);
-      $('#result').ruby();
-      _pua();
-      $('#result h1').css('visibility', 'visible');
+      Han($result[0]).substCombLigaWithPUA().renderRuby();
       window.scrollTo(0, 0);
-      $('#result h1 rb[word]').each(function(){
-        var _h, _i, _ci;
-        _h = HASHOF[LANG];
-        _i = $(this).attr('word-order');
-        _ci = $(this).attr('word');
-        return $(this).wrap($('<a/>').attr({
-          'word-order': _i,
-          'href': _h + _ci
-        })).on('mouseover', function(){
-          var _i;
-          _i = $(this).attr('word-order');
-          return $('#result h1 a[word-order=' + _i + ']').addClass('hovered');
-        }).on('mouseout', function(){
-          return $('#result h1 a').removeClass('hovered');
-        });
+      $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
+        var html, ci, $rb;
+        html = this.cloneNode().outerHTML;
+        ci = document.createTextNode($(this).text());
+        $rb = $(this).offsetParent();
+        $rb.wrap(html);
+        return $rb[0].replaceChild(ci, this);
+      }).end().on('mouseover', 'a[word-id]', function(){
+        var $it, i;
+        $it = $(this);
+        i = $it.attr('word-id');
+        $it.parents('h1').find('a[word-id=' + i + ']').addClass('hovered');
+      }).on('mouseout', 'a.hovered', function(){
+        $h1.find('a').removeClass('hovered');
       });
       $('#result .part-of-speech a').attr('href', null);
       setPinyinBindings();
@@ -1057,8 +1057,7 @@
         hide: 100,
         items: 'a',
         open: function(){
-          $('.ui-tooltip-content h1').ruby();
-          return _pua();
+          return Han($('.ui-tooltip-content h1')[0]).substCombLigaWithPUA().renderRuby();
         },
         content: function(cb){
           var id;

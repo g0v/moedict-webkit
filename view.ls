@@ -13,6 +13,9 @@ withProperties = (tag, def-props={}) ->
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
+cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<])'
+r-cjk-one  = new RegExp "^#{cjk}$"
+r-cjk-g  = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -423,8 +426,6 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
   cn-specific = ''
   cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
-  t = title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~'
-  t -= /<[^>]+>/g
   b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
   b .= replace /（[語|讀|又]音）[\u200B]?/, ''
   b .= replace /\(變\)\u200B\/.*/, ''
@@ -432,14 +433,22 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   cn-specific-bpmf = b - /.*<br>陸./ if b is /<br>陸/
   b .= replace /<br>(.*)/, ''
   b -= /.\u20DF/g
-  if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
-    ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
+  if r-cjk-one.test title
+    ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    ruby = '<rbc>' + t.replace( /([^`~]+)/g, (m, ci, o, s) ->
-      return if ( ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
-             then '<rb word="' + ci + '">' + ci + '</rb>'
-             else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
-    ).replace(/([`~])/g, '') + '</rbc>'
+    r-cjk-ci = new RegExp "(<a href=\"#[':~]?(#cjk+)\")>\\2</a>" \g
+    ruby = title
+    .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
+      open-tag = "<rb>#open-tag word-id=\"#offset\">"
+      close-tag = \</a></rb>
+      open-tag + ci.split('').join("#close-tag#open-tag") + close-tag
+    # Deal with rare CJK not indexed, such as ○, 𤍤
+    .replace new RegExp("<\/rb>(#cjk+)(<rb>)?", \g), ( mat, rare-cjk, x, open-tag ) ->
+      open-tag = open-tag || ''
+      if r-cjk-one.test rare-cjk
+        "</rb><rb>#rare-cjk</rb>" + open-tag
+      else
+        "</rb><rb>" + rare-cjk.split('').join("</rb><rb>") + open-tag
   p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
@@ -468,8 +477,8 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else ''
     yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if isParallel
     p[idx] = "<rt#span>#yin</rt>"
-  ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-  ruby += '<rtc style="display: none" class="romanization">'
+  ruby += '<rtc hidden class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+  ruby += '<rtc hidden class="romanization">'
   ruby += p.join ''
   ruby += '</rtc>'
   if LANG is \c
@@ -832,7 +841,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
   return part
 
 if module?
-  module?.exports = { Result, DropDown, Nav, Links, decodeLangPart }
+  module.exports = { Result, DropDown, Nav, Links, decodeLangPart }
 else
   React{}.View.Result = Result
   React.View.Nav = Nav
