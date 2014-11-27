@@ -25,7 +25,7 @@
   h1Name = withProperties(h1, {
     itemProp: 'name'
   });
-  cjk = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<])';
+  cjk = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])';
   rCjkOne = new RegExp("^" + cjk + "$");
   rCjkG = new RegExp(cjk, 'g');
   nbsp = '\u00A0';
@@ -1001,11 +1001,9 @@
         closeTag = '</a></rb>';
         return ci = ci.replace(rCjkG, openTag + "$1" + closeTag);
       }).replace(new RegExp("</rb>(" + cjk + "+)(<rb>)?", 'g'), function(mat, rareCjk, x, openTag){
-        var closeTag;
         openTag = openTag || '';
-        closeTag = '</rb>';
-        rareCjk = rareCjk.replace(rCjkG, "<rb>$1" + closeTag);
-        return rareCjk + openTag;
+        rareCjk = rareCjk.replace(rCjkG, '<rb>$1</rb>');
+        return '</rb>' + rareCjk + openTag;
       });
     }
     p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
