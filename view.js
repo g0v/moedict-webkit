@@ -847,11 +847,6 @@
       }
       list = [titleRuby
         ? ruby({
-          style: {
-            display: 'inline-block',
-            marginTop: '20px',
-            marginBottom: '17px'
-          },
           className: "rightangle",
           dangerouslySetInnerHTML: {
             __html: h(titleRuby)

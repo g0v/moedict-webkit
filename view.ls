@@ -330,7 +330,7 @@ Heteronym = createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
+      ruby { className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
