@@ -1,13 +1,23 @@
-@charset "utf-8"
 
-/*! 漢字標準格式 v3.0.0 | MIT License | css.hanzi.co */
-/*! Han: CSS typography framework optimised for Hanzi */
+// Use MOEDICT.woff instead
+$han-webfont: url('./fonts/MOEDICT.woff') format('woff')
 
-$han-font-woff:  './fonts/han.woff'
-$han-font-otf:   './fonts/han.otf'
+$han-glyph-set-hant: CNS
+$han-biaodian-hant:  CNS
 
-@import han/var
-@import han/api
+$han-sans:  MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial
+$han-serif: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman'
+
+$han-sans-zh: "'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'"
+
+$han-serif-zh: "'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'"
+
+$han-cursive-zh: "'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'"
+
+@import 'han/var'
+@import 'han/api'
+
+$mre-webfont: $han-webfont 
 
 @import han/hyu/normalize
 // @import han/locale

@@ -21,14 +21,17 @@ $_default-variant: $mre-glyph-set-hant
 
 @function mre-typeface( $typeface: sans, $set: default, $pre: null )
   @if ( $set == default )
-    $set: ''
+    $typeface: $typeface 
   @else
-    $set: ' ' + $set
+    $typeface: $typeface + ' ' + $set
+
 
   @if ( $pre == null or $pre == '' )
-    @return $typeface + $set
+    @return $typeface
 
-  @return $pre + ', ' + $typeface + $set
+  $typeface: '"' + $typeface + '"'
+  $pre: #{$pre} 
+  @return $pre + ', ' + $typeface
 
 @import extend/sans
 @import extend/serif
