@@ -1090,7 +1090,7 @@
     }
     ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>';
     ruby += '<rtc style="display: none" class="romanization">';
-    ruby += p.join('');
+    ruby += p.join('').replace(/\u200B/g, '');
     ruby += '</rtc>';
     if (LANG === 'c') {
       if (/<br>/.exec(bopomofo)) {

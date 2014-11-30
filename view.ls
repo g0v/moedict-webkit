@@ -470,7 +470,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     p[idx] = "<rt#span>#yin</rt>"
   ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
   ruby += '<rtc style="display: none" class="romanization">'
-  ruby += p.join ''
+  ruby += p.join('').replace(/\u200B/g, '')
   ruby += '</rtc>'
   if LANG is \c
     if bopomofo is /<br>/
