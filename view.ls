@@ -506,7 +506,7 @@ const DT-Tones = {
 # ă(5) 直接轉 ā̱ (7+3) # 優勢腔變中平 ā (7)，台北變 a̲ (3)
 
 
-function convert-pinyin-t (yin)
+function convert-pinyin-t (yin, isBody)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
   if system is /DT$/
@@ -536,7 +536,7 @@ function convert-pinyin-t (yin)
               .replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A')
               .replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A')
               .replace(/nn($|[-\s])/g, 'ⁿ$1')
-    if yin2 is /[.,!?]/
+    if isBody
       # We're in examples; apply DT tone-sandhi across phrase boundaries
       # (delimited by punctuation) according to 呂富美's suggestion
       yin2.=replace(/((?:[^\.,!?]*(?:\w[^-\.,!?\w\s\u2011]*)[- \u2011])+)(\w)/g, (_, $1, $2) ->
@@ -576,13 +576,13 @@ function tone-sandhi (seg)
     return seg.replace(/\u0304/, '\u0300')      # 4(h) -> 2
   return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
 
-function convert-pinyin (yin)
+function convert-pinyin (yin, isBody)
   yin.=replace(/-/g '\u2011')
-  return convert-pinyin-t yin if $?('body').hasClass('lang-t')
+  return convert-pinyin-t(yin, isBody) if $?('body').hasClass('lang-t')
   return yin unless $?('body').hasClass('lang-a')
   system = localStorage?getItem \pinyin_a
   return yin unless system and PinYinMap[system - /^HanYu-/]
-  return [ convert-pinyin y for y in yin.split(/\s+/) ].join(' ') if yin is /\s/
+  return [ convert-pinyin(y, isBody) for y in yin.split(/\s+/) ].join(' ') if yin is /\s/
   tone = 5
   tone = 1 if yin is /[āōēīūǖ]/
   tone = 2 if yin is /[áóéíúǘ]/
@@ -768,7 +768,7 @@ function h (it)
         if localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
           trs.replace(/-/g "\u2011")
         }</span>" else ""
-      }#{ convert-pinyin-t trs }
+      }#{ convert-pinyin-t trs, yes }
     """
   return res
 
