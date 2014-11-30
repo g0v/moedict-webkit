@@ -981,6 +981,7 @@
           return $tooltip.remove();
         }, 125);
       }, 125);
+      React.render(React.View.UserPref(), $('#user-pref')[0]);
       Han($result[0]).substCombLigaWithPUA().renderRuby();
       window.scrollTo(0, 0);
       $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
@@ -1118,7 +1119,7 @@
           }
           return $(this).attr('annotation', replace$.call(a, /<span[^<]*<\/span>/g, ''));
         });
-        $('hruby rb[diao]').each(function(){
+        return $('hruby rb[diao]').each(function(){
           var d;
           d = $(this).attr('diao');
           d = d.replace(/([\u31B4-\u31B7])[\u0358|\u030d]/g, function(m, j){
@@ -1132,7 +1133,6 @@
           });
           return $(this).attr('diao', d);
         });
-        return React.render(React.View.UserPref(), $('#user-pref')[0]);
       }
       return _pua;
     };

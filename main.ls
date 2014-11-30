@@ -559,6 +559,7 @@ window.do-load = ->
       <- setTimeout _, 125ms
       $tooltip.remove!
 
+    React.render React.View.UserPref!, $(\#user-pref).0
     Han $result.0
     .subst-comb-liga-with-PUA!
     .render-ruby!
@@ -668,8 +669,6 @@ window.do-load = ->
                  else if j is \\u31B6 then \\uDB8C\uDDB6
                  else if j is \\u31B7 then \\uDB8C\uDDB7
         $ @ .attr \diao, d
-
-      React.render React.View.UserPref!, $(\#user-pref).0
 
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
