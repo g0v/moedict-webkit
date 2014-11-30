@@ -446,15 +446,19 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
              then '<rb word="' + ci + '">' + ci + '</rb>'
              else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
     ).replace(/([`~])/g, '') + '</rbc>'
-  p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
+  p = pinyin
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
+  converted-p = convert-pinyin(p)
+  converted-p .= replace /[,\.;，、；。－—]\s?/g, ' '
+  converted-p .= split ' '
+  p .= replace /[,\.;，、；。－—]\s?/g, ' '
   p .= split ' '
   isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
   isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $?('body').hasClass('lang-t')
   for yin, idx in p | yin
-    yin = convert-pinyin yin
+    yin = converted-p[idx]
     span = # 閩南語典，按隔音符計算字數
            if LANG is \t and yin is /[-\u2011]/g
            then ' rbspan="'+ (yin.match /[-\u2011]+/g .length+1) + '"'
@@ -506,7 +510,7 @@ const DT-Tones = {
 # ă(5) 直接轉 ā̱ (7+3) # 優勢腔變中平 ā (7)，台北變 a̲ (3)
 
 
-function convert-pinyin-t (yin, isBody)
+function convert-pinyin-t (yin, isBody=true)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
   if system is /DT$/
@@ -525,7 +529,7 @@ function convert-pinyin-t (yin, isBody)
               .replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1')
               .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
-              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
+              .replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
               .replace(/([\u0300-\u0302\u0304\u0307\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])([ptkh])/g, '$1\u0304$2')
               .replace(/\u200B/g, '')

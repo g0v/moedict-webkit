@@ -1019,7 +1019,7 @@
     }
   });
   decorateRuby = function(arg$){
-    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, t, b, cnSpecificBpmf, ruby, p, isParallel, i$, len$, idx, yin, span, cns, tws;
+    var LANG, title, ref$, bopomofo, py, pinyin, trs, youyin, bAlt, pAlt, cnSpecific, t, b, cnSpecificBpmf, ruby, p, convertedP, isParallel, i$, len$, idx, yin, span, cns, tws;
     LANG = arg$.LANG, title = (ref$ = arg$.title) != null ? ref$ : '', bopomofo = arg$.bopomofo, py = arg$.py, pinyin = (ref$ = arg$.pinyin) != null ? ref$ : py, trs = arg$.trs;
     pinyin == null && (pinyin = trs != null ? trs : '');
     if (LANG !== 'c') {
@@ -1078,10 +1078,14 @@
           : ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>');
       }).replace(/([`~])/g, '') + '</rbc>';
     }
-    p = pinyin.replace(/[,\.;，、；。－—]\s?/g, ' ');
+    p = pinyin;
     p = p.replace(/\(變\)\u200B.*/, '');
     p = p.replace(/\/.*/, '');
     p = p.replace(/<br>.*/, '');
+    convertedP = convertPinyin(p);
+    convertedP = convertedP.replace(/[,\.;，、；。－—]\s?/g, ' ');
+    convertedP = convertedP.split(' ');
+    p = p.replace(/[,\.;，、；。－—]\s?/g, ' ');
     p = p.split(' ');
     if (typeof $ == 'function' && $('body').hasClass('lang-a')) {
       isParallel = /^HanYu-/.exec(typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_a') : void 8);
@@ -1093,7 +1097,7 @@
       idx = i$;
       yin = p[i$];
       if (yin) {
-        yin = convertPinyin(yin);
+        yin = convertedP[idx];
         span = LANG === 't' && /[-\u2011]/g.exec(yin)
           ? ' rbspan="' + (yin.match(/[-\u2011]+/g).length + 1) + '"'
           : LANG !== 't' && /^[^eēéěè].*r\d?$/g.exec(yin)
@@ -1143,12 +1147,13 @@
   };
   function convertPinyinT(yin, isBody){
     var system, yin2;
+    isBody == null && (isBody = true);
     system = (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8) || 'TL';
     if (system === 'TL') {
       return yin;
     }
     if (/DT$/.exec(system)) {
-      yin2 = yin.replace(/-/g, '\u2011').replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/Tsh/g, 'C').replace(/Ts/g, 'Z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u0307\u030d])/g, function(it){
+      yin2 = yin.replace(/-/g, '\u2011').replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/Tsh/g, 'C').replace(/Ts/g, 'Z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u0307\u030d])/g, function(it){
         return DTTones[it];
       }).replace(/([aeiou])([ptkh])/g, '$1\u0304$2').replace(/\u200B/g, '').replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1');
       if (isBody) {
