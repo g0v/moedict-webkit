@@ -345,9 +345,15 @@ Heteronym = createClass do
       meta { itemProp: \name, content: mp3 - /^.*\// }
       meta { itemProp: \contentURL, content: mp3 }
     if b-alt
-      list ++= small { className: \alternative },
-        span { className: \pinyin } convert-pinyin p-alt
-        span { className: \bopomofo } b-alt
+      if localStorage?getItem("pinyin_#LANG") is /-/
+        list ++= small { className: \alternative },
+          span { className: \pinyin } p-alt
+          span { className: \bopomofo, style: { margin: 0 padding: 0 marginTop: \4px } } b-alt
+          span { className: \pinyin } convert-pinyin p-alt
+      else
+        list ++= small { className: \alternative },
+          span { className: \pinyin } convert-pinyin p-alt
+          span { className: \bopomofo } b-alt
     list ++= span { lang: \en, className: \english } english if english
     list ++= span { className: \specific_to, dangerouslySetInnerHTML: { __html: h specific_to } } if specific_to
 
@@ -491,7 +497,7 @@ const DT-Tones = {
   "\u0302": "\u0306"  # 5
   "\u0304": "\u0304"  "\u0305": "\u0305"  # 7
   "\u0306": "\u0301"  # 9
-  "\u0307": ""        "\u030d": ""        # 8
+  "\u0307": "\u200B"  "\u030d": "\u200B"        # 8
 }
 
 # ptk(4) 變高入 (1)
@@ -514,14 +520,15 @@ function convert-pinyin-t (yin)
               .replace(/j/g, 'r')
               .replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1') # Consonants
               .replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1')
-              .replace(/tsh/g, 'c').replace(/ts/g, 'z')
+              .replace(/Tsh/g, 'C').replace(/Ts/g, 'Z')
               .replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1')
               .replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1')
               .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
-              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
-              .replace(/([\u0300-\u0302\u0304\u030d])/g -> DT-Tones[it])
+              .replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
+              .replace(/([\u0300-\u0302\u0304\u0307\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])([ptkh])/g, '$1\u0304$2')
+              .replace(/\u200B/g, '')
               .replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A')
               .replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A')
               .replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A')
@@ -532,8 +539,8 @@ function convert-pinyin-t (yin)
     if yin2 is /[.,!?]/
       # We're in examples; apply DT tone-sandhi across phrase boundaries
       # (delimited by punctuation) according to 呂富美's suggestion
-      yin2.=replace(/((?:[^.,!?]*(?:\w[^.,!?\w\s\u2011]*)[ \u2011])+)(\w)/g, (_, $1, $2) ->
-        [ tone-sandhi seg for seg in $1.split(/([ \u2011.,!?])/) ].join("") + $2)
+      yin2.=replace(/((?:[^\.,!?]*(?:\w[^-\.,!?\w\s\u2011]*)[- \u2011])+)(\w)/g, (_, $1, $2) ->
+        [ tone-sandhi seg for seg in $1.split(/([- \u2011\.,!?])/) ].join("") + $2)
     else
       # Title words; apply tone-sandhi only within a multi-syllable phrase
       yin2.=replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
@@ -554,7 +561,7 @@ function convert-pinyin-t (yin)
 const DT-Tones-Sandhi = {
     "\u0300": ""              # 2,6 ->  1
     "\u0332": "\u0300"        # 3   ->  2
-    "\u0306": "\u0304\u0331"  # 5   ->  3+7
+    "\u0306": "\u0304"        # 5   ->  7
     "\u0304": "\u0332"        # 7   ->  3
 }
 function tone-sandhi (seg)
