@@ -9624,7 +9624,7 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 }
 @font-face {
   font-family: "EBAS";
-  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
+  src: url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
 }
 @font-face {
   font-family: "MOEDICT";
