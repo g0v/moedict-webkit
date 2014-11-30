@@ -10159,7 +10159,7 @@ body.lang-a.web #lookback {
 
 .cc0 {
   line-height: 1.5;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 
 img.logo {
@@ -10423,7 +10423,7 @@ canvas {
 
 hruby rb[annotation]:before,
 hruby rb[annotation]:after {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   font-weight: normal;
 }
 
@@ -10678,12 +10678,12 @@ body#moedict.overflow-scrolling-false.lang-t .pinyin {
   font-family: 'MOEDICT';
 }
 body#moedict.lang-t .pinyin {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 
 .english {
   word-break: normal !important;
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   font-weight: normal;
   font-size: 90%;
   margin-left: 5px;
@@ -10691,7 +10691,7 @@ body#moedict.lang-t .pinyin {
 }
 
 .pinyin {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   display: inline-block;
   word-break: normal !important;
 }
@@ -10782,7 +10782,7 @@ body.lang-h h1 {
   padding-bottom: 0;
 }
 body.lang-h .bopomofo {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
@@ -10816,7 +10816,7 @@ body.lang-c .specific {
 }
 
 .translation .fw_def {
-  font-family: "Fira Sans OT", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "MOEDICT", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   display: inline;
   padding-left: 3.3ex;
   font-size: 90%;

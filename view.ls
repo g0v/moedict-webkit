@@ -504,7 +504,7 @@ function convert-pinyin-t (yin)
   system = localStorage?getItem(\pinyin_t) || \TL
   return yin if system is \TL
   if system is /DT$/
-    return yin.replace(/-/g, '\u2011')
+    yin2 = yin.replace(/-/g, '\u2011')
               .replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1') # Consonants
               .replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1')
               .replace(/tsh/g, 'c').replace(/ts/g, 'z')
@@ -529,8 +529,16 @@ function convert-pinyin-t (yin)
               .replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A')
               .replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A')
               .replace(/nn($|[-\s])/g, 'ⁿ$1')
-              .replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
-                [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
+    if yin2 is /[.,!?]/
+      # We're in examples; apply DT tone-sandhi across phrase boundaries
+      # (delimited by punctuation) according to 呂富美's suggestion
+      yin2.=replace(/((?:[^.,!?]*(?:\w[^.,!?\w\s\u2011]*)[ \u2011])+)(\w)/g, (_, $1, $2) ->
+        [ tone-sandhi seg for seg in $1.split(/([ \u2011.,!?])/) ].join("") + $2)
+    else
+      # Title words; apply tone-sandhi only within a multi-syllable phrase
+      yin2.=replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
+        [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
+    return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')
             .replace(/ts/g, 'ch')
@@ -550,6 +558,7 @@ const DT-Tones-Sandhi = {
     "\u0304": "\u0332"        # 7   ->  3
 }
 function tone-sandhi (seg)
+  return seg unless seg is /\w/
   if seg is /[aeiou][hptk]/
     return seg.replace(/([aioue])/, '$1\u0332') # 8 -> 3
   if seg isnt /[\u0300\u0332\u0306\u0304]/

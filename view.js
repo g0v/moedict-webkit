@@ -1125,25 +1125,41 @@
     "\u030d": ""
   };
   function convertPinyinT(yin){
-    var system;
+    var system, yin2;
     system = (typeof localStorage != 'undefined' && localStorage !== null ? localStorage.getItem('pinyin_t') : void 8) || 'TL';
     if (system === 'TL') {
       return yin;
     }
     if (/DT$/.exec(system)) {
-      return yin.replace(/-/g, '\u2011').replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d])/g, function(it){
+      yin2 = yin.replace(/-/g, '\u2011').replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^\w\s\u2011]*)o/g, 'O$1O').replace(/o([^\w\s\u2011]*)(?![^\w\s\u2011]*[hptknm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u030d])/g, function(it){
         return DTTones[it];
-      }).replace(/([aeiou])([ptkh])/g, '$1\u0304$2').replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, function(_, $1, $2){
-        var seg;
-        return (function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = $1.split('\u2011')).length; i$ < len$; ++i$) {
-            seg = ref$[i$];
-            results$.push(toneSandhi(seg));
-          }
-          return results$;
-        }()).join("\u2011") + $2;
-      });
+      }).replace(/([aeiou])([ptkh])/g, '$1\u0304$2').replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1');
+      if (/[.,!?]/.exec(yin2)) {
+        yin2 = yin2.replace(/((?:[^.,!?]*(?:\w[^.,!?\w\s\u2011]*)[ \u2011])+)(\w)/g, function(_, $1, $2){
+          var seg;
+          return (function(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = $1.split(/([ \u2011.,!?])/)).length; i$ < len$; ++i$) {
+              seg = ref$[i$];
+              results$.push(toneSandhi(seg));
+            }
+            return results$;
+          }()).join("") + $2;
+        });
+      } else {
+        yin2 = yin2.replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, function(_, $1, $2){
+          var seg;
+          return (function(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = $1.split('\u2011')).length; i$ < len$; ++i$) {
+              seg = ref$[i$];
+              results$.push(toneSandhi(seg));
+            }
+            return results$;
+          }()).join("\u2011") + $2;
+        });
+      }
+      return yin2;
     }
     return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/([ie])r/g, '$1\u0358').replace(/\u030B/g, "\u0306");
   }
@@ -1154,6 +1170,9 @@
     "\u0304": "\u0332"
   };
   function toneSandhi(seg){
+    if (!/\w/.test(seg)) {
+      return seg;
+    }
     if (/[aeiou][hptk]/.exec(seg)) {
       return seg.replace(/([aioue])/, '$1\u0332');
     }

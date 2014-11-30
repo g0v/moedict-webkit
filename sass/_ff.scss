@@ -54,10 +54,8 @@
 }
 
 @mixin en-fonts {
-    font-family:
-        "Fira Sans OT", "Segoe UI", "Charis SIL",
-        "Biaodian Pro Sans CNS", "MOEDICT",
-        sans-serif;
+    font-family: "Noto Sans", "Geneva", "Segoe UI",
+        "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 
 
