@@ -561,8 +561,8 @@ window.do-load = ->
 
     React.render React.View.UserPref!, $(\#user-pref).0
     Han $result.0
-    .subst-comb-liga-with-PUA!
     .render-ruby!
+    .subst-comb-liga-with-PUA!
     window.scroll-to 0 0
     $h1
     .css \visibility \visible
@@ -622,8 +622,8 @@ window.do-load = ->
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
         Han $('.ui-tooltip-content')[0]
-        .subst-comb-liga-with-PUA!
         .render-ruby!
+        .subst-comb-liga-with-PUA!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~]?/, ''
         callLater ->
@@ -641,34 +641,6 @@ window.do-load = ->
           unless $(\#loading).length
             try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-
-    # TODO: delete this 
-    function _pua
-      $('hruby rb[annotation]').each ->
-        a = $ @ .attr \annotation
-
-        if isDroidGap or isChrome
-          a .= replace /([aeiou])\u030d/g (m, v) ->
-            return      if v is \a then \\uDB80\uDC61
-                   else if v is \e then \\uDB80\uDC65
-                   else if v is \i then \\uDB80\uDC69
-                   else if v is \o then \\uDB80\uDC6F
-                   else if v is \u then \\uDB80\uDC75
-        else
-          a .= replace /i\u030d/g \\uDB80\uDC69
-
-        if a is /(<span[^<]*<\/span>)/
-          $(RegExp.$1).appendTo $(\<span/> class: \specific_to).appendTo $(@).parents('h1')
-        $ @ .attr \annotation, a - /<span[^<]*<\/span>/g
-
-      $('hruby rb[diao]').each ->
-        d = $ @ .attr \diao
-        d .= replace /([\u31B4-\u31B7])[\u0358|\u030d]/g (m, j) ->
-          return      if j is \\u31B4 then \\uDB8C\uDDB4
-                 else if j is \\u31B5 then \\uDB8C\uDDB5
-                 else if j is \\u31B6 then \\uDB8C\uDDB6
-                 else if j is \\u31B7 then \\uDB8C\uDDB7
-        $ @ .attr \diao, d
 
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part

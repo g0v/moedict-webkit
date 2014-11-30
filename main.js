@@ -982,7 +982,7 @@
         }, 125);
       }, 125);
       React.render(React.View.UserPref(), $('#user-pref')[0]);
-      Han($result[0]).substCombLigaWithPUA().renderRuby();
+      Han($result[0]).renderRuby().substCombLigaWithPUA();
       window.scrollTo(0, 0);
       $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
         var html, ci, $rb;
@@ -1058,7 +1058,7 @@
         hide: 100,
         items: 'a',
         open: function(){
-          return Han($('.ui-tooltip-content')[0]).substCombLigaWithPUA().renderRuby();
+          return Han($('.ui-tooltip-content')[0]).renderRuby().substCombLigaWithPUA();
         },
         content: function(cb){
           var id;
@@ -1074,7 +1074,7 @@
           });
         }
       });
-      $('#result a[href]:not(.xref)').hoverIntent({
+      return $('#result a[href]:not(.xref)').hoverIntent({
         timeout: 250,
         over: function(){
           var this$ = this;
@@ -1093,48 +1093,6 @@
           } catch (e$) {}
         }
       });
-      function _pua(){
-        $('hruby rb[annotation]').each(function(){
-          var a;
-          a = $(this).attr('annotation');
-          if (isDroidGap || isChrome) {
-            a = a.replace(/([aeiou])\u030d/g, function(m, v){
-              return v === 'a'
-                ? '\uDB80\uDC61'
-                : v === 'e'
-                  ? '\uDB80\uDC65'
-                  : v === 'i'
-                    ? '\uDB80\uDC69'
-                    : v === 'o'
-                      ? '\uDB80\uDC6F'
-                      : v === 'u' ? '\uDB80\uDC75' : void 8;
-            });
-          } else {
-            a = a.replace(/i\u030d/g, '\uDB80\uDC69');
-          }
-          if (/(<span[^<]*<\/span>)/.exec(a)) {
-            $(RegExp.$1).appendTo($('<span/>', {
-              'class': 'specific_to'
-            }).appendTo($(this).parents('h1')));
-          }
-          return $(this).attr('annotation', replace$.call(a, /<span[^<]*<\/span>/g, ''));
-        });
-        return $('hruby rb[diao]').each(function(){
-          var d;
-          d = $(this).attr('diao');
-          d = d.replace(/([\u31B4-\u31B7])[\u0358|\u030d]/g, function(m, j){
-            return j === '\u31B4'
-              ? '\uDB8C\uDDB4'
-              : j === '\u31B5'
-                ? '\uDB8C\uDDB5'
-                : j === '\u31B6'
-                  ? '\uDB8C\uDDB6'
-                  : j === '\u31B7' ? '\uDB8C\uDDB7' : void 8;
-          });
-          return $(this).attr('diao', d);
-        });
-      }
-      return _pua;
     };
     fillJson = function(part, id, cb){
       var reactProps, xrefs, res$, lang, ref$, words;
