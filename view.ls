@@ -570,13 +570,15 @@ const DT-Tones-Sandhi = {
 }
 function tone-sandhi (seg)
   return seg unless seg is /\w/
-  if seg is /[aeiou][hptk]/
+  if seg is /[aeiou]r?[hptk]/
     return seg.replace(/([aioue])/, '$1\u0332') # 8 -> 3
   if seg isnt /[\u0300\u0332\u0306\u0304]/
+    if seg isnt /[aioue]/
+      return seg.replace(/([nm])/, '$1\u0304') # 1 -> 7
     return seg.replace(/([aioue])/, '$1\u0304') # 1 -> 7
-  if seg is /[aeiou]\u0304[ptk]/
+  if seg is /[aeiou]\u0304r?[ptk]/
     return seg.replace(/\u0304/, '')            # 4(ptk) -> 8
-  if seg is /[aeiou]\u0304[h]/
+  if seg is /[aeiou]\u0304r?[h]/
     return seg.replace(/\u0304/, '\u0300')      # 4(h) -> 2
   return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
 

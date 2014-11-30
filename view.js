@@ -1195,16 +1195,19 @@
     if (!/\w/.test(seg)) {
       return seg;
     }
-    if (/[aeiou][hptk]/.exec(seg)) {
+    if (/[aeiou]r?[hptk]/.exec(seg)) {
       return seg.replace(/([aioue])/, '$1\u0332');
     }
     if (!/[\u0300\u0332\u0306\u0304]/.test(seg)) {
+      if (!/[aioue]/.test(seg)) {
+        return seg.replace(/([nm])/, '$1\u0304');
+      }
       return seg.replace(/([aioue])/, '$1\u0304');
     }
-    if (/[aeiou]\u0304[ptk]/.exec(seg)) {
+    if (/[aeiou]\u0304r?[ptk]/.exec(seg)) {
       return seg.replace(/\u0304/, '');
     }
-    if (/[aeiou]\u0304[h]/.exec(seg)) {
+    if (/[aeiou]\u0304r?[h]/.exec(seg)) {
       return seg.replace(/\u0304/, '\u0300');
     }
     return seg.replace(/([\u0300\u0332\u0306\u0304])/g, function(it){
