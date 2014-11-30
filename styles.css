@@ -9620,15 +9620,15 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 
 @font-face {
   font-family: "Fira Sans OT";
-  src: url('fonts/FiraSansOT-Regular.ttf') format('truetype');
+  src: url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: "EBAS";
-  src: url('fonts/EBAS-Subset.ttf') format('truetype');
+  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
 }
 @font-face {
   font-family: "MOEDICT";
-  src: url('fonts/MOEDICT.ttf') format('truetype');
+  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 @font-face {
   font-family: MOEDICT-IOS-KAI;

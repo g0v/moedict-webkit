@@ -1,13 +1,19 @@
 
 @include font-face("Fira Sans OT", font-files(
+   "FiraSansOT-Regular.woff", woff,
+   "FiraSansOT-Regular.otf", opentype,
    "FiraSansOT-Regular.ttf", truetype
 ));
 
 @include font-face(EBAS, font-files(
+   "MOEDICT.woff", woff,
+   "MOEDICT.otf", opentype,
    "EBAS-Subset.ttf", truetype
 ));
 
 @include font-face(MOEDICT, font-files(
+   "MOEDICT.woff", woff,
+   "MOEDICT.otf", opentype,
    "MOEDICT.ttf", truetype
 ));
 
