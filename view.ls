@@ -549,6 +549,9 @@ function convert-pinyin-t (yin, isBody=true)
       # Title words; apply tone-sandhi only within a multi-syllable phrase
       yin2.=replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
         [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
+    # -仔 sandhi. We handle only the two obvious, non-contentious cases.
+    yin2.=replace(/\u0332(\w*\u2011a\u0300)(?![-\w\u2011])/g '\u0304$1')  # 3 -> 4
+    yin2.=replace(/\u0300(\w*\u2011a\u0300)(?![-\w\u2011])/g '$1')        # 2 -> 1
     return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')

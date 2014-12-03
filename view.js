@@ -1181,6 +1181,8 @@
           }()).join("\u2011") + $2;
         });
       }
+      yin2 = yin2.replace(/\u0332(\w*\u2011a\u0300)(?![-\w\u2011])/g, '\u0304$1');
+      yin2 = yin2.replace(/\u0300(\w*\u2011a\u0300)(?![-\w\u2011])/g, '$1');
       return yin2;
     }
     return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/([ie])r/g, '$1\u0358').replace(/\u030B/g, "\u0306");
