@@ -515,14 +515,14 @@ function convert-pinyin-t (yin, isBody=true)
   return yin if system is \TL
   if system is /DT$/
     yin2 = yin.replace(/-/g, '\u2011')
-              .replace(/ph(\w)/, 'PH$1').replace(/b(\w)/g, 'bh$1') # Consonants
+              .replace(/ph(\w)/g, 'PH$1').replace(/b(\w)/g, 'bh$1') # Consonants
               .replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1')
               .replace(/tsh/g, 'c').replace(/ts/g, 'z')
               .replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1')
               .replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1')
               .replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1')
               .replace(/j/g, 'r')
-              .replace(/Ph(\w)/, 'pH$1').replace(/B(\w)/g, 'Bh$1') # Consonants
+              .replace(/Ph(\w)/g, 'pH$1').replace(/B(\w)/g, 'Bh$1') # Consonants
               .replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1')
               .replace(/Tsh/g, 'C').replace(/Ts/g, 'Z')
               .replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1')
