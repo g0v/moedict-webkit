@@ -567,12 +567,15 @@ window.do-load = ->
     $h1
     .css \visibility \visible
       .find 'a[word-id]'
-      .each ->
+      .each !->
+        $it = $ @
         html = @.cloneNode().outerHTML
-        ci = document.createTextNode $(@).text!
-        $rb = $ @ .offset-parent!
-        $rb.wrap html 
-        $rb.0.replaceChild ci, @
+        ci = document.createTextNode $it.text!
+        $it
+          .parents \ru
+          .wrap html 
+          .end!
+        .replace-with ci
       .end!
     .on \mouseover, 'a[word-id]' !->
       $it = $ @

@@ -1,21 +1,20 @@
 
 hruby
-  rb[annotation]:before,
-  rb zhuyin
+  ru[annotation]:before,
+  ru zhuyin
     color: #666
     z-index: 10
-  rb[annotation]:before
+  ru[annotation]:before
     +hyu-scale( .4 ) 
-    left: -190%
-    overflow: visible
+    left: -240% !important
 
-  rb[annotation][order='1']:before
+  ru[annotation][order='1']:before
     top: -.15em !important
-  rb[annotation][order='0']:before
+  ru[annotation][order='0']:before
     bottom: -.4em !important
     top: auto !important
 
-  rb[zhuyin]
+  ru[zhuyin]
     width: 1.55em !important
 
     zhuyin
@@ -31,16 +30,16 @@ hruby
   body[data-ruby-pref='none'] &
     zhuyin
       display: none
-    rb[zhuyin]
+    ru[zhuyin]
       width: 1em !important
-    rb[annotation]:before
-      left: -160% !important
+    ru[annotation]:before
+      left: -210% !important
   body[data-ruby-pref='zhuyin'] &,
   body[data-ruby-pref='none'] &
-    rb[annotation][order]:before,
-    rb[annotation][order] rt
+    ru[annotation][order]:before,
+    ru[annotation][order] rt
       display: none
   body[data-ruby-pref='none'] &,
-  body[data-ruby-pref='none'] & rb
+  body[data-ruby-pref='none'] & ru
     line-height: 1.3 !important 
 

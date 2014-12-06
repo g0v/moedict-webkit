@@ -405,18 +405,18 @@ hruby {
 hruby rp {
   display: none;
 }
-hruby rb[annotation] > rt {
+hruby ru[annotation] > rt {
   display: inline-block;
   height: 0;
   width: 0;
   font: 0/0 hidden-text;
 }
-hruby rb {
+hruby ru {
   position: relative;
   display: inline-block;
   text-indent: 0;
 }
-hruby rb:before,
+hruby ru:before,
 hruby zhuyin {
   -moz-transform: scale(0.55);
   -ms-transform: scale(0.55);
@@ -433,28 +433,30 @@ hruby zhuyin {
   position: absolute;
   display: inline-block;
 }
-hruby rb[annotation] {
+hruby ru[annotation] {
   text-align: center;
 }
-hruby rb[annotation]:before {
-  left: -200%;
+hruby ru[annotation]:before {
+  left: -265%;
   top: -0.5em;
   vertical-align: top;
   height: 1em;
-  width: 500%;
-  overflow: hidden;
+  width: 600%;
   content: attr(annotation);
   line-height: 1;
   text-align: center;
   text-indent: 0;
 }
-hruby rb[zhuyin] {
+hruby[rightangle] ru[annotation]:before {
+  left: -250%;
+}
+hruby ru[zhuyin] {
   display: inline-block;
   position: relative;
   width: 1.8em;
   text-align: left;
 }
-hruby rb[zhuyin] zhuyin {
+hruby ru[zhuyin] zhuyin {
   right: 0.2em;
   top: 0;
   height: 2.7em;
@@ -463,68 +465,68 @@ hruby rb[zhuyin] zhuyin {
   white-space: pre-wrap;
   word-break: break-all;
 }
-hruby rb[zhuyin] diao {
+hruby ru[zhuyin] diao {
   position: absolute;
   right: -0.9em;
   top: 0;
   display: inline-block;
   width: 1em;
 }
-hruby rb[zhuyin][length='0'], hruby rb[zhuyin]:empty {
+hruby ru[zhuyin][length='0'], hruby ru[zhuyin]:empty {
   width: auto;
 }
-hruby rb[zhuyin][length='0'] zhuyin, hruby rb[zhuyin]:empty zhuyin {
+hruby ru[zhuyin][length='0'] zhuyin, hruby ru[zhuyin]:empty zhuyin {
   display: none;
 }
-hruby rb[zhuyin][length='1'] zhuyin {
+hruby ru[zhuyin][length='1'] zhuyin {
   margin-top: 0.125em;
 }
-hruby rb[zhuyin][length='1'] diao {
+hruby ru[zhuyin][length='1'] diao {
   margin-top: -0.35em;
 }
-hruby rb[zhuyin][length='2'] zhuyin {
+hruby ru[zhuyin][length='2'] zhuyin {
   margin-top: -0.175em;
 }
-hruby rb[zhuyin][length='2'] diao {
+hruby ru[zhuyin][length='2'] diao {
   margin-top: 0.5em;
 }
-hruby rb[zhuyin][length='3'] zhuyin {
+hruby ru[zhuyin][length='3'] zhuyin {
   margin-top: -0.45em;
 }
-hruby rb[zhuyin][length='3'] diao {
+hruby ru[zhuyin][length='3'] diao {
   margin-top: 1.3em;
 }
-hruby rb[zhuyin][diao='˙'] diao {
-  right: -0.45em;
+hruby ru[zhuyin][diao='˙'] diao {
+  right: -0.35em;
 }
-hruby rb[zhuyin][diao='˙'][length='1'] diao {
-  margin-top: -0.4em;
+hruby ru[zhuyin][diao='˙'][length='1'] diao {
+  margin-top: -0.5em;
 }
-hruby rb[zhuyin][diao='˙'][length='2'] diao {
+hruby ru[zhuyin][diao='˙'][length='2'] diao {
+  margin-top: -0.3em;
+}
+hruby ru[zhuyin][diao='˙'][length='3'] diao {
   margin-top: -0.25em;
 }
-hruby rb[zhuyin][diao='˙'][length='3'] diao {
-  margin-top: -0.4em;
-}
-hruby rb[zhuyin][diao='˪'] diao, hruby rb[zhuyin][diao='˫'] diao {
+hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
   -moz-transform: scale(1.2);
   -ms-transform: scale(1.2);
   -webkit-transform: scale(1.2);
   transform: scale(1.2);
   margin-right: -0.25em;
 }
-hruby rb[zhuyin][diao^='ㆴ'] diao, hruby rb[zhuyin][diao^='ㆵ'] diao, hruby rb[zhuyin][diao^='ㆶ'] diao, hruby rb[zhuyin][diao^='ㆷ'] diao, hruby rb[zhuyin][diao='󳆴'] diao, hruby rb[zhuyin][diao='󳆵'] diao, hruby rb[zhuyin][diao='󳆶'] diao, hruby rb[zhuyin][diao='󳆷'] diao {
+hruby ru[zhuyin][diao^='ㆴ'] diao, hruby ru[zhuyin][diao^='ㆵ'] diao, hruby ru[zhuyin][diao^='ㆶ'] diao, hruby ru[zhuyin][diao^='ㆷ'] diao, hruby ru[zhuyin][diao='󳆴'] diao, hruby ru[zhuyin][diao='󳆵'] diao, hruby ru[zhuyin][diao='󳆶'] diao, hruby ru[zhuyin][diao='󳆷'] diao {
   top: 20%;
   margin-right: -0.3em;
 }
-hruby rb[annotation]:before {
+hruby ru[annotation]:before, hruby[rightangle] ru[annotation][order='1']:before {
   top: -0.5em;
 }
-hruby rb[order='1']:before, hruby[rightangle] rb[annotation]:before {
+hruby ru[order='1']:before, hruby[rightangle] ru[annotation][order='0']:before {
   bottom: -0.4em;
   top: auto;
 }
-hruby[rightangle] rb[annotation]:before {
+hruby[rightangle] ru[annotation]:before {
   margin-left: -0.4em;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
@@ -535,14 +537,14 @@ hruby[rightangle] rb[annotation]:before {
     transform: scale(0.8);
     display: inline-block;
   }
-  hruby rb[zhuyin][diao='˪'] diao,
-  hruby rb[zhuyin][diao='˫'] diao {
+  hruby ru[zhuyin][diao='˪'] diao,
+  hruby ru[zhuyin][diao='˫'] diao {
     -moz-transform: scale(1);
     -ms-transform: scale(1);
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-  hruby rb[zhuyin][diao='˙'] diao {
+  hruby ru[zhuyin][diao='˙'] diao {
     -moz-transform: scale(0.8);
     -ms-transform: scale(0.8);
     -webkit-transform: scale(0.8);
@@ -551,7 +553,6 @@ hruby[rightangle] rb[annotation]:before {
   }
 }
 
-/*! Mre v1.0.0 | MIT License | css.hanzi.co/mre */
 /**
  * The Four Typefaces: Heiti
  *  四大字體集・黑體
@@ -870,103 +871,103 @@ hruby[rightangle] rb[annotation]:before {
 /* Em dash (——) */
 @font-face {
   font-family: 'Biaodian Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Yakumono Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Yakumono Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 /* Ellipsis (……) */
 @font-face {
   font-family: 'Biaodian Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Yakumono Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Yakumono Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 /* Curve quotes (“‘’”, GB-only) */
@@ -1109,7 +1110,7 @@ hruby[rightangle] rb[annotation]:before {
  */
 @font-face {
   font-family: 'Biaodian Basic';
-  src: url("./fonts/MOEDICT.woff") format("woff");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
   unicode-range: U+2014, U+2026, U+00B7;
 }
 @font-face {
@@ -1283,7 +1284,7 @@ hruby[rightangle] rb[annotation]:before {
  * Zhuyin Kaiti
  */
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
   unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
   font-family: 'Zhuyin Kaiti';
 }
@@ -1293,15 +1294,15 @@ hruby[rightangle] rb[annotation]:before {
 @font-face {
   unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
   font-family: 'Zhuyin Heiti';
-  src: local("Hiragino Sans GB"), local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff");
+  src: local("Hiragino Sans GB"), local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
 }
 @font-face {
   font-family: 'Zhuyin Heiti';
-  src: local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff");
+  src: local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
   unicode-range: U+3127;
 }
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
   font-family: 'Zhuyin Heiti';
   unicode-range: U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+31B4, U+31B5, U+31B6, U+31B7, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
 }
@@ -1309,7 +1310,7 @@ hruby[rightangle] rb[annotation]:before {
  * Romanisation (checked tone ligature [陽入韻連字])
  */
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff");
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
   font-family: 'Romanization Sans';
   unicode-range: U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
 }
@@ -1320,7 +1321,7 @@ html *:not(:lang(zh)):not(:lang(ja)), article strong:lang(zh-Latn), article stro
 article strong *:lang(zh-Latn),
 article strong *:lang(ja-Latn),
 article strong *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", sans-serif;
+  font-family: MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 .result h1 .specific_to,
@@ -1338,12 +1339,12 @@ article strong *:not(:lang(zh)):not(:lang(ja)) {
 [lang*='Hant'],
 [lang='zh-TW'],
 [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
-  font-family: "Biaodian Pro Sans CNS", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", sans-serif;
+  font-family: "Biaodian Pro Sans CNS", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 html:lang(zh-Hans), html:lang(zh-CN), [lang*='Hans'],
 [lang='zh-CN'], article strong:lang(zh-Hans), article strong:lang(zh-CN) {
-  font-family: "Biaodian Pro Sans GB", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti GB", sans-serif;
+  font-family: "Biaodian Pro Sans GB", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
 }
 
 html:lang(ja), [lang^='ja'], article strong:lang(ja) {
@@ -1366,19 +1367,19 @@ article blockquote
 var *:lang(ja-Latn),
 article blockquote
 var *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", sans-serif;
+  font-family: "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 article blockquote i:lang(zh), article blockquote i:lang(zh-Hant), article blockquote
 var:lang(zh), article blockquote
 var:lang(zh-Hant) {
-  font-family: "Biaodian Pro Sans CNS", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", sans-serif;
+  font-family: "Biaodian Pro Sans CNS", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 article blockquote i:lang(zh-Hans), article blockquote i:lang(zh-CN), article blockquote
 var:lang(zh-Hans), article blockquote
 var:lang(zh-CN) {
-  font-family: "Biaodian Pro Sans GB", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti GB", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
 }
 
 article blockquote i:lang(ja), article blockquote
@@ -1393,15 +1394,15 @@ article figure blockquote *:not(:lang(zh)):not(:lang(ja)), figure blockquote:lan
 figure blockquote *:lang(zh-Latn),
 figure blockquote *:lang(ja-Latn),
 figure blockquote *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Songti CNS", cursive, serif;
+  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti CNS", cursive, serif;
 }
 
 .example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
-  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Songti CNS", serif;
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti CNS", serif;
 }
 
 article figure blockquote:lang(zh-Hans), article figure blockquote:lang(zh-CN), figure blockquote:lang(zh-Hans), figure blockquote:lang(zh-CN) {
-  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Songti GB", serif;
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti GB", serif;
 }
 
 article figure blockquote:lang(ja), figure blockquote:lang(ja) {
@@ -1415,16 +1416,16 @@ article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article bloc
 article blockquote *:lang(zh-Latn),
 article blockquote *:lang(ja-Latn),
 article blockquote *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti CNS", cursive, serif;
+  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
 }
 
 .result h1,
 .ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
-  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti CNS", cursive, serif;
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
 }
 
 article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
-  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti GB", cursive, serif;
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti GB", cursive, serif;
 }
 
 article blockquote:lang(ja) {
@@ -1444,19 +1445,19 @@ var:not(:lang(zh)):not(:lang(ja)),
 var *:lang(zh-Latn),
 var *:lang(ja-Latn),
 var *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti CNS", cursive, serif;
+  font-family: "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
 }
 
 i:lang(zh), i:lang(zh-Hant),
 var:lang(zh),
 var:lang(zh-Hant) {
-  font-family: "Biaodian Pro Serif CNS", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti CNS", cursive, serif;
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
 }
 
 i:lang(zh-Hans), i:lang(zh-CN),
 var:lang(zh-Hans),
 var:lang(zh-CN) {
-  font-family: "Biaodian Pro Serif GB", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Kaiti GB", cursive, serif;
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti GB", cursive, serif;
 }
 
 i:lang(ja),
@@ -1486,7 +1487,7 @@ pre:not(:lang(zh)):not(:lang(ja)),
 pre *:lang(zh-Latn),
 pre *:lang(ja-Latn),
 pre *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: Menlo, Courier, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", monospace, monospace, sans-serif;
+  font-family: Menlo, Consolas, Courier, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", monospace, monospace, sans-serif;
 }
 
 code:lang(zh), code:lang(zh-Hant),
@@ -1496,7 +1497,7 @@ samp:lang(zh),
 samp:lang(zh-Hant),
 pre:lang(zh),
 pre:lang(zh-Hant) {
-  font-family: "Biaodian Pro Sans CNS", Menlo, Courier, "Zhuyin Heiti", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", monospace, monospace, sans-serif;
+  font-family: "Biaodian Pro Sans CNS", Menlo, Consolas, Courier, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", monospace, monospace, sans-serif;
 }
 
 code:lang(zh-Hans), code:lang(zh-CN),
@@ -1506,88 +1507,87 @@ samp:lang(zh-Hans),
 samp:lang(zh-CN),
 pre:lang(zh-Hans),
 pre:lang(zh-CN) {
-  font-family: "Biaodian Pro Sans GB", Menlo, Courier, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti GB", monospace, monospace, sans-serif;
+  font-family: "Biaodian Pro Sans GB", Menlo, Consolas, Courier, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", monospace, monospace, sans-serif;
 }
 
 code:lang(ja),
 kbd:lang(ja),
 samp:lang(ja),
 pre:lang(ja) {
-  font-family: "Yakumono Sans", Menlo, Courier, monospace, monospace, sans-serif;
+  font-family: "Yakumono Sans", Menlo, Consolas, Courier, monospace, monospace, sans-serif;
 }
 
-html, ruby rb[zhuyin] zhuyin,
-ruby rb[zhuyin] zhuyin diao,
-hruby rb[zhuyin] zhuyin,
-hruby rb[zhuyin] zhuyin diao, ruby.romanization rt,
-ruby rb[annotation]:before,
+html, ruby ru[zhuyin] zhuyin,
+ruby ru[zhuyin] zhuyin diao,
+hruby ru[zhuyin] zhuyin,
+hruby ru[zhuyin] zhuyin diao, ruby.romanization rt,
+ruby ru[annotation]:before,
 hruby.romanization rt,
-hruby rb[annotation]:before {
+hruby ru[annotation]:before {
   -moz-font-feature-settings: "liga";
   -ms-font-feature-settings: "liga";
   -webkit-font-feature-settings: "liga";
   font-feature-settings: "liga";
 }
 
-ruby rb[zhuyin] zhuyin diao,
-hruby rb[zhuyin] zhuyin diao {
+ruby ru[zhuyin] zhuyin diao,
+hruby ru[zhuyin] zhuyin diao {
   font-family: "Zhuyin Kaiti", cursive, serif;
 }
 ruby.romanization rt,
-ruby rb[annotation]:before,
+ruby ru[annotation]:before,
 hruby.romanization rt,
-hruby rb[annotation]:before {
-  font-family: "Romanization Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', "Han Heiti CNS", sans-serif;
+hruby ru[annotation]:before {
+  font-family: "Romanization Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
-hruby rb[annotation]:before,
-hruby rb zhuyin {
+hruby ru[annotation]:before,
+hruby ru zhuyin {
   color: #666;
   z-index: 10;
 }
-hruby rb[annotation]:before {
+hruby ru[annotation]:before {
   -moz-transform: scale(0.4);
   -ms-transform: scale(0.4);
   -webkit-transform: scale(0.4);
   transform: scale(0.4);
-  left: -190%;
-  overflow: visible;
+  left: -240% !important;
 }
-hruby rb[annotation][order='1']:before {
+hruby ru[annotation][order='1']:before {
   top: -0.15em !important;
 }
-hruby rb[annotation][order='0']:before {
+hruby ru[annotation][order='0']:before {
   bottom: -0.4em !important;
   top: auto !important;
 }
-hruby rb[zhuyin] {
+hruby ru[zhuyin] {
   width: 1.55em !important;
 }
-hruby rb[zhuyin] zhuyin {
+hruby ru[zhuyin] zhuyin {
   -moz-transform: scale(0.4);
   -ms-transform: scale(0.4);
   -webkit-transform: scale(0.4);
   transform: scale(0.4);
   right: 0.05em !important;
 }
-hruby rb[zhuyin][length='2'] zhuyin, hruby rb[zhuyin][length='3'] zhuyin {
+hruby ru[zhuyin][length='2'] zhuyin, hruby ru[zhuyin][length='3'] zhuyin {
   top: 0.1em;
 }
 body[data-ruby-pref='pinyin'] hruby zhuyin, body[data-ruby-pref='none'] hruby zhuyin {
   display: none;
 }
-body[data-ruby-pref='pinyin'] hruby rb[zhuyin], body[data-ruby-pref='none'] hruby rb[zhuyin] {
+body[data-ruby-pref='pinyin'] hruby ru[zhuyin], body[data-ruby-pref='none'] hruby ru[zhuyin] {
   width: 1em !important;
 }
-body[data-ruby-pref='pinyin'] hruby rb[annotation]:before, body[data-ruby-pref='none'] hruby rb[annotation]:before {
-  left: -160% !important;
+body[data-ruby-pref='pinyin'] hruby ru[annotation]:before, body[data-ruby-pref='none'] hruby ru[annotation]:before {
+  left: -210% !important;
 }
-body[data-ruby-pref='zhuyin'] hruby rb[annotation][order]:before,
-body[data-ruby-pref='zhuyin'] hruby rb[annotation][order] rt, body[data-ruby-pref='none'] hruby rb[annotation][order]:before,
-body[data-ruby-pref='none'] hruby rb[annotation][order] rt {
+body[data-ruby-pref='zhuyin'] hruby ru[annotation][order]:before,
+body[data-ruby-pref='zhuyin'] hruby ru[annotation][order] rt, body[data-ruby-pref='none'] hruby ru[annotation][order]:before,
+body[data-ruby-pref='none'] hruby ru[annotation][order] rt {
   display: none;
 }
-body[data-ruby-pref='none'] hruby, body[data-ruby-pref='none'] hruby rb {
+body[data-ruby-pref='none'] hruby, body[data-ruby-pref='none'] hruby ru {
   line-height: 1.3 !important;
 }
 

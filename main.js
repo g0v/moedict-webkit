@@ -985,12 +985,11 @@
       Han($result[0]).renderRuby().substCombLigaWithPUA();
       window.scrollTo(0, 0);
       $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
-        var html, ci, $rb;
+        var $it, html, ci;
+        $it = $(this);
         html = this.cloneNode().outerHTML;
-        ci = document.createTextNode($(this).text());
-        $rb = $(this).offsetParent();
-        $rb.wrap(html);
-        return $rb[0].replaceChild(ci, this);
+        ci = document.createTextNode($it.text());
+        $it.parents('ru').wrap(html).end().replaceWith(ci);
       }).end().on('mouseover', 'a[word-id]', function(){
         var $it, i;
         $it = $(this);
