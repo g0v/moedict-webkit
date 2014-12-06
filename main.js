@@ -989,7 +989,7 @@
         $it = $(this);
         html = this.cloneNode().outerHTML;
         ci = document.createTextNode($it.text());
-        $it.parents('ru').wrap(html).end().replaceWith(ci);
+        $it.closest('ru').wrap(html).end().replaceWith(ci);
       }).end().on('mouseover', 'a[word-id]', function(){
         var $it, i;
         $it = $(this);

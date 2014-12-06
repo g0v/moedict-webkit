@@ -572,7 +572,7 @@ window.do-load = ->
         html = @.cloneNode().outerHTML
         ci = document.createTextNode $it.text!
         $it
-          .parents \ru
+          .closest \ru
           .wrap html 
           .end!
         .replace-with ci
