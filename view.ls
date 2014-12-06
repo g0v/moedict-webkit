@@ -13,6 +13,9 @@ withProperties = (tag, def-props={}) ->
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
+cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
+r-cjk-one  = new RegExp "^#{cjk}$"
+r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -31,30 +34,16 @@ PrefList = createClass do
   pinyin_aChanged: -> location.reload!
   pinyin_tChanged: -> location.reload!
   phoneticsChanged: ->
-    $('rb[order]').each ->
-      attr = $(@).attr('annotation')
-      $(@).data('annotation', attr) if attr
-    $('rb[zhuyin]').each ->
-      zhuyin = $(@).attr('zhuyin')
-      yin = $(@).attr('yin')
-      diao = $(@).attr('diao')
-      $(@).data({ yin, zhuyin, diao }) if zhuyin
-    restore-pinyin = -> $('rb[order]').each ->
-      attr = $(@).data('annotation')
-      $(@).attr('annotation', attr) if attr
-    restore-zhuyin = -> $('rb[zhuyin]').each ->
-      zhuyin = $(@).data('zhuyin')
-      yin = $(@).data('yin')
-      diao = $(@).data('diao')
-      $(@).attr({ yin, zhuyin, diao }) if zhuyin
-    clear-pinyin = -> $('rb[order]').attr('annotation', '')
-    clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
-    # new-ruby branch: bopomofo 改用 zhuyin 元素
+    $body = $ \body 
     switch @state.selected
-      | \rightangle => restore-pinyin!; restore-zhuyin!
-      | \bopomofo   => clear-pinyin!; restore-zhuyin!
-      | \pinyin     => restore-pinyin!; clear-zhuyin!
-      | \none       => clear-pinyin!; clear-zhuyin!
+      | \rightangle =>
+        $body.attr \data-ruby-pref, \both
+      | \bopomofo   => 
+        $body.attr \data-ruby-pref, \zhuyin 
+      | \pinyin     =>
+        $body.attr \data-ruby-pref, \pinyin
+      | \none       =>
+        $body.attr \data-ruby-pref, \none
   render: ->
     [ lbl, ...items ] = @props.children
     { key, selected=items.0.0 } = @state
@@ -327,7 +316,7 @@ Heteronym = createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
+      ruby { className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
@@ -383,9 +372,7 @@ Heteronym = createClass do
               css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
             })) } \歷代書體
       $char
-      h1 { className: "title#{
-        if localStorage?getItem("pinyin_#LANG") is /-/ then ' parallel' else ''
-      }", 'data-title': t }, ...list
+      h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
         if alt? then div { lang: \zh-Hans, className: \cn-specific },
           span { className: 'xref part-of-speech' }, \简
@@ -429,8 +416,6 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
   cn-specific = ''
   cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
-  t = title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~'
-  t -= /<[^>]+>/g
   b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
   b .= replace /（[語|讀|又]音）[\u200B]?/, ''
   b .= replace /\(變\)\u200B\/.*/, ''
@@ -438,15 +423,21 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   cn-specific-bpmf = b - /.*<br>陸./ if b is /<br>陸/
   b .= replace /<br>(.*)/, ''
   b -= /.\u20DF/g
-  if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
-    ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
+  if r-cjk-one.test title
+    ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    ruby = '<rbc>' + t.replace( /([^`~]+)/g, (m, ci, o, s) ->
-      return if ( ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
-             then '<rb word="' + ci + '">' + ci + '</rb>'
-             else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
-    ).replace(/([`~])/g, '') + '</rbc>'
-  p = pinyin
+    r-cjk-ci = new RegExp "(<a href=\"#[':~]?(#cjk+)\")>\\2</a>" \g
+    ruby = title
+    .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
+      open-tag = "<rb>#open-tag word-id=\"#offset\">"
+      close-tag = \</a></rb>
+      ci .= replace r-cjk-g, "#{open-tag}$1#close-tag"
+    # Deal with rare CJK not indexed, such as ○, 𤍤
+    .replace new RegExp("<\/rb>(#cjk+)(<rb>)?", \g), ( mat, rare-cjk, x, open-tag ) ->
+      open-tag = open-tag || ''
+      rare-cjk .= replace r-cjk-g, \<rb>$1</rb>
+      \</rb> + rare-cjk + open-tag
+  p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
@@ -455,6 +446,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   converted-p .= split ' '
   p .= replace /[,\.;，、；。－—]\s?/g, ' '
   p .= split ' '
+  p-upper = [] 
   isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $?('body').hasClass('lang-a')
   isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $?('body').hasClass('lang-t')
   for yin, idx in p | yin
@@ -476,12 +468,17 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
-    yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if isParallel
+    #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if 
+    p-upper[idx] = if isParallel then "<rt#span>#{p[idx]}</rt>"
     p[idx] = "<rt#span>#yin</rt>"
-  ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-  ruby += '<rtc style="display: none" class="romanization">'
-  ruby += p.join('').replace(/\u200B/g, '')
+  ruby += '<rtc hidden class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+  ruby += '<rtc hidden class="romanization">'
+  ruby += p.join ''
   ruby += '</rtc>'
+  if isParallel 
+    ruby += '<rtc hidden class="romanization">'
+    ruby += p-upper.join ''
+    ruby += '</rtc>'
   if LANG is \c
     if bopomofo is /<br>/
       pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
@@ -857,7 +854,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
   return part
 
 if module?
-  module?.exports = { Result, DropDown, Nav, Links, decodeLangPart }
+  module.exports = { Result, DropDown, Nav, Links, decodeLangPart }
 else
   React{}.View.Result = Result
   React.View.Nav = Nav

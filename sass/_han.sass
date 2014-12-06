@@ -1,52 +1,28 @@
-@charset 'utf-8'
 
-/* 
- * 漢字標準格式 v2.2.1
- * ---
- * Hanzi-optimised CSS Mode
- *
- *
- *
- * Lisence: MIT Lisence
- * Last Modified: 2013/12/05
- *
- */
+// Use MOEDICT.woff instead
+$han-webfont: url('./fonts/MOEDICT.woff') format('woff'), url('./fonts/MOEDICT.otf') format('opentype')
 
+$han-glyph-set-hant: CNS
+$han-biaodian-hant:  CNS
 
-// Imports all needed files
-// normalize.css
-@import 'han/normalize'
+$han-sans:  MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial
+$han-serif: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman'
 
-// CSS3 properties & mixin
-@import 'han/mixin'
+$han-sans-zh: 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁','Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'
 
-// `@font-face` configuration
-@import 'han/ff'
+$han-serif-zh: 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'
 
-// Language-based UA-style correction
-// @import 'han/main'
+$han-cursive-zh: 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B'
 
-// pure font configuration
-// @import 'han/fonts'
+@import 'han/var'
+@import 'han/api'
 
-// `<ruby>` for Zhuyin
-@import 'han/hruby'
+@import han/hyu/normalize
+// @import han/locale
+@import han/hyu/const
+@import han/hyu/mixin
+@import han/hyu/hruby
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@import han/typography
+// @import han/typeset
 

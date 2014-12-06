@@ -71,7 +71,7 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
             vertical-align: middle;
         }
         .gs-spelling {
-            @include fonts;
+            @extend %han-sans-hant;
             margin-bottom: 5px;
             a {
                 visibility: hidden;
@@ -98,7 +98,7 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
             border-radius: 2px;
         }
         .gsc-input {
-            @include fonts;
+            @extend %han-sans-hant;
             font-size: 15px !important;
             vertical-align: top;
         }
@@ -109,7 +109,7 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
             padding: 0 !important;
         }
         .gs-snippet {
-            @include fonts;
+            @extend %han-sans-hant;
             padding-top: 1px !important;
             padding-left: 4px !important;
             padding-bottom: 10px !important;

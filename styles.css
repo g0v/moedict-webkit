@@ -1,5 +1,1596 @@
 @charset "UTF-8";
 /*! HiDPI v1 | MIT License | git.io/hidpi */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+hruby {
+  display: inline;
+  line-height: 2;
+}
+hruby rp {
+  display: none;
+}
+hruby ru[annotation] > rt {
+  display: inline-block;
+  height: 0;
+  width: 0;
+  font: 0/0 hidden-text;
+}
+hruby ru {
+  position: relative;
+  display: inline-block;
+  text-indent: 0;
+}
+hruby ru:before,
+hruby zhuyin {
+  -moz-transform: scale(0.55);
+  -ms-transform: scale(0.55);
+  -webkit-transform: scale(0.55);
+  transform: scale(0.55);
+  -moz-text-emphasis: none;
+  -webkit-text-emphasis: none;
+  text-emphasis: none;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  text-decoration: none;
+  text-indent: 0;
+  position: absolute;
+  display: inline-block;
+}
+hruby ru[annotation] {
+  text-align: center;
+}
+hruby ru[annotation]:before {
+  left: -265%;
+  top: -0.5em;
+  vertical-align: top;
+  height: 1em;
+  width: 600%;
+  content: attr(annotation);
+  line-height: 1;
+  text-align: center;
+  text-indent: 0;
+}
+hruby[rightangle] ru[annotation]:before {
+  left: -250%;
+}
+hruby ru[zhuyin] {
+  display: inline-block;
+  position: relative;
+  width: 1.8em;
+  text-align: left;
+}
+hruby ru[zhuyin] zhuyin {
+  right: 0.2em;
+  top: 0;
+  height: 2.7em;
+  width: 0.8em;
+  line-height: 0.9;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hruby ru[zhuyin] diao {
+  position: absolute;
+  right: -0.9em;
+  top: 0;
+  display: inline-block;
+  width: 1em;
+}
+hruby ru[zhuyin][length='0'], hruby ru[zhuyin]:empty {
+  width: auto;
+}
+hruby ru[zhuyin][length='0'] zhuyin, hruby ru[zhuyin]:empty zhuyin {
+  display: none;
+}
+hruby ru[zhuyin][length='1'] zhuyin {
+  margin-top: 0.125em;
+}
+hruby ru[zhuyin][length='1'] diao {
+  margin-top: -0.35em;
+}
+hruby ru[zhuyin][length='2'] zhuyin {
+  margin-top: -0.175em;
+}
+hruby ru[zhuyin][length='2'] diao {
+  margin-top: 0.5em;
+}
+hruby ru[zhuyin][length='3'] zhuyin {
+  margin-top: -0.45em;
+}
+hruby ru[zhuyin][length='3'] diao {
+  margin-top: 1.3em;
+}
+hruby ru[zhuyin][diao='˙'] diao {
+  right: -0.35em;
+}
+hruby ru[zhuyin][diao='˙'][length='1'] diao {
+  margin-top: -0.5em;
+}
+hruby ru[zhuyin][diao='˙'][length='2'] diao {
+  margin-top: -0.3em;
+}
+hruby ru[zhuyin][diao='˙'][length='3'] diao {
+  margin-top: -0.25em;
+}
+hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  margin-right: -0.25em;
+}
+hruby ru[zhuyin][diao^='ㆴ'] diao, hruby ru[zhuyin][diao^='ㆵ'] diao, hruby ru[zhuyin][diao^='ㆶ'] diao, hruby ru[zhuyin][diao^='ㆷ'] diao, hruby ru[zhuyin][diao='󳆴'] diao, hruby ru[zhuyin][diao='󳆵'] diao, hruby ru[zhuyin][diao='󳆶'] diao, hruby ru[zhuyin][diao='󳆷'] diao {
+  top: 20%;
+  margin-right: -0.3em;
+}
+hruby ru[annotation]:before, hruby[rightangle] ru[annotation][order='1']:before {
+  top: -0.5em;
+}
+hruby ru[order='1']:before, hruby[rightangle] ru[annotation][order='0']:before {
+  bottom: -0.4em;
+  top: auto;
+}
+hruby[rightangle] ru[annotation]:before {
+  margin-left: -0.4em;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
+  hruby yin {
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    display: inline-block;
+  }
+  hruby ru[zhuyin][diao='˪'] diao,
+  hruby ru[zhuyin][diao='˫'] diao {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  hruby ru[zhuyin][diao='˙'] diao {
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    top: 0.125em;
+  }
+}
+
+/**
+ * The Four Typefaces: Heiti
+ *  四大字體集・黑體
+ */
+@font-face {
+  font-family: 'Han Heiti';
+  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Heiti';
+  src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
+}
+@font-face {
+  font-family: 'Han Heiti CNS';
+  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Heiti CNS';
+  src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
+}
+@font-face {
+  font-family: 'Han Heiti GB';
+  src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
+}
+/* Bold
+ */
+@font-face {
+  font-family: 'Han Heiti';
+  font-weight: 600;
+  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Heiti';
+  font-weight: 600;
+  src: local("YuGothic Bold"), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(YuGo-Bold), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
+}
+@font-face {
+  font-family: 'Han Heiti CNS';
+  font-weight: 600;
+  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Heiti CNS';
+  font-weight: 600;
+  src: local("YuGothic Bold"), local(YuGo-Bold), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
+}
+@font-face {
+  font-family: 'Han Heiti GB';
+  font-weight: 600;
+  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
+}
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox
+ */
+@font-face {
+  font-family: 'Han Heiti';
+  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Heiti';
+  font-weight: 600;
+  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Heiti CNS';
+  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Heiti CNS';
+  font-weight: 600;
+  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Heiti SC Medium"), local("Microsoft YaHei Bold"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Heiti GB';
+  src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
+  unicode-range: U+270C;
+}
+/**
+ * The Four Typefaces: Songti (serif)
+ * 四大字體集・宋體
+ */
+@font-face {
+  font-family: 'Han Songti';
+  src: local("Songti SC"), local("Songti TC"), local(STSong), local("Lisong Pro"), local(SimSun), local(PMingLiU);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Songti';
+  src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+}
+@font-face {
+  font-family: 'Han Songti CNS';
+  src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local(PMingLiU), local(SimSun);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Songti CNS';
+  src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro");
+}
+@font-face {
+  font-family: 'Han Songti GB';
+  src: local("Songti SC"), local(STSong), local(SimSun), local(PMingLiU);
+}
+/* Bold
+ */
+@font-face {
+  font-family: 'Han Songti';
+  font-weight: 600;
+  src: local("STSongti SC Bold"), local("STSongti TC Bold"), local(STSongti-SC-Bold), local(STSongti-TC-Bold);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Songti';
+  font-weight: 600;
+  src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
+}
+@font-face {
+  font-family: 'Han Songti CNS';
+  font-weight: 600;
+  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Songti CNS';
+  font-weight: 600;
+  src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
+}
+@font-face {
+  font-family: 'Han Songti GB';
+  font-weight: 600;
+  src: local("STSongti SC Bold"), local(STSongti-SC-Bold);
+}
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox.
+ */
+@font-face {
+  font-family: 'Han Songti';
+  src: local("Songti SC"), local("Songti TC"), local(STSongti), local("Lisong Pro"), local("MS Mincho"), local(SimSun), local(PMingLiU);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Songti';
+  font-weight: 600;
+  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Songti CNS';
+  src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local("MS Mincho"), local(PMingLiU), local(SimSun);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Songti CNS';
+  font-weight: 600;
+  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Han Songti GB';
+  src: local("Songti SC"), local(STSong), local(SimSun);
+  unicode-range: U+270C;
+}
+/**
+ * The Four Typefaces: Kaiti (Cursive)
+ * 四大字體集・楷體
+ */
+@font-face {
+  font-family: cursive;
+  src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Kaiti';
+  src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Kaiti CNS';
+  src: local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Kaiti GB';
+  src: local("Kaiti SC"), local(STKaiti), local(Kai), local(Kaiti), local(DFKai-SB);
+}
+/* Bold
+ */
+@font-face {
+  font-family: cursive;
+  font-weight: 600;
+  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
+}
+@font-face {
+  font-family: 'Han Kaiti';
+  font-weight: 600;
+  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
+}
+@font-face {
+  font-family: 'Han Kaiti GB';
+  font-weight: 600;
+  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
+}
+/**
+ * The Four Typefaces: Fangsong
+ * 四大字體集・仿宋體
+ */
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Fangsong';
+  src: local(STFangsong), local(FangSong);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Fangsong CNS';
+  src: local(STFangsong), local(FangSong);
+}
+@font-face {
+  unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
+  font-family: 'Han Fangsong GB';
+  src: local(STFangsong), local(FangSong);
+}
+/**
+ * Basic correction to CJK punctuation
+ * ‘Biaodian’(zh) and ‘Yakumono’(ja)
+ */
+/* Fullwidth full stop (．) */
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
+  unicode-range: U+FF0E;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
+  unicode-range: U+FF0E;
+}
+/* Middle dot (·) */
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
+  unicode-range: U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
+  unicode-range: U+00B7;
+}
+/* Em dash (——) */
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Yakumono Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Yakumono Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  unicode-range: U+2014;
+}
+/* Ellipsis (……) */
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Yakumono Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Yakumono Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  unicode-range: U+2026;
+}
+/* Curve quotes (“‘’”, GB-only) */
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
+  unicode-range: U+201C-201D, U+2018-2019;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
+  unicode-range: U+201C-201D, U+2018-2019;
+}
+/* Default emphasis mark (•) */
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local(Georgia), local("Times New Roman"), local(Arial), local("Droid Sans Fallback");
+  unicode-range: U+25CF;
+}
+/**
+ * Advanced correction to Chinese Biaodian
+ */
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("MS Gothic");
+  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU);
+  unicode-range: U+3002, U+FF0C, U+3001;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU), local("MS Gothic");
+  unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+  unicode-range: U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local(STSongti-TC-Regular), local("Lisong Pro"), local("Heiti TC"), local(PMingLiU);
+  unicode-range: U+3002, U+FF0C, U+3001;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
+  unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local("MS Gothic");
+  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Songti SC"), local(STSongti), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local("MS Mincho");
+  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
+  unicode-range: U+FF0D, U+FF0F, U+FF3C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
+  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
+}
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox.
+ */
+@font-face {
+  font-family: 'Biaodian Basic';
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  unicode-range: U+2014, U+2026, U+00B7;
+}
+@font-face {
+  font-family: 'Biaodian Sans';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans CNS';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif CNS';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Sans GB';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Biaodian Pro Serif GB';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+/**
+ * Western Italic Serif
+ */
+@font-face {
+  font-family: 'Latin Italic Serif';
+  src: local("Georgia Italic"), local("Times New Roman Italic"), local(Georgia-Italic), local(TimesNewRomanPS-ItalicMT), local(Times-Italic);
+}
+@font-face {
+  font-family: 'Latin Italic Serif';
+  font-weight: 700;
+  src: local("Georgia Bold Italic"), local("Times New Roman Bold Italic"), local(Georgia-BoldItalic), local(TimesNewRomanPS-BoldItalicMT), local(Times-Italic);
+}
+/**
+ * Western italic sans-serif
+ */
+@font-face {
+  font-family: 'Latin Italic Sans';
+  src: local("Helvetica Neue Italic"), local("Helvetica Oblique"), local("Arial Italic"), local(HelveticaNeue-Italic), local(Helvetica-LightOblique), local(Arial-ItalicMT);
+}
+@font-face {
+  font-family: 'Latin Italic Sans';
+  font-weight: 700;
+  src: local("Helvetica Neue Bold Italic"), local("Helvetica Bold Oblique"), local("Arial Bold Italic"), local(HelveticaNeue-BoldItalic), local(Helvetica-BoldOblique), local(Arial-BoldItalicMT);
+}
+/**
+ * Numerals: text figures
+ */
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral TF Sans';
+  src: local(Skia), local("Neutraface 2 Text"), local(Candara), local(Corbel);
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral TF Serif';
+  src: local(Georgia), local("Hoefler Text"), local("Big Caslon");
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral TF Italic Serif';
+  src: local("Georgia Italic"), local("Hoefler Text Italic"), local(Georgia-Italic), local(HoeflerText-Italic);
+}
+/**
+ * Numerals: lining figures
+ */
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Sans';
+  src: local("Helvetica Neue"), local(Helvetica), local(Arial);
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Italic Sans';
+  src: local("Helvetica Neue Italic"), local("Helvetica Oblique"), local("Arial Italic"), local(HelveticaNeue-Italic), local(Helvetica-LightOblique), local(Arial-ItalicMT);
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Italic Sans';
+  font-weight: bold;
+  src: local("Helvetica Neue Bold Italic"), local("Helvetica Bold Oblique"), local("Arial Bold Italic"), local(HelveticaNeue-BoldItalic), local(Helvetica-BoldOblique), local(Arial-BoldItalicMT);
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Serif';
+  src: local(Palatino), local("Palatino Linotype"), local("Times New Roman");
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Italic Serif';
+  src: local("Palatino Italic"), local("Palatino Italic Linotype"), local("Times New Roman Italic"), local(Palatino-Italic), local(Palatino-Italic-Linotype), local(TimesNewRomanPS-ItalicMT);
+}
+@font-face {
+  unicode-range: U+0030-0039;
+  font-family: 'Numeral LF Italic Serif';
+  font-weight: bold;
+  src: local("Palatino Bold Italic"), local("Palatino Bold Italic Linotype"), local("Times New Roman Bold Italic"), local(Palatino-BoldItalic), local(Palatino-BoldItalic-Linotype), local(TimesNewRomanPS-BoldItalicMT);
+}
+/* Address solution to `unicode-range` unsupported
+ * issues in Firefox.
+ */
+@font-face {
+  font-family: 'Numeral TF Sans';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral TF Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral TF Italic Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Sans';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Italic Sans';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Italic Sans';
+  font-weight: bold;
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Italic Serif';
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: 'Numeral LF Italic Serif';
+  font-weight: bold;
+  src: local(lying-to-firefox);
+  unicode-range: U+270C;
+}
+/**
+ * Zhuyin Kaiti
+ */
+@font-face {
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
+  font-family: 'Zhuyin Kaiti';
+}
+/**
+ * Zhuyin Heiti
+ */
+@font-face {
+  unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
+  font-family: 'Zhuyin Heiti';
+  src: local("Hiragino Sans GB"), local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+}
+@font-face {
+  font-family: 'Zhuyin Heiti';
+  src: local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  unicode-range: U+3127;
+}
+@font-face {
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  font-family: 'Zhuyin Heiti';
+  unicode-range: U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+31B4, U+31B5, U+31B6, U+31B7, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
+}
+/**
+ * Romanisation (checked tone ligature [陽入韻連字])
+ */
+@font-face {
+  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  font-family: 'Romanization Sans';
+  unicode-range: U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
+}
+.cc0, body#moedict.lang-t .pinyin, .english, .pinyin, body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app .pinyin, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results, body.lang-h .bopomofo, .translation .fw_def, html:lang(zh-Latn), html:lang(ja-Latn), html:not(:lang(zh)):not(:lang(ja)),
+html *:lang(zh-Latn),
+html *:lang(ja-Latn),
+html *:not(:lang(zh)):not(:lang(ja)), article strong:lang(zh-Latn), article strong:lang(ja-Latn), article strong:not(:lang(zh)):not(:lang(ja)),
+article strong *:lang(zh-Latn),
+article strong *:lang(ja-Latn),
+article strong *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+}
+
+.result h1 .specific_to,
+.ui-tooltip h1 .specific_to, .result h1 small.youyin,
+.result h1 small.alternative,
+.result h1 + div small.youyin,
+.result h1 + div small.alternative,
+.ui-tooltip h1 small.youyin,
+.ui-tooltip h1 small.alternative,
+.ui-tooltip h1 + div small.youyin,
+.ui-tooltip h1 + div small.alternative, .part-of-speech,
+.glyph,
+.fw_lang,
+.specific, body .ui-tooltip, body .ui-tooltip ul li, body .ui-tooltip ol li, #gcse > span .gsc-control-cse .gs-spelling, #gcse > span .gsc-control-cse .gsc-input, #gcse > span .gsc-control-cse .gs-snippet, html:lang(zh), html:lang(zh-Hant), [lang^='zh'],
+[lang*='Hant'],
+[lang='zh-TW'],
+[lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
+  font-family: "Biaodian Pro Sans CNS", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+}
+
+html:lang(zh-Hans), html:lang(zh-CN), [lang*='Hans'],
+[lang='zh-CN'], article strong:lang(zh-Hans), article strong:lang(zh-CN) {
+  font-family: "Biaodian Pro Sans GB", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
+}
+
+html:lang(ja), [lang^='ja'], article strong:lang(ja) {
+  font-family: "Yakumono Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/**
+ * Sans Italic
+ */
+article blockquote i:lang(zh-Latn), article blockquote i:lang(ja-Latn), article blockquote i:not(:lang(zh)):not(:lang(ja)),
+article blockquote i *:lang(zh-Latn),
+article blockquote i *:lang(ja-Latn),
+article blockquote i *:not(:lang(zh)):not(:lang(ja)), article blockquote
+var:lang(zh-Latn), article blockquote
+var:lang(ja-Latn), article blockquote
+var:not(:lang(zh)):not(:lang(ja)),
+article blockquote
+var *:lang(zh-Latn),
+article blockquote
+var *:lang(ja-Latn),
+article blockquote
+var *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+}
+
+article blockquote i:lang(zh), article blockquote i:lang(zh-Hant), article blockquote
+var:lang(zh), article blockquote
+var:lang(zh-Hant) {
+  font-family: "Biaodian Pro Sans CNS", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+}
+
+article blockquote i:lang(zh-Hans), article blockquote i:lang(zh-CN), article blockquote
+var:lang(zh-Hans), article blockquote
+var:lang(zh-CN) {
+  font-family: "Biaodian Pro Sans GB", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
+}
+
+article blockquote i:lang(ja), article blockquote
+var:lang(ja) {
+  font-family: "Yakumono Sans", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+article figure blockquote:lang(zh-Latn), article figure blockquote:lang(ja-Latn), article figure blockquote:not(:lang(zh)):not(:lang(ja)),
+article figure blockquote *:lang(zh-Latn),
+article figure blockquote *:lang(ja-Latn),
+article figure blockquote *:not(:lang(zh)):not(:lang(ja)), figure blockquote:lang(zh-Latn), figure blockquote:lang(ja-Latn), figure blockquote:not(:lang(zh)):not(:lang(ja)),
+figure blockquote *:lang(zh-Latn),
+figure blockquote *:lang(ja-Latn),
+figure blockquote *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti CNS", cursive, serif;
+}
+
+.example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti CNS", serif;
+}
+
+article figure blockquote:lang(zh-Hans), article figure blockquote:lang(zh-CN), figure blockquote:lang(zh-Hans), figure blockquote:lang(zh-CN) {
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Sung-98_1", "教育部標準宋體", MOESongUN, "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "文鼎ＰＬ新宋", "cwTex 仿宋體", PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Songti GB", serif;
+}
+
+article figure blockquote:lang(ja), figure blockquote:lang(ja) {
+  font-family: "Yakumono Serif", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", serif;
+}
+
+/**
+ * Serif Italic
+ */
+article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article blockquote:not(:lang(zh)):not(:lang(ja)),
+article blockquote *:lang(zh-Latn),
+article blockquote *:lang(ja-Latn),
+article blockquote *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
+}
+
+.result h1,
+.ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
+}
+
+article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti GB", cursive, serif;
+}
+
+article blockquote:lang(ja) {
+  font-family: "Yakumono Serif", "Numeral LF Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", cursive, serif;
+}
+
+/**
+ * Cursive Italic
+ */
+i:lang(zh-Latn), i:lang(ja-Latn), i:not(:lang(zh)):not(:lang(ja)),
+i *:lang(zh-Latn),
+i *:lang(ja-Latn),
+i *:not(:lang(zh)):not(:lang(ja)),
+var:lang(zh-Latn),
+var:lang(ja-Latn),
+var:not(:lang(zh)):not(:lang(ja)),
+var *:lang(zh-Latn),
+var *:lang(ja-Latn),
+var *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
+}
+
+i:lang(zh), i:lang(zh-Hant),
+var:lang(zh),
+var:lang(zh-Hant) {
+  font-family: "Biaodian Pro Serif CNS", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "Zhuyin Kaiti", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti CNS", cursive, serif;
+}
+
+i:lang(zh-Hans), i:lang(zh-CN),
+var:lang(zh-Hans),
+var:lang(zh-CN) {
+  font-family: "Biaodian Pro Serif GB", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", "TW-Kai-98_1", "教育部標準楷書", kai-pc, CMEXc1, "標楷體", Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", cursive, serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Kaiti GB", cursive, serif;
+}
+
+i:lang(ja),
+var:lang(ja) {
+  font-family: "Yakumono Serif", "Numeral LF Italic Serif", "Latin Italic Serif", MOEDICT, "Fira Sans OT", Georgia, "Times New Roman", cursive, serif;
+}
+
+code:lang(zh-Latn), code:lang(ja-Latn), code:not(:lang(zh)):not(:lang(ja)),
+code *:lang(zh-Latn),
+code *:lang(ja-Latn),
+code *:not(:lang(zh)):not(:lang(ja)),
+kbd:lang(zh-Latn),
+kbd:lang(ja-Latn),
+kbd:not(:lang(zh)):not(:lang(ja)),
+kbd *:lang(zh-Latn),
+kbd *:lang(ja-Latn),
+kbd *:not(:lang(zh)):not(:lang(ja)),
+samp:lang(zh-Latn),
+samp:lang(ja-Latn),
+samp:not(:lang(zh)):not(:lang(ja)),
+samp *:lang(zh-Latn),
+samp *:lang(ja-Latn),
+samp *:not(:lang(zh)):not(:lang(ja)),
+pre:lang(zh-Latn),
+pre:lang(ja-Latn),
+pre:not(:lang(zh)):not(:lang(ja)),
+pre *:lang(zh-Latn),
+pre *:lang(ja-Latn),
+pre *:not(:lang(zh)):not(:lang(ja)) {
+  font-family: Menlo, Consolas, Courier, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", monospace, monospace, sans-serif;
+}
+
+code:lang(zh), code:lang(zh-Hant),
+kbd:lang(zh),
+kbd:lang(zh-Hant),
+samp:lang(zh),
+samp:lang(zh-Hant),
+pre:lang(zh),
+pre:lang(zh-Hant) {
+  font-family: "Biaodian Pro Sans CNS", Menlo, Consolas, Courier, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", monospace, monospace, sans-serif;
+}
+
+code:lang(zh-Hans), code:lang(zh-CN),
+kbd:lang(zh-Hans),
+kbd:lang(zh-CN),
+samp:lang(zh-Hans),
+samp:lang(zh-CN),
+pre:lang(zh-Hans),
+pre:lang(zh-CN) {
+  font-family: "Biaodian Pro Sans GB", Menlo, Consolas, Courier, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", monospace, monospace, sans-serif;
+}
+
+code:lang(ja),
+kbd:lang(ja),
+samp:lang(ja),
+pre:lang(ja) {
+  font-family: "Yakumono Sans", Menlo, Consolas, Courier, monospace, monospace, sans-serif;
+}
+
+html, ruby ru[zhuyin] zhuyin,
+ruby ru[zhuyin] zhuyin diao,
+hruby ru[zhuyin] zhuyin,
+hruby ru[zhuyin] zhuyin diao, ruby.romanization rt,
+ruby ru[annotation]:before,
+hruby.romanization rt,
+hruby ru[annotation]:before {
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+}
+
+ruby ru[zhuyin] zhuyin diao,
+hruby ru[zhuyin] zhuyin diao {
+  font-family: "Zhuyin Kaiti", cursive, serif;
+}
+ruby.romanization rt,
+ruby ru[annotation]:before,
+hruby.romanization rt,
+hruby ru[annotation]:before {
+  font-family: "Romanization Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+}
+
+hruby ru[annotation]:before,
+hruby ru zhuyin {
+  color: #666;
+  z-index: 10;
+}
+hruby ru[annotation]:before {
+  -moz-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+  left: -240% !important;
+}
+hruby ru[annotation][order='1']:before {
+  top: -0.15em !important;
+}
+hruby ru[annotation][order='0']:before {
+  bottom: -0.4em !important;
+  top: auto !important;
+}
+hruby ru[zhuyin] {
+  width: 1.55em !important;
+}
+hruby ru[zhuyin] zhuyin {
+  -moz-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+  right: 0.05em !important;
+}
+hruby ru[zhuyin][length='2'] zhuyin, hruby ru[zhuyin][length='3'] zhuyin {
+  top: 0.1em;
+}
+body[data-ruby-pref='pinyin'] hruby zhuyin, body[data-ruby-pref='none'] hruby zhuyin {
+  display: none;
+}
+body[data-ruby-pref='pinyin'] hruby ru[zhuyin], body[data-ruby-pref='none'] hruby ru[zhuyin] {
+  width: 1em !important;
+}
+body[data-ruby-pref='pinyin'] hruby ru[annotation]:before, body[data-ruby-pref='none'] hruby ru[annotation]:before {
+  left: -210% !important;
+}
+body[data-ruby-pref='zhuyin'] hruby ru[annotation][order]:before,
+body[data-ruby-pref='zhuyin'] hruby ru[annotation][order] rt, body[data-ruby-pref='none'] hruby ru[annotation][order]:before,
+body[data-ruby-pref='none'] hruby ru[annotation][order] rt {
+  display: none;
+}
+body[data-ruby-pref='none'] hruby, body[data-ruby-pref='none'] hruby ru {
+  line-height: 1.3 !important;
+}
+
 @media print {
   * {
     text-shadow: none !important;
@@ -107,11 +1698,11 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: inherit;
   font-size: 14px;
   line-height: 1.42857;
   color: #333333;
-  background-color: white;
+  background-color: #fff;
 }
 
 input,
@@ -158,8 +1749,8 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -553,7 +2144,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: inherit;
 }
 
 code {
@@ -568,8 +2159,8 @@ code {
 kbd {
   padding: 2px 4px;
   font-size: 90%;
-  color: white;
-  background-color: #333333;
+  color: #fff;
+  background-color: #333;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
@@ -583,8 +2174,8 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
   color: #333333;
-  background-color: whitesmoke;
-  border: 1px solid #cccccc;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 pre code {
@@ -1520,11 +3111,11 @@ th {
   padding: 8px;
   line-height: 1.42857;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #ddd;
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid #ddd;
 }
 .table > caption + thead > tr:first-child > th,
 .table > caption + thead > tr:first-child > td,
@@ -1535,10 +3126,10 @@ th {
   border-top: 0;
 }
 .table > tbody + tbody {
-  border-top: 2px solid #dddddd;
+  border-top: 2px solid #ddd;
 }
 .table .table {
-  background-color: white;
+  background-color: #fff;
 }
 
 .table-condensed > thead > tr > th,
@@ -1551,7 +3142,7 @@ th {
 }
 
 .table-bordered {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td,
@@ -1559,7 +3150,7 @@ th {
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > th,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
@@ -1573,7 +3164,7 @@ th {
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
 }
 
 table col[class*="col-"] {
@@ -1599,7 +3190,7 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.active,
 .table > tfoot > tr.active > td,
 .table > tfoot > tr.active > th {
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
 }
 
 .table-hover > tbody > tr > td.active:hover,
@@ -1686,7 +3277,7 @@ table th[class*="col-"] {
     overflow-y: hidden;
     overflow-x: scroll;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #dddddd;
+    border: 1px solid #ddd;
     -webkit-overflow-scrolling: touch;
   }
   .table-responsive > .table {
@@ -1803,9 +3394,9 @@ output {
   font-size: 14px;
   line-height: 1.42857;
   color: #555555;
-  background-color: white;
+  background-color: #fff;
   background-image: none;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -2172,7 +3763,7 @@ select[multiple].input-lg,
   outline-offset: -2px;
 }
 .btn:hover, .btn:focus {
-  color: #333333;
+  color: #333;
   text-decoration: none;
 }
 .btn:active, .btn.active {
@@ -2191,17 +3782,17 @@ select[multiple].input-lg,
 }
 
 .btn-default {
-  color: #333333;
-  background-color: white;
-  border-color: #cccccc;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
 }
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
-  color: #333333;
+  color: #333;
   background-color: #ebebeb;
   border-color: #adadad;
 }
 .open .btn-default.dropdown-toggle {
-  color: #333333;
+  color: #333;
   background-color: #ebebeb;
   border-color: #adadad;
 }
@@ -2212,26 +3803,26 @@ select[multiple].input-lg,
   background-image: none;
 }
 .btn-default.disabled, .btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled:active, .btn-default.disabled.active, .btn-default[disabled], .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled]:active, .btn-default[disabled].active, fieldset[disabled] .btn-default, fieldset[disabled] .btn-default:hover, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default:active, fieldset[disabled] .btn-default.active {
-  background-color: white;
-  border-color: #cccccc;
+  background-color: #fff;
+  border-color: #ccc;
 }
 .btn-default .badge {
-  color: white;
-  background-color: #333333;
+  color: #fff;
+  background-color: #333;
 }
 
 .btn-primary {
-  color: white;
+  color: #fff;
   background-color: #428bca;
   border-color: #357ebd;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-  color: white;
+  color: #fff;
   background-color: #3276b1;
   border-color: #285e8e;
 }
 .open .btn-primary.dropdown-toggle {
-  color: white;
+  color: #fff;
   background-color: #3276b1;
   border-color: #285e8e;
 }
@@ -2247,21 +3838,21 @@ select[multiple].input-lg,
 }
 .btn-primary .badge {
   color: #428bca;
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn-success {
-  color: white;
+  color: #fff;
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active {
-  color: white;
+  color: #fff;
   background-color: #47a447;
   border-color: #398439;
 }
 .open .btn-success.dropdown-toggle {
-  color: white;
+  color: #fff;
   background-color: #47a447;
   border-color: #398439;
 }
@@ -2277,21 +3868,21 @@ select[multiple].input-lg,
 }
 .btn-success .badge {
   color: #5cb85c;
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn-info {
-  color: white;
+  color: #fff;
   background-color: #5bc0de;
   border-color: #46b8da;
 }
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active {
-  color: white;
+  color: #fff;
   background-color: #39b3d7;
   border-color: #269abc;
 }
 .open .btn-info.dropdown-toggle {
-  color: white;
+  color: #fff;
   background-color: #39b3d7;
   border-color: #269abc;
 }
@@ -2307,21 +3898,21 @@ select[multiple].input-lg,
 }
 .btn-info .badge {
   color: #5bc0de;
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn-warning {
-  color: white;
+  color: #fff;
   background-color: #f0ad4e;
   border-color: #eea236;
 }
 .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active {
-  color: white;
+  color: #fff;
   background-color: #ed9c28;
   border-color: #d58512;
 }
 .open .btn-warning.dropdown-toggle {
-  color: white;
+  color: #fff;
   background-color: #ed9c28;
   border-color: #d58512;
 }
@@ -2337,21 +3928,21 @@ select[multiple].input-lg,
 }
 .btn-warning .badge {
   color: #f0ad4e;
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn-danger {
-  color: white;
+  color: #fff;
   background-color: #d9534f;
   border-color: #d43f3a;
 }
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active {
-  color: white;
+  color: #fff;
   background-color: #d2322d;
   border-color: #ac2925;
 }
 .open .btn-danger.dropdown-toggle {
-  color: white;
+  color: #fff;
   background-color: #d2322d;
   border-color: #ac2925;
 }
@@ -2367,7 +3958,7 @@ select[multiple].input-lg,
 }
 .btn-danger .badge {
   color: #d9534f;
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn-link {
@@ -3304,8 +4895,8 @@ input[type="button"].btn-block {
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  background-color: white;
-  border: 1px solid #cccccc;
+  background-color: #fff;
+  border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -3335,11 +4926,11 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #262626;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  color: white;
+  color: #fff;
   text-decoration: none;
   outline: 0;
   background-color: #428bca;
@@ -3663,7 +5254,7 @@ input[type="button"].btn-block {
   color: #555555;
   text-align: center;
   background-color: #eeeeee;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 .input-group-addon.input-sm,
@@ -3787,7 +5378,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #ddd;
 }
 .nav-tabs > li {
   float: left;
@@ -3800,12 +5391,12 @@ input[type="button"].btn-block {
   border-radius: 4px 4px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #dddddd;
+  border-color: #eeeeee #eeeeee #ddd;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-bottom-color: transparent;
   cursor: default;
 }
@@ -3820,7 +5411,7 @@ input[type="button"].btn-block {
   margin-left: 2px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-  color: white;
+  color: #fff;
   background-color: #428bca;
 }
 
@@ -3868,11 +5459,11 @@ input[type="button"].btn-block {
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs-justified > .active > a:focus,
 .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 @media (min-width: 768px) {
   .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #ddd;
     border-radius: 4px 4px 0 0;
   }
   .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -3880,7 +5471,7 @@ input[type="button"].btn-block {
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: white;
+    border-bottom-color: #fff;
   }
 }
 
@@ -4198,38 +5789,38 @@ input[type="button"].btn-block {
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
-  color: #777777;
+  color: #777;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
   color: #5e5e5e;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
-  color: #777777;
+  color: #777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: #777;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #333333;
+  color: #333;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #555555;
+  color: #555;
   background-color: #e7e7e7;
 }
 .navbar-default .navbar-nav > .disabled > a, .navbar-default .navbar-nav > .disabled > a:hover, .navbar-default .navbar-nav > .disabled > a:focus {
-  color: #cccccc;
+  color: #ccc;
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #dddddd;
+  border-color: #ddd;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #888888;
+  background-color: #888;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
@@ -4237,50 +5828,50 @@ input[type="button"].btn-block {
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
   background-color: #e7e7e7;
-  color: #555555;
+  color: #555;
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #777777;
+    color: #777;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #333333;
+    color: #333;
     background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #555555;
+    color: #555;
     background-color: #e7e7e7;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #cccccc;
+    color: #ccc;
     background-color: transparent;
   }
 }
 .navbar-default .navbar-link {
-  color: #777777;
+  color: #777;
 }
 .navbar-default .navbar-link:hover {
-  color: #333333;
+  color: #333;
 }
 .navbar-default .btn-link {
-  color: #777777;
+  color: #777;
 }
 .navbar-default .btn-link:hover, .navbar-default .btn-link:focus {
-  color: #333333;
+  color: #333;
 }
 .navbar-default .btn-link[disabled]:hover, .navbar-default .btn-link[disabled]:focus, fieldset[disabled] .navbar-default .btn-link:hover, fieldset[disabled] .navbar-default .btn-link:focus {
-  color: #cccccc;
+  color: #ccc;
 }
 
 .navbar-inverse {
-  background-color: #222222;
+  background-color: #222;
   border-color: #090909;
 }
 .navbar-inverse .navbar-brand {
   color: #999999;
 }
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
-  color: white;
+  color: #fff;
   background-color: transparent;
 }
 .navbar-inverse .navbar-text {
@@ -4290,25 +5881,25 @@ input[type="button"].btn-block {
   color: #999999;
 }
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-  color: white;
+  color: #fff;
   background-color: transparent;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-  color: white;
+  color: #fff;
   background-color: #090909;
 }
 .navbar-inverse .navbar-nav > .disabled > a, .navbar-inverse .navbar-nav > .disabled > a:hover, .navbar-inverse .navbar-nav > .disabled > a:focus {
-  color: #444444;
+  color: #444;
   background-color: transparent;
 }
 .navbar-inverse .navbar-toggle {
-  border-color: #333333;
+  border-color: #333;
 }
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-  background-color: #333333;
+  background-color: #333;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: white;
+  background-color: #fff;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -4316,7 +5907,7 @@ input[type="button"].btn-block {
 }
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
   background-color: #090909;
-  color: white;
+  color: #fff;
 }
 @media (max-width: 767px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
@@ -4329,15 +5920,15 @@ input[type="button"].btn-block {
     color: #999999;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: white;
+    color: #fff;
     background-color: transparent;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: white;
+    color: #fff;
     background-color: #090909;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #444444;
+    color: #444;
     background-color: transparent;
   }
 }
@@ -4345,32 +5936,32 @@ input[type="button"].btn-block {
   color: #999999;
 }
 .navbar-inverse .navbar-link:hover {
-  color: white;
+  color: #fff;
 }
 .navbar-inverse .btn-link {
   color: #999999;
 }
 .navbar-inverse .btn-link:hover, .navbar-inverse .btn-link:focus {
-  color: white;
+  color: #fff;
 }
 .navbar-inverse .btn-link[disabled]:hover, .navbar-inverse .btn-link[disabled]:focus, fieldset[disabled] .navbar-inverse .btn-link:hover, fieldset[disabled] .navbar-inverse .btn-link:focus {
-  color: #444444;
+  color: #444;
 }
 
 .breadcrumb {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   border-radius: 4px;
 }
 .breadcrumb > li {
   display: inline-block;
 }
 .breadcrumb > li + li:before {
-  content: "/\00a0";
+  content: "/ ";
   padding: 0 5px;
-  color: #cccccc;
+  color: #ccc;
 }
 .breadcrumb > .active {
   color: #999999;
@@ -4393,8 +5984,8 @@ input[type="button"].btn-block {
   line-height: 1.42857;
   text-decoration: none;
   color: #428bca;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   margin-left: -1px;
 }
 .pagination > li:first-child > a,
@@ -4413,14 +6004,14 @@ input[type="button"].btn-block {
 .pagination > li > span:focus {
   color: #2a6496;
   background-color: #eeeeee;
-  border-color: #dddddd;
+  border-color: #ddd;
 }
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
 .pagination > .active > span,
 .pagination > .active > span:hover,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: white;
+  color: #fff;
   background-color: #428bca;
   border-color: #428bca;
   cursor: default;
@@ -4432,8 +6023,8 @@ input[type="button"].btn-block {
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
   color: #999999;
-  background-color: white;
-  border-color: #dddddd;
+  background-color: #fff;
+  border-color: #ddd;
   cursor: not-allowed;
 }
 
@@ -4489,8 +6080,8 @@ input[type="button"].btn-block {
 .pager li > span {
   display: inline-block;
   padding: 5px 14px;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 15px;
 }
 .pager li > a:hover,
@@ -4511,7 +6102,7 @@ input[type="button"].btn-block {
 .pager .disabled > a:focus,
 .pager .disabled > span {
   color: #999999;
-  background-color: white;
+  background-color: #fff;
   cursor: not-allowed;
 }
 
@@ -4521,14 +6112,14 @@ input[type="button"].btn-block {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: white;
+  color: #fff;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
 }
 .label[href]:hover, .label[href]:focus {
-  color: white;
+  color: #fff;
   text-decoration: none;
   cursor: pointer;
 }
@@ -4588,7 +6179,7 @@ input[type="button"].btn-block {
   padding: 3px 7px;
   font-size: 12px;
   font-weight: bold;
-  color: white;
+  color: #fff;
   line-height: 1;
   vertical-align: baseline;
   white-space: nowrap;
@@ -4609,7 +6200,7 @@ input[type="button"].btn-block {
 }
 
 a.badge:hover, a.badge:focus {
-  color: white;
+  color: #fff;
   text-decoration: none;
   cursor: pointer;
 }
@@ -4617,7 +6208,7 @@ a.badge:hover, a.badge:focus {
 a.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
   color: #428bca;
-  background-color: white;
+  background-color: #fff;
 }
 
 .nav-pills > li > a > .badge {
@@ -4665,8 +6256,8 @@ a.list-group-item.active > .badge,
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -4773,7 +6364,6 @@ a.thumbnail.active {
   from {
     background-position: 40px 0;
   }
-
   to {
     background-position: 0 0;
   }
@@ -4782,7 +6372,6 @@ a.thumbnail.active {
   from {
     background-position: 40px 0;
   }
-
   to {
     background-position: 0 0;
   }
@@ -4791,7 +6380,7 @@ a.thumbnail.active {
   overflow: hidden;
   height: 20px;
   margin-bottom: 20px;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -4803,7 +6392,7 @@ a.thumbnail.active {
   height: 100%;
   font-size: 12px;
   line-height: 20px;
-  color: white;
+  color: #fff;
   text-align: center;
   background-color: #428bca;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -4900,8 +6489,8 @@ a.thumbnail.active {
   display: block;
   padding: 10px 15px;
   margin-bottom: -1px;
-  background-color: white;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }
 .list-group-item:first-child {
   border-top-right-radius: 4px;
@@ -4920,18 +6509,18 @@ a.thumbnail.active {
 }
 
 a.list-group-item {
-  color: #555555;
+  color: #555;
 }
 a.list-group-item .list-group-item-heading {
-  color: #333333;
+  color: #333;
 }
 a.list-group-item:hover, a.list-group-item:focus {
   text-decoration: none;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
 }
 a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
   z-index: 2;
-  color: white;
+  color: #fff;
   background-color: #428bca;
   border-color: #428bca;
 }
@@ -5038,7 +6627,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 
 .panel {
   margin-bottom: 20px;
-  background-color: white;
+  background-color: #fff;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -5078,8 +6667,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 
 .panel-footer {
   padding: 10px 15px;
-  background-color: whitesmoke;
-  border-top: 1px solid #dddddd;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -5162,7 +6751,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 .panel > .panel-body + .table,
 .panel > .panel-body + .table-responsive {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #ddd;
 }
 .panel > .table > tbody:first-child > tr:first-child th,
 .panel > .table > tbody:first-child > tr:first-child td {
@@ -5240,35 +6829,35 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   border-bottom: 0;
 }
 .panel-group .panel-heading + .panel-collapse .panel-body {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #ddd;
 }
 .panel-group .panel-footer {
   border-top: 0;
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .panel-default {
-  border-color: #dddddd;
+  border-color: #ddd;
 }
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: whitesmoke;
-  border-color: #dddddd;
+  background-color: #f5f5f5;
+  border-color: #ddd;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #dddddd;
+  border-top-color: #ddd;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #dddddd;
+  border-bottom-color: #ddd;
 }
 
 .panel-primary {
   border-color: #428bca;
 }
 .panel-primary > .panel-heading {
-  color: white;
+  color: #fff;
   background-color: #428bca;
   border-color: #428bca;
 }
@@ -5343,7 +6932,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   min-height: 20px;
   padding: 19px;
   margin-bottom: 20px;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -5369,13 +6958,13 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
-  color: black;
-  text-shadow: 0 1px 0 white;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
 .close:hover, .close:focus {
-  color: black;
+  color: #000;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.5;
@@ -5430,8 +7019,8 @@ button.close {
 
 .modal-content {
   position: relative;
-  background-color: white;
-  border: 1px solid #999999;
+  background-color: #fff;
+  border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -5447,7 +7036,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: black;
+  background-color: #000;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -5555,10 +7144,10 @@ button.close {
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-  color: white;
+  color: #fff;
   text-align: center;
   text-decoration: none;
-  background-color: black;
+  background-color: #000;
   border-radius: 4px;
 }
 
@@ -5575,52 +7164,52 @@ button.close {
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: black;
+  border-top-color: #000;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
-  border-top-color: black;
+  border-top-color: #000;
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
-  border-top-color: black;
+  border-top-color: #000;
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-  border-right-color: black;
+  border-right-color: #000;
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-  border-left-color: black;
+  border-left-color: #000;
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: black;
+  border-bottom-color: #000;
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: black;
+  border-bottom-color: #000;
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: black;
+  border-bottom-color: #000;
 }
 
 .popover {
@@ -5632,9 +7221,9 @@ button.close {
   max-width: 276px;
   padding: 1px;
   text-align: left;
-  background-color: white;
+  background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -5700,7 +7289,7 @@ button.close {
   bottom: 1px;
   margin-left: -10px;
   border-bottom-width: 0;
-  border-top-color: white;
+  border-top-color: #fff;
 }
 .popover.right > .arrow {
   top: 50%;
@@ -5715,7 +7304,7 @@ button.close {
   left: 1px;
   bottom: -10px;
   border-left-width: 0;
-  border-right-color: white;
+  border-right-color: #fff;
 }
 .popover.bottom > .arrow {
   left: 50%;
@@ -5730,7 +7319,7 @@ button.close {
   top: 1px;
   margin-left: -10px;
   border-top-width: 0;
-  border-bottom-color: white;
+  border-bottom-color: #fff;
 }
 .popover.left > .arrow {
   top: 50%;
@@ -5744,7 +7333,7 @@ button.close {
   content: " ";
   right: 1px;
   border-right-width: 0;
-  border-left-color: white;
+  border-left-color: #fff;
   bottom: -10px;
 }
 
@@ -5810,7 +7399,7 @@ button.close {
   opacity: 0.5;
   filter: alpha(opacity=50);
   font-size: 20px;
-  color: white;
+  color: #fff;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -5830,7 +7419,7 @@ button.close {
 }
 .carousel-control:hover, .carousel-control:focus {
   outline: none;
-  color: white;
+  color: #fff;
   text-decoration: none;
   opacity: 0.9;
   filter: alpha(opacity=90);
@@ -5884,7 +7473,7 @@ button.close {
   height: 10px;
   margin: 1px;
   text-indent: -999px;
-  border: 1px solid white;
+  border: 1px solid #fff;
   border-radius: 10px;
   cursor: pointer;
   background-color: #000 \9;
@@ -5894,7 +7483,7 @@ button.close {
   margin: 0;
   width: 12px;
   height: 12px;
-  background-color: white;
+  background-color: #fff;
 }
 
 .carousel-caption {
@@ -5905,7 +7494,7 @@ button.close {
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;
-  color: white;
+  color: #fff;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -6149,1484 +7738,6 @@ button.close {
 #strokes .loader i.icon-fixed-width.icon-large {
   margin-top: -0.714em;
   margin-left: -0.714em;
-}
-
-/* 漢字標準格式 v2.2.1
- * ---
- * Hanzi-optimised CSS Mode
- *
- *
- *
- * Lisence: MIT Lisence
- * Last Modified: 2013/12/05
- *
- */
-/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
-/* ==========================================================================
-   HTML5 display definitions
-   ========================================================================== */
-/**
- * Correct `block` display not defined in IE 8/9.
- */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-  display: block;
-}
-
-/**
- * Correct `inline-block` display not defined in IE 8/9.
- */
-audio,
-canvas,
-video {
-  display: inline-block;
-}
-
-/**
- * Prevent modern browsers from displaying `audio` without controls.
- * Remove excess height in iOS 5 devices.
- */
-audio:not([controls]) {
-  display: none;
-  height: 0;
-}
-
-/**
- * Address `[hidden]` styling not present in IE 8/9.
- * Hide the `template` element in IE, Safari, and Firefox < 22.
- */
-[hidden],
-template {
-  display: none;
-}
-
-/* ==========================================================================
-   Base
-   ========================================================================== */
-/**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
- *    user zoom.
- */
-html {
-  font-family: sans-serif;
-  /* 1 */
-  -ms-text-size-adjust: 100%;
-  /* 2 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
-}
-
-/**
- * Remove default margin.
- */
-body {
-  margin: 0;
-}
-
-/* ==========================================================================
-   Links
-   ========================================================================== */
-/**
- * Remove the gray background color from active links in IE 10.
- */
-a {
-  background: transparent;
-}
-
-/**
- * Address `outline` inconsistency between Chrome and other browsers.
- */
-a:focus {
-  outline: thin dotted;
-}
-
-/**
- * Improve readability when focused and also mouse hovered in all browsers.
- */
-a:active,
-a:hover {
-  outline: 0;
-}
-
-/* ==========================================================================
-   Typography
-   ========================================================================== */
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari 5, and Chrome.
- */
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-/**
- * Address styling not present in IE 8/9, Safari 5, and Chrome.
- */
-abbr[title] {
-  border-bottom: 1px dotted;
-}
-
-/**
- * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
- */
-b,
-strong {
-  font-weight: bold;
-}
-
-/**
- * Address styling not present in Safari 5 and Chrome.
- */
-dfn {
-  font-style: italic;
-}
-
-/**
- * Address differences between Firefox and other browsers.
- */
-hr {
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  height: 0;
-}
-
-/**
- * Address styling not present in IE 8/9.
- */
-mark {
-  background: #ff0;
-  color: #000;
-}
-
-/**
- * Correct font family set oddly in Safari 5 and Chrome.
- */
-code,
-kbd,
-pre,
-samp {
-  font-family: monospace, serif;
-  font-size: 1em;
-}
-
-/**
- * Improve readability of pre-formatted text in all browsers.
- */
-pre {
-  white-space: pre-wrap;
-}
-
-/**
- * Set consistent quote types.
- */
-q {
-  quotes: "\201C" "\201D" "\2018" "\2019";
-}
-
-/**
- * Address inconsistent and variable font size in all browsers.
- */
-small {
-  font-size: 80%;
-}
-
-/**
- * Prevent `sub` and `sup` affecting `line-height` in all browsers.
- */
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-
-sup {
-  top: -0.5em;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-/* ==========================================================================
-   Embedded content
-   ========================================================================== */
-/**
- * Remove border when inside `a` element in IE 8/9.
- */
-img {
-  border: 0;
-}
-
-/**
- * Correct overflow displayed oddly in IE 9.
- */
-svg:not(:root) {
-  overflow: hidden;
-}
-
-/* ==========================================================================
-   Figures
-   ========================================================================== */
-/**
- * Address margin not present in IE 8/9 and Safari 5.
- */
-figure {
-  margin: 0;
-}
-
-/* ==========================================================================
-   Forms
-   ========================================================================== */
-/**
- * Define consistent border, margin, and padding.
- */
-fieldset {
-  border: 1px solid #c0c0c0;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em;
-}
-
-/**
- * 1. Correct `color` not being inherited in IE 8/9.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
- */
-legend {
-  border: 0;
-  /* 1 */
-  padding: 0;
-  /* 2 */
-}
-
-/**
- * 1. Correct font family not being inherited in all browsers.
- * 2. Correct font size not being inherited in all browsers.
- * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
- */
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  /* 1 */
-  font-size: 100%;
-  /* 2 */
-  margin: 0;
-  /* 3 */
-}
-
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
-button,
-input {
-  line-height: normal;
-}
-
-/**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
- * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
- * Correct `select` style inheritance in Firefox 4+ and Opera.
- */
-button,
-select {
-  text-transform: none;
-}
-
-/**
- * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
- *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
- */
-button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  -webkit-appearance: button;
-  /* 2 */
-  cursor: pointer;
-  /* 3 */
-}
-
-/**
- * Re-set default cursor for disabled elements.
- */
-button[disabled],
-html input[disabled] {
-  cursor: default;
-}
-
-/**
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-input[type="checkbox"],
-input[type="radio"] {
-  box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
-}
-
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
- *    (include `-moz` to future-proof).
- */
-input[type="search"] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  /* 2 */
-  box-sizing: content-box;
-}
-
-/**
- * Remove inner padding and search cancel button in Safari 5 and Chrome
- * on OS X.
- */
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-/**
- * Remove inner padding and border in Firefox 4+.
- */
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-/**
- * 1. Remove default vertical scrollbar in IE 8/9.
- * 2. Improve readability and alignment in all browsers.
- */
-textarea {
-  overflow: auto;
-  /* 1 */
-  vertical-align: top;
-  /* 2 */
-}
-
-/* ==========================================================================
-   Tables
-   ========================================================================== */
-/**
- * Remove most spacing between table cells.
- */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* 
- * @font-face字體設定
- * ---
- * @font-face settings
- *
- */
-/* ---------------------------------------
-   `unicode-range`
-   ---------------------------------------
-   瀏覽器若支援，[A-Za-z]顯示為無襯線字體；
-   若不支援，顯示為襯線字體。
-   --------------------------------------- */
-@font-face {
-  font-family: han-unicode-range;
-  src: local(Arial), local("Droid Sans");
-}
-@font-face {
-  font-family: han-unicode-range;
-  src: local("Times New Roman"), local(Times), local("Droid Serif");
-  unicode-range: U+270C;
-}
-/* ---------------------------------------
-   四大字體集及標點
-   ---
-   The Four Typefaces & Biaodian
-   --------------------------------------- */
-/* ---------------------------------------
-   四大字體集・黑體
-   ---
-   The Four Typefaces: Heiti (Gothic)
-   --------------------------------------- */
-@font-face {
-  font-family: 'Han Heiti';
-  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Heiti';
-  src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
-}
-@font-face {
-  font-family: 'Han Heiti CNS';
-  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Heiti CNS';
-  src: local(YuGothic), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro");
-}
-@font-face {
-  font-family: 'Han Heiti GB';
-  src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
-}
-/* ----------------------------------------- 
- * 粗體
- * Bold
- * ----------------------------------------- */
-@font-face {
-  font-family: 'Han Heiti';
-  font-weight: 600;
-  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Heiti';
-  font-weight: 600;
-  src: local("YuGothic Bold"), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(YuGo-Bold), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
-}
-@font-face {
-  font-family: 'Han Heiti CNS';
-  font-weight: 600;
-  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Heiti CNS';
-  font-weight: 600;
-  src: local("YuGothic Bold"), local(YuGo-Bold), local("Hiragino Kaku Gothic ProN W6"), local("Hiragino Kaku Gothic Pro W6"), local(HiraKakuProN-W6), local(HiraKakuPro-W6);
-}
-@font-face {
-  font-family: 'Han Heiti GB';
-  font-weight: 600;
-  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei SC Demibold"), local("Microsoft YaHei Bold"), local("Heiti SC Medium"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
-}
-/* ----------------------------------------- 
- * 解決Firefox不支援`unicode-range`及粗體調用問題
- * Solution to Firefox's `unicode-range`
- * and bold font issues
- * ----------------------------------------- */
-@font-face {
-  font-family: 'Han Heiti';
-  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Lantinghei SC"), local("Heiti SC"), local("Heiti TC"), local("Microsoft Yahei"), local("Microsoft Jhenghei"), local("Droid Sans Fallback");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Heiti';
-  font-weight: 600;
-  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Lantinghei SC Demibold"), local(FZLTXHB--B51-0), local(FZLTZHK--GBK1-0), local("Heiti SC Medium"), local("Heiti TC Medium"), local(STHeitiSC-Medium), local(STHeitiTC-Medium), local("Microsoft YaHei Bold"), local("Microsoft Jhenghei Bold"), local(MicrosoftYaHei-Bold), local(MicrosoftJhengHeiBold);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Heiti CNS';
-  src: local("Hiragino Sans GB"), local("Lantinghei TC"), local("Heiti TC"), local("Microsoft Jhenghei"), local("Heiti SC"), local("Lantinghei SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Heiti CNS';
-  font-weight: 600;
-  src: local("Hiragino Sans GB W6"), local(HiraginoSansGB-W6), local("Lantinghei TC Demibold"), local("Heiti TC Medium"), local("Microsoft Jhenghei Bold"), local(FZLTXHB--B51-0), local(STHeitiTC-Medium), local(MicrosoftJhengHeiBold), local("Lantinghei SC Demibold"), local("Heiti SC Medium"), local("Microsoft YaHei Bold"), local(FZLTZHK--GBK1-0), local(STHeitiSC-Medium), local(MicrosoftYaHei-Bold);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Heiti GB';
-  src: local("Hiragino Sans GB"), local("Lantinghei SC"), local("Heiti SC"), local("Microsoft Yahei"), local("Droid Sans Fallback");
-  unicode-range: U+270C;
-}
-/* ---------------------------------------
-   四大字體集・宋體（明朝體）
-   ---
-   The Four Typefaces: Songti (Mincho)
-   --------------------------------------- */
-@font-face {
-  font-family: 'Han Songti';
-  src: local("Songti SC"), local("Songti TC"), local(STSong), local("Lisong Pro"), local(SimSun), local(PMingLiU);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Songti';
-  src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
-}
-@font-face {
-  font-family: 'Han Songti CNS';
-  src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local(PMingLiU), local(SimSun);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Songti CNS';
-  src: local(YuMincho), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro");
-}
-@font-face {
-  font-family: 'Han Songti GB';
-  src: local("Songti SC"), local(STSong), local(SimSun), local(PMingLiU);
-}
-/* ----------------------------------------- 
- * 粗體
- * Bold
- * ----------------------------------------- */
-@font-face {
-  font-family: 'Han Songti';
-  font-weight: 600;
-  src: local("STSongti SC Bold"), local("STSongti TC Bold"), local(STSongti-SC-Bold), local(STSongti-TC-Bold);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Songti';
-  font-weight: 600;
-  src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
-}
-@font-face {
-  font-family: 'Han Songti CNS';
-  font-weight: 600;
-  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Songti CNS';
-  font-weight: 600;
-  src: local("YuMincho Demibold"), local("Hiragino Mincho ProN W6"), local("Hiragino Mincho Pro W6"), local(YuMin-Demibold), local(HiraMinProN-W6), local(HiraMinPro-W6);
-}
-@font-face {
-  font-family: 'Han Songti GB';
-  font-weight: 600;
-  src: local("STSongti SC Bold"), local(STSongti-SC-Bold);
-}
-/* ----------------------------------------- 
- * 解決Firefox不支援`unicode-range`及粗體調用問題
- * Solution to Firefox's `unicode-range`
- * and bold font issues
- * ----------------------------------------- */
-@font-face {
-  font-family: 'Han Songti';
-  src: local("Songti SC"), local("Songti TC"), local(STSongti), local("Lisong Pro"), local("MS Mincho"), local(SimSun), local(PMingLiU);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Songti';
-  font-weight: 600;
-  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Songti CNS';
-  src: local("Songti TC"), local("Lisong Pro"), local("Songti SC"), local(STSong), local("MS Mincho"), local(PMingLiU), local(SimSun);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Songti CNS';
-  font-weight: 600;
-  src: local("STSongti TC Bold"), local("STSongti SC Bold"), local(STSongti-TC-Bold), local(STSongti-SC-Bold);
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Han Songti GB';
-  src: local("Songti SC"), local(STSong), local(SimSun);
-  unicode-range: U+270C;
-}
-/* ---------------------------------------
-   四大字體集・楷體
-   ---
-   The Four Typefaces: Kaiti (Cursive)
-   --------------------------------------- */
-@font-face {
-  font-family: cursive;
-  src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Kaiti';
-  src: local("Kaiti SC"), local(STKaiti), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Kaiti CNS';
-  src: local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Kaiti GB';
-  src: local("Kaiti SC"), local(STKaiti), local(Kai), local(Kaiti), local(DFKai-SB);
-}
-/* ----------------------------------------- 
- * 粗體
- * Bold
- * ----------------------------------------- */
-@font-face {
-  font-family: cursive;
-  font-weight: 600;
-  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
-}
-@font-face {
-  font-family: 'Han Kaiti';
-  font-weight: 600;
-  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
-}
-@font-face {
-  font-family: 'Han Kaiti GB';
-  font-weight: 600;
-  src: local("Kaiti SC Bold"), local(STKaiti-SC-Bold);
-}
-/* ---------------------------------------
-   四大字體集・仿宋體
-   ---
-   The Four Typefaces: Fangsong
-   --------------------------------------- */
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Fangsong';
-  src: local(STFangsong), local(FangSong);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Fangsong CNS';
-  src: local(STFangsong), local(FangSong);
-}
-@font-face {
-  unicode-range: U+4E00-9FFF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3400-4DB5, U+9FBC-9FC2, U+9FC4-9FC5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+3040-309E, U+30A1-30FE, U+3007;
-  font-family: 'Han Fangsong GB';
-  src: local(STFangsong), local(FangSong);
-}
-/* ---------------------------------------
-   漢字標點
-   ---
-   Hanzi puncuation,
-   ‘Biaodian’(zh) and ‘Yakumono’(ja)
-   --------------------------------------
-   **注意：**為Windows設定的字體*必須*置於
-   OS X字體設定後方。
-
-   **NOTE**: Font settings for Windows
-   should be *always* placed after tho-
-   se for OS X. Since there are quite a
-   few fonts from Windows existing on 
-   OS X as well.
-   ---------------------------------------
-
-   ---------------------------------------
-   單點全形句號（．）
-   Fullwidth full stop
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("MS Gothic"), local(SimSun);
-  unicode-range: U+FF0E;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local(SimSun);
-  unicode-range: U+FF0E;
-}
-/* 間隔號（·）
-   Middle dot
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun);
-  unicode-range: U+00B7;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Songti SC"), local(STSong), local("Heiti SC"), local(SimSun);
-  unicode-range: U+00B7;
-}
-/* 破折號（——）
-   Em dash
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Yakumono Sans';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Yakumono Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
-  unicode-range: U+2014;
-}
-/* 省略號（……）
-   Ellipsis
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Yakumono Sans';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Yakumono Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
-  unicode-range: U+2026;
-}
-/* 彎引號（“‘’”）
-   Curve quotes
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Lisong Pro"), local("Heiti SC"), local(STHeiti), local(SimSun), local(PMingLiU);
-  unicode-range: U+201C-201D, U+2018-2019;
-}
-/* 着重號（●）
-   Emphasis dots
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local(Georgia), local("Times New Roman"), local("Droid Sans Fallback");
-  unicode-range: U+25CF;
-}
-/* ---------------------------------------
-   進階版標點樣式修正
-   ---
-   Advanced Correction to
-   Hanzi Punctuation
-   ---------------------------------------
- *
- * a. 句、逗、頓號（。，、）
- *	Period, comma, paused comma
- *
- * b. 分、冒、問、嘆號（；：？！）
- *	Colon, semicolon, question, exclam-
- *	ation marks
- *
- * c. 連接號、正、反斜線（－／＼）
- * En dash (fullwidth hyphen-minus),
- * division slash, back slash
- *
- */
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("MS Gothic");
-  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
-  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU);
-  unicode-range: U+3002, U+FF0C, U+3001;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Heiti TC"), local("Lihei Pro"), local("Microsoft Jhenghei"), local(PMingLiU), local("MS Gothic");
-  unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
-  unicode-range: U+FF0D, U+FF0F, U+FF3C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local(STSongti-TC-Regular), local("Lisong Pro"), local("Heiti TC"), local(PMingLiU);
-  unicode-range: U+3002, U+FF0C, U+3001;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
-  unicode-range: U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local("MS Gothic");
-  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01, U+FF0D, U+FF0F, U+FF3C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Songti SC"), local(STSongti), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Hiragino Sans GB"), local("Heiti SC"), local(STHeiti), local(SimSun), local("MS Mincho");
-  unicode-range: U+3002, U+FF0C, U+3001, U+FF1B, U+FF1A, U+FF1F, U+FF01;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(PMingLiU), local("MS Mincho");
-  unicode-range: U+FF0D, U+FF0F, U+FF3C;
-}
-/*
- * a. 引號（「『』」）
- *	Quotes
- *
- * b. 括號、書名號（（）《》〈〉〔〕）
- *	Brackets
- *
- */
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local(SimSun);
-  unicode-range: U+300C-300F, U+300A-300B, U+3008-3009, U+FF08-FF09, U+3014-3015;
-}
-/*
- * 解決Firefox不支援`Unicode-range`的問題
- * 
- * Solution to Firefox's `Unicode-range`
- * unspported issue
-   --------------------------------------- */
-@font-face {
-  font-family: 'Biaodian Sans';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Serif';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans CNS';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif CNS';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Sans GB';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Biaodian Pro Serif GB';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-/* ---------------------------------------
-   @mixin: 四大字體集
-   ---
-   @mixin: The Four Typefaces
-   --------------------------------------- 
-   黑體
-   Heiti
-   --------------------------------------- */
-/* 宋體
-   Songti
-   --------------------------------------- */
-/* 楷體
-   Kaiti
-   --------------------------------------- */
-/* 仿宋體
-   Fangsong
-   --------------------------------------- */
-/* ---------------------------------------
-   特殊西文及數字字體
-   ---
-   Latin Specialties & numerals
-   --------------------------------------- */
-/* ---------------------------------------
-	 襯線西文斜體
-	 ---
-	 Latin italic serif
-	 --------------------------------------- */
-@font-face {
-  font-family: 'Latin Italic Serif';
-  src: local("Georgia Italic"), local("Times New Roman Italic"), local(Georgia-Italic), local(TimesNewRomanPS-ItalicMT), local(Times-Italic);
-}
-@font-face {
-  font-family: 'Latin Italic Serif';
-  font-weight: 700;
-  src: local("Georgia Bold Italic"), local("Times New Roman Bold Italic"), local(Georgia-BoldItalic), local(TimesNewRomanPS-BoldItalicMT), local(Times-Italic);
-}
-/* ---------------------------------------
-	 無襯線西文斜體
-	 ---
-	 Latin italic sans-serif
-	 --------------------------------------- */
-@font-face {
-  font-family: 'Latin Italic Sans';
-  src: local("Helvetica Neue Italic"), local("Helvetica Oblique"), local("Arial Italic"), local(HelveticaNeue-Italic), local(Helvetica-LightOblique), local(Arial-ItalicMT);
-}
-@font-face {
-  font-family: 'Latin Italic Sans';
-  font-weight: 700;
-  src: local("Helvetica Neue Bold Italic"), local("Helvetica Bold Oblique"), local("Arial Bold Italic"), local(HelveticaNeue-BoldItalic), local(Helvetica-BoldOblique), local(Arial-BoldItalicMT);
-}
-/* ---------------------------------------
-   數字
-   ---
-   Numerals
-   --------------------------------------- 
-   文本數字
-   Text figures
-   --------------------------------------- */
-@font-face {
-  unicode-range: U+0030-0039;
-  font-family: 'Numeral TF Sans';
-  src: local(Skia), local("Neutraface 2 Text"), local(Candara), local(Corbel);
-}
-@font-face {
-  unicode-range: U+0030-0039;
-  font-family: 'Numeral TF Serif';
-  src: local(Georgia), local("Hoefler Text"), local("Big Caslon");
-}
-/* 等高數字
-   Lining figures
-   --------------------------------------- */
-@font-face {
-  unicode-range: U+0030-0039;
-  font-family: 'Numeral LF Sans';
-  src: local("Helvetica Neue"), local(Helvetica), local(Arial);
-}
-@font-face {
-  unicode-range: U+0030-0039;
-  font-family: 'Numeral LF Serif';
-  src: local(Palatino), local("Palatino Linotype"), local("Times New Roman");
-}
-/* ----------------------------------------- 
- * 解決Firefox不支援`unicode-range`的問題
- * Solution to Firefox's `unicode-range`
- * issues
- * ----------------------------------------- */
-@font-face {
-  font-family: 'Numeral TF Sans';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Numeral TF Serif';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Numeral LF Sans';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-@font-face {
-  font-family: 'Numeral LF Serif';
-  src: local("Lying to Firefox");
-  unicode-range: U+270C;
-}
-/* ---------------------------------------
-   注音符號
-   ---
-   Zhuyin
-   --------------------------------------- */
-/* ---------------------------------------
-   注音符號
-   ---
-   Zhuyin
-   --------------------------------------- */
-@font-face {
-  unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB;
-  font-family: 'Zhuyin Kaiti';
-  src: url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF), local(PMingLiU);
-}
-@font-face {
-  unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB;
-  font-family: 'Zhuyin Heiti';
-  src: local("Hiragino Sans GB"), local("Microsoft Jhenghei"), url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(PMingLiU), local(SimSun), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
-}
-@font-face {
-  font-family: 'Zhuyin Heiti';
-  src: local("Heiti TC"), local("Microsoft Jhenghei"), url("/fonts/zhuyin.eot") format("embedded-opentype"), url("/fonts/zhuyin.ttf") format("truetype"), local(PMingLiU), local(SimSun), local(BiauKai), local("標楷體"), local(DFKaiShu-SB-Estd-BF);
-  unicode-range: U+3127, U+02C7, U+02CA-B, U+02D9;
-}
-hruby {
-  display: inline;
-  line-height: 2;
-}
-
-/* ==========================================================================
- * 隱藏`<rp>`
- * Hide `<rp>`
- * ========================================================================== */
-hruby rp {
-  display: none;
-}
-
-/* ==========================================================================
- * 隱藏的`<copy>`元素，利於複製貼上
- * Invisible `<copy>` elements for copy-and-paste
- * ========================================================================== */
-hruby copy {
-  display: inline-block;
-  opacity: 0;
-  text-indent: -9999999px;
-  height: 0;
-  width: 0;
-}
-
-/* ==========================================================================
- * 小字標注
- * Annotations
- * ========================================================================== */
-.parallel hruby rb[annotation]:before {
-  line-height: 3.6em !important;
-  top: -0.63em !important;
-}
-
-hruby rb[annotation] {
-  display: inline-block;
-  position: relative;
-  text-indent: 0;
-}
-hruby rb[annotation]:before {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: inline-block;
-  left: -200%;
-  position: absolute;
-  top: -0.5em;
-  vertical-align: middle;
-  -moz-transform: scale(0.55);
-  -webkit-transform: scale(0.55);
-  -ms-transform: scale(0.55);
-  transform: scale(0.55);
-  height: 1em;
-  width: 500%;
-  content: attr(annotation);
-  line-height: 1.5;
-  text-align: center;
-  text-indent: 0;
-  padding: 0 275% 0 225%;
-  word-break: normal;
-}
-
-/* ==========================================================================
- * 複合式小字標注
- * Complex annotations
- * ========================================================================== */
-hruby[complex] rb[annotation][order="1"]:before {
-  top: -0.5em;
-}
-hruby[complex] rb[annotation][order="2"]:before {
-  bottom: -0.25em;
-  top: auto;
-}
-
-/* ==========================================================================
- * 拼、注音直角共同顯示
- * Complex right-angle ruby for Romanization & Zhuyin
- * ========================================================================== */
-hruby[rightangle] rb[annotation]:before {
-  bottom: -0.25em;
-  top: auto;
-  margin-left: -0.3em;
-  line-height: 1;
-}
-
-/* ==========================================================================
- * 國語注音、台灣方言音符號
- * Zhuyin
- * ========================================================================== */
-hruby rb[zhuyin] {
-  display: inline-block;
-  position: relative;
-  text-indent: 0;
-  width: 1.65em;
-}
-hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  -moz-transform: scale(0.55);
-  -webkit-transform: scale(0.55);
-  -ms-transform: scale(0.55);
-  transform: scale(0.55);
-  height: 2.7em;
-  width: 0.8em;
-  -moz-text-emphasis: none;
-  -webkit-text-emphasis: none;
-  text-emphasis: none;
-  -moz-text-emphasis-position: under;
-  -webkit-text-emphasis-position: under;
-  text-emphasis-position: under;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 0.9;
-  text-indent: 0;
-  text-decoration: none;
-}
-hruby rb[zhuyin]:before {
-  content: attr(yin);
-  line-height: 0.9;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-hruby rb[zhuyin][diao]:after {
-  right: -0.6em;
-  width: 1em;
-  content: attr(diao);
-}
-hruby rb[zhuyin][length="1"]:before {
-  margin-top: 0.25em;
-}
-hruby rb[zhuyin][length="1"]:after {
-  margin-top: -0.35em;
-}
-hruby rb[zhuyin][length="2"]:before {
-  margin-top: -0.15em;
-}
-hruby rb[zhuyin][length="2"]:after {
-  margin-top: 0.125em;
-}
-hruby rb[zhuyin][length="3"]:before {
-  margin-top: -0.4em;
-}
-hruby rb[zhuyin][length="3"]:after {
-  margin-top: 0.25em;
-}
-hruby rb[zhuyin][diao="˙"]:after {
-  right: -0.275em;
-}
-hruby rb[zhuyin][diao="˙"][length="1"]:after {
-  margin-top: 0;
-}
-hruby rb[zhuyin][diao="˙"][length="2"]:after {
-  margin-top: -0.25em;
-}
-hruby rb[zhuyin][diao="˙"][length="3"]:after {
-  margin-top: -0.55em;
-}
-hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
-  -moz-transform: scale(0.6);
-  -webkit-transform: scale(0.6);
-  -ms-transform: scale(0.6);
-  transform: scale(0.6);
-  margin-right: -0.15em;
-}
-hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after, hruby rb[zhuyin][diao^="󳆴"]:after, hruby rb[zhuyin][diao^="󳆵"]:after, hruby rb[zhuyin][diao^="󳆶"]:after, hruby rb[zhuyin][diao^="󳆷"]:after {
-  margin-right: -0.2em;
-  margin-top: 0.55em;
-}
-
-/* ==========================================================================
- * Retina Display
- * ========================================================================== */
-/* ==========================================================================
- * Optimised for Moedict
- * ========================================================================== */
-hruby[rightangle] rb[annotation]:before {
-  -moz-transform: scale(0.4);
-  -webkit-transform: scale(0.4);
-  -ms-transform: scale(0.4);
-  transform: scale(0.4);
-  bottom: -0.3em;
-  color: #666666;
-}
-hruby rb[zhuyin] {
-  width: 1.5em;
-}
-hruby rb[zhuyin]:before, hruby rb[zhuyin][diao]:after {
-  top: 0.15em;
-  -moz-transform: scale(0.33);
-  -webkit-transform: scale(0.33);
-  -ms-transform: scale(0.33);
-  transform: scale(0.33);
-  line-height: 0.9;
-  color: #666666;
-}
-hruby rb[zhuyin][diao]:after {
-  right: -0.4em;
-  top: 0;
-}
-hruby rb[zhuyin][length="1"]:before {
-  margin-top: -0.1em;
-}
-hruby rb[zhuyin][length="1"]:after {
-  margin-top: -0.1em;
-}
-hruby rb[zhuyin][length="2"]:before {
-  margin-top: -0.25em;
-}
-hruby rb[zhuyin][length="2"]:after {
-  margin-top: 0.1em;
-}
-hruby rb[zhuyin][length="3"]:before {
-  line-height: 0.8;
-}
-hruby rb[zhuyin][length="3"]:after {
-  margin-top: 0.15em;
-}
-hruby rb[zhuyin][diao="˙"]:after {
-  right: -0.2em;
-}
-hruby rb[zhuyin][diao="˙"][length="1"]:after {
-  margin-top: -0.05em;
-}
-hruby rb[zhuyin][diao="˙"][length="2"]:after {
-  margin-top: -0.2em;
-}
-hruby rb[zhuyin][diao="˙"][length="3"]:after {
-  margin-top: -0.35em;
-}
-hruby rb[zhuyin][diao="˪"]:after, hruby rb[zhuyin][diao="˫"]:after {
-  margin-right: -0.1em;
-}
-hruby rb[zhuyin][diao^="ㆴ"]:after, hruby rb[zhuyin][diao^="ㆵ"]:after, hruby rb[zhuyin][diao^="ㆶ"]:after, hruby rb[zhuyin][diao^="ㆷ"]:after, hruby rb[zhuyin][diao^="󳆴"]:after, hruby rb[zhuyin][diao^="󳆵"]:after, hruby rb[zhuyin][diao^="󳆶"]:after, hruby rb[zhuyin][diao^="󳆷"]:after {
-  margin-right: -0.1em;
-  margin-top: 0.25em;
 }
 
 /*!
@@ -7959,7 +8070,6 @@ a .icon-spin {
   0% {
     -moz-transform: rotate(0deg);
   }
-
   100% {
     -moz-transform: rotate(359deg);
   }
@@ -7968,7 +8078,6 @@ a .icon-spin {
   0% {
     -webkit-transform: rotate(0deg);
   }
-
   100% {
     -webkit-transform: rotate(359deg);
   }
@@ -7977,7 +8086,6 @@ a .icon-spin {
   0% {
     -o-transform: rotate(0deg);
   }
-
   100% {
     -o-transform: rotate(359deg);
   }
@@ -7986,7 +8094,6 @@ a .icon-spin {
   0% {
     -ms-transform: rotate(0deg);
   }
-
   100% {
     -ms-transform: rotate(359deg);
   }
@@ -7995,7 +8102,6 @@ a .icon-spin {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(359deg);
   }
@@ -9514,18 +9620,18 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 
 @font-face {
   font-family: "Fira Sans OT";
-  src: url('fonts/FiraSansOT-Regular.ttf') format('truetype');
+  src: url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: "EBAS";
-  src: url('fonts/EBAS-Subset.ttf') format('truetype');
+  src: url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
 }
 @font-face {
   font-family: "MOEDICT";
-  src: url('fonts/MOEDICT.ttf') format('truetype');
+  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
 }
 @font-face {
-  font-family: "MOEDICT-IOS-KAI";
+  font-family: MOEDICT-IOS-KAI;
   src: url("/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf") format("truetype");
 }
 .vowel-030d,
@@ -9537,7 +9643,7 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 .jiao-0358:before {
   left: 0;
   position: absolute;
-  color: black;
+  color: #000;
 }
 
 .u31bX {
@@ -9596,9 +9702,12 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
+html {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 body {
   background-image: url('images/subtle_stripes.png');
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 @media (-webkit-min-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (min--moz-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   body {
@@ -9608,9 +9717,6 @@ body {
     -webkit-background-size: 40px 40px;
     background-size: 40px 40px;
   }
-}
-body input, body button, body select, body textarea, body .ui-widget {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 body [class^="icon-"], body [class*=" icon-"] {
   font-family: FontAwesome;
@@ -9632,7 +9738,7 @@ body [class^="icon-"], body [class*=" icon-"] {
   padding: 2px;
   border-radius: 3px;
   position: relative;
-  background: #6b0000;
+  background: #6B0000;
   opacity: 0.8;
   color: white;
   margin-bottom: 40px;
@@ -9937,6 +10043,7 @@ body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .
 
 input.query {
   display: block;
+  border: 1px solid #ddd;
   font-size: 1.2em;
   width: 100%;
   height: 1.8em;
@@ -9999,6 +10106,14 @@ input.query {
     padding-bottom: 3px;
   }
 }
+.ui-widget,
+.ui-widget button,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea {
+  font-family: inherit !important;
+}
+
 body.overflow-scrolling-false .ui-autocomplete {
   max-height: 10000px !important;
   bottom: auto !important;
@@ -10159,7 +10274,6 @@ body.lang-a.web #lookback {
 
 .cc0 {
   line-height: 1.5;
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 
 img.logo {
@@ -10293,7 +10407,7 @@ img.back {
 }
 #user-pref ul.dropdown-menu li a.active {
   background-color: #6aa3d5;
-  color: white;
+  color: #fff;
 }
 #user-pref > ul {
   margin-bottom: 0.55em;
@@ -10349,7 +10463,7 @@ img.back {
 }
 .starred-record--header ~ div {
   padding: 1.25em 0.5em 1em;
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   border-top: 0;
 }
 .starred-record--header ~ div h3 {
@@ -10361,10 +10475,10 @@ img.back {
 .starred-record--header ~ div ul .starred-record--none-msg {
   list-style: none;
   margin-left: -2em;
-  color: #666666;
+  color: #666;
 }
 .starred-record--header ~ div ul .starred-record--none-msg span.fa {
-  color: #996655;
+  color: #965;
 }
 
 @media only screen and (max-width: 767px) {
@@ -10411,8 +10525,6 @@ svg {
   border: 2px solid #a00;
   background: white;
   margin-left: 5px;
-  -webkit-box-shadow: #d4d4d4 0 3px 3px;
-  box-shadow: #d4d4d4 0 3px 3px;
 }
 
 canvas {
@@ -10423,7 +10535,6 @@ canvas {
 
 hruby rb[annotation]:before,
 hruby rb[annotation]:after {
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   font-weight: normal;
 }
 
@@ -10432,11 +10543,10 @@ hruby rb[annotation]:after {
   visibility: visible !important;
   margin: -.25em 0 .5em;
   padding-bottom: .3em;
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "MOEDICT-IOS-KAI", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   font-size: 200%;
   line-height: 1;
   font-weight: 501;
-  border-bottom: 1px dotted #dddddd;
+  border-bottom: 1px dotted #ddd;
 }
 .result h1[style],
 .ui-tooltip h1[style] {
@@ -10450,10 +10560,10 @@ hruby rb[annotation]:after {
 .result h1 a.hovered,
 .ui-tooltip h1 a:hover,
 .ui-tooltip h1 a.hovered {
-  background: #ddd;
-  color: #0070A3;
+  background-color: #ddd;
   border-radius: 4px;
-  outline: none;
+  color: #0070A3;
+  outline: 0;
 }
 .result h1 div.stroke,
 .ui-tooltip h1 div.stroke {
@@ -10478,7 +10588,6 @@ hruby rb[annotation]:after {
   font-size: 40%;
   position: absolute;
   margin-top: 2.5ex;
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
 }
 .result h1 .english,
 .ui-tooltip h1 .english {
@@ -10499,7 +10608,6 @@ hruby rb[annotation]:after {
 .ui-tooltip h1 small.alternative,
 .ui-tooltip h1 + div small.youyin,
 .ui-tooltip h1 + div small.alternative {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   color: #888;
   display: inline-block;
   font-size: .45em;
@@ -10543,7 +10651,7 @@ hruby rb[annotation]:after {
   color: #fff;
   font-size: 14px;
   line-height: 1;
-  background: #6b0000;
+  background: #6B0000;
   border-radius: 4px;
 }
 body.lang-t .result h1 small.alternative:before, body.lang-t
@@ -10606,7 +10714,7 @@ body.lang-t .result h1 small.alternative:before, body.lang-t
 
 span b {
   font-weight: normal;
-  border-bottom: 1px solid #dddddd !important;
+  border-bottom: 1px solid #ddd !important;
 }
 span a {
   border: 0 !important;
@@ -10638,7 +10746,7 @@ span a:hover b, span b:hover {
   border-bottom: none !important;
 }
 .radical .glyph b:hover {
-  background: #6b0000;
+  background: #6B0000;
 }
 .radical .sym {
   margin-left: 0.2em;
@@ -10654,7 +10762,7 @@ span a:hover b, span b:hover {
   color: #666;
   font-size: 90%;
   width: 100%;
-  border-bottom: 1px dotted #dddddd;
+  border-bottom: 1px dotted #ddd;
   word-break: normal !important;
   padding-right: 34px;
 }
@@ -10677,13 +10785,9 @@ div.cn-specific.bopomofo .cn-specific {
 body#moedict.overflow-scrolling-false.lang-t .pinyin {
   font-family: 'MOEDICT';
 }
-body#moedict.lang-t .pinyin {
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
-}
 
 .english {
   word-break: normal !important;
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   font-weight: normal;
   font-size: 90%;
   margin-left: 5px;
@@ -10691,25 +10795,10 @@ body#moedict.lang-t .pinyin {
 }
 
 .pinyin {
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   display: inline-block;
   word-break: normal !important;
 }
 
-.bpmf {
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1", "標楷體", "BiauKai", "MOEDICT-IOS-KAI", "DFKaiShu-SB-Estd-BF", "全字庫正楷體", "Kaiti TC", "楷體-繁", "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
-/*.bopomofo {
-    .bpmf {
-        width: 65%;
-        display: inline-block;
-    }
-    .pinyin {
-        width: 35%;
-        display: inline-block;
-    }
-}*/
 span .tone {
   position: relative;
   float: right;
@@ -10718,16 +10807,9 @@ span .tone {
   font-size: 120%;
 }
 
-body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results {
-  font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
-}
-body.overflow-scrolling-false .pinyin, body.app .pinyin {
-  font-family: "Fira Sans OT", sans-serif !important;
-}
 body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false .english, body.overflow-scrolling-false .fw_def, body.overflow-scrolling-false .bopomofo, body.overflow-scrolling-false .cc0,
 body.overflow-scrolling-false hruby rb[annotation]:before, body.app .pinyin, body.app .english, body.app .fw_def, body.app .bopomofo, body.app .cc0,
 body.app hruby rb[annotation]:before {
-  text-rendering: auto !important;
   font-feature-settings: normal !important;
   -moz-font-feature-settings: normal !important;
   -webkit-font-feature-settings: normal !important;
@@ -10742,7 +10824,7 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 }
 
 .part-of-speech.playAudio {
-  background: #6b0000;
+  background: #6B0000;
   color: white;
   font-size: 90%;
   padding: 4px;
@@ -10757,8 +10839,8 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 }
 .audioBlock.playing {
   box-sizing: border-box;
-  border: 1px solid #6b0000;
-  color: #6b0000;
+  border: 1px solid #6B0000;
+  color: #6B0000;
   margin-left: 12px;
   padding-left: 10px;
   padding-right: 7px;
@@ -10767,7 +10849,7 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 
 .playAudio {
   margin-left: 5px;
-  color: #6b0000;
+  color: #6B0000;
   font-size: 70%;
   padding-left: 5px;
   display: inline-block !important;
@@ -10780,9 +10862,6 @@ body.lang-h h1 {
   padding-top: 0;
   margin-bottom: 0;
   padding-bottom: 0;
-}
-body.lang-h .bopomofo {
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
 }
 body.lang-h .bopomofo .part-of-speech {
   margin-right: 3px;
@@ -10806,7 +10885,6 @@ body.lang-c .specific {
 .glyph,
 .fw_lang,
 .specific {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   color: white;
   background-color: #6b0000;
   border-radius: 4px;
@@ -10816,7 +10894,6 @@ body.lang-c .specific {
 }
 
 .translation .fw_def {
-  font-family: "Noto Sans", "Geneva", "Segoe UI", "Charis SIL", "Biaodian Pro Sans CNS", "Fira Sans OT", "MOEDICT", sans-serif;
   display: inline;
   padding-left: 3.3ex;
   font-size: 90%;
@@ -10889,7 +10966,7 @@ body.lang-t .example, body.lang-h .example {
   display: inline-block;
   clear: both;
   width: auto;
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   padding: 3px;
   background: #eee;
   margin-right: 10px;
@@ -10897,12 +10974,7 @@ body.lang-t .example, body.lang-h .example {
   vertical-align: top;
 }
 
-.example {
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "Apple LiSung", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
 .quote {
-  font-family: "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT", "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體", "Songti TC", "宋體-繁", "Lisong Pro", "儷宋 Pro", "Apple LiSung", "蘋果儷細宋", "文鼎ＰＬ新宋", "cwTex 仿宋體", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   clear: both;
   display: block;
   font-size: 92%;
@@ -10916,14 +10988,14 @@ body.lang-t .example, body.lang-h .example {
 }
 
 .xrefs {
-  border-top: 3px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
+  border-top: 3px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 
 .xref-line {
   padding: 10px;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .link {
@@ -10977,13 +11049,12 @@ body .ui-tooltip {
   max-height: 300px;
   min-width: 300px;
   width: 300px;
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   word-break: break-all;
   background: #fffcfc !important;
   border-top: 0;
 }
 body .ui-tooltip h1[data-title] {
-  border-bottom: 1px solid #eeeeee !important;
+  border-bottom: 1px solid #eee !important;
 }
 body .ui-tooltip.bpmf {
   font-size: 80%;
@@ -11011,7 +11082,6 @@ body .ui-tooltip ul li, body .ui-tooltip ol li {
   margin: 0 !important;
   margin-left: 1.5em !important;
   padding: 0 !important;
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   line-height: 1.35;
 }
 body .ui-tooltip ul li .part-of-speech, body .ui-tooltip ol li .part-of-speech {
@@ -11047,7 +11117,7 @@ body .ui-tooltip .entry {
   font-size: 80%;
 }
 body .ui-tooltip .title {
-  border-bottom: 1px dotted #dddddd;
+  border-bottom: 1px dotted #ddd;
   margin: -.25em 0 .25em;
   padding: .25em;
   font-size: 130%;
@@ -11075,7 +11145,7 @@ body.lang-t .ui-tooltip .example {
 }
 
 body.lang-h .ui-tooltip .title {
-  border-bottom: 1px dotted #dddddd;
+  border-bottom: 1px dotted #ddd;
   line-height: 1.4;
 }
 body.lang-h .ui-tooltip .bopomofo {
@@ -11173,7 +11243,6 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
   vertical-align: middle;
 }
 #gcse > span .gsc-control-cse .gs-spelling {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   margin-bottom: 5px;
 }
 #gcse > span .gsc-control-cse .gs-spelling a {
@@ -11200,7 +11269,6 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
   border-radius: 2px;
 }
 #gcse > span .gsc-control-cse .gsc-input {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   font-size: 15px !important;
   vertical-align: top;
 }
@@ -11211,7 +11279,6 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
   padding: 0 !important;
 }
 #gcse > span .gsc-control-cse .gs-snippet {
-  font-family: "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT", 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', "Microsoft Jhenghei", "微軟正黑體", 'Source Han Sans', 'Source Han Sans HK', "Lantinghei TC", "Heiti TC", "黑體-繁",  "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU", sans-serif, "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
   padding-top: 1px !important;
   padding-left: 4px !important;
   padding-bottom: 10px !important;

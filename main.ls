@@ -548,32 +548,41 @@ window.do-load = ->
       callLater set-pinyin-bindings
 
   window.bind-html-actions = bind-html-actions = ->
+    $result = $ \#result
+    $h1 = $result.find \h1
+    $tooltip = $ '.ui-tooltip'
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
     do
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
       <- setTimeout _, 125ms
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
       <- setTimeout _, 125ms
-      $('.ui-tooltip').remove!
+      $tooltip.remove!
 
-    $ \#result .ruby!
-    _pua!
-    $ '#result h1' .css \visibility \visible
+    React.render React.View.UserPref!, $(\#user-pref).0
+    Han $result.0
+    .render-ruby!
+    .subst-comb-liga-with-PUA!
     window.scroll-to 0 0
-
-    $('#result h1 rb[word]') .each ->
-      _h = HASH-OF[LANG]
-      _i = $ @ .attr 'word-order'
-      _ci = $ @ .attr 'word'
-      $ @ .wrap $('<a/>').attr({
-        'word-order': _i
-        'href': _h + _ci
-      })
-      .on 'mouseover' ->
-        _i = $ this .attr 'word-order'
-        $('#result h1 a[word-order=' + _i + ']').addClass \hovered
-      .on 'mouseout' ->
-        $('#result h1 a') .removeClass \hovered
+    $h1
+    .css \visibility \visible
+      .find 'a[word-id]'
+      .each !->
+        $it = $ @
+        html = @.cloneNode().outerHTML
+        ci = document.createTextNode $it.text!
+        $it
+          .parents \ru
+          .wrap html 
+          .end!
+        .replace-with ci
+      .end!
+    .on \mouseover, 'a[word-id]' !->
+      $it = $ @
+      i = $it.attr \word-id
+      $it.parents \h1 .find 'a[word-id=' + i + ']' .addClass \hovered
+    .on \mouseout, 'a.hovered' !->
+      $h1.find \a .removeClass \hovered
 
     $('#result .part-of-speech a').attr \href, null
     set-pinyin-bindings!
@@ -615,8 +624,9 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        $('.ui-tooltip-content h1').ruby!
-        _pua!
+        Han $('.ui-tooltip-content')[0]
+        .render-ruby!
+        .subst-comb-liga-with-PUA!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~]?/, ''
         callLater ->
@@ -634,35 +644,6 @@ window.do-load = ->
           unless $(\#loading).length
             try $(@).tooltip \open
         out: -> try $(@).tooltip \close
-
-    function _pua
-      $('hruby rb[annotation]').each ->
-        a = $ @ .attr \annotation
-
-        if isDroidGap or isChrome
-          a .= replace /([aeiou])\u030d/g (m, v) ->
-            return      if v is \a then \\uDB80\uDC61
-                   else if v is \e then \\uDB80\uDC65
-                   else if v is \i then \\uDB80\uDC69
-                   else if v is \o then \\uDB80\uDC6F
-                   else if v is \u then \\uDB80\uDC75
-        else
-          a .= replace /i\u030d/g \\uDB80\uDC69
-
-        if a is /(<span[^<]*<\/span>)/
-          $(RegExp.$1).appendTo $(\<span/> class: \specific_to).appendTo $(@).parents('h1')
-        $ @ .attr \annotation, a - /<span[^<]*<\/span>/g
-
-      $('hruby rb[diao]').each ->
-        d = $ @ .attr \diao
-        d .= replace /([\u31B4-\u31B7])[\u0358|\u030d]/g (m, j) ->
-          return      if j is \\u31B4 then \\uDB8C\uDDB4
-                 else if j is \\u31B5 then \\uDB8C\uDDB5
-                 else if j is \\u31B6 then \\uDB8C\uDDB6
-                 else if j is \\u31B7 then \\uDB8C\uDDB7
-        $ @ .attr \diao, d
-
-      React.render React.View.UserPref!, $(\#user-pref).0
 
   fill-json = (part, id, cb) ->
     part = React.View.decodeLangPart LANG, part
