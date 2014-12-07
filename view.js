@@ -1046,7 +1046,7 @@
         yin = convertedP[idx];
         span = LANG === 't' && /[-\u2011]/g.exec(yin)
           ? ' rbspan="' + (yin.match(/[-\u2011]+/g).length + 1) + '"'
-          : LANG !== 't' && /^[^eēéěè].*r\d?$/g.exec(yin)
+          : LANG !== 't' && /^[^eēéěè].*r\d?$/.exec(yin) && !/^(j|ch|sh)r$/.test(yin)
             ? (cnSpecificBpmf && (cns = split$.call(cnSpecificBpmf, /\s+/), tws = split$.call(b, /\s+/), tws[tws.length - 2] = cns[cns.length - 2], bAlt = b.replace(/ /g, '\u3000').replace(/\sㄦ$/, 'ㄦ'), b = join$.call(tws, ' ')), ' rbspan="2"')
             : LANG !== 't' && /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g.exec(yin) ? ' rbspan="' + yin.match(/[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g).length + '"' : '';
         pUpper[idx] = isParallel ? "<rt" + span + ">" + p[idx] + "</rt>" : void 8;

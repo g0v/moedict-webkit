@@ -455,7 +455,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            if LANG is \t and yin is /[-\u2011]/g
            then ' rbspan="'+ (yin.match /[-\u2011]+/g .length+1) + '"'
            # 國語兒化音
-           else if LANG != \t && yin is /^[^eēéěè].*r\d?$/g
+           else if LANG != \t and yin is /^[^eēéěè].*r\d?$/ and yin isnt /^(j|ch|sh)r$/
            then
              if cn-specific-bpmf
                cns = cn-specific-bpmf / /\s+/
