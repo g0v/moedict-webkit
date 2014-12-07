@@ -9,8 +9,9 @@
   indexBody = replace$.call(indexBody, /<noscript>[\s\S]*<\/noscript>/g, '');
   indexBody = replace$.call(indexBody, /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g, '');
   indexBody = indexBody.replace(/<center\b[\s\S]*<\/center>/, '<!-- RESULT -->');
+  require('LiveScript');
   React = require('./js/react.js');
-  ref$ = require('./view.js'), Result = ref$.Result, decodeLangPart = ref$.decodeLangPart;
+  ref$ = require('./view.ls'), Result = ref$.Result, decodeLangPart = ref$.decodeLangPart;
   XREF = {};
   for (i$ = 0, len$ = (ref$ = ['a', 't', 'h', 'c']).length; i$ < len$; ++i$) {
     (fn$.call(this, ref$[i$]));

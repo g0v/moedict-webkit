@@ -37,6 +37,5 @@ gulp.task \webpack:build ->
 
 gulp.task \webpack:dev ->
   process.env.NODE_ENV = \development
-  webpack = require \webpack
-  server = require \webpack-dev-server
-  (new server webpack(require(\./webpack.config.js))).listen 8888, '0.0.0.0', it
+  process.argv ++= <[ --hot --port 8888 ]>
+  require \./node_modules/webpack-dev-server/bin/webpack-dev-server.js
