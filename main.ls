@@ -4,7 +4,7 @@ const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
 {any, map} = require('prelude-ls')
-$ = window.jQuery = require \jquery
+window.$ = window.jQuery = require \jquery
 
 React = require \react
 React.View = require \./view.ls

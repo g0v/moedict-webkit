@@ -28,7 +28,11 @@ module.exports = {
     ],
     module: {
         loaders: loaders.concat([
-            { test: /\.ls$/, loader: 'livescript' }
+            //{ test: /\.css$/, loader: 'style!css' },
+            //{ test: /\.scss$/, loader: 'style!css!sass?includePaths[]=' + require('path').resolve(__dirname, './sass') },
+            //{ test: /\.sass$/, loader: 'style!css!sass?indentedSyntax=sass&includePaths[]=' + require('path').resolve(__dirname, './sass') },
+            // { test: /\.(png|jpg|ttf|eot|woff|svg|otf)$/, loader: 'file' }
+            { test: /\.ls$/, loader: 'livescript' },
         ])
     },
 }

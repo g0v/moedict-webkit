@@ -16,8 +16,8 @@ html {
 }
 
 body {
-    @include hidpi('subtle_stripes', 'png');
-
+    background-image: url('images/subtle_stripes_x2.png');
+    background-size: 40px 40px;
     [class^="icon-"], [class*=" icon-"] {
         font-family: FontAwesome;
     }
@@ -67,7 +67,8 @@ body {
 }
 
 .navbar-inverse {
-    @include hidpi('leather', 'jpg');
+    background-image: url('images/leather_x2.jpg');
+    background-size: 400px 219px;
     border-bottom: 1px solid hsl(3,46%,16%);
     opacity: 0.9;
 }
