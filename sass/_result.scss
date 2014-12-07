@@ -46,7 +46,6 @@ svg {
     border: 2px solid #a00;
     background: white;
     margin-left: 5px;
-    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
 }
 canvas {
     margin-left: 5px;
@@ -57,7 +56,6 @@ canvas {
 hruby {
     rb[annotation]:before,
     rb[annotation]:after {
-        @include en-fonts;
         font-weight: normal;
     }
 }
@@ -67,19 +65,17 @@ hruby {
 .ui-tooltip {
     // 條目標題
     h1 {
+        @extend %han-cursive-hant;
         visibility: visible !important;
-
         // posi
         margin: -.25em 0 .5em;
         padding-bottom: .3em;
         // typo
-        @include kai-fonts;
         font-size: 200%;
         line-height: 1;
         font-weight: 501;
         // style
         border-bottom: 1px dotted $border-color;
-
 
         // 避免換頁時，未right-angle化的標題上下跳動
         &[style] {
@@ -92,10 +88,11 @@ hruby {
         // 標題詞條連結hack
         a:hover,
         a.hovered {
-            background: #ddd;
-            color: #0070A3;
+            // style
+            background-color: #ddd;
             border-radius: 4px;
-            outline: none; // 1px solid hsl(197,96%,70%);
+            color: #0070A3;
+            outline: 0;
         }
         // 單字條目的筆順動畫按鈕
         div.stroke {
@@ -115,11 +112,11 @@ hruby {
         }
         // 地區變體標示
         .specific_to {
+            @extend %han-sans-hant;
             display: inline;
             font-size: 40%;
             position: absolute;
             margin-top: 2.5ex;
-            @include fonts;
         }
         // 條目原文（英）
         .english {
@@ -140,7 +137,7 @@ hruby {
     h1 + div {
         small.youyin,
         small.alternative {
-            @include fonts;
+            @extend %han-sans-hant;
             color: #888;
             display: inline-block;
             font-size: .45em;
@@ -331,14 +328,13 @@ body#moedict {
         font-family: 'MOEDICT';
     }
     &.lang-t .pinyin {
-        // font-family: 'Segoe UI', 'Charis SIL', 'MOEDICT', 'Roboto', 'Arial Unicode MS', 'Candara', 'Ubuntu', 'Arial', 'Helvetica', sans-serif;
-        @include en-fonts
+        @extend %han-sans;
     }
 }
 
 .english {
+    @extend %han-sans;
     word-break: normal !important;
-    @include en-fonts;
     font-weight: normal;
     font-size: 90%;
     margin-left: 5px;
@@ -346,25 +342,14 @@ body#moedict {
 }
 
 .pinyin {
-    @include en-fonts;
+    @extend %han-sans;
     display: inline-block;
     word-break: normal !important;
 }
 
 .bpmf {
-    @include kai-fonts;
+    @extend %han-cursive-hant;
 }
-
-/*.bopomofo {
-    .bpmf {
-        width: 65%;
-        display: inline-block;
-    }
-    .pinyin {
-        width: 35%;
-        display: inline-block;
-    }
-}*/
 
 span .tone {
     position: relative;
@@ -375,15 +360,11 @@ span .tone {
 }
 
 body.overflow-scrolling-false, body.app {
-    .bpmf, input, button, select, textarea, .ui-widget, .results {
-        font-family: "MOEDICT", "Fira Sans OT", sans-serif !important;
-    }
-    .pinyin {
-        font-family: "Fira Sans OT", sans-serif !important;
+    .bpmf, .pinyin, input, button, select, textarea, .ui-widget, .results {
+        @extend %han-sans;
     }
     .pinyin, .english, .fw_def, .bopomofo, .cc0,
     hruby rb[annotation]:before {
-        text-rendering: auto !important;
         font-feature-settings: normal !important;
         -moz-font-feature-settings: normal !important;
         -webkit-font-feature-settings: normal !important;
@@ -443,7 +424,7 @@ body.lang-h {
         padding-bottom: 0;
     }
     .bopomofo {
-        @include en-fonts;
+        @extend %han-sans;
         .part-of-speech {
             margin-right: 3px;
             margin-left: 5px;
@@ -477,7 +458,7 @@ body.lang-c {
 .glyph,
 .fw_lang,
 .specific {
-    @include fonts;
+    @extend %han-sans-hant;
     color: white;
     background-color: hsl(360,100%,21%);
     border-radius: 4px;
@@ -488,9 +469,9 @@ body.lang-c {
 
 // 英、法、德語
 .translation .fw_def {
-    @include en-fonts;
+    @extend %han-sans;
     display: inline;
-    padding-left: 3.3ex;
+    padding-left: 1.7em; 
     font-size: 90%;
     word-break: normal !important;
     vertical-align: top;
@@ -574,10 +555,10 @@ body.lang-t .example, body.lang-h .example {
 }
 
 .example {
-    @include song-fonts;
+    @extend %han-serif-hant;
 }
 .quote {
-    @include song-fonts;
+    @extend %han-serif-hant;
     clear: both;
     display: block;
     font-size: 92%;
@@ -658,6 +639,7 @@ body.lang-t .example, body.lang-h .example {
 
 // 提示框
 body .ui-tooltip {
+    @extend %han-sans-hant;
     // posi
     margin-top: 0;
     overflow: hidden;
@@ -667,7 +649,6 @@ body .ui-tooltip {
     min-width: 300px;
     width: 300px;
     // typo
-    @include fonts;
     word-break: break-all;
     // style
     background: #fffcfc !important;
@@ -704,12 +685,12 @@ body .ui-tooltip {
         margin: 0 !important;
 
         li {
+            @extend %han-sans-hant;
             // posi
             margin: 0 !important;
             margin-left: 1.5em !important;
             padding: 0 !important;
             // typo
-            @include fonts;
             line-height: 1.35;
 
             // 詞性置左

@@ -6,8 +6,11 @@ $screen-small: 1px;
 $baseFontSize: 14pt;
 $baseBorderRadius: 0;
 $bodyBackground: hsl(0,3%,95%);
+$font-family-sans-serif: inherit;
+$font-family-serif: inherit;
+$font-family-monospace: inherit;
 
-// font-awesome
+// paths 
 $fontAwesomePath: "./fonts";
 
 $grayLight:             #ddd;
@@ -19,17 +22,18 @@ $primary-color: #6B0000;
 @import "compass/css3";
 @import "hidpi";
 
+// han.css 
+@import "han";
+@import "optimise-ruby";
+
 // Core variables and mixins
 @import "bootstrap/bootstrap";
 
 // for progress indicator of strokes
 @import "strokes";
 
-// CSS Reset
-@import "han";
-@import "font-awesome";
-
 // @font-face
+@import "font-awesome";
 @import "ff";
 
 // Unicode PUA and IDC glyphs
@@ -43,21 +47,5 @@ $primary-color: #6B0000;
 // Twitter timeline and Google Search Index
 @import "widget";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body { font-size: 14pt }
+

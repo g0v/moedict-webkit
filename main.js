@@ -964,39 +964,39 @@
       });
     };
     window.bindHtmlActions = bindHtmlActions = function(){
-      var vclick;
+      var $result, $h1, $tooltip, vclick;
+      $result = $('#result');
+      $h1 = $result.find('h1');
+      $tooltip = $('.ui-tooltip');
       if ($('svg, canvas').length && !$('body').hasClass('autodraw')) {
         $('#strokes').fadeOut('fast', function(){
           $('#strokes').html('');
           return window.scrollTo(0, 0);
         });
       }
-      $('.ui-tooltip').remove();
+      $tooltip.remove();
       setTimeout(function(){
-        $('.ui-tooltip').remove();
+        $tooltip.remove();
         return setTimeout(function(){
-          return $('.ui-tooltip').remove();
+          return $tooltip.remove();
         }, 125);
       }, 125);
-      $('#result').ruby();
-      _pua();
-      $('#result h1').css('visibility', 'visible');
+      React.render(React.View.UserPref(), $('#user-pref')[0]);
+      Han($result[0]).renderRuby().substCombLigaWithPUA();
       window.scrollTo(0, 0);
-      $('#result h1 rb[word]').each(function(){
-        var _h, _i, _ci;
-        _h = HASHOF[LANG];
-        _i = $(this).attr('word-order');
-        _ci = $(this).attr('word');
-        return $(this).wrap($('<a/>').attr({
-          'word-order': _i,
-          'href': _h + _ci
-        })).on('mouseover', function(){
-          var _i;
-          _i = $(this).attr('word-order');
-          return $('#result h1 a[word-order=' + _i + ']').addClass('hovered');
-        }).on('mouseout', function(){
-          return $('#result h1 a').removeClass('hovered');
-        });
+      $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
+        var $it, html, ci;
+        $it = $(this);
+        html = this.cloneNode().outerHTML;
+        ci = document.createTextNode($it.text());
+        $it.closest('ru').wrap(html).end().replaceWith(ci);
+      }).end().on('mouseover', 'a[word-id]', function(){
+        var $it, i;
+        $it = $(this);
+        i = $it.attr('word-id');
+        $it.parents('h1').find('a[word-id=' + i + ']').addClass('hovered');
+      }).on('mouseout', 'a.hovered', function(){
+        $h1.find('a').removeClass('hovered');
       });
       $('#result .part-of-speech a').attr('href', null);
       setPinyinBindings();
@@ -1057,8 +1057,7 @@
         hide: 100,
         items: 'a',
         open: function(){
-          $('.ui-tooltip-content h1').ruby();
-          return _pua();
+          return Han($('.ui-tooltip-content')[0]).renderRuby().substCombLigaWithPUA();
         },
         content: function(cb){
           var id;
@@ -1074,7 +1073,7 @@
           });
         }
       });
-      $('#result a[href]:not(.xref)').hoverIntent({
+      return $('#result a[href]:not(.xref)').hoverIntent({
         timeout: 250,
         over: function(){
           var this$ = this;
@@ -1093,49 +1092,6 @@
           } catch (e$) {}
         }
       });
-      function _pua(){
-        $('hruby rb[annotation]').each(function(){
-          var a;
-          a = $(this).attr('annotation');
-          if (isDroidGap || isChrome) {
-            a = a.replace(/([aeiou])\u030d/g, function(m, v){
-              return v === 'a'
-                ? '\uDB80\uDC61'
-                : v === 'e'
-                  ? '\uDB80\uDC65'
-                  : v === 'i'
-                    ? '\uDB80\uDC69'
-                    : v === 'o'
-                      ? '\uDB80\uDC6F'
-                      : v === 'u' ? '\uDB80\uDC75' : void 8;
-            });
-          } else {
-            a = a.replace(/i\u030d/g, '\uDB80\uDC69');
-          }
-          if (/(<span[^<]*<\/span>)/.exec(a)) {
-            $(RegExp.$1).appendTo($('<span/>', {
-              'class': 'specific_to'
-            }).appendTo($(this).parents('h1')));
-          }
-          return $(this).attr('annotation', replace$.call(a, /<span[^<]*<\/span>/g, ''));
-        });
-        $('hruby rb[diao]').each(function(){
-          var d;
-          d = $(this).attr('diao');
-          d = d.replace(/([\u31B4-\u31B7])[\u0358|\u030d]/g, function(m, j){
-            return j === '\u31B4'
-              ? '\uDB8C\uDDB4'
-              : j === '\u31B5'
-                ? '\uDB8C\uDDB5'
-                : j === '\u31B6'
-                  ? '\uDB8C\uDDB6'
-                  : j === '\u31B7' ? '\uDB8C\uDDB7' : void 8;
-          });
-          return $(this).attr('diao', d);
-        });
-        return React.render(React.View.UserPref(), $('#user-pref')[0]);
-      }
-      return _pua;
     };
     fillJson = function(part, id, cb){
       var reactProps, xrefs, res$, lang, ref$, words;
