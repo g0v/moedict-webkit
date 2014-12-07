@@ -1,6 +1,6 @@
 React = require('react')
 window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
-$body = window?$.('body') || { hasClass: -> false }
+$body = window?$('body') || { hasClass: -> false }
 
 {p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
