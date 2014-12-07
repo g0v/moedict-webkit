@@ -1,5 +1,3 @@
-JS_DEPS = js/jquery-2.1.1.min.js js/jquery-ui-1.10.4.custom.min.js js/jquery.hoverIntent.js js/han.min.js js/bootstrap/dropdown.js js/simp-trad.js js/phantomjs-shims.js js/console-polyfill.js js/es5-shim.js js/es5-sham.js
-
 run ::
 	gulp run
 
@@ -11,9 +9,6 @@ build ::
 	
 deps ::
 	npm i
-	make js/deps.js
-
-js/deps.js :: $(JS_DEPS)
 	gulp build
 
 manifest :: js/deps.js
