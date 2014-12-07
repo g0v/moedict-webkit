@@ -2,11 +2,11 @@ JS_DEPS = js/jquery-2.1.1.min.js js/jquery-ui-1.10.4.custom.min.js js/jquery.hov
 
 run ::
 	# node ./static-here.js 8888 | lsc -cw main.ls view.ls server.ls | jade -Pw *.jade | compass watch
-	env DEV=1 webpack-dev-server -h --port 8888
+	env NODE_ENV=development webpack-dev-server -h --port 8888
 	
 
 js/deps.js :: $(JS_DEPS)
-	webpack --optimize-minimize
+	env NODE_ENV=production webpack --optimize-minimize
 
 manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache

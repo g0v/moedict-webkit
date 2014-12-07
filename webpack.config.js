@@ -1,9 +1,11 @@
 var webpack = require('webpack');
 var entries = [];
 var loaders = [];
-if (process.env.DEV) {
+var plugins = [];
+if (/development/.test(process.env.NODE_ENV)) {
     entries = [ 'webpack-dev-server/client?http://localhost:8888', 'webpack/hot/dev-server' ];
     loaders = [ { test: /view\.ls$/, loader: 'react-hot' } ];
+    plugins = [ new webpack.HotModuleReplacementPlugin() ];
 }
 
 module.exports = {
@@ -23,9 +25,7 @@ module.exports = {
         filename: 'deps.js',
         publicPath: '/js/'
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    plugins: plugins,
     module: {
         loaders: loaders.concat([
             //{ test: /\.css$/, loader: 'style!css' },
