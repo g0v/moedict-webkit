@@ -1,12 +1,20 @@
 JS_DEPS = js/jquery-2.1.1.min.js js/jquery-ui-1.10.4.custom.min.js js/jquery.hoverIntent.js js/han.min.js js/bootstrap/dropdown.js js/simp-trad.js js/phantomjs-shims.js js/console-polyfill.js js/es5-shim.js js/es5-sham.js
 
 run ::
-	# node ./static-here.js 8888 | lsc -cw main.ls view.ls server.ls | jade -Pw *.jade | compass watch
-	env NODE_ENV=development webpack-dev-server -h --port 8888
+	gulp run
+
+dev ::
+	gulp dev
+
+build ::
+	gulp build
 	
+deps ::
+	npm i
+	make js/deps.js
 
 js/deps.js :: $(JS_DEPS)
-	env NODE_ENV=production webpack --optimize-minimize
+	gulp build
 
 manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
@@ -14,10 +22,6 @@ manifest :: js/deps.js
 upload ::
 	rsync -avzP main.* view.* styles.css index.html js moe0:code/
 	rsync -avzP main.* view.* styles.css index.html js moe1:code/
-
-deps ::
-	npm i
-	make js/deps.js
 
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git

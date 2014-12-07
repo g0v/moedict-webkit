@@ -7,6 +7,9 @@ if (/development/.test(process.env.NODE_ENV)) {
     loaders = [ { test: /view\.ls$/, loader: 'react-hot' } ];
     plugins = [ new webpack.HotModuleReplacementPlugin() ];
 }
+else {
+    plugins = [ new webpack.optimize.UglifyJsPlugin() ];
+}
 
 module.exports = {
     entry: entries.concat([

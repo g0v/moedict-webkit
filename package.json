@@ -20,6 +20,7 @@
   "devDependencies": {
     "LiveScript": "1.3.x",
     "gulp-sass": "^1.2.4",
+    "gulp-watch": "^3.0.0",
     "gulp-webpack": "^1.1.0",
     "han-css": "^3.0.1",
     "jquery": "^2.1.1",
