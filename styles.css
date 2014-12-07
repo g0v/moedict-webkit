@@ -871,103 +871,103 @@ hruby[rightangle] ru[annotation]:before {
 /* Em dash (——) */
 @font-face {
   font-family: 'Biaodian Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Yakumono Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
+  src: local("☺"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Arial Unicode MS"), local("MS Gothic");
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Yakumono Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho"), local("Microsoft Yahei");
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSong), local("Microsoft Yahei"), local(SimSun);
   unicode-range: U+2014;
 }
 /* Ellipsis (……) */
 @font-face {
   font-family: 'Biaodian Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local("MS Mincho"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Yakumono Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
+  src: local("☺"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(Meiryo), local("MS Gothic");
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Yakumono Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("MS Mincho");
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif CNS';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Sans GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Sans GB"), local("Hiragino Kaku Gothic ProN"), local("Hiragino Kaku Gothic Pro"), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 @font-face {
   font-family: 'Biaodian Pro Serif GB';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
+  src: local("☺"), local("Hiragino Mincho ProN"), local("Hiragino Mincho Pro"), local("Songti SC"), local(STSongti), local(SimSun), local(PMingLiU);
   unicode-range: U+2026;
 }
 /* Curve quotes (“‘’”, GB-only) */
@@ -1110,7 +1110,7 @@ hruby[rightangle] ru[annotation]:before {
  */
 @font-face {
   font-family: 'Biaodian Basic';
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("☺");
   unicode-range: U+2014, U+2026, U+00B7;
 }
 @font-face {
@@ -1284,7 +1284,7 @@ hruby[rightangle] ru[annotation]:before {
  * Zhuyin Kaiti
  */
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("☺");
   unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
   font-family: 'Zhuyin Kaiti';
 }
@@ -1294,15 +1294,15 @@ hruby[rightangle] ru[annotation]:before {
 @font-face {
   unicode-range: U+3105-312D, U+31A0-31BA, U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
   font-family: 'Zhuyin Heiti';
-  src: local("Hiragino Sans GB"), local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("Hiragino Sans GB"), local("Heiti TC"), local("Microsoft Jhenghei"), local("☺");
 }
 @font-face {
   font-family: 'Zhuyin Heiti';
-  src: local("Heiti TC"), local("Microsoft Jhenghei"), url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("Heiti TC"), local("Microsoft Jhenghei"), local("☺");
   unicode-range: U+3127;
 }
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("☺");
   font-family: 'Zhuyin Heiti';
   unicode-range: U+02D9, U+02CA, U+02C5, U+02C7, U+02CB, U+02EA-02EB, U+31B4, U+31B5, U+31B6, U+31B7, U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
 }
@@ -1310,7 +1310,7 @@ hruby[rightangle] ru[annotation]:before {
  * Romanisation (checked tone ligature [陽入韻連字])
  */
 @font-face {
-  src: url("./fonts/MOEDICT.woff") format("woff"), url("./fonts/MOEDICT.otf") format("opentype");
+  src: local("☺");
   font-family: 'Romanization Sans';
   unicode-range: U+030D, U+0358, U+F31B4-F31B7, U+F0061, U+F0065, U+F0069, U+F006F, U+F0075;
 }
@@ -1321,7 +1321,7 @@ html *:not(:lang(zh)):not(:lang(ja)), article strong:lang(zh-Latn), article stro
 article strong *:lang(zh-Latn),
 article strong *:lang(ja-Latn),
 article strong *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+  font-family: "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 .result h1 .specific_to,
@@ -1339,16 +1339,16 @@ article strong *:not(:lang(zh)):not(:lang(ja)) {
 [lang*='Hant'],
 [lang='zh-TW'],
 [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
-  font-family: "Biaodian Pro Sans CNS", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+  font-family: "Biaodian Pro Sans CNS", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 html:lang(zh-Hans), html:lang(zh-CN), [lang*='Hans'],
 [lang='zh-CN'], article strong:lang(zh-Hans), article strong:lang(zh-CN) {
-  font-family: "Biaodian Pro Sans GB", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
 }
 
 html:lang(ja), [lang^='ja'], article strong:lang(ja) {
-  font-family: "Yakumono Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Yakumono Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /**
@@ -1367,24 +1367,24 @@ article blockquote
 var *:lang(ja-Latn),
 article blockquote
 var *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+  font-family: "Latin Italic Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 article blockquote i:lang(zh), article blockquote i:lang(zh-Hant), article blockquote
 var:lang(zh), article blockquote
 var:lang(zh-Hant) {
-  font-family: "Biaodian Pro Sans CNS", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+  font-family: "Biaodian Pro Sans CNS", "Latin Italic Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Zhuyin Heiti", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 article blockquote i:lang(zh-Hans), article blockquote i:lang(zh-CN), article blockquote
 var:lang(zh-Hans), article blockquote
 var:lang(zh-CN) {
-  font-family: "Biaodian Pro Sans GB", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Latin Italic Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti GB", sans-serif;
 }
 
 article blockquote i:lang(ja), article blockquote
 var:lang(ja) {
-  font-family: "Yakumono Sans", "Latin Italic Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Yakumono Sans", "Latin Italic Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 article figure blockquote:lang(zh-Latn), article figure blockquote:lang(ja-Latn), article figure blockquote:not(:lang(zh)):not(:lang(ja)),
@@ -1538,12 +1538,12 @@ ruby.romanization rt,
 ruby ru[annotation]:before,
 hruby.romanization rt,
 hruby ru[annotation]:before {
-  font-family: "Romanization Sans", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
+  font-family: "Romanization Sans", "Noto Sans", "Geneva", "Segoe UI", MOEDICT, "Fira Sans OT", "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans T Chinese", "Source Han Sans TWHK", "Microsoft Jhenghei", "微軟正黑體", "Source Han Sans", "Source Han Sans HK", "Lantinghei TC", "Heiti TC", "黑體-繁", "Lihei Pro", "儷黑 Pro", "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, "HAN NOM A", "HAN NOM B", "Han Heiti CNS", sans-serif;
 }
 
 hruby ru[annotation]:before,
 hruby ru zhuyin {
-  color: #666;
+  color: #666666;
   z-index: 10;
 }
 hruby ru[annotation]:before {
@@ -1702,7 +1702,7 @@ body {
   font-size: 14px;
   line-height: 1.42857;
   color: #333333;
-  background-color: #fff;
+  background-color: white;
 }
 
 input,
@@ -1749,8 +1749,8 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -2159,8 +2159,8 @@ code {
 kbd {
   padding: 2px 4px;
   font-size: 90%;
-  color: #fff;
-  background-color: #333;
+  color: white;
+  background-color: #333333;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
@@ -2174,8 +2174,8 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
   color: #333333;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
+  background-color: whitesmoke;
+  border: 1px solid #cccccc;
   border-radius: 4px;
 }
 pre code {
@@ -3111,11 +3111,11 @@ th {
   padding: 8px;
   line-height: 1.42857;
   vertical-align: top;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #dddddd;
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #dddddd;
 }
 .table > caption + thead > tr:first-child > th,
 .table > caption + thead > tr:first-child > td,
@@ -3126,10 +3126,10 @@ th {
   border-top: 0;
 }
 .table > tbody + tbody {
-  border-top: 2px solid #ddd;
+  border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #fff;
+  background-color: white;
 }
 
 .table-condensed > thead > tr > th,
@@ -3142,7 +3142,7 @@ th {
 }
 
 .table-bordered {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td,
@@ -3150,7 +3150,7 @@ th {
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > th,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
@@ -3164,7 +3164,7 @@ th {
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
 }
 
 table col[class*="col-"] {
@@ -3190,7 +3190,7 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.active,
 .table > tfoot > tr.active > td,
 .table > tfoot > tr.active > th {
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
 }
 
 .table-hover > tbody > tr > td.active:hover,
@@ -3277,7 +3277,7 @@ table th[class*="col-"] {
     overflow-y: hidden;
     overflow-x: scroll;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
   }
   .table-responsive > .table {
@@ -3394,9 +3394,9 @@ output {
   font-size: 14px;
   line-height: 1.42857;
   color: #555555;
-  background-color: #fff;
+  background-color: white;
   background-image: none;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -3763,7 +3763,7 @@ select[multiple].input-lg,
   outline-offset: -2px;
 }
 .btn:hover, .btn:focus {
-  color: #333;
+  color: #333333;
   text-decoration: none;
 }
 .btn:active, .btn.active {
@@ -3782,17 +3782,17 @@ select[multiple].input-lg,
 }
 
 .btn-default {
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc;
+  color: #333333;
+  background-color: white;
+  border-color: #cccccc;
 }
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
-  color: #333;
+  color: #333333;
   background-color: #ebebeb;
   border-color: #adadad;
 }
 .open .btn-default.dropdown-toggle {
-  color: #333;
+  color: #333333;
   background-color: #ebebeb;
   border-color: #adadad;
 }
@@ -3803,26 +3803,26 @@ select[multiple].input-lg,
   background-image: none;
 }
 .btn-default.disabled, .btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled:active, .btn-default.disabled.active, .btn-default[disabled], .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled]:active, .btn-default[disabled].active, fieldset[disabled] .btn-default, fieldset[disabled] .btn-default:hover, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default:active, fieldset[disabled] .btn-default.active {
-  background-color: #fff;
-  border-color: #ccc;
+  background-color: white;
+  border-color: #cccccc;
 }
 .btn-default .badge {
-  color: #fff;
-  background-color: #333;
+  color: white;
+  background-color: #333333;
 }
 
 .btn-primary {
-  color: #fff;
+  color: white;
   background-color: #428bca;
   border-color: #357ebd;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-  color: #fff;
+  color: white;
   background-color: #3276b1;
   border-color: #285e8e;
 }
 .open .btn-primary.dropdown-toggle {
-  color: #fff;
+  color: white;
   background-color: #3276b1;
   border-color: #285e8e;
 }
@@ -3838,21 +3838,21 @@ select[multiple].input-lg,
 }
 .btn-primary .badge {
   color: #428bca;
-  background-color: #fff;
+  background-color: white;
 }
 
 .btn-success {
-  color: #fff;
+  color: white;
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active {
-  color: #fff;
+  color: white;
   background-color: #47a447;
   border-color: #398439;
 }
 .open .btn-success.dropdown-toggle {
-  color: #fff;
+  color: white;
   background-color: #47a447;
   border-color: #398439;
 }
@@ -3868,21 +3868,21 @@ select[multiple].input-lg,
 }
 .btn-success .badge {
   color: #5cb85c;
-  background-color: #fff;
+  background-color: white;
 }
 
 .btn-info {
-  color: #fff;
+  color: white;
   background-color: #5bc0de;
   border-color: #46b8da;
 }
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active {
-  color: #fff;
+  color: white;
   background-color: #39b3d7;
   border-color: #269abc;
 }
 .open .btn-info.dropdown-toggle {
-  color: #fff;
+  color: white;
   background-color: #39b3d7;
   border-color: #269abc;
 }
@@ -3898,21 +3898,21 @@ select[multiple].input-lg,
 }
 .btn-info .badge {
   color: #5bc0de;
-  background-color: #fff;
+  background-color: white;
 }
 
 .btn-warning {
-  color: #fff;
+  color: white;
   background-color: #f0ad4e;
   border-color: #eea236;
 }
 .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active {
-  color: #fff;
+  color: white;
   background-color: #ed9c28;
   border-color: #d58512;
 }
 .open .btn-warning.dropdown-toggle {
-  color: #fff;
+  color: white;
   background-color: #ed9c28;
   border-color: #d58512;
 }
@@ -3928,21 +3928,21 @@ select[multiple].input-lg,
 }
 .btn-warning .badge {
   color: #f0ad4e;
-  background-color: #fff;
+  background-color: white;
 }
 
 .btn-danger {
-  color: #fff;
+  color: white;
   background-color: #d9534f;
   border-color: #d43f3a;
 }
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active {
-  color: #fff;
+  color: white;
   background-color: #d2322d;
   border-color: #ac2925;
 }
 .open .btn-danger.dropdown-toggle {
-  color: #fff;
+  color: white;
   background-color: #d2322d;
   border-color: #ac2925;
 }
@@ -3958,7 +3958,7 @@ select[multiple].input-lg,
 }
 .btn-danger .badge {
   color: #d9534f;
-  background-color: #fff;
+  background-color: white;
 }
 
 .btn-link {
@@ -4895,8 +4895,8 @@ input[type="button"].btn-block {
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -4926,11 +4926,11 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #262626;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  color: #fff;
+  color: white;
   text-decoration: none;
   outline: 0;
   background-color: #428bca;
@@ -5254,7 +5254,7 @@ input[type="button"].btn-block {
   color: #555555;
   text-align: center;
   background-color: #eeeeee;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-radius: 4px;
 }
 .input-group-addon.input-sm,
@@ -5378,7 +5378,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
 }
 .nav-tabs > li {
   float: left;
@@ -5391,12 +5391,12 @@ input[type="button"].btn-block {
   border-radius: 4px 4px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #ddd;
+  border-color: #eeeeee #eeeeee #dddddd;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
 }
@@ -5411,7 +5411,7 @@ input[type="button"].btn-block {
   margin-left: 2px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-  color: #fff;
+  color: white;
   background-color: #428bca;
 }
 
@@ -5459,11 +5459,11 @@ input[type="button"].btn-block {
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs-justified > .active > a:focus,
 .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 @media (min-width: 768px) {
   .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
     border-radius: 4px 4px 0 0;
   }
   .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -5471,7 +5471,7 @@ input[type="button"].btn-block {
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #fff;
+    border-bottom-color: white;
   }
 }
 
@@ -5789,38 +5789,38 @@ input[type="button"].btn-block {
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
-  color: #777;
+  color: #777777;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
   color: #5e5e5e;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
-  color: #777;
+  color: #777777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777;
+  color: #777777;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #333;
+  color: #333333;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #555;
+  color: #555555;
   background-color: #e7e7e7;
 }
 .navbar-default .navbar-nav > .disabled > a, .navbar-default .navbar-nav > .disabled > a:hover, .navbar-default .navbar-nav > .disabled > a:focus {
-  color: #ccc;
+  color: #cccccc;
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #ddd;
+  border-color: #dddddd;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #ddd;
+  background-color: #dddddd;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #888;
+  background-color: #888888;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
@@ -5828,50 +5828,50 @@ input[type="button"].btn-block {
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
   background-color: #e7e7e7;
-  color: #555;
+  color: #555555;
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #777;
+    color: #777777;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #333;
+    color: #333333;
     background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #555;
+    color: #555555;
     background-color: #e7e7e7;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #ccc;
+    color: #cccccc;
     background-color: transparent;
   }
 }
 .navbar-default .navbar-link {
-  color: #777;
+  color: #777777;
 }
 .navbar-default .navbar-link:hover {
-  color: #333;
+  color: #333333;
 }
 .navbar-default .btn-link {
-  color: #777;
+  color: #777777;
 }
 .navbar-default .btn-link:hover, .navbar-default .btn-link:focus {
-  color: #333;
+  color: #333333;
 }
 .navbar-default .btn-link[disabled]:hover, .navbar-default .btn-link[disabled]:focus, fieldset[disabled] .navbar-default .btn-link:hover, fieldset[disabled] .navbar-default .btn-link:focus {
-  color: #ccc;
+  color: #cccccc;
 }
 
 .navbar-inverse {
-  background-color: #222;
+  background-color: #222222;
   border-color: #090909;
 }
 .navbar-inverse .navbar-brand {
   color: #999999;
 }
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
-  color: #fff;
+  color: white;
   background-color: transparent;
 }
 .navbar-inverse .navbar-text {
@@ -5881,25 +5881,25 @@ input[type="button"].btn-block {
   color: #999999;
 }
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-  color: #fff;
+  color: white;
   background-color: transparent;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-  color: #fff;
+  color: white;
   background-color: #090909;
 }
 .navbar-inverse .navbar-nav > .disabled > a, .navbar-inverse .navbar-nav > .disabled > a:hover, .navbar-inverse .navbar-nav > .disabled > a:focus {
-  color: #444;
+  color: #444444;
   background-color: transparent;
 }
 .navbar-inverse .navbar-toggle {
-  border-color: #333;
+  border-color: #333333;
 }
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-  background-color: #333;
+  background-color: #333333;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #fff;
+  background-color: white;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -5907,7 +5907,7 @@ input[type="button"].btn-block {
 }
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
   background-color: #090909;
-  color: #fff;
+  color: white;
 }
 @media (max-width: 767px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
@@ -5920,15 +5920,15 @@ input[type="button"].btn-block {
     color: #999999;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fff;
+    color: white;
     background-color: transparent;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #fff;
+    color: white;
     background-color: #090909;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #444;
+    color: #444444;
     background-color: transparent;
   }
 }
@@ -5936,32 +5936,32 @@ input[type="button"].btn-block {
   color: #999999;
 }
 .navbar-inverse .navbar-link:hover {
-  color: #fff;
+  color: white;
 }
 .navbar-inverse .btn-link {
   color: #999999;
 }
 .navbar-inverse .btn-link:hover, .navbar-inverse .btn-link:focus {
-  color: #fff;
+  color: white;
 }
 .navbar-inverse .btn-link[disabled]:hover, .navbar-inverse .btn-link[disabled]:focus, fieldset[disabled] .navbar-inverse .btn-link:hover, fieldset[disabled] .navbar-inverse .btn-link:focus {
-  color: #444;
+  color: #444444;
 }
 
 .breadcrumb {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   border-radius: 4px;
 }
 .breadcrumb > li {
   display: inline-block;
 }
 .breadcrumb > li + li:before {
-  content: "/ ";
+  content: "/\00a0";
   padding: 0 5px;
-  color: #ccc;
+  color: #cccccc;
 }
 .breadcrumb > .active {
   color: #999999;
@@ -5984,8 +5984,8 @@ input[type="button"].btn-block {
   line-height: 1.42857;
   text-decoration: none;
   color: #428bca;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
   margin-left: -1px;
 }
 .pagination > li:first-child > a,
@@ -6004,14 +6004,14 @@ input[type="button"].btn-block {
 .pagination > li > span:focus {
   color: #2a6496;
   background-color: #eeeeee;
-  border-color: #ddd;
+  border-color: #dddddd;
 }
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
 .pagination > .active > span,
 .pagination > .active > span:hover,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: #fff;
+  color: white;
   background-color: #428bca;
   border-color: #428bca;
   cursor: default;
@@ -6023,8 +6023,8 @@ input[type="button"].btn-block {
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
   color: #999999;
-  background-color: #fff;
-  border-color: #ddd;
+  background-color: white;
+  border-color: #dddddd;
   cursor: not-allowed;
 }
 
@@ -6080,8 +6080,8 @@ input[type="button"].btn-block {
 .pager li > span {
   display: inline-block;
   padding: 5px 14px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
   border-radius: 15px;
 }
 .pager li > a:hover,
@@ -6102,7 +6102,7 @@ input[type="button"].btn-block {
 .pager .disabled > a:focus,
 .pager .disabled > span {
   color: #999999;
-  background-color: #fff;
+  background-color: white;
   cursor: not-allowed;
 }
 
@@ -6112,14 +6112,14 @@ input[type="button"].btn-block {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #fff;
+  color: white;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
 }
 .label[href]:hover, .label[href]:focus {
-  color: #fff;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
@@ -6179,7 +6179,7 @@ input[type="button"].btn-block {
   padding: 3px 7px;
   font-size: 12px;
   font-weight: bold;
-  color: #fff;
+  color: white;
   line-height: 1;
   vertical-align: baseline;
   white-space: nowrap;
@@ -6200,7 +6200,7 @@ input[type="button"].btn-block {
 }
 
 a.badge:hover, a.badge:focus {
-  color: #fff;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
@@ -6208,7 +6208,7 @@ a.badge:hover, a.badge:focus {
 a.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
   color: #428bca;
-  background-color: #fff;
+  background-color: white;
 }
 
 .nav-pills > li > a > .badge {
@@ -6256,8 +6256,8 @@ a.list-group-item.active > .badge,
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -6364,6 +6364,7 @@ a.thumbnail.active {
   from {
     background-position: 40px 0;
   }
+
   to {
     background-position: 0 0;
   }
@@ -6372,6 +6373,7 @@ a.thumbnail.active {
   from {
     background-position: 40px 0;
   }
+
   to {
     background-position: 0 0;
   }
@@ -6380,7 +6382,7 @@ a.thumbnail.active {
   overflow: hidden;
   height: 20px;
   margin-bottom: 20px;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -6392,7 +6394,7 @@ a.thumbnail.active {
   height: 100%;
   font-size: 12px;
   line-height: 20px;
-  color: #fff;
+  color: white;
   text-align: center;
   background-color: #428bca;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -6489,8 +6491,8 @@ a.thumbnail.active {
   display: block;
   padding: 10px 15px;
   margin-bottom: -1px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  border: 1px solid #dddddd;
 }
 .list-group-item:first-child {
   border-top-right-radius: 4px;
@@ -6509,18 +6511,18 @@ a.thumbnail.active {
 }
 
 a.list-group-item {
-  color: #555;
+  color: #555555;
 }
 a.list-group-item .list-group-item-heading {
-  color: #333;
+  color: #333333;
 }
 a.list-group-item:hover, a.list-group-item:focus {
   text-decoration: none;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
 }
 a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
   z-index: 2;
-  color: #fff;
+  color: white;
   background-color: #428bca;
   border-color: #428bca;
 }
@@ -6627,7 +6629,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
+  background-color: white;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -6667,8 +6669,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 
 .panel-footer {
   padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #ddd;
+  background-color: whitesmoke;
+  border-top: 1px solid #dddddd;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -6751,7 +6753,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 .panel > .panel-body + .table,
 .panel > .panel-body + .table-responsive {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #dddddd;
 }
 .panel > .table > tbody:first-child > tr:first-child th,
 .panel > .table > tbody:first-child > tr:first-child td {
@@ -6829,35 +6831,35 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   border-bottom: 0;
 }
 .panel-group .panel-heading + .panel-collapse .panel-body {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #dddddd;
 }
 .panel-group .panel-footer {
   border-top: 0;
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 .panel-default {
-  border-color: #ddd;
+  border-color: #dddddd;
 }
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: #f5f5f5;
-  border-color: #ddd;
+  background-color: whitesmoke;
+  border-color: #dddddd;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #ddd;
+  border-top-color: #dddddd;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #ddd;
+  border-bottom-color: #dddddd;
 }
 
 .panel-primary {
   border-color: #428bca;
 }
 .panel-primary > .panel-heading {
-  color: #fff;
+  color: white;
   background-color: #428bca;
   border-color: #428bca;
 }
@@ -6932,7 +6934,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   min-height: 20px;
   padding: 19px;
   margin-bottom: 20px;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -6958,13 +6960,13 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
+  color: black;
+  text-shadow: 0 1px 0 white;
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
 .close:hover, .close:focus {
-  color: #000;
+  color: black;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.5;
@@ -7019,8 +7021,8 @@ button.close {
 
 .modal-content {
   position: relative;
-  background-color: #fff;
-  border: 1px solid #999;
+  background-color: white;
+  border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -7036,7 +7038,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: black;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -7144,10 +7146,10 @@ button.close {
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-  color: #fff;
+  color: white;
   text-align: center;
   text-decoration: none;
-  background-color: #000;
+  background-color: black;
   border-radius: 4px;
 }
 
@@ -7164,52 +7166,52 @@ button.close {
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: #000;
+  border-top-color: black;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #000;
+  border-top-color: black;
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #000;
+  border-top-color: black;
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-  border-right-color: #000;
+  border-right-color: black;
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-  border-left-color: #000;
+  border-left-color: black;
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000;
+  border-bottom-color: black;
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000;
+  border-bottom-color: black;
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000;
+  border-bottom-color: black;
 }
 
 .popover {
@@ -7221,9 +7223,9 @@ button.close {
   max-width: 276px;
   padding: 1px;
   text-align: left;
-  background-color: #fff;
+  background-color: white;
   background-clip: padding-box;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -7289,7 +7291,7 @@ button.close {
   bottom: 1px;
   margin-left: -10px;
   border-bottom-width: 0;
-  border-top-color: #fff;
+  border-top-color: white;
 }
 .popover.right > .arrow {
   top: 50%;
@@ -7304,7 +7306,7 @@ button.close {
   left: 1px;
   bottom: -10px;
   border-left-width: 0;
-  border-right-color: #fff;
+  border-right-color: white;
 }
 .popover.bottom > .arrow {
   left: 50%;
@@ -7319,7 +7321,7 @@ button.close {
   top: 1px;
   margin-left: -10px;
   border-top-width: 0;
-  border-bottom-color: #fff;
+  border-bottom-color: white;
 }
 .popover.left > .arrow {
   top: 50%;
@@ -7333,7 +7335,7 @@ button.close {
   content: " ";
   right: 1px;
   border-right-width: 0;
-  border-left-color: #fff;
+  border-left-color: white;
   bottom: -10px;
 }
 
@@ -7399,7 +7401,7 @@ button.close {
   opacity: 0.5;
   filter: alpha(opacity=50);
   font-size: 20px;
-  color: #fff;
+  color: white;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -7419,7 +7421,7 @@ button.close {
 }
 .carousel-control:hover, .carousel-control:focus {
   outline: none;
-  color: #fff;
+  color: white;
   text-decoration: none;
   opacity: 0.9;
   filter: alpha(opacity=90);
@@ -7473,7 +7475,7 @@ button.close {
   height: 10px;
   margin: 1px;
   text-indent: -999px;
-  border: 1px solid #fff;
+  border: 1px solid white;
   border-radius: 10px;
   cursor: pointer;
   background-color: #000 \9;
@@ -7483,7 +7485,7 @@ button.close {
   margin: 0;
   width: 12px;
   height: 12px;
-  background-color: #fff;
+  background-color: white;
 }
 
 .carousel-caption {
@@ -7494,7 +7496,7 @@ button.close {
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;
-  color: #fff;
+  color: white;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -8070,6 +8072,7 @@ a .icon-spin {
   0% {
     -moz-transform: rotate(0deg);
   }
+
   100% {
     -moz-transform: rotate(359deg);
   }
@@ -8078,6 +8081,7 @@ a .icon-spin {
   0% {
     -webkit-transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(359deg);
   }
@@ -8086,6 +8090,7 @@ a .icon-spin {
   0% {
     -o-transform: rotate(0deg);
   }
+
   100% {
     -o-transform: rotate(359deg);
   }
@@ -8094,6 +8099,7 @@ a .icon-spin {
   0% {
     -ms-transform: rotate(0deg);
   }
+
   100% {
     -ms-transform: rotate(359deg);
   }
@@ -8102,6 +8108,7 @@ a .icon-spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(359deg);
   }
@@ -9643,7 +9650,7 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
 .jiao-0358:before {
   left: 0;
   position: absolute;
-  color: #000;
+  color: black;
 }
 
 .u31bX {
@@ -9738,7 +9745,7 @@ body [class^="icon-"], body [class*=" icon-"] {
   padding: 2px;
   border-radius: 3px;
   position: relative;
-  background: #6B0000;
+  background: #6b0000;
   opacity: 0.8;
   color: white;
   margin-bottom: 40px;
@@ -10043,7 +10050,7 @@ body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .
 
 input.query {
   display: block;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   font-size: 1.2em;
   width: 100%;
   height: 1.8em;
@@ -10407,7 +10414,7 @@ img.back {
 }
 #user-pref ul.dropdown-menu li a.active {
   background-color: #6aa3d5;
-  color: #fff;
+  color: white;
 }
 #user-pref > ul {
   margin-bottom: 0.55em;
@@ -10463,7 +10470,7 @@ img.back {
 }
 .starred-record--header ~ div {
   padding: 1.25em 0.5em 1em;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-top: 0;
 }
 .starred-record--header ~ div h3 {
@@ -10475,10 +10482,10 @@ img.back {
 .starred-record--header ~ div ul .starred-record--none-msg {
   list-style: none;
   margin-left: -2em;
-  color: #666;
+  color: #666666;
 }
 .starred-record--header ~ div ul .starred-record--none-msg span.fa {
-  color: #965;
+  color: #996655;
 }
 
 @media only screen and (max-width: 767px) {
@@ -10546,7 +10553,7 @@ hruby rb[annotation]:after {
   font-size: 200%;
   line-height: 1;
   font-weight: 501;
-  border-bottom: 1px dotted #ddd;
+  border-bottom: 1px dotted #dddddd;
 }
 .result h1[style],
 .ui-tooltip h1[style] {
@@ -10651,7 +10658,7 @@ hruby rb[annotation]:after {
   color: #fff;
   font-size: 14px;
   line-height: 1;
-  background: #6B0000;
+  background: #6b0000;
   border-radius: 4px;
 }
 body.lang-t .result h1 small.alternative:before, body.lang-t
@@ -10714,7 +10721,7 @@ body.lang-t .result h1 small.alternative:before, body.lang-t
 
 span b {
   font-weight: normal;
-  border-bottom: 1px solid #ddd !important;
+  border-bottom: 1px solid #dddddd !important;
 }
 span a {
   border: 0 !important;
@@ -10746,7 +10753,7 @@ span a:hover b, span b:hover {
   border-bottom: none !important;
 }
 .radical .glyph b:hover {
-  background: #6B0000;
+  background: #6b0000;
 }
 .radical .sym {
   margin-left: 0.2em;
@@ -10762,7 +10769,7 @@ span a:hover b, span b:hover {
   color: #666;
   font-size: 90%;
   width: 100%;
-  border-bottom: 1px dotted #ddd;
+  border-bottom: 1px dotted #dddddd;
   word-break: normal !important;
   padding-right: 34px;
 }
@@ -10824,7 +10831,7 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 }
 
 .part-of-speech.playAudio {
-  background: #6B0000;
+  background: #6b0000;
   color: white;
   font-size: 90%;
   padding: 4px;
@@ -10839,8 +10846,8 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 }
 .audioBlock.playing {
   box-sizing: border-box;
-  border: 1px solid #6B0000;
-  color: #6B0000;
+  border: 1px solid #6b0000;
+  color: #6b0000;
   margin-left: 12px;
   padding-left: 10px;
   padding-right: 7px;
@@ -10849,7 +10856,7 @@ body.overflow-scrolling-true.web hruby rb[annotation]:before {
 
 .playAudio {
   margin-left: 5px;
-  color: #6B0000;
+  color: #6b0000;
   font-size: 70%;
   padding-left: 5px;
   display: inline-block !important;
@@ -10966,7 +10973,7 @@ body.lang-t .example, body.lang-h .example {
   display: inline-block;
   clear: both;
   width: auto;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   padding: 3px;
   background: #eee;
   margin-right: 10px;
@@ -10988,14 +10995,14 @@ body.lang-t .example, body.lang-h .example {
 }
 
 .xrefs {
-  border-top: 3px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-top: 3px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
 }
 
 .xref-line {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 .link {
@@ -11054,7 +11061,7 @@ body .ui-tooltip {
   border-top: 0;
 }
 body .ui-tooltip h1[data-title] {
-  border-bottom: 1px solid #eee !important;
+  border-bottom: 1px solid #eeeeee !important;
 }
 body .ui-tooltip.bpmf {
   font-size: 80%;
@@ -11117,7 +11124,7 @@ body .ui-tooltip .entry {
   font-size: 80%;
 }
 body .ui-tooltip .title {
-  border-bottom: 1px dotted #ddd;
+  border-bottom: 1px dotted #dddddd;
   margin: -.25em 0 .25em;
   padding: .25em;
   font-size: 130%;
@@ -11145,7 +11152,7 @@ body.lang-t .ui-tooltip .example {
 }
 
 body.lang-h .ui-tooltip .title {
-  border-bottom: 1px dotted #ddd;
+  border-bottom: 1px dotted #dddddd;
   line-height: 1.4;
 }
 body.lang-h .ui-tooltip .bopomofo {
