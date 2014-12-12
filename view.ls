@@ -527,6 +527,7 @@ function convert-pinyin-t (yin, isBody=true)
               .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
               .replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
+              .replace(/O([^.!?,\w\s\u2011]*)o/g, 'O$1')
               .replace(/([\u0300-\u0302\u0304\u0307\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])(r?[ptkh])/g, '$1\u0304$2')
               .replace(/\u200B/g, '')
@@ -547,8 +548,8 @@ function convert-pinyin-t (yin, isBody=true)
       yin2.=replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
         [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
     # -仔 sandhi. We handle only the two obvious, non-contentious cases.
-    yin2.=replace(/\u0332(\w*\u2011a\u0300)(?![-\w\u2011])/g '\u0304$1')  # 3 -> 4
-    yin2.=replace(/\u0300(\w*\u2011a\u0300)(?![-\w\u2011])/g '$1')        # 2 -> 1
+    yin2.=replace(/\u0332(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '\u0304$1')  # 3 -> 4
+    yin2.=replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '$1')        # 2 -> 1
     return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/oo/g, 'o\u0358')
@@ -570,15 +571,15 @@ const DT-Tones-Sandhi = {
 }
 function tone-sandhi (seg)
   return seg unless seg is /\w/
-  if seg is /[aeiou]r?[hptk]/
-    return seg.replace(/([aioue])/, '$1\u0332') # 8 -> 3
+  if seg is /[aeiou]r?[hptk]/i
+    return seg.replace(/([aioue])/i, '$1\u0332') # 8 -> 3
   if seg isnt /[\u0300\u0332\u0306\u0304]/
-    if seg isnt /[aioue]/
+    if seg isnt /[aioue]/i
       return seg.replace(/([nm])/, '$1\u0304') # 1 -> 7
-    return seg.replace(/([aioue])/, '$1\u0304') # 1 -> 7
-  if seg is /[aeiou]\u0304r?[ptk]/
+    return seg.replace(/([aioue])/i, '$1\u0304') # 1 -> 7
+  if seg is /[aeiou]\u0304r?[ptk]/i
     return seg.replace(/\u0304/, '')            # 4(ptk) -> 8
-  if seg is /[aeiou]\u0304r?[h]/
+  if seg is /[aeiou]\u0304r?[h]/i
     return seg.replace(/\u0304/, '\u0300')      # 4(h) -> 2
   return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
 

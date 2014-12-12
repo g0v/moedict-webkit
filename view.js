@@ -1102,7 +1102,7 @@
       return yin;
     }
     if (/DT$/.exec(system)) {
-      yin2 = yin.replace(/-/g, '\u2011').replace(/ph(\w)/g, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/g, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/Tsh/g, 'C').replace(/Ts/g, 'Z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/([\u0300-\u0302\u0304\u0307\u030d])/g, function(it){
+      yin2 = yin.replace(/-/g, '\u2011').replace(/ph(\w)/g, 'PH$1').replace(/b(\w)/g, 'bh$1').replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1').replace(/tsh/g, 'c').replace(/ts/g, 'z').replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1').replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1').replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1').replace(/j/g, 'r').replace(/Ph(\w)/g, 'pH$1').replace(/B(\w)/g, 'Bh$1').replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1').replace(/Tsh/g, 'C').replace(/Ts/g, 'Z').replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1').replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1').replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1').replace(/J/g, 'R').replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1').replace(/O([^.!?,\w\s\u2011]*)o/g, 'O$1').replace(/([\u0300-\u0302\u0304\u0307\u030d])/g, function(it){
         return DTTones[it];
       }).replace(/([aeiou])(r?[ptkh])/g, '$1\u0304$2').replace(/\u200B/g, '').replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A').replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A').replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A').replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A').replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A').replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A').replace(/nn($|[-\s])/g, 'ⁿ$1');
       if (isBody) {
@@ -1130,8 +1130,8 @@
           }()).join("\u2011") + $2;
         });
       }
-      yin2 = yin2.replace(/\u0332(\w*\u2011a\u0300)(?![-\w\u2011])/g, '\u0304$1');
-      yin2 = yin2.replace(/\u0300(\w*\u2011a\u0300)(?![-\w\u2011])/g, '$1');
+      yin2 = yin2.replace(/\u0332(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g, '\u0304$1');
+      yin2 = yin2.replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g, '$1');
       return yin2;
     }
     return yin.replace(/oo/g, 'o\u0358').replace(/ts/g, 'ch').replace(/u([^\w\s]*)a/g, 'o$1a').replace(/u([^\w\s]*)e/g, 'o$1e').replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2').replace(/i([^\w\s]*)ng/g, 'e$1ng').replace(/nn($|[-\s])/g, 'ⁿ$1').replace(/([ie])r/g, '$1\u0358').replace(/\u030B/g, "\u0306");
@@ -1146,19 +1146,19 @@
     if (!/\w/.test(seg)) {
       return seg;
     }
-    if (/[aeiou]r?[hptk]/.exec(seg)) {
-      return seg.replace(/([aioue])/, '$1\u0332');
+    if (/[aeiou]r?[hptk]/i.exec(seg)) {
+      return seg.replace(/([aioue])/i, '$1\u0332');
     }
     if (!/[\u0300\u0332\u0306\u0304]/.test(seg)) {
-      if (!/[aioue]/.test(seg)) {
+      if (!/[aioue]/i.test(seg)) {
         return seg.replace(/([nm])/, '$1\u0304');
       }
-      return seg.replace(/([aioue])/, '$1\u0304');
+      return seg.replace(/([aioue])/i, '$1\u0304');
     }
-    if (/[aeiou]\u0304r?[ptk]/.exec(seg)) {
+    if (/[aeiou]\u0304r?[ptk]/i.exec(seg)) {
       return seg.replace(/\u0304/, '');
     }
-    if (/[aeiou]\u0304r?[h]/.exec(seg)) {
+    if (/[aeiou]\u0304r?[h]/i.exec(seg)) {
       return seg.replace(/\u0304/, '\u0300');
     }
     return seg.replace(/([\u0300\u0332\u0306\u0304])/g, function(it){
