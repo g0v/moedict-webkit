@@ -437,7 +437,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
       open-tag = open-tag || ''
       rare-cjk .= replace r-cjk-g, \<rb>$1</rb>
       \</rb> + rare-cjk + open-tag
-  p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
+  p = pinyin #.replace /[,\.;，、；。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
@@ -527,7 +527,7 @@ function convert-pinyin-t (yin, isBody=true)
               .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
               .replace(/J/g, 'R')
               .replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
-              .replace(/O([^.!?,\w\s\u2011]*)o/g, 'O$1')
+              .replace(/O([^.!?,\w\s\u2011]*)o([^.!?,\w\s\u2011]*)r?/g, 'O$1$2')
               .replace(/([\u0300-\u0302\u0304\u0307\u030d])/g -> DT-Tones[it])
               .replace(/([aeiou])(r?[ptkh])/g, '$1\u0304$2')
               .replace(/\u200B/g, '')
