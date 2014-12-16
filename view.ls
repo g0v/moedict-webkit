@@ -142,10 +142,10 @@ Nav = createClass do
           span { className: \lang-active, style: { margin: 0, padding: 0 }, itemProp: \articleSection }, \國語辭典
           b { className: \caret }
         DropDown { STANDALONE: @props.STANDALONE },
-      li { id: \btn-starred },
+      li { id: \btn-starred, title: \字詞紀錄簿 },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-bookmark-empty }
-      li { id: \btn-pref },
+      li { id: \btn-pref, title: \偏好設定 },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-cogs }
       if isMoedictDesktop then

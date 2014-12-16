@@ -273,7 +273,8 @@
       })), DropDown({
         STANDALONE: this.props.STANDALONE
       })), li({
-        id: 'btn-starred'
+        id: 'btn-starred',
+        title: '字詞紀錄簿'
       }, a({
         href: '#=*',
         style: {
@@ -283,7 +284,8 @@
       }, i({
         className: 'icon-bookmark-empty'
       }))), li({
-        id: 'btn-pref'
+        id: 'btn-pref',
+        title: '偏好設定'
       }, a({
         href: '#=*',
         style: {
