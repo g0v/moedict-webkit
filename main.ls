@@ -559,10 +559,9 @@ window.do-load = ->
       <- setTimeout _, 125ms
       $tooltip.remove!
 
-    React.render React.View.UserPref!, $(\#user-pref).0
-    Han $result.0
-    .render-ruby!
-    .subst-comb-liga-with-PUA!
+    React.render React.View.UserPref!, $(\#user-pref).0, ->
+      Han($result.0).render-ruby!.subst-comb-liga-with-PUA!
+
     window.scroll-to 0 0
     $h1
     .css \visibility \visible

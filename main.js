@@ -981,8 +981,9 @@
           return $tooltip.remove();
         }, 125);
       }, 125);
-      React.render(React.View.UserPref(), $('#user-pref')[0]);
-      Han($result[0]).renderRuby().substCombLigaWithPUA();
+      React.render(React.View.UserPref(), $('#user-pref')[0], function(){
+        return Han($result[0]).renderRuby().substCombLigaWithPUA();
+      });
       window.scrollTo(0, 0);
       $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
         var $it, html, ci;
