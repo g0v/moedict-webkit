@@ -964,7 +964,7 @@
       });
     };
     window.bindHtmlActions = bindHtmlActions = function(){
-      var $result, $h1, $tooltip, vclick;
+      var $result, $h1, $tooltip;
       $result = $('#result');
       $h1 = $result.find('h1');
       $tooltip = $('.ui-tooltip');
@@ -981,117 +981,118 @@
           return $tooltip.remove();
         }, 125);
       }, 125);
-      React.render(React.View.UserPref(), $('#user-pref')[0], function(){
-        return Han($result[0]).renderRuby().substCombLigaWithPUA();
-      });
-      window.scrollTo(0, 0);
-      $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
-        var $it, html, ci;
-        $it = $(this);
-        html = this.cloneNode().outerHTML;
-        ci = document.createTextNode($it.text());
-        $it.closest('ru').wrap(html).end().replaceWith(ci);
-      }).end().on('mouseover', 'a[word-id]', function(){
-        var $it, i;
-        $it = $(this);
-        i = $it.attr('word-id');
-        $it.parents('h1').find('a[word-id=' + i + ']').addClass('hovered');
-      }).on('mouseout', 'a.hovered', function(){
-        $h1.find('a').removeClass('hovered');
-      });
-      $('#result .part-of-speech a').attr('href', null);
-      setPinyinBindings();
-      cacheLoading = false;
-      vclick = isMobile ? 'touchstart click' : 'click';
-      $('.results .star').on(vclick, function(){
-        var $star, key;
-        $star = $(this).hide();
-        key = "\"" + prevId + "\"\n";
-        if ($(this).hasClass('icon-star-empty')) {
-          STARRED[LANG] = key + STARRED[LANG];
-          $(this).attr('title', '已加入記錄簿');
-        } else {
-          STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
-          $(this).attr('title', '加入字詞記錄簿');
-        }
-        $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
-        $('#btn-starred a').fadeOut('fast', function(){
-          return $(this).css('background', '#ddd').fadeIn(function(){
-            $(this).css('background', 'transparent');
-            return $star.fadeIn('fast');
-          });
-        });
-        return setPref("starred-" + LANG, STARRED[LANG]);
-      });
-      $('.results .stroke').on(vclick, function(){
-        $('#historical-scripts').fadeIn();
-        if ($('svg, canvas').length) {
-          return $('#strokes').fadeOut('fast', function(){
-            $('#strokes').html('');
-            return window.scrollTo(0, 0);
-          });
-        }
+      return React.render(React.View.UserPref(), $('#user-pref')[0], function(){
+        var vclick;
+        Han($result[0]).renderRuby().substCombLigaWithPUA();
         window.scrollTo(0, 0);
-        return strokeWords(replace$.call($('h1:first').data('title'), /[（(].*/, ''));
-      });
-      $('.results .playAudio').click(function(){
-        return window.playAudio(this, $(this).find("meta[itemprop='contentURL']").attr('content'));
-      });
-      if (isCordova && !DEBUGGING) {
-        try {
-          navigator.splashscreen.hide();
-        } catch (e$) {}
-        $('#result .playAudio').on('touchstart', function(){
-          if ($(this).hasClass('icon-play')) {
-            return $(this).click();
-          }
+        $h1.css('visibility', 'visible').find('a[word-id]').each(function(){
+          var $it, html, ci;
+          $it = $(this);
+          html = this.cloneNode().outerHTML;
+          ci = document.createTextNode($it.text());
+          $it.closest('ru').wrap(html).end().replaceWith(ci);
+        }).end().on('mouseover', 'a[word-id]', function(){
+          var $it, i;
+          $it = $(this);
+          i = $it.attr('word-id');
+          $it.parents('h1').find('a[word-id=' + i + ']').addClass('hovered');
+        }).on('mouseout', 'a.hovered', function(){
+          $h1.find('a').removeClass('hovered');
         });
-        return;
-      }
-      $('#result .trs.pinyin').tooltip({
-        tooltipClass: 'bpmf'
-      });
-      $('#result a[href]:not(.xref)').tooltip({
-        disabled: true,
-        tooltipClass: "prefer-pinyin-" + true,
-        show: 100,
-        hide: 100,
-        items: 'a',
-        open: function(){
-          return Han($('.ui-tooltip-content')[0]).renderRuby().substCombLigaWithPUA();
-        },
-        content: function(cb){
-          var id;
-          id = $(this).attr('href').replace(/^#['!:~]?/, '');
-          callLater(function(){
-            if (htmlCache[LANG][id]) {
-              cb(htmlCache[LANG][id]);
-              return;
-            }
-            return loadJson(id, function(it){
-              return cb(it);
+        $('#result .part-of-speech a').attr('href', null);
+        setPinyinBindings();
+        cacheLoading = false;
+        vclick = isMobile ? 'touchstart click' : 'click';
+        $('.results .star').on(vclick, function(){
+          var $star, key;
+          $star = $(this).hide();
+          key = "\"" + prevId + "\"\n";
+          if ($(this).hasClass('icon-star-empty')) {
+            STARRED[LANG] = key + STARRED[LANG];
+            $(this).attr('title', '已加入記錄簿');
+          } else {
+            STARRED[LANG] = replace$.call(STARRED[LANG], key + "", '');
+            $(this).attr('title', '加入字詞記錄簿');
+          }
+          $(this).toggleClass('icon-star-empty').toggleClass('icon-star');
+          $('#btn-starred a').fadeOut('fast', function(){
+            return $(this).css('background', '#ddd').fadeIn(function(){
+              $(this).css('background', 'transparent');
+              return $star.fadeIn('fast');
             });
           });
-        }
-      });
-      return $('#result a[href]:not(.xref)').hoverIntent({
-        timeout: 250,
-        over: function(){
-          var this$ = this;
-          return setTimeout(function(){
-            $('.ui-tooltip').remove();
-            if (!$('#loading').length) {
-              try {
-                return $(this$).tooltip('open');
-              } catch (e$) {}
-            }
-          }, 50);
-        },
-        out: function(){
+          return setPref("starred-" + LANG, STARRED[LANG]);
+        });
+        $('.results .stroke').on(vclick, function(){
+          $('#historical-scripts').fadeIn();
+          if ($('svg, canvas').length) {
+            return $('#strokes').fadeOut('fast', function(){
+              $('#strokes').html('');
+              return window.scrollTo(0, 0);
+            });
+          }
+          window.scrollTo(0, 0);
+          return strokeWords(replace$.call($('h1:first').data('title'), /[（(].*/, ''));
+        });
+        $('.results .playAudio').click(function(){
+          return window.playAudio(this, $(this).find("meta[itemprop='contentURL']").attr('content'));
+        });
+        if (isCordova && !DEBUGGING) {
           try {
-            return $(this).tooltip('close');
+            navigator.splashscreen.hide();
           } catch (e$) {}
+          $('#result .playAudio').on('touchstart', function(){
+            if ($(this).hasClass('icon-play')) {
+              return $(this).click();
+            }
+          });
+          return;
         }
+        $('#result .trs.pinyin').tooltip({
+          tooltipClass: 'bpmf'
+        });
+        $('#result a[href]:not(.xref)').tooltip({
+          disabled: true,
+          tooltipClass: "prefer-pinyin-" + true,
+          show: 100,
+          hide: 100,
+          items: 'a',
+          open: function(){
+            return Han($('.ui-tooltip-content')[0]).renderRuby().substCombLigaWithPUA();
+          },
+          content: function(cb){
+            var id;
+            id = $(this).attr('href').replace(/^#['!:~]?/, '');
+            callLater(function(){
+              if (htmlCache[LANG][id]) {
+                cb(htmlCache[LANG][id]);
+                return;
+              }
+              return loadJson(id, function(it){
+                return cb(it);
+              });
+            });
+          }
+        });
+        return $('#result a[href]:not(.xref)').hoverIntent({
+          timeout: 250,
+          over: function(){
+            var this$ = this;
+            return setTimeout(function(){
+              $('.ui-tooltip').remove();
+              if (!$('#loading').length) {
+                try {
+                  return $(this$).tooltip('open');
+                } catch (e$) {}
+              }
+            }, 50);
+          },
+          out: function(){
+            try {
+              return $(this).tooltip('close');
+            } catch (e$) {}
+          }
+        });
       });
     };
     fillJson = function(part, id, cb){
