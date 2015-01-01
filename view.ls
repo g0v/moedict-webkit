@@ -763,7 +763,7 @@ function h (it)
     .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
     .replace(/\uFFF9/g """
       <span class="ruby#{
-        if localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""
+        if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""
       }"><span class="rb"><span class="ruby"><span class="rb">
     """)
     .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
@@ -772,7 +772,7 @@ function h (it)
     .replace(/<span class="rt mandarin">\s*<\//g '</')
     .replace /(<span class="rt trs pinyin")>\s*([^<]+)/g, (_, pre, trs) -> """
       #pre title="#{ trs2bpmf \t trs }">#{
-        if localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
+        if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
           trs.replace(/-/g "\u2011")
         }</span>" else ""
       }#{ convert-pinyin-t trs, yes }
