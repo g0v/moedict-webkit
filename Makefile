@@ -84,6 +84,9 @@ translation-data/cedict.txt :
 translation-data/cfdict.xml :
 	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict_xml.zip' && unzip -o cfdict_xml.zip && rm cfdict_xml.zip
 
+clean-translation-data ::
+	rm -f translation-data/cfdict.xml translation-data/cedict.txt translation-data/handedict.txt
+
 all :: data/0/100.html
 	tar jxf data.tar.bz2
 
