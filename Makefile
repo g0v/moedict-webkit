@@ -75,17 +75,20 @@ translation :: translation-data moedict-data
 
 translation-data :: translation-data/handedict.txt translation-data/cedict.txt translation-data/cfdict.xml
 
-translation-data/handedict.txt ::
+translation-data/handedict.txt :
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
 
-translation-data/cedict.txt ::
+translation-data/cedict.txt :
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 
-translation-data/cfdict.xml ::
+translation-data/cfdict.xml :
 	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict_xml.zip' && unzip -o cfdict_xml.zip && rm cfdict_xml.zip
 
 all :: data/0/100.html
 	tar jxf data.tar.bz2
+
+clean ::
+	git clean -xdf
 
 emulate ::
 	make -C cordova emulate
