@@ -1435,10 +1435,43 @@
       return cb(split$.call(data, '|'));
     });
   };
-  pinyin_lookup = function(term, cb){
-    return GET("lookup/pinyin/" + term + ".json", function(data){
-      return cb($.parseJSON(data));
-    });
+  pinyin_lookup = function(query, cb){
+    var res, terms, i$, len$, term;
+    res = [];
+    terms = query.replace(/^\s+/, "").replace(/\s+$/, "").replace(/\s+/, " ").split(/ /);
+    console.log(terms.length);
+    for (i$ = 0, len$ = terms.length; i$ < len$; ++i$) {
+      term = terms[i$];
+      GET("lookup/pinyin/" + term + ".json", fn$);
+    }
+    function fn$(data){
+      var seen, i$, ref$, len$, titles, j$, len1$, t, x;
+      res.push($.parseJSON(data));
+      if (res.length === terms.length) {
+        seen = {};
+        for (i$ = 0, len$ = (ref$ = res).length; i$ < len$; ++i$) {
+          titles = ref$[i$];
+          for (j$ = 0, len1$ = titles.length; j$ < len1$; ++j$) {
+            t = titles[j$];
+            if (seen[t] == null) {
+              seen[t] = 0;
+            }
+            seen[t]++;
+          }
+        }
+        x = [];
+        for (t in seen) {
+          if (seen[t] === terms.length) {
+            x.push(t);
+          }
+        }
+        if (x.length === 0) {
+          return cb(["無符合之詞"]);
+        } else {
+          return cb(x);
+        }
+      }
+    }
   };
   SIMPTRAD = (ref1$ = window.SIMPTRAD) != null ? ref1$ : '';
   function b2g(str){
