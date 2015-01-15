@@ -753,6 +753,7 @@ function init-autocomplete
       $('iframe').fadeOut \fast
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
+      return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -811,6 +812,27 @@ trs_lookup = (term,cb) ->
   data.=replace /[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it]
   cb( data / '|' )
 
+pinyin_lookup = (query,cb) !->
+  res = []
+  terms = query.replace(/^\s+/,"").replace(/\s+$/,"").replace(/\s+/, " ").split(/ /)
+  for term in terms
+    data <- GET "lookup/pinyin/#{term}.json"
+    res.push( $.parseJSON(data) )
+    if res.length == terms.length
+      seen = {}
+      for titles in res
+        for t in titles
+          if !seen[t]?
+            seen[t] = 0
+          seen[t]++
+      x=[]
+      for t of seen
+        if (seen[t] == terms.length)
+          x.push(t)
+      if x.length == 0
+        cb(["無符合之詞"])
+      else
+        cb(x)
 
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
