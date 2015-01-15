@@ -1439,7 +1439,6 @@
     var res, terms, i$, len$, term;
     res = [];
     terms = query.replace(/^\s+/, "").replace(/\s+$/, "").replace(/\s+/, " ").split(/ /);
-    console.log(terms.length);
     for (i$ = 0, len$ = terms.length; i$ < len$; ++i$) {
       term = terms[i$];
       GET("lookup/pinyin/" + term + ".json", fn$);

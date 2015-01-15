@@ -815,7 +815,6 @@ trs_lookup = (term,cb) ->
 pinyin_lookup = (query,cb) !->
   res = []
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"").replace(/\s+/, " ").split(/ /)
-  console.log(terms.length) 
   for term in terms
     data <- GET "lookup/pinyin/#{term}.json"
     res.push( $.parseJSON(data) )
