@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
@@ -353,7 +354,7 @@ hruby {
     text-align: center; }
     hruby ru[annotation]:before {
       left: -265%;
-      top: -0.5em;
+      top: -.5em;
       vertical-align: top;
       height: 1em;
       width: 600%;
@@ -369,16 +370,16 @@ hruby {
     width: 1.8em;
     text-align: left; }
     hruby ru[zhuyin] zhuyin {
-      right: 0.2em;
+      right: .2em;
       top: 0;
       height: 2.7em;
-      width: 0.8em;
-      line-height: 0.9;
+      width: .8em;
+      line-height: .9;
       white-space: pre-wrap;
       word-break: break-all; }
     hruby ru[zhuyin] diao {
       position: absolute;
-      right: -0.9em;
+      right: -.9em;
       top: 0;
       display: inline-block;
       width: 1em; }
@@ -387,41 +388,41 @@ hruby {
     hruby ru[zhuyin][length='0'] zhuyin, hruby ru[zhuyin]:empty zhuyin {
       display: none; }
     hruby ru[zhuyin][length='1'] zhuyin {
-      margin-top: 0.125em; }
+      margin-top: .125em; }
     hruby ru[zhuyin][length='1'] diao {
-      margin-top: -0.35em; }
+      margin-top: -.35em; }
     hruby ru[zhuyin][length='2'] zhuyin {
-      margin-top: -0.175em; }
+      margin-top: -.175em; }
     hruby ru[zhuyin][length='2'] diao {
-      margin-top: 0.5em; }
+      margin-top: .5em; }
     hruby ru[zhuyin][length='3'] zhuyin {
-      margin-top: -0.45em; }
+      margin-top: -.45em; }
     hruby ru[zhuyin][length='3'] diao {
       margin-top: 1.3em; }
     hruby ru[zhuyin][diao='˙'] diao {
-      right: -0.35em; }
+      right: -.35em; }
     hruby ru[zhuyin][diao='˙'][length='1'] diao {
-      margin-top: -0.5em; }
+      margin-top: -.5em; }
     hruby ru[zhuyin][diao='˙'][length='2'] diao {
-      margin-top: -0.3em; }
+      margin-top: -.3em; }
     hruby ru[zhuyin][diao='˙'][length='3'] diao {
-      margin-top: -0.25em; }
+      margin-top: -.25em; }
     hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
       -moz-transform: scale(1.2);
       -ms-transform: scale(1.2);
       -webkit-transform: scale(1.2);
       transform: scale(1.2);
-      margin-right: -0.25em; }
+      margin-right: -.25em; }
     hruby ru[zhuyin][diao^='ㆴ'] diao, hruby ru[zhuyin][diao^='ㆵ'] diao, hruby ru[zhuyin][diao^='ㆶ'] diao, hruby ru[zhuyin][diao^='ㆷ'] diao, hruby ru[zhuyin][diao='󳆴'] diao, hruby ru[zhuyin][diao='󳆵'] diao, hruby ru[zhuyin][diao='󳆶'] diao, hruby ru[zhuyin][diao='󳆷'] diao {
       top: 20%;
-      margin-right: -0.3em; }
+      margin-right: -.3em; }
   hruby ru[annotation]:before, hruby[rightangle] ru[annotation][order='1']:before {
-    top: -0.5em; }
+    top: -.5em; }
   hruby ru[order='1']:before, hruby[rightangle] ru[annotation][order='0']:before {
-    bottom: -0.4em;
+    bottom: -.4em;
     top: auto; }
   hruby[rightangle] ru[annotation]:before {
-    margin-left: -0.4em; }
+    margin-left: -.4em; }
   @media screen and (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
     hruby yin {
       -moz-transform: scale(0.8);
@@ -429,20 +430,17 @@ hruby {
       -webkit-transform: scale(0.8);
       transform: scale(0.8);
       display: inline-block; }
-
     hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
       -moz-transform: scale(1);
       -ms-transform: scale(1);
       -webkit-transform: scale(1);
       transform: scale(1); }
-
     hruby ru[zhuyin][diao='˙'] diao {
       -moz-transform: scale(0.8);
       -ms-transform: scale(0.8);
       -webkit-transform: scale(0.8);
       transform: scale(0.8);
-      top: 0.125em; }
- }
+      top: .125em; } }
 
 /**
  * The Four Typefaces: Heiti
@@ -620,17 +618,17 @@ hruby {
  */
 @font-face {
   font-family: cursive;
-  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
+  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
   font-family: 'Han Kaiti';
-  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
+  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
   font-family: 'Han Kaiti CNS';
-  src: local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF); }
+  src: local(BiauKai), local(DFKaiShu-SB-Estd-BF); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
@@ -1248,13 +1246,13 @@ article figure blockquote:lang(ja), figure blockquote:lang(ja) {
  * Serif Italic
  */
 article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article blockquote:not(:lang(zh)):not(:lang(ja)), article blockquote *:lang(zh-Latn), article blockquote *:lang(ja-Latn), article blockquote *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 .result h1, .ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
-  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
-  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
+  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
 
 article blockquote:lang(ja) {
   font-family: 'Yakumono Serif', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', cursive, serif; }
@@ -1263,13 +1261,13 @@ article blockquote:lang(ja) {
  * Cursive Italic
  */
 i:lang(zh-Latn), i:lang(ja-Latn), i:not(:lang(zh)):not(:lang(ja)), i *:lang(zh-Latn), i *:lang(ja-Latn), i *:not(:lang(zh)):not(:lang(ja)), var:lang(zh-Latn), var:lang(ja-Latn), var:not(:lang(zh)):not(:lang(ja)), var *:lang(zh-Latn), var *:lang(ja-Latn), var *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 i:lang(zh), i:lang(zh-Hant), var:lang(zh), var:lang(zh-Hant) {
-  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 i:lang(zh-Hans), i:lang(zh-CN), var:lang(zh-Hans), var:lang(zh-CN) {
-  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
+  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
 
 i:lang(ja), var:lang(ja) {
   font-family: 'Yakumono Serif', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', cursive, serif; }
@@ -1652,7 +1650,7 @@ hruby {
     text-align: center; }
     hruby ru[annotation]:before {
       left: -265%;
-      top: -0.5em;
+      top: -.5em;
       vertical-align: top;
       height: 1em;
       width: 600%;
@@ -1668,16 +1666,16 @@ hruby {
     width: 1.8em;
     text-align: left; }
     hruby ru[zhuyin] zhuyin {
-      right: 0.2em;
+      right: .2em;
       top: 0;
       height: 2.7em;
-      width: 0.8em;
-      line-height: 0.9;
+      width: .8em;
+      line-height: .9;
       white-space: pre-wrap;
       word-break: break-all; }
     hruby ru[zhuyin] diao {
       position: absolute;
-      right: -0.9em;
+      right: -.9em;
       top: 0;
       display: inline-block;
       width: 1em; }
@@ -1686,41 +1684,41 @@ hruby {
     hruby ru[zhuyin][length='0'] zhuyin, hruby ru[zhuyin]:empty zhuyin {
       display: none; }
     hruby ru[zhuyin][length='1'] zhuyin {
-      margin-top: 0.125em; }
+      margin-top: .125em; }
     hruby ru[zhuyin][length='1'] diao {
-      margin-top: -0.35em; }
+      margin-top: -.35em; }
     hruby ru[zhuyin][length='2'] zhuyin {
-      margin-top: -0.175em; }
+      margin-top: -.175em; }
     hruby ru[zhuyin][length='2'] diao {
-      margin-top: 0.5em; }
+      margin-top: .5em; }
     hruby ru[zhuyin][length='3'] zhuyin {
-      margin-top: -0.45em; }
+      margin-top: -.45em; }
     hruby ru[zhuyin][length='3'] diao {
       margin-top: 1.3em; }
     hruby ru[zhuyin][diao='˙'] diao {
-      right: -0.35em; }
+      right: -.35em; }
     hruby ru[zhuyin][diao='˙'][length='1'] diao {
-      margin-top: -0.5em; }
+      margin-top: -.5em; }
     hruby ru[zhuyin][diao='˙'][length='2'] diao {
-      margin-top: -0.3em; }
+      margin-top: -.3em; }
     hruby ru[zhuyin][diao='˙'][length='3'] diao {
-      margin-top: -0.25em; }
+      margin-top: -.25em; }
     hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
       -moz-transform: scale(1.2);
       -ms-transform: scale(1.2);
       -webkit-transform: scale(1.2);
       transform: scale(1.2);
-      margin-right: -0.25em; }
+      margin-right: -.25em; }
     hruby ru[zhuyin][diao^='ㆴ'] diao, hruby ru[zhuyin][diao^='ㆵ'] diao, hruby ru[zhuyin][diao^='ㆶ'] diao, hruby ru[zhuyin][diao^='ㆷ'] diao, hruby ru[zhuyin][diao='󳆴'] diao, hruby ru[zhuyin][diao='󳆵'] diao, hruby ru[zhuyin][diao='󳆶'] diao, hruby ru[zhuyin][diao='󳆷'] diao {
       top: 20%;
-      margin-right: -0.3em; }
+      margin-right: -.3em; }
   hruby ru[annotation]:before, hruby[rightangle] ru[annotation][order='1']:before {
-    top: -0.5em; }
+    top: -.5em; }
   hruby ru[order='1']:before, hruby[rightangle] ru[annotation][order='0']:before {
-    bottom: -0.4em;
+    bottom: -.4em;
     top: auto; }
   hruby[rightangle] ru[annotation]:before {
-    margin-left: -0.4em; }
+    margin-left: -.4em; }
   @media screen and (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
     hruby yin {
       -moz-transform: scale(0.8);
@@ -1728,20 +1726,17 @@ hruby {
       -webkit-transform: scale(0.8);
       transform: scale(0.8);
       display: inline-block; }
-
     hruby ru[zhuyin][diao='˪'] diao, hruby ru[zhuyin][diao='˫'] diao {
       -moz-transform: scale(1);
       -ms-transform: scale(1);
       -webkit-transform: scale(1);
       transform: scale(1); }
-
     hruby ru[zhuyin][diao='˙'] diao {
       -moz-transform: scale(0.8);
       -ms-transform: scale(0.8);
       -webkit-transform: scale(0.8);
       transform: scale(0.8);
-      top: 0.125em; }
- }
+      top: .125em; } }
 
 /**
  * The Four Typefaces: Heiti
@@ -1919,17 +1914,17 @@ hruby {
  */
 @font-face {
   font-family: cursive;
-  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
+  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
   font-family: 'Han Kaiti';
-  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
+  src: local('Kaiti SC'), local(STKaiti), local(BiauKai), local(DFKaiShu-SB-Estd-BF), local(Kaiti), local(DFKai-SB); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
   font-family: 'Han Kaiti CNS';
-  src: local(BiauKai), local('標楷體'), local(DFKaiShu-SB-Estd-BF); }
+  src: local(BiauKai), local(DFKaiShu-SB-Estd-BF); }
 
 @font-face {
   unicode-range: U+4E00-9FFF, U+3400-4DB5, U+20000-2A6D6, U+2A700-2B734, U+2B740-2B81D, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23, U+FA24, U+FA27-FA29, U+3040-309F, U+30A0-30FF, U+3099-309E, U+FF66-FF9F, U+3007, U+31C0-31E3, U+2F00-2FD5, U+2E80-2EF3;
@@ -2547,13 +2542,13 @@ article figure blockquote:lang(ja), figure blockquote:lang(ja) {
  * Serif Italic
  */
 article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article blockquote:not(:lang(zh)):not(:lang(ja)), article blockquote *:lang(zh-Latn), article blockquote *:lang(ja-Latn), article blockquote *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 .result h1, .ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
-  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
-  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
+  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
 
 article blockquote:lang(ja) {
   font-family: 'Yakumono Serif', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', cursive, serif; }
@@ -2562,13 +2557,13 @@ article blockquote:lang(ja) {
  * Cursive Italic
  */
 i:lang(zh-Latn), i:lang(ja-Latn), i:not(:lang(zh)):not(:lang(ja)), i *:lang(zh-Latn), i *:lang(ja-Latn), i *:not(:lang(zh)):not(:lang(ja)), var:lang(zh-Latn), var:lang(ja-Latn), var:not(:lang(zh)):not(:lang(ja)), var *:lang(zh-Latn), var *:lang(ja-Latn), var *:not(:lang(zh)):not(:lang(ja)) {
-  font-family: 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 i:lang(zh), i:lang(zh-Hant), var:lang(zh), var:lang(zh-Hant) {
-  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
+  font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 i:lang(zh-Hans), i:lang(zh-CN), var:lang(zh-Hans), var:lang(zh-CN) {
-  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, '標楷體', Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
+  font-family: 'Biaodian Pro Serif GB', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti GB', cursive, serif; }
 
 i:lang(ja), var:lang(ja) {
   font-family: 'Yakumono Serif', 'Numeral LF Italic Serif', 'Latin Italic Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', cursive, serif; }
@@ -2610,9 +2605,9 @@ hruby ru[annotation]:before {
   transform: scale(0.4);
   left: -240% !important; }
 hruby ru[annotation][order='1']:before {
-  top: -0.15em !important; }
+  top: -.15em !important; }
 hruby ru[annotation][order='0']:before {
-  bottom: -0.4em !important;
+  bottom: -.4em !important;
   top: auto !important; }
 hruby ru[zhuyin] {
   width: 1.55em !important; }
@@ -2621,9 +2616,9 @@ hruby ru[zhuyin] {
     -ms-transform: scale(0.4);
     -webkit-transform: scale(0.4);
     transform: scale(0.4);
-    right: 0.05em !important; }
+    right: .05em !important; }
   hruby ru[zhuyin][length='2'] zhuyin, hruby ru[zhuyin][length='3'] zhuyin {
-    top: 0.1em; }
+    top: .1em; }
 body[data-ruby-pref='pinyin'] hruby zhuyin, body[data-ruby-pref='none'] hruby zhuyin {
   display: none; }
 body[data-ruby-pref='pinyin'] hruby ru[zhuyin], body[data-ruby-pref='none'] hruby ru[zhuyin] {
@@ -2641,60 +2636,42 @@ body[data-ruby-pref='none'] hruby, body[data-ruby-pref='none'] hruby ru {
     color: #000 !important;
     background: transparent !important;
     box-shadow: none !important; }
-
   a, a:visited {
     text-decoration: underline; }
-
   a[href]:after {
     content: " (" attr(href) ")"; }
-
   abbr[title]:after {
     content: " (" attr(title) ")"; }
-
   a[href^="javascript:"]:after, a[href^="#"]:after {
     content: ""; }
-
   pre, blockquote {
     border: 1px solid #999;
     page-break-inside: avoid; }
-
   thead {
     display: table-header-group; }
-
   tr, img {
     page-break-inside: avoid; }
-
   img {
     max-width: 100% !important; }
-
   p, h2, h3 {
     orphans: 3;
     widows: 3; }
-
   h2, h3 {
     page-break-after: avoid; }
-
   select {
     background: #fff !important; }
-
   .navbar {
     display: none; }
-
   .table td, .table th {
     background-color: #fff !important; }
-
   .btn > .caret, .dropup > .btn > .caret {
     border-top-color: #000 !important; }
-
   .label {
     border: 1px solid #000; }
-
   .table {
     border-collapse: collapse !important; }
-
   .table-bordered th, .table-bordered td {
-    border: 1px solid #ddd !important; }
- }
+    border: 1px solid #ddd !important; } }
 
 * {
   -webkit-box-sizing: border-box;
@@ -2708,7 +2685,7 @@ body[data-ruby-pref='none'] hruby, body[data-ruby-pref='none'] hruby ru {
 
 html {
   font-size: 62.5%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  -webkit-tap-highlight-color: transparent; }
 
 body {
   font-family: inherit;
@@ -2753,8 +2730,8 @@ img {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
   display: inline-block;
   max-width: 100%;
   height: auto; }
@@ -2963,10 +2940,8 @@ dd {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
-
   .dl-horizontal dd {
-    margin-left: 180px; }
- }
+    margin-left: 180px; } }
 
 abbr[title], abbr[data-original-title] {
   cursor: help;
@@ -3258,476 +3233,320 @@ pre {
 @media (min-width: 768px) {
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left; }
-
   .col-sm-1 {
     width: 8.33333%; }
-
   .col-sm-2 {
     width: 16.66667%; }
-
   .col-sm-3 {
     width: 25%; }
-
   .col-sm-4 {
     width: 33.33333%; }
-
   .col-sm-5 {
     width: 41.66667%; }
-
   .col-sm-6 {
     width: 50%; }
-
   .col-sm-7 {
     width: 58.33333%; }
-
   .col-sm-8 {
     width: 66.66667%; }
-
   .col-sm-9 {
     width: 75%; }
-
   .col-sm-10 {
     width: 83.33333%; }
-
   .col-sm-11 {
     width: 91.66667%; }
-
   .col-sm-12 {
     width: 100%; }
-
   .col-sm-pull-0 {
     right: 0%; }
-
   .col-sm-pull-1 {
     right: 8.33333%; }
-
   .col-sm-pull-2 {
     right: 16.66667%; }
-
   .col-sm-pull-3 {
     right: 25%; }
-
   .col-sm-pull-4 {
     right: 33.33333%; }
-
   .col-sm-pull-5 {
     right: 41.66667%; }
-
   .col-sm-pull-6 {
     right: 50%; }
-
   .col-sm-pull-7 {
     right: 58.33333%; }
-
   .col-sm-pull-8 {
     right: 66.66667%; }
-
   .col-sm-pull-9 {
     right: 75%; }
-
   .col-sm-pull-10 {
     right: 83.33333%; }
-
   .col-sm-pull-11 {
     right: 91.66667%; }
-
   .col-sm-pull-12 {
     right: 100%; }
-
   .col-sm-push-0 {
     left: 0%; }
-
   .col-sm-push-1 {
     left: 8.33333%; }
-
   .col-sm-push-2 {
     left: 16.66667%; }
-
   .col-sm-push-3 {
     left: 25%; }
-
   .col-sm-push-4 {
     left: 33.33333%; }
-
   .col-sm-push-5 {
     left: 41.66667%; }
-
   .col-sm-push-6 {
     left: 50%; }
-
   .col-sm-push-7 {
     left: 58.33333%; }
-
   .col-sm-push-8 {
     left: 66.66667%; }
-
   .col-sm-push-9 {
     left: 75%; }
-
   .col-sm-push-10 {
     left: 83.33333%; }
-
   .col-sm-push-11 {
     left: 91.66667%; }
-
   .col-sm-push-12 {
     left: 100%; }
-
   .col-sm-offset-0 {
     margin-left: 0%; }
-
   .col-sm-offset-1 {
     margin-left: 8.33333%; }
-
   .col-sm-offset-2 {
     margin-left: 16.66667%; }
-
   .col-sm-offset-3 {
     margin-left: 25%; }
-
   .col-sm-offset-4 {
     margin-left: 33.33333%; }
-
   .col-sm-offset-5 {
     margin-left: 41.66667%; }
-
   .col-sm-offset-6 {
     margin-left: 50%; }
-
   .col-sm-offset-7 {
     margin-left: 58.33333%; }
-
   .col-sm-offset-8 {
     margin-left: 66.66667%; }
-
   .col-sm-offset-9 {
     margin-left: 75%; }
-
   .col-sm-offset-10 {
     margin-left: 83.33333%; }
-
   .col-sm-offset-11 {
     margin-left: 91.66667%; }
-
   .col-sm-offset-12 {
-    margin-left: 100%; }
- }
+    margin-left: 100%; } }
 
 @media (min-width: 992px) {
   .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
     float: left; }
-
   .col-md-1 {
     width: 8.33333%; }
-
   .col-md-2 {
     width: 16.66667%; }
-
   .col-md-3 {
     width: 25%; }
-
   .col-md-4 {
     width: 33.33333%; }
-
   .col-md-5 {
     width: 41.66667%; }
-
   .col-md-6 {
     width: 50%; }
-
   .col-md-7 {
     width: 58.33333%; }
-
   .col-md-8 {
     width: 66.66667%; }
-
   .col-md-9 {
     width: 75%; }
-
   .col-md-10 {
     width: 83.33333%; }
-
   .col-md-11 {
     width: 91.66667%; }
-
   .col-md-12 {
     width: 100%; }
-
   .col-md-pull-0 {
     right: 0%; }
-
   .col-md-pull-1 {
     right: 8.33333%; }
-
   .col-md-pull-2 {
     right: 16.66667%; }
-
   .col-md-pull-3 {
     right: 25%; }
-
   .col-md-pull-4 {
     right: 33.33333%; }
-
   .col-md-pull-5 {
     right: 41.66667%; }
-
   .col-md-pull-6 {
     right: 50%; }
-
   .col-md-pull-7 {
     right: 58.33333%; }
-
   .col-md-pull-8 {
     right: 66.66667%; }
-
   .col-md-pull-9 {
     right: 75%; }
-
   .col-md-pull-10 {
     right: 83.33333%; }
-
   .col-md-pull-11 {
     right: 91.66667%; }
-
   .col-md-pull-12 {
     right: 100%; }
-
   .col-md-push-0 {
     left: 0%; }
-
   .col-md-push-1 {
     left: 8.33333%; }
-
   .col-md-push-2 {
     left: 16.66667%; }
-
   .col-md-push-3 {
     left: 25%; }
-
   .col-md-push-4 {
     left: 33.33333%; }
-
   .col-md-push-5 {
     left: 41.66667%; }
-
   .col-md-push-6 {
     left: 50%; }
-
   .col-md-push-7 {
     left: 58.33333%; }
-
   .col-md-push-8 {
     left: 66.66667%; }
-
   .col-md-push-9 {
     left: 75%; }
-
   .col-md-push-10 {
     left: 83.33333%; }
-
   .col-md-push-11 {
     left: 91.66667%; }
-
   .col-md-push-12 {
     left: 100%; }
-
   .col-md-offset-0 {
     margin-left: 0%; }
-
   .col-md-offset-1 {
     margin-left: 8.33333%; }
-
   .col-md-offset-2 {
     margin-left: 16.66667%; }
-
   .col-md-offset-3 {
     margin-left: 25%; }
-
   .col-md-offset-4 {
     margin-left: 33.33333%; }
-
   .col-md-offset-5 {
     margin-left: 41.66667%; }
-
   .col-md-offset-6 {
     margin-left: 50%; }
-
   .col-md-offset-7 {
     margin-left: 58.33333%; }
-
   .col-md-offset-8 {
     margin-left: 66.66667%; }
-
   .col-md-offset-9 {
     margin-left: 75%; }
-
   .col-md-offset-10 {
     margin-left: 83.33333%; }
-
   .col-md-offset-11 {
     margin-left: 91.66667%; }
-
   .col-md-offset-12 {
-    margin-left: 100%; }
- }
+    margin-left: 100%; } }
 
 @media (min-width: 1200px) {
   .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
     float: left; }
-
   .col-lg-1 {
     width: 8.33333%; }
-
   .col-lg-2 {
     width: 16.66667%; }
-
   .col-lg-3 {
     width: 25%; }
-
   .col-lg-4 {
     width: 33.33333%; }
-
   .col-lg-5 {
     width: 41.66667%; }
-
   .col-lg-6 {
     width: 50%; }
-
   .col-lg-7 {
     width: 58.33333%; }
-
   .col-lg-8 {
     width: 66.66667%; }
-
   .col-lg-9 {
     width: 75%; }
-
   .col-lg-10 {
     width: 83.33333%; }
-
   .col-lg-11 {
     width: 91.66667%; }
-
   .col-lg-12 {
     width: 100%; }
-
   .col-lg-pull-0 {
     right: 0%; }
-
   .col-lg-pull-1 {
     right: 8.33333%; }
-
   .col-lg-pull-2 {
     right: 16.66667%; }
-
   .col-lg-pull-3 {
     right: 25%; }
-
   .col-lg-pull-4 {
     right: 33.33333%; }
-
   .col-lg-pull-5 {
     right: 41.66667%; }
-
   .col-lg-pull-6 {
     right: 50%; }
-
   .col-lg-pull-7 {
     right: 58.33333%; }
-
   .col-lg-pull-8 {
     right: 66.66667%; }
-
   .col-lg-pull-9 {
     right: 75%; }
-
   .col-lg-pull-10 {
     right: 83.33333%; }
-
   .col-lg-pull-11 {
     right: 91.66667%; }
-
   .col-lg-pull-12 {
     right: 100%; }
-
   .col-lg-push-0 {
     left: 0%; }
-
   .col-lg-push-1 {
     left: 8.33333%; }
-
   .col-lg-push-2 {
     left: 16.66667%; }
-
   .col-lg-push-3 {
     left: 25%; }
-
   .col-lg-push-4 {
     left: 33.33333%; }
-
   .col-lg-push-5 {
     left: 41.66667%; }
-
   .col-lg-push-6 {
     left: 50%; }
-
   .col-lg-push-7 {
     left: 58.33333%; }
-
   .col-lg-push-8 {
     left: 66.66667%; }
-
   .col-lg-push-9 {
     left: 75%; }
-
   .col-lg-push-10 {
     left: 83.33333%; }
-
   .col-lg-push-11 {
     left: 91.66667%; }
-
   .col-lg-push-12 {
     left: 100%; }
-
   .col-lg-offset-0 {
     margin-left: 0%; }
-
   .col-lg-offset-1 {
     margin-left: 8.33333%; }
-
   .col-lg-offset-2 {
     margin-left: 16.66667%; }
-
   .col-lg-offset-3 {
     margin-left: 25%; }
-
   .col-lg-offset-4 {
     margin-left: 33.33333%; }
-
   .col-lg-offset-5 {
     margin-left: 41.66667%; }
-
   .col-lg-offset-6 {
     margin-left: 50%; }
-
   .col-lg-offset-7 {
     margin-left: 58.33333%; }
-
   .col-lg-offset-8 {
     margin-left: 66.66667%; }
-
   .col-lg-offset-9 {
     margin-left: 75%; }
-
   .col-lg-offset-10 {
     margin-left: 83.33333%; }
-
   .col-lg-offset-11 {
     margin-left: 91.66667%; }
-
   .col-lg-offset-12 {
-    margin-left: 100%; }
- }
+    margin-left: 100%; } }
 
 table {
   max-width: 100%;
@@ -3900,8 +3719,8 @@ output {
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
   .form-control:focus {
     border-color: #66afe9;
     outline: 0;
@@ -4071,33 +3890,26 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle; }
-
   .form-inline .form-control, .navbar-form .form-control {
     display: inline-block;
     width: auto;
     vertical-align: middle; }
-
   .form-inline .input-group > .form-control, .navbar-form .input-group > .form-control {
     width: 100%; }
-
   .form-inline .control-label, .navbar-form .control-label {
     margin-bottom: 0;
     vertical-align: middle; }
-
   .form-inline .radio, .navbar-form .radio, .form-inline .checkbox, .navbar-form .checkbox {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
     vertical-align: middle; }
-
   .form-inline .radio input[type="radio"], .navbar-form .radio input[type="radio"], .form-inline .checkbox input[type="checkbox"], .navbar-form .checkbox input[type="checkbox"] {
     float: none;
     margin-left: 0; }
-
   .form-inline .has-feedback .form-control-feedback, .navbar-form .has-feedback .form-control-feedback {
-    top: 0; }
- }
+    top: 0; } }
 
 .form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
   margin-top: 0;
@@ -4118,8 +3930,7 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
   padding-bottom: 7px; }
 @media (min-width: 768px) {
   .form-horizontal .control-label {
-    text-align: right; }
- }
+    text-align: right; } }
 .form-horizontal .has-feedback .form-control-feedback {
   top: 0;
   right: 15px; }
@@ -4351,8 +4162,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .fade {
   opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-  transition: opacity 0.15s linear; }
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear; }
   .fade.in {
     opacity: 1; }
 
@@ -4365,8 +4176,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   position: relative;
   height: 0;
   overflow: hidden;
-  -webkit-transition: height 0.35s ease;
-  transition: height 0.35s ease; }
+  -webkit-transition: height .35s ease;
+  transition: height .35s ease; }
 
 .caret {
   display: inline-block;
@@ -4488,8 +4299,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     left: auto; }
   .navbar-right .dropdown-menu-left {
     left: 0;
-    right: auto; }
- }
+    right: auto; } }
 
 .btn-group, .btn-group-vertical {
   position: relative;
@@ -4788,8 +4598,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
       display: table-cell;
       width: 1%; }
       .nav-justified > li > a, .nav-tabs.nav-justified > li > a {
-        margin-bottom: 0; }
- }
+        margin-bottom: 0; } }
 
 .nav-tabs-justified, .nav-tabs.nav-justified {
   border-bottom: 0; }
@@ -4802,10 +4611,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
       border-bottom: 1px solid #ddd;
       border-radius: 4px 4px 0 0; }
-
     .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a, .nav-tabs-justified > .active > a:hover, .nav-tabs.nav-justified > .active > a:hover, .nav-tabs-justified > .active > a:focus, .nav-tabs.nav-justified > .active > a:focus {
-      border-bottom-color: #fff; }
- }
+      border-bottom-color: #fff; } }
 
 .tab-content > .tab-pane {
   display: none; }
@@ -4914,8 +4721,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     text-decoration: none; }
   @media (min-width: 768px) {
     .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
-      margin-left: -15px; }
- }
+      margin-left: -15px; } }
 
 .navbar-toggle {
   position: relative;
@@ -4961,8 +4767,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
       .navbar-nav .open .dropdown-menu > li > a {
         line-height: 20px; }
         .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-nav .open .dropdown-menu > li > a:focus {
-          background-image: none; }
- }
+          background-image: none; } }
   @media (min-width: 768px) {
     .navbar-nav {
       float: left;
@@ -4978,10 +4783,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 @media (min-width: 768px) {
   .navbar-left {
     float: left !important; }
-
   .navbar-right {
-    float: right !important; }
- }
+    float: right !important; } }
 
 .navbar-form {
   margin-left: -15px;
@@ -5082,8 +4885,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
       background-color: #e7e7e7; }
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
       color: #ccc;
-      background-color: transparent; }
- }
+      background-color: transparent; } }
   .navbar-default .navbar-link {
     color: #777; }
     .navbar-default .navbar-link:hover {
@@ -5142,8 +4944,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
       background-color: #090909; }
     .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:focus {
       color: #444;
-      background-color: transparent; }
- }
+      background-color: transparent; } }
   .navbar-inverse .navbar-link {
     color: #999999; }
     .navbar-inverse .navbar-link:hover {
@@ -5262,7 +5063,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .label {
   display: inline;
-  padding: 0.2em 0.6em 0.3em;
+  padding: .2em .6em .3em;
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
@@ -5270,7 +5071,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 0.25em; }
+  border-radius: .25em; }
   .label[href]:hover, .label[href]:focus {
     color: #fff;
     text-decoration: none;
@@ -5378,8 +5179,8 @@ a.list-group-item.active > .badge, .nav-pills > .active > a > .badge {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out; }
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out; }
   .thumbnail > img, .thumbnail a > img {
     display: block;
     max-width: 100%;
@@ -5486,8 +5287,8 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
   background-color: #428bca;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  -webkit-transition: width 0.6s ease;
-  transition: width 0.6s ease; }
+  -webkit-transition: width .6s ease;
+  transition: width .6s ease; }
 
 .progress-striped .progress-bar {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -5972,19 +5773,15 @@ button.close {
   .modal-dialog {
     width: 600px;
     margin: 30px auto; }
-
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
-
   .modal-sm {
-    width: 300px; }
- }
+    width: 300px; } }
 
 @media (min-width: 992px) {
   .modal-lg {
-    width: 900px; }
- }
+    width: 900px; } }
 
 .tooltip {
   position: absolute;
@@ -6189,8 +5986,8 @@ button.close {
   .carousel-inner > .item {
     display: none;
     position: relative;
-    -webkit-transition: 0.6s ease-in-out left;
-    transition: 0.6s ease-in-out left; }
+    -webkit-transition: .6s ease-in-out left;
+    transition: .6s ease-in-out left; }
     .carousel-inner > .item > img, .carousel-inner > .item > a > img {
       display: block;
       max-width: 100%;
@@ -6285,7 +6082,7 @@ button.close {
     border-radius: 10px;
     cursor: pointer;
     background-color: #000 \9;
-    background-color: rgba(0, 0, 0, 0); }
+    background-color: transparent; }
   .carousel-indicators .active {
     margin: 0;
     width: 12px;
@@ -6313,15 +6110,12 @@ button.close {
     margin-top: -15px;
     margin-left: -15px;
     font-size: 30px; }
-
   .carousel-caption {
     left: 20%;
     right: 20%;
     padding-bottom: 30px; }
-
   .carousel-indicators {
-    bottom: 20px; }
- }
+    bottom: 20px; } }
 
 .clearfix:before, .clearfix:after {
   content: " ";
@@ -6372,78 +6166,58 @@ button.close {
 @media (max-width: 767px) {
   .visible-xs {
     display: block !important; }
-
   table.visible-xs {
     display: table; }
-
   tr.visible-xs {
     display: table-row !important; }
-
   th.visible-xs, td.visible-xs {
-    display: table-cell !important; }
- }
+    display: table-cell !important; } }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .visible-sm {
     display: block !important; }
-
   table.visible-sm {
     display: table; }
-
   tr.visible-sm {
     display: table-row !important; }
-
   th.visible-sm, td.visible-sm {
-    display: table-cell !important; }
- }
+    display: table-cell !important; } }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .visible-md {
     display: block !important; }
-
   table.visible-md {
     display: table; }
-
   tr.visible-md {
     display: table-row !important; }
-
   th.visible-md, td.visible-md {
-    display: table-cell !important; }
- }
+    display: table-cell !important; } }
 
 @media (min-width: 1200px) {
   .visible-lg {
     display: block !important; }
-
   table.visible-lg {
     display: table; }
-
   tr.visible-lg {
     display: table-row !important; }
-
   th.visible-lg, td.visible-lg {
-    display: table-cell !important; }
- }
+    display: table-cell !important; } }
 
 @media (max-width: 767px) {
   .hidden-xs {
-    display: none !important; }
- }
+    display: none !important; } }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .hidden-sm {
-    display: none !important; }
- }
+    display: none !important; } }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .hidden-md {
-    display: none !important; }
- }
+    display: none !important; } }
 
 @media (min-width: 1200px) {
   .hidden-lg {
-    display: none !important; }
- }
+    display: none !important; } }
 
 .visible-print {
   display: none !important; }
@@ -6451,21 +6225,48 @@ button.close {
 @media print {
   .visible-print {
     display: block !important; }
-
   table.visible-print {
     display: table; }
-
   tr.visible-print {
     display: table-row !important; }
-
   th.visible-print, td.visible-print {
-    display: table-cell !important; }
- }
+    display: table-cell !important; } }
 
 @media print {
   .hidden-print {
-    display: none !important; }
- }
+    display: none !important; } }
+
+#strokes {
+  display: inline-block;
+  clear: both;
+  min-height: 221px; }
+  #strokes .word {
+    position: relative;
+    float: left; }
+  #strokes .loader {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: #CCC; }
+  #strokes .loader div {
+    height: 100%;
+    background: #FFF; }
+  #strokes .loader i {
+    position: absolute;
+    top: 107.5px;
+    left: 107.5px;
+    color: #A33; }
+  #strokes .loader i.icon-fixed-width {
+    margin-top: -0.5714em;
+    margin-left: -0.5714em; }
+  #strokes .loader i.icon-fixed-width.icon-large {
+    margin-top: -0.714em;
+    margin-left: -0.714em; }
 
 /*!
  *  Font Awesome 3.2.1
@@ -6509,7 +6310,7 @@ button.close {
   font-style: normal;
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
-  *margin-right: 0.3em; }
+  *margin-right: .3em; }
 
 [class^="icon-"]:before, [class*=" icon-"]:before {
   text-decoration: inherit;
@@ -6563,7 +6364,7 @@ a [class^="icon-"], a [class*=" icon-"] {
 
 .icon-border {
   border: solid 1px #eeeeee;
-  padding: 0.2em 0.25em 0.15em;
+  padding: .2em .25em .15em;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px; }
@@ -6611,10 +6412,10 @@ a [class^="icon-"], a [class*=" icon-"] {
   float: left; }
 
 [class^="icon-"].pull-left, [class*=" icon-"].pull-left {
-  margin-right: 0.3em; }
+  margin-right: .3em; }
 
 [class^="icon-"].pull-right, [class*=" icon-"].pull-right {
-  margin-left: 0.3em; }
+  margin-left: .3em; }
 
 /* BOOTSTRAP SPECIFIC CLASSES
  * -------------------------- */
@@ -6636,34 +6437,34 @@ a [class^="icon-"], a [class*=" icon-"] {
 
 /* keeps Bootstrap styles with and without icons the same */
 .btn [class^="icon-"].icon-large, .btn [class*=" icon-"].icon-large, .nav [class^="icon-"].icon-large, .nav [class*=" icon-"].icon-large {
-  line-height: 0.9em; }
+  line-height: .9em; }
 
 .btn [class^="icon-"].icon-spin, .btn [class*=" icon-"].icon-spin, .nav [class^="icon-"].icon-spin, .nav [class*=" icon-"].icon-spin {
   display: inline-block; }
 
 .nav-tabs [class^="icon-"], .nav-tabs [class^="icon-"].icon-large, .nav-tabs [class*=" icon-"], .nav-tabs [class*=" icon-"].icon-large, .nav-pills [class^="icon-"], .nav-pills [class^="icon-"].icon-large, .nav-pills [class*=" icon-"], .nav-pills [class*=" icon-"].icon-large {
-  line-height: 0.9em; }
+  line-height: .9em; }
 
 .btn [class^="icon-"].pull-left.icon-2x, .btn [class^="icon-"].pull-right.icon-2x, .btn [class*=" icon-"].pull-left.icon-2x, .btn [class*=" icon-"].pull-right.icon-2x {
-  margin-top: 0.18em; }
+  margin-top: .18em; }
 
 .btn [class^="icon-"].icon-spin.icon-large, .btn [class*=" icon-"].icon-spin.icon-large {
-  line-height: 0.8em; }
+  line-height: .8em; }
 
 .btn.btn-small [class^="icon-"].pull-left.icon-2x, .btn.btn-small [class^="icon-"].pull-right.icon-2x, .btn.btn-small [class*=" icon-"].pull-left.icon-2x, .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
-  margin-top: 0.25em; }
+  margin-top: .25em; }
 
 .btn.btn-large [class^="icon-"], .btn.btn-large [class*=" icon-"] {
   margin-top: 0; }
 
 .btn.btn-large [class^="icon-"].pull-left.icon-2x, .btn.btn-large [class^="icon-"].pull-right.icon-2x, .btn.btn-large [class*=" icon-"].pull-left.icon-2x, .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-top: 0.05em; }
+  margin-top: .05em; }
 
 .btn.btn-large [class^="icon-"].pull-left.icon-2x, .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
-  margin-right: 0.2em; }
+  margin-right: .2em; }
 
 .btn.btn-large [class^="icon-"].pull-right.icon-2x, .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-left: 0.2em; }
+  margin-left: .2em; }
 
 /* Fixes alignment in nav lists */
 .nav-list [class^="icon-"], .nav-list [class*=" icon-"] {
@@ -8008,7 +7809,7 @@ body.lang-h #gcse .lang-h-only {
   margin-top: 0 !important; }
 body.lang-h h1 {
   border-bottom: 0;
-  margin: 0.25em 0 0.25em; }
+  margin: .25em 0 .25em; }
   body.lang-h h1 + .bopomofo {
     display: table; }
 
@@ -8057,23 +7858,17 @@ body.lang-c #gcse .lang-c-only {
 @media only screen and (max-width: 767px) {
   .brand, #lookback input {
     display: none !important; }
-
   .navbar-inner {
     padding: 0 !important; }
-
   body .navbar-inverse {
     opacity: 0.95; }
-
   body .navbar {
     padding-left: 0; }
-
   body .iconic-color.star {
     right: 22px;
     top: 151px; }
-
   body.cordova .iconic-color.star {
-    top: 158px !important; }
- }
+    top: 158px !important; } }
 
 input.iconic-circle {
   padding: 0;
@@ -8126,8 +7921,7 @@ input.iconic-circle {
     top: 72px;
     right: auto;
     left: 215px;
-    width: 24px; }
- }
+    width: 24px; } }
 
 .app .back-box {
   position: fixed;
@@ -8141,8 +7935,7 @@ input.iconic-circle {
 @media only screen and (min-width: 768px) {
   .app .back-box {
     top: 72px;
-    width: 24px; }
- }
+    width: 24px; } }
 
 @media only screen and (max-width: 767px) {
   .app .query-box input {
@@ -8150,8 +7943,7 @@ input.iconic-circle {
     left: 40px;
     top: 18px;
     right: 10px;
-    width: auto; }
- }
+    width: auto; } }
 
 input.back {
   position: fixed;
@@ -8163,8 +7955,7 @@ input.back {
 
 @media only screen and (min-width: 768px) {
   input.back {
-    display: block; }
- }
+    display: block; } }
 
 .query-box {
   width: 260px;
@@ -8191,14 +7982,12 @@ input.back {
 
 @media print {
   .query-box {
-    display: none; }
- }
+    display: none; } }
 
 @media only screen and (max-width: 767px) {
   body.overflow-scrolling-false .query-box input {
     position: absolute !important;
-    top: 18px !important; }
- }
+    top: 18px !important; } }
 
 body.overflow-scrolling-false .navbar-fixed-top, body.overflow-scrolling-false .erase-box, body.overflow-scrolling-false #query-box, body.overflow-scrolling-false .back-box, body.overflow-scrolling-false #gcse {
   position: absolute !important; }
@@ -8224,22 +8013,18 @@ input.query {
 @media only screen and (max-width: 767px) {
   * .navbar-nav {
     margin: 4px; }
-
   * .navbar-nav .open .dropdown-menu > li > a {
     line-height: 1.5;
     border-bottom: 1px solid #999; }
-
   .info {
     display: none; }
-
   .erase, .lang {
     display: block;
     position: fixed;
     bottom: 0px;
     right: 0px;
     width: 60px;
-    height: 60px; }
- }
+    height: 60px; } }
 
 @media only screen and (min-width: 768px) {
   .erase, .lang {
@@ -8248,8 +8033,7 @@ input.query {
     top: 0px;
     left: 280px;
     width: 60px;
-    height: 60px; }
- }
+    height: 60px; } }
 
 @media only screen and (max-width: 767px) {
   #query-box {
@@ -8259,8 +8043,7 @@ input.query {
     height: 65px;
     bottom: auto !important;
     padding: 15px;
-    padding-bottom: 3px; }
- }
+    padding-bottom: 3px; } }
 
 .ui-widget, .ui-widget button, .ui-widget input, .ui-widget select, .ui-widget textarea {
   font-family: inherit !important; }
@@ -8285,17 +8068,12 @@ body.overflow-scrolling-false .ui-autocomplete {
     left: auto !important;
     right: 54px !important;
     top: -2px !important; }
-
   .ui-autocomplete.invisible {
     display: block !important; }
-
   .ui-autocomplete:empty, .ui-autocomplete.invisible:empty {
     display: none !important; }
-
-
   .ui-autocomplete.invisible {
     visibility: visible !important; }
-
   .ui-autocomplete {
     display: block !important;
     top: 113px !important;
@@ -8303,15 +8081,13 @@ body.overflow-scrolling-false .ui-autocomplete {
     left: 19px !important;
     width: 221px !important;
     overflow: auto !important;
-    max-height: 80% !important; }
- }
+    max-height: 80% !important; } }
 
 @media only screen and (max-width: 767px) {
   ul.ui-autocomplete {
     top: 100px !important;
     height: auto !important;
-    max-height: 75% !important; }
- }
+    max-height: 75% !important; } }
 
 .ui-autocomplete li a {
   font-size: 90%; }
@@ -8344,8 +8120,7 @@ body.lang-a.web #lookback {
   .dropdown-submenu:hover > .dropdown-menu {
     display: block;
     left: 100%;
-    top: 0; }
- }
+    top: 0; } }
 
 @media only screen and (max-width: 767px) {
   .dropdown .dropdown-submenu > .dropdown-menu {
@@ -8353,8 +8128,7 @@ body.lang-a.web #lookback {
   .dropdown .dropdown-submenu > a:before {
     content: "▼"; }
   .dropdown .dropdown-submenu .dropdown-menu > li > a {
-    padding-left: 0.5em; }
- }
+    padding-left: .5em; } }
 
 @media only screen and (max-width: 767px) {
   body #btn-starred {
@@ -8364,8 +8138,7 @@ body.lang-a.web #lookback {
     body #btn-starred i {
       display: block;
       padding-right: 15px;
-      padding-left: 25px; }
- }
+      padding-left: 25px; } }
 
 @media only screen and (min-width: 768px) {
   body #btn-starred {
@@ -8374,22 +8147,19 @@ body.lang-a.web #lookback {
     body #btn-starred i {
       display: block;
       padding-right: 5px;
-      padding-left: 5px; }
- }
+      padding-left: 5px; } }
 
 @media only screen and (max-width: 767px) {
   table.moetext tr {
     display: table;
     width: 100%; }
     table.moetext tr td {
-      display: table-row; }
- }
+      display: table-row; } }
 
 @media only screen and (max-width: 767px) {
   img.moedict {
     margin-top: 0 !important;
-    margin-left: -12px !important; }
- }
+    margin-left: -12px !important; } }
 
 .about .content {
   margin: 15px;
@@ -8471,15 +8241,14 @@ img.back {
 
 @media only screen and (max-width: 767px) {
   #btn-pref {
-    display: none; }
- }
+    display: none; } }
 
 #user-pref label {
   width: 100% !important;
   margin-top: 20px !important; }
 
 #btn-starred {
-  margin-left: -0.5em !important; }
+  margin-left: -.5em !important; }
 
 #btn-pref {
   margin-left: -5px !important;
@@ -8494,18 +8263,18 @@ img.back {
   display: none;
   height: 100%;
   width: 260px;
-  padding: 0.25em 1em;
-  font-size: 0.85em;
+  padding: .25em 1em;
+  font-size: .85em;
   background-color: #d6cbbc;
   border-right: 1px solid #c8baa6; }
   #user-pref h4 {
-    margin: 1.25em 0 0.75em;
+    margin: 1.25em 0 .75em;
     font-weight: bold;
     color: #634f3c; }
     #user-pref h4 + button.close {
       position: absolute;
-      right: 0.5em;
-      top: 0.5em; }
+      right: .5em;
+      top: .5em; }
   #user-pref ul {
     list-style: none;
     padding: 0;
@@ -8514,14 +8283,14 @@ img.back {
       background-color: #6aa3d5;
       color: #fff; }
   #user-pref > ul {
-    margin-bottom: 0.55em;
-    padding-bottom: 0.5em; }
+    margin-bottom: .55em;
+    padding-bottom: .5em; }
     #user-pref > ul li.btn-group {
       width: 100%;
       display: block;
-      margin-bottom: 0.75em; }
+      margin-bottom: .75em; }
       #user-pref > ul li.btn-group:last-child {
-        margin-bottom: 0.35em; }
+        margin-bottom: .35em; }
       #user-pref > ul li.btn-group.option-romanization {
         display: none; }
       #user-pref > ul li.btn-group label {
@@ -8531,21 +8300,21 @@ img.back {
         text-shadow: 1px 1px 0 rgba(238, 238, 238, 0.7); }
       #user-pref > ul li.btn-group button {
         float: none;
-        margin-top: -0.4em;
+        margin-top: -.4em;
         border-radius: 4px !important; }
   #user-pref span.fa {
-    font-size: 0.8em;
+    font-size: .8em;
     vertical-align: top; }
   #user-pref .btn-info {
-    margin: -0.5em 0 1em; }
+    margin: -.5em 0 1em; }
   #user-pref .btn-primary {
     bottom: 60px;
-    left: 0.75em;
+    left: .75em;
     position: absolute;
     width: 90%;
     font-size: 1.1em;
-    letter-spacing: 0.75em;
-    padding-left: 0.75em; }
+    letter-spacing: .75em;
+    padding-left: .75em; }
 
 .starred-record--header {
   display: none; }
@@ -8554,7 +8323,7 @@ img.back {
     .starred-record--header + nav a:hover {
       outline: 0; }
   .starred-record--header ~ div {
-    padding: 1.25em 0.5em 1em;
+    padding: 1.25em .5em 1em;
     border: 1px solid #ddd;
     border-top: 0; }
     .starred-record--header ~ div h3 {
@@ -8575,15 +8344,13 @@ img.back {
     margin-right: 0px;
     margin-bottom: 10px;
     width: 100%;
-    max-width: 100%; }
- }
+    max-width: 100%; } }
 
 @media only screen and (min-width: 768px) {
   .results {
     margin-top: 65px;
     margin-left: 280px;
-    margin-right: 20px; }
- }
+    margin-right: 20px; } }
 
 .result {
   background: #fff;
@@ -8620,8 +8387,8 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
 
 .result h1, .ui-tooltip h1 {
   visibility: visible !important;
-  margin: -0.25em 0 0.5em;
-  padding-bottom: 0.3em;
+  margin: -.25em 0 .5em;
+  padding-bottom: .3em;
   font-size: 200%;
   line-height: 1;
   font-weight: 501;
@@ -8629,7 +8396,7 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
   .result h1[style], .ui-tooltip h1[style] {
     line-height: 2; }
   .result h1[itemprop="name"], .ui-tooltip h1[itemprop="name"] {
-    margin-top: 0.25em; }
+    margin-top: .25em; }
   .result h1 a:hover, .result h1 a.hovered, .ui-tooltip h1 a:hover, .ui-tooltip h1 a.hovered {
     background-color: #ddd;
     border-radius: 4px;
@@ -8654,29 +8421,29 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
   .result h1 .english, .ui-tooltip h1 .english {
     color: #777;
     display: inline-block;
-    font-size: 0.65em;
+    font-size: .65em;
     line-height: 1; }
 .result .bopomofo, .ui-tooltip .bopomofo {
   display: none; }
 .result h1 small.youyin, .result h1 small.alternative, .result h1 + div small.youyin, .result h1 + div small.alternative, .ui-tooltip h1 small.youyin, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.youyin, .ui-tooltip h1 + div small.alternative {
   color: #888;
   display: inline-block;
-  font-size: 0.45em;
-  letter-spacing: 0.125em;
+  font-size: .45em;
+  letter-spacing: .125em;
   line-height: 1;
-  margin: 0 0 0 0.25em; }
+  margin: 0 0 0 .25em; }
 .result h1 small.alternative, .result h1 + div small.alternative, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.alternative {
   display: block;
-  margin: 0.75em 0 0 2em;
+  margin: .75em 0 0 2em;
   position: relative;
   letter-spacing: 0;
   line-height: 1.2; }
   .result h1 small.alternative span, .result h1 + div small.alternative span, .ui-tooltip h1 small.alternative span, .ui-tooltip h1 + div small.alternative span {
     display: block;
     border-bottom: 0 !important;
-    font-size: 0.8em; }
+    font-size: .8em; }
     .result h1 small.alternative span:last-of-type, .result h1 + div small.alternative span:last-of-type, .ui-tooltip h1 small.alternative span:last-of-type, .ui-tooltip h1 + div small.alternative span:last-of-type {
-      margin: 0.25em 0 0 -0.1em; }
+      margin: .25em 0 0 -.1em; }
   .result h1 small.alternative:before, .result h1 + div small.alternative:before, .ui-tooltip h1 small.alternative:before, .ui-tooltip h1 + div small.alternative:before {
     display: inline-block;
     left: -1.85em;
@@ -8691,7 +8458,7 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
     body.lang-t .result h1 small.alternative:before, body.lang-t .result h1 + div small.alternative:before, body.lang-t .ui-tooltip h1 small.alternative:before, body.lang-t .ui-tooltip h1 + div small.alternative:before {
       content: '又'; }
 .result div.entry ~ .radical, .ui-tooltip div.entry ~ .radical {
-  margin-top: 0.4em; }
+  margin-top: .4em; }
 .result h1 + div small.cn-specific, .ui-tooltip h1 + div small.cn-specific {
   font-size: 1em; }
   .result h1 + div small.cn-specific:before, .ui-tooltip h1 + div small.cn-specific:before {
@@ -8978,7 +8745,7 @@ body.lang-t .example, body.lang-h .example {
     list-style: none;
     margin-left: -1.5em; }
   .result .entry .entry-item > .part-of-speech ~ ol li:only-child {
-    margin: -0.25em 0 1.5em; }
+    margin: -.25em 0 1.5em; }
 
 @media only screen and (max-width: 767px) {
   .entry-item:before, .entry-item:after {
@@ -8990,8 +8757,7 @@ body.lang-t .example, body.lang-h .example {
     float: left; }
   .entry-item > ol {
     width: 100%;
-    padding-top: 0px; }
- }
+    padding-top: 0px; } }
 
 body .ui-tooltip {
   margin-top: 0;
@@ -9012,7 +8778,7 @@ body .ui-tooltip {
     background: #f0f0f0; }
   body .ui-tooltip h1 small.youyin {
     display: block;
-    margin-top: 0.25em; }
+    margin-top: .25em; }
   body .ui-tooltip .bopomofo {
     display: none;
     margin: 0px;
@@ -9035,11 +8801,11 @@ body .ui-tooltip {
           position: static; }
       body .ui-tooltip ul li:only-child, body .ui-tooltip ol li:only-child {
         list-style: none;
-        margin-left: 0.75em !important; }
+        margin-left: .75em !important; }
   body .ui-tooltip .part-of-speech + ol li {
     margin-left: 3em !important; }
     body .ui-tooltip .part-of-speech + ol li:first-child {
-      margin-top: -0.75em !important; }
+      margin-top: -.75em !important; }
     body .ui-tooltip .part-of-speech + ol li:first-child:only-child {
       margin-left: 1.5em !important; }
   body .ui-tooltip .entry .part-of-speech {
@@ -9053,8 +8819,8 @@ body .ui-tooltip {
     font-size: 80%; }
   body .ui-tooltip .title {
     border-bottom: 1px dotted #ddd;
-    margin: -0.25em 0 0.25em;
-    padding: 0.25em;
+    margin: -.25em 0 .25em;
+    padding: .25em;
     font-size: 130%;
     line-height: 1.2; }
     body .ui-tooltip .title .playAudio {
@@ -9114,13 +8880,11 @@ body.web #gcse {
   body #gcse, body.web #gcse {
     right: 40px; }
     body #gcse > span, body.web #gcse > span {
-      width: 120px; }
- }
+      width: 120px; } }
 
 @media only screen and (max-width: 360px) {
   body.cordova #gcse > span {
-    width: 64px; }
- }
+    width: 64px; } }
 
 body.cordova #gcse > span .gsc-control-cse a.gs-title {
   display: inline-block !important; }
