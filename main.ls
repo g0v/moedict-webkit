@@ -4,6 +4,14 @@ const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
 {any, map} = require('prelude-ls')
+window.$ = window.jQuery = require \jquery
+
+React = require \react
+React.View = require \./view.ls
+Han = require \han-css
+
+unless window.PRERENDER_LANG
+  $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
 LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
