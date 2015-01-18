@@ -7,10 +7,10 @@ unless lang in <[ a t h c p ]>
 
 fs.mkdir-sync lang unless fs.exists-sync lang
 PUA2UNI = {
-  \⿰𧾷百 : \󾜅
+  \⿰𧾷百 : \𬦀
   \⿸疒哥 : \󿗧
-  \⿰亻恩 : \󿌇
-  \⿰虫念 : \󿑂
+  \⿰亻恩 : \𫣆
+  \⿰虫念 : \𬠖
   \⿺皮卜 : \󿕅
 }
 grok = -> JSON.parse fs.read-file-sync(it, \utf8).replace(/[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it])

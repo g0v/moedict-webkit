@@ -3,15 +3,9 @@
 ## 需求
 
 * Node.js 0.10.x
-    * LiveScript
-    * webworker-threads
-    * jade
 * Perl 5.8.0+
 * Python
     * lxml
-* Ruby
-    * sass 3.2+
-    * compass 0.12+
 
 ## 前置作業 (Debian/Ubuntu)
 
@@ -26,10 +20,8 @@ sudo apt-get install nodejs python-lxml curl
 ## 安裝環境
 
 ```
-sudo npm install -g LiveScript jade
-npm install webworker-threads
-gem install sass
-gem install compass
+npm i
+pip install lxml
 ```
 
 ## 建置
@@ -74,7 +66,15 @@ perl link2pack.pl t < t.txt
 ## 本機運行
 
 ```
-make # runs in http://127.0.0.1:8888/
+# quick static server, uses the pre-built js/deps.js ( watches: sass/ .jade )
+npm start
+
+# auto-reloads with react-hot-loader ( watches: sass/ .jade .ls )
+npm run dev
+
+# builds for deployment, using webpack and uglify
+npm run build
+
 ```
 
 ## API 說明

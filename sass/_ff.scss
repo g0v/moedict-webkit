@@ -1,80 +1,17 @@
-
-
-@include font-face("Fira Sans OT", font-files(
-   "FiraSansOT-Regular.ttf", truetype
-));
-
-@include font-face("EBAS", font-files(
-   "EBAS-Subset.ttf", truetype
-));
-
-@include font-face("MOEDICT", font-files(
-   "MOEDICT.ttf", truetype
-));
-
 @font-face {
-  font-family: "MOEDICT-IOS-KAI";
+  font-family: "Fira Sans OT";
+  src: url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "EBAS";
+  src: url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
+}
+@font-face {
+  font-family: "MOEDICT";
+  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
+}
+@font-face {
+  font-family: MOEDICT-IOS-KAI;
   src: url('/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf') format('truetype');
 }
-
-@mixin kai-fonts {
-    font-family:
-        "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT",
-        "TW-Kai-98_1", "教育部標準楷書", "kai-pc", "CMEXc1",
-        "標楷體", "BiauKai",
-        "MOEDICT-IOS-KAI",
-        "DFKaiShu-SB-Estd-BF", "全字庫正楷體",
-        "Kaiti TC", "楷體-繁",
-        "文鼎ＰＬ新中楷", "cwText 楷書", sans-serif,
-        "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
-@mixin song-fonts {
-    font-family: 
-        "MOEDICT", "Biaodian Pro Serif CNS", "Fira Sans OT",
-        "TW-Sung-98_1", "教育部標準宋體", "MOESongUN", "全字庫正宋體",
-        "Songti TC", "宋體-繁",
-        "Lisong Pro", "儷宋 Pro", "Apple LiSung", "蘋果儷細宋",
-        "文鼎ＰＬ新宋", "cwTex 仿宋體", "PMingLiU", "MingLiU", sans-serif,
-        "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
-@mixin fonts {
-    font-family:
-        "MOEDICT", "Biaodian Pro Sans CNS", "Fira Sans OT",
-        'Noto Sans CJK TC', 'Source Han Sans TW',
-        'Noto Sans T Chinese', 'Source Han Sans TWHK',
-        "Microsoft Jhenghei", "微軟正黑體",
-        'Source Han Sans', 'Source Han Sans HK',
-        "Lantinghei TC", "Heiti TC", "黑體-繁", 
-        "Lihei Pro", "儷黑 Pro", "Apple LiGothic", "蘋果儷中黑",
-        "Adobe 繁黑體 Std", "cwTex 明體", "Adobe 明體 Std", "PMingLiU", "MingLiU",
-        sans-serif,
-        "HanaMinA", "HanaMinB", "HAN NOM A", "HAN NOM B";
-}
-
-@mixin en-fonts {
-    font-family:
-        "Fira Sans OT", "Segoe UI", "Charis SIL",
-        "Biaodian Pro Sans CNS", "MOEDICT",
-        sans-serif;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-require! <[ fs ]>
+require! <[ LiveScript fs ]>
 LTM-regexes = {}
 
 index-body = fs.read-file-sync \index.html
@@ -10,7 +10,7 @@ index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
 index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
 
 React = require \react
-{Result, decodeLangPart} = require \./view.js
+{Result, decodeLangPart} = require \./view.ls
 
 XREF = {}
 
@@ -198,7 +198,7 @@ require(\zappajs) {+disable_io} ->
   @view index: ->
     expand-def = (def) ->
       def.replace(
-        /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
+        /^\s*<(\d)>\s*([介代副助動名歎嘆形連]?)/, (_, num, char) -> "#{
           String.fromCharCode(0x327F + parseInt num)
         }#{ if char then "#char\u20DE" else '' }"
       ).replace(
@@ -225,7 +225,9 @@ require(\zappajs) {+disable_io} ->
     LANG = 'a'
     LANG = SYM-OF[@text.slice(0, 1)] if @text is /^['!~:]/
 
-    html {prefix:"og: http://ogp.me/ns#", lang:'zh-Hant', 'xml:lang':'zh-Hant'} -> head ->
+    attrs = { prefix: "og: http://ogp.me/ns#", lang: 'zh-Hant', 'xml:lang': 'zh-Hant' }
+    attrs.manifest = \manifest.appcache unless @segments or @idx
+    html attrs, -> head ->
       meta charset:\utf-8
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
@@ -294,15 +296,15 @@ require(\zappajs) {+disable_io} ->
           fill-props!
         text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
         html = @index-body
-        html.=replace('<!-- RESULT -->', @React.renderComponentToString @Result props)
-        #html.=replace('<!-- DROPDOWN -->', @React.renderComponentToString @DropDown!)
+        html.=replace('<!-- RESULT -->', @React.renderToString @Result props)
+        #html.=replace('<!-- DROPDOWN -->', @React.renderToString @DropDown!)
         text html
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
         fill-props!
         props.H = "##h"
         text """<!--[if gt IE 8]><!--><script>$(function(){
           window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
-          React.View.result = React.renderComponent(React.View.Result(
+          React.View.result = React.render(React.View.Result(
             window.PRERENDER_JSON
           ), $('\#result')[0], window.bindHtmlActions);
         })</script><!--<![endif]-->"""

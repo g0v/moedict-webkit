@@ -1,17 +1,22 @@
-React = window?React || require \react
+React = require('react')
 window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
+$body = window?$('body') || { hasClass: -> false }
 
 {p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
 {any, map} = require \prelude-ls
 
+createClass = React.createFactory << React.createClass
 withProperties = (tag, def-props={}) ->
   (props = {}, ...args) ->
     tag ({} <<< def-props <<< props), ...args
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
+cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
+r-cjk-one  = new RegExp "^#{cjk}$"
+r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -21,38 +26,24 @@ const share-buttons = [
   { id: \g, icon: \google-plus, label: \Google+, background: \#D95C5C, href: \https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F }
 ]
 
-PrefList = React.createClass do
+PrefList = createClass do
   getInitialState: ->
     for own key, selected of @props | key isnt \children
       return { key, selected }
   componentDidMount: -> @phoneticsChanged!
   componentDidUpdate: -> @phoneticsChanged!
   pinyin_aChanged: -> location.reload!
+  pinyin_tChanged: -> location.reload!
   phoneticsChanged: ->
-    $('rb[order]').each ->
-      attr = $(@).attr('annotation')
-      $(@).data('annotation', attr) if attr
-    $('rb[zhuyin]').each ->
-      zhuyin = $(@).attr('zhuyin')
-      yin = $(@).attr('yin')
-      diao = $(@).attr('diao')
-      $(@).data({ yin, zhuyin, diao }) if zhuyin
-    restore-pinyin = -> $('rb[order]').each ->
-      attr = $(@).data('annotation')
-      $(@).attr('annotation', attr) if attr
-    restore-zhuyin = -> $('rb[zhuyin]').each ->
-      zhuyin = $(@).data('zhuyin')
-      yin = $(@).data('yin')
-      diao = $(@).data('diao')
-      $(@).attr({ yin, zhuyin, diao }) if zhuyin
-    clear-pinyin = -> $('rb[order]').attr('annotation', '')
-    clear-zhuyin = -> $('rb[zhuyin]').attr({ yin: '', zhuyin: '', diao: '' })
-    # new-ruby branch: bopomofo 改用 zhuyin 元素
     switch @state.selected
-      | \rightangle => restore-pinyin!; restore-zhuyin!
-      | \bopomofo   => clear-pinyin!; restore-zhuyin!
-      | \pinyin     => restore-pinyin!; clear-zhuyin!
-      | \none       => clear-pinyin!; clear-zhuyin!
+      | \rightangle =>
+        $body.attr \data-ruby-pref, \both
+      | \bopomofo   =>
+        $body.attr \data-ruby-pref, \zhuyin
+      | \pinyin     =>
+        $body.attr \data-ruby-pref, \pinyin
+      | \none       =>
+        $body.attr \data-ruby-pref, \none
   render: ->
     [ lbl, ...items ] = @props.children
     { key, selected=items.0.0 } = @state
@@ -77,25 +68,35 @@ PrefList = React.createClass do
           else
             li { className: \divider, role: \presentation }
 
-UserPref = React.createClass do
+UserPref = createClass do
   getDefaultProps: -> {
     simptrad: localStorage?getItem \simptrad
     phonetics: localStorage?getItem \phonetics
-    pinyin_a: localStorage?getItem \pinyin_a
+    pinyin_a: localStorage?getItem(\pinyin_a) || \HanYu
+    pinyin_t: localStorage?getItem(\pinyin_t) || \TL
   }
-  render: -> { phonetics, simptrad, pinyin_a } = @props; div {},
+  render: -> { phonetics, simptrad, pinyin_a, pinyin_t } = @props; div {},
     h4 {}, \偏好設定
     button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
+    lang-pref = null
     ul {},
-      PrefList { pinyin_a }, \國語辭典拼音系統,
-        [ \HanYu      \漢語拼音 ]
-        [ \TongYong   \通用拼音 ] # , small {}, \（方言音） ]
-        [ \WadeGiles  \威妥瑪拼音 ]
-        [ \GuoYin     \國音二式 ]
-      PrefList { phonetics }, \條目注音顯示方式,
-        [ \rightangle \直角共同顯示 ]
-        [ \bopomofo   \只顯示注音符號 ] # , small {}, \（方言音） ]
-        [ \pinyin     \只顯示羅馬拼音 ]
+      if $body.hasClass('lang-a')
+        PrefList { pinyin_a }, \羅馬拼音顯示方式,
+          [ \HanYu-TongYong \漢語華通共同顯示 ]
+          [ \HanYu      \漢語拼音 ]
+          [ \TongYong   \華通拼音 ]
+          [ \WadeGiles  \威妥瑪式 ]
+          [ \GuoYin     \注音二式 ]
+      if $body.hasClass('lang-t')
+        PrefList { pinyin_t }, \羅馬拼音顯示方式,
+          [ \TL-DT      \臺羅臺通共同顯示 ]
+          [ \TL         \臺羅拼音 ]
+          [ \DT         \臺通拼音 ]
+          [ \POJ        \白話字   ]
+      PrefList { phonetics }, \條目音標顯示方式,
+        [ \rightangle \注音拼音共同顯示 ]
+        [ \bopomofo   \注音符號 ] # , small {}, \（方言音） ]
+        [ \pinyin     \羅馬拼音 ]
         [] # li {}, a {}, \置於條目名稱下方
         [ \none       \關閉 ] /*
       li { className: \btn-group },
@@ -118,7 +119,7 @@ UserPref = React.createClass do
         [ \none         \關閉 ] */
     button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
-Links = React.createClass do
+Links = createClass do
   render: -> div {},
     # a { id: \sendback, className: 'btn btn-default small', title: \送回編修, style: { marginLeft: \50%, display: \none, background: \#333333, color: \white }, href: \mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：, target: \_blank }, \送回編修
     a { className: 'visible-xs pull-left ebas btn btn-default', href: \#, title: \關於本站, style: { float: \left, marginTop: \-10px, marginLeft: \5px, marginBottom: \5px }, onClick: -> pressAbout! },
@@ -130,7 +131,7 @@ Links = React.createClass do
           i { className: \icon-share } nbsp
           i { className: "icon-#icon" }
 
-Nav = React.createClass do
+Nav = createClass do
   render: -> nav { className: 'navbar navbar-inverse navbar-fixed-top', role: \navigation },
     div { className: \navbar-header },
       a { className: 'navbar-brand brand ebas', href: \./ }, \萌典
@@ -141,10 +142,10 @@ Nav = React.createClass do
           span { className: \lang-active, style: { margin: 0, padding: 0 }, itemProp: \articleSection }, \國語辭典
           b { className: \caret }
         DropDown { STANDALONE: @props.STANDALONE },
-      li { id: \btn-starred },
+      li { id: \btn-starred, title: \字詞紀錄簿 },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-bookmark-empty }
-      li { id: \btn-pref },
+      li { id: \btn-pref, title: \偏好設定 },
         a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
           i { className: \icon-cogs }
       if isMoedictDesktop then
@@ -181,20 +182,20 @@ Nav = React.createClass do
         a { href: \https://itunes.apple.com/tw/app/meng-dian/id599429224, target: \_blank, title: 'App Store 下載', style: { color: \#ccc } },
           i { className: \icon-apple }
 
-Taxonomy = React.createClass do
+Taxonomy = createClass do
   render: ->
     {lang} = @props
     li { className: \dropdown-submenu },
       a { className: "#lang taxonomy", }, \…分類索引
 
-MenuItem = React.createClass do
+MenuItem = createClass do
   render: ->
     {lang, href, children} = @props
     role = \menuitem if children.0 is \…
     li { role: \presentation },
       a { className: "#lang lang-option#{ if role then '' else " #lang\-idiom"}", role, href }, children
 
-DropDown = React.createClass do
+DropDown = createClass do
   render: ->
     list = []
     if @props.STANDALONE isnt \c => list ++= [
@@ -215,7 +216,7 @@ DropDown = React.createClass do
     ]
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
-Result = React.createClass do
+Result = createClass do
   render: -> switch @props?type
     | \term    => Term @props
     | \list    => List @props
@@ -224,7 +225,7 @@ Result = React.createClass do
     | \html    => div-inline { dangerouslySetInnerHTML: { __html: @props.html } }
     | _        => div {}
 
-Term = React.createClass do
+Term = createClass do
   render: ->
     { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
     CurrentId := @props.id # Used in h()
@@ -244,7 +245,7 @@ Term = React.createClass do
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
 
-Translations = React.createClass do
+Translations = createClass do
   render: ->
     {translation} = @props
     div { className: \xrefs }, span { className: \translation },
@@ -267,7 +268,7 @@ Translations = React.createClass do
 
 const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;'}
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \阿}
-XRefs = React.createClass do
+XRefs = createClass do
   render: ->
     { LANG, xrefs } = @props
     div { className: \xrefs }, ...for { lang, words } in xrefs
@@ -281,7 +282,7 @@ XRefs = React.createClass do
             word -= /[`~]/g
             a { key: word, className: \xref, href: "#H#word" } word
 
-Star = React.createClass do
+Star = createClass do
   getDefaultProps: -> { STARRED: window?STARRED || {} }
   render: ->
     { CurrentId, STARRED, LANG } = @props
@@ -290,7 +291,7 @@ Star = React.createClass do
       return i { className: "star iconic-color icon-star", title: \已加入記錄簿 }
     return i { className: "star iconic-color icon-star-empty", title: \加入字詞記錄簿 }
 
-Heteronym = React.createClass do
+Heteronym = createClass do
   render: ->
     { CurrentId, key, $char, H, LANG, title, english,
     id, audio_id=id, bopomofo, trs='', py, pinyin=py||trs||'',
@@ -316,7 +317,7 @@ Heteronym = React.createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { style: { display: \inline-block, marginTop: \20px, marginBottom: \17px }, className: \rightangle, dangerouslySetInnerHTML: { __html: h title-ruby } }
+      ruby { className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
@@ -334,16 +335,22 @@ Heteronym = React.createClass do
       meta { itemProp: \name, content: mp3 - /^.*\// }
       meta { itemProp: \contentURL, content: mp3 }
     if b-alt
-      list ++= small { className: \alternative },
-        span { className: \pinyin } convert-pinyin p-alt
-        span { className: \bopomofo } b-alt
+      if localStorage?getItem("pinyin_#LANG") is /-/
+        list ++= small { className: \alternative },
+          span { className: \pinyin } p-alt
+          span { className: \bopomofo, style: { margin: 0 padding: 0 marginTop: \4px } } b-alt
+          span { className: \pinyin } convert-pinyin p-alt
+      else
+        list ++= small { className: \alternative },
+          span { className: \pinyin } convert-pinyin p-alt
+          span { className: \bopomofo } b-alt
     list ++= span { lang: \en, className: \english } english if english
     list ++= span { className: \specific_to, dangerouslySetInnerHTML: { __html: h specific_to } } if specific_to
 
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
-      if key is 0 then # Only display Star for the first entry
+      if (key ? 0)  is 0 then # Only display Star for the first entry
         Star { CurrentId, LANG } /* a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \甲
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \篆
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \金
@@ -410,8 +417,6 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
   cn-specific = ''
   cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
-  t = title.replace /<a[^>]+>/g '`' .replace /<\/a>/g '~'
-  t -= /<[^>]+>/g
   b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
   b .= replace /（[語|讀|又]音）[\u200B]?/, ''
   b .= replace /\(變\)\u200B\/.*/, ''
@@ -419,26 +424,39 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   cn-specific-bpmf = b - /.*<br>陸./ if b is /<br>陸/
   b .= replace /<br>(.*)/, ''
   b -= /.\u20DF/g
-  if t is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|.)$/
-    ruby = '<rbc><div class="stroke" title="筆順動畫"><rb>' + t + '</rb></div></rbc>'
+  if r-cjk-one.test title
+    ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    ruby = '<rbc>' + t.replace( /([^`~]+)/g, (m, ci, o, s) ->
-      return if ( ci is /^([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])$/ )
-             then '<rb word="' + ci + '">' + ci + '</rb>'
-             else ci.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—])/g, '<rb word="' + ci + '" word-order="' + o + '">$1</rb>')
-    ).replace(/([`~])/g, '') + '</rbc>'
-  p = pinyin.replace /[,\.;，、；。－—]\s?/g, ' '
+    r-cjk-ci = new RegExp "(<a href=\"#[':~]?(#cjk+)\")>\\2</a>" \g
+    ruby = title
+    .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
+      open-tag = "<rb>#open-tag word-id=\"#offset\">"
+      close-tag = \</a></rb>
+      ci .= replace r-cjk-g, "#{open-tag}$1#close-tag"
+    # Deal with rare CJK not indexed, such as ○, 𤍤
+    .replace new RegExp("<\/rb>(#cjk+)(<rb>)?", \g), ( mat, rare-cjk, x, open-tag ) ->
+      open-tag = open-tag || ''
+      rare-cjk .= replace r-cjk-g, \<rb>$1</rb>
+      \</rb> + rare-cjk + open-tag
+  p = pinyin #.replace /[,\.;，、；。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
+  converted-p = convert-pinyin(p)
+  converted-p .= replace /[,\.;，、；。－—]\s?/g, ' '
+  converted-p .= split ' '
+  p .= replace /[,\.;，、；。－—]\s?/g, ' '
   p .= split ' '
+  p-upper = [] 
+  isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $body.hasClass('lang-a')
+  isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $body.hasClass('lang-t')
   for yin, idx in p | yin
-    yin = convert-pinyin yin
+    yin = converted-p[idx]
     span = # 閩南語典，按隔音符計算字數
-           if LANG is \t and yin is /\-/g
-           then ' rbspan="'+ (yin.match /[\-]+/g .length+1) + '"'
+           if LANG is \t and yin is /[-\u2011]/g
+           then ' rbspan="'+ (yin.match /[-\u2011]+/g .length+1) + '"'
            # 國語兒化音
-           else if LANG != \t && yin is /^[^eēéěè].*r\d?$/g
+           else if LANG != \t and yin is /^[^eēéěè].*r\d?$/ and yin isnt /^(j|ch|sh)r$/
            then
              if cn-specific-bpmf
                cns = cn-specific-bpmf / /\s+/
@@ -451,11 +469,17 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
+    #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if 
+    p-upper[idx] = if isParallel then "<rt#span>#{p[idx]}</rt>"
     p[idx] = "<rt#span>#yin</rt>"
-  ruby += '<rtc style="display: none" class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-  ruby += '<rtc style="display: none" class="romanization">'
+  ruby += '<rtc hidden class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+  ruby += '<rtc hidden class="romanization">'
   ruby += p.join ''
   ruby += '</rtc>'
+  if isParallel 
+    ruby += '<rtc hidden class="romanization">'
+    ruby += p-upper.join ''
+    ruby += '</rtc>'
   if LANG is \c
     if bopomofo is /<br>/
       pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
@@ -468,11 +492,105 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     bopomofo = ''
   return { ruby, youyin, b-alt, p-alt, cn-specific, pinyin, bopomofo }
 
-function convert-pinyin (yin)
-  return yin unless $?('body').hasClass('lang-a')
+#p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" 
+const DT-Tones = {
+  "\u0300": "\u0332"  # 3
+  "\u0301": "\u0300"  # 2,6
+  "\u0302": "\u0306"  # 5
+  "\u0304": "\u0304"  "\u0305": "\u0305"  # 7
+  "\u0306": "\u0301"  # 9
+  "\u0307": "\u200B"  "\u030d": "\u200B"        # 8
+}
+
+# ptk(4) 變高入 (1)
+# h(4) 變高降 (2)
+# ptkh(8) 變低入 (4)
+# ă(5) 直接轉 ā̱ (7+3) # 優勢腔變中平 ā (7)，台北變 a̲ (3)
+
+
+function convert-pinyin-t (yin, isBody=true)
+  system = localStorage?getItem(\pinyin_t) || \TL
+  return yin if system is \TL
+  if system is /DT$/
+    yin2 = yin.replace(/-/g, '\u2011')
+              .replace(/ph(\w)/g, 'PH$1').replace(/b(\w)/g, 'bh$1') # Consonants
+              .replace(/p(\w)/g, 'b$1').replace(/PH(\w)/g, 'p$1')
+              .replace(/tsh/g, 'c').replace(/ts/g, 'z')
+              .replace(/th(\w)/g, 'TH$1').replace(/t(\w)/g, 'd$1').replace(/TH(\w)/g, 't$1')
+              .replace(/kh(\w)/g, 'KH$1').replace(/g(\w)/g, 'gh$1')
+              .replace(/k(\w)/g, 'g$1').replace(/KH(\w)/g, 'k$1')
+              .replace(/j/g, 'r')
+              .replace(/Ph(\w)/g, 'pH$1').replace(/B(\w)/g, 'Bh$1') # Consonants
+              .replace(/P(\w)/g, 'B$1').replace(/pH(\w)/g, 'P$1')
+              .replace(/Tsh/g, 'C').replace(/Ts/g, 'Z')
+              .replace(/Th(\w)/g, 'tH$1').replace(/T(\w)/g, 'D$1').replace(/tH(\w)/g, 'T$1')
+              .replace(/Kh(\w)/g, 'kH$1').replace(/G(\w)/g, 'Gh$1')
+              .replace(/K(\w)/g, 'G$1').replace(/kH(\w)/g, 'K$1')
+              .replace(/J/g, 'R')
+              .replace(/o([^.!?,\w\s\u2011]*)o/g, 'O$1O').replace(/o([^.!?,\w\s\u2011]*)(?![^\w\s\u2011]*[knm])/g, 'o$1r').replace(/O([^\w\s\u2011]*)O/g, 'o$1')
+              .replace(/O([^.!?,\w\s\u2011]*)o([^.!?,\w\s\u2011]*)r?/g, 'O$1$2')
+              .replace(/([\u0300-\u0302\u0304\u0307\u030d])/g -> DT-Tones[it])
+              .replace(/([aeiou])(r?[ptkh])/g, '$1\u0304$2')
+              .replace(/\u200B/g, '')
+              .replace(/[-\u2011][-\u2011]([aeiou])(?![\u0300\u0332\u0306\u0304])/g, '$1\u030A')
+              .replace(/[-\u2011][-\u2011](ā|a\u0304)/g, '\u2011\u2011a\u030A')
+              .replace(/[-\u2011][-\u2011](ō|o\u0304)/g, '\u2011\u2011o\u030A')
+              .replace(/[-\u2011][-\u2011](ī|i\u0304)/g, '\u2011\u2011i\u030A')
+              .replace(/[-\u2011][-\u2011](ē|e\u0304)/g, '\u2011\u2011e\u030A')
+              .replace(/[-\u2011][-\u2011](ū|u\u0304)/g, '\u2011\u2011u\u030A')
+              .replace(/nn($|[-\s])/g, 'ⁿ$1')
+    if isBody
+      # We're in examples; apply DT tone-sandhi across phrase boundaries
+      # (delimited by punctuation) according to 呂富美's suggestion
+      yin2.=replace(/((?:[^\.,!?]*(?:\w[^-\.,!?\w\s\u2011]*)[- \u2011])+)(\w)/g, (_, $1, $2) ->
+        [ tone-sandhi seg for seg in $1.split(/([- \u2011\.,!?])/) ].join("") + $2)
+    else
+      # Title words; apply tone-sandhi only within a multi-syllable phrase
+      yin2.=replace(/((?:\S*(?:\w[^\w\s\u2011]*)\u2011)+)(\w)/g, (_, $1, $2) ->
+        [ tone-sandhi seg for seg in $1.split('\u2011') ].join("\u2011") + $2)
+    # -仔 sandhi. We handle only the two obvious, non-contentious cases.
+    yin2.=replace(/\u0332(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '\u0304$1')  # 3 -> 4
+    yin2.=replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '$1')        # 2 -> 1
+    return yin2
+  # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
+  return yin.replace(/oo/g, 'o\u0358')
+            .replace(/ts/g, 'ch')
+            .replace(/u([^\w\s]*)a/g, 'o$1a')
+            .replace(/u([^\w\s]*)e/g, 'o$1e')
+            .replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2')
+            .replace(/i([^\w\s]*)ng/g, 'e$1ng')
+            .replace(/nn($|[-\s])/g, 'ⁿ$1')
+            .replace(/([ie])r/g, '$1\u0358')
+            .replace(/\u030B/g, "\u0306") # 9th tone
+
+
+const DT-Tones-Sandhi = {
+    "\u0300": ""              # 2,6 ->  1
+    "\u0332": "\u0300"        # 3   ->  2
+    "\u0306": "\u0304"        # 5   ->  7
+    "\u0304": "\u0332"        # 7   ->  3
+}
+function tone-sandhi (seg)
+  return seg unless seg is /\w/
+  if seg is /[aeiou]r?[hptk]/i
+    return seg.replace(/([aioue])/i, '$1\u0332') # 8 -> 3
+  if seg isnt /[\u0300\u0332\u0306\u0304]/
+    if seg isnt /[aioue]/i
+      return seg.replace(/([nm])/, '$1\u0304') # 1 -> 7
+    return seg.replace(/([aioue])/i, '$1\u0304') # 1 -> 7
+  if seg is /[aeiou]\u0304r?[ptk]/i
+    return seg.replace(/\u0304/, '')            # 4(ptk) -> 8
+  if seg is /[aeiou]\u0304r?[h]/i
+    return seg.replace(/\u0304/, '\u0300')      # 4(h) -> 2
+  return seg.replace(/([\u0300\u0332\u0306\u0304])/g -> DT-Tones-Sandhi[it])
+
+function convert-pinyin (yin, isBody)
+  yin.=replace(/-/g '\u2011')
+  return convert-pinyin-t(yin, isBody) if $body.hasClass('lang-t')
+  return yin unless $body.hasClass('lang-a')
   system = localStorage?getItem \pinyin_a
-  return yin unless system and PinYinMap[system]
-  return [ convert-pinyin y for y in yin.split(/\s+/) ].join(' ') if yin is /\s/
+  return yin unless system and PinYinMap[system - /^HanYu-/]
+  return [ convert-pinyin(y, isBody) for y in yin.split(/\s+/) ].join(' ') if yin is /\s/
   tone = 5
   tone = 1 if yin is /[āōēīūǖ]/
   tone = 2 if yin is /[áóéíúǘ]/
@@ -488,10 +606,19 @@ function convert-pinyin (yin)
   if yin is /^[^eēéěè].*r/
     r = 'r'
     yin -= /r$/
-  yin = PinYinMap[system][yin] || yin
-  return "#yin#r#tone"
+  yin = PinYinMap[system - /^HanYu-/][yin] || yin
+  match yin
+  | /a/   => yin.=replace /a/ "aāáǎàa"[tone]
+  | /o/   => yin.=replace /o/ "oōóǒòo"[tone]
+  | /e/   => yin.=replace /e/ "eēéěèe"[tone]
+  | /ui/  => yin.=replace /i/ "iīíǐìi"[tone]
+  | /u/   => yin.=replace /u/ "uūúǔùu"[tone]
+  | /ü/   => yin.=replace /ü/ "üǖǘǚǜü"[tone]
+  | /i/   => yin.=replace /i/ "iīíǐìi"[tone]
 
-DefinitionList = React.createClass do
+  return "#yin#r"
+
+DefinitionList = createClass do
   render: ->
     { H, LANG, defs } = @props
     list = []
@@ -513,7 +640,7 @@ function decorate-nyms (props)
         span { dangerouslySetInnerHTML: { __html } }
   return list
 
-Definition = React.createClass do
+Definition = createClass do
   render: ->
     {LANG, type, def, defs, antonyms, synonyms} = @props
     if def is /∥/
@@ -536,7 +663,7 @@ Definition = React.createClass do
 
 const CJK-RADICALS = '⼀一⼁丨⼂丶⼃丿⼄乙⼅亅⼆二⼇亠⼈人⼉儿⼊入⼋八⼌冂⼍冖⼎冫⼏几⼐凵⼑刀⼒力⼓勹⼔匕⼕匚⼖匸⼗十⼘卜⼙卩⼚厂⼛厶⼜又⼝口⼞囗⼟土⼠士⼡夂⼢夊⼣夕⼤大⼥女⼦子⼧宀⼨寸⼩小⼪尢⼫尸⼬屮⼭山⼮巛⼯工⼰己⼱巾⼲干⼳幺⼴广⼵廴⼶廾⼷弋⼸弓⼹彐⼺彡⼻彳⼼心⼽戈⼾戶⼿手⽀支⽁攴⽂文⽃斗⽄斤⽅方⽆无⽇日⽈曰⽉月⽊木⽋欠⽌止⽍歹⽎殳⽏毋⽐比⽑毛⽒氏⽓气⽔水⽕火⽖爪⽗父⽘爻⽙爿⺦丬⽚片⽛牙⽜牛⽝犬⽞玄⽟玉⽠瓜⽡瓦⽢甘⽣生⽤用⽥田⽦疋⽧疒⽨癶⽩白⽪皮⽫皿⽬目⽭矛⽮矢⽯石⽰示⽱禸⽲禾⽳穴⽴立⽵竹⽶米⽷糸⺰纟⽸缶⽹网⽺羊⽻羽⽼老⽽而⽾耒⽿耳⾀聿⾁肉⾂臣⾃自⾄至⾅臼⾆舌⾇舛⾈舟⾉艮⾊色⾋艸⾌虍⾍虫⾎血⾏行⾐衣⾑襾⾒見⻅见⾓角⾔言⻈讠⾕谷⾖豆⾗豕⾘豸⾙貝⻉贝⾚赤⾛走⾜足⾝身⾞車⻋车⾟辛⾠辰⾡辵⻌辶⾢邑⾣酉⾤釆⾥里⾦金⻐钅⾧長⻓长⾨門⻔门⾩阜⾪隶⾫隹⾬雨⾭靑⾮非⾯面⾰革⾱韋⻙韦⾲韭⾳音⾴頁⻚页⾵風⻛风⾶飛⻜飞⾷食⻠饣⾸首⾹香⾺馬⻢马⾻骨⾼高⾽髟⾾鬥⾿鬯⿀鬲⿁鬼⿂魚⻥鱼⻦鸟⿃鳥⿄鹵⻧卤⿅鹿⿆麥⻨麦⿇麻⿈黃⻩黄⿉黍⿊黑⿋黹⿌黽⻪黾⿍鼎⿎鼓⿏鼠⿐鼻⿑齊⻬齐⿒齒⻮齿⿓龍⻰龙⿔龜⻳龟⿕龠'
 
-RadicalGlyph = React.createClass do
+RadicalGlyph = createClass do
   render: ->
     {char, H} = @props
     idx = CJK-RADICALS.index-of(char)
@@ -545,7 +672,7 @@ RadicalGlyph = React.createClass do
     return span { className: \glyph },
       a { title: \部首檢索, className: \xref, href: "#H@#char" style: { color: \white } }, " #char"
 
-RadicalTable = React.createClass do
+RadicalTable = createClass do
   render: ->
     {terms, id, H} = @props
     id -= /^[@=]/
@@ -569,7 +696,7 @@ RadicalTable = React.createClass do
       list ++= hr { style: { margin: 0, padding: 0, height: 0 } }
     return div-inline {}, title, div { className: \list }, ...list
 
-List = React.createClass do
+List = createClass do
   render: ->
     {terms, id, H, LRU} = @props
     return div {} unless terms
@@ -641,13 +768,21 @@ function h (it)
     else
       res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
   else:
-    res.=replace(/\uFFF9/g '<span class="ruby"><span class="rb"><span class="ruby"><span class="rb">')
+    res.=replace(/\uFFF9/g """
+      <span class="ruby#{
+        if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""
+      }"><span class="rb"><span class="ruby"><span class="rb">
+    """)
     .replace(/\uFFFA/g '</span><br><span class="rt trs pinyin">')
     .replace(/\uFFFB$/, '')
     .replace(/\uFFFB/g '</span></span></span></span><br><span class="rt mandarin">')
     .replace(/<span class="rt mandarin">\s*<\//g '</')
     .replace /(<span class="rt trs pinyin")>\s*([^<]+)/g, (_, pre, trs) -> """
-      #pre title="#{ trs2bpmf \t trs }">#trs
+      #pre title="#{ trs2bpmf \t trs }">#{
+        if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
+          trs.replace(/-/g "\u2011")
+        }</span>" else ""
+      }#{ convert-pinyin-t trs, yes }
     """
   return res
 
@@ -667,7 +802,7 @@ groupBy = (prop, xs) ->
   return [pre, ...groupBy(prop, xs)]
 function expand-def (def)
   def.replace(
-    /^\s*<(\d)>\s*([介代副助動名嘆形連]?)/, (_, num, char) -> "#{
+    /^\s*<(\d)>\s*([介代副助動名歎嘆形連]?)/, (_, num, char) -> "#{
       String.fromCharCode(0x327F + parseInt num)
     }#{ if char then "#char\u20DE" else '' }"
   ).replace(
@@ -726,18 +861,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
   part.=replace /([)）])/g "$1\u200B"
   return part
 
-if module?
-  module?.exports = { Result, DropDown, Nav, Links, decodeLangPart }
-else
-  React{}.View.Result = Result
-  React.View.Nav = Nav
-  React.View.Links = Links
-  React.View.DropDown = DropDown
-  React.View.UserPref = UserPref
-  React.View.decodeLangPart = decodeLangPart
-  unless window.PRERENDER_LANG
-    <- $
-    React.View.result = React.renderComponent Result!, $(\#result).0
+module.exports = { UserPref, Result, DropDown, Nav, Links, decodeLangPart }
 
 PinYinMap =
   "WadeGiles": {"zha":"cha","cha":"ch'a","zhai":"chai","chai":"ch'ai","zhan":"chan","chan":"ch'an","zhang":"chang","chang":"ch'ang","zhao":"chao","chao":"ch'ao","zhe":"che","che":"ch'e","zhei":"chei","zhen":"chen","chen":"ch'en","zheng":"cheng","cheng":"ch'eng","ji":"chi","qi":"ch'i","jia":"chia","qia":"ch'ia","jiang":"chiang","qiang":"ch'iang","jiao":"chiao","qiao":"ch'iao","jie":"chieh","qie":"ch'ieh","jian":"chien","qian":"ch'ien","zhi":"chih","chi":"ch'ih","jin":"chin","qin":"ch'in","jing":"ching","qing":"ch'ing","jiu":"chiu","qiu":"ch'iu","jiong":"chiung","qiong":"ch'iung","zhuo":"cho","chuo":"ch'o","zhou":"chou","chou":"ch'ou","zhu":"chu","chu":"ch'u","zhua":"chua","chua":"ch'ua","zhuai":"chuai","chuai":"ch'uai","zhuan":"chuan","chuan":"ch'uan","zhuang":"chuang","chuang":"ch'uang","zhui":"chui","chui":"ch'ui","zhun":"chun","chun":"ch'un","zhong":"chung","chong":"ch'ung","ju":"chü","qu":"ch'ü","juan":"chüan","quan":"ch'üan","jue":"chüeh","que":"ch'üeh","jun":"chün","qun":"ch'ün","er":"erh","he":"ho","xi":"hsi","xia":"hsia","xiang":"hsiang","xiao":"hsiao","xie":"hsieh","xian":"hsien","xin":"hsin","xing":"hsing","xiu":"hsiu","xiong":"hsiung","xu":"hsü","xuan":"hsüan","xue":"hsüeh","xun":"hsün","hong":"hung","ran":"jan","rang":"jang","rao":"jao","re":"je","ren":"jen","reng":"jeng","ri":"jih","ruo":"jo","rou":"jou","ru":"ju","ruan":"juan","rui":"jui","run":"jun","rong":"jung","ga":"ka","ka":"k'a","gai":"kai","kai":"k'ai","gan":"kan","kan":"k'an","gang":"kang","kang":"k'ang","gao":"kao","kao":"k'ao","gei":"kei","gen":"ken","ken":"k'en","geng":"keng","keng":"k'eng","ge":"ko","ke":"k'o","gou":"kou","kou":"k'ou","gu":"ku","ku":"k'u","gua":"kua","kua":"k'ua","guai":"kuai","kuai":"k'uai","guan":"kuan","kuan":"k'uan","guang":"kuang","kuang":"k'uang","gui":"kuei","kui":"k'uei","gun":"kun","kun":"k'un","gong":"kung","kong":"k'ung","guo":"kuo","kuo":"k'uo","lie":"lieh","lian":"lien","luo":"lo","long":"lung","lv":"lü","lve":"lüeh","lvn":"lün","mie":"mieh","mian":"mien","nie":"nieh","nian":"nien","nuo":"no","nong":"nung","nv":"nü","nve":"nüeh","ba":"pa","pa":"p'a","bai":"pai","pai":"p'ai","ban":"pan","pan":"p'an","bang":"pang","pang":"p'ang","bao":"pao","pao":"p'ao","bei":"pei","pei":"p'ei","ben":"pen","pen":"p'en","beng":"peng","peng":"p'eng","bi":"pi","pi":"p'i","biao":"piao","piao":"p'iao","bie":"pieh","pie":"p'ieh","bian":"pien","pian":"p'ien","bin":"pin","pin":"p'in","bing":"ping","ping":"p'ing","bo":"po","po":"p'o","pou":"p'ou","bu":"pu","pu":"p'u","shi":"shih","shong":"shung","suo":"so","si":"ssu","song":"sung","da":"ta","ta":"t'a","dai":"tai","tai":"t'ai","dan":"tan","tan":"t'an","dang":"tang","tang":"t'ang","dao":"tao","tao":"t'ao","de":"te","te":"t'e","dei":"tei","den":"ten","deng":"teng","teng":"t'eng","di":"ti","ti":"t'i","diang":"tiang","diao":"tiao","tiao":"t'iao","die":"tieh","tie":"t'ieh","dian":"tien","tian":"t'ien","ding":"ting","ting":"t'ing","diu":"tiu","duo":"to","tuo":"t'o","dou":"tou","tou":"t'ou","za":"tsa","ca":"ts'a","zai":"tsai","cai":"ts'ai","zan":"tsan","can":"ts'an","zang":"tsang","cang":"ts'ang","zao":"tsao","cao":"ts'ao","ze":"tse","ce":"ts'e","zei":"tsei","zen":"tsen","cen":"ts'en","zeng":"tseng","ceng":"ts'eng","zuo":"tso","cuo":"ts'o","zou":"tsou","cou":"ts'ou","zu":"tsu","cu":"ts'u","zuan":"tsuan","cuan":"ts'uan","zui":"tsui","cui":"ts'ui","zun":"tsun","cun":"ts'un","zong":"tsung","cong":"ts'ung","du":"tu","tu":"t'u","duan":"tuan","tuan":"t'uan","dui":"tui","tui":"t'ui","dun":"tun","tun":"t'un","dong":"tung","tong":"t'ung","zi":"tzu","ci":"tz'u","yan":"yen","ye":"yeh","you":"yu","yong":"yung","yu":"yü","yuan":"yüan","yue":"yüeh","yun":"yün"}

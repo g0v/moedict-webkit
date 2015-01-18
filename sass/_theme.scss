@@ -1,5 +1,4 @@
 
-
 // webkit scrollbar
 .ios ::-webkit-scrollbar, .web ::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -12,11 +11,13 @@
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-body {
-    @include hidpi('subtle_stripes', 'png');
-    @include fonts;
-    input, button, select, textarea, .ui-widget { @include fonts; }
+html {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
 
+body {
+    background-image: url('images/subtle_stripes_x2.png');
+    background-size: 40px 40px;
     [class^="icon-"], [class*=" icon-"] {
         font-family: FontAwesome;
     }
@@ -66,7 +67,8 @@ body {
 }
 
 .navbar-inverse {
-    @include hidpi('leather', 'jpg');
+    background-image: url('images/leather_x2.jpg');
+    background-size: 400px 219px;
     border-bottom: 1px solid hsl(3,46%,16%);
     opacity: 0.9;
 }
@@ -317,6 +319,7 @@ body.overflow-scrolling-false {
 
 input.query {
     display: block;
+    border: 1px solid $border-color;
     font-size: 1.2em;
     width: 100%;
     height: 1.8em;
@@ -376,6 +379,15 @@ input.query {
 }
 
 // 搜尋結果列表
+.ui-widget,
+.ui-widget button,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea {
+  // overwrite font declaration from jquery-ui.css
+  font-family: inherit !important;
+}
+
 body.overflow-scrolling-false .ui-autocomplete {
     max-height: 10000px !important;
     bottom: auto !important;
@@ -552,8 +564,8 @@ body.lang-a.web #lookback {
 }
 
 .cc0 {
+    @extend %han-sans;
     line-height: 1.5;
-    @include en-fonts;
 }
 
 img {
