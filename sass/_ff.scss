@@ -1,22 +1,15 @@
-
-@include font-face("Fira Sans OT", font-files(
-   "FiraSansOT-Regular.woff", woff,
-   "FiraSansOT-Regular.otf", opentype,
-   "FiraSansOT-Regular.ttf", truetype
-));
-
-@include font-face(EBAS, font-files(
-   "EBAS-Subset.woff", woff,
-   "EBAS-Subset.otf", opentype,
-   "EBAS-Subset.ttf", truetype
-));
-
-@include font-face(MOEDICT, font-files(
-   "MOEDICT.woff", woff,
-   "MOEDICT.otf", opentype,
-   "MOEDICT.ttf", truetype
-));
-
+@font-face {
+  font-family: "Fira Sans OT";
+  src: url('fonts/FiraSansOT-Regular.woff') format('woff'), url('fonts/FiraSansOT-Regular.otf') format('opentype'), url('fonts/FiraSansOT-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "EBAS";
+  src: url('fonts/EBAS-Subset.woff') format('woff'), url('fonts/EBAS-Subset.otf') format('opentype'), url('fonts/EBAS-Subset.ttf') format('truetype');
+}
+@font-face {
+  font-family: "MOEDICT";
+  src: url('fonts/MOEDICT.woff') format('woff'), url('fonts/MOEDICT.otf') format('opentype'), url('fonts/MOEDICT.ttf') format('truetype');
+}
 @font-face {
   font-family: MOEDICT-IOS-KAI;
   src: url('/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf') format('truetype');

@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-require! <[ fs ]>
+require! <[ LiveScript fs ]>
 LTM-regexes = {}
 
 index-body = fs.read-file-sync \index.html
@@ -9,8 +9,8 @@ index-body -= /<noscript>[\s\S]*<\/noscript>/g
 index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
 index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
 
-React = require \./js/react.js
-{Result, decodeLangPart} = require \./view.js
+React = require \react
+{Result, decodeLangPart} = require \./view.ls
 
 XREF = {}
 
