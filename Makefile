@@ -37,17 +37,17 @@ offline :: moedict-data deps translation
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
-	lsc json2prefix.ls a
-	lsc autolink.ls a > a.txt
+	#lsc json2prefix.ls a
+	#lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
-	lsc json2prefix.ls t
-	lsc autolink.ls t > t.txt
+	#lsc json2prefix.ls t
+	#lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
-	lsc json2prefix.ls h
-	lsc autolink.ls h > h.txt
+	#lsc json2prefix.ls h
+	#lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
-	-lsc json2prefix.ls c
-	-lsc autolink.ls c > c.txt
+	#-lsc json2prefix.ls c
+	#-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
