@@ -3,7 +3,9 @@ window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
-{any, map} = require('prelude-ls')
+{any, map}       = require('prelude-ls')
+{ucs2}           = require('punycode')
+{compute-length} = require('react-zh-stroker/lib/data')
 window.$ = window.jQuery = require \jquery
 
 React = require \react
@@ -941,6 +943,22 @@ $ ->
       cb (timeout + delay)
 
   window.strokeWords = (words) ->
+    cpts = ucs2.decode words
+    type = \json #if isCordova then \bin else \json
+    to-fetch = (for cpt in cpts => "#{cpt.toString 16}.json")
+    fetched = []
+    stroker = null
+    :fetch let
+      console.log to-fetch
+      filepath = "#{type}/#{to-fetch.pop!}"
+      data <- $.getJSON filepath
+      fetched.push compute-length data
+      if to-fetch.length then fetch! else
+        fetched .= reverse!
+        stroker = React.render do
+          React.View.Stroker words: fetched
+          $(\#strokes).0
+    /*
     $('#strokes').html('').show!
     if (try document.createElement('canvas')?getContext('2d'))
       <- getScript \js/raf.min.js
@@ -960,6 +978,7 @@ $ ->
       ws = words.split ''
       step = -> strokeWord(ws.shift!, step, it) if ws.length
       step 0
+    */
 
 LoadedScripts = {}
 function getScript (src, cb)
