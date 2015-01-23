@@ -36,10 +36,13 @@ ENV LC_ALL zh_TW.UTF-8
 # Copy script to build from GitHub
 WORKDIR /usr/local/src
 RUN git clone https://github.com/audreyt/moedict-webkit.git
-WORKDIR /usr/local/moedict-webkit
+WORKDIR /usr/local/src/moedict-webkit
+RUN npm install -g gulp
 RUN npm install webworker-threads
 
-# moedict is in /usr/local/src
-# Type 'make offline' to compile
+# make offline
+WORKDIR /usr/local/src/moedict-webkit
+RUN make offline
 
+# Default port is 8888
 EXPOSE 8888
