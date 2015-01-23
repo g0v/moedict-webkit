@@ -2,7 +2,15 @@
 
 ## Docker
 
-可直接使用 `docker pull miaoski/moedict-webkit` 取回開發環境。
+可以從 Docker Hub 取回開發環境:
+
+```
+docker@boot2docker:~$ docker pull miaoski/moedict-webkit
+docker@boot2docker:~$ docker run -t -i -p 8888:8888 bash
+root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
+```
+
+
 
 ## 需求
 
