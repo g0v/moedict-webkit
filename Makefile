@@ -37,7 +37,14 @@ checkout ::
 
 moedict-data :: checkout
 
-offline :: moedict-data deps translation
+offline :: deps
+	perl link2pack.pl a < a.txt
+	perl link2pack.pl t < t.txt
+	perl link2pack.pl h < h.txt
+	-perl link2pack.pl c < c.txt
+	perl special2pack.pl
+
+offline-dev :: moedict-data deps translation
 	ln -fs ../moedict-data/dict-revised-translated.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
@@ -49,17 +56,17 @@ offline :: moedict-data deps translation
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	cd moedict-data-amis && python moedict.py
 	ln -fs moedict-data-amis/dict-amis.json                dict-amis.json
-	lsc json2prefix.ls a
-	lsc autolink.ls a > a.txt
+	#lsc json2prefix.ls a
+	#lsc autolink.ls a > a.txt
 	perl link2pack.pl a < a.txt
-	lsc json2prefix.ls t
-	lsc autolink.ls t > t.txt
+	#lsc json2prefix.ls t
+	#lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
-	lsc json2prefix.ls h
-	lsc autolink.ls h > h.txt
+	#lsc json2prefix.ls h
+	#lsc autolink.ls h > h.txt
 	perl link2pack.pl h < h.txt
-	-lsc json2prefix.ls c
-	-lsc autolink.ls c > c.txt
+	#-lsc json2prefix.ls c
+	#-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt

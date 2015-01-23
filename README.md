@@ -1,5 +1,17 @@
 這是 <http://moedict.tw/> 線上及離線查詢 App 的源碼庫。
 
+## Docker
+
+可以從 Docker Hub 取回開發環境:
+
+```
+docker@boot2docker:~$ docker pull miaoski/moedict-webkit
+docker@boot2docker:~$ docker run -t -i -p 8888:8888 bash
+root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
+```
+
+
+
 ## 需求
 
 * Node.js 0.10.x

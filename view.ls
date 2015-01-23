@@ -283,11 +283,10 @@ XRefs = createClass do
             a { key: word, className: \xref, href: "#H#word" } word
 
 Star = createClass do
-  getDefaultProps: -> { STARRED: window?STARRED || {} }
   render: ->
-    { CurrentId, STARRED, LANG } = @props
-    return i {} unless STARRED[LANG]?
-    if ~STARRED[LANG].indexOf("\"#CurrentId\"")
+    { CurrentId, LANG } = @props
+    STARRED = window?STARRED || {}
+    if STARRED[LANG] and ~STARRED[LANG].indexOf("\"#CurrentId\"")
       return i { className: "star iconic-color icon-star", title: \已加入記錄簿 }
     return i { className: "star iconic-color icon-star-empty", title: \加入字詞記錄簿 }
 
