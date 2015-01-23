@@ -27,7 +27,14 @@ checkout ::
 
 moedict-data :: checkout
 
-offline :: moedict-data deps translation
+offline :: deps
+	perl link2pack.pl a < a.txt
+	perl link2pack.pl t < t.txt
+	perl link2pack.pl h < h.txt
+	-perl link2pack.pl c < c.txt
+	perl special2pack.pl
+
+offline-dev :: moedict-data deps translation
 	ln -fs ../moedict-data/dict-revised-translated.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
