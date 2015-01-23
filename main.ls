@@ -216,7 +216,7 @@ window.do-load = ->
     s.parentNode.insertBefore(gcse, s);
     poll-gsc = ->
       return setTimeout poll-gsc, 500ms unless $('.gsc-input').length
-      $('.gsc-input').attr \placeholder \全文檢索
+      $('.gsc-input').attr \placeholder \Search
       isQuery := no
     setTimeout poll-gsc, 500ms
 
