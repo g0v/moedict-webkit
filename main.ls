@@ -576,6 +576,7 @@ window.do-load = ->
     .css \visibility \visible
       .find 'a[word-id]'
       .each !->
+        return if isCordova
         $it = $ @
         html = @.cloneNode().outerHTML
         ci = document.createTextNode $it.text!
