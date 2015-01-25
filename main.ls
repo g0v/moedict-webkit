@@ -767,7 +767,7 @@ function init-autocomplete
       $('iframe').fadeOut \fast
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
-      return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
+      return pinyin_lookup(term, cb) if LANG is /^[ach]$/ and term is /^[a-zA-Z1-4 ]+$/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
