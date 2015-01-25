@@ -38,23 +38,41 @@ sub sort_index {
 }
 
 sub produce_lookup {
-    my $idx = shift;
+    my ($idx, $lang) = @_;
     reset(%$idx);
     while (my ($term, $docs) = each %$idx) {
         my $content = $JSON->encode([ map { $_->[0] } @$docs ]);
-        write_file("lookup/pinyin/${term}.json", $content);
+        write_file("lookup/pinyin/$lang/${term}.json", $content);
     }
 }
 
+my $lang = shift;
+unless ($lang =~ /^[tahc]$/) {
+    die << '.';
+Please invoke this as one of:
+    perl build-pinyin-lookup.pl a
+    perl build-pinyin-lookup.pl t
+    perl build-pinyin-lookup.pl h
+    perl build-pinyin-lookup.pl c
+.
+}
+
+my $dict_file = {
+    a => "dict-revised.unicode.json",
+    t => "dict-twblg.json",
+    h => "dict-hakka.json",
+    c => "dict-csld.json",
+}->{$lang};
+    
 binmode STDERR, ":utf8";
+
 
 mkdir "lookup";
 mkdir "lookup/pinyin";
+mkdir "lookup/pinyin/$lang";
 
-my $dict = from_json(scalar read_file "dict-revised.unicode.json", { binmode => ":utf8" });
+my $dict = from_json(scalar read_file $dict_file, { binmode => ":utf8" });
 
-my %pinyin;
-my %pinyin_numerical_tone;
 my %pinyin_sans_tone;
 
 my %tones = ( "\x{304}" => 1 , "\x{301}" => 2, "\x{30c}" => 3 , "\x{300}" => 4 );
@@ -80,20 +98,11 @@ for (my $i = 0; $i < @$dict; $i++) {
             if ($p1 !~ /\A[ a-z1234]+\z/) {
                 say STDERR "This looks weird: $title $p";
             } else {
-                # insert_index(\%pinyin, $title, [split /\s+/, $p]);
-                # insert_index(\%pinyin_numerical_tone, $title, [split /\s+/, $p1]);
                 insert_index(\%pinyin_sans_tone, $title, [split /\s+/, $p0]);
             }
         }
     }
 }
 
-# sort_index(\%pinyin);
-# sort_index(\%pinyin_numerical_tone);
-
 sort_index(\%pinyin_sans_tone);
-
-# produce_lookup(\%pinyin);
-# produce_lookup(\%pinyin_numerical_tone);
-
-produce_lookup(\%pinyin_sans_tone);
+produce_lookup(\%pinyin_sans_tone, $lang);

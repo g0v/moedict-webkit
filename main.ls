@@ -830,7 +830,7 @@ pinyin_lookup = (query,cb) !->
   res = []
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"").replace(/\s+/, " ").split(/ /)
   for term in terms
-    data <- GET "lookup/pinyin/#{term}.json"
+    data <- GET "lookup/pinyin/#{LANG}/#{term}.json"
     res.push( $.parseJSON(data) )
     if res.length == terms.length
       seen = {}

@@ -30,7 +30,7 @@ checkout ::
 
 moedict-data :: checkout
 
-offline :: deps
+offline :: deps pinyin
 	perl link2pack.pl a < a.txt
 	perl link2pack.pl t < t.txt
 	perl link2pack.pl h < h.txt
@@ -80,6 +80,12 @@ twblg ::
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
 	python twblg_index.py
+
+pinyin ::
+	perl build-pinyin-lookup.pl a
+	perl build-pinyin-lookup.pl t
+	perl build-pinyin-lookup.pl h
+	perl build-pinyin-lookup.pl c
 
 translation :: translation-data moedict-data
 	python translation-data/xml2txt.py
