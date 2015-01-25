@@ -8,7 +8,8 @@ use Unicode::Normalize;
 my $JSON = JSON->new->utf8->canonical;
 
 sub insert_index {
-    my ($idx, $title, $terms) = @_;
+    my ($ctx, $title, $terms) = @_;
+    my $idx = $ctx->{pinyin_sans_tone};
 
     my (%pos, %freq);
     for (my $i = 0; $i < @$terms; $i++) {
@@ -23,7 +24,8 @@ sub insert_index {
 }
 
 sub sort_index {
-    my $idx = shift;
+    my ($ctx) = @_;
+    my $idx = $ctx->{pinyin_sans_tone};
     reset(%$idx);
     while (my ($term, $docs) = each %$idx) {
         my @rows = map {
@@ -38,11 +40,13 @@ sub sort_index {
 }
 
 sub produce_lookup {
-    my ($idx, $lang) = @_;
+    my ($ctx) = @_;
+    my $idx = $ctx->{pinyin_sans_tone};
+
     reset(%$idx);
     while (my ($term, $docs) = each %$idx) {
         my $content = $JSON->encode([ map { $_->[0] } @$docs ]);
-        write_file("lookup/pinyin/$lang/${term}.json", $content);
+        write_file("lookup/pinyin/$ctx->{lang}/${term}.json", $content);
     }
 }
 
@@ -65,13 +69,16 @@ my $dict_file = {
 }->{$lang};
     
 binmode STDERR, ":utf8";
-
-
 mkdir "lookup";
 mkdir "lookup/pinyin";
 mkdir "lookup/pinyin/$lang";
 
 my $dict = from_json(scalar read_file $dict_file, { binmode => ":utf8" });
+
+my %ctx = (
+    lang => $lang,
+    pinyin_sans_tone => {},
+);
 
 my %pinyin_sans_tone;
 
@@ -84,12 +91,21 @@ for (my $i = 0; $i < @$dict; $i++) {
     for my $heteronym (@{ $entry->{heteronyms} }) {
         next unless $heteronym->{pinyin};
 
-        for my $p (split /\s*\(變\)\s*/, $heteronym->{pinyin}) {
-            # strip comments like:（讀音）(又音)(語音)
-            $p =~ s/（.音）//g;
-            $p =~ s/\(.音\)//g;
-            $p = NFD($p);
+        my @pinyin_tokens = map {
+            split(/\s+/, $_)
+        } grep {
+            $_ ne '';
+        } map {
+            $_ = NFD($_);
+            s/ɑ/a/g;
+            s/([bcdfghjklmnpqrstwxyz])/ $1/ig;
+            s/^ +//;
+            $_;
+        } map {
+            split(/(?:\p{Punct}|<br>|陸⃝|陸|臺|-|[又語讀]音)/, $_)
+        } split /\s*\(變\)\s*/, $heteronym->{pinyin};
 
+        for my $p (@pinyin_tokens) {
             my $p0 = $p =~ s! $tone_re !!xgr =~ s/u\x{308}/v/gr;
 
             my $p1 = $p =~ s! $tone_re !$tones{$1}!xgr =~ s/u\x{308}/v/gr;
@@ -98,11 +114,12 @@ for (my $i = 0; $i < @$dict; $i++) {
             if ($p1 !~ /\A[ a-z1234]+\z/) {
                 say STDERR "This looks weird: $title $p";
             } else {
-                insert_index(\%pinyin_sans_tone, $title, [split /\s+/, $p0]);
+                insert_index( \%ctx, $title, [$p0]);
             }
         }
     }
 }
 
-sort_index(\%pinyin_sans_tone);
-produce_lookup(\%pinyin_sans_tone, $lang);
+sort_index( \%ctx );
+produce_lookup( \%ctx );
+
