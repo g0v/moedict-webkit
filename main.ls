@@ -9,6 +9,7 @@ window.$ = window.jQuery = require \jquery
 React = require \react
 React.View = require \./view.ls
 Han = require \han-css
+window.React = React
 
 unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Sun Jan 25 18:33:33 CST 2015
+# Sun Jan 25 18:45:31 CST 2015
 
 CACHE:
 
@@ -7,24 +7,8 @@ CACHE:
 index.html
 styles.css
 
-# core JSON files
-a/=.json
-a/@.json
-a/index.json
-a/xref.json
-
-c/=.json
-c/@.json
-c/index.json
-c/xref.json
-
-h/index.json
-h/xref.json
-
-t/=.json
-t/index.json
-t/xref.json
-t/variants.json
+# js files
+js/deps.js
 
 # css files
 css/cupertino/jquery-ui-1.10.4.custom.css
@@ -38,9 +22,6 @@ fonts/MOEDICT.ttf
 # html files
 about.html
 favicon.ico
-
-# js files
-js/deps.js
 
 # optional deps
 js/howler.js
@@ -85,6 +66,25 @@ cordova.js
 
 # iOS specific
 private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf
+
+# core JSON files
+a/=.json
+a/@.json
+a/xref.json
+#a/index.json
+
+c/=.json
+c/@.json
+c/index.json
+c/xref.json
+
+h/index.json
+h/xref.json
+
+t/=.json
+t/index.json
+t/xref.json
+t/variants.json
 
 FALLBACK:
 
