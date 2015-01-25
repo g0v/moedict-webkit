@@ -76,6 +76,7 @@ twblg ::
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
+	python twblg_index.py
 
 translation :: translation-data moedict-data
 	python translation-data/xml2txt.py
