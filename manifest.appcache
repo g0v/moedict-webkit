@@ -1,12 +1,10 @@
 CACHE MANIFEST
-# Tue Jan 20 21:12:12 CST 2015
+# Sun Jan 25 18:33:33 CST 2015
 
 CACHE:
 
 # core App files
 index.html
-main.js
-view.js
 styles.css
 
 # core JSON files
