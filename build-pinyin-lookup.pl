@@ -96,9 +96,10 @@ for (my $i = 0; $i < @$dict; $i++) {
     my $entry = $dict->[$i];
     my $title = $entry->{title};
     for my $heteronym (@{ $entry->{heteronyms} }) {
-        next unless $heteronym->{pinyin};
+        my $pinyin = $heteronym->{pinyin} || $heteronym->{trs} ;
+        next unless $pinyin;
 
-        my @pinyin_tokens = grep { /\A[a-z]/ } split(/([a-z]+)/i, (NFD($heteronym->{pinyin}) =~ s/\p{Mark}//gr =~ s/ɑ/a/gr));
+        my @pinyin_tokens = grep { /\A[a-z]/ } split(/([a-z]+)/i, (NFD($pinyin) =~ s/\p{Mark}//gr =~ s/ɑ/a/gr));
 
         if (defined $re_all_known_pinyin) {
             @pinyin_tokens = grep {
