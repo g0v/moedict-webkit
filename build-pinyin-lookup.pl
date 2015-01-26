@@ -9,6 +9,21 @@ my $JSON = JSON->new->utf8->canonical;
 
 my $re_all_known_pinyin;
 
+sub analyze_pinyin_field {
+    my ($val) = @_;
+
+    my @pinyin_tokens = grep { /\A[a-z]/ } split(/([a-z]+)/i, (NFD($val) =~ s/\p{Mark}//gr =~ s/ɑ/a/gr));
+    if (defined $re_all_known_pinyin) {
+        @pinyin_tokens = grep {
+            $_
+        } map {
+            split(/($re_all_known_pinyin)/)
+        } @pinyin_tokens;
+    }
+
+    return \@pinyin_tokens;
+}
+
 sub insert_index {
     my ($ctx, $title, $terms) = @_;
     my $idx = $ctx->{pinyin_sans_tone};
@@ -85,12 +100,9 @@ my $dict = from_json(scalar read_file $dict_file, { binmode => ":utf8" });
 my %ctx = (
     lang => $lang,
     pinyin_sans_tone => {},
+    hanyu_pinyin_sans_tone => {},
+    tongyong_pinyin_sans_tone => {},
 );
-
-my %pinyin_sans_tone;
-
-my %tones = ( "\x{304}" => 1 , "\x{301}" => 2, "\x{30c}" => 3 , "\x{300}" => 4 );
-my $tone_re = "(" . join("|", keys %tones) . ")";
 
 for (my $i = 0; $i < @$dict; $i++) {
     my $entry = $dict->[$i];
@@ -99,28 +111,8 @@ for (my $i = 0; $i < @$dict; $i++) {
         my $pinyin = $heteronym->{pinyin} || $heteronym->{trs} ;
         next unless $pinyin;
 
-        my @pinyin_tokens = grep { /\A[a-z]/ } split(/([a-z]+)/i, (NFD($pinyin) =~ s/\p{Mark}//gr =~ s/ɑ/a/gr));
-
-        if (defined $re_all_known_pinyin) {
-            @pinyin_tokens = grep {
-                $_
-            } map {
-                split(/($re_all_known_pinyin)/)
-            } @pinyin_tokens;
-        }
-
-        for my $p (@pinyin_tokens) {
-            my $p0 = $p =~ s! $tone_re !!xgr =~ s/u\x{308}/v/gr;
-
-            my $p1 = $p =~ s! $tone_re !$tones{$1}!xgr =~ s/u\x{308}/v/gr;
-            $p1 =~ s{([1234])(\S+)}{$2$1}g;
-
-            if ($p1 !~ /\A[ a-z1234]+\z/) {
-                say STDERR "This looks weird: $title: <$p>";
-            } else {
-                insert_index( \%ctx, $title, [$p0]);
-            }
-        }
+        my $pinyin_tokens = analyze_pinyin_field($pinyin);
+        insert_index( \%ctx, $title, $pinyin_tokens);
     }
 }
 
