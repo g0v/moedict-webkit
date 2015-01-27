@@ -186,6 +186,21 @@ hruby {
                     content: '又'
                 }
             }
+            body[data-ruby-pref='none'] & {
+                display: none;
+            }
+            body[data-ruby-pref='pinyin'] &,
+            body[data-ruby-pref='none'] & {
+                .bopomofo {
+                    display: none;
+                }
+            }
+            body[data-ruby-pref='zhuyin'] &,
+            body[data-ruby-pref='none'] & {
+                .pinyin {
+                    display: none;
+                }
+            }
         }
     }
     //如果是第二個以上之條目
