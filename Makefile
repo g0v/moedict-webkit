@@ -28,9 +28,9 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
-moedict-data :: checkout
+moedict-data :: checkout pinyin
 
-offline :: deps pinyin
+offline :: deps
 	perl link2pack.pl a < a.txt
 	perl link2pack.pl t < t.txt
 	perl link2pack.pl h < h.txt
