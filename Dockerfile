@@ -39,12 +39,15 @@ RUN git clone https://github.com/audreyt/moedict-webkit.git
 WORKDIR /usr/local/src/moedict-webkit
 RUN npm install -g gulp
 RUN npm install webworker-threads
+RUN apt-get install -y sqlite3
+RUN npm install -g sqlite3
 
 # make offline
 WORKDIR /usr/local/src/moedict-webkit
 RUN make offline
 
 # For build-pinyin-lookup.pl
+WORKDIR /usr/local/src/moedict-webkit
 RUN apt-get install -y libjson-perl
 RUN apt-get install -y libfile-slurp-unicode-perl
 RUN make offline-dev

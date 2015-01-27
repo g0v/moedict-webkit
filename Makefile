@@ -26,6 +26,8 @@ amis ::
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
 	cp moedict-data-amis/index.json           p/index.json
+	cd moedict-data-amis && make sqlite
+	cp moedict-data-amis/dict-amis.sq3        dict-amis.sq3
 
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
