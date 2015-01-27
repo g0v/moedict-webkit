@@ -861,17 +861,21 @@ pinyin_lookup = (query,cb) !->
 
 # 由漢字查阿美語
 han_amis_lookup = (query,cb) !->
-  cmn_amis_longstr <- GET \revdict-amis.txt
+  cmn_amis_def <- GET \revdict-amis-def.txt
+  cmn_amis_ex  <- GET \revdict-amis-ex.txt
   x = []
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"")
-  p = 0
-  i = 0
-  loop
-    p = cmn_amis_longstr.indexOf terms, p+1
-    break if p is -1 or ++i > 20        # 最多找 20 個
-    ae = cmn_amis_longstr.lastIndexOf '\ufffb', p
-    ab = cmn_amis_longstr.lastIndexOf '\ufffa', ae
-    x.push cmn_amis_longstr.slice(ab+1, ae).replace('g', 'ng')
+  lookup_in = (cmn) ~>
+    p = 0
+    loop
+      p = cmn.indexOf terms, p+1
+      break if p is -1 or x.length > 20        # 最多找 20 個
+      ae = cmn.lastIndexOf '\ufffb', p
+      ab = cmn.lastIndexOf '\ufffa', ae
+      title = cmn.slice(ab+1, ae).replace('g', 'ng')
+      x.push title if title not in x
+  lookup_in cmn_amis_def
+  lookup_in cmn_amis_ex
   if x.length == 0
     cb(["無符合之詞"])
   else
