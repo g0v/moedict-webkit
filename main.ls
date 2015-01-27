@@ -778,6 +778,7 @@ function init-autocomplete
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
       return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
+      return han_amis_lookup(term, cb) if LANG is \p and term is /[^\u0000-\u00FF]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -857,6 +858,24 @@ pinyin_lookup = (query,cb) !->
         cb(["無符合之詞"])
       else
         cb(x)
+
+# 由漢字查阿美語
+han_amis_lookup = (query,cb) !->
+  cmn_amis_longstr <- GET \revdict-amis.txt
+  x = []
+  terms = query.replace(/^\s+/,"").replace(/\s+$/,"")
+  p = 0
+  i = 0
+  loop
+    p = cmn_amis_longstr.indexOf terms, p+1
+    break if p is -1 or ++i > 20        # 最多找 20 個
+    ae = cmn_amis_longstr.lastIndexOf '\ufffb', p
+    ab = cmn_amis_longstr.lastIndexOf '\ufffa', ae
+    x.push cmn_amis_longstr.slice(ab+1, ae).replace('g', 'ng')
+  if x.length == 0
+    cb(["無符合之詞"])
+  else
+    cb(x)
 
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
