@@ -1,5 +1,5 @@
 # 
-# Dockerfile to build miaoski/moedict_amis:0.3
+# Dockerfile to build miaoski/moedict_amis
 #
 FROM ubuntu:14.04.1
 MAINTAINER miaoski
@@ -43,6 +43,11 @@ RUN npm install webworker-threads
 # make offline
 WORKDIR /usr/local/src/moedict-webkit
 RUN make offline
+
+# For build-pinyin-lookup.pl
+RUN apt-get install -y libjson-perl
+RUN apt-get install -y libfile-slurp-unicode-perl
+RUN make offline-dev
 
 # Default port is 8888
 EXPOSE 8888
