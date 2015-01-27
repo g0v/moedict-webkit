@@ -8457,6 +8457,12 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
     border-radius: 4px; }
     body.lang-t .result h1 small.alternative:before, body.lang-t .result h1 + div small.alternative:before, body.lang-t .ui-tooltip h1 small.alternative:before, body.lang-t .ui-tooltip h1 + div small.alternative:before {
       content: '又'; }
+  body[data-ruby-pref='none'] .result h1 small.alternative, body[data-ruby-pref='none'] .result h1 + div small.alternative, body[data-ruby-pref='none'] .ui-tooltip h1 small.alternative, body[data-ruby-pref='none'] .ui-tooltip h1 + div small.alternative {
+    display: none; }
+  body[data-ruby-pref='pinyin'] .result h1 small.alternative .bopomofo, body[data-ruby-pref='none'] .result h1 small.alternative .bopomofo, body[data-ruby-pref='pinyin'] .result h1 + div small.alternative .bopomofo, body[data-ruby-pref='none'] .result h1 + div small.alternative .bopomofo, body[data-ruby-pref='pinyin'] .ui-tooltip h1 small.alternative .bopomofo, body[data-ruby-pref='none'] .ui-tooltip h1 small.alternative .bopomofo, body[data-ruby-pref='pinyin'] .ui-tooltip h1 + div small.alternative .bopomofo, body[data-ruby-pref='none'] .ui-tooltip h1 + div small.alternative .bopomofo {
+    display: none; }
+  body[data-ruby-pref='zhuyin'] .result h1 small.alternative .pinyin, body[data-ruby-pref='none'] .result h1 small.alternative .pinyin, body[data-ruby-pref='zhuyin'] .result h1 + div small.alternative .pinyin, body[data-ruby-pref='none'] .result h1 + div small.alternative .pinyin, body[data-ruby-pref='zhuyin'] .ui-tooltip h1 small.alternative .pinyin, body[data-ruby-pref='none'] .ui-tooltip h1 small.alternative .pinyin, body[data-ruby-pref='zhuyin'] .ui-tooltip h1 + div small.alternative .pinyin, body[data-ruby-pref='none'] .ui-tooltip h1 + div small.alternative .pinyin {
+    display: none; }
 .result div.entry ~ .radical, .ui-tooltip div.entry ~ .radical {
   margin-top: .4em; }
 .result h1 + div small.cn-specific, .ui-tooltip h1 + div small.cn-specific {
