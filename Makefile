@@ -11,6 +11,9 @@ deps ::
 	npm i
 	gulp build
 
+js/deps.js ::
+	gulp webpack:build
+
 manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
 
