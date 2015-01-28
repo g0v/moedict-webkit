@@ -3,15 +3,28 @@ use v5.14;
 use utf8;
 use JSON;
 use File::Slurp;
-use Unicode::Normalize;
+use Unicode::Normalize qw(NFD);
+
+use constant PINYIN_TYPE => {
+    a => {
+        pinyin => "HanYu",
+    },
+    c => {
+        pinyin => "HanYu",
+    },
+    t => {
+        trs => "TL"
+    },
+    h => {
+        pinyin => "HanYu",
+    }
+};
 
 my $JSON = JSON->new->utf8->canonical;
-
 my $re_all_known_pinyin;
 
 sub analyze_pinyin_field {
     my ($val) = @_;
-
     my @pinyin_tokens = grep { /\A[a-z]/ } split(/([a-z]+)/i, (NFD($val) =~ s/\p{Mark}//gr =~ s/ɑ/a/gr));
     if (defined $re_all_known_pinyin) {
         @pinyin_tokens = grep {
@@ -25,8 +38,8 @@ sub analyze_pinyin_field {
 }
 
 sub insert_index {
-    my ($ctx, $title, $terms) = @_;
-    my $idx = $ctx->{pinyin_sans_tone};
+    my ($ctx, $pinyin_type, $title, $terms) = @_;
+    my $idx = $ctx->{idx}{$pinyin_type};
 
     my (%pos, %freq);
     for (my $i = 0; $i < @$terms; $i++) {
@@ -42,28 +55,32 @@ sub insert_index {
 
 sub sort_index {
     my ($ctx) = @_;
-    my $idx = $ctx->{pinyin_sans_tone};
-    reset(%$idx);
-    while (my ($term, $docs) = each %$idx) {
-        my @rows = map {
-            [ $_, $docs->{$_}[0], $docs->{$_}[1] ]
-        } sort {
-            length($a) <=> length($b)
-            || $docs->{$a}[0] <=> $docs->{$b}[0]
-            || $docs->{$b}[1] <=> $docs->{$a}[1]
-        } keys %$docs;
-        $idx->{$term} = \@rows;
+
+    for my $pinyin_type (keys %{$ctx->{idx}}) {
+        my $idx = $ctx->{idx}{$pinyin_type};
+        reset(%$idx);
+        while (my ($term, $docs) = each %$idx) {
+            my @rows = map {
+                [ $_, $docs->{$_}[0], $docs->{$_}[1] ]
+            } sort {
+                length($a) <=> length($b)
+                || $docs->{$a}[0] <=> $docs->{$b}[0]
+                || $docs->{$b}[1] <=> $docs->{$a}[1]
+            } keys %$docs;
+            $idx->{$term} = \@rows;
+        }        
     }
 }
 
 sub produce_lookup {
     my ($ctx) = @_;
-    my $idx = $ctx->{pinyin_sans_tone};
-
-    reset(%$idx);
-    while (my ($term, $docs) = each %$idx) {
-        my $content = $JSON->encode([ map { $_->[0] } @$docs ]);
-        write_file("lookup/pinyin/$ctx->{lang}/${term}.json", $content);
+    for my $pinyin_type (keys %{$ctx->{idx}}) {
+        my $idx = $ctx->{idx}{$pinyin_type};
+        reset(%$idx);
+        while (my ($term, $docs) = each %$idx) {
+            my $content = $JSON->encode([ map { $_->[0] } @$docs ]);
+            write_file("lookup/pinyin/$ctx->{lang}/${pinyin_type}/${term}.json", $content);
+        }
     }
 }
 
@@ -84,11 +101,17 @@ my $dict_file = {
     h => "dict-hakka.json",
     c => "dict-csld.json",
 }->{$lang};
+
     
 binmode STDERR, ":utf8";
 mkdir "lookup";
 mkdir "lookup/pinyin";
 mkdir "lookup/pinyin/$lang";
+
+# pinyin_type list from view.ls line 85..95
+for my $pinyin_type ("HanYu", "HanYu-TongYong", "TongYong", "WadeGiles", "GuoYin", "TL", "TL-DT", "DT", "POJ") {
+    mkdir("lookup/pinyin/${lang}/${pinyin_type}");
+}
 
 ## ls -1 lookup/pinyin/a/*.json | cut -f 4 -d '/' | cut -f1 -d '.' | perl -MRegex::PreSuf=presuf -E 'my $re = presuf(<>); say $re'
 if ($lang eq "c") {
@@ -99,20 +122,21 @@ my $dict = from_json(scalar read_file $dict_file, { binmode => ":utf8" });
 
 my %ctx = (
     lang => $lang,
-    pinyin_sans_tone => {},
-    hanyu_pinyin_sans_tone => {},
-    tongyong_pinyin_sans_tone => {},
+    idx => {
+        HanYu => {},
+        TL => {}
+    }
 );
 
 for (my $i = 0; $i < @$dict; $i++) {
     my $entry = $dict->[$i];
     my $title = $entry->{title};
     for my $heteronym (@{ $entry->{heteronyms} }) {
-        my $pinyin = $heteronym->{pinyin} || $heteronym->{trs} ;
-        next unless $pinyin;
-
-        my $pinyin_tokens = analyze_pinyin_field($pinyin);
-        insert_index( \%ctx, $title, $pinyin_tokens);
+        for my $field (qw(pinyin trs)) {
+            my $pinyin = $heteronym->{$field} or next;
+            my $pinyin_tokens = analyze_pinyin_field($pinyin);
+            insert_index( \%ctx, PINYIN_TYPE->{$lang}{$field}, $title, $pinyin_tokens);
+        }
     }
 }
 
