@@ -3,7 +3,7 @@ window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
-{any, map} = require('prelude-ls')
+{any, map, unique} = require('prelude-ls')
 window.$ = window.jQuery = require \jquery
 
 React = require \react
@@ -824,7 +824,7 @@ PUA2UNI = {
 trs_lookup = (term,cb) ->
   data <- GET "https://www.moedict.tw/lookup/trs/#{term}"
   data.=replace /[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it]
-  cb( data / '|' )
+  cb( unique(data / '|') )
 
 pinyin_lookup = (query,cb) !->
   res = []
