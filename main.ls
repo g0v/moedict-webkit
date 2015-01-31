@@ -3,7 +3,7 @@ window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
-{any, map}       = require('prelude-ls')
+{any, map, sum}  = require('prelude-ls')
 {ucs2}           = require('punycode')
 {compute-length} = require('react-zh-stroker/lib/data')
 window.$ = window.jQuery = require \jquery
@@ -955,9 +955,28 @@ $ ->
       fetched.push compute-length data
       if to-fetch.length then fetch! else
         fetched .= reverse!
+        length = fetched |> map (.length) |> sum
+        speed = 120
+        wait = 0
+        time = 0
         stroker = React.render do
-          React.View.Stroker words: fetched
+          React.View.Stroker do
+            words: fetched
+            progress: 0
+            onLeaveWord:   -> wait := 60
+            onLeaveStroke: -> wait := 12
+            onEnterWord:   (, next) -> next.progress = 0 if wait
+            onEnterStroke: (, next) -> next.progress = 0 if wait
           $(\#strokes).0
+        update = ->
+          if wait is 0
+            then stroker.setProps progress: time++ * speed
+            else --wait
+          if time <= length
+            requestAnimationFrame update
+        <- getScript \js/raf.min.js
+        $('#strokes').show!
+        requestAnimationFrame update
     /*
     $('#strokes').html('').show!
     if (try document.createElement('canvas')?getContext('2d'))

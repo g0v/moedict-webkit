@@ -5,7 +5,7 @@ $body = window?$('body') || { hasClass: -> false }
 {p, i, a, b, form, h1, div, main, span, br, h3, h4, button, label, table, nav,
 tr, td, th, input, hr, meta, ul, ol, li, ruby, small} = React.DOM
 
-{any, map}      = require \prelude-ls
+{any, map, sum} = require \prelude-ls
 {Word}          = require \react-zh-stroker
 {computeLength} = require 'react-zh-stroker/lib/data'
 
@@ -391,17 +391,36 @@ Heteronym = createClass do
 Stroker = createClass do
   getDefaultProps: ->
     words: []
-    #progress: 0
+    progress: 0
+    onEnter: ->
+    onLeave: ->
+    onEnterWord: ->
+    onLeaveWord: ->
+    onEnterStroke: ->
+    onLeaveStroke: ->
+  componentWillReceiveProps: (next) ->
+    length = @props.words |> map (.length) |> sum
+    if @props.progress <= 0 and next.progress > 0
+      @props.onEnter!
+    if @props.progress <= length and next.progress > length
+      @props.onLeave!
   render: ->
+    progress = @props.progress
     div do
       className: 'stroker'
       for i, word of @props.words
-        Word do
+        comp = Word do
           key: i
           data: word
-          progress: word.length
+          progress: progress
           width:  204
           height: 204
+          onEnter: @props.onEnterWord
+          onLeave: @props.onLeaveWord
+          onEnterStroke: @props.onEnterStroke
+          onLeaveStroke: @props.onLeaveStroke
+        progress -= word.length
+        comp
 
 
 decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
