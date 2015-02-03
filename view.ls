@@ -747,7 +747,7 @@ http-map =
 http-map <<< window.moedictDesktop.voices if isMoedictDesktop
 http = -> "http#{if not isMoedictDesktop or it.match(/^([^.]+)\.[^\/]+/).1 not of window.moedictDesktop.voices then "s" else ""}://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 can-play-mp3 = -> !isMoedictDesktop
-can-play-ogg = -> isMoedictDesktop
+can-play-ogg = -> isMoedictDesktop or window?can-play-ogg?!
 can-play-opus = -> no
 function h (it)
   id = CurrentId

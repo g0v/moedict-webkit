@@ -863,7 +863,7 @@ function can-play-mp3
   a = document.createElement \audio
   CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /^no$/)
 
-function can-play-ogg
+window.can-play-ogg = function can-play-ogg
   return CACHED.can-play-ogg if CACHED.can-play-ogg?
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg; codecs="vorbis"') - /^no$/)
