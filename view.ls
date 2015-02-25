@@ -551,7 +551,7 @@ function convert-pinyin-t (yin, isBody=true)
     yin2.=replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '$1')        # 2 -> 1
     return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
-  return yin.replace(/oo/g, 'o\u0358')
+  return yin.replace(/o([^.!?,\w\s\u2011]*)o/g, 'o$1\u0358')
             .replace(/ts/g, 'ch')
             .replace(/u([^\w\s]*)a/g, 'o$1a')
             .replace(/u([^\w\s]*)e/g, 'o$1e')
