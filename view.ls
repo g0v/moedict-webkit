@@ -125,11 +125,6 @@ Links = createClass do
     a { className: 'visible-xs pull-left ebas btn btn-default', href: \#, title: \關於本站, style: { float: \left, marginTop: \-10px, marginLeft: \5px, marginBottom: \5px }, onClick: -> pressAbout! },
       span { className: \iconic-circle }, i { className: \icon-info }
       span {}, nbsp, \萌典
-    div { className: \share, style: { float: \right, marginTop: \-10px, marginRight: \5px, marginBottom: \15px } },
-      ...for { id, icon, label, background, href } in share-buttons
-        a { id: "share-#id", className: "btn btn-default small", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
-          i { className: \icon-share } nbsp
-          i { className: "icon-#icon" }
 
 Nav = createClass do
   render: -> nav { className: 'navbar navbar-inverse navbar-fixed-top', role: \navigation },
