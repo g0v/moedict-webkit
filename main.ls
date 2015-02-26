@@ -571,7 +571,6 @@ window.do-load = ->
     <- React.render React.View.UserPref!, $(\#user-pref).0
 
     Han($result.0).render-ruby!.subst-comb-liga-with-PUA!
-    $('iframe[src=gap://ready]').remove! if isCordova
 
     window.scroll-to 0 0
     $h1
