@@ -28,7 +28,7 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
-moedict-data :: checkout
+moedict-data :: checkout pinyin
 
 offline :: deps
 	perl link2pack.pl a < a.txt
@@ -80,6 +80,12 @@ twblg ::
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
 	python twblg_index.py
+
+pinyin ::
+	perl build-pinyin-lookup.pl a
+	perl build-pinyin-lookup.pl t
+	perl build-pinyin-lookup.pl h
+	perl build-pinyin-lookup.pl c
 
 translation :: translation-data moedict-data
 	python translation-data/xml2txt.py
