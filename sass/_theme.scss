@@ -433,6 +433,9 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 @media only screen and (max-width: 767px) {
+    .icon-book {
+        display: none !important;
+    }
     ul.ui-autocomplete {
         top: 100px !important;
         height: auto !important;

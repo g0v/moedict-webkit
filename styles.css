@@ -8084,6 +8084,8 @@ body.overflow-scrolling-false .ui-autocomplete {
     max-height: 80% !important; } }
 
 @media only screen and (max-width: 767px) {
+  .icon-book {
+    display: none !important; }
   ul.ui-autocomplete {
     top: 100px !important;
     height: auto !important;
@@ -8239,9 +8241,17 @@ img.back {
 .app #opening {
   display: none !important; }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 360px) {
   #btn-pref {
     display: none; } }
+
+@media only screen and (max-width: 767px) {
+  #btn-pref {
+    left: auto !important;
+    right: 155px !important;
+    top: 5px !important;
+    display: block;
+    position: absolute; } }
 
 #user-pref label {
   width: 100% !important;
@@ -8976,3 +8986,6 @@ body.cordova #gcse > span .gsc-results-wrapper-overlay {
 
 body {
   font-size: 14pt; }
+
+body.cordova.ios iframe {
+  display: none !important; }
