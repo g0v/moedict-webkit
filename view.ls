@@ -604,7 +604,7 @@ function convert-pinyin (yin, isBody)
   if yin is /^[^eēéěè].*r/
     r = 'r'
     yin -= /r$/
-  yin = PinYinMap[system - /^HanYu-/][yin] || yin
+  yin = PinYinMap[system - /^HanYu-/][yin - /\u200b/g] || yin
   match yin
   | /a/   => yin.=replace /a/ "aāáǎàa"[tone]
   | /o/   => yin.=replace /o/ "oōóǒòo"[tone]
