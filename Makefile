@@ -48,13 +48,13 @@ offline-dev :: moedict-data deps translation
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	#lsc json2prefix.ls a
-	#lsc autolink.ls a > a.txt
+	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
 	perl link2pack.pl a < a.txt
 	#lsc json2prefix.ls t
-	#lsc autolink.ls t > t.txt
+	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
 	#lsc json2prefix.ls h
-	#lsc autolink.ls h > h.txt
+	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c > c.txt
