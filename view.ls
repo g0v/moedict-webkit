@@ -127,7 +127,7 @@ Links = createClass do
       span {}, nbsp, \萌典
     div { className: \share, style: { float: \right, marginTop: \-10px, marginRight: \5px, marginBottom: \15px } },
       ...for { id, icon, label, background, href } in share-buttons
-        a { id: "share-#id", className: "btn btn-default small", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
+        a { id: "share-#id", className: "btn btn-default small not-ios", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
           i { className: \icon-share } nbsp
           i { className: "icon-#icon" }
 

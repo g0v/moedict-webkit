@@ -8235,6 +8235,12 @@ img.back {
 .web-only {
   display: none !important; }
 
+.ios .not-ios {
+  display: none !important; }
+
+.not-ios {
+  display: inline-block !important; }
+
 .web .web-only {
   display: block !important; }
 
