@@ -7807,6 +7807,8 @@ body.lang-h #query-box {
 body.lang-h #gcse .lang-h-only {
   position: static !important;
   margin-top: 0 !important; }
+body.lang-h #btn-pref {
+  display: none !important; }
 body.lang-h h1 {
   border-bottom: 0;
   margin: .25em 0 .25em; }
@@ -8043,7 +8045,8 @@ input.query {
     height: 65px;
     bottom: auto !important;
     padding: 15px;
-    padding-bottom: 3px; } }
+    padding-bottom: 3px;
+    z-index: 10 !important; } }
 
 .ui-widget, .ui-widget button, .ui-widget input, .ui-widget select, .ui-widget textarea {
   font-family: inherit !important; }
@@ -8247,14 +8250,17 @@ img.back {
 .app #opening {
   display: none !important; }
 
+body.ios > iframe {
+  display: none !important; }
+
 @media only screen and (max-width: 360px) {
   #btn-pref {
     display: none; } }
 
 @media only screen and (max-width: 767px) {
   #btn-pref {
-    left: auto !important;
-    right: 155px !important;
+    left: 130px !important;
+    right: auto !important;
     top: 5px !important;
     display: block;
     position: absolute; } }

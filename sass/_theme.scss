@@ -87,6 +87,7 @@ body.lang-h {
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
     #gcse .lang-h-only { position: static !important; margin-top: 0 !important }
+    #btn-pref { display: none !important }
 
     h1 {
         border-bottom: 0;
@@ -367,6 +368,7 @@ input.query {
         bottom: auto !important;
         padding: 15px;
         padding-bottom: 3px;
+        z-index: 10 !important;
     }
 }
 
@@ -655,6 +657,10 @@ img {
 }
 
 .app #opening {
+    display: none !important;
+}
+
+body.ios > iframe {
     display: none !important;
 }
 
