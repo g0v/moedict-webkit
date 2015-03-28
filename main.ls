@@ -3,14 +3,15 @@ window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
-{any, map, sum}  = require('prelude-ls')
-{ucs2}           = require('punycode')
-{compute-length} = require('react-zh-stroker/lib/data')
+{any, map, unique, sum} = require('prelude-ls')
+{ucs2}                  = require('punycode')
+{compute-length}        = require('react-zh-stroker/lib/data')
 window.$ = window.jQuery = require \jquery
 
 React = require \react
 React.View = require \./view.ls
 Han = require \han-css
+window.React = React
 
 unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
@@ -218,7 +219,7 @@ window.do-load = ->
     s.parentNode.insertBefore(gcse, s);
     poll-gsc = ->
       return setTimeout poll-gsc, 500ms unless $('.gsc-input').length
-      $('.gsc-input').attr \placeholder \全文檢索
+      $('.gsc-input').attr \placeholder \Search
       isQuery := no
     setTimeout poll-gsc, 500ms
 
@@ -578,6 +579,7 @@ window.do-load = ->
     .css \visibility \visible
       .find 'a[word-id]'
       .each !->
+        return if isCordova
         $it = $ @
         html = @.cloneNode().outerHTML
         ci = document.createTextNode $it.text!
@@ -767,7 +769,7 @@ function init-autocomplete
       $('iframe').fadeOut \fast
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
-      return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
+      return pinyin_lookup(term, cb) if term is /^[a-zA-Z1-4 ']+$/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -824,13 +826,14 @@ PUA2UNI = {
 trs_lookup = (term,cb) ->
   data <- GET "https://www.moedict.tw/lookup/trs/#{term}"
   data.=replace /[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it]
-  cb( data / '|' )
+  cb( unique(data / '|') )
 
 pinyin_lookup = (query,cb) !->
   res = []
-  terms = query.replace(/^\s+/,"").replace(/\s+$/,"").replace(/\s+/, " ").split(/ /)
+  terms = query.replace(/((?:a(?:ir|n[gr]|[inor])|b(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:ir|n(?:gr|[gr])|[inr])|i(?:a(?:nr|or|[nor])|er|ng|[enr])|or|ur|[aiou])|c(?:a(?:ir|n[gr]|or|[inor])|e(?:ngr?|[nr])|h(?:a(?:ngr?|or|[inor])|e(?:n(?:gr|[gr])|[nr])|ir|o(?:ngr?|u)|u(?:a(?:ir|n(?:gr|[gr])|[inr])|or|[ainor])|[aeiu])|ir|o(?:ngr?|ur|u)|u(?:a(?:nr|[nr])|er|nr|or|[ino])|[aeiu])|d(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:ngr?|[inr])|i(?:a(?:nr|or|[nor])|er|ngr?|ur|[eru])|o(?:ngr?|ur|u)|u(?:a(?:nr|[nr])|er|ir|nr|or|[inor])|[aeiu])|e(?:ng|[nr])|f(?:a(?:n(?:gr|[gr])|[nr])|e(?:n(?:gr|[gr])|[inr])|ou|ur|[aou])|g(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:n(?:gr|[gr])|[inr])|o(?:ngr?|ur|u)|u(?:a(?:ir|n(?:gr|[gr])|[inr])|er|ir|nr|or|[ainor])|[aeu])|h(?:a(?:ir|n[gr]|or|[inor])|e(?:ir|ngr?|[inr])|o(?:ng|ur|u)|u(?:a(?:ir|n(?:gr|[gr])|[inr])|er|ir|nr|or|[ainor])|[aeu])|j(?:i(?:a(?:n[gr]|or|[nor])|er|n(?:gr|[gr])|ong|ur|[aenru])|u(?:a(?:nr|[nr])|er|[enr])|[iu])|k(?:a(?:ir|n[gr]|[inor])|e(?:ngr?|[nr])|o(?:ngr?|ur|u)|u(?:a(?:ir|n[gr]|[inr])|er|nr|[ainor])|[aeu])|l(?:a(?:n(?:gr|[gr])|or|[inor])|e(?:ngr?|[ir])|i(?:a(?:n(?:gr|[gr])|or|[nor])|er|ngr?|ur|[aenru])|o(?:ngr?|ur|u)|u(?:a(?:nr|[nr])|er|nr|or|[enor])|[aeiou])|m(?:a(?:n[gr]|or|[inor])|e(?:ir|n(?:gr|[gr])|[inr])|i(?:a(?:nr|or|[nor])|er|ngr?|[enru])|o[ru]|ur|[aeiou])|n(?:a(?:ngr?|or|[inor])|e(?:ng|[in])|i(?:a(?:n(?:gr|[gr])|or|[nor])|ng|ur|[enu])|o(?:ngr?|u)|u(?:a(?:nr|[nr])|er|[enor])|[aeiu])|ou|p(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:ir|n(?:gr|[gr])|[inr])|i(?:a(?:nr|or|[nor])|er|ng|[aenr])|o[ru]|ur|[aiou])|q(?:i(?:a(?:n(?:gr|[gr])|or|[nor])|er|n(?:gr|[gr])|ongr?|ur|[aenru])|u(?:a(?:nr|[nr])|er|[enr])|[iu])|r(?:a(?:ngr?|[no])|e(?:n[gr]|[nr])|ir|o(?:ng|ur|u)|u(?:a(?:nr|[nr])|[ino])|[eiu])|s(?:a(?:n(?:gr|[gr])|[inor])|e(?:ngr?|[inr])|h(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:n(?:gr|[gr])|[inr])|ir|our?|u(?:a(?:ngr?|[in])|er|ir|nr|or|[ainor])|[aeiu])|ir|o(?:ng|u)|u(?:an|er|ir|[ino])|[aeiu])|t(?:a(?:ir|n(?:gr|[gr])|or|[inor])|e(?:ngr?|r)|i(?:a(?:nr|or|[nor])|er|ngr?|[er])|o(?:ngr?|ur|u)|u(?:a(?:nr|[nr])|er|ir|[inor])|[aeiu])|w(?:a(?:n(?:gr|[gr])|[inr])|e(?:ir|n[gr]|[inr])|or|ur|[aou])|x(?:i(?:a(?:n(?:gr|[gr])|or|[nor])|er|n(?:gr|[gr])|ong|ur|[aenru])|u(?:a(?:nr|[nr])|er|nr|[enr])|[iu])|y(?:a(?:n(?:gr|[gr])|or|[inor])|er|i(?:n(?:gr|[gr])|[nr])|o(?:ng|ur|u)|u(?:a(?:nr|[nr])|er|[enr])|[aeiou])|z(?:a(?:ng|or|[inor])|e(?:ngr?|[inr])|h(?:a(?:n(?:gr|[gr])|or|[inor])|e(?:n(?:gr|[gr])|[inr])|ir|o(?:ngr?|ur|u)|u(?:a(?:n(?:gr|[gr])|[inr])|er|ir|nr|or|[ainor])|[aeiu])|ir|o(?:ngr?|u)|u(?:a(?:nr|[nr])|er|ir|or|[inor])|[aeiu])|[aeoq]))/g, '$1 ').replace(/^\s+/,"").replace(/\s+$/,"").split(/[\s']+/)
+  pinyin_type = localStorage?getItem("pinyin_#{LANG}") || \HanYu
   for term in terms
-    data <- GET "lookup/pinyin/#{term}.json"
+    data <- GET "lookup/pinyin/#{LANG}/#{pinyin_type}/#{term}.json"
     res.push( $.parseJSON(data) )
     if res.length == terms.length
       seen = {}
@@ -863,7 +866,7 @@ function can-play-mp3
   a = document.createElement \audio
   CACHED.can-play-mp3 = !!(a.canPlayType?('audio/mpeg;') - /^no$/)
 
-function can-play-ogg
+window.can-play-ogg = function can-play-ogg
   return CACHED.can-play-ogg if CACHED.can-play-ogg?
   a = document.createElement \audio
   CACHED.can-play-ogg = !!(a.canPlayType?('audio/ogg; codecs="vorbis"') - /^no$/)

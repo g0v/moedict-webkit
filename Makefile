@@ -11,6 +11,9 @@ deps ::
 	npm i
 	gulp build
 
+js/deps.js ::
+	gulp webpack:build
+
 manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
 
@@ -25,9 +28,16 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
-moedict-data :: checkout
+moedict-data :: checkout pinyin
 
-offline :: moedict-data deps translation
+offline :: deps
+	perl link2pack.pl a < a.txt
+	perl link2pack.pl t < t.txt
+	perl link2pack.pl h < h.txt
+	-perl link2pack.pl c < c.txt
+	perl special2pack.pl
+
+offline-dev :: moedict-data deps translation
 	ln -fs ../moedict-data/dict-revised-translated.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
@@ -38,13 +48,13 @@ offline :: moedict-data deps translation
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	#lsc json2prefix.ls a
-	#lsc autolink.ls a > a.txt
+	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
 	perl link2pack.pl a < a.txt
 	#lsc json2prefix.ls t
-	#lsc autolink.ls t > t.txt
+	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
 	#lsc json2prefix.ls h
-	#lsc autolink.ls h > h.txt
+	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c > c.txt
@@ -69,6 +79,13 @@ twblg ::
 	lsc json2prefix.ls t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
+	python twblg_index.py
+
+pinyin ::
+	perl build-pinyin-lookup.pl a
+	perl build-pinyin-lookup.pl t
+	perl build-pinyin-lookup.pl h
+	perl build-pinyin-lookup.pl c
 
 translation :: translation-data moedict-data
 	python translation-data/xml2txt.py

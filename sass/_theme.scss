@@ -87,6 +87,7 @@ body.lang-h {
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
     #gcse .lang-h-only { position: static !important; margin-top: 0 !important }
+    #btn-pref { display: none !important }
 
     h1 {
         border-bottom: 0;
@@ -367,6 +368,7 @@ input.query {
         bottom: auto !important;
         padding: 15px;
         padding-bottom: 3px;
+        z-index: 10 !important;
     }
 }
 
@@ -433,6 +435,9 @@ body.overflow-scrolling-false .ui-autocomplete {
 }
 
 @media only screen and (max-width: 767px) {
+    .icon-book {
+        display: none !important;
+    }
     ul.ui-autocomplete {
         top: 100px !important;
         height: auto !important;
@@ -639,11 +644,23 @@ img {
     display: none !important;
 }
 
+.ios .not-ios {
+    display: none !important;
+}
+
+.not-ios {
+    display: inline-block !important;
+}
+
 .web .web-only {
     display: block !important;
 }
 
 .app #opening {
+    display: none !important;
+}
+
+body.ios > iframe {
     display: none !important;
 }
 

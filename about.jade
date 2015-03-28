@@ -28,7 +28,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
     .content
       p
         a.home(href='./') 萌典
-        | 共收錄十六萬筆國語、兩萬筆台語、一萬四千筆客語條目，並支援「自動完成」功能及
+        | 共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，並支援「自動完成」功能及
         span(style='white-space: nowrap;') 「%_ *? ^.$」
         | 等萬用字元。
       p 定義裡的每個字詞都可以點擊連到說明。
@@ -37,19 +37,27 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         a(target='_blank', href='http://3du.tw/') 3du.tw
         |  取得。
       p
-        | 原始資料來源為教育部「
-        a(target='_blank', href='http://dict.revised.moe.edu.tw/') 重編國語辭典（修訂本）
-        | 」、「
+        | 原始資料來源為教育部《
+        a(target='_blank', href='http://dict.revised.moe.edu.tw/') 重編國語辭典修訂本
+        | 》（
+        a(target='_blank', href='http://resources.publicense.moe.edu.tw/dict_reviseddict_download.html') CC BY-ND 3.0 臺灣
+        | 授權）、《
         a(target='_blank', href='http://twblg.dict.edu.tw') 臺灣閩南語常用詞辭典
-        | 」及「
+        | 》（
+        a(target='_blank', href='http://twblg.dict.edu.tw/holodict_new/compile1_6_1.jsp') CC BY-ND 3.0 臺灣
+        | 授權）及《
         a(target='_blank', href='http://hakka.dict.edu.tw') 臺灣客家語常用詞辭典
-        | 」，辭典本文的著作權仍為教育部所有。
+        | 》（
+        a(target='_blank', href='http://hakka.dict.edu.tw/hakkadict/qa.htm') 授權聲明
+        | ），辭典本文的著作權仍為教育部所有。
       p
         | 筆劃資料來源為教育部「
         a(target='_blank', href='http://stroke-order.learningweb.moe.edu.tw/') 常用國字標準字體筆順學習網
         | 」，國語發音資料來源為教育部「
-        a(target='_blank', href='http://dict.concised.moe.edu.tw/') 國語辭典簡編本多媒體網路版
-        | 」，著作權仍為教育部所有。
+        a(target='_blank', href='http://dict.concised.moe.edu.tw/') 國語辭典簡編本
+        | 」（
+        a(target='_blank', href='http://resources.publicense.moe.edu.tw/dict_concised_download.html') CC BY-ND 3.0 臺灣
+        | 授權），著作權仍為教育部所有。
       p
         | 英/法/德文對照表 
         a(target='_blank', href='http://cc-cedict.org') CC-CEDict
@@ -64,13 +72,13 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         | 兩岸詞典由
         a(target='_blank', href='http://www.gacc.org.tw/') 中華文化總會
         | 提供，採用 
-        a(target='_blank', href='https://creativecommons.org/licenses/by-nc-nd/3.0/tw/deed.zh_TW') CC BY-NC-ND 3.0 台灣
+        a(target='_blank', href='https://creativecommons.org/licenses/by-nc-nd/3.0/tw/deed.zh_TW') CC BY-NC-ND 3.0 臺灣
         | 授權。
       p
         | 歷代書體以內嵌網頁方式，連至
         a(target='_blank', href='http://www.gacc.org.tw/') 中華文化總會
         | 網站。字體e筆書寫：張炳煌教授。字體選用：郭晉銓博士。
-      p
+      p.web-only
         a(target='_blank', href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe') Android
         | 、
         a(target='_blank', href='https://itunes.apple.com/tw/app/meng-dian/id599429224') Apple iOS
@@ -97,7 +105,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li
           a(target='_blank', href='http://www.cns11643.gov.tw/AIDB/download.do?name=%E5%AD%97%E5%9E%8B%E4%B8%8B%E8%BC%89') 中文全字庫
           | 採用 
-          a(target='_blank', href='https://creativecommons.org/licenses/by-nd/3.0/tw/deed.zh_TW') CC BY-ND 3.0 台灣
+          a(target='_blank', href='https://creativecommons.org/licenses/by-nd/3.0/tw/deed.zh_TW') CC BY-ND 3.0 臺灣
           | 授權。
         li
           a(target='_blank', href='http://www.cl.fcu.edu.tw/') 逢甲大學中文系
@@ -134,9 +142,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         img(alt='Google Play 下載', title='Google Play 下載', src='css/google_play.jpg', width='135', height='46')
       a(target='_blank', href='http://itunes.apple.com/app/id599429224', style='margin-left: 10px')
         img(alt='App Store 下載', title='App Store 下載', src='css/Download_on_the_App_Store_Badge_HK_TW_135x40.png', width='155', height='46')
-    .web-only(style='position: fixed; bottom: 10px; right: 130px; z-index: 1')
-      a.btn.btn-default(href="javascript:$('head').prepend(\"<style type='text/css'> @font-face {font-family:'一秒變思源';src:local('☺'),url('https://www.moedict.tw/SourceHanSansTW.ttf?subset=\" + encodeURIComponent($('body').text().replace(/\s+/g, '').length) + \"') format('truetype');}body{font-family:'一秒變思源' !important}</style>\");void(0);")
-        | 「一秒變思源」書籤
     .web-only(style='position: fixed; bottom: 10px; right: 10px; z-index: 1')
       a#opensearch.btn.btn-default.btn-info(onclick="window.external.AddSearchProvider('https://www.moedict.tw/opensearch/moedict.xml'); return false")
         i.icon.icon-plus-sign

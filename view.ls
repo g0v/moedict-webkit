@@ -129,7 +129,7 @@ Links = createClass do
       span {}, nbsp, \萌典
     div { className: \share, style: { float: \right, marginTop: \-10px, marginRight: \5px, marginBottom: \15px } },
       ...for { id, icon, label, background, href } in share-buttons
-        a { id: "share-#id", className: "btn btn-default small", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
+        a { id: "share-#id", className: "btn btn-default small not-ios", title: "#label 分享", style: { background, color: \white }, 'data-href': href, target: \_blank },
           i { className: \icon-share } nbsp
           i { className: "icon-#icon" }
 
@@ -284,11 +284,10 @@ XRefs = createClass do
             a { key: word, className: \xref, href: "#H#word" } word
 
 Star = createClass do
-  getDefaultProps: -> { STARRED: window?STARRED || {} }
   render: ->
-    { CurrentId, STARRED, LANG } = @props
-    return i {} unless STARRED[LANG]?
-    if ~STARRED[LANG].indexOf("\"#CurrentId\"")
+    { CurrentId, LANG } = @props
+    STARRED = window?STARRED || {}
+    if STARRED[LANG] and ~STARRED[LANG].indexOf("\"#CurrentId\"")
       return i { className: "star iconic-color icon-star", title: \已加入記錄簿 }
     return i { className: "star iconic-color icon-star-empty", title: \加入字詞記錄簿 }
 
@@ -591,7 +590,7 @@ function convert-pinyin-t (yin, isBody=true)
     yin2.=replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '$1')        # 2 -> 1
     return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
-  return yin.replace(/oo/g, 'o\u0358')
+  return yin.replace(/o([^.!?,\w\s\u2011]*)o/g, 'o$1\u0358')
             .replace(/ts/g, 'ch')
             .replace(/u([^\w\s]*)a/g, 'o$1a')
             .replace(/u([^\w\s]*)e/g, 'o$1e')
@@ -644,7 +643,7 @@ function convert-pinyin (yin, isBody)
   if yin is /^[^eēéěè].*r/
     r = 'r'
     yin -= /r$/
-  yin = PinYinMap[system - /^HanYu-/][yin] || yin
+  yin = PinYinMap[system - /^HanYu-/][yin - /\u200b/g] || yin
   match yin
   | /a/   => yin.=replace /a/ "aāáǎàa"[tone]
   | /o/   => yin.=replace /o/ "oōóǒòo"[tone]
@@ -787,7 +786,7 @@ http-map =
 http-map <<< window.moedictDesktop.voices if isMoedictDesktop
 http = -> "http#{if not isMoedictDesktop or it.match(/^([^.]+)\.[^\/]+/).1 not of window.moedictDesktop.voices then "s" else ""}://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
 can-play-mp3 = -> !isMoedictDesktop
-can-play-ogg = -> isMoedictDesktop
+can-play-ogg = -> isMoedictDesktop or window?can-play-ogg?!
 can-play-opus = -> no
 function h (it)
   id = CurrentId
