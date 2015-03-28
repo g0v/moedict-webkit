@@ -8372,10 +8372,36 @@ img.back {
 center {
   padding: 15px; }
 
-svg {
+.stroker {
+  position: relative;
+  display: inline-block;
+  width: 208px;
+  height: 208px;
   border: 2px solid #a00;
   background: white;
   margin-left: 5px; }
+  .stroker:before, .stroker:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border: 1px dashed #a00; }
+  .stroker:before {
+    z-index: 0;
+    height: 33.33%;
+    border-left-width: 0;
+    border-right-width: 0; }
+  .stroker:after {
+    z-index: 1;
+    width: 33.33%;
+    border-top-width: 0;
+    border-bottom-width: 0; }
+  .stroker svg {
+    z-index: 2;
+    position: absolute; }
 
 canvas {
   margin-left: 5px;

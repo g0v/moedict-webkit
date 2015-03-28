@@ -407,7 +407,7 @@ Stroker = createClass do
   render: ->
     progress = @props.progress
     div do
-      className: 'stroker'
+      className: 'strokes'
       for i, word of @props.words
         comp = Word do
           key: i
@@ -420,7 +420,9 @@ Stroker = createClass do
           onEnterStroke: @props.onEnterStroke
           onLeaveStroke: @props.onLeaveStroke
         progress -= word.length
-        comp
+        div do
+          className: 'stroker'
+          comp
 
 
 decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
