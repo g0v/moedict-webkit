@@ -4,8 +4,8 @@ const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
 {any, map, unique, sum} = require('prelude-ls')
-{ucs2}                  = require('punycode')
-{compute-length}        = require('react-zh-stroker/lib/data')
+{ucs2} = require('punycode')
+{compute-length, packedFromPath, fromBinary} = require('react-zh-stroker/lib/data')
 window.$ = window.jQuery = require \jquery
 
 React = require \react
@@ -945,16 +945,29 @@ $ ->
         drawOutline(paper,outline,pathAttrs)
       cb (timeout + delay)
 
+  $.getBinary = (filepath, done) ->
+    {filepath, index} = packedFromPath filepath
+    new XMLHttpRequest
+      ..open \GET, filepath, true
+      ..responseType = \arraybuffer
+      ..onload = (err) ->
+        if @status is 200
+          buffer = new Uint8Array @response
+          err, data <- fromBinary buffer
+          done data[index]
+      ..send!
+  getter = do
+    json: \getJSON
+    bin:  \getBinary
   window.strokeWords = (words) ->
     cpts = ucs2.decode words
-    type = \json #if isCordova then \bin else \json
-    to-fetch = (for cpt in cpts => "#{cpt.toString 16}.json")
+    type = if isCordova then \bin else \json
+    to-fetch = (for cpt in cpts => "#{cpt.toString 16}.#{type}")
     fetched = []
     stroker = null
     :fetch let
-      console.log to-fetch
       filepath = "#{type}/#{to-fetch.pop!}"
-      data <- $.getJSON filepath
+      data <- $[getter[type]] filepath
       fetched.push compute-length data
       if to-fetch.length then fetch! else
         fetched .= reverse!
