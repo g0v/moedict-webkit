@@ -106,7 +106,7 @@ add-to-lru = ->
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
-  if LANG is \p
+  if LANG in <[ p m ]>
     url .= toLowerCase!
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
@@ -656,7 +656,7 @@ window.do-load = ->
         .subst-comb-liga-with-PUA!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~;|]?/, ''
-        id = id.toLowerCase! if LANG is \p
+        id = id.toLowerCase! if LANG in <[ p m ]>
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -889,7 +889,7 @@ han_amis_lookup = (query,cb) !->
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
-  return str.toLowerCase! if LANG is \p
+  return str.toLowerCase! if LANG in <[ p m ]>
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')

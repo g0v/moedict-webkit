@@ -8908,7 +8908,7 @@ a.stroke-char {
 
 body.lang-m .example {
   font-size: 100%;
-  display: block;
+  display: inline-block;
   clear: both;
   width: auto;
   border: 1px solid #ddd;
