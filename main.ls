@@ -1,6 +1,6 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-window.STANDALONE = \m	# 阿美語方敏英
+# window.STANDALONE = \p	# 阿美語方敏英
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 

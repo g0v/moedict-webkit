@@ -8906,9 +8906,21 @@ a.stroke-char {
   padding: 2px;
   line-height: 1; }
 
+body.lang-m .example {
+  font-size: 100%;
+  display: block;
+  clear: both;
+  width: auto;
+  border: 1px solid #ddd;
+  padding: 3px;
+  background: #eee;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  vertical-align: top; }
+
 body.lang-m .example-amis {
   font-size: 100%;
-  font-family: Times;
+  font-family: Lucida Console;
   display: block;
   clear: both;
   width: auto;

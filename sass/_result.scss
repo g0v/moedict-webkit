@@ -810,9 +810,22 @@ a.stroke-char {
 }
 
 // 潘世光阿美語例句
+body.lang-m .example {
+    font-size: 100%;
+    display: inline-block;
+    clear: both;
+    width: auto;
+    border: 1px solid $border-color;
+    padding: 3px;
+    background: #eee;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+}
+
 body.lang-m .example-amis {
     font-size: 100%;
-    font-family: Times;
+    font-family: Lucida Console;
     display: block;
     clear: both;
     width: auto;
