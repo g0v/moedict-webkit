@@ -8,11 +8,13 @@ t
 a.txt
 c.txt
 h.txt
+m.txt
 p.txt
 t.txt
 pack/
 pcck/
 phck/
+pmck/
 ppck/
 ptck/
 json/
@@ -30,6 +32,7 @@ dict-revised.unicode.json
 dict-twblg-ext.json
 dict-twblg.json
 dict-amis.json
+dict-amis-mp.json
 dict-nan.json
 translation-data/cfdict.xml
 translation-data/cedict.txt
@@ -40,7 +43,11 @@ moedict-data-csld/
 moedict-data-hakka/
 moedict-data-twblg/
 moedict-data-amis/
+moedict-data-amis-mp/
 moedict-data/
 moedict-epub/
+moedict-app/
 server.js
 dict-amis.sq3
+revdict-amis-def.txt
+revdict-amis-ex.txt
