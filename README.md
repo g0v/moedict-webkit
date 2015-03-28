@@ -610,10 +610,7 @@ ajax 範例
 
 # 其他
 
-`index.*.json` 為「重編國語辭典（修訂本）」的完整詞條清單，
-於 2013-05-22 取得，為非營利之教育目的，依著作權法第 50 條，
-「以中央或地方機關或公法人之名義公開發表之著作，在合理範圍內，
-得重製、公開播送或公開傳輸。」
+`index.*.json` 為「重編國語辭典（修訂本）」的完整詞條清單。
 
 `dict-concised.audio.json` 為「國語辭典簡編本」的詞條發音
 檔名清單。
@@ -631,9 +628,11 @@ ajax 範例
 * <https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW>
 * <http://wiki.creativecommons.org.tw/cc-zero-1-0:pre-final>
 
-# 教育部版權頁
+# 教育部國語辭典公眾授權網
 
-http://dict.revised.moe.edu.tw/htm/sk/ban.htm
+http://resources.publicense.moe.edu.tw/
+
+# 教育部版權頁
 
         =====================================================
         編　　輯　　者：        教育部國語推行委員會
