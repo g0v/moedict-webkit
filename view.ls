@@ -213,7 +213,7 @@ DropDown = createClass do
       Taxonomy { lang: \c }
       MenuItem { lang: \c, href: \#~@ }, \…部首表
       MenuItem { lang: \p, href: '#;' }, \方敏英阿美語
-      MenuItem { lang: \m, href: '#,' }, \潘世光阿美語
+      MenuItem { lang: \m, href: '#|' }, \潘世光阿美語
     ]
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
@@ -267,7 +267,7 @@ Translations = createClass do
     u.rate = 1.0
     syn.speak u
 
-const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#,' }
+const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#|' }
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \方 m: \潘 }
 XRefs = createClass do
   render: ->
@@ -767,6 +767,8 @@ function h (it)
       res.=replace(/\uFFF9/g '').replace(/\uFFFA/g '<span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
     else
       res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
+  else if $?('body').hasClass('lang-m') then
+      res.=replace(/\uFFF9/g '<span class="example-amis">').replace(/\uFFFB/g '</span><span class="example-fr">')
   else:
     res.=replace(/\uFFF9/g """
       <span class="ruby#{

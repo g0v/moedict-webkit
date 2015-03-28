@@ -7833,6 +7833,18 @@ body.lang-t #gcse .lang-t-only {
   position: static !important;
   margin-top: 0 !important; }
 
+body.lang-m .nav-bg {
+  background-color: #a00; }
+body.lang-m .iconic-circle {
+  background: #a44; }
+body.lang-m .iconic-color {
+  color: #a44; }
+body.lang-m #query-box {
+  background-color: #FBCCCC; }
+body.lang-m #gcse .lang-m-only {
+  position: static !important;
+  margin-top: 0 !important; }
+
 body.lang-p .nav-bg {
   background-color: #a00; }
 body.lang-p .iconic-circle {
@@ -8893,6 +8905,27 @@ a.stroke-char {
   border-radius: 4px;
   padding: 2px;
   line-height: 1; }
+
+body.lang-m .example-amis {
+  font-size: 100%;
+  font-family: Times;
+  display: block;
+  clear: both;
+  width: auto;
+  padding: 3px;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  vertical-align: top; }
+
+body.lang-m .example-fr {
+  font-size: 90%;
+  display: block;
+  clear: both;
+  width: auto;
+  padding: 3px;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  vertical-align: top; }
 
 body.lang-p .example {
   font-size: 100%;

@@ -1,6 +1,6 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-window.STANDALONE = \p	# 阿美語方敏英
+window.STANDALONE = \m	# 阿美語方敏英
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || false
 
@@ -34,7 +34,7 @@ $ ->
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \方 m: \潘 }
 const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸 p: \方敏英 m: \潘世光 }
 
-HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#,' }
+HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#|' }
 
 if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   if STANDALONE
@@ -401,6 +401,7 @@ window.do-load = ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     if "#val" is /^;/ => lang = \p; val.=substr 1
+    if "#val" is /^|/ => lang = \m; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       return setTimeout (-> window.press-lang lang, val), 1ms
@@ -427,9 +428,9 @@ window.do-load = ->
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
     if LANG isnt \p
-      title -= /^[':!~;]/
+      title -= /^[':!~;|]/
     else
-      title -= /^[:!~;]/
+      title -= /^[:!~;|]/
     return if title is /^</
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
@@ -646,7 +647,7 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        id = $(@).attr \href .replace /^#['!:~]?/, ''
+        id = $(@).attr \href .replace /^#['!:~|]?/, ''
         if entryHistory.length and entryHistory[*-1] == id
           try $(@).tooltip \close
           return
@@ -654,7 +655,7 @@ window.do-load = ->
         .render-ruby!
         .subst-comb-liga-with-PUA!
       content: (cb) ->
-        id = $(@).attr \href .replace /^#['!:~;]?/, ''
+        id = $(@).attr \href .replace /^#['!:~;|]?/, ''
         id = id.toLowerCase! if LANG is \p
         callLater ->
           if htmlCache[LANG][id]

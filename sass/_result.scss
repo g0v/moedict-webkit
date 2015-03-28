@@ -809,7 +809,31 @@ a.stroke-char {
     line-height: 1;
 }
 
-// 阿美語例句
+// 潘世光阿美語例句
+body.lang-m .example-amis {
+    font-size: 100%;
+    font-family: Times;
+    display: block;
+    clear: both;
+    width: auto;
+    padding: 3px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+}
+
+body.lang-m .example-fr {
+    font-size: 90%;
+    display: block;
+    clear: both;
+    width: auto;
+    padding: 3px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+}
+
+// 方敏英阿美語例句
 body.lang-p .example {
     font-size: 100%;
     display: inline-block;
@@ -823,7 +847,7 @@ body.lang-p .example {
     vertical-align: top;
 }
 
-// 阿美語提示框
+// 方敏英阿美語提示框
 body.lang-p .ui-tooltip .example {
     display: none;
 }
