@@ -553,11 +553,12 @@ function convert-pinyin-t (yin, isBody=true)
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
   return yin.replace(/o([^.!?,\w\s\u2011]*)o/g, 'o$1\u0358')
             .replace(/ts/g, 'ch')
-            .replace(/u([^\w\s]*)a/g, 'o$1a')
-            .replace(/u([^\w\s]*)e/g, 'o$1e')
-            .replace(/i([^\w\s]*)k($|[-\s])/g, 'e$1k$2')
-            .replace(/i([^\w\s]*)ng/g, 'e$1ng')
-            .replace(/nn($|[-\s])/g, 'ⁿ$1')
+            .replace(/Ts/g, 'Ch')
+            .replace(/u([^‑-\w\s]*)a/g, 'o$1a')
+            .replace(/u([^‑-\w\s]*)e/g, 'o$1e')
+            .replace(/i([^‑-\w\s]*)k($|[-\s])/g, 'e$1k$2')
+            .replace(/i([^‑-\w\s]*)ng/g, 'e$1ng')
+            .replace(/nn($|[‑-\s])/g, 'ⁿ$1')
             .replace(/([ie])r/g, '$1\u0358')
             .replace(/\u030B/g, "\u0306") # 9th tone
 
