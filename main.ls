@@ -915,36 +915,6 @@ $ ->
     <- setTimeout _, 1ms
     stroke.node.setAttribute "class" "fade in"
 
-  fetchStrokeXml = (code, next, cb) ->
-    $.get((if isCordova then http "stroke.moedict.tw/" else "utf8/") + code.toLowerCase() + ".xml", cb, "xml")
-     .fail -> $('svg:last').fadeOut \fast -> $('svg:last').remove!; next!
-
-  strokeWord = (word, cb, timeout) ->
-    return unless $('#strokes').is \:visible
-    window.scroll-to 0 0
-    utf8code = escape(word).replace(/%u/ , "")
-    id = "stroke-#{ "#{Math.random!}" - /^../ }"
-    div = $('<div/>', { id, css: { display: \inline-block } }).appendTo $('#strokes')
-    paper = Raphael id, 204 204
-    grid-lines = [
-      "M68,0 L68,204"
-      "M136,0 L136,204"
-      "M0,68 L204,68"
-      "M0,136 L204,136"
-    ]
-    for line in grid-lines
-      paper.path line .attr 'stroke-width': 1 stroke: \#a33
-
-    fetchStrokeXml utf8code, (-> cb timeout), (doc) ->
-      window.scroll-to 0 0
-      color = "black"
-      pathAttrs = { stroke: color, "stroke-width": 0, "stroke-linecap": "round", "fill": color }
-      delay = 350ms
-      for let outline in doc.getElementsByTagName 'Outline'
-        <- setTimeout _, timeout += delay
-        drawOutline(paper,outline,pathAttrs)
-      cb (timeout + delay)
-
   $.getBinary = (filepath, done) ->
     {filepath, index} = packedFromPath filepath
     new XMLHttpRequest
@@ -993,27 +963,6 @@ $ ->
         <- getScript \js/raf.min.js
         $('#strokes').show!
         requestAnimationFrame update
-    /*
-    $('#strokes').html('').show!
-    if (try document.createElement('canvas')?getContext('2d'))
-      <- getScript \js/raf.min.js
-      <- getScript \js/gl-matrix-min.js
-      <- getScript \js/sax.js
-      <- getScript \js/jquery.strokeWords.js
-      url = \./json/
-      dataType = \json
-      if isCordova
-        if window.DataView and window.ArrayBuffer
-          url = \./bin/
-          dataType = \bin
-        else url = http \stroke-json.moedict.tw/ # Android <4 has no DataView support
-      $('#strokes').strokeWords(words, {url, dataType, -svg})
-    else
-      <- getScript \js/raphael.js
-      ws = words.split ''
-      step = -> strokeWord(ws.shift!, step, it) if ws.length
-      step 0
-    */
 
 LoadedScripts = {}
 function getScript (src, cb)
