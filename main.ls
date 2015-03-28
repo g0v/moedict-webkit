@@ -16,7 +16,7 @@ unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
 LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im }[LANG]
+MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.render React.View.Links!, $(\#links).0
@@ -31,10 +31,10 @@ $ ->
         $('form[id=lookback] input[id=cond]').val "^#{window.PRERENDER_ID}$"
         $('#query').val window.PRERENDER_ID
 
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \阿}
-const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸 p: \阿美}
+const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \方 m: \潘 }
+const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸 p: \方敏英 m: \潘世光 }
 
-HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;' }
+HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#,' }
 
 if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   if STANDALONE
@@ -61,13 +61,14 @@ isChrome = navigator.userAgent is /\bChrome\/\b/
 isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '', c: '', p: '' }
+INDEX = { t: '', a: '', h: '', c: '', p: '', m: '' }
 XREF = {
-  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"', p: "ci'im" }
-  a: {t: '"萌":"發穎"' h: '"萌":"發芽"', p: "ci'im" }
-  h: {a: '"發芽":"萌,萌芽"', p: "ci'im"}
+  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"', p: "ci'im", m: "aag" }
+  a: {t: '"萌":"發穎"' h: '"萌":"發芽"', p: "ci'im", m: "aag" }
+  h: {a: '"發芽":"萌,萌芽"', p: "ci'im", m: "aag" }
   tv: {t: ''}
-  p: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"' h: '"萌":"發芽"'}
+  p: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"', h: '"萌":"發芽"', m: "aag" }
+  m: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"', h: '"萌":"發芽"', p: "ci'im" }
 }
 
 if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
@@ -455,9 +456,9 @@ window.do-load = ->
     prevId := null
     prevVal := null
     if HASH-OF.c
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => | \c => \p | \p => \a
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => | \c => \p | \p => \m | \m => \a
     else
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \p | \p => \a
+      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \p | \p => \m | \m => \a
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
@@ -466,7 +467,7 @@ window.do-load = ->
     for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '')
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im }[LANG]
+    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
     id -= /[\\"~`]/g
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
@@ -476,6 +477,7 @@ window.do-load = ->
     $('body').removeClass("lang-h")
     $('body').removeClass("lang-c")
     $('body').removeClass("lang-p")
+    $('body').removeClass("lang-m")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id

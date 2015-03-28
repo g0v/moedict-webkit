@@ -32,6 +32,15 @@ amis ::
 	cd moedict-data-amis && python cmn-amis-longstr.py
 	cp moedict-data-amis/revdict-amis*.txt    .
 
+amis-poinsot ::
+	@-git clone --depth 1 https://github.com/miaoski/amis-francais.git moedict-data-amis-mp
+	cd moedict-data-amis-mp && python moedict.py
+	ln -sf moedict-data-amis-mp/dict-amis-mp.json   dict-amis-mp.json
+	lsc json2prefix.ls m
+	lsc autolink.ls m > m.txt
+	perl link2pack.pl m < m.txt
+	cp moedict-data-amis-mp/index.json           m/index.json
+
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git

@@ -3,7 +3,7 @@ use utf8;
 use 5.008;
 use Encode;
 my $lang = shift;
-unless ($lang =~ /^[tahcp]/ and not -t STDIN) {
+unless ($lang =~ /^[tahcpm]/ and not -t STDIN) {
     die << '.';
 Please invoke this as one of:
     perl link2pack.pl a < a.txt
@@ -11,6 +11,7 @@ Please invoke this as one of:
     perl link2pack.pl h < h.txt
     perl link2pack.pl c < c.txt
     perl link2pack.pl p < p.txt
+    perl link2pack.pl m < m.txt
 .
 }
 binmode STDIN, ':raw';

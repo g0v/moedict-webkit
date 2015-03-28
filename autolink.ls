@@ -1,7 +1,7 @@
 require! <[ fs os ]>
 lang = process.argv.2
-unless lang in <[ a t h c p ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c p ]>."
+unless lang in <[ a t h c p m ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c p m ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
@@ -97,6 +97,7 @@ entries = switch lang
 | \h => grok(\dict-hakka.json)
 | \c => grok(\dict-csld.json)
 | \p => grok(\dict-amis.json)
+| \m => grok(\dict-amis-mp.json)
 
 i = 0
 todo = 0
@@ -126,7 +127,7 @@ for {t:title, h:heteronyms}:entry in entries
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
-  if lang is \p then
+  if lang in <[ p m ]> then
     pool.any.eval "procNoSeg(#chunk, \"#title\", #idx)", (,x) ->
       console.log x
       process.exit! unless --todo
