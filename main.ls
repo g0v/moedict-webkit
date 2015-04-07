@@ -52,7 +52,7 @@ if location.search is /\?_escaped_fragment_=(.+)/
 isDroidGap = isCordova and location.href is /android_asset/
 isDeviceReady = not isCordova
 isCordova = true if DEBUGGING
-isMobile = isCordova or \ontouchstart of window or \onmsgesturechange in window
+isMobile = isCordova or \ontouchstart of window or \onmsgesturechange of window
 isApp = true if isCordova or try window.locationbar?visible is false
 isWebKit = navigator.userAgent is /WebKit/
 isGecko = navigator.userAgent is /\bGecko\/\b/
@@ -815,7 +815,7 @@ function init-autocomplete
       #return cb ((results.join(',') - /"/g) / ',')
 
 PUA2UNI = {
-  \⿰𧾷百 : \󾜅
+  \⿰𧾷百 : \𬦰
   \⿸疒哥 : \󿗧
   \⿰亻恩 : \󿌇
   \⿰虫念 : \󿑂
