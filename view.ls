@@ -83,7 +83,7 @@ XRefs = createClass do
   render: ->
     { LANG, xrefs } = @props
     div { className: \xrefs }, ...for { lang, words } in xrefs
-      H = HASH-OF[lang]
+      H = "./#{ HASH-OF[lang] }"
       div { key: lang, className: \xref-line },
         span { className: 'xref part-of-speech' },
           XREF-LABEL-OF["#LANG#lang"] || XREF-LABEL-OF[lang]
@@ -497,6 +497,7 @@ RadicalTable = createClass do
     else
       rows = JSON.parse terms
     list = []
+    H = "./#H"
     for chars, strokes in rows | chars?length
       chs = []
       for ch in chars
@@ -658,7 +659,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
   part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
   part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
-  H = HASH-OF[LANG-OR-H] || LANG-OR-H
+  H = "./#{ HASH-OF[LANG-OR-H] || LANG-OR-H }"
   part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a>#post</span>"
   part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a></span>"
   part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#H#word\\\">#word</a>#post</span>"
