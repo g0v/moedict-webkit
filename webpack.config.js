@@ -8,8 +8,7 @@ if (/production/.test(process.env.NODE_ENV)) {
 }
 else {
     entries = [ 'webpack-dev-server/client?http://localhost:8888', 'webpack/hot/dev-server' ];
-    loaders = [ { test: /view\.ls$/, loader: 'react-hot' }
-              , { test: /\.jsx$/, loader: 'babel' } ];
+    loaders = [ { loader: 'react-hot', exclude: /node_modules/ } ]
     plugins = [ new webpack.HotModuleReplacementPlugin() ];
 }
 
@@ -33,9 +32,8 @@ module.exports = {
     plugins: plugins,
     module: {
         loaders: loaders.concat([
-            { test: /\.ls$/, loader: 'livescript', },
-            { test: /\.jsx$/, loader: 'babel?stage=0',
-              include: path.join(__dirname, 'react-web') }
+            { test: /\.ls$/, loader: 'livescript', exclude: /node_modules/ },
+            { test: /\.jsx$/, loader: 'babel?stage=0', exclude: /node_modules/ }
         ])
     },
 }
