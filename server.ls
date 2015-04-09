@@ -1,5 +1,6 @@
 #!/usr/bin/env lsc
 require! <[ LiveScript fs ]>
+require("babel/register")({ stage: 0 })
 LTM-regexes = {}
 
 index-body = fs.read-file-sync \index.html
@@ -7,7 +8,7 @@ index-body -= /^[\s\S]*<\/head>/
 index-body -= /<\/html>/
 index-body -= /<noscript>[\s\S]*<\/noscript>/g
 index-body -= /<script\b[^>]*data-cfasync="true"[^>]*><\/script>/g
-index-body.=replace /<center\b[\s\S]*<\/center>/, '<!-- RESULT -->'
+index-body.=replace /\s*<center\b[\s\S]*<\/center>\s*/, '<!-- RESULT -->'
 
 React = require \react
 {Result, decodeLangPart} = require \./view.ls
@@ -287,12 +288,13 @@ require(\zappajs) {+disable_io} ->
           props.H = h
           props.type = \term
         props = {}
-        if (@json || '').toString! is /^\[\s*\[/
-          props = { id, type: \radical, terms: (@json || '').toString!, H: h }
-        else if (@json || '').toString! is /^\[/
-          props = { id, type: \list, terms: (@json || ''), H: h }
+        str = (@json || '').toString!
+        if str is /^\[\s*\[/
+          props = { id, type: \radical, terms: str, H: h }
+        else if str is /^\[/
+          props = { id, type: \list, terms: str, H: h }
         else
-          props = JSON.parse(@decodeLangPart h, (@json || '').toString!)
+          props = JSON.parse(@decodeLangPart h, str)
           fill-props!
         text "<script>window.PRERENDER_LANG = '#LANG'; window.PRERENDER_ID = '#id';</script>"
         html = @index-body
@@ -302,12 +304,14 @@ require(\zappajs) {+disable_io} ->
         props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
         fill-props!
         props.H = "##h"
-        text """<!--[if gt IE 8]><!--><script>$(function(){
+        console.log id
+        text """<!--[if gt IE 8]><!--><script>$(function(){ #{
+          if id is /^[=@]/ then 'window.bindHtmlActions()' else """
           window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
           React.View.result = React.render(React.View.Result(
             window.PRERENDER_JSON
           ), $('\#result')[0], window.bindHtmlActions);
-        })</script><!--<![endif]-->"""
+        """ } })</script><!--<![endif]-->"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word

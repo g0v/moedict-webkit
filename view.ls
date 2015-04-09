@@ -23,7 +23,7 @@ h1-name    = h1  `withProperties` { itemProp: \name }
 cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
 r-cjk-one  = new RegExp "^#{cjk}$"
 r-cjk-g    = new RegExp cjk, \g
-nbsp       = '\u00A0'
+nbsp       = ' '#\u00A0'
 CurrentId  = null
 
 
@@ -39,6 +39,8 @@ Result = createClass do
 Term = createClass do
   render: ->
     { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
+    H -= /^#/
+    H = "./##H"
     CurrentId := @props.id # Used in h()
     a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
     $char = if radical
@@ -141,7 +143,7 @@ Heteronym = createClass do
         mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
       mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
       mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
-    if mp3 => list ++= i { +itemScope, itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
+    if mp3 => list ++= i { itemScope: "itemScope", itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
       meta { itemProp: \name, content: mp3 - /^.*\// }
       meta { itemProp: \contentURL, content: mp3 }
     if b-alt
@@ -282,12 +284,12 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if 
     p-upper[idx] = if isParallel then "<rt#span>#{p[idx]}</rt>"
     p[idx] = "<rt#span>#yin</rt>"
-  ruby += '<rtc hidden class="zhuyin"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
-  ruby += '<rtc hidden class="romanization">'
+  ruby += '<rtc class="zhuyin" hidden="hidden"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
+  ruby += '<rtc class="romanization" hidden="hidden">'
   ruby += p.join ''
   ruby += '</rtc>'
   if isParallel 
-    ruby += '<rtc hidden class="romanization">'
+    ruby += '<rtc class="romanization" hidden="hidden">'
     ruby += p-upper.join ''
     ruby += '</rtc>'
   if LANG is \c
@@ -512,7 +514,8 @@ List = createClass do
   render: ->
     {terms, id, H, LRU} = @props
     return div {} unless terms
-
+    H -= /^#/
+    H = "./##H"
     id -= /^[@=]/
     terms -= /^[^"]*/
     list = [ h1-name {}, id ]
