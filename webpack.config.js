@@ -34,8 +34,7 @@ module.exports = {
     module: {
         loaders: loaders.concat([
             { test: /\.ls$/, loader: 'livescript', },
-            { test: /\.jsx$/, loader: 'babel',
-              options: { stage: 0 },
+            { test: /\.jsx$/, loader: 'babel?stage=0',
               include: path.join(__dirname, 'react-web') }
         ])
     },

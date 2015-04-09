@@ -1,6 +1,7 @@
 require! <[
   ./react-web/Links.jsx
   ./react-web/Nav.jsx
+  ./react-web/UserPref.jsx
 ]>
 
 React = require('react')
@@ -25,99 +26,6 @@ r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
 
-
-PrefList = createClass do
-  getInitialState: ->
-    for own key, selected of @props | key isnt \children
-      return { key, selected }
-  componentDidMount: -> @phoneticsChanged!
-  componentDidUpdate: -> @phoneticsChanged!
-  pinyin_aChanged: -> location.reload!
-  pinyin_tChanged: -> location.reload!
-  phoneticsChanged: ->
-    switch @state.selected
-      | \rightangle =>
-        $body.attr \data-ruby-pref, \both
-      | \bopomofo   =>
-        $body.attr \data-ruby-pref, \zhuyin
-      | \pinyin     =>
-        $body.attr \data-ruby-pref, \pinyin
-      | \none       =>
-        $body.attr \data-ruby-pref, \none
-  render: ->
-    [ lbl, ...items ] = @props.children
-    { key, selected=items.0.0 } = @state
-    li { className: \btn-group },
-      label {}, lbl
-      button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
-        ...for let [val, ...els] in items
-          if val is selected then els else ''
-        nbsp
-        span { className: \caret }
-      ul { className: \dropdown-menu },
-        ...for let [val, ...els] in items
-          if val then
-            li {}, a {
-              style: { cursor: \pointer }
-              className: if val is selected then \active else ''
-              onClick: ~>
-                localStorage?setItem key, val
-                @setState { selected: val }
-                @"#{key}Changed"?!
-            }, ...els
-          else
-            li { className: \divider, role: \presentation }
-
-UserPref = createClass do
-  getDefaultProps: -> {
-    simptrad: localStorage?getItem \simptrad
-    phonetics: localStorage?getItem \phonetics
-    pinyin_a: localStorage?getItem(\pinyin_a) || \HanYu
-    pinyin_t: localStorage?getItem(\pinyin_t) || \TL
-  }
-  render: -> { phonetics, simptrad, pinyin_a, pinyin_t } = @props; div {},
-    h4 {}, \偏好設定
-    button { className: 'close btn-close', type: \button, 'aria-hidden': true }, \×
-    lang-pref = null
-    ul {},
-      if $body.hasClass('lang-a')
-        PrefList { pinyin_a }, \羅馬拼音顯示方式,
-          [ \HanYu-TongYong \漢語華通共同顯示 ]
-          [ \HanYu      \漢語拼音 ]
-          [ \TongYong   \華通拼音 ]
-          [ \WadeGiles  \威妥瑪式 ]
-          [ \GuoYin     \注音二式 ]
-      if $body.hasClass('lang-t')
-        PrefList { pinyin_t }, \羅馬拼音顯示方式,
-          [ \TL-DT      \臺羅臺通共同顯示 ]
-          [ \TL         \臺羅拼音 ]
-          [ \DT         \臺通拼音 ]
-          [ \POJ        \白話字   ]
-      PrefList { phonetics }, \條目音標顯示方式,
-        [ \rightangle \注音拼音共同顯示 ]
-        [ \bopomofo   \注音符號 ] # , small {}, \（方言音） ]
-        [ \pinyin     \羅馬拼音 ]
-        [] # li {}, a {}, \置於條目名稱下方
-        [ \none       \關閉 ] /*
-      li { className: \btn-group },
-        label {}, \字詞查閱紀錄
-        button { className: 'btn btn-default btn-sm dropdown-toggle', type: \button, 'data-toggle': \dropdown },
-          '50 筆'
-          span { className: \caret }
-        ul { className: \dropdown-menu },
-          li {}, a { className: \active }, '50 筆'
-          li {}, a {}, '30 筆'
-          li {}, a {}, '15 筆'
-          li { className: \divider, role: \presentation }
-          li {}, a {}, \關閉, small {}, \（將清除所有紀錄）
-        button { className: 'btn btn-danger btn-sm', type: \button }, \清除
-
-      PrefList { simptrad }, \「簡→繁」搜尋轉換,
-        [ \no-variants  \避開通同字及異體字 ]
-        [ \total        \完全轉換 ]
-        []
-        [ \none         \關閉 ] */
-    button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
 
 Result = createClass do
   render: -> switch @props?type

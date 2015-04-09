@@ -19,7 +19,7 @@ MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.render React.createElement(React.View.Links), $(\#links).0
-  React.render React.View.UserPref!, $(\#user-pref).0
+  React.render React.createElement(React.View.UserPref), $(\#user-pref).0
   React.render React.createElement(React.View.Nav, {STANDALONE}), $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
@@ -568,7 +568,7 @@ window.do-load = ->
       <- setTimeout _, 125ms
       $tooltip.remove!
 
-    <- React.render React.View.UserPref!, $(\#user-pref).0
+    <- React.render React.createElement(React.View.UserPref), $(\#user-pref).0
 
     Han($result.0).render-ruby!.subst-comb-liga-with-PUA!
 
