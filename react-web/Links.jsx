@@ -20,7 +20,7 @@ export default class Links extends React.Component { render() {
            float: "right", marginTop: "-10px",
            marginRight: "5px", marginBottom: "15px"
        }}>{ shareButtons.map(({ id, icon, label, background, href }) =>
-           <a id={"share-"+id} className="btn btn-default small not-ios"
+           <a key={id} id={"share-"+id} className="btn btn-default small not-ios"
               title={`${label} 分享`} style={{ background, color: "white" }}
               data-href={href} target="_blank">
               <i className="icon-share">&nbsp;</i>

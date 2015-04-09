@@ -300,18 +300,14 @@ require(\zappajs) {+disable_io} ->
         html = @index-body
         html.=replace('<!-- RESULT -->', @React.renderToString @Result props)
         #html.=replace('<!-- DROPDOWN -->', @React.renderToString @DropDown!)
-        text html
-        props = JSON.parse(@decodeLangPart LANG, (@json || '').toString!)
-        fill-props!
-        props.H = "##h"
-        console.log id
-        text """<!--[if gt IE 8]><!--><script>$(function(){ #{
-          if id is /^[=@]/ then 'window.bindHtmlActions()' else """
+        text html.replace(/&nbsp;/g '\u00A0')
+        props.H = h
+        text """<!--[if gt IE 8]><!--><script>$(function(){
           window.PRERENDER_JSON = #{ JSON.stringify props,,2 };
           React.View.result = React.render(React.View.Result(
             window.PRERENDER_JSON
           ), $('\#result')[0], window.bindHtmlActions);
-        """ } })</script><!--<![endif]-->"""
+        })</script><!--<![endif]-->"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
         meta itemprop:"name" content:word

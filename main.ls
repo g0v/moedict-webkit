@@ -455,7 +455,7 @@ window.do-load = ->
     $('iframe').fadeIn \fast
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     setPref \lang LANG
-    for {lang, words} in (React.View.result.props.xrefs || []) | lang is LANG
+    for {lang, words} in (React.View.result?props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '')
     id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌}[LANG]
@@ -715,7 +715,7 @@ function render-taxonomy (lang, taxonomy)
   for taxo in (if taxonomy instanceof Array then taxonomy else [taxonomy])
     if typeof taxo is \string
       $ul.append $(\<li/> role: \presentation).append $(
-        \<a/> class: "lang-option #lang" href: "#{ HASH-OF[lang] }=#taxo"
+        \<a/> class: "lang-option #lang" href: "./#{ HASH-OF[lang] }=#taxo"
       ).text(taxo)
     else for label, submenu of taxo
       $ul.append $(\<li/> class: \dropdown-submenu).append(

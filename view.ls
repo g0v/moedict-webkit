@@ -23,7 +23,7 @@ h1-name    = h1  `withProperties` { itemProp: \name }
 cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
 r-cjk-one  = new RegExp "^#{cjk}$"
 r-cjk-g    = new RegExp cjk, \g
-nbsp       = ' '#\u00A0'
+nbsp       = '\u00A0'
 CurrentId  = null
 
 
@@ -143,7 +143,7 @@ Heteronym = createClass do
         mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
       mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
       mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
-    if mp3 => list ++= i { itemScope: "itemScope", itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
+    if mp3 => list ++= i { itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
       meta { itemProp: \name, content: mp3 - /^.*\// }
       meta { itemProp: \contentURL, content: mp3 }
     if b-alt

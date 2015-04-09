@@ -68,8 +68,8 @@ class PrefList extends React.Component {
                 vals.map((val)=>(val === selected) && items[val])
             }&nbsp;<span className="caret" /></button>
             <ul className="dropdown-menu">{ vals.map((val) => (val[0] === '-') 
-                ? <li className="divider" role="presentation" />
-                : <li><a style={{ cursor: "pointer" }}
+                ? <li key={val} className="divider" role="presentation" />
+                : <li key={val}><a style={{ cursor: "pointer" }}
                          className={ (val === selected) && 'active' }
                          onClick={()=>{
                              localStorage.setItem(key, val)
