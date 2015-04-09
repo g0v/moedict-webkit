@@ -1,4 +1,7 @@
-require! <[ ./react-web/Links.jsx ]>
+require! <[
+  ./react-web/Links.jsx
+  ./react-web/Nav.jsx
+]>
 
 React = require('react')
 window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
@@ -115,90 +118,6 @@ UserPref = createClass do
         []
         [ \none         \關閉 ] */
     button { className: 'btn btn-primary btn-block btn-close', type: \button } \關閉
-
-Nav = createClass do
-  render: -> nav { className: 'navbar navbar-inverse navbar-fixed-top', role: \navigation },
-    div { className: \navbar-header },
-      a { className: 'navbar-brand brand ebas', href: \./ }, \萌典
-    ul { className: 'nav navbar-nav' },
-      li { className: \dropdown },
-        a { className: \dropdown-toggle, href: \#, 'data-toggle': \dropdown },
-          i { className: \icon-book }, nbsp
-          span { className: \lang-active, style: { margin: 0, padding: 0 }, itemProp: \articleSection }, \國語辭典
-          b { className: \caret }
-        DropDown { STANDALONE: @props.STANDALONE },
-      li { id: \btn-starred, title: \字詞紀錄簿 },
-        a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
-          i { className: \icon-bookmark-empty }
-      li { id: \btn-pref, title: \偏好設定 },
-        a { href: \#=*, style: { paddingLeft: \5px, paddingRight: \5px } },
-          i { className: \icon-cogs }
-      if isMoedictDesktop then
-        li { id: \btn-moedict-desktop-addons },
-          a { href: \https://racklin.github.io/moedict-desktop/addon.html, style: { paddingLeft: \5px, paddingRight: \5px }, alt: \下載擴充套件 },
-            i { className: \icon-download-alt }
-      li {},
-        form { id: \lookback, className: \back, target: \_blank, acceptCharset: \big5, action: \http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh, style: { display: \none, margin: 0, padding: 0 } },
-          input { type: \hidden, name: \idx, value: \dict.idx }
-          input { type: \hidden, name: \fld, value: \1 }
-          input { type: \hidden, name: \imgFont, value: \1 }
-          input { type: \hidden, name: \cat, value: '' }
-          input { id: \cond, type: \hidden, name: \cond, value: '^萌$' }
-          input { className: \iconic-circle, type: \submit, value: \反, title: \反查來源（教育部國語辭典）, style: { fontFamily: \EBAS, marginTop: \12px, borderRadius: \20px, border: \0px } }
-      li { className: 'resize-btn app-only', style: { position: \absolute, top: \2px, left: \8em, padding: \3px } },
-        a { style: { paddingLeft: \5px, paddingRight: \5px, marginRight: \30px }, href: \#, onClick: -> adjustFontSize -1 },
-          i { className: \icon-resize-small }
-      li { className: 'resize-btn app-only', style: { position: \absolute, top: \2px, left: \8em, padding: \3px, marginLeft: \30px } },
-        a { style: { paddingLeft: \5px, paddingRight: \5px}, href: \#, onClick: -> adjustFontSize 1 },
-          i { className: \icon-resize-full }
-    ul { className: 'nav pull-right hidden-xs' },
-      li {},
-        a { href: \about.html, title: \關於本站, onClick: -> pressAbout! },
-          span { className: \iconic-circle },
-            i { className: \icon-info }
-    ul { className: 'nav pull-right hidden-xs' },
-      li { className: \web-inline-only, style: { display: \inline-block } },
-        a { href: \https://racklin.github.io/moedict-desktop/download.html, target: \_blank, title: '桌面版下載（可離線使用）', style: { color: \#ccc } },
-          i { className: \icon-download-alt }
-      li { className: \web-inline-only, style: { display: \inline-block } },
-        a { href: \https://play.google.com/store/apps/details?id=org.audreyt.dict.moe, target: \_blank, title: 'Google Play 下載', style: { color: \#ccc } },
-          i { className: \icon-android }
-      li { className: \web-inline-only, style: { display: \inline-block } },
-        a { href: \https://itunes.apple.com/tw/app/meng-dian/id599429224, target: \_blank, title: 'App Store 下載', style: { color: \#ccc } },
-          i { className: \icon-apple }
-
-Taxonomy = createClass do
-  render: ->
-    {lang} = @props
-    li { className: \dropdown-submenu },
-      a { className: "#lang taxonomy", }, \…分類索引
-
-MenuItem = createClass do
-  render: ->
-    {lang, href, children} = @props
-    role = \menuitem if children.0 is \…
-    li { role: \presentation },
-      a { className: "#lang lang-option#{ if role then '' else " #lang\-idiom"}", role, href }, children
-
-DropDown = createClass do
-  render: ->
-    list = []
-    if @props.STANDALONE isnt \c => list ++= [
-      MenuItem { lang: \a, href: \## }, \國語辭典
-      Taxonomy { lang: \a }
-      MenuItem { lang: \a, href: \#@ }, \…部首表
-      MenuItem { lang: \t, href: \#! }, \臺灣閩南語
-      Taxonomy { lang: \t }
-      MenuItem { lang: \t, href: \#!=諺語 }, \…諺語
-      MenuItem { lang: \h, href: \#: }, \臺灣客家語
-      MenuItem { lang: \h, href: \#:=諺語 }, \…諺語
-    ]
-    list ++= [
-      MenuItem { lang: \c, href: \#~ }, \兩岸詞典
-      Taxonomy { lang: \c }
-      MenuItem { lang: \c, href: \#~@ }, \…部首表
-    ]
-    ul { className: \dropdown-menu, role: \navigation }, ...list
 
 Result = createClass do
   render: -> switch @props?type
@@ -839,7 +758,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
   part.=replace /([)）])/g "$1\u200B"
   return part
 
-module.exports = { UserPref, Result, DropDown, Nav, Links, decodeLangPart }
+module.exports = { UserPref, Result, Nav, Links, decodeLangPart }
 
 PinYinMap =
   "WadeGiles": {"zha":"cha","cha":"ch'a","zhai":"chai","chai":"ch'ai","zhan":"chan","chan":"ch'an","zhang":"chang","chang":"ch'ang","zhao":"chao","chao":"ch'ao","zhe":"che","che":"ch'e","zhei":"chei","zhen":"chen","chen":"ch'en","zheng":"cheng","cheng":"ch'eng","ji":"chi","qi":"ch'i","jia":"chia","qia":"ch'ia","jiang":"chiang","qiang":"ch'iang","jiao":"chiao","qiao":"ch'iao","jie":"chieh","qie":"ch'ieh","jian":"chien","qian":"ch'ien","zhi":"chih","chi":"ch'ih","jin":"chin","qin":"ch'in","jing":"ching","qing":"ch'ing","jiu":"chiu","qiu":"ch'iu","jiong":"chiung","qiong":"ch'iung","zhuo":"cho","chuo":"ch'o","zhou":"chou","chou":"ch'ou","zhu":"chu","chu":"ch'u","zhua":"chua","chua":"ch'ua","zhuai":"chuai","chuai":"ch'uai","zhuan":"chuan","chuan":"ch'uan","zhuang":"chuang","chuang":"ch'uang","zhui":"chui","chui":"ch'ui","zhun":"chun","chun":"ch'un","zhong":"chung","chong":"ch'ung","ju":"chü","qu":"ch'ü","juan":"chüan","quan":"ch'üan","jue":"chüeh","que":"ch'üeh","jun":"chün","qun":"ch'ün","er":"erh","he":"ho","xi":"hsi","xia":"hsia","xiang":"hsiang","xiao":"hsiao","xie":"hsieh","xian":"hsien","xin":"hsin","xing":"hsing","xiu":"hsiu","xiong":"hsiung","xu":"hsü","xuan":"hsüan","xue":"hsüeh","xun":"hsün","hong":"hung","ran":"jan","rang":"jang","rao":"jao","re":"je","ren":"jen","reng":"jeng","ri":"jih","ruo":"jo","rou":"jou","ru":"ju","ruan":"juan","rui":"jui","run":"jun","rong":"jung","ga":"ka","ka":"k'a","gai":"kai","kai":"k'ai","gan":"kan","kan":"k'an","gang":"kang","kang":"k'ang","gao":"kao","kao":"k'ao","gei":"kei","gen":"ken","ken":"k'en","geng":"keng","keng":"k'eng","ge":"ko","ke":"k'o","gou":"kou","kou":"k'ou","gu":"ku","ku":"k'u","gua":"kua","kua":"k'ua","guai":"kuai","kuai":"k'uai","guan":"kuan","kuan":"k'uan","guang":"kuang","kuang":"k'uang","gui":"kuei","kui":"k'uei","gun":"kun","kun":"k'un","gong":"kung","kong":"k'ung","guo":"kuo","kuo":"k'uo","lie":"lieh","lian":"lien","luo":"lo","long":"lung","lv":"lü","lve":"lüeh","lvn":"lün","mie":"mieh","mian":"mien","nie":"nieh","nian":"nien","nuo":"no","nong":"nung","nv":"nü","nve":"nüeh","ba":"pa","pa":"p'a","bai":"pai","pai":"p'ai","ban":"pan","pan":"p'an","bang":"pang","pang":"p'ang","bao":"pao","pao":"p'ao","bei":"pei","pei":"p'ei","ben":"pen","pen":"p'en","beng":"peng","peng":"p'eng","bi":"pi","pi":"p'i","biao":"piao","piao":"p'iao","bie":"pieh","pie":"p'ieh","bian":"pien","pian":"p'ien","bin":"pin","pin":"p'in","bing":"ping","ping":"p'ing","bo":"po","po":"p'o","pou":"p'ou","bu":"pu","pu":"p'u","shi":"shih","shong":"shung","suo":"so","si":"ssu","song":"sung","da":"ta","ta":"t'a","dai":"tai","tai":"t'ai","dan":"tan","tan":"t'an","dang":"tang","tang":"t'ang","dao":"tao","tao":"t'ao","de":"te","te":"t'e","dei":"tei","den":"ten","deng":"teng","teng":"t'eng","di":"ti","ti":"t'i","diang":"tiang","diao":"tiao","tiao":"t'iao","die":"tieh","tie":"t'ieh","dian":"tien","tian":"t'ien","ding":"ting","ting":"t'ing","diu":"tiu","duo":"to","tuo":"t'o","dou":"tou","tou":"t'ou","za":"tsa","ca":"ts'a","zai":"tsai","cai":"ts'ai","zan":"tsan","can":"ts'an","zang":"tsang","cang":"ts'ang","zao":"tsao","cao":"ts'ao","ze":"tse","ce":"ts'e","zei":"tsei","zen":"tsen","cen":"ts'en","zeng":"tseng","ceng":"ts'eng","zuo":"tso","cuo":"ts'o","zou":"tsou","cou":"ts'ou","zu":"tsu","cu":"ts'u","zuan":"tsuan","cuan":"ts'uan","zui":"tsui","cui":"ts'ui","zun":"tsun","cun":"ts'un","zong":"tsung","cong":"ts'ung","du":"tu","tu":"t'u","duan":"tuan","tuan":"t'uan","dui":"tui","tui":"t'ui","dun":"tun","tun":"t'un","dong":"tung","tong":"t'ung","zi":"tzu","ci":"tz'u","yan":"yen","ye":"yeh","you":"yu","yong":"yung","yu":"yü","yuan":"yüan","yue":"yüeh","yun":"yün"}

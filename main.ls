@@ -20,7 +20,7 @@ $ ->
   $('body').addClass("lang-#LANG")
   React.render React.createElement(React.View.Links), $(\#links).0
   React.render React.View.UserPref!, $(\#user-pref).0
-  React.render React.View.Nav({STANDALONE}), $(\#nav).0, ->
+  React.render React.createElement(React.View.Nav, {STANDALONE}), $(\#nav).0, ->
     $('.lang-active').text $(".lang-option.#LANG:first").text!
     if navigator.userAgent is /MSIE|Trident/
       $('form[id=lookback]').remove!
