@@ -1,7 +1,7 @@
 require! <[
-  ./react-web/Links.jsx
-  ./react-web/Nav.jsx
-  ./react-web/UserPref.jsx
+  ./scripts/Links.jsx
+  ./scripts/Nav.jsx
+  ./scripts/UserPref.jsx
 ]>
 
 React = require('react')
@@ -239,7 +239,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a href=\"#[':~]?(#cjk+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a href=\"(?:\./)?#[':~]?(#cjk+)\")>\\2</a>" \g
     ruby = title
     .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
