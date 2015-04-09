@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 var entries = [];
 var loaders = [];
@@ -7,7 +8,8 @@ if (/production/.test(process.env.NODE_ENV)) {
 }
 else {
     entries = [ 'webpack-dev-server/client?http://localhost:8888', 'webpack/hot/dev-server' ];
-    loaders = [ { test: /view\.ls$/, loader: 'react-hot' } ];
+    loaders = [ { test: /view\.ls$/, loader: 'react-hot' }
+              , { test: /\.jsx$/, loader: 'babel' } ];
     plugins = [ new webpack.HotModuleReplacementPlugin() ];
 }
 
@@ -31,11 +33,10 @@ module.exports = {
     plugins: plugins,
     module: {
         loaders: loaders.concat([
-            //{ test: /\.css$/, loader: 'style!css' },
-            //{ test: /\.scss$/, loader: 'style!css!sass?includePaths[]=' + require('path').resolve(__dirname, './sass') },
-            //{ test: /\.sass$/, loader: 'style!css!sass?indentedSyntax=sass&includePaths[]=' + require('path').resolve(__dirname, './sass') },
-            // { test: /\.(png|jpg|ttf|eot|woff|svg|otf)$/, loader: 'file' }
-            { test: /\.ls$/, loader: 'livescript' },
+            { test: /\.ls$/, loader: 'livescript', },
+            { test: /\.jsx$/, loader: 'babel',
+              options: { stage: 0 },
+              include: path.join(__dirname, 'react-web') }
         ])
     },
 }
