@@ -115,7 +115,6 @@ Heteronym = createClass do
       while t = re.exec(pinyin)
         variant = " 四海大平安".indexOf(t.1)
         mp3 = http "h.moedict.tw/#{variant}-#audio_id.ogg"
-        mp3.=replace(/ogg$/ \mp3) if mp3 and not can-play-ogg!
         pinyin-list ++= span { className: \audioBlock },
           div { className: 'icon-play playAudio part-of-speech' },
             meta { itemProp: \name, content: mp3 - /^.*\// }
@@ -135,14 +134,12 @@ Heteronym = createClass do
     ]
     list ++= small { className: \youyin } youyin if youyin
     mp3 = ''
-    if audio_id and (can-play-ogg! or can-play-mp3!)
+    if audio_id
       if LANG is \t and not (20000 < audio_id < 50000)
         basename = (100000 + Number audio_id) - /^1/
         mp3 = http "t.moedict.tw/#basename.ogg"
       else if LANG is \a
         mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
-      mp3.=replace(/opus$/ \ogg) if mp3 is /opus$/ and not can-play-opus!
-      mp3.=replace(/(opus|ogg)$/ \mp3) if mp3 is /(opus|ogg)$/ and not can-play-ogg!
     if mp3 => list ++= i { itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
       meta { itemProp: \name, content: mp3 - /^.*\// }
       meta { itemProp: \contentURL, content: mp3 }
@@ -239,7 +236,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a href=\"(?:\./)?#[':~]?(#cjk+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
     ruby = title
     .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
@@ -563,9 +560,6 @@ http-map =
 
 http-map <<< window.moedictDesktop.voices if isMoedictDesktop
 http = -> "http#{if not isMoedictDesktop or it.match(/^([^.]+)\.[^\/]+/).1 not of window.moedictDesktop.voices then "s" else ""}://#{ it.replace(/^([^.]+)\.[^\/]+/, (xs,x) -> http-map[x] or xs ) }"
-can-play-mp3 = -> !isMoedictDesktop
-can-play-ogg = -> isMoedictDesktop or window?can-play-ogg?!
-can-play-opus = -> no
 function h (it)
   id = CurrentId
   it += '</span></span></span></span>' if it is /\uFFF9/

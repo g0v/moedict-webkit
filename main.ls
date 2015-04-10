@@ -634,7 +634,7 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        id = $(@).attr \href .replace /^(\.\/)?#['!:~]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~]?/, ''
         if entryHistory.length and entryHistory[*-1] == id
           try $(@).tooltip \close
           return
@@ -642,7 +642,7 @@ window.do-load = ->
         .render-ruby!
         .subst-comb-liga-with-PUA!
       content: (cb) ->
-        id = $(@).attr \href .replace /^(\.\/)?#['!:~]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~]?/, ''
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
