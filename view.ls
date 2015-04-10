@@ -63,7 +63,7 @@ Translations = createClass do
     {translation} = @props
     div { className: \xrefs }, span { className: \translation },
       ...for let key, val of { English: \英, francais: \法, Deutsch: \德 } | translation[key]
-        text = untag((translation[key] * ', ') - /, CL:.*/g - /\|(?:<\/?a[^>*]>|[^[,.(])+/g)
+        text = untag(translation[key] * ', ') - /, CL:.*/g - /\|[^[,.()]+/g
         div { key, className: \xref-line },
           span { className: \fw_lang }, val
           span { className: \fw_def, onClick: ~> @onClick val, text }, text
