@@ -113,7 +113,7 @@ Heteronym = createClass do
       re = /(.)\u20DE(\S+)/g
       pinyin-list = []
       while t = re.exec(pinyin)
-        variant = " 四海大平安".indexOf(t.1)
+        variant = " 四海大平安南".indexOf(t.1)
         mp3 = http "h.moedict.tw/#{variant}-#audio_id.ogg"
         pinyin-list ++= span { className: \audioBlock },
           div { className: 'icon-play playAudio part-of-speech' },

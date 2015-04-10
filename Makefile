@@ -70,9 +70,8 @@ csld ::
 	cp moedict-data-csld/index.json c/
 
 hakka ::
-	cp ../hakka/dict-hakka.json .
 	lsc json2prefix.ls h
-	lsc autolink.ls h > h.txt
+	lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
 twblg ::
