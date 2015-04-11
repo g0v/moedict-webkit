@@ -4,6 +4,9 @@ require! <[
   ./scripts/UserPref.jsx
 ]>
 
+# Use the ./ prefix only for the web, not Cordova
+const DotSlash = if document.URL is /^https?:/ then "./" else ""
+
 React = require('react')
 window.isMoedictDesktop = isMoedictDesktop = true if window?moedictDesktop
 $body = window?$('body') || { hasClass: -> false }
@@ -40,7 +43,7 @@ Term = createClass do
   render: ->
     { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
     H -= /^#/
-    H = "./##H"
+    H = "#DotSlash##H"
     CurrentId := @props.id # Used in h()
     a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
     $char = if radical
@@ -85,7 +88,7 @@ XRefs = createClass do
   render: ->
     { LANG, xrefs } = @props
     div { className: \xrefs }, ...for { lang, words } in xrefs
-      H = "./#{ HASH-OF[lang] }"
+      H = "#DotSlash#{ HASH-OF[lang] }"
       div { key: lang, className: \xref-line },
         span { className: 'xref part-of-speech' },
           XREF-LABEL-OF["#LANG#lang"] || XREF-LABEL-OF[lang]
@@ -496,7 +499,7 @@ RadicalTable = createClass do
     else
       rows = JSON.parse terms
     list = []
-    H = "./#H"
+    H = "#DotSlash#H"
     for chars, strokes in rows | chars?length
       chs = []
       for ch in chars
@@ -512,7 +515,7 @@ List = createClass do
     {terms, id, H, LRU} = @props
     return div {} unless terms
     H -= /^#/
-    H = "./##H"
+    H = "#DotSlash##H"
     id -= /^[@=]/
     terms -= /^[^"]*/
     list = [ h1-name {}, id ]
@@ -656,7 +659,7 @@ decodeLangPart = (LANG-OR-H, part='') ->
     part.=replace /"`辨~\u20DE&nbsp`似~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/ '"辨\u20DE 似\u20DE $1"'
   part.=replace /"`(.)~\u20DE"[^}]*},{"f":"([^（]+)[^"]*"/g '"$1\u20DE $2"'
   part.=replace /"([hbpdcnftrelsaqETAVCDS_=])":/g (, k) -> keyMap[k] + \:
-  H = "./#{ HASH-OF[LANG-OR-H] || LANG-OR-H }"
+  H = "#DotSlash#{ HASH-OF[LANG-OR-H] || LANG-OR-H }"
   part.=replace /([「【『（《])`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, pre, word, post) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a>#post</span>"
   part.=replace /([「【『（《])`([^~]+)~/g (, pre, word) -> "<span class='punct'>#pre<a href=\\\"#H#word\\\">#word</a></span>"
   part.=replace /`([^~]+)~([。，、；：？！─…．·－」』》〉]+)/g (, word, post) -> "<span class='punct'><a href=\\\"#H#word\\\">#word</a>#post</span>"
