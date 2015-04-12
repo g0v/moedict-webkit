@@ -8,7 +8,6 @@ window.$ = window.jQuery = require \jquery
 
 React = require \react
 React.View = require \./view.ls
-Han = require \han-css
 window.React = React
 
 unless window.PRERENDER_LANG
@@ -570,8 +569,6 @@ window.do-load = ->
 
     <- React.render React.createElement(React.View.UserPref), $(\#user-pref).0
 
-    Han($result.0).render-ruby!.subst-comb-liga-with-PUA!
-
     window.scroll-to 0 0
     $h1
     .css \visibility \visible
@@ -638,9 +635,6 @@ window.do-load = ->
         if entryHistory.length and entryHistory[*-1] == id
           try $(@).tooltip \close
           return
-        Han $('.ui-tooltip-content')[0]
-        .render-ruby!
-        .subst-comb-liga-with-PUA!
       content: (cb) ->
         id = $(@).attr \href .replace /^(\.\/)?#?['!:~]?/, ''
         callLater ->

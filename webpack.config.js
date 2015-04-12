@@ -18,7 +18,6 @@ module.exports = {
         './js/jquery-ui-1.10.4.custom.min.js',
         './js/jquery.hoverIntent.js',
         './js/bootstrap/dropdown.js',
-        './js/simp-trad.js',
         './js/phantomjs-shims.js',
         './js/console-polyfill.js',
         './js/es5-shim.js',
@@ -33,7 +32,8 @@ module.exports = {
     module: {
         loaders: loaders.concat([
             { test: /\.ls$/, loader: 'livescript', exclude: /node_modules/ },
-            { test: /\.jsx$/, loader: 'babel?stage=0', exclude: /node_modules/ }
+            { test: /\.jsx$/, loader: 'babel?stage=0', exclude: /node_modules/ },
+            { test: /\.json$/, loader: 'json' }
         ])
     },
 }

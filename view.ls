@@ -2,6 +2,7 @@ require! <[
   ./scripts/Links.jsx
   ./scripts/Nav.jsx
   ./scripts/UserPref.jsx
+  ./scripts/RightAngle.ls
 ]>
 
 # Use the ./ prefix only for the web, not Cordova
@@ -131,7 +132,7 @@ Heteronym = createClass do
     t = untag h title
     { ruby: title-ruby, youyin, b-alt, p-alt, cn-specific, bopomofo, pinyin } = decorate-ruby @props unless LANG is \h
     list = [ if title-ruby
-      ruby { className: "rightangle", dangerouslySetInnerHTML: { __html: h title-ruby } }
+      RightAngle { html: h title-ruby }
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
