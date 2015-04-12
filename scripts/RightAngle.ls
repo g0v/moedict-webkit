@@ -68,31 +68,34 @@ ruby2hruby = (html) ->
     $($rbs[i]).replaceWith $ru
     $rus.push $ru
   $('rtc.zhuyin').remove()
+  spans = []
   $('rtc').each (order, e) ->
     i, rt <- $(e).find('rt').each
-    aRb = []
-    rbspan = Number( $(rt).attr( 'rbspan' ) || 1 ) <? maxspan
-    span = 0
-    while rbspan > span
-      rb = $rus.shift!
-      aRb.push rb
-      break unless rb?
-      span += Number( $(rb).attr('span') || 1)
-    if rbspan < span
-      return if aRb.length > 1
-      aRb = $(aRb[0]).find('rb').get()
-      $ru = aRb.slice( rbspan ).concat( $ru )
-      aRb = aRb.slice( 0, rbspan )
-      span = rbspan
+    if order is 0
+      aRb = []
+      rbspan = Number( $(rt).attr( 'rbspan' ) || 1 ) <? maxspan
+      span = 0
+      while rbspan > span
+        rb = $rus.shift!
+        aRb.push rb
+        break unless rb?
+        span += Number( $(rb).attr('span') || 1)
+      if rbspan < span
+        return if aRb.length > 1
+        aRb = $(aRb[0]).find('rb').get()
+        $ru = aRb.slice( rbspan ).concat( $ru )
+        aRb = aRb.slice( 0, rbspan )
+        span = rbspan
+      spans[i] = span
+    else
+      span = spans[i]
+      aRb = [$('ru[order=0]').eq(i)]
     $ru = $('<ru/>')
     $rt = $(rt).clone()
-    if aRb instanceof Array
-      $ru.html aRb.map((rb) ->
-        return '' unless rb?
-        return $.html(rb)
-      ).join('')
-    else
-      $ru.append $(aRb).clone!
+    $ru.html aRb.map((rb) ->
+      return '' unless rb?
+      return $.html(rb)
+    ).join('')
     $ru.append $rt
     $ru.attr \span span
     $ru.attr \order order
