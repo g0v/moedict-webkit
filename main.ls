@@ -850,7 +850,7 @@ pinyin_lookup = (query,cb) !->
       else
         cb(x)
 
-const SIMP-TRAD = window.SIMP-TRAD ? ''
+const SIMP-TRAD = require('./js/simp-trad.js')
 
 function b2g (str='')
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
