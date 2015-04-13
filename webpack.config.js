@@ -4,7 +4,7 @@ var entries = [];
 var loaders = [];
 var plugins = [];
 if (/production/.test(process.env.NODE_ENV)) {
-    plugins = [ ]; // new webpack.optimize.UglifyJsPlugin() ];
+    plugins = [ new webpack.optimize.UglifyJsPlugin() ];
 }
 else {
     entries = [ 'webpack-dev-server/client?http://localhost:8888', 'webpack/hot/dev-server' ];

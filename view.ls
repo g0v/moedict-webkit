@@ -25,7 +25,7 @@ withProperties = (tag, def-props={}) ->
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
 cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
-r-cjk-one  = new RegExp "^#{cjk}$"
+r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])$/
 r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Mon Apr 13 18:39:54 CST 2015
+# Mon Apr 13 23:54:28 CST 2015
 
 CACHE:
 
@@ -8,7 +8,9 @@ index.html
 styles.css
 
 # js files
-js/deps.js?4eddc2fa
+js/deps.js
+js/es5-shim.js
+js/es5-sham.js
 
 # css files
 css/cupertino/jquery-ui-1.10.4.custom.css
