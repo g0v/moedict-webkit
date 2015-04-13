@@ -357,17 +357,22 @@ window.do-load = ->
       LRU[LANG] = []
       setPref "lru-#LANG" ''
 
-    if isCordova or not \onhashchange of window
-      $ '#result, .dropdown-menu' .on \click 'a[href^=#]' ->
+    onFollow = ->
+        return if it.metaKey or it.ctrlKey
         val = $(@).attr(\href)
         return true if val is \#
         if $('.dropdown.open').length
           $ \.navbar .css \position \fixed
           $ \.dropdown.open .removeClass \open
-        val -= /[^#]*\#/ if val
+        val -= /[^#]*(\.\/|\#)+/ if val
         val ||= $(@).text!
         window.grok-val val
         return false
+    if isCordova or not \onhashchange of window
+      $ '#result, .dropdown-menu' .on \click 'a[href^=#]' onFollow
+    else
+      $ '#result, .dropdown-menu' .on \click 'a[href^="./"]:not([href^=#])' onFollow
+
     unless isDroidGap => window.onpopstate = ->
       return window.press-back! if isDroidGap
       state = decodeURIComponent "#{location.pathname}".slice(1)
