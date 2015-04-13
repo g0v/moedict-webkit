@@ -116,5 +116,15 @@ ruby2hruby = (html) ->
   $('rtc').remove()
   $('rt').attr \style 'text-indent: -9999px; color: transparent'
   return $('ruby').html().replace(
-    /&#x([0-9a-fA-F]+);/g (_, _1) -> String.fromCharCode parseInt(_1, 16)
+    /&#x([0-9a-fA-F]+);/g (_, _1) ->
+        codePoint = parseInt(_1, 16)
+        if codePoint <= 0xFFFF
+          String.fromCharCode codePoint
+        else
+          codePoint -= 0x10000
+          '' + String.fromCharCode(
+            (codePoint .>>. 10) + 0xD800
+          ) + String.fromCharCode(
+            (codePoint % 0x400) + 0xDC00
+          )
   )
