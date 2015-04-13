@@ -31,7 +31,7 @@ for let lang in <[ a t h c ]>
 function xref-of (id, src-lang)
   rv = {}
   for tgt-lang, words of XREF[src-lang] | words[id]?
-    rv[tgt-lang] = [ x || id for x in words[id] / \, ]
+    rv[tgt-lang] = [ x || id for x in words[id] / /,+/ ]
   return rv
 
 trim = -> (it ? '').replace /[`~]/g ''

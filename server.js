@@ -26,7 +26,7 @@
       words = ref$[tgtLang];
       if (words[id] != null) {
         res$ = [];
-        for (i$ = 0, len$ = (ref1$ = split$.call(words[id], ',')).length; i$ < len$; ++i$) {
+        for (i$ = 0, len$ = (ref1$ = split$.call(words[id], /,+/)).length; i$ < len$; ++i$) {
           x = ref1$[i$];
           res$.push(x || id);
         }

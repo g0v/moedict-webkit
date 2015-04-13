@@ -3,7 +3,11 @@ React = require \react
 createClass = React.createFactory << React.createClass
 module.exports = createClass do
   render: ->
-    __html = "<hruby class='rightangle' rightangle>#{ ruby2hruby @props.html }</hruby>"
+    __html = """
+      <hruby class="rightangle" rightangle="rightangle">#{
+        ruby2hruby @props.html
+      }</hruby>
+    """
     React.createElement \span dangerouslySetInnerHTML: { __html }
 
 # Algorithm and constants below are derived from
@@ -111,4 +115,6 @@ ruby2hruby = (html) ->
     for x in aRb => $(x).remove!
   $('rtc').remove()
   $('rt').attr \style 'text-indent: -9999px; color: transparent'
-  return $('ruby').html()
+  return $('ruby').html().replace(
+    /&#x([0-9a-fA-F]+);/g (_, _1) -> String.fromCharCode parseInt(_1, 16)
+  )

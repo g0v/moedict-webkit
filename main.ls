@@ -88,7 +88,7 @@ function xref-of (id, src-lang=LANG, tgt-lang-only)
       part = words.slice(idx + id.length + 4);
       idx = part.indexOf \"
       part.=slice 0 idx
-      [ x || id for x in part / \, ]
+      [ x || id for x in part / /,+/ ]
     return rv[tgt-lang] if tgt-lang-only
   return rv
 
