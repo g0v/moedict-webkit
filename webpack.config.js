@@ -20,8 +20,6 @@ module.exports = {
         './js/bootstrap/dropdown.js',
         './js/phantomjs-shims.js',
         './js/console-polyfill.js',
-        './js/es5-shim.js',
-        './js/es5-sham.js'
     ]),
     output: {
         path: __dirname + '/js/',

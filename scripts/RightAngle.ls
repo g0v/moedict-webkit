@@ -100,8 +100,15 @@ ruby2hruby = (html) ->
     $ru.attr \span span
     $ru.attr \order order
     $ru.attr \class $('ruby').attr \class
-    $ru.attr \annotation $rt.text()
+    $ru.attr \annotation do
+      $rt.text()
+        .replace(/\u0061[\u030d\u0358]/g '\uDB80\uDC61')
+        .replace(/\u0065[\u030d\u0358]/g '\uDB80\uDC65')
+        .replace(/\u0069[\u030d\u0358]/g '\uDB80\uDC69')
+        .replace(/\u006F[\u030d\u0358]/g '\uDB80\uDC6F')
+        .replace(/\u0075[\u030d\u0358]/g '\uDB80\uDC75')
     $(aRb.shift!).replaceWith($ru)
     for x in aRb => $(x).remove!
-  $('rt, rtc').remove()
+  $('rtc').remove()
+  $('rt').attr \style 'text-indent: -9999px; color: transparent'
   return $('ruby').html()
