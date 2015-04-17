@@ -239,7 +239,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
     ruby = title
     .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
@@ -467,8 +467,8 @@ Definition = createClass do
     for let key in <[ example quote link ]> | @props[key]
       list ++= for it, idx in @props[key]
         __html = h it
-        if __html is /class="ruby/
-          $ = require('cheerio').load(__html, { -decodeEntities })
+        if LANG is \t and __html is /class="ruby/
+          $ = require('cheerio').load((__html - /<\/?b>/g), { -decodeEntities })
           title = $('.ruby .ruby .rb').eq(0).html()
           bopomofo = $('.trs.pinyin').attr('title')
           py = $('.upper').text() || $('.trs.pinyin').text()
@@ -582,9 +582,8 @@ function h (it)
     .replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     .replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
     .replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
-#    .replace //<a[^<]+>#id<\/a>//g "<mark>#id</mark>" # TODO
-    .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
-#    .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<mark>#id</mark>" # TODO
+    .replace //<a([^<]+)>#id<\/a>//g "<a class='mark'$1>#id</a>"
+    .replace //(>[^<]*)#id(?!</(?:h1|rb)>)<//g      "$1<b>#id</b><"
     .replace(/\uFFF9/g """
       <span class="ruby#{
         if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""

@@ -271,9 +271,14 @@ hruby {
 
 // 條目自我指涉
 span {
-    b {
+    b, a.mark {
         font-weight: normal;
         border-bottom: 1px solid $border-color !important;
+        cursor: default;
+        &:hover {
+            background: #f0f0f0;
+            outline: 0;
+        }
     }
 
     a {
@@ -620,7 +625,8 @@ body.lang-t .example, body.lang-h .example {
     margin-bottom: 2pt;
 }
 
-.lang-t .example b, .lang-h .example b {
+.lang-t .example b, .lang-h .example b,
+.lang-t .example a.mark, .lang-h .example a.mark {
     background: #ffd;
     border-radius: 5px;
 }

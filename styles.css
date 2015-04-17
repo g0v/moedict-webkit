@@ -8526,9 +8526,13 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
     text-decoration: none;
     border-radius: 5px; }
 
-span b {
+span b, span a.mark {
   font-weight: normal;
-  border-bottom: 1px solid #ddd !important; }
+  border-bottom: 1px solid #ddd !important;
+  cursor: default; }
+  span b:hover, span a.mark:hover {
+    background: #f0f0f0;
+    outline: 0; }
 span a {
   border: 0 !important;
   margin: 0 !important;
@@ -8766,7 +8770,7 @@ body.lang-t .example, body.lang-h .example {
   display: block;
   margin-bottom: 2pt; }
 
-.lang-t .example b, .lang-h .example b {
+.lang-t .example b, .lang-h .example b, .lang-t .example a.mark, .lang-h .example a.mark {
   background: #ffd;
   border-radius: 5px; }
 
