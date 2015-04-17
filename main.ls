@@ -562,7 +562,7 @@ window.do-load = ->
 
   window.bind-html-actions = bind-html-actions = ->
     $result = $ \#result
-    $h1 = $result.find \h1
+    $h1 = $result.find('h1, .h1')
     $tooltip = $ '.ui-tooltip'
     $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
     do
@@ -592,7 +592,7 @@ window.do-load = ->
     .on \mouseover, 'a[word-id]' !->
       $it = $ @
       i = $it.attr \word-id
-      $it.parents \h1 .find 'a[word-id=' + i + ']' .addClass \hovered
+      $it.parents 'h1, .h1' .find 'a[word-id=' + i + ']' .addClass \hovered
     .on \mouseout, 'a.hovered' !->
       $h1.find \a .removeClass \hovered
 

@@ -1206,7 +1206,7 @@ hruby {
 .cc0, body#moedict.lang-t .pinyin, .english, .pinyin, body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app .pinyin, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results, body.lang-h .bopomofo, .translation .fw_def, html:lang(zh-Latn), html:lang(ja-Latn), html:not(:lang(zh)):not(:lang(ja)), html *:lang(zh-Latn), html *:lang(ja-Latn), html *:not(:lang(zh)):not(:lang(ja)), article strong:lang(zh-Latn), article strong:lang(ja-Latn), article strong:not(:lang(zh)):not(:lang(ja)), article strong *:lang(zh-Latn), article strong *:lang(ja-Latn), article strong *:not(:lang(zh)):not(:lang(ja)) {
   font-family: "Noto Sans", "Geneva", "Segoe UI", MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁', 'Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Heiti CNS', sans-serif; }
 
-.result h1 .specific_to, .ui-tooltip h1 .specific_to, .result h1 small.youyin, .result h1 small.alternative, .result h1 + div small.youyin, .result h1 + div small.alternative, .ui-tooltip h1 small.youyin, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.youyin, .ui-tooltip h1 + div small.alternative, .part-of-speech, .glyph, .fw_lang, .specific, body .ui-tooltip, body .ui-tooltip ul li, body .ui-tooltip ol li, #gcse > span .gsc-control-cse .gs-spelling, #gcse > span .gsc-control-cse .gsc-input, #gcse > span .gsc-control-cse .gs-snippet, html:lang(zh), html:lang(zh-Hant), [lang^='zh'], [lang*='Hant'], [lang='zh-TW'], [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
+.result h1 .specific_to, .result .h1 .specific_to, .ui-tooltip h1 .specific_to, .ui-tooltip .h1 .specific_to, .result h1 small.youyin, .result h1 small.alternative, .result h1 + div small.youyin, .result h1 + div small.alternative, .ui-tooltip h1 small.youyin, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.youyin, .ui-tooltip h1 + div small.alternative, .part-of-speech, .glyph, .fw_lang, .specific, body .ui-tooltip, body .ui-tooltip ul li, body .ui-tooltip ol li, #gcse > span .gsc-control-cse .gs-spelling, #gcse > span .gsc-control-cse .gsc-input, #gcse > span .gsc-control-cse .gs-snippet, html:lang(zh), html:lang(zh-Hant), [lang^='zh'], [lang*='Hant'], [lang='zh-TW'], [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
   font-family: 'Biaodian Pro Sans CNS', "Noto Sans", "Geneva", "Segoe UI", MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial, 'Zhuyin Heiti', 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁', 'Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Heiti CNS', sans-serif; }
 
 html:lang(zh-Hans), html:lang(zh-CN), [lang*='Hans'], [lang='zh-CN'], article strong:lang(zh-Hans), article strong:lang(zh-CN) {
@@ -1233,7 +1233,7 @@ article blockquote i:lang(ja), article blockquote var:lang(ja) {
 article figure blockquote:lang(zh-Latn), article figure blockquote:lang(ja-Latn), article figure blockquote:not(:lang(zh)):not(:lang(ja)), article figure blockquote *:lang(zh-Latn), article figure blockquote *:lang(ja-Latn), article figure blockquote *:not(:lang(zh)):not(:lang(ja)), figure blockquote:lang(zh-Latn), figure blockquote:lang(ja-Latn), figure blockquote:not(:lang(zh)):not(:lang(ja)), figure blockquote *:lang(zh-Latn), figure blockquote *:lang(ja-Latn), figure blockquote *:not(:lang(zh)):not(:lang(ja)) {
   font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Songti CNS', cursive, serif; }
 
-.example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
+.result span.h1, .ui-tooltip span.h1, .example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
   font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Songti CNS', serif; }
 
 article figure blockquote:lang(zh-Hans), article figure blockquote:lang(zh-CN), figure blockquote:lang(zh-Hans), figure blockquote:lang(zh-CN) {
@@ -1248,7 +1248,7 @@ article figure blockquote:lang(ja), figure blockquote:lang(ja) {
 article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article blockquote:not(:lang(zh)):not(:lang(ja)), article blockquote *:lang(zh-Latn), article blockquote *:lang(ja-Latn), article blockquote *:not(:lang(zh)):not(:lang(ja)) {
   font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
-.result h1, .ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
+.result h1, .result .h1, .ui-tooltip h1, .ui-tooltip .h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
   font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
@@ -2502,7 +2502,7 @@ hruby {
 .cc0, body#moedict.lang-t .pinyin, .english, .pinyin, body.overflow-scrolling-false .bpmf, body.overflow-scrolling-false .pinyin, body.overflow-scrolling-false input, body.overflow-scrolling-false button, body.overflow-scrolling-false select, body.overflow-scrolling-false textarea, body.overflow-scrolling-false .ui-widget, body.overflow-scrolling-false .results, body.app .bpmf, body.app .pinyin, body.app input, body.app button, body.app select, body.app textarea, body.app .ui-widget, body.app .results, body.lang-h .bopomofo, .translation .fw_def, html:lang(zh-Latn), html:lang(ja-Latn), html:not(:lang(zh)):not(:lang(ja)), html *:lang(zh-Latn), html *:lang(ja-Latn), html *:not(:lang(zh)):not(:lang(ja)), article strong:lang(zh-Latn), article strong:lang(ja-Latn), article strong:not(:lang(zh)):not(:lang(ja)), article strong *:lang(zh-Latn), article strong *:lang(ja-Latn), article strong *:not(:lang(zh)):not(:lang(ja)) {
   font-family: "Noto Sans", "Geneva", "Segoe UI", MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial, 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁', 'Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Heiti CNS', sans-serif; }
 
-.result h1 .specific_to, .ui-tooltip h1 .specific_to, .result h1 small.youyin, .result h1 small.alternative, .result h1 + div small.youyin, .result h1 + div small.alternative, .ui-tooltip h1 small.youyin, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.youyin, .ui-tooltip h1 + div small.alternative, .part-of-speech, .glyph, .fw_lang, .specific, body .ui-tooltip, body .ui-tooltip ul li, body .ui-tooltip ol li, #gcse > span .gsc-control-cse .gs-spelling, #gcse > span .gsc-control-cse .gsc-input, #gcse > span .gsc-control-cse .gs-snippet, html:lang(zh), html:lang(zh-Hant), [lang^='zh'], [lang*='Hant'], [lang='zh-TW'], [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
+.result h1 .specific_to, .result .h1 .specific_to, .ui-tooltip h1 .specific_to, .ui-tooltip .h1 .specific_to, .result h1 small.youyin, .result h1 small.alternative, .result h1 + div small.youyin, .result h1 + div small.alternative, .ui-tooltip h1 small.youyin, .ui-tooltip h1 small.alternative, .ui-tooltip h1 + div small.youyin, .ui-tooltip h1 + div small.alternative, .part-of-speech, .glyph, .fw_lang, .specific, body .ui-tooltip, body .ui-tooltip ul li, body .ui-tooltip ol li, #gcse > span .gsc-control-cse .gs-spelling, #gcse > span .gsc-control-cse .gsc-input, #gcse > span .gsc-control-cse .gs-snippet, html:lang(zh), html:lang(zh-Hant), [lang^='zh'], [lang*='Hant'], [lang='zh-TW'], [lang='zh-HK'], article strong:lang(zh), article strong:lang(zh-Hant) {
   font-family: 'Biaodian Pro Sans CNS', "Noto Sans", "Geneva", "Segoe UI", MOEDICT, 'Fira Sans OT', 'Helvetica Neue', Helvetica, Arial, 'Zhuyin Heiti', 'Noto Sans CJK TC', 'Source Han Sans TW', 'Noto Sans T Chinese', 'Source Han Sans TWHK', 'Microsoft Jhenghei', '微軟正黑體', 'Source Han Sans', 'Source Han Sans HK', 'Lantinghei TC', 'Heiti TC', '黑體-繁', 'Lihei Pro', '儷黑 Pro', 'Adobe 繁黑體 Std', 'cwTex 明體', 'Adobe 明體 Std', PMingLiU, MingLiU, sans-serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Heiti CNS', sans-serif; }
 
 html:lang(zh-Hans), html:lang(zh-CN), [lang*='Hans'], [lang='zh-CN'], article strong:lang(zh-Hans), article strong:lang(zh-CN) {
@@ -2529,7 +2529,7 @@ article blockquote i:lang(ja), article blockquote var:lang(ja) {
 article figure blockquote:lang(zh-Latn), article figure blockquote:lang(ja-Latn), article figure blockquote:not(:lang(zh)):not(:lang(ja)), article figure blockquote *:lang(zh-Latn), article figure blockquote *:lang(ja-Latn), article figure blockquote *:not(:lang(zh)):not(:lang(ja)), figure blockquote:lang(zh-Latn), figure blockquote:lang(ja-Latn), figure blockquote:not(:lang(zh)):not(:lang(ja)), figure blockquote *:lang(zh-Latn), figure blockquote *:lang(ja-Latn), figure blockquote *:not(:lang(zh)):not(:lang(ja)) {
   font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Songti CNS', cursive, serif; }
 
-.example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
+.result span.h1, .ui-tooltip span.h1, .example, .quote, article figure blockquote:lang(zh), article figure blockquote:lang(zh-Hant), figure blockquote:lang(zh), figure blockquote:lang(zh-Hant) {
   font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Sung-98_1', '教育部標準宋體', MOESongUN, '全字庫正宋體', 'Songti TC', '宋體-繁', 'Lisong Pro', '儷宋 Pro', '文鼎ＰＬ新宋', 'cwTex 仿宋體', PMingLiU, MingLiU, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Songti CNS', serif; }
 
 article figure blockquote:lang(zh-Hans), article figure blockquote:lang(zh-CN), figure blockquote:lang(zh-Hans), figure blockquote:lang(zh-CN) {
@@ -2544,7 +2544,7 @@ article figure blockquote:lang(ja), figure blockquote:lang(ja) {
 article blockquote:lang(zh-Latn), article blockquote:lang(ja-Latn), article blockquote:not(:lang(zh)):not(:lang(ja)), article blockquote *:lang(zh-Latn), article blockquote *:lang(ja-Latn), article blockquote *:not(:lang(zh)):not(:lang(ja)) {
   font-family: MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
-.result h1, .ui-tooltip h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
+.result h1, .result .h1, .ui-tooltip h1, .ui-tooltip .h1, .bpmf, article blockquote:lang(zh), article blockquote:lang(zh-Hant) {
   font-family: 'Biaodian Pro Serif CNS', 'Numeral LF Serif', MOEDICT, 'Fira Sans OT', Georgia, 'Times New Roman', 'Zhuyin Kaiti', 'TW-Kai-98_1', '教育部標準楷書', kai-pc, CMEXc1, Biaukai, MOEDICT-IOS-KAI, DFKaiShu-SB-Estd-BF, '全字庫正楷體', 'Kaiti TC', '楷體-繁', '文鼎ＰＬ新中楷', 'cwText 楷書', cursive, serif, HanaMinA, HanaMinB, 'HAN NOM A', 'HAN NOM B', 'Han Kaiti CNS', cursive, serif; }
 
 article blockquote:lang(zh-Hans), article blockquote:lang(zh-CN) {
@@ -8407,7 +8407,10 @@ canvas {
 hruby rb[annotation]:before, hruby rb[annotation]:after {
   font-weight: normal; }
 
-.result h1, .ui-tooltip h1 {
+.result span.h1, .ui-tooltip span.h1 {
+  font-weight: normal;
+  font-size: 175%; }
+.result h1, .result .h1, .ui-tooltip h1, .ui-tooltip .h1 {
   visibility: visible !important;
   margin: -.25em 0 .5em;
   padding-bottom: .3em;
@@ -8415,32 +8418,32 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
   line-height: 1;
   font-weight: 501;
   border-bottom: 1px dotted #ddd; }
-  .result h1[style], .ui-tooltip h1[style] {
+  .result h1[style], .result .h1[style], .ui-tooltip h1[style], .ui-tooltip .h1[style] {
     line-height: 2; }
-  .result h1[itemprop="name"], .ui-tooltip h1[itemprop="name"] {
+  .result h1[itemprop="name"], .result .h1[itemprop="name"], .ui-tooltip h1[itemprop="name"], .ui-tooltip .h1[itemprop="name"] {
     margin-top: .25em; }
-  .result h1 a:hover, .result h1 a.hovered, .ui-tooltip h1 a:hover, .ui-tooltip h1 a.hovered {
+  .result h1 a:hover, .result h1 a.hovered, .result .h1 a:hover, .result .h1 a.hovered, .ui-tooltip h1 a:hover, .ui-tooltip h1 a.hovered, .ui-tooltip .h1 a:hover, .ui-tooltip .h1 a.hovered {
     background-color: #ddd;
     border-radius: 4px;
     color: #0070A3;
     outline: 0; }
-  .result h1 div.stroke, .ui-tooltip h1 div.stroke {
+  .result h1 div.stroke, .result .h1 div.stroke, .ui-tooltip h1 div.stroke, .ui-tooltip .h1 div.stroke {
     display: inline;
     cursor: pointer;
     border: 1px solid white; }
-    .result h1 div.stroke:hover, .ui-tooltip h1 div.stroke:hover {
+    .result h1 div.stroke:hover, .result .h1 div.stroke:hover, .ui-tooltip h1 div.stroke:hover, .ui-tooltip .h1 div.stroke:hover {
       border: 1px solid #a00;
       background: #fff8f8; }
-  .result h1 audio, .ui-tooltip h1 audio {
+  .result h1 audio, .result .h1 audio, .ui-tooltip h1 audio, .ui-tooltip .h1 audio {
     vertical-align: bottom;
     margin-left: 20px;
     width: 50px; }
-  .result h1 .specific_to, .ui-tooltip h1 .specific_to {
+  .result h1 .specific_to, .result .h1 .specific_to, .ui-tooltip h1 .specific_to, .ui-tooltip .h1 .specific_to {
     display: inline;
     font-size: 40%;
     position: absolute;
     margin-top: 2.5ex; }
-  .result h1 .english, .ui-tooltip h1 .english {
+  .result h1 .english, .result .h1 .english, .ui-tooltip h1 .english, .ui-tooltip .h1 .english {
     color: #777;
     display: inline-block;
     font-size: .65em;
@@ -8693,7 +8696,8 @@ body.lang-c .specific {
     font-size: 90%;
     text-align: left;
     width: auto;
-    display: inline-block;
+    display: block;
+    margin-top: 1em;
     margin-left: 1em;
     text-indent: -1em; }
     .example .mandarin * {
