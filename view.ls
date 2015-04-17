@@ -24,8 +24,8 @@ withProperties = (tag, def-props={}) ->
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
-cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])'
-r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^，、；。－—<>])$/
+cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])'
+r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])$/
 r-cjk-g    = new RegExp cjk, \g
 nbsp       = '\u00A0'
 CurrentId  = null
@@ -239,7 +239,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
     ruby = title
     .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
@@ -466,7 +466,19 @@ Definition = createClass do
       span { key, className: \def, dangerouslySetInnerHTML: { __html: h it } }
     for let key in <[ example quote link ]> | @props[key]
       list ++= for it, idx in @props[key]
-        span { "#key.#idx", className: key, dangerouslySetInnerHTML: { __html: h it } }
+        __html = h it
+        if LANG is \t and __html is /class="ruby/
+          $ = require('cheerio').load((__html - /<\/?b>/g), { -decodeEntities })
+          title = $('.ruby .ruby .rb').eq(0).html()
+          bopomofo = $('.trs.pinyin').attr('title')
+          py = $('.upper').text() || $('.trs.pinyin').text()
+          { ruby } = decorate-ruby { LANG: \t, title, bopomofo, py }
+          span { key: "#key.#idx", className: key },
+            span { className: \h1 }, RightAngle { html: h ruby }
+            if $('.mandarin').html!
+              span { className: \mandarin, dangerouslySetInnerHTML: { __html: $('.mandarin').html() } }
+        else
+          span { key: "#key.#idx", className: key, dangerouslySetInnerHTML: { __html } }
     list ++= decorate-nyms @props
     list ++= $after-def if $after-def
     style = if is-colon-def then { marginLeft: \-28px } else {}
@@ -570,9 +582,8 @@ function h (it)
     .replace /(.)\u20DE/g          "</span><span class='part-of-speech'>$1</span><span>"
     .replace /(.)\u20DF/g          "<span class='specific'>$1</span>"
     .replace /(.)\u20E3/g          "<span class='variant'>$1</span>"
-    .replace //<a[^<]+>#id<\/a>//g "#id"
-    .replace //<a>([^<]+)</a>//g   "<a href=\"#{h}$1\">$1</a>"
-    .replace //(>[^<]*)#id(?!</(?:h1|rb)>)//g      "$1<b>#id</b>"
+    .replace //<a([^<]+)>#id<\/a>//g "<a class='mark'$1>#id</a>"
+    .replace //(>[^<]*)#id(?!</(?:h1|rb)>)<//g      "$1<b>#id</b><"
     .replace(/\uFFF9/g """
       <span class="ruby#{
         if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then " parallel" else ""

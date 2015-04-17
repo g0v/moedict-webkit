@@ -64,7 +64,12 @@ hruby {
 .result,
 .ui-tooltip {
     // 條目標題
-    h1 {
+    span.h1 {
+      @extend %han-serif-hant;
+      font-weight: normal;
+      font-size: 175%;
+    }
+    h1, .h1 {
         @extend %han-cursive-hant;
         visibility: visible !important;
         // posi
@@ -266,9 +271,14 @@ hruby {
 
 // 條目自我指涉
 span {
-    b {
+    b, a.mark {
         font-weight: normal;
         border-bottom: 1px solid $border-color !important;
+        cursor: default;
+        &:hover {
+            background: #f0f0f0;
+            outline: 0;
+        }
     }
 
     a {
@@ -523,7 +533,8 @@ body.lang-c {
         font-size: 90%;
         text-align: left;
         width: auto;
-        display: inline-block;
+        display: block;
+        margin-top: 1em;
         margin-left: 1em;
         text-indent: -1em;
 
@@ -614,7 +625,8 @@ body.lang-t .example, body.lang-h .example {
     margin-bottom: 2pt;
 }
 
-.lang-t .example b, .lang-h .example b {
+.lang-t .example b, .lang-h .example b,
+.lang-t .example a.mark, .lang-h .example a.mark {
     background: #ffd;
     border-radius: 5px;
 }
