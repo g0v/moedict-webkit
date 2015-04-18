@@ -654,7 +654,7 @@ function trs2bpmf (LANG, trs)
     it.=replace //[ptkh]$// -> tone := Tones[it+tone]; ''
     it.=replace //(#V)//g -> Vowels[it]
     it + (tone || '\uFFFD')
-  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/\. ?/g \。).replace(/\? ?/g \？).replace(/\! ?/g \！).replace(/\, ?/g \，)
+  ).replace(/[- ]/g '').replace(/\uFFFD/g ' ').replace(/[.?!,] ?/g '')
 
 const keyMap = {
   h: \"heteronyms" b: \"bopomofo" p: \"pinyin" d: \"definitions"
