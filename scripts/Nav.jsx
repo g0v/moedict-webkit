@@ -55,7 +55,7 @@ export default class Nav extends React.Component { render() {
               , marginLeft: "30px"
             }}>
                 <a style={{ paddingLeft: "5px", paddingRight: "5px" }} href="#" onClick={()=> window.adjustFontSize(+1)}>
-                    <i className="icon-resize-small" />
+                    <i className="icon-resize-full" />
                 </a>
             </li>
         </ul>
