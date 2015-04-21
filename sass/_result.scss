@@ -68,6 +68,7 @@ hruby {
       @extend %han-serif-hant;
       font-weight: normal;
       font-size: 175%;
+      border-bottom: none;
     }
     h1, .h1 {
         @extend %han-cursive-hant;

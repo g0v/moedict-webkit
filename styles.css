@@ -8409,7 +8409,8 @@ hruby rb[annotation]:before, hruby rb[annotation]:after {
 
 .result span.h1, .ui-tooltip span.h1 {
   font-weight: normal;
-  font-size: 175%; }
+  font-size: 175%;
+  border-bottom: none; }
 .result h1, .result .h1, .ui-tooltip h1, .ui-tooltip .h1 {
   visibility: visible !important;
   margin: -.25em 0 .5em;

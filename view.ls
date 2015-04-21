@@ -24,9 +24,8 @@ withProperties = (tag, def-props={}) ->
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
-cjk        = '([\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])'
 r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])$/
-r-cjk-g    = new RegExp cjk, \g
+r-cjk-g    = /([\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])/g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -239,14 +238,14 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?(#cjk+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])+)\")>\\2</a>" \g
     ruby = title
-    .replace r-cjk-ci, ( mat, open-tag, ci, x, offset ) ->
+    .replace r-cjk-ci, ( mat, open-tag, ci, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
       close-tag = \</a></rb>
       ci .= replace r-cjk-g, "#{open-tag}$1#close-tag"
     # Deal with rare CJK not indexed, such as ○, 𤍤
-    .replace new RegExp("<\/rb>(#cjk+)(<rb>)?", \g), ( mat, rare-cjk, x, open-tag ) ->
+    .replace new RegExp("<\/rb>((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])+)(<rb>)?", \g), ( mat, rare-cjk, open-tag ) ->
       open-tag = open-tag || ''
       rare-cjk .= replace r-cjk-g, \<rb>$1</rb>
       \</rb> + rare-cjk + open-tag
