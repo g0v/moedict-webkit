@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-require! <[ LiveScript fs ]>
+require! <[ livescript fs ]>
 require("babel/register")({ stage: 0 })
 LTM-regexes = {}
 
