@@ -8891,6 +8891,17 @@ a.stroke-char {
   padding: 2px;
   line-height: 1; }
 
+#timeline .fb-page > span {
+    height: 100% !important;
+    display: block;
+}
+
+#timeline .fb-page > span iframe {
+    height: 100% !important;
+    display: block;
+}
+
+
 #timeline iframe {
   height: 100% !important;
   border-radius: 8px;
