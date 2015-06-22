@@ -24,7 +24,7 @@
     border: 1px solid hsl(0,1%,83%);
     padding: 20px;
     padding-top: 5px;
-    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+    box-shadow: hsl(0,0%,83%) 0 3px 3px;
     margin-bottom: 20px;
     font-size: 100%;
     line-height: 1.5;
@@ -49,7 +49,7 @@ svg {
 }
 canvas {
     margin-left: 5px;
-    @include box-shadow(hsl(0,0%,83%) 0 3px 3px);
+    box-shadow: hsl(0,0%,83%) 0 3px 3px;
 }
 
 // 拼、注音right-angle
@@ -654,7 +654,7 @@ body.lang-t .example, body.lang-h .example {
 
 @media only screen and (max-width: 767px) {
     .entry-item {
-        @include clearfix;
+        overflow: hidden;
         >span.part-of-speech, >ol {
             float: left;
         }

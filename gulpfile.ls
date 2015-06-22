@@ -15,6 +15,11 @@ if process.argv[*-1] in <[ run dev ]>
 gulp.task \sass ->
   src(\./sass/*.scss)
     .pipe sass!
+    .pipe(require('gulp-postcss')([
+      require('autoprefixer-core') browsers: ['last 1 version']
+      require('css-mqpacker')
+      require('csswring')
+    ]))
     .pipe gulp.dest \.
 
 gulp.task \jade ->
