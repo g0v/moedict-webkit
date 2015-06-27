@@ -65,7 +65,7 @@ csld ::
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	lsc json2prefix.ls c
-	lsc autolink.ls c > c.txt
+	lsc autolink.ls c | env LC_ALL=C sort > c.txt
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
