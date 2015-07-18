@@ -2,7 +2,7 @@ window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isn
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
 # window.STANDALONE = \p	# 阿美語方敏英
 const DEBUGGING = (!isCordova and !!window.cordova?require)
-const STANDALONE = window.STANDALONE || false
+const STANDALONE = window.STANDALONE || 'm'
 
 {any, map, unique} = require('prelude-ls')
 window.$ = window.jQuery = require \jquery
@@ -106,7 +106,7 @@ add-to-lru = ->
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
-  if LANG in <[ p m ]>
+  if LANG in <[ p ]>
     url .= toLowerCase!
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
@@ -656,7 +656,7 @@ window.do-load = ->
         .subst-comb-liga-with-PUA!
       content: (cb) ->
         id = $(@).attr \href .replace /^#['!:~;|]?/, ''
-        id = id.toLowerCase! if LANG in <[ p m ]>
+        id = id.toLowerCase! if LANG in <[ p ]>
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -889,7 +889,7 @@ han_amis_lookup = (query,cb) !->
 const SIMP-TRAD = window.SIMP-TRAD ? ''
 
 function b2g (str='')
-  return str.toLowerCase! if LANG in <[ p m ]>
+  return str.toLowerCase! if LANG in <[ p ]>
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')

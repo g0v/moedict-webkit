@@ -198,22 +198,8 @@ MenuItem = createClass do
 DropDown = createClass do
   render: ->
     list = []
-    if @props.STANDALONE isnt \c => list ++= [
-      MenuItem { lang: \a, href: \## }, \國語辭典
-      Taxonomy { lang: \a }
-      MenuItem { lang: \a, href: \#@ }, \…部首表
-      MenuItem { lang: \t, href: \#! }, \臺灣閩南語
-      Taxonomy { lang: \t }
-      MenuItem { lang: \t, href: \#!=諺語 }, \…諺語
-      MenuItem { lang: \h, href: \#: }, \臺灣客家語
-      MenuItem { lang: \h, href: \#:=諺語 }, \…諺語
-    ]
     list ++= [
-      MenuItem { lang: \c, href: \#~ }, \兩岸詞典
-      Taxonomy { lang: \c }
-      MenuItem { lang: \c, href: \#~@ }, \…部首表
-      MenuItem { lang: \p, href: '#;' }, \方敏英阿美語
-      MenuItem { lang: \m, href: '#|' }, \潘世光阿美語
+      MenuItem { lang: \m, href: '#|' }, "Monlam英藏詞典"
     ]
     ul { className: \dropdown-menu, role: \navigation }, ...list
 
@@ -240,6 +226,7 @@ Term = createClass do
         span { className: \count }, " = #s-count"
         nbsp, a-stroke
     else div { className: \radical }, a-stroke
+    heteronyms = [heteronyms] unless heteronyms instanceof Array
     list = for props, key in heteronyms
       Heteronym { key, $char, H, LANG, title, py, english, CurrentId } <<< props
     list ++= XRefs { LANG, xrefs } if xrefs?length
@@ -347,6 +334,7 @@ Heteronym = createClass do
     list ++= span { lang: \en, className: \english } english if english
     list ++= span { className: \specific_to, dangerouslySetInnerHTML: { __html: h specific_to } } if specific_to
 
+    console.log "X"
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
@@ -359,19 +347,6 @@ Heteronym = createClass do
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \行
       a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \楷
       */
-      a {
-        style: { position: \absolute right: \41px top: \160px color: \white cursor: \pointer display: \none }
-        id: 'historical-scripts'
-        className: 'hidden-xs part-of-speech'
-        title: "字體e筆書寫：張炳煌教授\n字體選用：郭晉銓博士"
-        onClick: ->
-          $('#strokes iframe').remove!
-          for ch in CurrentId
-            $('#strokes').append($('<iframe />', {
-              src: "https://www.moedict.tw/clk/searchclk/srch_history/main/#{ encodeURIComponent ch }"
-              scrolling: \no
-              css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
-            })) } \歷代書體
       $char
       h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
