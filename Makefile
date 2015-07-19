@@ -23,7 +23,7 @@ upload ::
 
 amis ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
-	cd moedict-data-amis && python moedict.py
+	cd moedict-data-amis && make moedict
 	ln -sf moedict-data-amis/dict-amis.json   dict-amis.json
 	lsc json2prefix.ls p
 	lsc autolink.ls p > p.txt
