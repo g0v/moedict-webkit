@@ -1,6 +1,6 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-# window.STANDALONE = \p	# 阿美語方敏英
+window.STANDALONE = \p	# 阿美語方敏英
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE || 'm'
 
@@ -648,12 +648,12 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        id = $(@).attr \href .replace /^(\.\/)?#?['!:~|]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;|]?/, ''
         if entryHistory.length and entryHistory[*-1] == id
           try $(@).tooltip \close
           return
       content: (cb) ->
-        id = $(@).attr \href .replace /^(\.\/)?#?['!:~|]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;|]?/, ''
         id = id.toLowerCase! if LANG in <[ p ]>
         callLater ->
           if htmlCache[LANG][id]
