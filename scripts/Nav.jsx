@@ -89,19 +89,9 @@ export default class Nav extends React.Component { render() {
 } }
 
 class DropDown extends React.Component { render() {
-    return <ul className="dropdown-menu" role="navigation">{
-        (this.props.STANDALONE !== "c") && [
-        <MenuItem key="##" lang="a" href="##">國語辭典</MenuItem>,
-        <Taxonomy key="#=" lang="a" />,
-        <MenuItem key="#@" lang="a" href="#@">…部首表</MenuItem>,
-        <MenuItem key="#!" lang="t" href="#!">臺灣閩南語</MenuItem>,
-        <Taxonomy key="#!=" lang="t" />,
-        <MenuItem key="#!=諺語" lang="t" href="#!=諺語">…諺語</MenuItem>,
-        <MenuItem key="#:" lang="h" href="#:">臺灣客家語</MenuItem>,
-        <MenuItem key="#:=諺語" lang="h" href="#:=諺語">…諺語</MenuItem>]
-       }<MenuItem key="#~" lang="c" href="#~">兩岸詞典</MenuItem>
-        <Taxonomy key="#~=" lang="c" />
-        <MenuItem key="#~@" lang="c" href="#~@">…部首表</MenuItem>
+    return <ul className="dropdown-menu" role="navigation">{[
+        <MenuItem key="#;" lang="p" href="#;">方敏英阿美語</MenuItem>,
+        <MenuItem key="#|" lang="m" href="#|">潘世光阿法</MenuItem>]}
     </ul>
 } }
 
