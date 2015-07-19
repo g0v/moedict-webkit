@@ -1,3 +1,10 @@
+// Facebook
+#timeline .fb-page > span {
+    &, & iframe {
+        display: block;
+        height: 100% !important;
+    }
+}
 
 // Twitter
 #timeline iframe {

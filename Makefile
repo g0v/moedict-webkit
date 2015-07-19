@@ -92,14 +92,13 @@ csld ::
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	lsc json2prefix.ls c
-	lsc autolink.ls c > c.txt
+	lsc autolink.ls c | env LC_ALL=C sort > c.txt
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
 hakka ::
-	cp ../hakka/dict-hakka.json .
 	lsc json2prefix.ls h
-	lsc autolink.ls h > h.txt
+	lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
 twblg ::

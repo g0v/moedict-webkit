@@ -1,13 +1,14 @@
+var path = require('path');
 var webpack = require('webpack');
 var entries = [];
 var loaders = [];
 var plugins = [];
 if (/production/.test(process.env.NODE_ENV)) {
-    plugins = [ ]; // new webpack.optimize.UglifyJsPlugin() ];
+    plugins = [ new webpack.optimize.UglifyJsPlugin() ];
 }
 else {
     entries = [ 'webpack-dev-server/client?http://localhost:8888', 'webpack/hot/dev-server' ];
-    loaders = [ { test: /view\.ls$/, loader: 'react-hot' } ];
+    loaders = [ { loader: 'react-hot', exclude: /node_modules/ } ]
     plugins = [ new webpack.HotModuleReplacementPlugin() ];
 }
 
@@ -17,11 +18,8 @@ module.exports = {
         './js/jquery-ui-1.10.4.custom.min.js',
         './js/jquery.hoverIntent.js',
         './js/bootstrap/dropdown.js',
-        './js/simp-trad.js',
         './js/phantomjs-shims.js',
         './js/console-polyfill.js',
-        './js/es5-shim.js',
-        './js/es5-sham.js'
     ]),
     output: {
         path: __dirname + '/js/',
@@ -31,11 +29,9 @@ module.exports = {
     plugins: plugins,
     module: {
         loaders: loaders.concat([
-            //{ test: /\.css$/, loader: 'style!css' },
-            //{ test: /\.scss$/, loader: 'style!css!sass?includePaths[]=' + require('path').resolve(__dirname, './sass') },
-            //{ test: /\.sass$/, loader: 'style!css!sass?indentedSyntax=sass&includePaths[]=' + require('path').resolve(__dirname, './sass') },
-            // { test: /\.(png|jpg|ttf|eot|woff|svg|otf)$/, loader: 'file' }
-            { test: /\.ls$/, loader: 'livescript' },
+            { test: /\.ls$/, loader: 'livescript', exclude: /node_modules/ },
+            { test: /\.jsx$/, loader: 'babel?stage=0', exclude: /node_modules/ },
+            { test: /\.json$/, loader: 'json' }
         ])
     },
 }

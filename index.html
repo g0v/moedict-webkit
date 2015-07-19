@@ -100,7 +100,13 @@
         <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
-      <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
+      <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 10px; bottom: 20px" class="hidden-xs">
+        <div data-href="https://www.facebook.com/MoeDict" data-width="240" data-height="768" data-small-header="true" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true" data-show-posts="true" style="height: 100%; width: 100%" class="fb-page">
+          <div class="fb-xfbml-parse-ignore">
+            <blockquote cite="https://www.facebook.com/MoeDict"><a href="https://www.facebook.com/MoeDict" style="visibility: hidden">萌典 FB 專頁</a></blockquote>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="user-pref"></div>
     <!-- 
@@ -141,6 +147,18 @@
     --><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
     <div id="moe" style="display: none"></div><!--[if gt IE 8]><!-->
     <script src="cordova.js" data-cfasync="true" charset="utf-8"></script>
-    <script src="js/deps.js?4eddc2fa" charset="utf-8"></script><!--<![endif]-->
+    <script src="js/es5-shim.js" charset="utf-8"></script>
+    <script src="js/es5-sham.js" charset="utf-8"></script>
+    <script src="js/deps.js" charset="utf-8"></script>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.3&appId=252470654795525";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script><!--<![endif]-->
   </body>
 </html>
