@@ -1,8 +1,8 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-window.STANDALONE = \p	# 阿美語方敏英
+#window.STANDALONE = \p	# 阿美語方敏英
 const DEBUGGING = (!isCordova and !!window.cordova?require)
-const STANDALONE = window.STANDALONE || 'm'
+const STANDALONE = window.STANDALONE
 
 {any, map, unique} = require('prelude-ls')
 window.$ = window.jQuery = require \jquery
@@ -405,7 +405,7 @@ window.do-load = ->
     if "#val" is /^:/ => lang = \h; val.=substr 1
     if "#val" is /^~/ => lang = \c; val.=substr 1
     if "#val" is /^;/ => lang = \p; val.=substr 1
-    if "#val" is /^|/ => lang = \m; val.=substr 1
+    if "#val" is /^\|/ => lang = \m; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       return setTimeout (-> window.press-lang lang, val), 1ms
@@ -432,9 +432,9 @@ window.do-load = ->
   window.fill-query = fill-query = ->
     title = decodeURIComponent(it) - /[（(].*/
     if LANG isnt \p
-      title -= /^[':!~;|]/
+      title -= /^[':!~;\|]/
     else
-      title -= /^[:!~;|]/
+      title -= /^[:!~;\|]/
     return if title is /^</
     if title is /^→/
       $(\#query).blur! if isMobile and width-is-xs!
@@ -472,7 +472,7 @@ window.do-load = ->
     for {lang, words} in (React.View.result?props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '')
-    id ||= {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
+    id || = {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
     id -= /[\\"~`]/g
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
@@ -648,12 +648,12 @@ window.do-load = ->
     $('#result a[href]:not(.xref)').tooltip {
       +disabled, tooltipClass: "prefer-pinyin-#{ true /* !!getPref \prefer-pinyin */ }", show: 100ms, hide: 100ms, items: \a,
       open: ->
-        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;|]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;\|]?/, ''
         if entryHistory.length and entryHistory[*-1] == id
           try $(@).tooltip \close
           return
       content: (cb) ->
-        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;|]?/, ''
+        id = $(@).attr \href .replace /^(\.\/)?#?['!:~;\|]?/, ''
         id = id.toLowerCase! if LANG in <[ p ]>
         callLater ->
           if htmlCache[LANG][id]
