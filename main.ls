@@ -174,13 +174,11 @@ window.play-audio = (el, url) ->
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.unshift url.replace(/(ogg|opus)$/ 'mp3') if url is /(ogg|opus)$/ and can-play-mp3! and not isGecko
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    audio = new window.Howl { +buffer, src: urls, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
   return play! if window.Howl
-  <- getScript \js/howler.js
-  return play!
 
 window.show-info = ->
   ref = window.open \about.html \_blank \location=no
@@ -714,7 +712,9 @@ function render-taxonomy (lang, taxonomy)
   for taxo in (if taxonomy instanceof Array then taxonomy else [taxonomy])
     if typeof taxo is \string
       $ul.append $(\<li/> role: \presentation).append $(
-        \<a/> class: "lang-option #lang" href: "./#{ HASH-OF[lang] }=#taxo"
+        \<a/> class: "lang-option #lang" href: "#{
+          if isCordova or not \onhashchange of window then '#' else './'
+        }#{ HASH-OF[lang] }=#taxo"
       ).text(taxo)
     else for label, submenu of taxo
       $ul.append $(\<li/> class: \dropdown-submenu).append(

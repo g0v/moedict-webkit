@@ -20,6 +20,7 @@ module.exports = {
         './js/bootstrap/dropdown.js',
         './js/phantomjs-shims.js',
         './js/console-polyfill.js',
+        './js/howler.min.js',
     ]),
     output: {
         path: __dirname + '/js/',
