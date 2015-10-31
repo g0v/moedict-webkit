@@ -68,9 +68,6 @@ export default class Nav extends React.Component { render() {
                 </a>
             </li>
         </ul>
-        <ul className="nav pull-right hidden-xs web-only">
-            <li><a href="http://ckhis.ck.tp.edu.tw/~ljm/amis-fr/" target="_blank" title="「阿美語萌典」校對活動"><img src="https://www.moedict.tw/dodo/icon.png" width="32" height="32" /> 挑錯字</a></li>
-        </ul>
         <ul className="nav pull-right hidden-xs">
             <li className="web-inline-only" style={{ display: "inline-block" }}>
                 <a href="https://racklin.github.io/moedict-desktop/download.html" target="_blank" title="桌面版下載（可離線使用）" style={{ color: "#ccc" }}>
