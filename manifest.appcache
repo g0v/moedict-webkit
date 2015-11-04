@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Sat Oct 31 18:54:34 CST 2015
+# Wed Nov  4 15:57:03 CST 2015
 
 CACHE:
 
@@ -26,7 +26,6 @@ about.html
 favicon.ico
 
 # optional deps
-js/howler.js
 js/raf.min.js
 js/gl-matrix-min.js
 js/sax.js

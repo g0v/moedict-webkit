@@ -572,6 +572,9 @@ window.do-load = ->
 
     <- React.render React.createElement(React.View.UserPref), $(\#user-pref).0
 
+    $('.share .btn').each ->
+      $(@).attr href: $(@).data(\href).replace(/__TEXT__/, prevId) + encodeURIComponent encodeURIComponent "#{ HASH-OF[LANG].replace(/^#/, '') }#prevId"
+
     window.scroll-to 0 0
     $h1
     .css \visibility \visible
