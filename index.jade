@@ -61,16 +61,6 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li#btn-pref
           a(title='偏好設定', href='#')
             i.icon-cogs
-        //if !IE
-        li
-          form#lookback.back(target='_blank', accept-charset='big5', action='http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh', style='display: none; margin: 0; padding: 0')
-            input(type='hidden', name='idx', value='dict.idx')
-            input(type='hidden', name='fld', value='1')
-            input(type='hidden', name='imgFont', value='1')
-            input(type='hidden', name='cat', value='')
-            input#cond(type='hidden', name='cond', value='^萌$', title='偏好設定')
-            input.iconic-circle(type='submit', value='反', title='反查來源（教育部國語辭典）', style='font-family: EBAS; margin-top: 12px; border-radius: 20px; border: 0px;')
-        // <![endif]
         li.resize-btn.app-only(style='position: absolute; top: 2px; left: 8em; padding: 3px')
           a(style='padding-left: 5px; padding-right: 5px; margin-right: 30px', onclick='adjustFontSize(-1); return false')
             i.icon-resize-small

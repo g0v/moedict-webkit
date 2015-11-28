@@ -31,18 +31,6 @@ export default class Nav extends React.Component { render() {
                     paddingLeft: "5px", paddingRight: "5px"
                 }} alt="下載擴充套件"><i className="icon-download-alt" /></a>
             </li> }
-            <li>
-                <form id="lookback" className="back"
-                    target="_blank" acceptCharset="big5"
-                    action="http://dict.revised.moe.edu.tw/cgi-bin/newDict/dict.sh" style={{ display: "none", margin: 0, padding: 0 }}>
-                    <input type="hidden" name="idx" value="dict.idx" />
-                    <input type="hidden" name="fld" value="1" />
-                    <input type="hidden" name="imgFont" value="1" />
-                    <input type="hidden" name="cat" value="" />
-                    <input id="cond" type="hidden" name="cond" value="^萌$" />
-                    <input className="iconic-circle" type="submit" value="反" title="反查來源（教育部國語辭典）" style={{ fontFamily: "EBAS", marginTop: "12px", borderRadius: "20px", border: "0px" }} />
-                </form>
-            </li>
             <li className="resize-btn app-only" style={{
                 position: "absolute", top: "2px", left: "8em", padding: "3px"
             }}>
