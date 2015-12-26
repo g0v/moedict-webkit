@@ -876,7 +876,7 @@ han_amis_lookup = (query,cb) !->
       break if p is -1 or x.length > 20        # 最多找 20 個
       ae = cmn.lastIndexOf '\ufffb', p
       ab = cmn.lastIndexOf '\ufffa', ae
-      title = cmn.slice(ab+1, ae).replace('g', 'ng')
+      title = cmn.slice(ab+1, ae)              # .replace('g', 'ng') 方敏英字典改成 ng 了
       x.push title if title not in x
   lookup_in cmn_amis_def
   lookup_in cmn_amis_ex
