@@ -14,7 +14,7 @@ window.React = React
 unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
-LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \a)
+LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \p)
 MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
@@ -105,7 +105,7 @@ add-to-lru = ->
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
-  if LANG in <[ p ]>
+  if LANG in <[ p m ]>
     url .= toLowerCase!
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
@@ -654,7 +654,7 @@ window.do-load = ->
           return
       content: (cb) ->
         id = $(@).attr \href .replace /^(\.\/)?#?['!:~;\|]?/, ''
-        id = id.toLowerCase! if LANG in <[ p ]>
+        id = id.toLowerCase! if LANG in <[ p m ]>
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -779,8 +779,8 @@ function init-autocomplete
       $('iframe').fadeOut \fast
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
-      return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
-      return han_amis_lookup(term, cb) if LANG is \p and term is /[^\u0000-\u00FF]/
+      # return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
+      return han_amis_lookup(term, cb) if LANG is \p and term is not /[\u0000-\u00FF]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -839,6 +839,7 @@ trs_lookup = (term,cb) ->
   data.=replace /[⿰⿸⿺](?:𧾷|.)./g -> PUA2UNI[it]
   cb( unique(data / '|') )
 
+/*
 pinyin_lookup = (query,cb) !->
   res = []
   pinyin_type = localStorage?getItem("pinyin_#{LANG}") || \HanYu
@@ -862,6 +863,7 @@ pinyin_lookup = (query,cb) !->
         cb(["無符合之詞"])
       else
         cb(x)
+*/
 
 # 由漢字查阿美語
 han_amis_lookup = (query,cb) !->
@@ -888,7 +890,7 @@ han_amis_lookup = (query,cb) !->
 const SIMP-TRAD = require('./js/simp-trad.js')
 
 function b2g (str='')
-  return str.toLowerCase! if LANG in <[ p ]>
+  return str.toLowerCase! if LANG in <[ p m ]>
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')
