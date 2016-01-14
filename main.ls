@@ -251,7 +251,10 @@ window.do-load = ->
   window.adjust-font-size 0
 
   cache-loading = no
-  window.press-about = press-about = -> location.href = \about.html
+  if isCordova
+    window.press-about = press-about = -> window.open \about.html \_blank
+  else
+    window.press-about = press-about = -> location.href = \about.html
   window.press-erase = press-erase = ->
     $ \#query .val '' .focus!
     $ \.erase-box .hide!

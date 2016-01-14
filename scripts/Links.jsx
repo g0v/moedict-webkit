@@ -12,7 +12,7 @@ export default class Links extends React.Component { render() {
            className="visible-xs pull-left ebas btn btn-default"
            style={{ float: "left", marginTop: "-10px"
                   , marginLeft: "5px", marginBottom: "5px" }}
-           onClick={ ()=>window.pressAbout } >
+           onClick={ ()=>window.pressAbout() } >
            <span className="iconic-circle"><i className="icon-info" /></span>
            <span>&nbsp;萌典</span>
        </a>
