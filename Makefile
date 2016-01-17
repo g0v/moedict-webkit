@@ -100,7 +100,7 @@ translation-data/cedict.txt :
 	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 
 translation-data/cfdict.xml :
-	cd translation-data && curl -O 'http://www.chine-informations.com/chinois/open/CFDICT/cfdict_xml.zip' && unzip -o cfdict_xml.zip && rm cfdict_xml.zip
+	cd translation-data && curl -O https://www.moedict.tw/translation-data/cfdict.xml
 
 clean-translation-data ::
 	rm -f translation-data/cfdict.xml translation-data/cedict.txt translation-data/handedict.txt
