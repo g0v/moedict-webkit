@@ -856,6 +856,7 @@ const SIMP-TRAD = require('./js/simp-trad.js')
 
 function b2g (str='')
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
+  return str if " 叁 勅 疎 効 嘷 凥 凟 擧 彛 煅 厮 勠 叶 湼 袴 飱 顋 呪 蟮 眦 幷 滙 庄 鼗 厠 彠 覩 歺 唣 廵 榘 幞 郄 峯 恒 迹 麽 羣 讁 攵 緜 浜 彡 夊 夂 厶 广 廴 丶 台 ".index-of(str) >= 0
   rv = ''
   for char in (str / '')
     idx = SIMP-TRAD.index-of(char)
