@@ -24,8 +24,8 @@ withProperties = (tag, def-props={}) ->
 
 div-inline = div `withProperties` { style: { display: \inline } }
 h1-name    = h1  `withProperties` { itemProp: \name }
-r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])$/
-r-cjk-g    = /([\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])/g
+r-cjk-one  = /^(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；！。－—<>])$/
+r-cjk-g    = /([\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；！。－—<>])/g
 nbsp       = '\u00A0'
 CurrentId  = null
 
@@ -228,7 +228,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   bopomofo .= replace /([ˇˊˋ˪˫])[ ]?/g, '$1 ' .replace /([ㆴㆵㆶㆷ][̍͘]?)/g, '$1 '
   cn-specific = ''
   cn-specific = \cn-specific if bopomofo is /陸/ #and bopomofo isnt /<br>/
-  b = bopomofo.replace /\s?[，、；。－—,\.;]\s?/g, ' '
+  b = bopomofo.replace /\s?[，、；！。－—,\.;]\s?/g, ' '
   b .= replace /（[語|讀|又]音）[\u200B]?/, ''
   b .= replace /\(變\)\u200B\/.*/, ''
   b .= replace /\/.*/, ''
@@ -238,25 +238,25 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if r-cjk-one.test title
     ruby = '<div class="stroke" title="筆順動畫"><rb>' + title + '</rb></div>'
   else
-    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])+)\")>\\2</a>" \g
+    r-cjk-ci = new RegExp "(<a[^>]*href=\"(?:\./)?#?[':~]?((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；！。－—<>])+)\")>\\2</a>" \g
     ruby = title
     .replace r-cjk-ci, ( mat, open-tag, ci, offset ) ->
       open-tag = "<rb>#open-tag word-id=\"#offset\">"
       close-tag = \</a></rb>
       ci .= replace r-cjk-g, "#{open-tag}$1#close-tag"
     # Deal with rare CJK not indexed, such as ○, 𤍤
-    .replace new RegExp("<\/rb>((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；。－—<>])+)(<rb>)?", \g), ( mat, rare-cjk, open-tag ) ->
+    .replace new RegExp("<\/rb>((?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^？，、；！。－—<>])+)(<rb>)?", \g), ( mat, rare-cjk, open-tag ) ->
       open-tag = open-tag || ''
       rare-cjk .= replace r-cjk-g, \<rb>$1</rb>
       \</rb> + rare-cjk + open-tag
-  p = pinyin #.replace /[,\.;，、；。－—]\s?/g, ' '
+  p = pinyin #.replace /[,\.;，、；！。－—]\s?/g, ' '
   p .= replace /\(變\)\u200B.*/, ''
   p .= replace /\/.*/, ''
   p .= replace /<br>.*/, ''
   converted-p = convert-pinyin(p)
-  converted-p .= replace /[,\.;，、；。－—]\s?/g, ' '
+  converted-p .= replace /[,\.;，、；！。－—]\s?/g, ' '
   converted-p .= split ' '
-  p .= replace /[,\.;，、；。－—]\s?/g, ' '
+  p .= replace /[,\.;，、；！。－—]\s?/g, ' '
   p .= split ' '
   p-upper = [] 
   isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $body.hasClass('lang-a')
@@ -294,7 +294,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   if LANG is \c
     if bopomofo is /<br>/
       pinyin .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([,\.;])\s?/g '$1 '
-      bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，。；])\s?/g '$1'
+      bopomofo .= replace /.*<br>/ '' .replace /陸./ '' .replace /\s?([，！。；])\s?/g '$1'
       bopomofo .= replace(/ /g, '\u3000').replace(/([ˇˊˋ])\u3000/g, '$1 ')
     else
       pinyin = ''
@@ -460,7 +460,7 @@ Definition = createClass do
       def -= /∥.*/
     is-colon-def = LANG is \c and (def is /[:：]<\/span>$/) and not(any (.def is /^\s*\(\d+\)/), defs)
     def-string = h(expand-def def).replace do
-      /([：。」])([\u278A-\u2793\u24eb-\u24f4])/g
+      /([：！。」])([\u278A-\u2793\u24eb-\u24f4])/g
       '$1\uFFFC$2'
     list = for it, key in def-string.split '\uFFFC'
       span { key, className: \def, dangerouslySetInnerHTML: { __html: h it } }
