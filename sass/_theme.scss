@@ -680,7 +680,7 @@ img {
     display: block !important;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .web .web-only.hidden-sm {
         display: none !important;
     }
