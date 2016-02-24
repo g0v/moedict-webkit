@@ -28,7 +28,7 @@
     "gulp": "^3.8.10",
     "gulp-jade": "^0.10.0",
     "gulp-postcss": "^5.1.8",
-    "gulp-sass": "^1.2.4",
+    "gulp-sass": "^2.2.0",
     "gulp-watch": "^3.0.0",
     "gulp-webpack": "^1.1.0",
     "iconv-lite": "^0.4.5",

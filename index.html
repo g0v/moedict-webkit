@@ -2,7 +2,7 @@
 <html lang="zh-Hant" xml:lang="zh-Hant" manifest="manifest.appcache">
   <head>
     <meta charset="utf-8">
-    <title>萌典 – 教育部國語、臺語、客語辭典民間版</title>
+    <title>阿美語萌典</title>
     <link rel="apple-touch-icon" href="images/icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
@@ -10,8 +10,8 @@
     <link rel="publisher" href="https://plus.google.com/+MoedictTw-g0v">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible">
-    <meta name="keywords" content="詞典,辭典,國語,臺語,台語,客語,兩岸,g0v">
-    <meta name="description" content="共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。">
+    <meta name="keywords" content="詞典,辭典,阿美語,方敏英,潘世光,蔡中涵,Virginia Fey,Maurice Poinsot,Safolu,g0v">
+    <meta name="description" content="提供 Android 及 iOS 離線 App。來源為台灣聖經公會、潘世光神父、蔡中涵委員。辭典本文的著作權仍為各該著作人所有。">
   </head>
   <body id="moedict" onhashchange="grokHash()" itemscope itemtype="http://schema.org/ScholarlyArticle" class="main">
     <noscript>
@@ -30,19 +30,11 @@
     <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header"><a href="./" class="navbar-brand brand ebas">萌典</a></div>
       <ul class="nav navbar-nav">
-        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-book">&nbsp;</i><span style="margin: 0; padding: 0;" itemprop="articleSection" class="lang-active">國語辭典</span><b class="caret"></b></a>
+        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-book">&nbsp;</i><span style="margin: 0; padding: 0;" itemprop="articleSection" class="lang-active">方敏英字典</span><b class="caret"></b></a>
           <ul role="navigation" class="dropdown-menu">
-            <li role="presentation"><a role="menuitem" href="##" class="lang-option a">國語辭典</a></li>
-            <li class="dropdown-submenu"><a href="#" class="a taxonomy">…分類索引</a></li>
-            <li role="presentation"><a href="#@" class="lang-option a a-idiom">…部首表</a></li>
-            <li role="presentation"><a role="menuitem" href="#!" class="lang-option t">臺灣閩南語</a></li>
-            <li class="dropdown-submenu"><a href="#" class="t taxonomy">…分類索引</a></li>
-            <li role="presentation"><a href="#!=諺語" class="lang-option t t-idiom">…諺語</a></li>
-            <li role="presentation"><a role="menuitem" href="#:" class="lang-option h">臺灣客家語</a></li>
-            <li role="presentation"><a href="#:=諺語" class="lang-option h h-idiom">…諺語</a></li>
-            <li role="presentation"><a role="menuitem" href="#~" class="lang-option c">兩岸詞典</a></li>
-            <li role="presentation"><a role="menuitem" href="#;" class="lang-option p">方敏英阿漢</a></li>
-            <li role="presentation"><a role="menuitem" href="#|" class="lang-option m">潘世光阿法</a></li>
+            <li role="presentation"><a role="menuitem" href="##" class="lang-option a">方敏英字典</a></li>
+            <li role="presentation"><a role="menuitem" href="#!" class="lang-option t">潘世光阿法</a></li>
+            <li role="presentation"><a role="menuitem" href="#:" class="lang-option h">蔡中涵辭典</a></li>
           </ul>
         </li>
         <li id="btn-starred"><a title="字詞紀錄簿" href="#=*"><i class="icon-bookmark-empty"></i></a></li>
@@ -98,7 +90,13 @@
         <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
-      <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 15px; bottom: 20px" class="hidden-xs"><a data-chrome="transparent noheader" data-lang="zh-TW" href="https://twitter.com/moedict" data-widget-id="410481400710578176" class="twitter-timeline"></a></div>
+      <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 10px; bottom: 20px" class="hidden-xs">
+        <div data-href="https://www.facebook.com/MoeDict" data-width="240" data-height="768" data-small-header="true" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true" data-show-posts="true" style="height: 100%; width: 100%" class="fb-page">
+          <div class="fb-xfbml-parse-ignore">
+            <blockquote cite="https://www.facebook.com/MoeDict"><a href="https://www.facebook.com/MoeDict" style="visibility: hidden">萌典 FB 專頁</a></blockquote>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="user-pref"></div>
     <!-- 
@@ -141,6 +139,16 @@
     <script src="cordova.js" data-cfasync="true" charset="utf-8"></script>
     <script src="js/es5-shim.js" charset="utf-8"></script>
     <script src="js/es5-sham.js" charset="utf-8"></script>
-    <script src="js/deps.js" charset="utf-8"></script><!--<![endif]-->
+    <script src="js/deps.js" charset="utf-8"></script>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.3&appId=252470654795525";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script><!--<![endif]-->
   </body>
 </html>
