@@ -656,6 +656,12 @@ img {
     display: block !important;
 }
 
+@media (max-width: 767px) {
+    .web .web-only.hidden-sm {
+        display: none !important;
+    }
+}
+
 .app #opening {
     display: none !important;
 }
