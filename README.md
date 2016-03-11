@@ -422,7 +422,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 
 結構基本同 `/a/`。
 
-範例： https://www.moedict.tw/t/%E8%90%8C.json
+範例： https://www.moedict.tw/t/%E7%99%BC%E7%A9%8E.json
 
 ```json
 {
