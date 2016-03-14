@@ -4,7 +4,7 @@
 
 可以從 Docker Hub 取回開發環境:
 
-```
+```sh
 docker@boot2docker:~$ docker pull miaoski/moedict-webkit
 docker@boot2docker:~$ docker run -t -i -p 8888:8888 bash
 root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
@@ -21,7 +21,7 @@ root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 
 ## 前置作業 (Debian/Ubuntu)
 
-```
+```sh
 sudo apt-get update
 sudo apt-get install -y python-software-properties python g++ make
 sudo add-apt-repository -y ppa:chris-lea/node.js
@@ -31,7 +31,7 @@ sudo apt-get install nodejs python-lxml curl
 
 ## 安裝環境
 
-```
+```sh
 npm i
 pip install lxml
 sudo npm i -g gulp
@@ -43,7 +43,7 @@ sudo npm i -g gulp
 
 建置離線瀏覽所需要的檔案:
 
-```
+```sh
 make offline
 ```
 
@@ -54,7 +54,7 @@ make offline
 <https://github.com/g0v/moedict-epub> 造字轉換程式 `json2unicode.pl` 轉為
 Unicode 編碼:
 
-```
+```sh
 git clone --depth 1 https://github.com/g0v/moedict-data.git
 git clone --depth 1 https://github.com/g0v/moedict-epub.git
 cp -v moedict-data/dict-revised.json moedict-epub/
@@ -66,7 +66,7 @@ perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
 `pack`、`a` 及 `t` 資料目錄由 `json2prefix.ls`、
 `autolink.ls` 及 `link2pack.pl` 程式產生：
 
-```
+```sh
 lsc json2prefix.ls a
 lsc autolink.ls a > a.txt
 perl link2pack.pl a < a.txt
@@ -78,7 +78,7 @@ perl link2pack.pl t < t.txt
 
 ## 本機運行
 
-```
+```sh
 # quick static server, uses the pre-built js/deps.js ( watches: sass/ .jade )
 npm start
 
@@ -564,23 +564,27 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62B
 
 /uni/ 範例
 
-    $.ajax({
-      url: "https://www.moedict.tw/uni/萌",
-      dataType: "json",
-      success: function(result) {
-        console.log(result);
-      }
-    });
+```js
+ $.ajax({
+   url: "https://www.moedict.tw/uni/萌",
+   dataType: "json",
+   success: function(result) {
+     console.log(result);
+   }
+ });
+```
 
 /a/ 範例
 
-    $.ajax({
-      url: "https://www.moedict.tw/a/萌.json",
-      dataType: "json",
-      success: function(result) {
-        console.log(result);
-      }
-    });
+```js
+ $.ajax({
+   url: "https://www.moedict.tw/a/萌.json",
+   dataType: "json",
+   success: function(result) {
+     console.log(result);
+   }
+ });
+```
 
 ### jsonp
 
@@ -590,14 +594,16 @@ callback= 參數須固定為 moedict_jsonp_callback
 
 ajax 範例
 
-    $.ajax({
-      url: "https://www.moedict.tw/uni/萌",
-      dataType: "jsonp",
-      jsonpCallback: "moedict_jsonp_callback",
-      success: function(result) {
-        console.log(result);
-      }
-    });
+```js
+ $.ajax({
+   url: "https://www.moedict.tw/uni/萌",
+   dataType: "jsonp",
+   jsonpCallback: "moedict_jsonp_callback",
+   success: function(result) {
+     console.log(result);
+   }
+ });
+```
 
 ### Terminal
 
