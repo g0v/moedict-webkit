@@ -1,7 +1,7 @@
 require! <[ fs os ]>
 lang = process.argv.2
-unless lang in <[ a t h c p m ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c p m ]>."
+unless lang in <[ p m s ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ p m s ]>."
   process.exit!
 pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
@@ -11,14 +11,12 @@ for k, v of audio-map
   k = k - /\..*/
   audio-map[k] = v
 LTM-regexes = []
-Threads = require \webworker-threads
-pool = Threads.create-pool(os.cpus!length)
-pool.all.eval("var pre2 = #pre2;")
-pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
-pool.all.eval(init);
-pool.all.eval('init()');
-pool.all.eval(proc);
-pool.all.eval(procNoSeg);
+eval("var pre2 = #pre2;")
+eval("var lenToRegex, lens, LTMRegexes = [];")
+eval(init);
+eval('init()');
+eval(proc);
+eval(procNoSeg);
 
 function proc (struct, title, idx)
   chunk = JSON.stringify(struct)
@@ -34,8 +32,7 @@ function proc (struct, title, idx)
   """)
 
 
-function procNoSeg (struct, title, idx)   # no segmentation
-  chunk = JSON.stringify(struct)
+function procNoSeg (chunk, title, idx)   # no segmentation
   esc = escape title
   return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
     "t":"#{ unescape title }"
@@ -92,12 +89,9 @@ grok = -> JSON.parse(
 )
 
 entries = switch lang
-| \a => grok(\dict-revised.pua.json)
-| \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
-| \h => grok(\dict-hakka.json)
-| \c => grok(\dict-csld.json)
 | \p => grok(\dict-amis.json)
 | \m => grok(\dict-amis-mp.json)
+| \s => grok(\dict-amis-safolu.json)
 
 i = 0
 todo = 0
@@ -127,11 +121,9 @@ for {t:title, h:heteronyms}:entry in entries
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
-  if lang in <[ p m ]> then
-    pool.any.eval "procNoSeg(#chunk, \"#title\", #idx)", (,x) ->
-      console.log x
-      process.exit! unless --todo
+  if lang in <[ p m s ]> then
+    x = procNoSeg(chunk, title, idx)
+    console.log x
   else
-    pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
-      console.log x
-      process.exit! unless --todo
+    x = proc(chunk, title, idx)
+    console.log x
