@@ -1,7 +1,7 @@
 # 
 # Dockerfile to build miaoski/moedict_amis
 #
-FROM ubuntu:14.04.1
+FROM ubuntu:14.04
 MAINTAINER miaoski
  
 ENV DEBIAN_FRONTEND noninteractive
@@ -35,6 +35,7 @@ ENV LC_ALL zh_TW.UTF-8
 
 # Copy script to build from GitHub
 WORKDIR /usr/local/src
+CMD mkdir /usr/local/src/moedict-webkit
 RUN git clone https://github.com/audreyt/moedict-webkit.git
 WORKDIR /usr/local/src/moedict-webkit
 RUN npm install -g gulp

@@ -2,7 +2,7 @@ doctype html
 html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
   head
     meta(charset='utf-8')
-    title 萌典 – 教育部國語、臺語、客語辭典民間版
+    title 阿美語萌典
 
     link(rel='apple-touch-icon', href='images/icon.png')
     link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
@@ -12,8 +12,8 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
 
     meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1')
     meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
-    meta(name='keywords', content='詞典,辭典,國語,臺語,台語,客語,兩岸,g0v')
-    meta(name='description', content='共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+    meta(name='keywords', content='詞典,辭典,阿美語,方敏英,潘世光,蔡中涵,Virginia Fey,Maurice Poinsot,Safolu,g0v')
+    meta(name='description', content='提供 Android 及 iOS 離線 App。來源為台灣聖經公會、潘世光神父、蔡中涵委員。辭典本文的著作權仍為各該著作人所有。')
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: center(style='position: absolute; width: 95%'): main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ méng
@@ -29,35 +29,15 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             i.icon-book &nbsp;
-            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 國語辭典
+            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 方敏英字典
             b.caret
           ul.dropdown-menu(role='navigation')
             li(role='presentation')
-              a.lang-option.a(role='menuitem', href='##') 國語辭典
-            li.dropdown-submenu
-              a.a.taxonomy(href='#') …分類索引
+              a.lang-option.a(role='menuitem', href='##') 方敏英字典
             li(role='presentation')
-              a.lang-option.a.a-idiom(href='#@') …部首表
+              a.lang-option.t(role='menuitem', href='#!') 潘世光阿法
             li(role='presentation')
-              a.lang-option.t(role='menuitem', href='#!') 臺灣閩南語
-            li.dropdown-submenu
-              a.t.taxonomy(href='#') …分類索引
-            li(role='presentation')
-              a.lang-option.t.t-idiom(href='#!=諺語') …諺語
-            li(role='presentation')
-              a.lang-option.h(role='menuitem', href='#:') 臺灣客家語
-            li(role='presentation')
-              a.lang-option.h.h-idiom(href='#:=諺語') …諺語
-            li(role='presentation')
-              a.lang-option.c(role='menuitem', href='#~') 兩岸詞典
-            li.dropdown-submenu
-              a.c.taxonomy(href='#') …分類索引
-            li(role='presentation')
-              a.lang-option.c.c-idiom(href='#~@') …部首表
-            li(role='presentation')
-              a.lang-option.p(role='menuitem', href='#;') 方敏英阿漢
-            li(role='presentation')
-              a.lang-option.m(role='menuitem', href='#|') 潘世光阿法
+              a.lang-option.h(role='menuitem', href='#:') 蔡中涵辭典
         li#btn-starred
           a(title='字詞紀錄簿', href='#=*')
             i.icon-bookmark-empty

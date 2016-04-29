@@ -1,6 +1,6 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-#window.STANDALONE = \p	# 阿美語方敏英
+#window.STANDALONE = \p	# 方敏英字典
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE
 
@@ -15,7 +15,7 @@ unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
 LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \p)
-MOE-ID = getPref(\prev-id) || {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
+MOE-ID = getPref(\prev-id) || {p: \ci'im m: \aag s: \co'ong}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
   React.render React.createElement(React.View.Links), $(\#links).0
@@ -30,10 +30,10 @@ $ ->
         $('form[id=lookback] input[id=cond]').val "^#{window.PRERENDER_ID}$"
         $('#query').val window.PRERENDER_ID
 
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \方 m: \潘 }
-const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸 p: \方敏英 m: \潘世光 }
+const XREF-LABEL-OF = {p: \方 m: \潘 s: \蔡}
+const TITLE-OF = {p: \方敏英 m: \潘世光 s: \蔡中涵}
 
-HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#|' }
+HASH-OF = {p: \#, m: "#!", s: \#: }
 
 if (isCordova or DEBUGGING) and not window.ALL_LANGUAGES
   if STANDALONE
@@ -60,14 +60,11 @@ isChrome = navigator.userAgent is /\bChrome\/\b/
 isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
-INDEX = { t: '', a: '', h: '', c: '', p: '', m: '' }
+INDEX = { p: '', m: '', s: '' }
 XREF = {
-  t: {a: '"發穎":"萌,抽芽,發芽,萌芽"', p: "ci'im", m: "aag" }
-  a: {t: '"萌":"發穎"' h: '"萌":"發芽"', p: "ci'im", m: "aag" }
-  h: {a: '"發芽":"萌,萌芽"', p: "ci'im", m: "aag" }
-  tv: {t: ''}
-  p: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"', h: '"萌":"發芽"', m: "aag" }
-  m: {a: '"發穎":"萌,抽芽,發芽,萌芽"', t: '"萌":"發穎"', h: '"萌":"發芽"', p: "ci'im" }
+  p: {m: "aag", s: \co'ong }
+  m: {p: "ci'im", s: \co'ong }
+  s: {p: "ci'im", m: \aag }
 }
 
 if isCordova and STANDALONE isnt \c and not window.ALL_LANGUAGES
@@ -105,7 +102,7 @@ add-to-lru = ->
     LRU[LANG] = (lru * '\n') + '\n'
   setPref "lru-#LANG" LRU[LANG]
 GET = (url, data, onSuccess, dataType) ->
-  if LANG in <[ p m ]>
+  if LANG in <[ p m s ]>
     url .= toLowerCase!
   if data instanceof Function
     [data, dataType, onSuccess] = [null, onSuccess, data]
@@ -136,7 +133,7 @@ catch
   $ \#F9868 .html '&#xF9868;'
   $ \#loading .text \載入中，請稍候……
   if document.URL is /^http:\/\/(?:www.)?moedict.tw/i
-    url = "https://www.moedict.tw/"
+    url = "https://amis.moedict.tw/"
     url += location.hash if location.hash is /^#./
     location.replace url
   else
@@ -463,10 +460,7 @@ window.do-load = ->
     return if lang is LANG and !id
     prevId := null
     prevVal := null
-    if HASH-OF.c
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \c | \c => | \c => \p | \p => \m | \m => \a
-    else
-      LANG := lang || switch LANG | \a => \t | \t => \h | \h => \p | \p => \m | \m => \a
+    LANG := lang || switch LANG | \p => \m | \m => \s | \s => \p
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
@@ -475,17 +469,14 @@ window.do-load = ->
     for {lang, words} in (React.View.result?props.xrefs || []) | lang is LANG
       id ||= words.0
     id ||= LRU[LANG]?replace(/[\\\n][\d\D]*/, '')
-    id || = {a: \萌 t: \發穎 h: \發芽 c: \萌 p: \ci'im m: \aag }[LANG]
+    id || = {p: \ci'im m: \aag s: \co'ong}[LANG]
     id -= /[\\"~`]/g
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
-    $('body').removeClass("lang-t")
-    $('body').removeClass("lang-a")
-    $('body').removeClass("lang-h")
-    $('body').removeClass("lang-c")
     $('body').removeClass("lang-p")
     $('body').removeClass("lang-m")
+    $('body').removeClass("lang-s")
     $('body').addClass("lang-#LANG")
     $ \#query .val id
     window.do-lookup id
@@ -657,7 +648,7 @@ window.do-load = ->
           return
       content: (cb) ->
         id = $(@).attr \href .replace /^(\.\/)?#?['!:~;\|]?/, ''
-        id = id.toLowerCase! if LANG in <[ p m ]>
+        id = id.toLowerCase! if LANG in <[ p m s ]>
         callLater ->
           if htmlCache[LANG][id]
             cb htmlCache[LANG][id]
@@ -783,7 +774,7 @@ function init-autocomplete
       return cb [] unless term.length
       return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
       # return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
-      return han_amis_lookup(term, cb) if LANG is \p and term is not /[\u0000-\u00FF]/
+      return han_amis_lookup(term, cb) if LANG in <[ p m s ]> and term is not /[\u0000-\u00FF]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
       return do-lookup(term) if term is /^[@=]/
       term.=replace(/^→列出含有「/ '')
@@ -893,7 +884,7 @@ han_amis_lookup = (query,cb) !->
 const SIMP-TRAD = require('./js/simp-trad.js')
 
 function b2g (str='')
-  return str.toLowerCase! if LANG in <[ p m ]>
+  return str.toLowerCase! if LANG in <[ p m s ]>
   return str.replace(/台([北中南東灣語])/g '臺$1') unless LANG in <[ a c ]> and str isnt /^@/
   rv = ''
   for char in (str / '')

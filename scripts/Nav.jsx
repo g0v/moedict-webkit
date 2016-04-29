@@ -3,7 +3,7 @@ import React from 'react'
 export default class Nav extends React.Component { render() {
     return <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div className="navbar-header">
-            <a className="navbar-brand brand ebas" href="./">萌典</a>
+            <a className="navbar-brand brand ebas" href="./">阿美語萌典</a>
         </div>
         <ul className="nav navbar-nav">
             <li className="dropdown">
@@ -11,7 +11,7 @@ export default class Nav extends React.Component { render() {
                     <i className="icon-book">&nbsp;</i>
                     <span className="lang-active" style={{
                         margin: 0, padding: 0
-                    }} itemProp="articleSection">國語辭典</span>
+                    }} itemProp="articleSection">方敏英字典</span>
                     <b className="caret"></b>
                 </a>
                 <DropDown STANDALONE={this.props.STANDALONE} />
@@ -90,8 +90,9 @@ export default class Nav extends React.Component { render() {
 
 class DropDown extends React.Component { render() {
     return <ul className="dropdown-menu" role="navigation">{[
-        <MenuItem key="#;" lang="p" href="#;">方敏英阿漢</MenuItem>,
-        <MenuItem key="#|" lang="m" href="#|">潘世光阿法</MenuItem>]}
+        <MenuItem key="##" lang="p" href="##">方敏英字典</MenuItem>,
+        <MenuItem key="#!" lang="m" href="#!">潘世光阿法</MenuItem>,
+        <MenuItem key="#:" lang="s" href="#:">蔡中涵辭典</MenuItem>]}
     </ul>
 } }
 

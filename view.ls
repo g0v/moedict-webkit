@@ -82,8 +82,8 @@ Translations = createClass do
     u.rate = 1.0
     syn.speak u
 
-const HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~, p: '#;', m: '#|' }
-const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺 p: \方 m: \潘 }
+const HASH-OF = {p: \#, m: "#!", s: \#: }
+const XREF-LABEL-OF = {p: \方 m: \潘 s: \蔡}
 XRefs = createClass do
   render: ->
     { LANG, xrefs } = @props
