@@ -41,6 +41,13 @@ amis-poinsot ::
 	perl link2pack.pl m < m.txt
 	cp moedict-data-amis-mp/index.json           m/index.json
 
+amis-safolu ::
+	ln -sf ../amis-safolu/txt/dict-amis.json   dict-amis-safolu.json
+	lsc json2prefix.ls s
+	lsc autolink.ls s > s.txt
+	perl link2pack.pl s < s.txt
+	cp ../amis-safolu/txt/index.json           s/index.json
+
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
 	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git

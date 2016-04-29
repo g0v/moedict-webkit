@@ -1,8 +1,8 @@
 require! fs
 lang = process.argv.2
 
-unless lang in <[ a t h c p m ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h p m ]>."
+unless lang in <[ p m s ]>
+  console.log "Please invoke this program with a single-letter argument, one of <[ p m s ]>."
   process.exit!
 
 fs.mkdir-sync lang unless fs.exists-sync lang
@@ -19,12 +19,9 @@ dump = (file, data) ->
   fs.write-file-sync file, JSON.stringify data
 
 entries = switch lang
-  | \t => grok(\dict-twblg.json) ++ grok(\dict-twblg-ext.json)
-  | \a => grok(\dict-revised.pua.json)
-  | \h => grok(\dict-hakka.json)
-  | \c => grok(\dict-csld.json)
   | \p => grok(\dict-amis.json)
   | \m => grok(\dict-amis-mp.json)
+  | \s => grok(\dict-amis-safolu.json)
 
 prefix = {}
 defs = {}
