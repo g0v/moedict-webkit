@@ -579,6 +579,8 @@ function h (it)
       res.=replace(/\uFFF9/g '<span class="part-of-speech">例</span>&nbsp;<span class="amisnative">').replace(/\uFFFA/g '</span><br><span class="amisenglish">').replace(/\uFFFB/g '</span><br><span class="amismandarin">')
   else if $?('body').hasClass('lang-m') then
       res.=replace(/\uFFF9/g '<span class="example-amis">').replace(/\uFFFB/g '</span><span class="example-fr">')
+  else if $?('body').hasClass('lang-s') then
+      res.=replace(/\uFFF9/g '<span class="amisnative">').replace(/\uFFFB/g '</span><span class="amismandarin">')
   else:
     res.=replace(/\uFFF9/g """
       <span class="ruby#{

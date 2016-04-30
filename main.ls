@@ -1,6 +1,6 @@
 window.isCordova = isCordova = document.URL isnt /^https?:/ and document.URL isnt /^http:\/\/localhost/
 window.isMoedictDesktop = isMoedictDesktop = true if window.moedictDesktop
-#window.STANDALONE = \p	# 方敏英字典
+# window.STANDALONE = \p	# 方敏英字典
 const DEBUGGING = (!isCordova and !!window.cordova?require)
 const STANDALONE = window.STANDALONE
 
@@ -400,12 +400,9 @@ window.do-load = ->
     if val in <[ '=諺語 !=諺語 :=諺語 ]> and not width-is-xs!
       <- setTimeout _, 500ms
       $(\#query).autocomplete(\search)
-    lang = \a
-    if "#val" is /^['!]/ => lang = \t; val.=substr 1
-    if "#val" is /^:/ => lang = \h; val.=substr 1
-    if "#val" is /^~/ => lang = \c; val.=substr 1
-    if "#val" is /^;/ => lang = \p; val.=substr 1
-    if "#val" is /^\|/ => lang = \m; val.=substr 1
+    lang = \p
+    if "#val" is /^!/ => lang = \m; val.=substr 1
+    if "#val" is /^:/ => lang = \s; val.=substr 1
     $('.lang-active').text $(".lang-option.#lang:first").text!
     if lang isnt LANG
       return setTimeout (-> window.press-lang lang, val), 1ms
@@ -460,7 +457,7 @@ window.do-load = ->
     return if lang is LANG and !id
     prevId := null
     prevVal := null
-    LANG := lang || switch LANG | \p => \m | \m => \s | \s => \p
+    LANG := lang || switch LANG | \a => \p | \p => \m | \m => \s | \s => \p
     $ \#query .val ''
     $('.ui-autocomplete li').remove!
     $('iframe').fadeIn \fast
@@ -474,6 +471,10 @@ window.do-load = ->
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
+    $('body').removeClass("lang-a")
+    $('body').removeClass("lang-t")
+    $('body').removeClass("lang-c")
+    $('body').removeClass("lang-h")
     $('body').removeClass("lang-p")
     $('body').removeClass("lang-m")
     $('body').removeClass("lang-s")
@@ -772,7 +773,7 @@ function init-autocomplete
       term = "，" if term is \=諺語 and LANG is \h
       $('iframe').fadeOut \fast
       return cb [] unless term.length
-      return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
+	  # return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
       # return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
       return han_amis_lookup(term, cb) if LANG in <[ p m s ]> and term is not /[\u0000-\u00FF]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/

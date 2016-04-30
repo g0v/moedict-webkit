@@ -878,3 +878,22 @@ body.lang-p .example {
 body.lang-p .ui-tooltip .example {
     display: none;
 }
+
+// 蔡中涵辭典例句
+body.lang-s .example {
+    font-size: 100%;
+    display: inline-block;
+    clear: both;
+    width: auto;
+    border: 1px solid $border-color;
+    padding: 3px;
+    background: #eee;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    vertical-align: top;
+}
+
+// 蔡中涵辭典提示框
+body.lang-s .ui-tooltip .example {
+    display: none;
+}
