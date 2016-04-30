@@ -40,11 +40,15 @@ Result = createClass do
 
 Term = createClass do
   render: ->
-    { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
+    { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs, tag, stem } = @props
     H -= /^#/
     H = "#DotSlash##H"
     CurrentId := @props.id # Used in h()
-    a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
+    # a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
+    if tag? then
+      a-stroke = span { className: \part-of-speech}, tag
+    else
+      a-stroke = ''
     $char = if radical
       div { className: \radical },
         RadicalGlyph { H, char: radical - /<\/?a[^>]*>/g }
@@ -56,7 +60,7 @@ Term = createClass do
     else div { className: \radical }, a-stroke
     heteronyms = [heteronyms] unless heteronyms instanceof Array
     list = for props, key in heteronyms
-      Heteronym { key, $char, H, LANG, title, py, english, CurrentId } <<< props
+      Heteronym { key, $char, H, LANG, title, py, english, CurrentId, tag } <<< props
     list ++= XRefs { LANG, xrefs } if xrefs?length
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
@@ -109,7 +113,8 @@ Heteronym = createClass do
   render: ->
     { CurrentId, key, $char, H, LANG, title, english,
     id, audio_id=id, bopomofo, trs='', py, pinyin=py||trs||'',
-    definitions=[], antonyms, synonyms, variants, specific_to, alt
+    definitions=[], antonyms, synonyms, variants, specific_to, alt,
+    tag, stem
     } = @props
     if audio_id and LANG is \h
       re = /(.)\u20DE(\S+)/g
@@ -580,7 +585,10 @@ function h (it)
   else if $?('body').hasClass('lang-m') then
       res.=replace(/\uFFF9/g '<span class="example-amis">').replace(/\uFFFB/g '</span><span class="example-fr">')
   else if $?('body').hasClass('lang-s') then
-      res.=replace(/\uFFF9/g '<span class="amisnative">').replace(/\uFFFB/g '</span><span class="amismandarin">')
+      res.=replace(/\uFFF9\uFFFA\uFFFB/g '')
+          .replace(/\uFFF9/g '<span class="amisnative">')
+          .replace(/\uFFFA/g '')
+          .replace(/\uFFFB/g '</span><br><span class="amismandarin">')
   else:
     res.=replace(/\uFFF9/g """
       <span class="ruby#{
