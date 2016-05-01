@@ -374,7 +374,7 @@ window.do-load = ->
         window.grok-val val
         return false
     if isCordova or not \onhashchange of window
-      $ '#result, .dropdown-menu' .on \click 'a[href^=#]:not(.mark)' onFollow
+      $ '#result, .dropdown-menu' .on \click 'a[href^="#"]:not(.mark)' onFollow
     else
       $ '#result, .dropdown-menu' .on \click 'a[href^="./"]:not([href^=#]):not(.mark)' onFollow
 
