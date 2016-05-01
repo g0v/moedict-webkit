@@ -60,7 +60,7 @@ Term = createClass do
     else div { className: \radical }, a-stroke
     heteronyms = [heteronyms] unless heteronyms instanceof Array
     list = for props, key in heteronyms
-      Heteronym { key, $char, H, LANG, title, py, english, CurrentId, tag } <<< props
+      Heteronym { key, $char, H, LANG, title, py, english, CurrentId, stem } <<< props
     list ++= XRefs { LANG, xrefs } if xrefs?length
     list ++= Translations { translation } if translation
     return div-inline {}, ...list
@@ -114,7 +114,7 @@ Heteronym = createClass do
     { CurrentId, key, $char, H, LANG, title, english,
     id, audio_id=id, bopomofo, trs='', py, pinyin=py||trs||'',
     definitions=[], antonyms, synonyms, variants, specific_to, alt,
-    tag, stem
+    stem
     } = @props
     if audio_id and LANG is \h
       re = /(.)\u20DE(\S+)/g
@@ -139,6 +139,7 @@ Heteronym = createClass do
     else
       span { dangerouslySetInnerHTML: { __html: title } }
     ]
+    list ++= small { className: \youyin } a { key: stem, className: \xref, href: "#H#stem" } "(詞幹:#stem)" if stem?
     list ++= small { className: \youyin } youyin if youyin
     mp3 = ''
     if audio_id
