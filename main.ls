@@ -862,8 +862,8 @@ pinyin_lookup = (query,cb) !->
 
 # 由漢字查阿美語
 han_amis_lookup = (query,cb) !->
-  cmn_amis_def <- GET \revdict-amis-def.txt
-  cmn_amis_ex  <- GET \revdict-amis-ex.txt
+  cmn_amis_def <- GET LANG + '/revdict-amis-def.txt'
+  cmn_amis_ex  <- GET LANG + '/revdict-amis-ex.txt'
   x = []
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"")
   lookup_in = (cmn) ~>

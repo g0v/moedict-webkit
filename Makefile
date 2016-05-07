@@ -30,7 +30,7 @@ amis ::
 	perl link2pack.pl p < p.txt
 	cp moedict-data-amis/index.json           p/index.json
 	cd moedict-data-amis && python cmn-amis-longstr.py
-	cp moedict-data-amis/revdict-amis*.txt    .
+	cp moedict-data-amis/revdict-amis*.txt    p/
 
 amis-poinsot ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-francais.git moedict-data-amis-mp
@@ -39,7 +39,9 @@ amis-poinsot ::
 	lsc json2prefix.ls m
 	lsc autolink.ls m > m.txt
 	perl link2pack.pl m < m.txt
-	cp moedict-data-amis-mp/index.json           m/index.json
+	cp moedict-data-amis-mp/index.json         m/index.json
+	touch m/revdict-amis-def.txt
+	touch m/revdict-amis-ex.txt
 
 amis-safolu ::
 	ln -sf ../amis-safolu/txt/dict-amis.json   dict-amis-safolu.json
@@ -47,6 +49,7 @@ amis-safolu ::
 	lsc autolink.ls s > s.txt
 	perl link2pack.pl s < s.txt
 	cp ../amis-safolu/txt/index.json           s/index.json
+	cp ../amis-safolu/txt/revdict-*.txt        s/
 
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
