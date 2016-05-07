@@ -25,7 +25,7 @@ while (<STDIN>) {
     my $bucket = $1;
     my $title = $2;
     /"t":"([^"]+)"/ or die "Wrong title: $title";
-    my $file = Encode::decode_utf8($1);
+    my $file = lc Encode::decode_utf8($1);
     $file =~ s![`~]!!g;
     next if $file =~ /[⿰⿸⿺]/;
     next if $seen{$file}++;
