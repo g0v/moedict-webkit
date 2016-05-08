@@ -365,7 +365,7 @@ window.do-load = ->
     onFollow = ->
         return if it.metaKey or it.ctrlKey
         val = $(@).attr(\href)
-        return true if val is \#
+        return true if val is \# or val is \##
         if $('.dropdown.open').length
           $ \.navbar .css \position \fixed
           $ \.dropdown.open .removeClass \open
@@ -376,7 +376,7 @@ window.do-load = ->
     if isCordova or not \onhashchange of window
       $ '#result, .dropdown-menu' .on \click 'a[href^="#"]:not(.mark)' onFollow
     else
-      $ '#result, .dropdown-menu' .on \click 'a[href^="./"]:not([href^=#]):not(.mark)' onFollow
+      $ '#result, .dropdown-menu' .on \click 'a[href^="./"]:not([href^="#"]):not(.mark)' onFollow
 
     unless isDroidGap => window.onpopstate = ->
       return window.press-back! if isDroidGap
@@ -683,7 +683,7 @@ window.do-load = ->
   fill-bucket = (id, bucket, cb) ->
     raw <- GET "p#{LANG}ck/#bucket.txt"
     key = escape id
-    idx = raw.indexOf('"' + key + '"');
+    idx = raw.indexOf('"' + key + '":{');
     return if idx is -1
     part = raw.slice(idx + key.length + 3);
     idx = part.indexOf('\n')
