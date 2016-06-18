@@ -50,6 +50,8 @@ amis-safolu ::
 	perl link2pack.pl s < s.txt
 	cp ../amis-safolu/txt/index.json           s/index.json
 	cp ../amis-safolu/txt/revdict-*.txt        s/
+	ruby ../amis-safolu/txt/stem-mapping.rb
+	cp ../amis-safolu/tmp/amis-stem-words.json s/stem-words.json
 
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
