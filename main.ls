@@ -592,7 +592,7 @@ window.do-load = ->
         ci = document.createTextNode $it.text!
         $it
           .closest \ru
-          .wrap html 
+          .wrap html
           .end!
         .replace-with ci
       .end!
@@ -699,10 +699,7 @@ window.do-load = ->
       INDEX[lang] = p1 + p2
       init-autocomplete! if lang is LANG
   else
-    GET "#LANG/xref.json", (-> XREF[LANG] = it; init!), \text
-    GET "#LANG/index.json", (-> INDEX[LANG] = it; init-autocomplete!), \text
-    for let lang of HASH-OF | lang isnt LANG
-      GET "#lang/xref.json", (-> XREF[lang] = it), \text
+    GET "#LANG/index.json", (-> INDEX[LANG] = it; init!; init-autocomplete!), \text
 
   unless STANDALONE
     GET "t/variants.json", (-> XREF.tv = {t: it}), \text
