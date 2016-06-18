@@ -61,6 +61,7 @@ isPrerendered = window.PRERENDER_LANG
 width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { p: '', m: '', s: '' }
+STEM = { p: '', m: '', s: '' }
 XREF = {
   p: {m: "aag", s: \co'ong }
   m: {p: "ci'im", s: \co'ong }
@@ -471,6 +472,7 @@ window.do-load = ->
     unless isCordova
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
+      GET "#LANG/stem-words.json" (-> STEM[LANG] = $.parseJSON it), \text
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-t")
     $('body').removeClass("lang-c")
@@ -700,6 +702,7 @@ window.do-load = ->
       init-autocomplete! if lang is LANG
   else
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init!; init-autocomplete!), \text
+    GET "#LANG/stem-words.json", (-> STEM[LANG] = $.parseJSON it; init-autocomplete!), \text
 
   unless STANDALONE
     GET "t/variants.json", (-> XREF.tv = {t: it}), \text
@@ -728,6 +731,22 @@ function render-taxonomy (lang, taxonomy)
   return $ul
 
 const MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字~：「`萌~，`艸~`芽~`也~。」","`唐~．`韓愈~、`劉~`師~`服~、`侯~`喜~、`軒轅~`彌~`明~．`石~`鼎~`聯句~：「`秋~`瓜~`未~`落~`蒂~，`凍~`芋~`強~`抽~`萌~。」"],"type":"`名~","f":"`草木~`初~`生~`的~`芽~。"},{"q":["`韓非子~．`說~`林~`上~：「`聖人~`見~`微~`以~`知~`萌~，`見~`端~`以~`知~`末~。」","`漢~．`蔡邕~．`對~`詔~`問~`灾~`異~`八~`事~：「`以~`杜漸防萌~，`則~`其~`救~`也~。」"],"type":"`名~","f":"`事物~`發生~`的~`開端~`或~`徵兆~。"},{"type":"`名~","l":["`通~「`氓~」。"],"e":["`如~：「`萌黎~」、「`萌隸~」。"],"f":"`人民~。"},{"type":"`名~","f":"`姓~。`如~`五代~`時~`蜀~`有~`萌~`慮~。"},{"q":["`楚辭~．`王~`逸~．`九思~．`傷~`時~：「`明~`風~`習習~`兮~`龢~`暖~，`百草~`萌~`兮~`華~`榮~。」"],"type":"`動~","e":["`如~：「`萌芽~」。"],"f":"`發芽~。"},{"q":["`管子~．`牧民~：「`惟~`有道~`者~，`能~`備~`患~`於~`未~`形~`也~，`故~`禍~`不~`萌~。」","`三國演義~．`第一~`回~：「`若~`萌~`異心~，`必~`獲~`惡報~。」"],"type":"`動~","e":["`如~：「`故態復萌~」。"],"f":"`發生~。"}],"p":"méng","b":"ㄇㄥˊ","=":"0676"}],"translation":{"francais":["germer"],"Deutsch":["Leute, Menschen  (S)","Meng  (Eig, Fam)","keimen, sprießen, knospen, ausschlagen "],"English":["to sprout","to bud","to have a strong affection for (slang)","adorable (loanword from Japanese `萌~え moe, slang describing affection for a cute character)"]}}'
+
+# 族語搜尋後重新排序列表
+# 1. 搜尋結果以字母排序
+# 2. exactly match 的詞彙放到最上面
+# 3. 根據 STEM[LANG] 去對照詞幹，將相關詞全部拉出來。目前有提供 STEM 的還只有蔡中涵大辭典(s)
+# 4. 剩下模糊搜尋出來的詞彙，接在最下面
+function amis-ordering (list, term)
+  list.=sort!
+  if list.indexOf(term) > 0
+    if Object.keys(STEM[LANG]).indexOf(term) > 0
+      list = list.filter (w) -> Object.keys(STEM[LANG]).indexOf(w) < 0
+      return [term].concat(STEM[LANG][term]).concat(["以下是模糊搜尋"]).concat(list)
+    else
+      return [term].concat(list)
+  else
+    return list
 
 function init-autocomplete
   $.widget "ui.autocomplete", $.ui.autocomplete, {
@@ -811,6 +830,7 @@ function init-autocomplete
       return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
+      results = amis-ordering results, term # 在列出前先做 amis 排序
       MaxResults = if width-is-xs! then 400 else 1024
       if results.length > MaxResults
         more = "(僅顯示前 #MaxResults 筆)"
