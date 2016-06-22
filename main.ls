@@ -739,12 +739,16 @@ const MOE = '{"n":8,"t":"萌","r":"`艸~","c":12,"h":[{"d":[{"q":["`說文解字
 # 4. 剩下模糊搜尋出來的詞彙，接在最下面
 function amis-ordering (list, term)
   list.=sort!
-  if list.indexOf(term) > 0
-    if Object.keys(STEM[LANG]).indexOf(term) > 0
-      list = list.filter (w) -> Object.keys(STEM[LANG]).indexOf(w) < 0
-      return [term].concat(STEM[LANG][term]).concat(["以下是模糊搜尋"]).concat(list)
+
+  if term in list
+    if term in Object.keys(STEM[LANG])
+      filtered-list = list.filter (w) -> w !== term
+      filtered-list = filtered-list.filter (w) -> w not in STEM[LANG][term]
+      filtered-list = ["以下是模糊搜尋"] ++ filtered-list if filtered-list.length
+      return [term] ++ STEM[LANG][term] ++ filtered-list
     else
-      return [term].concat(list)
+      filtered-list = list.filter (w) -> w !== term
+      return [term] ++ filtered-list
   else
     return list
 
