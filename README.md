@@ -6,7 +6,7 @@
 
 ```sh
 docker@boot2docker:~$ docker pull miaoski/moedict-webkit
-docker@boot2docker:~$ docker run -t -i -p 8888:8888 bash
+docker@boot2docker:~$ docker run -p 8888:8888 -t -i miaoski/moedict-webkit /bin/bash
 root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 ```
 
