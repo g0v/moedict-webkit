@@ -122,6 +122,7 @@ Heteronym = createClass do
             meta { itemProp: \name, content: mp3 - /^.*\// }
             meta { itemProp: \contentURL, content: mp3 }
             t.1
+        t.2 = convert-pinyin-h(t.2) if t.1 is \四
         __html = t.2.replace(/¹/g \<sup>1</sup>).replace(/²/g \<sup>2</sup>).replace(/³/g \<sup>3</sup>)
                     .replace(/⁴/g \<sup>4</sup>).replace(/⁵/g \<sup>5</sup>)
         pinyin-list ++= span { dangerouslySetInnerHTML: { __html } }
@@ -318,6 +319,11 @@ const DT-Tones = {
 # ptkh(8) 變低入 (4)
 # ă(5) 直接轉 ā̱ (7+3) # 優勢腔變中平 ā (7)，台北變 a̲ (3)
 
+
+function convert-pinyin-h (yin, isBody=true)
+  system = localStorage?getItem(\pinyin_h) || \TH
+  return yin if system is \TH
+  return th2pfs yin if system is \PFS
 
 function convert-pinyin-t (yin, isBody=true)
   system = localStorage?getItem(\pinyin_t) || \TL
@@ -678,6 +684,55 @@ decodeLangPart = (LANG-OR-H, part='') ->
   return part
 
 module.exports = { UserPref, Result, Nav, Links, decodeLangPart }
+
+th2pfs = ->
+  segs = it
+    .replace(/t/g   \th)
+    .replace(/p/g   \ph)
+    .replace(/k/g   \kh)
+    .replace(/c/g   \chh)
+    .replace(/b/g   \p)
+    .replace(/d/g   \t)
+    .replace(/g/g   \k)
+    .replace(/nk/g  \ng)
+    .replace(/j/g   \ch)
+    .replace(/q/g   \chh)
+    .replace(/x/g   \s)
+    .replace(/z/g   \ch)
+    .replace(/ii/g  'ṳ')
+    .replace(/ua/g  \oa)
+    .replace(/ue/g  \oe)
+    .replace(/\bi/   \y)
+    .replace(/\by\b/ \yi)
+    .split /([^¹²³⁴⁵]+[¹²³⁴⁵]+)/
+  result = ''
+  for s in segs | s.length
+    result += tone2pfs s
+  return result
+  /*
+  for v in vowels
+    tonePosition = it.indexOf(v)
+  */
+
+ToneMarkMap = {
+  '²⁴':  "\u0302" # â
+  '¹¹':  "\u0300" # à
+  '³¹':  "\u0301" # á
+  '⁵⁵':  '' # a
+  '²' :  '' # a
+  '⁵' :  "\u030d" # a̍
+}
+tone2pfs = ->
+  [syllable, tone] = it.split(/([¹²³⁴⁵]+)/)
+  mark = ToneMarkMap[tone]
+  for vowel in <[ oa a u o e i ṳ n m ]> | ~syllable.indexOf(vowel)
+    pos = syllable.indexOf vowel
+    before = syllable.substring 0, pos+1
+    after = syllable.substring pos+1
+    return "#before#mark#after "
+  return it
+
+#xi-only = -> parts = it.split(/ /); return [th2pfs(parts.shift!)].concat(parts).join(' ')
 
 PinYinMap =
   "WadeGiles": {"zha":"cha","cha":"ch'a","zhai":"chai","chai":"ch'ai","zhan":"chan","chan":"ch'an","zhang":"chang","chang":"ch'ang","zhao":"chao","chao":"ch'ao","zhe":"che","che":"ch'e","zhei":"chei","zhen":"chen","chen":"ch'en","zheng":"cheng","cheng":"ch'eng","ji":"chi","qi":"ch'i","jia":"chia","qia":"ch'ia","jiang":"chiang","qiang":"ch'iang","jiao":"chiao","qiao":"ch'iao","jie":"chieh","qie":"ch'ieh","jian":"chien","qian":"ch'ien","zhi":"chih","chi":"ch'ih","jin":"chin","qin":"ch'in","jing":"ching","qing":"ch'ing","jiu":"chiu","qiu":"ch'iu","jiong":"chiung","qiong":"ch'iung","zhuo":"cho","chuo":"ch'o","zhou":"chou","chou":"ch'ou","zhu":"chu","chu":"ch'u","zhua":"chua","chua":"ch'ua","zhuai":"chuai","chuai":"ch'uai","zhuan":"chuan","chuan":"ch'uan","zhuang":"chuang","chuang":"ch'uang","zhui":"chui","chui":"ch'ui","zhun":"chun","chun":"ch'un","zhong":"chung","chong":"ch'ung","ju":"chü","qu":"ch'ü","juan":"chüan","quan":"ch'üan","jue":"chüeh","que":"ch'üeh","jun":"chün","qun":"ch'ün","er":"erh","he":"ho","xi":"hsi","xia":"hsia","xiang":"hsiang","xiao":"hsiao","xie":"hsieh","xian":"hsien","xin":"hsin","xing":"hsing","xiu":"hsiu","xiong":"hsiung","xu":"hsü","xuan":"hsüan","xue":"hsüeh","xun":"hsün","hong":"hung","ran":"jan","rang":"jang","rao":"jao","re":"je","ren":"jen","reng":"jeng","ri":"jih","ruo":"jo","rou":"jou","ru":"ju","ruan":"juan","rui":"jui","run":"jun","rong":"jung","ga":"ka","ka":"k'a","gai":"kai","kai":"k'ai","gan":"kan","kan":"k'an","gang":"kang","kang":"k'ang","gao":"kao","kao":"k'ao","gei":"kei","gen":"ken","ken":"k'en","geng":"keng","keng":"k'eng","ge":"ko","ke":"k'o","gou":"kou","kou":"k'ou","gu":"ku","ku":"k'u","gua":"kua","kua":"k'ua","guai":"kuai","kuai":"k'uai","guan":"kuan","kuan":"k'uan","guang":"kuang","kuang":"k'uang","gui":"kuei","kui":"k'uei","gun":"kun","kun":"k'un","gong":"kung","kong":"k'ung","guo":"kuo","kuo":"k'uo","lie":"lieh","lian":"lien","luo":"lo","long":"lung","lv":"lü","lve":"lüeh","lvn":"lün","mie":"mieh","mian":"mien","nie":"nieh","nian":"nien","nuo":"no","nong":"nung","nv":"nü","nve":"nüeh","ba":"pa","pa":"p'a","bai":"pai","pai":"p'ai","ban":"pan","pan":"p'an","bang":"pang","pang":"p'ang","bao":"pao","pao":"p'ao","bei":"pei","pei":"p'ei","ben":"pen","pen":"p'en","beng":"peng","peng":"p'eng","bi":"pi","pi":"p'i","biao":"piao","piao":"p'iao","bie":"pieh","pie":"p'ieh","bian":"pien","pian":"p'ien","bin":"pin","pin":"p'in","bing":"ping","ping":"p'ing","bo":"po","po":"p'o","pou":"p'ou","bu":"pu","pu":"p'u","shi":"shih","shong":"shung","suo":"so","si":"ssu","song":"sung","da":"ta","ta":"t'a","dai":"tai","tai":"t'ai","dan":"tan","tan":"t'an","dang":"tang","tang":"t'ang","dao":"tao","tao":"t'ao","de":"te","te":"t'e","dei":"tei","den":"ten","deng":"teng","teng":"t'eng","di":"ti","ti":"t'i","diang":"tiang","diao":"tiao","tiao":"t'iao","die":"tieh","tie":"t'ieh","dian":"tien","tian":"t'ien","ding":"ting","ting":"t'ing","diu":"tiu","duo":"to","tuo":"t'o","dou":"tou","tou":"t'ou","za":"tsa","ca":"ts'a","zai":"tsai","cai":"ts'ai","zan":"tsan","can":"ts'an","zang":"tsang","cang":"ts'ang","zao":"tsao","cao":"ts'ao","ze":"tse","ce":"ts'e","zei":"tsei","zen":"tsen","cen":"ts'en","zeng":"tseng","ceng":"ts'eng","zuo":"tso","cuo":"ts'o","zou":"tsou","cou":"ts'ou","zu":"tsu","cu":"ts'u","zuan":"tsuan","cuan":"ts'uan","zui":"tsui","cui":"ts'ui","zun":"tsun","cun":"ts'un","zong":"tsung","cong":"ts'ung","du":"tu","tu":"t'u","duan":"tuan","tuan":"t'uan","dui":"tui","tui":"t'ui","dun":"tun","tun":"t'un","dong":"tung","tong":"t'ung","zi":"tzu","ci":"tz'u","yan":"yen","ye":"yeh","you":"yu","yong":"yung","yu":"yü","yuan":"yüan","yue":"yüeh","yun":"yün"}

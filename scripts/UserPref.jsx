@@ -8,10 +8,11 @@ export default class UserPref extends React.Component {
         simptrad: localStorage.getItem("simptrad"),
         phonetics: localStorage.getItem("phonetics"),
         pinyin_a: localStorage.getItem("pinyin_a") || "HanYu",
-        pinyin_t: localStorage.getItem("pinyin_t") || "TL"
+        pinyin_t: localStorage.getItem("pinyin_t") || "TL",
+        pinyin_h: localStorage.getItem("pinyin_h") || "TH"
     }
     render() {
-        const { phonetics, simptrad, pinyin_a, pinyin_t } = this.props
+        const { phonetics, simptrad, pinyin_a, pinyin_t, pinyin_h } = this.props
         return <div>
             <h4>偏好設定</h4>
             <button className="close btn-close" type="button" aria-hidden>×</button>
@@ -29,6 +30,11 @@ export default class UserPref extends React.Component {
                     TL:        "臺羅拼音",
                     DT:        "臺通拼音",
                     POJ:       "白話字"
+                }} />
+            }{ $body.hasClass('lang-h') &&
+                <PrefList pref={{pinyin_h}} label="四縣客語顯示方式" items={{
+                    TH:        "客家語拼音方案",
+                    PFS:       "客語白話字"
                 }} />
             }<PrefList pref={{ phonetics }} label="條目音標顯示方式" items={{
                     rightangle:"注音拼音共同顯示",
@@ -53,6 +59,7 @@ class PrefList extends React.Component {
     componentDidUpdate() { this.phoneticsChanged() }
     pinyin_aChanged() { location.reload() }
     pinyin_tChanged() { location.reload() }
+    pinyin_hChanged() { location.reload() }
     phoneticsChanged() { $body.attr('data-ruby-pref', {
         rightangle: "both", bopomofo: "zhuyin",
         pinyin: "pinyin", none: "none"
