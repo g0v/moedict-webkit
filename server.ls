@@ -342,7 +342,7 @@ require(\zappajs) {+disable_io} ->
               boder: 1px solid #999;
               box-shadow: #d4d4d4 0 3px 3px;
               margin: 10px;
-            ''' class: 'btn btn-default' src: "#part#png-suffix" width:160 height:160 alt:part, title:part
+            ''' class: 'btn btn-default' src: esc("#part#png-suffix"), width:160 height:160 alt:esc(part), title:esc(part)
           td -> a {style: 'color: #006', href}, expand-def def
         form id:'frm' style:'''
           top: 0;

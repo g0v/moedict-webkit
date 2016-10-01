@@ -912,11 +912,11 @@
                           return img({
                             style: 'vertical-align: top;\nbackground: white;\nborder-radius: 10px;\nboder: 1px solid #999;\nbox-shadow: #d4d4d4 0 3px 3px;\nmargin: 10px;',
                             'class': 'btn btn-default',
-                            src: part + "" + pngSuffix,
+                            src: esc(part + "" + pngSuffix),
                             width: 160,
                             height: 160,
-                            alt: part,
-                            title: part
+                            alt: esc(part),
+                            title: esc(part)
                           });
                         });
                       });
