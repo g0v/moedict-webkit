@@ -826,6 +826,7 @@ function init-autocomplete
       regex.=replace(/\(\)/g '')
       try results = INDEX[LANG].match(//#{ b2g regex }//g)
       results ||= xref-of(term, (if LANG is \a then \t else \a), LANG)
+      results = amis-ordering results, term # 在列出前先做 amis 排序
       if LANG is \h and term is \我
         results.unshift \𠊎
       if LANG is \t => for v in xref-of(term, \tv, \t).reverse!
@@ -834,7 +835,6 @@ function init-autocomplete
       return cb ["▶找不到。分享這些字？"] if LANG isnt \c and not results?length
       return cb [''] unless results?length
       do-lookup(results.0 - /"/g) if results.length is 1
-      results = amis-ordering results, term # 在列出前先做 amis 排序
       MaxResults = if width-is-xs! then 400 else 1024
       if results.length > MaxResults
         more = "(僅顯示前 #MaxResults 筆)"
