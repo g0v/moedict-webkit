@@ -17,7 +17,7 @@ export default class UserPref extends React.Component {
             <h4>偏好設定</h4>
             <button className="close btn-close" type="button" aria-hidden>×</button>
             <ul>{ $body.hasClass('lang-a') &&
-                <PrefList pref={{pinyin_a}} label="羅馬拼音顯示方式" items={{
+                <PrefList name="a" pref={{pinyin_a}} label="羅馬拼音顯示方式" items={{
                     'HanYu-TongYong': "漢語華通共同顯示",
                     HanYu:            "漢語拼音",
                     TongYong:         "華通拼音",
@@ -25,25 +25,25 @@ export default class UserPref extends React.Component {
                     GuoYin:           "注音二式"
                 }} />
             }{ $body.hasClass('lang-t') &&
-                <PrefList pref={{pinyin_t}} label="羅馬拼音顯示方式" items={{
+                <PrefList name="t" pref={{pinyin_t}} label="羅馬拼音顯示方式" items={{
                     'TL-DT':   "臺羅臺通共同顯示",
                     TL:        "臺羅拼音",
                     DT:        "臺通拼音",
                     POJ:       "白話字"
                 }} />
-            }{ $body.hasClass('lang-h') ?
-                <PrefList pref={{pinyin_h}} label="四縣客語顯示方式" items={{
+            }{ $body.hasClass('lang-h') &&
+                <PrefList name="h" pref={{pinyin_h}} label="四縣客語顯示方式" items={{
                     TH:        "客家語拼音方案",
                     PFS:       "客語白話字"
                 }} />
-            : <PrefList pref={{ phonetics }} label="條目音標顯示方式" items={{
+            }<PrefList name="phonetics" pref={{ phonetics }} label="條目音標顯示方式" items={{
                     rightangle:"注音拼音共同顯示",
                     bopomofo:  "注音符號",
                     pinyin:    "羅馬拼音",
                     '-':       '',
                     none:      "關閉"
                 }} />
-            }</ul>
+            </ul>
             <button className="btn btn-primary btn-block btn-close" type="button">關閉</button>
         </div>
     }
@@ -65,11 +65,11 @@ class PrefList extends React.Component {
         pinyin: "pinyin", none: "none"
     }[this.state.selected]) }
     render() {
-        const { label, items } = this.props
+        const { label, items, name } = this.props
         const vals = Object.keys(items)
         var { key, selected } = this.state
         selected = selected || vals[0]
-        return <li className="btn-group">
+        return <li className="btn-group" id={"pref-"+name}>
             <label>{ label }</label>
             <button className="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">{
                 vals.map((val)=>(val === selected) && items[val])

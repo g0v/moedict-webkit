@@ -703,7 +703,7 @@ th2pfs = ->
     .replace(/ua/g  \oa)
     .replace(/ue/g  \oe)
     .replace(/\bi/   \y)
-    .replace(/\by\b/ \yi)
+    .replace(/\by(\b|[ptk])/ \yi)
     .split /([^¹²³⁴⁵]+[¹²³⁴⁵]+)/
   result = ''
   for s in segs | s.length
