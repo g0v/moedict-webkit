@@ -31,19 +31,19 @@ export default class UserPref extends React.Component {
                     DT:        "臺通拼音",
                     POJ:       "白話字"
                 }} />
-            }{ $body.hasClass('lang-h') &&
+            }{ $body.hasClass('lang-h') ?
                 <PrefList pref={{pinyin_h}} label="四縣客語顯示方式" items={{
                     TH:        "客家語拼音方案",
                     PFS:       "客語白話字"
                 }} />
-            }<PrefList pref={{ phonetics }} label="條目音標顯示方式" items={{
+            : <PrefList pref={{ phonetics }} label="條目音標顯示方式" items={{
                     rightangle:"注音拼音共同顯示",
                     bopomofo:  "注音符號",
                     pinyin:    "羅馬拼音",
                     '-':       '',
                     none:      "關閉"
                 }} />
-            </ul>
+            }</ul>
             <button className="btn btn-primary btn-block btn-close" type="button">關閉</button>
         </div>
     }
