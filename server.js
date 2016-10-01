@@ -817,7 +817,7 @@
                   var attrs, uri;
                   meta({
                     itemprop: "name",
-                    content: word
+                    content: esc(word)
                   });
                   meta({
                     itemprop: "image",
@@ -904,7 +904,7 @@
                       td(function(){
                         meta({
                           itemprop: "itemListElement",
-                          content: part
+                          content: esc(part)
                         });
                         return a({
                           href: href

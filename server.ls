@@ -311,7 +311,7 @@ require(\zappajs) {+disable_io} ->
         })</script><!--<![endif]-->"""
         return
       body {+itemscope, itemtype:\http://schema.org/ItemList}, -> center ->
-        meta itemprop:"name" content:word
+        meta itemprop:"name" content:esc word
         meta itemprop:"image" content:og-image
         meta itemprop:"itemListOrder" content:\Unordered
         attrs = class:'moedict' src:"#word#png-suffix" width:240 height:240 alt:word, title:word
@@ -334,7 +334,7 @@ require(\zappajs) {+disable_io} ->
           box-shadow: #d4d4d4 0 3px 3px;
         ''', -> for {href, part, def} in @segments || [] => tr ->
           td ->
-            meta itemprop:"itemListElement" content:part
+            meta itemprop:"itemListElement" content:esc part
             a {href} -> img style:'''
               vertical-align: top;
               background: white;
