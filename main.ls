@@ -62,6 +62,7 @@ width-is-xs = -> $ \body .width! < 768
 entryHistory = []
 INDEX = { p: '', m: '', s: '' }
 STEM = { p: '', m: '', s: '' }
+CH_STEM_MAPPING = { p: '', m: '', s: '' }
 XREF = {
   p: {m: "aag", s: \co'ong }
   m: {p: "ci'im", s: \co'ong }
@@ -473,6 +474,7 @@ window.do-load = ->
       GET "#LANG/xref.json" (-> XREF[LANG] = it), \text
       GET "#LANG/index.json" (-> INDEX[LANG] = it), \text
       GET "#LANG/stem-words.json" (-> STEM[LANG] = $.parseJSON it), \text
+      GET "#LANG/ch-mapping.json" (-> CH_STEM_MAPPING[LANG] = $.parseJSON it), \text
     $('body').removeClass("lang-a")
     $('body').removeClass("lang-t")
     $('body').removeClass("lang-c")
@@ -703,6 +705,7 @@ window.do-load = ->
   else
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init!; init-autocomplete!), \text
     GET "#LANG/stem-words.json", (-> STEM[LANG] = $.parseJSON it; init-autocomplete!), \text
+    GET "#LANG/ch-mapping.json", (-> CH_STEM_MAPPING[LANG] = $.parseJSON it; init-autocomplete!), \text
 
   unless STANDALONE
     GET "t/variants.json", (-> XREF.tv = {t: it}), \text

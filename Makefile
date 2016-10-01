@@ -50,6 +50,7 @@ amis-safolu ::
 	perl link2pack.pl s < s.txt
 	cp ../amis-safolu/txt/index.json           s/index.json
 	cp ../amis-safolu/txt/revdict-*.txt        s/
+	cp ../amis-safolu/txt/amis-ch-mapping.json s/ch-mapping.json
 	ruby ../amis-safolu/txt/stem-mapping.rb
 	cp ../amis-safolu/tmp/amis-stem-words.json s/stem-words.json
 
