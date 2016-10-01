@@ -249,11 +249,12 @@ require(\zappajs) {+disable_io} ->
       t ||= @text
       t = t.slice(1) if t is /^['!~:]/
       Title = "#t - #{ TITLE-OF[LANG] }萌典"
-      title Title
-      meta name:"og:title" content:Title
-      meta name:"twitter:title" content:Title
-      meta property:"og:description" content:def
-      meta name:"description" content:def
+      esc = -> it.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, "&apos;").replace(/"/g, "&quot;")
+      title esc Title
+      meta name:"og:title" content:esc Title
+      meta name:"twitter:title" content:esc Title
+      meta property:"og:description" content:esc def
+      meta name:"description" content:esc def
       link href:'/styles.css' rel:'stylesheet'
       link href:'/css/cupertino/jquery-ui-1.10.4.custom.css' rel:'stylesheet'
       link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
@@ -269,8 +270,8 @@ require(\zappajs) {+disable_io} ->
         if @idx => return body {+itemscope, itemtype:\http://schema.org/ScholarlyArticle}, ->
           idx = 0
           (if @isCLI then (-> div class:'result', it) else (-> div id:'result' class:'hide', it)) <| ~>
-            meta itemprop:"image" content:og-image
-            h1 {itemprop:\name}, "<a href='/#h#word'>#word</a>"
+            meta itemprop:"image" content:esc og-image
+            h1 {itemprop:\name}, "<a href='/#h#{ esc word }'>#{ esc word }</a>"
             div {itemprop:\articleBody}, -> for {d, t, b, T, p:P} in (@h || {d:[{f: @t}]})
               p trim(b || t || T || "#P".replace(/\u20DE/g ' '))
               ol -> for {f='', l='', s='', e='', l='', q=[], a=''} in d => li ->
