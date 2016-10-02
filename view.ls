@@ -726,7 +726,7 @@ ToneMarkMap = {
 tone2pfs = ->
   [syllable, tone] = it.split(/([¹²³⁴⁵]+)/)
   mark = ToneMarkMap[tone]
-  for vowel in <[ oa a u o e i ṳ n m ]> | ~syllable.indexOf(vowel)
+  for vowel in <[ o e a u i ṳ n m ]> | ~syllable.indexOf(vowel)
     pos = syllable.indexOf vowel
     before = syllable.substring 0, pos+1
     after = syllable.substring pos+1
