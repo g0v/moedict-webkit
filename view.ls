@@ -705,6 +705,7 @@ th2pfs = ->
     .replace(/\bi/   \y)
     .replace(/\by(\b|[ptk])h?/g "yi$1")
     .replace(/(i[ptk])h/g "$1")
+    .replace(/y[mn]/g "yi$1")
     .split /([^¹²³⁴⁵]+[¹²³⁴⁵]+)/
   result = ''
   for s in segs | s.length
