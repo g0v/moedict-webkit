@@ -155,6 +155,9 @@
     if (/srch/i.exec(it)) {
       return 'SourceHanSansTWHeavy';
     }
+    if (/rxkt/i.exec(it)) {
+      return 'Typography';
+    }
     return wt2font[it] || 'TW-Kai';
   };
   iconv = require('iconv-lite');
@@ -1128,6 +1131,10 @@
           }
           if (/ShuoWen/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             x += 50;
+            y += 45;
+          }
+          if (/Typography/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
+            x += 25;
             y += 45;
           }
           if (/cwTeXQ/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
