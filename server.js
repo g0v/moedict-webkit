@@ -973,6 +973,14 @@
                         }, '篆文');
                       });
                       optgroup({
+                        label: '日星'
+                      }, function(){
+                        return option({
+                          selected: pngSuffix === '.png?font=rxkt',
+                          value: '?font=rxkt'
+                        }, '初號楷體');
+                      });
+                      optgroup({
                         label: '逢甲大學'
                       }, function(){
                         return option({
@@ -1135,7 +1143,7 @@
           }
           if (/Typography/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             x += 25;
-            y += 25;
+            y += 5;
           }
           if (/cwTeXQ/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             x += 15;
