@@ -1135,7 +1135,7 @@
           }
           if (/Typography/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             x += 25;
-            y += 45;
+            y += 25;
           }
           if (/cwTeXQ/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             x += 15;

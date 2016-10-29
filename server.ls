@@ -432,7 +432,7 @@ function text2png (text, font)
         y += 45
       if font is /Typography/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 25
-        y += 45
+        y += 25
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15
         y += 15
