@@ -362,8 +362,8 @@ require(\zappajs) {+disable_io} ->
               option value:'?font=kai', \楷書
               option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
-            optgroup label:'日星', ->
-              option selected:(png-suffix is '.png?font=rxkt'), value:\?font=rxkt, \初號楷體
+            # optgroup label:'日星', ->
+            #   option selected:(png-suffix is '.png?font=rxkt'), value:\?font=rxkt, \初號楷體
             optgroup label:'逢甲大學', ->
               option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
             optgroup label:'cwTeX Q', style:'font-family: Helvetica, sans-serif', ->

@@ -973,14 +973,6 @@
                         }, '篆文');
                       });
                       optgroup({
-                        label: '日星'
-                      }, function(){
-                        return option({
-                          selected: pngSuffix === '.png?font=rxkt',
-                          value: '?font=rxkt'
-                        }, '初號楷體');
-                      });
-                      optgroup({
                         label: '逢甲大學'
                       }, function(){
                         return option({
