@@ -796,7 +796,7 @@ function init-autocomplete
       term = "，" if term is \=諺語 and LANG is \h
       $('iframe').fadeOut \fast
       return cb [] unless term.length
-	  # return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
+	    # return trs_lookup(term, cb) unless LANG isnt \t or term is /[^\u0000-\u00FF]/ or term is /[,;0-9]/
       # return pinyin_lookup(term, cb) if LANG is \a and term is /^[a-zA-Z1-4 ]+$/
       return han_amis_lookup(term, cb) if LANG in <[ p m s ]> and term is not /[\u0000-\u00FF]/
       return cb ["→列出含有「#{term}」的詞"] if width-is-xs! and term isnt /[「」。，?.*_% ]/
@@ -844,7 +844,7 @@ function init-autocomplete
         results.=slice(0, MaxResults)
         results.push more
       return cb (map (- /"/g), results)
-      #return cb ((results.join(',') - /"/g) / ',')
+      # return cb ((results.join(',') - /"/g) / ',')
 
 PUA2UNI = {
   \⿰𧾷百 : \𬦰
@@ -899,10 +899,10 @@ han_amis_lookup = (query,cb) !->
     p = 0
     loop
       p = cmn.indexOf terms, p+1
-      break if p is -1 or x.length > 20        # 最多找 20 個
+      break if p is -1 or x.length > 20 # 最多找 20 個
       ae = cmn.lastIndexOf '\ufffb', p
       ab = cmn.lastIndexOf '\ufffa', ae
-      title = cmn.slice(ab+1, ae)              # .replace('g', 'ng') 方敏英字典改成 ng 了
+      title = cmn.slice(ab+1, ae) # .replace('g', 'ng') 方敏英字典改成 ng 了
       x.push title if title not in x
 
   lookup_in cmn_amis_def
