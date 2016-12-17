@@ -890,6 +890,11 @@ han_amis_lookup = (query,cb) !->
   cmn_amis_ex  <- GET LANG + '/revdict-amis-ex.txt'
   x = []
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"")
+
+  if terms in Object.keys(CH_STEM_MAPPING[LANG])
+    stem = CH_STEM_MAPPING[LANG][terms]
+    x = x.concat [stem], STEM[LANG][stem]
+
   lookup_in = (cmn) ~>
     p = 0
     loop
@@ -899,8 +904,10 @@ han_amis_lookup = (query,cb) !->
       ab = cmn.lastIndexOf '\ufffa', ae
       title = cmn.slice(ab+1, ae)              # .replace('g', 'ng') 方敏英字典改成 ng 了
       x.push title if title not in x
+
   lookup_in cmn_amis_def
   lookup_in cmn_amis_ex
+
   if x.length == 0
     cb(["無符合之詞"])
   else
