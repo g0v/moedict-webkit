@@ -35,8 +35,8 @@ dict-revised.pua.json
 dict-revised.unicode.json
 dict-twblg-ext.json
 dict-twblg.json
-dict-amis.json
-dict-amis-mp.json
+/dict-amis.json
+/dict-amis-mp.json
 dict-nan.json
 translation-data/cfdict.xml
 translation-data/cedict.txt
@@ -55,4 +55,4 @@ server.js
 dict-amis.sq3
 revdict-amis-def.txt
 revdict-amis-ex.txt
-styles.css
+/styles.css
