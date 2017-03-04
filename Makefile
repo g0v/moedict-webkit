@@ -23,6 +23,8 @@ upload ::
 
 amis-static:
 	cp -r styles.css *.html js css scripts p m s dict-amis*.json amis-deploy/
+	cp ../amis-safolu/txt/amis-ch-mapping.json amis-deploy/s/ch-mapping.json
+	cp ../amis-safolu/tmp/amis-stem-words.json amis-deploy/s/stem-words.json
 
 amis ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
