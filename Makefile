@@ -21,6 +21,9 @@ upload ::
 	rsync -avzP main.* view.* styles.css index.html js moe0:code/
 	rsync -avzP main.* view.* styles.css index.html js moe1:code/
 
+amis-static:
+	cp -r styles.css *.html js scripts p m s dict-amis*.json amis-deploy/
+
 amis ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
 	cd moedict-data-amis && make moedict
