@@ -62,6 +62,7 @@ offline-dev :: moedict-data deps translation
 	#-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
+	lsc cat2special.ls
 
 csld ::
 	python translation-data/csld2json.py
