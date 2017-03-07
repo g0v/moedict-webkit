@@ -28,7 +28,7 @@ checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	-git clone https://github.com/g0v/moedict-epub.git
 
-moedict-data :: checkout pinyin
+moedict-data :: checkout symlinks pinyin
 
 offline :: deps
 	perl link2pack.pl a < a.txt
@@ -37,7 +37,7 @@ offline :: deps
 	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
-offline-dev :: moedict-data deps translation
+symlinks :: translation
 	ln -fs ../moedict-data/dict-revised-translated.json moedict-epub/dict-revised.json
 	cd moedict-epub && perl json2unicode.pl             > dict-revised.unicode.json
 	cd moedict-epub && perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
@@ -47,6 +47,8 @@ offline-dev :: moedict-data deps translation
 	ln -fs moedict-data-twblg/dict-twblg-ext.json          dict-twblg-ext.json
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
+
+offline-dev :: moedict-data deps translation
 	#lsc json2prefix.ls a
 	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
 	perl link2pack.pl a < a.txt
@@ -86,7 +88,7 @@ pinyin ::
 	perl build-pinyin-lookup.pl h
 	perl build-pinyin-lookup.pl c
 
-translation :: translation-data moedict-data
+translation :: translation-data
 	python translation-data/xml2txt.py
 	python translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
@@ -97,7 +99,7 @@ translation-data/handedict.txt :
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
 
 translation-data/cedict.txt :
-	cd translation-data && curl http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
+	cd translation-data && curl https://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 
 translation-data/cfdict.xml :
 	cd translation-data && curl -O https://www.moedict.tw/translation-data/cfdict.xml
