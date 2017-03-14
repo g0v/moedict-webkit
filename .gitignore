@@ -53,6 +53,6 @@ moedict-epub/
 moedict-app/
 server.js
 dict-amis.sq3
-revdict-amis-def.txt
-revdict-amis-ex.txt
+/revdict-amis-def.txt
+/revdict-amis-ex.txt
 /styles.css
