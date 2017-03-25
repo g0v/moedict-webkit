@@ -10,10 +10,10 @@ build ::
 deps ::
 	npm i
 	gulp build
-	cp js/deps.js amis-deploy/js
 
 js/deps.js ::
 	gulp webpack:build
+	cp js/deps.js amis-deploy/js
 
 manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
