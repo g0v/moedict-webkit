@@ -415,7 +415,7 @@ function text2png (text, font)
       ctx.font = "355px #font"
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
-        ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG"
+        ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG, HanaMinA, HanaMinB, Apple Color Emoji"
         ch += text.0
         ch += text.1
         text.=slice 2
