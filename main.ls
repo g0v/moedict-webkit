@@ -14,7 +14,7 @@ window.React = React
 unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
-LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \p)
+LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || \s
 MOE-ID = getPref(\prev-id) || {p: \ci'im m: \aag s: \co'ong}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
@@ -706,18 +706,6 @@ window.do-load = ->
     GET "#LANG/index.json", (-> INDEX[LANG] = it; init!; init-autocomplete!), \text
     GET "#LANG/stem-words.json", (-> STEM[LANG] = $.parseJSON it; init-autocomplete!), \text
     GET "#LANG/ch-mapping.json", (-> CH_STEM_MAPPING[LANG] = $.parseJSON it; init-autocomplete!), \text
-
-  unless STANDALONE
-    GET "t/variants.json", (-> XREF.tv = {t: it}), \text
-
-  for let lang of HASH-OF | lang isnt \h
-    return if STANDALONE and lang isnt STANDALONE
-    GET "#lang/=.json", (->
-      $ul = render-taxonomy lang, $.parseJSON it
-      if STANDALONE
-        return $(".taxonomy.#lang").parent!replaceWith $ul.children!
-      $(".taxonomy.#lang").after $ul
-    ), \text
 
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)

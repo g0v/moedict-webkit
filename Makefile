@@ -10,6 +10,7 @@ build ::
 deps ::
 	npm i
 	gulp build
+	cp js/deps.js amis-deploy/js
 
 js/deps.js ::
 	gulp webpack:build
