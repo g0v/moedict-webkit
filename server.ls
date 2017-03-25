@@ -417,7 +417,8 @@ function text2png (text, font)
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
         ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG"
         ch += text.0
-        text.=slice 1
+        ch += text.1
+        text.=slice 2
       while text.length and text.0 is /[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/ # combining
         ctx.font = "355px Arial Unicode MS, #font"
         ch += text.0
