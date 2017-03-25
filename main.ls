@@ -707,18 +707,6 @@ window.do-load = ->
     GET "#LANG/stem-words.json", (-> STEM[LANG] = $.parseJSON it; init-autocomplete!), \text
     GET "#LANG/ch-mapping.json", (-> CH_STEM_MAPPING[LANG] = $.parseJSON it; init-autocomplete!), \text
 
-  unless STANDALONE
-    GET "t/variants.json", (-> XREF.tv = {t: it}), \text
-
-  for let lang of HASH-OF | lang isnt \h
-    return if STANDALONE and lang isnt STANDALONE
-    GET "#lang/=.json", (->
-      $ul = render-taxonomy lang, $.parseJSON it
-      if STANDALONE
-        return $(".taxonomy.#lang").parent!replaceWith $ul.children!
-      $(".taxonomy.#lang").after $ul
-    ), \text
-
 function render-taxonomy (lang, taxonomy)
   $ul = $(\<ul/> class: \dropdown-menu)
   $ul.css bottom: 0 top: \auto if lang is \c and not STANDALONE
