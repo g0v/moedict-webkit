@@ -14,7 +14,7 @@ window.React = React
 unless window.PRERENDER_LANG
   $ -> React.View.result = React.render React.View.Result!, $(\#result).0
 
-LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || (if document.URL is /twblg/ then \t else \p)
+LANG = STANDALONE || window.PRERENDER_LANG || getPref(\lang) || \s
 MOE-ID = getPref(\prev-id) || {p: \ci'im m: \aag s: \co'ong}[LANG]
 $ ->
   $('body').addClass("lang-#LANG")
