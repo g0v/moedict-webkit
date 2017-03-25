@@ -1,4 +1,15 @@
 CACHE MANIFEST
+# Sat Mar 25 13:29:48 CST 2017
+
+CACHE:
+# txt files
+/dict-amis-safolu.json
+/dict-amis.json
+/js/deps.js
+/s/revdict-amis-def.txt
+/s/revdict-amis-ex.txt
+/s/stem-words.json
+/s/index.json
 
 NETWORK:
 *
