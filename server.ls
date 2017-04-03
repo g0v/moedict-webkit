@@ -83,6 +83,13 @@ font-of = ->
   return 'SourceHanSansTWMedium' if it is /srcm/i
   return 'SourceHanSansTWBold' if it is /srcb/i
   return 'SourceHanSansTWHeavy' if it is /srch/i
+  return 'SourceHanSerifTWExtraLight' if it is /shsx/i
+  return 'SourceHanSerifTWLight' if it is /shsl/i
+  return 'SourceHanSerifTWMedium' if it is /shsm/i
+  return 'SourceHanSerifTWRegular' if it is /shsr/i
+  return 'SourceHanSerifTWSemiBold' if it is /shss/i
+  return 'SourceHanSerifTWBold' if it is /shsb/i
+  return 'SourceHanSerifTWHeavy' if it is /shsh/i
   return 'Typography' if it is /rxkt/i
   return wt2font[it] || 'TW-Kai'
 
@@ -372,6 +379,14 @@ require(\zappajs) {+disable_io} ->
               option selected:(png-suffix is '.png?font=cwyuan'), value:\?font=cwyuan, \圓體
               option selected:(png-suffix is '.png?font=cwkai'), value:\?font=cwkai, \楷書
               option selected:(png-suffix is '.png?font=cwfangsong'), value:\?font=cwfangsong, \仿宋
+            optgroup label:'思源宋體', ->
+              option selected:(png-suffix is '.png?font=shsx'), value:\?font=shsx, \特細
+              option selected:(png-suffix is '.png?font=shsl'), value:\?font=shsl, \細體
+              option selected:(png-suffix is '.png?font=shsr'), value:\?font=shsr, \標準
+              option selected:(png-suffix is '.png?font=shsm'), value:\?font=shsm, \正宋
+              option selected:(png-suffix is '.png?font=shss'), value:\?font=shss, \中宋
+              option selected:(png-suffix is '.png?font=shsb'), value:\?font=shsb, \粗體
+              option selected:(png-suffix is '.png?font=shsh'), value:\?font=shsh, \特粗
             optgroup label:'思源黑體', ->
               option selected:(png-suffix is '.png?font=srcx'), value:\?font=srcx, \特細
               option selected:(png-suffix is '.png?font=srcl'), value:\?font=srcl, \細體
@@ -413,6 +428,8 @@ function text2png (text, font)
       ch = text.slice 0, 1
       text.=slice 1
       ctx.font = "355px #font"
+      ctx.font = '355px "Source Han Serif TW"' if font is /SourceHanSerifTWRegular/
+      ctx.font = 'bold 355px "Source Han Serif TW"' if font is /SourceHanSerifTWBold/
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
         ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG, HanaMinA, HanaMinB, Apple Color Emoji"
@@ -437,6 +454,8 @@ function text2png (text, font)
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15
         y += 15
+      if font is /SourceHanSerif/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        y += 30
       if font is /SourceHanSans/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         y += 30
       ctx.fillText ch, x, y
