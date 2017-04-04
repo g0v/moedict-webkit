@@ -3,16 +3,16 @@
 #
 FROM ubuntu:14.04
 MAINTAINER miaoski
- 
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
- 
+
 RUN apt-get install -y git
 RUN apt-get install -y tree
 RUN apt-get install -y vim
 RUN apt-get install -y screen
- 
+
 RUN apt-get install -y curl
 RUN apt-get install -y build-essential
 RUN apt-get install -y g++
