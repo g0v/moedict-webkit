@@ -48,20 +48,15 @@ symlinks :: translation
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 
-offline-dev :: moedict-data deps translation
+offline-dev :: offline moedict-data deps translation
 	#lsc json2prefix.ls a
 	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
-	perl link2pack.pl a < a.txt
 	#lsc json2prefix.ls t
 	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
-	perl link2pack.pl t < t.txt
 	#lsc json2prefix.ls h
 	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
-	perl link2pack.pl h < h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c > c.txt
-	-perl link2pack.pl c < c.txt
-	perl special2pack.pl
 	lsc cat2special.ls
 
 csld ::
