@@ -15,6 +15,7 @@ root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 ## 需求
 
 * Node.js 0.10.x
+    * npm
 * Perl 5.8.0+
 * Python
     * lxml
@@ -23,10 +24,7 @@ root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 
 ```sh
 sudo apt-get update
-sudo apt-get install -y python-software-properties python g++ make
-sudo add-apt-repository -y ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs python-lxml curl
+sudo apt-get install -y python g++ make nodejs python-lxml curl npm
 ```
 
 ## 安裝環境
