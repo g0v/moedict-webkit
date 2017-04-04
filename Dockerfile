@@ -54,7 +54,6 @@ WORKDIR /usr/local/src/moedict-webkit
 RUN npm install
 
 # make offline
-RUN make offline
 RUN make offline-dev
 
 # Default port is 8888
