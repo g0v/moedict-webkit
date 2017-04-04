@@ -1,7 +1,7 @@
 # 
 # Dockerfile to build miaoski/moedict_amis
 #
-FROM ubuntu:14.04.1
+FROM ubuntu:14.04
 MAINTAINER miaoski
  
 ENV DEBIAN_FRONTEND noninteractive
