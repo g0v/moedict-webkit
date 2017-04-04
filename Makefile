@@ -95,7 +95,7 @@ translation-data/handedict.txt :
 	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
 
 translation-data/cedict.txt :
-	cd translation-data && curl https://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
+	cd translation-data && curl https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 
 translation-data/cfdict.xml :
 	cd translation-data && curl -O https://www.moedict.tw/translation-data/cfdict.xml
