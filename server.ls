@@ -76,20 +76,20 @@ font-of = ->
   return 'cwTeXQYuan' if it is /cwyuan/i
   return 'cwTeXQKai' if it is /cwkai/i
   return 'cwTeXQFangsong' if it is /cwfangsong/i
-  return 'SourceHanSansTWExtraLight' if it is /srcx/i
-  return 'SourceHanSansTWLight' if it is /srcl/i
-  return 'SourceHanSansTWNormal' if it is /srcn/i
-  return 'SourceHanSansTWRegular' if it is /srcr/i
-  return 'SourceHanSansTWMedium' if it is /srcm/i
-  return 'SourceHanSansTWBold' if it is /srcb/i
-  return 'SourceHanSansTWHeavy' if it is /srch/i
-  return 'SourceHanSerifTWExtraLight' if it is /shsx/i
-  return 'SourceHanSerifTWLight' if it is /shsl/i
-  return 'SourceHanSerifTWMedium' if it is /shsm/i
-  return 'SourceHanSerifTWRegular' if it is /shsr/i
-  return 'SourceHanSerifTWSemiBold' if it is /shss/i
-  return 'SourceHanSerifTWBold' if it is /shsb/i
-  return 'SourceHanSerifTWHeavy' if it is /shsh/i
+  return 'SourceHanSansTCExtraLight' if it is /srcx/i
+  return 'SourceHanSansTCLight' if it is /srcl/i
+  return 'SourceHanSansTCNormal' if it is /srcn/i
+  return 'SourceHanSansTCRegular' if it is /srcr/i
+  return 'SourceHanSansTCMedium' if it is /srcm/i
+  return 'SourceHanSansTCBold' if it is /srcb/i
+  return 'SourceHanSansTCHeavy' if it is /srch/i
+  return 'SourceHanSerifTCExtraLight' if it is /shsx/i
+  return 'SourceHanSerifTCLight' if it is /shsl/i
+  return 'SourceHanSerifTCMedium' if it is /shsm/i
+  return 'SourceHanSerifTCRegular' if it is /shsr/i
+  return 'SourceHanSerifTCSemiBold' if it is /shss/i
+  return 'SourceHanSerifTCBold' if it is /shsb/i
+  return 'SourceHanSerifTCHeavy' if it is /shsh/i
   return 'Typography' if it is /rxkt/i
   return wt2font[it] || 'TW-Kai'
 
@@ -428,11 +428,11 @@ function text2png (text, font)
       ch = text.slice 0, 1
       text.=slice 1
       ctx.font = "355px #font"
-      ctx.font = '355px "Source Han Serif TW"' if font is /SourceHanSerifTWRegular/
-      ctx.font = 'bold 355px "Source Han Serif TW"' if font is /SourceHanSerifTWBold/
+      ctx.font = '355px "Source Han Serif TC"' if font is /SourceHanSerifTCRegular/
+      ctx.font = 'bold 355px "Source Han Serif TC"' if font is /SourceHanSerifTCBold/
       ctx.font = "355px TW-Kai" if ch is /[\u3000\uFF01-\uFF5E]/ and font is /EBAS|ShuoWen/
       while text.length and text.0 is /[\uDC00-\uDFFF]/ # lower surrogate
-        ctx.font = "355px #font, SourceHanSansTWRegular, SourceHanSansTWRegular, TWBLG, HanaMinA, HanaMinB, Apple Color Emoji"
+        ctx.font = "355px #font, SourceHanSansTCRegular, SourceHanSansTCRegular, TWBLG, HanaMinA, HanaMinB, Apple Color Emoji"
         ch += text.0
         ch += text.1
         text.=slice 2
