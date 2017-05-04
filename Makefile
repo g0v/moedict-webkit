@@ -48,20 +48,15 @@ symlinks :: translation
 	ln -fs moedict-data-hakka/dict-hakka.json              dict-hakka.json
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 
-offline-dev :: moedict-data deps translation
+offline-dev :: offline moedict-data deps translation
 	#lsc json2prefix.ls a
 	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
-	perl link2pack.pl a < a.txt
 	#lsc json2prefix.ls t
 	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
-	perl link2pack.pl t < t.txt
 	#lsc json2prefix.ls h
 	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
-	perl link2pack.pl h < h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c > c.txt
-	-perl link2pack.pl c < c.txt
-	perl special2pack.pl
 	lsc cat2special.ls
 
 csld ::
@@ -97,13 +92,13 @@ translation :: translation-data
 translation-data :: translation-data/handedict.txt translation-data/cedict.txt translation-data/cfdict.xml
 
 translation-data/handedict.txt :
-	cd translation-data && curl http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
+	cd translation-data && curl -L http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
 
 translation-data/cedict.txt :
-	cd translation-data && curl https://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
+	cd translation-data && curl -L https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
 
 translation-data/cfdict.xml :
-	cd translation-data && curl -O https://www.moedict.tw/translation-data/cfdict.xml
+	cd translation-data && curl -L -O https://www.moedict.tw/translation-data/cfdict.xml
 
 clean-translation-data ::
 	rm -f translation-data/cfdict.xml translation-data/cedict.txt translation-data/handedict.txt
