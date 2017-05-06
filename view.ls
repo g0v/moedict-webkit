@@ -148,8 +148,9 @@ Heteronym = createClass do
         mp3 = http "t.moedict.tw/#basename.ogg"
       else if LANG is \a
         mp3 = http "a.moedict.tw/#audio_id.ogg" # TODO: opus
+    mp3 = http "服務.意傳.台灣/%E6%96%87%E6%9C%AC%E7%9B%B4%E6%8E%A5%E5%90%88%E6%88%90?%E6%9F%A5%E8%A9%A2%E8%85%94%E5%8F%A3=Pangcah&%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5=#t"
     if mp3 => list ++= i { itemType: \http://schema.org/AudioObject, className: 'icon-play playAudio' },
-      meta { itemProp: \name, content: mp3 - /^.*\// }
+      meta { itemProp: \name, content: "#t.wav" }
       meta { itemProp: \contentURL, content: mp3 }
     if b-alt
       if localStorage?getItem("pinyin_#LANG") is /-/
