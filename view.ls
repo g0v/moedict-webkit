@@ -164,7 +164,6 @@ Heteronym = createClass do
     list ++= span { lang: \en, className: \english } english if english
     list ++= span { className: \specific_to, dangerouslySetInnerHTML: { __html: h specific_to } } if specific_to
 
-    console.log "X"
     return div-inline {},
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
@@ -252,7 +251,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
   converted-p .= split ' '
   p .= replace /[,\.;，、；。－—]\s?/g, ' '
   p .= split ' '
-  p-upper = [] 
+  p-upper = []
   isParallel = localStorage?getItem(\pinyin_a) is /^HanYu-/ if $body.hasClass('lang-a')
   isParallel = localStorage?getItem(\pinyin_t) is /^TL-/ if $body.hasClass('lang-t')
   for yin, idx in p | yin
@@ -274,14 +273,14 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
            else if LANG != \t and yin is /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g
            then ' rbspan="'+ yin.match /[aāáǎàeēéěèiīíǐìoōóǒòuūúǔùüǖǘǚǜ]+/g .length + '"'
            else ''
-    #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if 
+    #yin = "#{ p[idx].replace(/-/g, '\u2011') }\n#yin" if
     p-upper[idx] = if isParallel then "<rt#span>#{p[idx]}</rt>"
     p[idx] = "<rt#span>#yin</rt>"
   ruby += '<rtc class="zhuyin" hidden="hidden"><rt>' + b.replace(/[ ]+/g, '</rt><rt>') + '</rt></rtc>'
   ruby += '<rtc class="romanization" hidden="hidden">'
   ruby += p.join ''
   ruby += '</rtc>'
-  if isParallel 
+  if isParallel
     ruby += '<rtc class="romanization" hidden="hidden">'
     ruby += p-upper.join ''
     ruby += '</rtc>'
@@ -297,7 +296,7 @@ decorate-ruby = ({ LANG, title='', bopomofo, py, pinyin=py, trs }) ->
     bopomofo = ''
   return { ruby, youyin, b-alt, p-alt, cn-specific, pinyin, bopomofo }
 
-#p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358" 
+#p:\ㆴ t:\ㆵ k:\ㆶ h:\ㆷ p$:"ㆴ\u0358" t$:"ㆵ\u0358" k$:"ㆶ\u0358" h$:"ㆷ\u0358"
 const DT-Tones = {
   "\u0300": "\u0332"  # 3
   "\u0301": "\u0300"  # 2,6
