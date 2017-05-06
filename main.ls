@@ -178,7 +178,7 @@ window.play-audio = (el, url) ->
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
     urls.unshift url.replace(/(ogg|opus)$/ 'mp3') if url is /(ogg|opus)$/ and can-play-mp3! and not isGecko
-    audio = new window.Howl { +buffer, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    audio = new window.Howl { +buffer, urls, onend: done, format: ['wav'], onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
