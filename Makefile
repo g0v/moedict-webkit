@@ -56,7 +56,7 @@ offline-dev :: offline moedict-data deps translation
 	#lsc json2prefix.ls h
 	#lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	#-lsc json2prefix.ls c
-	#-lsc autolink.ls c > c.txt
+	#-lsc autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
 	lsc cat2special.ls
 
 csld ::
