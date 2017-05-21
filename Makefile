@@ -50,11 +50,11 @@ symlinks :: translation
 
 offline-dev :: offline moedict-data deps translation
 	#lsc json2prefix.ls a
-	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
+	#lsc autolink.ls a | perl sort-json.pl | env LC_ALL=C sort > a.txt
 	#lsc json2prefix.ls t
-	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
+	#lsc autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
 	#lsc json2prefix.ls h
-	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
+	#lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c > c.txt
 	lsc cat2special.ls
@@ -63,18 +63,18 @@ csld ::
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	lsc json2prefix.ls c
-	lsc autolink.ls c | env LC_ALL=C sort > c.txt
+	lsc autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
 hakka ::
 	lsc json2prefix.ls h
-	lsc autolink.ls h | env LC_ALL=C sort > h.txt
+	lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
 twblg ::
 	lsc json2prefix.ls t
-	lsc autolink.ls t > t.txt
+	lsc autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
 	python twblg_index.py
 
