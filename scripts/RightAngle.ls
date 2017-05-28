@@ -22,7 +22,7 @@ const UNICODE = zhuyin: {
   medial:  '[\u3127-\u3129]',
   final:   '[\u311A-\u3129\u312D\u31A4-\u31B3\u31B8-\u31BA]',
   tone:    '[\u02D9\u02CA\u02C5\u02C7\u02CB\u02EA\u02EB]',
-  ruyun:   '[\u31B4-\u31B7][\u0358\u030d]?'
+  ruyun:   '[\u31B4-\u31B7][\u0307\u0358\u030d]?'
 }
 rZyS = UNICODE.zhuyin.initial
 rZyJ = UNICODE.zhuyin.medial
@@ -54,6 +54,7 @@ ruby2hruby = (html) ->
     diao = zhuyin.replace( yin, '' )
       .replace( /[\u02C5]/g, '\u02C7' )
       .replace( /[\u030D]/g, '\u0358' )
+      .replace( /[\u0358]/g, '\u0307' )
     form = zhuyin.replace TYPESET.zhuyin.form, ( s, j, y ) -> [
       if s then 'S' else null,
       if j then 'J' else null,
@@ -106,11 +107,11 @@ ruby2hruby = (html) ->
     $ru.attr \class $('ruby').attr \class
     $ru.attr \annotation do
       $rt.text()
-        .replace(/\u0061[\u030d\u0358]/g '\uDB80\uDC61')
-        .replace(/\u0065[\u030d\u0358]/g '\uDB80\uDC65')
-        .replace(/\u0069[\u030d\u0358]/g '\uDB80\uDC69')
-        .replace(/\u006F[\u030d\u0358]/g '\uDB80\uDC6F')
-        .replace(/\u0075[\u030d\u0358]/g '\uDB80\uDC75')
+        .replace(/\u0061[\u0307\u030d\u0358]/g '\uDB80\uDC61')
+        .replace(/\u0065[\u0307\u030d\u0358]/g '\uDB80\uDC65')
+        .replace(/\u0069[\u0307\u030d\u0358]/g '\uDB80\uDC69')
+        .replace(/\u006F[\u0307\u030d\u0358]/g '\uDB80\uDC6F')
+        .replace(/\u0075[\u0307\u030d\u0358]/g '\uDB80\uDC75')
     $(aRb.shift!).replaceWith($ru)
     for x in aRb => $(x).remove!
   $('rtc').remove()
