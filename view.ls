@@ -604,7 +604,7 @@ function h (it)
         if $?('body').hasClass('lang-t') and localStorage?getItem(\pinyin_t) is "TL-DT" then "<span class='upper'>#{
           trs.replace(/-/g "\u2011")
         }</span>" else ""
-      }#{ convert-pinyin-t trs, yes }
+      }#{ trs }
     """
   return res
 
