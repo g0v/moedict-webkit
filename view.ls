@@ -370,7 +370,7 @@ function convert-pinyin-t (yin, isBody=true)
     yin2.=replace(/\u0300(\w*[ \u2011]a(?:[ -\u2011]|\u0300](?![-\w\u2011])))/g '$1')        # 2 -> 1
     return yin2
   # POJ Rules from: https://lukhnos.org/blog/zh/archives/472/
-  return yin.replace(/o([^.!?,\w\s\u2011]*)o/g, 'o$1\u0358')
+  poj = (yin.replace(/o([^.!?,\w\s\u2011]*)o/g, 'o$1\u0358')
             .replace(/ts/g, 'ch')
             .replace(/Ts/g, 'Ch')
             .replace(/u([^‑-\w\s]*)a/g, 'o$1a')
@@ -381,7 +381,24 @@ function convert-pinyin-t (yin, isBody=true)
             .replace(/nnh($|[‑-\s])/g, 'hⁿ$1')
             .replace(/([ie])r/g, '$1\u0358')
             .replace(/\u030B/g, "\u0306") # 9th tone
+  )
+  replaced = [ tone-poj seg for seg in poj.split(/([- \u2011\.,!?])/) ].join("")
+  return replaced
 
+function tone-poj (poj)
+  if poj is /([\u0300-\u0302\u0304\u0306\u0307\u030d])/
+    tone = RegExp.$1
+    poj -= /[\u0300-\u0302\u0304\u0306\u0307\u030d]/
+    return poj.replace(/(oa)([in])/i, "$1#{tone}$2") if poj is /oa[in]/i
+    return poj.replace(/(o)/i, "$1#tone") if poj is /o/i
+    return poj.replace(/(e)/i, "$1#tone") if poj is /e/i
+    return poj.replace(/(a)/i, "$1#tone") if poj is /a/i
+    return poj.replace(/(u)/i, "$1#tone") if poj is /u/i
+    return poj.replace(/(i)/i, "$1#tone") if poj is /i/i
+    return poj.replace(/(n)(g)/i, "$1#{tone}$2") if poj is /ng/i
+    return poj.replace(/(m)/i, "$1#tone") if poj is /m/i
+    return "#poj#tone" # impossible
+  return poj
 
 const DT-Tones-Sandhi = {
     "\u0300": ""              # 2,6 ->  1
