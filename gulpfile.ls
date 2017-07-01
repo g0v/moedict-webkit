@@ -42,5 +42,9 @@ gulp.task \webpack:build ->
 
 gulp.task \webpack:dev ->
   process.env.NODE_ENV = \development
+  # package `optimist` put non-hypenated options in argv._, and
+  # `convert-argv.js` in `webpack` treat them as modules in main entry point.
+  # So we have to strip it out.
+  process.argv /= \dev
   process.argv ++= <[ --hot --port 8888 ]>
   require \./node_modules/webpack-dev-server/bin/webpack-dev-server.js
