@@ -50,6 +50,7 @@ amis-poinsot ::
 	touch m/revdict-amis-ex.txt
 
 amis-safolu ::
+	@-git clone --depth 1 https://github.com/miaoski/amis-safolu.git ../amis-safolu
 	ln -sf ../amis-safolu/txt/dict-amis.json   dict-amis-safolu.json
 	lsc json2prefix.ls s
 	lsc autolink.ls s > s.txt
