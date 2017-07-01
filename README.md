@@ -33,8 +33,9 @@ sudo apt-get install nodejs python-lxml curl
 
 ```sh
 npm i
-pip install lxml
-sudo npm i -g gulp
+npm i -g gulp livescript
+make amis
+make dev
 ```
 
 ## 建置
