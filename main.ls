@@ -857,6 +857,8 @@ han_amis_lookup = (query,cb) !->
   lookup_in cmn_amis_def
   lookup_in cmn_amis_ex
 
+  x.=filter (e) -> e !== undefined
+
   if x.length == 0
     cb(["無符合之詞"])
   else
