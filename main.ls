@@ -840,8 +840,9 @@ han_amis_lookup = (query,cb) !->
   terms = query.replace(/^\s+/,"").replace(/\s+$/,"")
 
   if terms in Object.keys(CH_STEM_MAPPING[LANG])
-    stem = CH_STEM_MAPPING[LANG][terms]
-    x = x.concat [stem], STEM[LANG][stem]
+    stems = CH_STEM_MAPPING[LANG][terms].split(',').map (stem) -> [stem] ++ STEM[LANG][stem]
+    x = [].concat.apply([], stems)
+    x = x.filter (item, pos) -> x.indexOf(item) == pos
 
   lookup_in = (cmn) ~>
     p = 0
