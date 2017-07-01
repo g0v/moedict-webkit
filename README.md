@@ -92,6 +92,28 @@ npm run build
 
 ```
 
+## Deploy production 步驟
+
+如果只有改到 js
+
+```
+$ make js/deps.js
+更新 amis-deploy/manifest.appcache 這個檔案第二行的時間
+$ git add .
+$ git commit -m 'Update js/deps.js and amis-deploy/manifest.appcache in amis-deploy'
+$ git push
+```
+
+如果有改到字典檔案，如更新蔡中涵字典
+
+```
+$ make amis-static
+更新 amis-deploy/manifest.appcache 這個檔案第二行的時間
+$ git add .
+$ git commit -m 'Update js/deps.js and amis-deploy/manifest.appcache in amis-deploy'
+$ git push
+```
+
 ## API 說明
 
 首先請注意，萌典 API 必須去詢問 `https://www.moedict.tw/`，因為這個網址才有開 CORS。不要去訪問 `http://moedict.org/` ，會噴 No 'Access-Control-Allow-Origin' header 的錯誤。
