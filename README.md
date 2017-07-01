@@ -35,7 +35,8 @@ sudo apt-get install nodejs python-lxml curl
 npm i
 npm i -g gulp livescript
 make amis
-make dev
+make amis-poinsot
+make amis-safolu
 ```
 
 ## 建置
