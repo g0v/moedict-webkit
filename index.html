@@ -64,11 +64,7 @@
         <li style="display: inline-block" class="web-inline-only"><a href="https://itunes.apple.com/tw/app/meng-dian/id599429224" target="_blank" title="App Store 下載" style="color: #ccc"><i class="icon-apple"></i></a></li>
       </ul>
     </nav>
-    <div id="gcse"><span class="lang-a-only">
-        <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
-        <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
-        <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div><!--[if lte IE 8]>
+    <!--[if lte IE 8]>
     <style>body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }</style>
     <div id="result" style="position: absolute; top: 10%; left: 10%; right: 10%" class="result">
       <p><br>很抱歉，我們不支援 Internet Explorer 8 和之前的版本。請您改用&nbsp;<a href="https://www.mozilla.org/firefox/" class="icon-external-link">&nbsp;Firefox</a>&nbsp;或&nbsp;<a href="https://www.google.com/chrome/browser/" class="icon-external-link">&nbsp;Chrome</a>&nbsp;瀏覽器。</p>
@@ -79,16 +75,10 @@
       <div id="result" class="result">
         <center style="font-size: 30px; margin-top: 40px; margin-bottom: 40px"><span id="loading"></span><br><br><img title="〔萌典〕" src="images/icon.png" width="100" class="logo"><br><br><span id="F9868" style="font-family: &quot;MOEDICT&quot;; margin-botom: 40px"></span><i class="icon-spinner"></i></center>
       </div>
-      <!-- a#sendback.btn.btn-default.small(title='送回編修', style='margin-left: 50%; display: none; background: #333333; color: white', href='mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：', target='_blank') 送回編修-->
       <div id="links"></div>
     </div>
     <div class="nav-bg navbar-fixed-top"></div>
     <div id="nav"></div>
-    <div id="gcse"><span class="lang-a-only">
-        <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
-        <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
-        <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div>
     <div id="query-box" class="query-box">
       <input id="query" type="search" style="display: none" autofocus="" autocomplete="off" placeholder="請輸入欲查詢的字詞" class="query">
       <div id="timeline" style="position: absolute; top: 70px; right: 5px; left: 10px; bottom: 20px" class="hidden-xs">
@@ -100,43 +90,8 @@
       </div>
     </div>
     <div id="user-pref"></div>
-    <!-- 
-    li
-      button.btn.btn-info.btn-xs(type="button") 拼注音進階選項
-    li.btn-group.option-romanization
-      label 國語拼音
-      button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-       | 漢語拼音 <span class="caret"></span>
-      ul.dropdown-menu
-        li: a.active(href="#") 漢語拼音
-        li.divider(role="presentation")
-        li: a(href="#") 威妥瑪拼音
-        li: a(href="#") 國音二式
-        li: a(href="#") 通用拼音
-    li.btn-group.option-romanization
-      label 閩南語拼音
-      button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-       | 臺灣閩南語羅馬字 <span class="caret"></span>
-      ul.dropdown-menu
-        li: a.active(href="#") 臺灣閩南語羅馬字
-        li.divider(role="presentation")
-        li: a(href="#") 白話字
-        li: a(href="#") 通用拼音
-    li.btn-group.option-romanization
-      label 客語發音
-      button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-       | 預設<small>（全部顯示）</small> <span class="caret"></span>
-      ul.dropdown-menu
-        li
-          a.active(href="#") 預設<small>（全部顯示）</small>
-        li.divider(role="presentation")
-        li: a(href="#") 四縣
-        li: a(href="#") 海陸
-        li: a(href="#") 大埔
-        li: a(href="#") 饒平
-        li: a(href="#") 詔安
-    --><a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
-    <div id="moe" style="display: none"></div><!--[if gt IE 8]><!-->
+    <a href="#" onclick="pressBack(); return false" class="back-box app-only"><i style="color: #6B0000" class="icon-chevron-left"></i></a><a href="#" onclick="pressErase(); return false" class="erase-box mobile-only"><i style="color: #c0c0c0" title="清除搜尋框" class="icon-remove-sign"></i></a>
+    <div id="moe" style="display: none"></div>
     <script src="cordova.js" data-cfasync="true" charset="utf-8"></script>
     <script src="js/es5-shim.js" charset="utf-8"></script>
     <script src="js/es5-sham.js" charset="utf-8"></script>
