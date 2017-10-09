@@ -14,8 +14,6 @@
 git clone -b amis-react git@github.com:g0v/moedict-webkit.git
 npm i
 make amis
-make amis-poinsot
-make amis-safolu
 ```
 
 ## 本機運行
@@ -28,6 +26,26 @@ make dev
 
 * gulpfile.js
 * webpack.config.js
+
+## 重新編譯字典
+
+編譯方敏英字典
+
+```
+make amis-fey
+```
+
+編譯潘世光、博利亞阿法字典
+
+```
+make amis-poinsot
+```
+
+編譯蔡中涵大辭典
+
+```
+make amis-safolu
+```
 
 ## Deploy production 步驟
 
