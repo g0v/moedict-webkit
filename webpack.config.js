@@ -14,7 +14,7 @@ else {
 
 module.exports = {
     entry: entries.concat([
-        './main.ls',
+        './main.js',
         './js/jquery-ui-1.10.4.custom.min.js',
         './js/jquery.hoverIntent.js',
         './js/bootstrap/dropdown.js',
@@ -29,8 +29,7 @@ module.exports = {
     plugins: plugins,
     module: {
         loaders: loaders.concat([
-            { test: /\.ls$/, loader: 'livescript', exclude: /node_modules/ },
-            { test: /\.jsx$/, loader: 'babel?stage=0', exclude: /node_modules/ },
+            { test: /\.jsx?$/, loader: 'babel?stage=0', exclude: /node_modules/ },
             { test: /\.json$/, loader: 'json' }
         ])
     },

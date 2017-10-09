@@ -108,7 +108,7 @@ mkdir "lookup";
 mkdir "lookup/pinyin";
 mkdir "lookup/pinyin/$lang";
 
-# pinyin_type list from view.ls line 85..95
+# pinyin_type list from view.js
 for my $pinyin_type ("HanYu", "HanYu-TongYong", "TongYong", "WadeGiles", "GuoYin", "TL", "TL-DT", "DT", "POJ") {
     mkdir("lookup/pinyin/${lang}/${pinyin_type}");
 }

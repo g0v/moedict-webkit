@@ -1,18 +1,17 @@
-這是 <http://amis.moedict.tw/> 線上及離線查詢 App 的源碼庫。
+這是 <https://amis.moedict.tw/> 線上及離線查詢 App 的源碼庫。
 
 ## 需求
 
-* Node.js 0.10.x
+* Node.js v6+
 * Perl 5.8.0+
 * Python
+* Ruby
 * Gulp
-* Livescript
 
 ## 安裝環境
 
 ```sh
 npm i
-npm i -g gulp livescript
 make amis
 make amis-poinsot
 make amis-safolu
@@ -26,7 +25,7 @@ make dev
 
 相關設定檔案請看
 
-* gulpfile.ls
+* gulpfile.js
 * webpack.config.js
 
 ## Deploy production 步驟
