@@ -1,6 +1,6 @@
 這是 <https://amis.moedict.tw/> 線上及離線查詢 App 的源碼庫。
 
-## 需求
+## 環境需求
 
 * Node.js v6+
 * Perl 5.8.0+
@@ -8,9 +8,10 @@
 * Ruby
 * Gulp
 
-## 安裝環境
+## 安裝開發環境
 
 ```sh
+git clone -b amis-react git@github.com:g0v/moedict-webkit.git
 npm i
 make amis
 make amis-poinsot
