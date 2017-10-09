@@ -14,7 +14,7 @@ else {
 
 module.exports = {
     entry: entries.concat([
-        './main.ls',
+        './main.js',
         './js/jquery-ui-1.10.4.custom.min.js',
         './js/jquery.hoverIntent.js',
         './js/bootstrap/dropdown.js',
