@@ -31,7 +31,7 @@ amis ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-data.git moedict-data-amis
 	cd moedict-data-amis && make moedict
 	ln -sf moedict-data-amis/dict-amis.json   dict-amis.json
-	lsc json2prefix.ls p
+	node json2prefix.js p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
 	cp moedict-data-amis/index.json           p/index.json
@@ -42,7 +42,7 @@ amis-poinsot ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-francais.git moedict-data-amis-mp
 	cd moedict-data-amis-mp && python moedict.py
 	ln -sf moedict-data-amis-mp/dict-amis-mp.json   dict-amis-mp.json
-	lsc json2prefix.ls m
+	node json2prefix.js m
 	lsc autolink.ls m > m.txt
 	perl link2pack.pl m < m.txt
 	cp moedict-data-amis-mp/index.json         m/index.json
@@ -52,7 +52,7 @@ amis-poinsot ::
 amis-safolu ::
 	@-git clone --depth 1 https://github.com/miaoski/amis-safolu.git ../amis-safolu
 	ln -sf ../amis-safolu/txt/dict-amis-safolu.json dict-amis-safolu.json
-	lsc json2prefix.ls s
+	node json2prefix.js s
 	lsc autolink.ls s > s.txt
 	perl link2pack.pl s < s.txt
 	cp ../amis-safolu/txt/index.json           s/index.json
@@ -91,19 +91,19 @@ offline-dev :: moedict-data deps translation
 	ln -fs moedict-data-csld/dict-csld.json                dict-csld.json
 	cd moedict-data-amis && python moedict.py
 	ln -fs moedict-data-amis/dict-amis.json                dict-amis.json
-	#lsc json2prefix.ls a
+	#node json2prefix.js a
 	#lsc autolink.ls a | env LC_ALL=C sort > a.txt
 	perl link2pack.pl a < a.txt
-	#lsc json2prefix.ls t
+	#node json2prefix.js t
 	#lsc autolink.ls t | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
-	#lsc json2prefix.ls h
+	#node json2prefix.js h
 	#lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
-	#-lsc json2prefix.ls c
+	#-node json2prefix.js c
 	#-lsc autolink.ls c > c.txt
 	-perl link2pack.pl c < c.txt
-	lsc json2prefix.ls p
+	node json2prefix.js p
 	lsc autolink.ls p > p.txt
 	perl link2pack.pl p < p.txt
 	cp moedict-data-amis/index.json                        p/index.json
@@ -112,18 +112,18 @@ offline-dev :: moedict-data deps translation
 csld ::
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
-	lsc json2prefix.ls c
+	node json2prefix.js c
 	lsc autolink.ls c | env LC_ALL=C sort > c.txt
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
 hakka ::
-	lsc json2prefix.ls h
+	node json2prefix.js h
 	lsc autolink.ls h | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
 twblg ::
-	lsc json2prefix.ls t
+	node json2prefix.js t
 	lsc autolink.ls t > t.txt
 	perl link2pack.pl t < t.txt
 	python twblg_index.py
