@@ -23,7 +23,7 @@ upload ::
 	rsync -avzP main.* view.* styles.css index.html js moe1:code/
 
 amis-static:
-	cp -r styles.css *.html js css fonts scripts p m s dict-amis*.json amis-deploy/
+	cp -r styles.css *.html js css fonts p m s dict-amis*.json amis-deploy/
 	cp ../amis-safolu/txt/amis-ch-mapping.json amis-deploy/s/ch-mapping.json
 	cp ../amis-safolu/tmp/amis-stem-words.json amis-deploy/s/stem-words.json
 
