@@ -1,12 +1,12 @@
 {
   "author": "g0v.tw",
   "name": "moedict-webkit",
-  "description": "moedict.tw",
+  "description": "amis.moedict.tw",
   "version": "0.0.1",
-  "homepage": "https://github.com/audreyt/moedict-webkit",
+  "homepage": "https://github.com/g0v/moedict-webkit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/audreyt/moedict-webkit"
+    "url": "https://github.com/g0v/moedict-webkit"
   },
   "scripts": {
     "start": "gulp run",
@@ -26,7 +26,6 @@
     "css-mqpacker": "^3.1.0",
     "csswring": "^3.0.5",
     "gulp": "^3.8.10",
-    "gulp-jade": "^0.10.0",
     "gulp-postcss": "^5.1.8",
     "gulp-sass": "^2.3.1",
     "gulp-watch": "^3.0.0",
