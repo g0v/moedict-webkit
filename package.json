@@ -2,6 +2,7 @@
   "author": "g0v.tw",
   "name": "moedict-webkit",
   "description": "amis.moedict.tw",
+  "license": "CC0-1.0",
   "version": "0.0.1",
   "homepage": "https://github.com/g0v/moedict-webkit",
   "repository": {
