@@ -17,7 +17,9 @@
     "node": ">=0.8.0",
     "npm": ">=1.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "napajs": "^0.1.8"
+  },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
     "babel-core": "^5.0.12",

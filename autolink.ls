@@ -11,16 +11,17 @@ for k, v of audio-map
   k = k - /\..*/
   audio-map[k] = v
 LTM-regexes = []
-Threads = require \webworker-threads
-pool = Threads.create-pool(os.cpus!length)
-pool.all.eval("var pre2 = #pre2;")
-pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
-pool.all.eval(init);
-pool.all.eval('init()');
-pool.all.eval(proc);
 
-function proc (struct, title, idx)
-  chunk = JSON.stringify(struct)
+napa = require \napajs
+pool = napa.zone.create \a
+pre2 = fs.read-file-sync "#lang/lenToRegex.json"
+pool.broadcast("var pre2 = #pre2;")
+pool.broadcast("var lenToRegex, lens, LTMRegexes = [];")
+pool.broadcast("global.init = #init")
+pool.broadcast('global.init()')
+pool.broadcast("global.proc = #proc")
+
+function proc (chunk, title, idx)
   for re in LTM-regexes
     chunk.=replace(re, -> escape "`#it~")
   esc = escape title
@@ -115,6 +116,4 @@ for {t:title, h:heteronyms}:entry in entries
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
-  pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
-    console.log x
-    process.exit! unless --todo
+  pool.execute(((c,t,i) -> global.proc(unescape(c), unescape(t), i)), [escape(chunk), escape(title), idx]).then(-> console.log(it.value))
