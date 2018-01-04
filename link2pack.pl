@@ -20,8 +20,8 @@ mkdir "p${lang}ck";
 while (<STDIN>) {
     print STDERR "$.\n" unless $. % 10000;
     chomp;
-    s/^(\d+) (\S+) // or die $_;
     s!\{\[([a-f0-9]{4,5})\]\}!Encode::encode_utf8(chr hex $1)!eg;
+    s/^(\d+) (\S+) // or die $_;
     # s/\x{fffb}\K([^"]*)/$1 =~ s![`~]!!gr/eg;
     my $bucket = $1;
     my $title = $2;
