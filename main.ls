@@ -562,7 +562,7 @@ window.do-load = ->
     $result = $ \#result
     $h1 = $result.find('h1, .h1')
     $tooltip = $ '.ui-tooltip'
-    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length and not $('body').hasClass('autodraw')
+    $('#strokes').fadeOut(\fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('#strokes').is(\:visible) and not $('body').hasClass('autodraw')
     do
       $tooltip.remove!
       <- setTimeout _, 125ms
@@ -620,7 +620,7 @@ window.do-load = ->
 
     $ '.results .stroke' .on vclick, ->
       $('#historical-scripts').fadeIn!
-      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('svg, canvas').length
+      return ($('#strokes').fadeOut \fast -> $('#strokes').html(''); window.scroll-to 0 0) if $('#strokes').is \:visible
       window.scroll-to 0 0
       strokeWords($('h1:first').data(\title) - /[（(].*/) # Strip the english part and draw the strokes
 
