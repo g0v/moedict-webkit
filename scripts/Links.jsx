@@ -8,7 +8,7 @@ const shareButtons = [
 
 export default class Links extends React.Component { render() {
     return <div>
-        <a title="關於本站" href="#"
+        <a title="關於本站" href="https://www.moedict.tw/about.html"
            className="visible-xs pull-left ebas btn btn-default"
            style={{ float: "left", marginTop: "-10px"
                   , marginLeft: "5px", marginBottom: "5px" }}
