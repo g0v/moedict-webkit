@@ -68,7 +68,7 @@ export default class Nav extends React.Component { render() {
                 </a>
             </li>
             <li className="web-inline-only" style={{ display: "inline-block" }}>
-                <a href="https://itunes.apple.com/tw/app/meng-dian/id599429224" target="_blank" title="App Store 下載" style={{ color: "#ccc" }}>
+                <a href="http://itunes.apple.com/app/id1434947403" target="_blank" title="App Store 下載" style={{ color: "#ccc" }}>
                     <i className="icon-apple" />
                 </a>
             </li>
