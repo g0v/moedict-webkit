@@ -5,10 +5,10 @@
   "description": "moedict: Dictionaries from Ministry of Education",
   "description_zh": "萌典: 教育部字典匯總",
   "homepage": "https://moedict.tw/",
-  "document": "http://3du.tw/",
+  "document": "https://moedict.tw/about.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/audreyt/moedict-webkit"
+    "url": "https://github.com/g0v/moedict-webkit"
   },
   "licenses": [
     {
@@ -27,7 +27,7 @@
     "website", "app"
   ],
   "projects": [
-    "3du"
+    "moedict"
   ],
   "contributors": [
     "clkao",
