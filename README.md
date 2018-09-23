@@ -14,7 +14,7 @@ root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 
 ## 需求
 
-* Node.js 0.10.x
+* Node.js 0.10.x+
     * npm
 * Perl 5.8.0+
 * Python
