@@ -27,5 +27,5 @@ for row in unicode_csv_reader(f):
     if row[1] in attrs and re.search(ur"[⿰⿸]+", row[2], re.UNICODE) == None:
         entries.append((u' ' + row[2]).encode('utf-8').strip())
 
-json.dump(sorted(entries), open("./t/index.json", "w"), ensure_ascii = False, encoding="utf-8", separators = (',', ':'), indent = 1)
+json.dump(sorted(set(entries)), open("./t/index.json", "w"), ensure_ascii = False, encoding="utf-8", separators = (',', ':'), indent = 1)
 
