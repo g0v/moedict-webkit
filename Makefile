@@ -11,6 +11,9 @@ deps ::
 	npm i
 	gulp build
 
+worker.js :: worker.ls
+	lsc -c worker.ls
+
 js/deps.js ::
 	gulp webpack:build
 
@@ -59,7 +62,7 @@ offline-dev :: offline moedict-data deps translation
 	#-lsc autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
 	lsc cat2special.ls
 
-csld ::
+csld :: worker.js
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	lsc json2prefix.ls c
@@ -67,12 +70,12 @@ csld ::
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
-hakka ::
+hakka :: worker.js
 	lsc json2prefix.ls h
 	lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
-twblg ::
+twblg :: worker.js
 	lsc json2prefix.ls t
 	lsc autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt

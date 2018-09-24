@@ -1,9 +1,9 @@
 require! <[ fs os ]>
 lang = process.argv.2
+lang = \t
 unless lang in <[ a t h c ]>
   console.log "Please invoke this program with a single-letter argument, one of <[ a t h c ]>."
   process.exit!
-pre2 = fs.read-file-sync "#lang/lenToRegex.json"
 audio-map = JSON.parse(fs.read-file-sync \dict-concised.audio.json \utf8) if lang is \a
 for k, v of audio-map
   k = k.replace(/\.（.*?）/ \.) - /，/g - /（.*）.*/
@@ -11,38 +11,12 @@ for k, v of audio-map
   k = k - /\..*/
   audio-map[k] = v
 LTM-regexes = []
-Threads = require \webworker-threads
-pool = Threads.create-pool(os.cpus!length)
-pool.all.eval("var pre2 = #pre2;")
-pool.all.eval("var lenToRegex, lens, LTMRegexes = [];")
-pool.all.eval(init);
-pool.all.eval('init()');
-pool.all.eval(proc);
 
-function proc (struct, title, idx)
-  chunk = JSON.stringify(struct)
-  for re in LTM-regexes
-    chunk.=replace(re, -> escape "`#it~")
-  esc = escape title
-  codepoints-of = -> it.length - it.split( /[\uD800-\uDBFF][\uDC00-\uDFFF]/g ).length + 1
-  title-codes = codepoints-of title
-  for len in lens | len < title-codes
-    title.=replace(lenToRegex[len], -> escape "`#it~")
-  return "#idx #esc " + unescape(chunk).replace(/"t":""/, """
-    "t":"#{ unescape title }"
-  """)
+require! \worker
+pool = worker.pool "#{__dirname}/worker.js", os.cpus!length, env: {lang}
 
 lenToRegex = {}
 lens = []
-function init ()
-  lenToRegex := pre2.lenToRegex
-  lens := []
-  for len of lenToRegex
-    lens.push len
-    lenToRegex[len] = new RegExp lenToRegex[len], \g
-  lens.sort (a, b) -> b - a
-  for len in lens => LTM-regexes.push lenToRegex[len]
-
 ##############
 PUA2UNI = {
   \⿰𧾷百 : \󾜅
@@ -115,6 +89,6 @@ for {t:title, h:heteronyms}:entry in entries
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
-  pool.any.eval "proc(#chunk, \"#title\", #idx)", (,x) ->
-    console.log x
+  pool.run(\proc, [chunk, title, idx]).then ->
+    console.log it
     process.exit! unless --todo
