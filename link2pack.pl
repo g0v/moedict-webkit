@@ -12,6 +12,11 @@ Please invoke this as one of:
     perl link2pack.pl c < c.txt
 .
 }
+
+if ($^O eq 'darwin' and `diskutil info / |grep Bundle` =~ /apfs/) {
+    die "APFS in High Sierra+ detected; this script cannot work on a normalization-insensitive filesystem and so cannot proceed. Ref: https://github.com/g0v/moedict-webkit/issues/229\n"
+}
+
 binmode STDIN, ':raw';
 my %prepack;
 my %seen;
