@@ -51,7 +51,7 @@ Term = createClass do
         RadicalGlyph { H, char: radical - /<\/?a[^>]*>/g }
         span { className: \count },
           span { className: \sym }, \+
-          nrs-count
+          nrs-count >? 0
         span { className: \count }, " = #s-count"
         nbsp, a-stroke
     else div { className: \radical }, a-stroke
