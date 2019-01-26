@@ -15,15 +15,15 @@ Please invoke this as one of:
 }
 
 my $mount = '/';
-if ($RealBin =~ m{^/Volumes/[^/]+$}) {
-    $mount = $RealBin;
+if ($RealBin =~ m{^(/Volumes/[^/]+)}) {
+    $mount = $1;
 }
 if ($^O eq 'darwin' and `diskutil info $RealBin |grep Bundle` =~ /apfs/) {
     die << '.';
 
 APFS in High Sierra+ detected; this script cannot work on a normalization-insensitive filesystem and so cannot proceed.
 
-As a workaround, create a HFS+ partition with Disk Utility and mount this repositoy as /Volumes/moedict-webkit/.
+As a workaround, please create a HFS+ partition with Disk Utility and clone this repository again under that volume.
 
 Ref: https://github.com/g0v/moedict-webkit/issues/229
 .
