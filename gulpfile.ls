@@ -1,5 +1,5 @@
 require! gulp
-sass = require \gulp-sass
+sass = require \gulp-dart-sass
 jade = require \gulp-jade
 src = -> gulp.src it
 

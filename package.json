@@ -18,7 +18,7 @@
     "npm": ">=1.1.0"
   },
   "dependencies": {
-    "node-sass": "^4.9.3"
+    "sass": "^1.13.2"
   },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
@@ -30,7 +30,7 @@
     "gulp": "^3.8.10",
     "gulp-jade": "^0.10.0",
     "gulp-postcss": "^5.1.8",
-    "gulp-sass": "^2.3.1",
+    "gulp-dart-sass": "^0.9.1",
     "gulp-watch": "^3.0.0",
     "gulp-webpack": "^1.1.0",
     "iconv-lite": "^0.4.5",
