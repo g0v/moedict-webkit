@@ -41,9 +41,10 @@ Result = createClass do
 
 Term = createClass do
   render: ->
-    { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
+    { LANG, H=HASH-OF[LANG], title, english, heteronyms, radical, translation, reading, non_radical_stroke_count: nrs-count, stroke_count: s-count, pinyin: py, xrefs } = @props
     H -= /^#/
     H = "#DotSlash##H"
+    console.log reading
     CurrentId := @props.id # Used in h()
     a-stroke = a { className: 'iconic-circle stroke icon-pencil', title: \筆順動畫, style: { color: \white } }
     $char = if radical

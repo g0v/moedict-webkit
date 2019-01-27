@@ -62,7 +62,10 @@ entries = switch lang
 
 i = 0
 todo = 0
+seen = {}
 for {t:title, h:heteronyms}:entry in entries
+  continue if seen[title]
+  seen[title] = true
   continue if title is /\{\[[0-9a-f]{4}\]\}/ # Unsubstituted
   continue if title is /\uDB40[\uDD00-\uDD0F]/ # Variant
   ++todo
