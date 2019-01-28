@@ -1,6 +1,5 @@
 require! <[ fs os ]>
 lang = process.argv.2
-lang = \t
 unless lang in <[ a t h c ]>
   console.log "Please invoke this program with a single-letter argument, one of <[ a t h c ]>."
   process.exit!
