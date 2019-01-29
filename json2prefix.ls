@@ -1,8 +1,8 @@
 require! fs
-lang = process.argv.2
+lang = process.argv.filter((in <[ a t h c ]>)).0
 
 unless lang in <[ a t h c ]>
-  console.log "Please invoke this program with a single-letter argument, one of <[ a t h ]>."
+  console.log "Please invoke this program with a single-letter argument, one of <[ a t h c ]>."
   process.exit!
 
 fs.mkdir-sync lang unless fs.exists-sync lang
