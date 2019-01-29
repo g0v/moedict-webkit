@@ -4,7 +4,7 @@ lenToRegex = {}
 lens = []
 LTMRegexes = []
 
-lang = process.env.lang || process.argv.2
+lang = process.env.lang || process.argv.filter((in <[ a t h c ]>)).0
 require! fs
 pre2 = JSON.parse fs.read-file-sync "#lang/lenToRegex.json"
 init!
