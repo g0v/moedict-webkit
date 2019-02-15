@@ -24,10 +24,16 @@ root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
 請先用 Disk Utility 建立一個 HFS+ 分割區，再將開發目錄移至該卷宗。
 
 ## 前置作業 (Debian/Ubuntu)
-
+### Ubuntu 16.04 之前的發行版
 ```sh
 sudo apt-get update
 sudo apt-get install -y python g++ make nodejs python-lxml curl npm
+```
+
+### Ubuntu 16.04（含）之後的發行版
+```sh
+sudo apt update
+sudo apt install -y python g++ make nodejs python-lxml curl npm
 ```
 
 ## 安裝環境
