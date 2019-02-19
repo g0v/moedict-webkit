@@ -173,8 +173,8 @@ window.play-audio = (el, url) ->
     $el.removeClass('icon-play').addClass('icon-spinner')
     $el.parent('.audioBlock').addClass('playing')
     urls = [url]
-    urls.unshift url.replace(/(ogg|opus)$/ 'mp3?_=1548581542') if url is /(ogg|opus)$/ and can-play-mp3!
-    audio = new window.Howl { +buffer, src: urls, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
+    urls.unshift url.replace(/(ogg|opus)$/ \mp3) if url is /(ogg|opus)$/ and can-play-mp3!
+    audio = new window.Howl { +buffer, +html5, src: urls, urls, onend: done, onloaderror: done, onplay: -> $el.removeClass('icon-play').removeClass('icon-spinner').addClass('icon-stop').show!
     }
     audio.play!
     player := audio
