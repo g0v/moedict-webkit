@@ -4,13 +4,13 @@
  * 四大字體集・仿宋體
  */
 
-// * 1. Recommended
-// * 2. CNS (適用台灣的舊字形或國字標準字形字體)
-// * 3. GB (中國國標)
+// * 1. Recommended (推薦傳統字形，適用繁體漢字)
+// * 2. CNS (台灣教育部國字標準字體［字形］)
+// * 3. GB (中國國家標準)
 
 // 1
 @font-face {
-    @include mre-range-cjk;
+    @include han-range-cjk;
     font-family: 'Han Fangsong';
     src:
       local(STFangsong),
@@ -20,7 +20,7 @@
 
 // 2
 @font-face {
-    @include mre-range-cjk;
+    @include han-range-cjk;
     font-family: 'Han Fangsong CNS';
     src:
       local(STFangsong),
@@ -30,10 +30,11 @@
 
 // 3
 @font-face {
-    @include mre-range-cjk;
+    @include han-range-cjk;
     font-family: 'Han Fangsong GB';
     src:
       local(STFangsong),
       local(FangSong)
     ;
 }
+

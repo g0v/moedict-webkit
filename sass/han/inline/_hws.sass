@@ -7,23 +7,29 @@
  */
 
 // * 1. The value is calculated with Arial, which
-// *    lets the spacing display precisely in size 0.25em.
+// *    makes the spacing display precisely in size
+// *    of a quarter em.
 // * 2. Hidden in certain elements or situations.
 // *
-hws
-  // box
-  display: inline
-  visibility: hidden
-  // typography
-  font-family: Arial, sans-serif !important
-  // 1
-  font-size: .89em
+h-hws,
+h-hws[hidden]
+  &
+    // box
+    display: inline
+    // typography
+    font-family: Arial
+  &:before
+    content: ' '
+    // 1
+    letter-spacing: -.04em
 
   // 2
   code &,
   kbd  &,
   samp &,
   pre  &,
-  ol > &,
-  ul > &
+  &.quote-inner,
+  &.quote-outer:lang(zh-Hans),
+  &.quote-outer:lang(zh-CN)
     display: none
+

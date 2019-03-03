@@ -86,6 +86,12 @@ $han-text-emphasis-posi-ja:  over     !default
 $han-text-emphasis-color-ja: inherit  !default
 
 // **
+// * Font size for Zhuyin ruby (unit: em)
+// * http://www.w3.org/TR/clreq/#positioning_of_zhuyin
+// *
+$han-zhuyin-size:         .4      !default
+
+// **
 // * Default Chinese locale variant
 // * (Traditional or simplified characters)
 // * `hant` || `hans`
@@ -117,6 +123,13 @@ $han-biaodian-hant:       CNS     !default
 $han-biaodian-hans:       GB      !default
 
 // **
+// * Hanging Biaodian
+// *
+$han-hanging-hant: false !default
+$han-hanging-hans: true  !default
+$han-hanging-ja:   true  !default
+
+// **
 // * Generic typefaces for Western (Latin-based)
 // * characters
 // *
@@ -138,5 +151,5 @@ $han-mono-zh:    $han-sans-zh                     !default
 // * (Zhuyin, Yang checked-toned romanisation and
 // * partial Biaodian correction)
 // *
-$han-font-woff:  './font/han.woff'                !default
-$han-font-otf:   './font/han.otf'                 !default
+$han-font-path:  './font/'                        !default
+

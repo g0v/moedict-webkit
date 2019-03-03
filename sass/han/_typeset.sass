@@ -1,8 +1,8 @@
 
-/* Global
-   ========================================================================== */
+/*  Global
+   -------- */
 
-@if ( $han-line-height != $HYU-LINE-HEIGHT )
+@if ( $han-line-height != $HAN-LINE-HEIGHT )
   #{$han-root}
     line-height: $han-line-height
 
@@ -17,18 +17,28 @@ var
     // style
     border-bottom: 3px double lightgrey
 
+// * Zhuyin ruby size
+// *
+@if ( $han-zhuyin-size != $HAN-ZHUYIN-SIZE )
+  ruby.zhuyin,
+  ruby.mps
+    +han-scale( $han-zhuyin-size/.5, 'left center' )
 
-/* Section-wise arrangement
-   ========================================================================== */
+  [zhuyin] h-zhuyin > *
+    +han-scale( $han-zhuyin-size )
+
+/*  Section-wise arrangement
+   -------------------------- */
 
 @import section/well-knit
 @import section/counter
 
-/* Line composition
-   ========================================================================== */
+/*  Line composition
+   ------------------ */
 
 @import inline/em
-@import inline/basic-bd
 @import inline/hws
+@import inline/hanging
 @import inline/jiya
 @import inline/subst
+
