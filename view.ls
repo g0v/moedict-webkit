@@ -176,14 +176,33 @@ Heteronym = createClass do
         id: 'historical-scripts'
         className: 'hidden-xs part-of-speech'
         title: "字體e筆書寫：張炳煌教授\n字體選用：郭晉銓博士"
-        onClick: ->
-          $('#strokes iframe').remove!
-          for ch in CurrentId
-            $('#strokes').append($('<iframe />', {
-              src: "https://www.moedict.tw/clk/searchclk/srch_history/main/#{ encodeURIComponent ch }"
-              scrolling: \no
-              css: { width: \1400px clear: \both transform: 'scale(0.6)' marginLeft: \-290px marginRight: \-290px height: \250px marginTop: \-50px marginBottom: \-50px border: \0 }
-            })) } \歷代書體
+        onClick: !->
+          $('#strokes section').remove!
+          load = (cs, ds, cb) !->
+            [ch, ...cs] = cs
+            return cb? ds if not ch
+            data <- $.ajax { url: "http://bs.chinese-linguipedia.org/api/web/word/#ch" } .done
+            load cs, [...ds, data], cb
+          ds <- load CurrentId, []
+          types = <[楷書 篆書 隸書 行書 草書 金文]>
+          sections = {}
+          for t in types
+            section = $('<section />', { css: { clear: \both } })
+            sections[t] = section
+            $('#strokes').append(section)
+          for data in ds
+            console.log data
+            strokes = {}
+            for s in data.data.strokes
+              strokes[s.key] = s
+            for t in types
+              s = strokes[t]
+              sections[t].append($('<img />', {
+                src: if s then s.gif else \#
+                alt: "#{data.data.tw_word} - #t"
+                css: { display: \inline-block, width: 220, height: 220 }
+              }))
+      } \歷代書體
       $char
       h1 { className: \title, 'data-title': t }, ...list
       if bopomofo or alt or pinyin-list then div { className: "bopomofo #cn-specific" },
