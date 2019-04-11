@@ -181,7 +181,7 @@ Heteronym = createClass do
           load = (cs, ds, cb) !->
             [ch, ...cs] = cs
             return cb? ds if not ch
-            data <- $.ajax { url: "http://bs.chinese-linguipedia.org/api/web/word/#ch" } .done
+            data <- $.ajax { url: "https://www.moedict.tw/api/web/word/#ch" } .done
             load cs, [...ds, data], cb
           ds <- load CurrentId, []
           types = <[楷書 篆書 隸書 行書 草書 金文]>
