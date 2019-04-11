@@ -191,7 +191,6 @@ Heteronym = createClass do
             sections[t] = section
             $('#strokes').append(section)
           for data in ds
-            console.log data
             strokes = {}
             for s in data.data.strokes
               strokes[s.key] = s
