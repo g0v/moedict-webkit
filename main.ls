@@ -817,9 +817,11 @@ function init-autocomplete
       #return cb ((results.join(',') - /"/g) / ',')
 
 PUA2UNI = {
+### TWBLG
   \⿰𧾷百 : \𬦰
-  \⿸疒哥 : \󿗧
-  \⿰亻恩 : \󿌇
+  \⿸疒哥 : \󿗧  # \𰣺 (U+308FA) CJK Extension G (not part of Unicode 12.0; expected to be part of Unicode 13.0 around March 2020)
+### Hakka
+  \⿰亻恩 : \󿌇 # \𫣆
   \⿰虫念 : \󿑂
   \⿺皮卜 : \󿕅
 }
