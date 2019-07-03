@@ -2,15 +2,13 @@ require! gulp
 sass = require \gulp-dart-sass
 jade = require \gulp-jade
 src = -> gulp.src it
+task = process.argv[*-1]
 
-gulp.task \default <[ sass jade ]>
-gulp.task \build <[ default webpack:build ]>
-gulp.task \run <[ default static-here show-url ]>
-gulp.task \dev <[ default webpack:dev show-url ]>
-
-if process.argv[*-1] in <[ run dev ]>
-  watch = require \gulp-watch
-  src = -> gulp.src(it).pipe(watch(it))
+if task in <[ run dev ]>
+  src = ->
+    rv = gulp.src(it)
+    gulp.watch(it, gulp.series({run: \build, dev: \webpack:dev}[task]))
+    return rv
 
 gulp.task \sass ->
   src(\./sass/*.scss)
@@ -44,3 +42,9 @@ gulp.task \webpack:dev ->
   process.env.NODE_ENV = \development
   process.argv ++= <[ --hot --port 8888 ]>
   require \./node_modules/webpack-dev-server/bin/webpack-dev-server.js
+
+gulp.task \default gulp.parallel \sass \jade
+gulp.task \build gulp.series \default \webpack:build
+gulp.task \run gulp.series \default \static-here \show-url
+gulp.task \dev gulp.series \default \webpack:dev \show-url
+
