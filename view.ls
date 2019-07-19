@@ -163,14 +163,7 @@ Heteronym = createClass do
       meta { itemProp: \image, content: encodeURIComponent(t) + ".png" }
       meta { itemProp: \name, content: t }
       if (key ? 0)  is 0 then # Only display Star for the first entry
-        Star { CurrentId, LANG } /* a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \甲
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \篆
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \金
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \隸
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \草
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \行
-      a { style: { color: \white cursor: \pointer }, className: \part-of-speech, title: \加入字詞記錄簿 } \楷
-      */
+        Star { CurrentId, LANG }
       a {
         style: { position: \absolute right: \41px top: \160px color: \white cursor: \pointer display: \none }
         id: 'historical-scripts'
@@ -746,10 +739,6 @@ th2pfs = ->
   for s in segs | s.length
     result += tone2pfs s
   return result
-  /*
-  for v in vowels
-    tonePosition = it.indexOf(v)
-  */
 
 ToneMarkMap = {
   '²⁴':  "\u0302" # â
