@@ -77,6 +77,7 @@ for {t:title, h:heteronyms}:entry in entries
   idx = code % (if lang is \a then 1024 else 128)
 
   english-index = title.indexOf \(
+  english-index = title.indexOf \（ if english-index < 0
   if english-index >= 0
     entry.english = title.slice(english-index + 1, -1)
     title = title.slice(0, english-index)
