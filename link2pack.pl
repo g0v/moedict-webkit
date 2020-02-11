@@ -18,7 +18,7 @@ my $mount = '/';
 if ($RealBin =~ m{^(/Volumes/[^/]+)}) {
     $mount = $1;
 }
-if ($^O eq 'darwin' and `diskutil info $RealBin |grep Bundle` =~ /apfs/) {
+if ($^O eq 'darwin' and `diskutil info $mount |grep Bundle` =~ /apfs/) {
     die << '.';
 
 APFS in High Sierra+ detected; this script cannot work on a normalization-insensitive filesystem and so cannot proceed.
