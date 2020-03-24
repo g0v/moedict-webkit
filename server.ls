@@ -91,6 +91,7 @@ font-of = ->
   return 'SourceHanSerifTCBold' if it is /shsb/i
   return 'SourceHanSerifTCHeavy' if it is /shsh/i
   return 'Typography' if it is /rxkt/i
+  return 'jf-openhuninn-1.0' if it is /openhuninn/i
   return wt2font[it] || 'TW-Kai'
 
 iconv = require \iconv-lite
@@ -369,8 +370,8 @@ require(\zappajs) {+disable_io} ->
               option value:'?font=kai', \楷書
               option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
-            # optgroup label:'日星', ->
-            #   option selected:(png-suffix is '.png?font=rxkt'), value:\?font=rxkt, \初號楷體
+            optgroup label:'Justfont', ->
+              option selected:(png-suffix is '.png?font=openhuninn'), value:\?font=openhuninn, 'Open 粉圓'
             optgroup label:'逢甲大學', ->
               option selected:(png-suffix is '.png?font=shuowen'), value:\?font=shuowen, \說文標篆
             optgroup label:'cwTeX Q', style:'font-family: Helvetica, sans-serif', ->
@@ -451,6 +452,8 @@ function text2png (text, font)
       if font is /Typography/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 25
         y += 5
+      if font is /jf-openhuninn-1.0/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        y += 20
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15
         y += 15
