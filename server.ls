@@ -91,7 +91,7 @@ font-of = ->
   return 'SourceHanSerifTCBold' if it is /shsb/i
   return 'SourceHanSerifTCHeavy' if it is /shsh/i
   return 'Typography' if it is /rxkt/i
-  return 'jf-openhuninn-1.0' if it is /openhuninn/i
+  return 'jf-openhuninn-1.1' if it is /openhuninn/i
   return wt2font[it] || 'TW-Kai'
 
 iconv = require \iconv-lite
@@ -452,7 +452,7 @@ function text2png (text, font)
       if font is /Typography/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 25
         y += 5
-      if font is /jf-openhuninn-1.0/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+      if font is /jf-openhuninn-1.1/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         y += 20
       if font is /cwTeXQ/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         x += 15

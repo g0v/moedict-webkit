@@ -179,7 +179,7 @@
       return 'Typography';
     }
     if (/openhuninn/i.exec(it)) {
-      return 'jf-openhuninn-1.0';
+      return 'jf-openhuninn-1.1';
     }
     return wt2font[it] || 'TW-Kai';
   };
@@ -1207,7 +1207,7 @@
             x += 25;
             y += 5;
           }
-          if (/jf-openhuninn-1.0/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
+          if (/jf-openhuninn-1.1/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             y += 20;
           }
           if (/cwTeXQ/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
