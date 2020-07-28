@@ -700,16 +700,6 @@
                 rel: 'stylesheet'
               });
               if (this.segments) {
-                link({
-                  rel: 'author',
-                  href: 'https://plus.google.com/+AudreyTang/posts'
-                });
-              }
-              link({
-                rel: 'publisher',
-                href: 'https://plus.google.com/+MoedictTw-g0v'
-              });
-              if (this.segments) {
                 base({
                   target: '_blank'
                 });
@@ -900,20 +890,6 @@
                       return i({
                         'class': 'icon-twitter'
                       }, ' 推特');
-                    });
-                    return a({
-                      'class': 'share-g btn btn-default',
-                      title: 'Google+ 分享',
-                      style: 'margin-left: 10px; background: #D95C5C; color: white',
-                      'href': "https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" + uri
-                    }, function(){
-                      i({
-                        'class': 'icon-share'
-                      });
-                      span(' ');
-                      return i({
-                        'class': 'icon-google-plus'
-                      }, ' 分享');
                     });
                   });
                   table({

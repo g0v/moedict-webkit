@@ -3,7 +3,6 @@ import React from 'react'
 const shareButtons = [
   { id: "f", icon: "facebook", label: "Facebook", background: "#3B579D", href: "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.moedict.tw%2F" },
   { id: "t", icon: "twitter", label: "Twitter", background: "#00ACED", href: "https://twitter.com/share?text=__TEXT__&url=https%3A%2F%2Fwww.moedict.tw%2F" },
-  { id: "g", icon: "google-plus", label: "Google+", background: "#D95C5C", href: "https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F" }
 ]
 
 export default class Links extends React.Component { render() {

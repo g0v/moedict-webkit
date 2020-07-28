@@ -266,8 +266,6 @@ require(\zappajs) {+disable_io} ->
       meta name:"description" content:esc def
       link href:'/styles.css' rel:'stylesheet'
       link href:'/css/cupertino/jquery-ui-1.10.4.custom.css' rel:'stylesheet'
-      link rel:'author' href:'https://plus.google.com/+AudreyTang/posts' if @segments
-      link rel:'publisher' href:'https://plus.google.com/+MoedictTw-g0v'
       base target:\_blank if @segments
       word = @text.replace(/^['!~:]/ '').replace(/["\n]/g '')
       if not @segments
@@ -334,8 +332,6 @@ require(\zappajs) {+disable_io} ->
             i class:\icon-share; span ' '; i class:\icon-facebook, ' 臉書'
           a class:'share-t btn btn-default' title:'Twitter 分享' style:'background: #00ACED; color: white' 'href':"https://twitter.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri&text=#{ encodeURIComponent @text.replace(/^['!~:]/, '') }", ->
             i class:\icon-share; span ' '; i class:\icon-twitter, ' 推特'
-          a class:'share-g btn btn-default' title:'Google+ 分享' style:'margin-left: 10px; background: #D95C5C; color: white' 'href':"https://plus.google.com/share?url=https%3A%2F%2Fwww.moedict.tw%2F#uri", ->
-            i class:\icon-share; span ' '; i class:\icon-google-plus, ' 分享'
         table class:'moetext' style:'''
           max-width: 90%;
           background: #eee;
