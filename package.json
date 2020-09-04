@@ -39,7 +39,7 @@
     "livescript": "1.5.x",
     "livescript-loader": "^0.1.3",
     "prelude-ls": "1.1.1",
-    "react": "^0.13.1",
+    "react": "^0.14.0",
     "react-hot-loader": "^1.2.4",
     "react-zh-stroker": "^0.1.3",
     "webpack": "^1.7.2",
