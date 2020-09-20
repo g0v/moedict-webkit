@@ -175,6 +175,21 @@
     if (/shsh/i.exec(it)) {
       return 'SourceHanSerifTCHeavy';
     }
+    if (/gwmel/i.exec(it)) {
+      return 'GenWanMin TW EL';
+    }
+    if (/gwml/i.exec(it)) {
+      return 'GenWanMin TW L';
+    }
+    if (/gwmr/i.exec(it)) {
+      return 'GenWanMin TW R';
+    }
+    if (/gwmm/i.exec(it)) {
+      return 'GenWanMin TW M';
+    }
+    if (/gwmsb/i.exec(it)) {
+      return 'GenWanMin TW SB';
+    }
     if (/rxkt/i.exec(it)) {
       return 'Typography';
     }
@@ -972,6 +987,30 @@
                         }, '篆文');
                       });
                       optgroup({
+                        label: '源雲明體'
+                      }, function(){
+                        option({
+                          selected: pngSuffix === '.png?font=gwmel',
+                          value: '?font=gwmel'
+                        }, '特細');
+                        option({
+                          selected: pngSuffix === '.png?font=gwml',
+                          value: '?font=gwml'
+                        }, '細體');
+                        option({
+                          selected: pngSuffix === '.png?font=gwmr',
+                          value: '?font=gwmr'
+                        }, '標準');
+                        option({
+                          selected: pngSuffix === '.png?font=gwmm',
+                          value: '?font=gwmm'
+                        }, '正明');
+                        return option({
+                          selected: pngSuffix === '.png?font=gwmsb',
+                          value: '?font=gwmsb'
+                        }, '中明');
+                      });
+                      optgroup({
                         label: 'Justfont'
                       }, function(){
                         return option({
@@ -1194,6 +1233,9 @@
             y += 30;
           }
           if (/SourceHanSans/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
+            y += 30;
+          }
+          if (/GenWanMin/.exec(font) && !/[\u3000\uFF01-\uFF5E]/.test(ch)) {
             y += 30;
           }
           ctx.fillText(ch, x, y);

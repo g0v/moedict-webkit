@@ -90,6 +90,11 @@ font-of = ->
   return 'SourceHanSerifTCSemiBold' if it is /shss/i
   return 'SourceHanSerifTCBold' if it is /shsb/i
   return 'SourceHanSerifTCHeavy' if it is /shsh/i
+  return 'GenWanMin TW EL' if it is /gwmel/i
+  return 'GenWanMin TW L' if it is /gwml/i
+  return 'GenWanMin TW R' if it is /gwmr/i
+  return 'GenWanMin TW M' if it is /gwmm/i
+  return 'GenWanMin TW SB' if it is /gwmsb/i
   return 'Typography' if it is /rxkt/i
   return 'jf-openhuninn-1.1' if it is /openhuninn/i
   return wt2font[it] || 'TW-Kai'
@@ -366,6 +371,12 @@ require(\zappajs) {+disable_io} ->
               option value:'?font=kai', \楷書
               option selected:(png-suffix is '.png?font=sung'), value:\?font=sung, \宋體
               option selected:(png-suffix is '.png?font=ebas'), value:\?font=ebas, \篆文
+            optgroup label:'源雲明體', ->
+              option selected:(png-suffix is '.png?font=gwmel'), value:\?font=gwmel, \特細
+              option selected:(png-suffix is '.png?font=gwml'), value:\?font=gwml, \細體
+              option selected:(png-suffix is '.png?font=gwmr'), value:\?font=gwmr, \標準
+              option selected:(png-suffix is '.png?font=gwmm'), value:\?font=gwmm, \正明
+              option selected:(png-suffix is '.png?font=gwmsb'), value:\?font=gwmsb, \中明
             optgroup label:'Justfont', ->
               option selected:(png-suffix is '.png?font=openhuninn'), value:\?font=openhuninn, 'Open 粉圓'
             optgroup label:'逢甲大學', ->
@@ -456,6 +467,8 @@ function text2png (text, font)
       if font is /SourceHanSerif/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         y += 30
       if font is /SourceHanSans/ and ch isnt /[\u3000\uFF01-\uFF5E]/
+        y += 30
+      if font is /GenWanMin/ and ch isnt /[\u3000\uFF01-\uFF5E]/
         y += 30
       ctx.fillText ch, x, y
       idx++
