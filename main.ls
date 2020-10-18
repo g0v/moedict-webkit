@@ -819,10 +819,10 @@ function init-autocomplete
 PUA2UNI = {
 ### TWBLG
   \⿰𧾷百 : \𬦰
-  \⿸疒哥 : \󿗧  # \𰣺 (U+308FA) CJK Extension G (not part of Unicode 12.0; expected to be part of Unicode 13.0 around March 2020)
+  \⿸疒哥 : \𰣻
 ### Hakka
-  \⿰亻恩 : \󿌇 # \𫣆
-  \⿰虫念 : \󿑂
+  \⿰亻恩 : \𫣆
+  \⿰虫念 : \𬠖
   \⿺皮卜 : \󿕅
 }
 trs_lookup = (term,cb) ->
