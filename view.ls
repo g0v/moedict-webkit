@@ -400,7 +400,8 @@ function tone-poj (poj)
   if poj is /([\u0300-\u0302\u0304\u0306\u0307\u030d])/
     tone = RegExp.$1
     poj -= /[\u0300-\u0302\u0304\u0306\u0307\u030d]/
-    return poj.replace(/(oa)([in])/i, "$1#{tone}$2") if poj is /oa[in]/i
+    return poj.replace(/(oa)([inht])/i, "$1#{tone}$2") if poj is /oa[inht]/i
+    return poj.replace(/(oe)([h])/i, "$1#{tone}$2") if poj is /oe[h]/i
     return poj.replace(/(o)/i, "$1#tone") if poj is /o/i
     return poj.replace(/(e)/i, "$1#tone") if poj is /e/i
     return poj.replace(/(a)/i, "$1#tone") if poj is /a/i
