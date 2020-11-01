@@ -663,7 +663,7 @@
         },
         updatesPerStep: 10,
         delays: {
-          stroke: 0.25,
+          stroke: 0.5,
           word: 0.5
         },
         progress: null,
