@@ -637,6 +637,10 @@
                 charset: 'utf-8'
               });
               meta({
+                name: "robots",
+                content: "noindex"
+              });
+              meta({
                 name: "twitter:card",
                 content: "summary"
               });
