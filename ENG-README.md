@@ -640,7 +640,7 @@ Apart from any files mentioned above, all other files in this directory have bee
 
 # 教育部國語辭典公眾授權網
 
-http://resources.publicense.moe.edu.tw/
+https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html
 
 # 教育部版權頁
 
