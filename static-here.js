@@ -74,6 +74,12 @@ var httpCb = function (req, res) {
       filename = path.join(process.cwd(), uri);
   };
 
+  if (path.normalize(decodeURIComponent(uri)) !== decodeURIComponent(uri)) {
+    res.statusCode = 403;
+    res.end();
+    return;
+  }
+
   (path.exists || fs.exists)(filename, function (exists) {
     if (!exists || /manifest.appcache/.test(filename)) {
       httpRespond(res, 404, "Page Not Found!\n");
