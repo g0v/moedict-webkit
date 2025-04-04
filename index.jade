@@ -1,7 +1,82 @@
-// index.jade (原始架構基礎上修改)
 doctype html
-html
+html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
   head
-    title 萌典
-  body
-    h1 歡迎使用華語辭典、臺灣台語、臺灣客語！
+    meta(charset='utf-8')
+    title 萌典 – 教育部華語、臺灣台語、臺灣客語辭典民間版
+
+    link(rel='apple-touch-icon', href='images/icon.png')
+    link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
+    link(rel='stylesheet', href='styles.css')
+    link(rel='stylesheet', href='css/cupertino/jquery-ui-1.10.4.custom.css')
+    link(rel='search', type='application/opensearchdescription+xml', href='opensearch/moedict.xml', title='萌典華語')
+
+    meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1')
+    meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
+    meta(name='keywords', content='詞典,辭典,華語,臺灣台語,臺灣客語,兩岸,g0v')
+    meta(name='description', content='共收錄十六萬筆華語、兩萬筆臺灣台語、一萬四千筆臺灣客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+  body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
+    noscript: center(style='position: absolute; width: 95%'): main: dl
+      dt: a(href='萌') 萌 ㄇㄥˊ méng
+      dd 草木初生的芽。
+      dt: a(href='典') 典 ㄉㄧㄢˇ diǎn
+      dd 可作為依據或模範的書。
+
+    .nav-bg.navbar-fixed-top
+    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .navbar-header
+        a.navbar-brand.brand.ebas(href='./') 萌典
+      ul.nav.navbar-nav
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            i.icon-book &nbsp;
+            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 華語辭典
+            b.caret
+          ul.dropdown-menu(role='navigation')
+            li(role='presentation')
+              a.lang-option.a(role='menuitem', href='##') 華語辭典
+            li.dropdown-submenu
+              a.a.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.a.a-idiom(href='#@') …部首表
+            li(role='presentation')
+              a.lang-option.t(role='menuitem', href='#!') 臺灣台語
+            li.dropdown-submenu
+              a.t.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.t.t-idiom(href='#!=諺語') …諺語
+            li(role='presentation')
+              a.lang-option.h(role='menuitem', href='#:') 臺灣客語
+            li(role='presentation')
+              a.lang-option.h.h-idiom(href='#:=諺語') …諺語
+            li(role='presentation')
+              a.lang-option.c(role='menuitem', href='#~') 兩岸詞典
+            li.dropdown-submenu
+              a.c.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.c.c-idiom(href='#~@') …部首表
+        li#btn-starred
+          a(title='字詞紀錄簿', href='#=*')
+            i.icon-bookmark-empty
+        li#btn-pref
+          a(title='偏好設定', href='#')
+            i.icon-cogs
+        li.resize-btn.app-only(style='position: absolute; top: 2px; left: 8em; padding: 3px')
+          a(style='padding-left: 5px; padding-right: 5px; margin-right: 30px', onclick='adjustFontSize(-1); return false')
+            i.icon-resize-small
+        li.resize-btn.app-only(style='position: absolute; top: 2px; left: 8em; padding: 3px; margin-left: 30px;')
+          a(style='padding-left: 5px; padding-right: 5px', onclick='adjustFontSize(1); return false')
+            i.icon-resize-full
+      ul.nav.pull-right.hidden-xs
+        li
+          a(href='about.html', onclick='pressAbout(); return false', title='關於本站')
+            span.iconic-circle: i.icon-info
+      ul.nav.pull-right.hidden-xs
+        li.web-inline-only(style='display: inline-block')
+          a(href='https://twitter.com/moedict', target='_blank', title='萌典 Twitter', style='color: #ccc')
+            i.icon-twitter-sign
+        li.web-inline-only(style='display: inline-block')
+          a(href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe', target='_blank', title='Google Play 下載', style='color: #ccc')
+            i.icon-android
+        li.web-inline-only(style='display: inline-block')
+          a(href='http://itunes.apple.com/app/id1434947403', target='_blank', title='App Store 下載', style='color: #ccc')
+            i.icon-apple
