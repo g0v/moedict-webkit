@@ -1,4 +1,3 @@
-
 doctype html
 html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
   head
@@ -13,7 +12,170 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
 
     meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1')
     meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
-    meta(name='keywords', content='詞典,辭典,華語,臺灣台語,臺灣客語,兩岸,g0v')
-    meta(name='description', content='共收錄十六萬筆華語、兩萬筆臺灣台語、一萬四千筆臺灣客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+    meta(name='keywords', content='詞典,辭典,華語,臺灣台語,臺灣台語,臺灣客語,兩岸,g0v')
+    meta(name='description', content='共收錄十六萬筆華語、兩萬筆臺灣台語、一萬四千筆臺灣客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編華語辭典修訂本」、「臺灣台語常用詞辭典」、「臺灣臺灣臺灣客語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+  body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
+    noscript: center(style='position: absolute; width: 95%'): main: dl
+      dt: a(href='萌') 萌 ㄇㄥˊ méng
+      dd 草木初生的芽。
+      dt: a(href='典') 典 ㄉㄧㄢˇ diǎn
+      dd 可作為依據或模範的書。
 
-  # The rest of the document will be added below...
+    .nav-bg.navbar-fixed-top
+    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .navbar-header
+        a.navbar-brand.brand.ebas(href='./') 萌典
+      ul.nav.navbar-nav
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            i.icon-book &nbsp;
+            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 華語辭典
+            b.caret
+          ul.dropdown-menu(role='navigation')
+            li(role='presentation')
+              a.lang-option.a(role='menuitem', href='##') 華語辭典
+            li.dropdown-submenu
+              a.a.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.a.a-idiom(href='#@') …部首表
+            li(role='presentation')
+              a.lang-option.t(role='menuitem', href='#!') 臺灣台語
+            li.dropdown-submenu
+              a.t.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.t.t-idiom(href='#!=諺語') …諺語
+            li(role='presentation')
+              a.lang-option.h(role='menuitem', href='#:') 臺灣臺灣客語
+            li(role='presentation')
+              a.lang-option.h.h-idiom(href='#:=諺語') …諺語
+            li(role='presentation')
+              a.lang-option.c(role='menuitem', href='#~') 兩岸詞典
+            li.dropdown-submenu
+              a.c.taxonomy(href='#') …分類索引
+            li(role='presentation')
+              a.lang-option.c.c-idiom(href='#~@') …部首表
+        li#btn-starred
+          a(title='字詞紀錄簿', href='#=*')
+            i.icon-bookmark-empty
+        li#btn-pref
+          a(title='偏好設定', href='#')
+            i.icon-cogs
+        li.resize-btn.app-only(style='position: absolute; top: 2px; left: 8em; padding: 3px')
+          a(style='padding-left: 5px; padding-right: 5px; margin-right: 30px', onclick='adjustFontSize(-1); return false')
+            i.icon-resize-small
+        li.resize-btn.app-only(style='position: absolute; top: 2px; left: 8em; padding: 3px; margin-left: 30px;')
+          a(style='padding-left: 5px; padding-right: 5px', onclick='adjustFontSize(1); return false')
+            i.icon-resize-full
+      ul.nav.pull-right.hidden-xs
+        li
+          a(href='about.html', onclick='pressAbout(); return false', title='關於本站')
+            span.iconic-circle: i.icon-info
+      ul.nav.pull-right.hidden-xs
+        li.web-inline-only(style='display: inline-block')
+          a(href='https://twitter.com/moedict', target='_blank', title='萌典 Twitter', style='color: #ccc')
+            i.icon-twitter-sign
+        li.web-inline-only(style='display: inline-block')
+          a(href='https://play.google.com/store/apps/details?id=org.audreyt.dict.moe', target='_blank', title='Google Play 下載', style='color: #ccc')
+            i.icon-android
+        li.web-inline-only(style='display: inline-block')
+          a(href='http://itunes.apple.com/app/id1434947403', target='_blank', title='App Store 下載', style='color: #ccc')
+            i.icon-apple
+    #gcse
+      span.lang-a-only: gcse:search(webSearchQueryAddition='-"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-h-only: gcse:search(webSearchQueryAddition='+"臺灣客語萌典" -"臺灣台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"臺灣台語萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+
+    | <!--[if lte IE 8]>
+    style body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }
+    #result.result(style='position: absolute; top: 10%; left: 10%; right: 10%')
+      p
+        br
+        | 很抱歉，我們不支援 Internet Explorer 8 和之前的版本。請您改用&nbsp;
+        a.icon-external-link(href="https://www.mozilla.org/firefox/") &nbsp;Firefox
+        | &nbsp;或&nbsp;
+        a.icon-external-link(href="https://www.google.com/chrome/browser/") &nbsp;Chrome
+        | &nbsp;瀏覽器。
+      p Sorry, Internet Explorer 8 and earlier versions are not supported.
+    | <![endif]-->
+
+    .results
+      #strokes(style='display: none')
+      #result.result
+        center(style='font-size: 30px; margin-top: 40px; margin-bottom: 40px')
+          span#loading
+          br
+          br
+          img.logo(title='〔萌典〕', src='images/icon.png', width='100')
+          br
+          br
+          span#F9868(style='font-family: "MOEDICT"; margin-botom: 40px')
+          i.icon-spinner
+      // a#sendback.btn.btn-default.small(title='送回編修', style='margin-left: 50%; display: none; background: #333333; color: white', href='mailto:xldictionary@gmail.com?subject=編修建議&body=出處及定義：', target='_blank') 送回編修
+      #links
+    .nav-bg.navbar-fixed-top
+    #nav
+
+    #query-box.query-box
+      input#query.query(type='search', style='display: none', autofocus='', autocomplete='off', placeholder='請輸入欲查詢的字詞')
+      // #timeline.hidden-xs(style='position: absolute; top: 70px; right: 5px; left: 10px; bottom: 20px')
+        .fb-page(data-href='https://www.facebook.com/MoeDict', data-width='240', data-height='768', data-small-header='true', data-adapt-container-width='false', data-hide-cover='false', data-show-facepile='true', data-show-posts='true', style='height: 100%; width: 100%')
+          .fb-xfbml-parse-ignore
+            blockquote(cite='https://www.facebook.com/MoeDict')
+              a(href='https://www.facebook.com/MoeDict' style='visibility: hidden') 萌典 FB 專頁
+    #user-pref
+    // 
+       li
+         button.btn.btn-info.btn-xs(type="button") 拼注音進階選項
+       li.btn-group.option-romanization
+         label 華語拼音
+         button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
+          | 漢語拼音 <span class="caret"></span>
+         ul.dropdown-menu
+           li: a.active(href="#") 漢語拼音
+           li.divider(role="presentation")
+           li: a(href="#") 威妥瑪拼音
+           li: a(href="#") 國音二式
+           li: a(href="#") 通用拼音
+       li.btn-group.option-romanization
+         label 閩南語拼音
+         button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
+          | 臺灣台語羅馬字 <span class="caret"></span>
+         ul.dropdown-menu
+           li: a.active(href="#") 臺灣台語羅馬字
+           li.divider(role="presentation")
+           li: a(href="#") 白話字
+           li: a(href="#") 通用拼音
+       li.btn-group.option-romanization
+         label 臺灣客語發音
+         button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
+          | 預設<small>（全部顯示）</small> <span class="caret"></span>
+         ul.dropdown-menu
+           li
+             a.active(href="#") 預設<small>（全部顯示）</small>
+           li.divider(role="presentation")
+           li: a(href="#") 四縣
+           li: a(href="#") 海陸
+           li: a(href="#") 大埔
+           li: a(href="#") 饒平
+           li: a(href="#") 詔安
+    a.back-box.app-only(href='#', onclick='pressBack(); return false')
+      i.icon-chevron-left(style='color: #6B0000')
+    a.erase-box.mobile-only(href='#', onclick='pressErase(); return false')
+      i.icon-remove-sign(style='color: #c0c0c0', title='清除搜尋框')
+    #moe(style='display: none')
+    | <!--[if gt IE 8]><!-->
+    script(src='cordova.js', data-cfasync='true', charset='utf-8')
+    script(src='js/es5-shim.js', charset='utf-8')
+    script(src='js/es5-sham.js', charset='utf-8')
+    script(src='js/deps.js', charset='utf-8')
+    #fb-root
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.3&appId=252470654795525";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    | <!--<![endif]-->
