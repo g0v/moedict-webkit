@@ -17,7 +17,7 @@ module.exports = {
         './main.ls',
         './js/jquery-ui-1.10.4.custom.min.js',
         './js/jquery.hoverIntent.js',
-        './js/bootstrap/dropdown.js',
+        './js/bootstrap-new.js',
         './js/phantomjs-shims.js',
         './js/console-polyfill.js',
         './js/howler.min.js',
