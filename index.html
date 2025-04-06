@@ -2,16 +2,16 @@
 <html lang="zh-Hant" xml:lang="zh-Hant" manifest="manifest.appcache">
   <head>
     <meta charset="utf-8">
-    <title>萌典 – 教育部國語、臺語、客語辭典民間版</title>
+    <title>萌典 – 教育部華語、臺灣台語、臺灣客語辭典民間版</title>
     <link rel="apple-touch-icon" href="images/icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="css/cupertino/jquery-ui-1.10.4.custom.css">
-    <link rel="search" type="application/opensearchdescription+xml" href="opensearch/moedict.xml" title="萌典國語">
+    <link rel="search" type="application/opensearchdescription+xml" href="opensearch/moedict.xml" title="萌典華語">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta content="IE=edge,chrome=IE9" http-equiv="X-UA-Compatible">
-    <meta name="keywords" content="詞典,辭典,國語,臺語,台語,客語,兩岸,g0v">
-    <meta name="description" content="共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。">
+    <meta name="keywords" content="詞典,辭典,華語,臺灣台語,臺灣台語,臺灣客語,兩岸,g0v">
+    <meta name="description" content="共收錄十六萬筆華語、兩萬筆臺灣台語、一萬四千筆臺灣客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣台語常用詞辭典」、「臺灣客語辭典」，辭典本文的著作權仍為教育部所有。">
   </head>
   <body id="moedict" onhashchange="grokHash()" itemscope itemtype="http://schema.org/ScholarlyArticle" class="main">
     <noscript>
@@ -30,12 +30,12 @@
     <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header"><a href="./" class="navbar-brand brand ebas">萌典</a></div>
       <ul class="nav navbar-nav">
-        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-book">&nbsp;</i><span style="margin: 0; padding: 0;" itemprop="articleSection" class="lang-active">國語辭典</span><b class="caret"></b></a>
+        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-book">&nbsp;</i><span style="margin: 0; padding: 0;" itemprop="articleSection" class="lang-active">華語辭典</span><b class="caret"></b></a>
           <ul role="navigation" class="dropdown-menu">
-            <li role="presentation"><a role="menuitem" href="##" class="lang-option a">國語辭典</a></li>
+            <li role="presentation"><a role="menuitem" href="##" class="lang-option a">華語辭典</a></li>
             <li class="dropdown-submenu"><a href="#" class="a taxonomy">…分類索引</a></li>
             <li role="presentation"><a href="#@" class="lang-option a a-idiom">…部首表</a></li>
-            <li role="presentation"><a role="menuitem" href="#!" class="lang-option t">臺灣閩南語</a></li>
+            <li role="presentation"><a role="menuitem" href="#!" class="lang-option t">臺灣台語</a></li>
             <li class="dropdown-submenu"><a href="#" class="t taxonomy">…分類索引</a></li>
             <li role="presentation"><a href="#!=諺語" class="lang-option t t-idiom">…諺語</a></li>
             <li role="presentation"><a role="menuitem" href="#:" class="lang-option h">臺灣客語</a></li>
@@ -60,10 +60,10 @@
       </ul>
     </nav>
     <div id="gcse"><span class="lang-a-only">
-        <gcse:search webSearchQueryAddition="-&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
-        <gcse:search webSearchQueryAddition="+&quot;臺語萌典&quot; -&quot;兩岸萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
-        <gcse:search webSearchQueryAddition="+&quot;客語萌典&quot; -&quot;台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;台語萌典&quot; -&quot;客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div><!--[if lte IE 8]>
+        <gcse:search webSearchQueryAddition="-&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
+        <gcse:search webSearchQueryAddition="+&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
+        <gcse:search webSearchQueryAddition="+&quot;臺灣客語萌典&quot; -&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
+        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;臺灣台語萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div><!--[if lte IE 8]>
     <style>body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }</style>
     <div id="result" style="position: absolute; top: 10%; left: 10%; right: 10%" class="result">
       <p><br>很抱歉，我們不支援 Internet Explorer 8 和之前的版本。請您改用&nbsp;<a href="https://www.mozilla.org/firefox/" class="icon-external-link">&nbsp;Firefox</a>&nbsp;或&nbsp;<a href="https://www.google.com/chrome/browser/" class="icon-external-link">&nbsp;Chrome</a>&nbsp;瀏覽器。</p>
@@ -93,7 +93,7 @@
     li
       button.btn.btn-info.btn-xs(type="button") 拼注音進階選項
     li.btn-group.option-romanization
-      label 國語拼音
+      label 華語拼音
       button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
        | 漢語拼音 <span class="caret"></span>
       ul.dropdown-menu
@@ -105,14 +105,14 @@
     li.btn-group.option-romanization
       label 閩南語拼音
       button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-       | 臺灣閩南語羅馬字 <span class="caret"></span>
+       | 臺灣台語羅馬字 <span class="caret"></span>
       ul.dropdown-menu
-        li: a.active(href="#") 臺灣閩南語羅馬字
+        li: a.active(href="#") 臺灣台語羅馬字
         li.divider(role="presentation")
         li: a(href="#") 白話字
         li: a(href="#") 通用拼音
     li.btn-group.option-romanization
-      label 客語發音
+      label 臺灣客語發音
       button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
        | 預設<small>（全部顯示）</small> <span class="caret"></span>
       ul.dropdown-menu
