@@ -644,7 +644,7 @@ ajax 範例
 
 # 教育部國語辭典公眾授權網
 
-http://resources.publicense.moe.edu.tw/
+https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/
 
 # 教育部版權頁
 
