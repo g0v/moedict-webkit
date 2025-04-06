@@ -2,18 +2,18 @@ doctype html
 html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
   head
     meta(charset='utf-8')
-    title 萌典 – 教育部國語、臺語、客語辭典民間版
+    title 萌典 – 教育部華語、臺灣台語、臺灣客語辭典民間版
 
     link(rel='apple-touch-icon', href='images/icon.png')
     link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
     link(rel='stylesheet', href='styles.css')
     link(rel='stylesheet', href='css/cupertino/jquery-ui-1.10.4.custom.css')
-    link(rel='search', type='application/opensearchdescription+xml', href='opensearch/moedict.xml', title='萌典國語')
+    link(rel='search', type='application/opensearchdescription+xml', href='opensearch/moedict.xml', title='萌典華語')
 
     meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1')
     meta(content='IE=edge,chrome=IE9', http-equiv='X-UA-Compatible')
-    meta(name='keywords', content='詞典,辭典,國語,臺語,台語,客語,兩岸,g0v')
-    meta(name='description', content='共收錄十六萬筆國語、兩萬筆臺語、一萬四千筆客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣閩南語常用詞辭典」、「臺灣客家語常用詞辭典」，辭典本文的著作權仍為教育部所有。')
+    meta(name='keywords', content='詞典,辭典,華語,臺灣台語,臺灣台語,臺灣客語,兩岸,g0v')
+    meta(name='description', content='共收錄十六萬筆華語、兩萬筆臺灣台語、一萬四千筆臺灣客語條目，每個字詞都可以輕按連到說明，並提供 Android 及 iOS 離線 App。來源為教育部「重編國語辭典修訂本」、「臺灣台語常用詞辭典」、「臺灣客語辭典」，辭典本文的著作權仍為教育部所有。')
   body#moedict.main(onhashchange='grokHash()',itemscope,itemtype="http://schema.org/ScholarlyArticle")
     noscript: center(style='position: absolute; width: 95%'): main: dl
       dt: a(href='萌') 萌 ㄇㄥˊ méng
@@ -29,17 +29,17 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             i.icon-book &nbsp;
-            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 國語辭典
+            span.lang-active(style='margin: 0; padding: 0;', itemprop='articleSection') 華語辭典
             b.caret
           ul.dropdown-menu(role='navigation')
             li(role='presentation')
-              a.lang-option.a(role='menuitem', href='##') 國語辭典
+              a.lang-option.a(role='menuitem', href='##') 華語辭典
             li.dropdown-submenu
               a.a.taxonomy(href='#') …分類索引
             li(role='presentation')
               a.lang-option.a.a-idiom(href='#@') …部首表
             li(role='presentation')
-              a.lang-option.t(role='menuitem', href='#!') 臺灣閩南語
+              a.lang-option.t(role='menuitem', href='#!') 臺灣台語
             li.dropdown-submenu
               a.t.taxonomy(href='#') …分類索引
             li(role='presentation')
@@ -81,10 +81,10 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
           a(href='http://itunes.apple.com/app/id1434947403', target='_blank', title='App Store 下載', style='color: #ccc')
             i.icon-apple
     #gcse
-      span.lang-a-only: gcse:search(webSearchQueryAddition='-"台語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺語萌典" -"兩岸萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-h-only: gcse:search(webSearchQueryAddition='+"客語萌典" -"台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"台語萌典" -"客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-a-only: gcse:search(webSearchQueryAddition='-"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-h-only: gcse:search(webSearchQueryAddition='+"臺灣客語萌典" -"臺灣台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"臺灣台語萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
 
     | <!--[if lte IE 8]>
     style body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }
@@ -128,7 +128,7 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
        li
          button.btn.btn-info.btn-xs(type="button") 拼注音進階選項
        li.btn-group.option-romanization
-         label 國語拼音
+         label 華語拼音
          button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
           | 漢語拼音 <span class="caret"></span>
          ul.dropdown-menu
@@ -140,14 +140,14 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
        li.btn-group.option-romanization
          label 閩南語拼音
          button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
-          | 臺灣閩南語羅馬字 <span class="caret"></span>
+          | 臺灣台語羅馬字 <span class="caret"></span>
          ul.dropdown-menu
-           li: a.active(href="#") 臺灣閩南語羅馬字
+           li: a.active(href="#") 臺灣台語羅馬字
            li.divider(role="presentation")
            li: a(href="#") 白話字
            li: a(href="#") 通用拼音
        li.btn-group.option-romanization
-         label 客語發音
+         label 臺灣客語發音
          button.btn.btn-default.btn-sm.dropdown-toggle(type="button" data-toggle="dropdown")
           | 預設<small>（全部顯示）</small> <span class="caret"></span>
          ul.dropdown-menu
