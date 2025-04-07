@@ -10,5 +10,3 @@ require('bootstrap/js/dropdown');
 require('bootstrap/js/modal');
 require('bootstrap/js/scrollspy');
 require('bootstrap/js/tab');
-require('bootstrap/js/popover');
-require('bootstrap/js/typeahead');
