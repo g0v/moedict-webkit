@@ -1,13 +1,14 @@
-//= require bootstrap-transition
-//= require bootstrap-affix
-//= require bootstrap-alert
-//= require bootstrap-button
-//= require bootstrap-carousel
-//= require bootstrap-collapse
-//= require bootstrap-dropdown
-//= require bootstrap-modal
-//= require bootstrap-scrollspy
-//= require bootstrap-tab
-//= require bootstrap-tooltip
-//= require bootstrap-popover
-//= require bootstrap-typeahead
+// Load Bootstrap from node_modules
+// Alternatively, you can import individual components if needed:
+require('bootstrap/js/transition');
+require('bootstrap/js/affix');
+require('bootstrap/js/alert');
+require('bootstrap/js/button');
+require('bootstrap/js/carousel');
+require('bootstrap/js/collapse');
+require('bootstrap/js/dropdown');
+require('bootstrap/js/modal');
+require('bootstrap/js/scrollspy');
+require('bootstrap/js/tab');
+require('bootstrap/js/popover');
+require('bootstrap/js/typeahead');
