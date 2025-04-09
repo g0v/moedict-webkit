@@ -963,6 +963,7 @@ $ ->
           url = \./bin/
           dataType = \bin
         else url = http \stroke-json.moedict.tw/ # Android <4 has no DataView support
+      <~ setTimeout _, 1ms
       $('#strokes').strokeWords(words, {url, dataType, -svg})
     else
       <- getScript \js/raphael.js
