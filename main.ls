@@ -30,7 +30,7 @@ $ ->
         $('#query').val window.PRERENDER_ID
 
 const XREF-LABEL-OF = {a: \華, t: \閩, h: \客, c: \陸, ca: \臺}
-const TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
+const TITLE-OF = {a: '', t: \台語, h: \客語, c: \兩岸}
 
 HASH-OF = {a: \#, t: "#'", h: \#:, c: \#~}
 

@@ -235,7 +235,7 @@ require(\zappajs) {+disable_io} ->
     png-suffix.=replace /\?font=kai$/ ''
     og-image = "https://www.moedict.tw/#{ encodeURIComponent @text.replace(/^['!~:]/, '') }#png-suffix"
 
-    TITLE-OF = {a: '', t: \臺語, h: \客語, c: \兩岸}
+    TITLE-OF = {a: '', t: \台語, h: \客語, c: \兩岸}
     SYM-OF = {'!': \t, ':': \h, '~': \c, "'": \t}
     LANG = 'a'
     LANG = SYM-OF[@text.slice(0, 1)] if @text is /^['!~:]/
@@ -364,9 +364,9 @@ require(\zappajs) {+disable_io} ->
           position: absolute;
         ''', ->
           select id:'lang' name:'lang' onchange:"document.getElementById('submit').click()", ->
-            option value:'', \國語
-            option selected:(@text is /^['!]/), value:\', \臺語
-            option selected:(@text is /^:/), value:\:, \客語
+            option value:'', \臺灣華語
+            option selected:(@text is /^['!]/), value:\', \臺灣台語
+            option selected:(@text is /^:/), value:\:, \臺灣客語
           select id:'font' name:'font' onchange:"document.getElementById('submit').click()", ->
             optgroup label:'全字庫', ->
               option value:'?font=kai', \楷書

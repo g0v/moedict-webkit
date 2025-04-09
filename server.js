@@ -608,7 +608,7 @@
           ogImage = "https://www.moedict.tw/" + encodeURIComponent(this.text.replace(/^['!~:]/, '')) + pngSuffix;
           TITLEOF = {
             a: '',
-            t: '臺語',
+            t: '台語',
             h: '客語',
             c: '兩岸'
           };
@@ -637,8 +637,8 @@
                 charset: 'utf-8'
               });
               meta({
-                name: "robots",
-                content: "noindex"
+                name: 'robots',
+                content: 'noindex'
               });
               meta({
                 name: "twitter:card",
@@ -896,7 +896,7 @@
                         'class': 'icon-facebook'
                       }, ' 臉書');
                     });
-                    a({
+                    return a({
                       'class': 'share-t btn btn-default',
                       title: 'Twitter 分享',
                       style: 'background: #00ACED; color: white',
@@ -960,15 +960,15 @@
                     }, function(){
                       option({
                         value: ''
-                      }, '國語');
+                      }, '臺灣華語');
                       option({
                         selected: /^['!]/.exec(this.text),
                         value: '\''
-                      }, '臺語');
+                      }, '臺灣台語');
                       return option({
                         selected: /^:/.exec(this.text),
                         value: ':'
-                      }, '客語');
+                      }, '臺灣客語');
                     });
                     select({
                       id: 'font',
