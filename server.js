@@ -207,7 +207,8 @@
   };
   fs.mkdir('png', function(){
     require('zappajs')({
-      disable_io: true
+      disable_io: true,
+      port: process.env.ZAPPA_PORT || 3000
     }, function(){
       this.get({
         '/:text.png': function(){

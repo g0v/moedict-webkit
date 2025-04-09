@@ -105,7 +105,7 @@ fix-mojibake = ->
   return iconv.decode iconv.encode(it, \latin1), \utf8
 
 <- fs.mkdir \png
-require(\zappajs) {+disable_io} ->
+require(\zappajs) {+disable_io, port: process.env.ZAPPA_PORT || 3000} ->
   @get '/:text.png': ->
     @params.text = fix-mojibake @params.text
     @response.type \image/png
