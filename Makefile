@@ -21,8 +21,7 @@ manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
 
 upload ::
-	rsync -avzP main.* view.* styles.css index.html js moe0:code/
-	rsync -avzP main.* view.* styles.css index.html js moe1:code/
+	rsync -avzP main.* view.* styles.css about.html index.html js root@moe0:code/
 
 checkout ::
 	-git clone --depth 1 https://github.com/g0v/moedict-data.git
