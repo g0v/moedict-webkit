@@ -37,7 +37,7 @@
     "iconv-lite": "^0.4.5",
     "jquery": "^3.4.0",
     "json-loader": "^0.5.1",
-    "livescript": "1.5.x",
+    "livescript": "1.6.1",
     "livescript-loader": "^0.1.3",
     "prelude-ls": "1.1.1",
     "react": "^0.14.9",

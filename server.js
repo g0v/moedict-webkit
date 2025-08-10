@@ -633,14 +633,16 @@
           }
           return html(attrs, function(){
             return head(function(){
-              var len, ref$, w, t, Title, esc, word, h, id, fillProps, props, str, html, this$ = this;
+              var ref$, len, ref1$, w, t, Title, esc, word, h, id, fillProps, props, str, html, this$ = this;
               meta({
                 charset: 'utf-8'
               });
-              meta({
-                name: 'robots',
-                content: 'noindex'
-              });
+              if ((ref$ = this.segments) != null && ref$.length) {
+                meta({
+                  name: 'robots',
+                  content: 'noindex'
+                });
+              }
               meta({
                 name: "twitter:card",
                 content: "summary"
@@ -669,7 +671,7 @@
                 name: 'viewport',
                 content: 'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1'
               });
-              len = (ref$ = this.text.length) < 50 ? ref$ : 50;
+              len = (ref1$ = this.text.length) < 50 ? ref1$ : 50;
               w = len;
               if (w > 4) {
                 w = Math.ceil(len / Math.sqrt(len * 0.5));

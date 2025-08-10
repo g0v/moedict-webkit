@@ -244,7 +244,7 @@ require(\zappajs) {+disable_io, port: process.env.ZAPPA_PORT || 3000} ->
     attrs.manifest = \manifest.appcache unless @segments or @idx
     html attrs, -> head ->
       meta charset:\utf-8
-      meta name:\robots content:\noindex
+      meta name:\robots content:\noindex if @segments?length
       meta name:"twitter:card" content:"summary"
       meta name:"twitter:site" content:"@moedict"
       meta name:"twitter:creator" content:"@audreyt"
