@@ -101,7 +101,7 @@ npm run build
 
 首先請注意，萌典 API 必須去詢問 `https://www.moedict.tw/`，因為這個網址才有開 CORS。不要去訪問 `http://moedict.org/` ，會噴 No 'Access-Control-Allow-Origin' header 的錯誤。
 
-API 的原始資料，請[參考連結](https://g0v.hackpad.com/3du.tw-ZNwaun62BP4)，本段落的說明是參考連結整理後並加上範例。
+API 的原始資料，請[參考連結](https://g0v.hackpad.tw/3du.tw-ZNwaun62BP4)，本段落的說明是參考連結整理後並加上範例。
 
 目前 API 已有 7 個端點，分別是 /a/, /t/, /h/, /c/, /raw/, /uni/, /pua/
 
