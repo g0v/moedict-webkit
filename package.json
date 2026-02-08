@@ -35,7 +35,7 @@
     "gulp-watch": "*",
     "gulp-webpack": "*",
     "iconv-lite": "^0.4.5",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "json-loader": "^0.5.1",
     "livescript": "1.6.0",
     "livescript-loader": "^0.1.3",
