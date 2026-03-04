@@ -47,7 +47,7 @@
     "webpack": "^1.7.2",
     "webpack-dev-server": "^1.14.1",
     "worker": "^0.3.12",
-    "zappajs": "0.4.x",
+    "zappajs": "6.5.x",
     "zeparser": "0.0.7"
   }
 }
