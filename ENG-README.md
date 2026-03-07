@@ -62,6 +62,8 @@ The original JSON files `dict-revised.unicode.json` and `dict-revised.pua.json` 
 ```SH
 git clone --depth 1 https://github.com/g0v/moedict-data.git
 git clone --depth 1 https://github.com/g0v/moedict-epub.git
+curl -fL https://www.moedict.tw/dict-revised.json.xz -o moedict-data/dict-revised.json.xz
+xz -dc moedict-data/dict-revised.json.xz > moedict-data/dict-revised.json
 cp -v moedict-data/dict-revised.json moedict-epub/
 cd moedict-epub
 perl json2unicode.pl > dict-revised.unicode.json

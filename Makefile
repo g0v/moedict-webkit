@@ -32,7 +32,18 @@ checkout ::
 
 moedict-data :: checkout symlinks pinyin
 
-offline :: deps
+MOEDICT_REVISED_XZ_URL ?= https://www.moedict.tw/dict-revised.json.xz
+MOEDICT_REVISED_XZ := moedict-data/dict-revised.json.xz
+MOEDICT_REVISED_JSON := moedict-data/dict-revised.json
+
+$(MOEDICT_REVISED_XZ) ::
+	mkdir -p moedict-data
+	curl -fL "$(MOEDICT_REVISED_XZ_URL)" -o "$(MOEDICT_REVISED_XZ)"
+
+$(MOEDICT_REVISED_JSON) :: $(MOEDICT_REVISED_XZ)
+	xz -dc "$(MOEDICT_REVISED_XZ)" > "$(MOEDICT_REVISED_JSON)"
+
+offline :: $(MOEDICT_REVISED_JSON) deps
 	perl link2pack.pl a < a.txt
 	perl link2pack.pl t < t.txt
 	perl link2pack.pl h < h.txt
