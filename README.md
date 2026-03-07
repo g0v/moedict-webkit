@@ -64,7 +64,7 @@ Unicode 編碼:
 ```sh
 git clone --depth 1 https://github.com/g0v/moedict-data.git
 git clone --depth 1 https://github.com/g0v/moedict-epub.git
-curl -fL https://www.moedict.tw/dict-revised.json.xz -o moedict-data/dict-revised.json.xz
+curl -fL https://github.com/g0v/moedict-data/raw/refs/heads/master/dict-revised.json.xz -o moedict-data/dict-revised.json.xz
 xz -dc moedict-data/dict-revised.json.xz > moedict-data/dict-revised.json
 cp -v moedict-data/dict-revised.json moedict-epub/
 cd moedict-epub

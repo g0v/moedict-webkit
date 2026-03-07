@@ -32,7 +32,7 @@ checkout ::
 
 moedict-data :: checkout symlinks pinyin
 
-MOEDICT_REVISED_XZ_URL ?= https://www.moedict.tw/dict-revised.json.xz
+MOEDICT_REVISED_XZ_URL ?= https://github.com/g0v/moedict-data/raw/refs/heads/master/dict-revised.json.xz
 MOEDICT_REVISED_XZ := moedict-data/dict-revised.json.xz
 MOEDICT_REVISED_JSON := moedict-data/dict-revised.json
 
