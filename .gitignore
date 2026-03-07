@@ -40,3 +40,4 @@ moedict-data/
 moedict-epub/
 server.js
 styles.css
+js/deps.js
