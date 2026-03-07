@@ -1,6 +1,6 @@
 這是 <http://moedict.tw/> 線上及離線查詢 App 的源碼庫。
 
-## Docker
+## Docker(此環境因Node版本過舊，已不再可用)
 
 可以從 Docker Hub 取回開發環境:
 
