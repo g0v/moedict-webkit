@@ -1,3 +1,5 @@
+LSC ?= ./node_modules/.bin/lsc
+
 run ::
 	gulp run
 
@@ -12,7 +14,7 @@ deps ::
 	gulp build
 
 worker.js :: worker.ls
-	lsc -c worker.ls
+	$(LSC) -c worker.ls
 
 js/deps.js ::
 	gulp webpack:build
@@ -43,7 +45,34 @@ $(MOEDICT_REVISED_XZ) ::
 $(MOEDICT_REVISED_JSON) :: $(MOEDICT_REVISED_XZ)
 	xz -dc "$(MOEDICT_REVISED_XZ)" > "$(MOEDICT_REVISED_JSON)"
 
+dict-revised.pua.json :: $(MOEDICT_REVISED_JSON)
+	ln -fs "$(MOEDICT_REVISED_JSON)" dict-revised.pua.json
+
+dict-twblg.json dict-twblg-ext.json :: checkout
+	ln -fs "moedict-data-twblg/$@" "$@"
+
+dict-hakka.json :: checkout
+	ln -fs "moedict-data-hakka/$@" "$@"
+
+dict-csld.json :: checkout
+	ln -fs "moedict-data-csld/$@" "$@"
+
 offline :: $(MOEDICT_REVISED_JSON) deps
+	perl link2pack.pl a < a.txt
+	perl link2pack.pl t < t.txt
+	perl link2pack.pl h < h.txt
+	-perl link2pack.pl c < c.txt
+	perl special2pack.pl
+
+full :: dict-revised.pua.json dict-twblg.json dict-twblg-ext.json dict-hakka.json dict-csld.json deps worker.js
+	$(LSC) json2prefix.ls a
+	$(LSC) autolink.ls a | perl sort-json.pl | env LC_ALL=C sort > a.txt
+	$(LSC) json2prefix.ls t
+	$(LSC) autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
+	$(LSC) json2prefix.ls h
+	$(LSC) autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
+	-$(LSC) json2prefix.ls c
+	-$(LSC) autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
 	perl link2pack.pl a < a.txt
 	perl link2pack.pl t < t.txt
 	perl link2pack.pl h < h.txt
@@ -70,24 +99,24 @@ offline-dev :: offline moedict-data deps translation
 	#lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	#-lsc json2prefix.ls c
 	#-lsc autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
-	lsc cat2special.ls
+	$(LSC) cat2special.ls
 
 csld :: worker.js
 	python translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
-	lsc json2prefix.ls c
-	lsc autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
+	$(LSC) json2prefix.ls c
+	$(LSC) autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
 	perl link2pack.pl c < c.txt
 	cp moedict-data-csld/index.json c/
 
 hakka :: worker.js
-	lsc json2prefix.ls h
-	lsc autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
+	$(LSC) json2prefix.ls h
+	$(LSC) autolink.ls h | perl sort-json.pl | env LC_ALL=C sort > h.txt
 	perl link2pack.pl h < h.txt
 
 twblg :: worker.js
-	lsc json2prefix.ls t
-	lsc autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
+	$(LSC) json2prefix.ls t
+	$(LSC) autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
 	python twblg_index.py
 

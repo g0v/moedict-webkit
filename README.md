@@ -54,6 +54,26 @@ sudo npm i -g gulp
 make offline
 ```
 
+## 以新版詞庫完整重建（`make full`）
+
+若要從新版 `moedict-data/dict-revised.json` 開始，完整重建 `a/t/h/c`
+全語系的 `*.txt` 與 pack 檔案，請執行：
+
+```sh
+make full
+```
+
+`make full` 會依序：
+
+1. 下載並解壓 `dict-revised.json.xz`（產生 `moedict-data/dict-revised.json`）
+2. 準備 `dict-revised.pua.json` 與 `dict-twblg.json` / `dict-hakka.json` /
+   `dict-csld.json` 等必要檔案（缺少時會自動 checkout）
+3. 重建 `a.txt`、`t.txt`、`h.txt`、`c.txt`
+4. 重建 `pack` 檔案
+
+> 注意：此流程資料量大，首次執行可能需要數十分鐘到數小時；在
+> `autolink.ls ... | sort > *.txt` 期間終端機長時間沒有新輸出屬正常現象。
+
 ## 手動逐步建置
 
 來源 JSON 檔 `dict-revised.unicode.json` 及 `dict-revised.pua.json` 由
