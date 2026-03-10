@@ -68,11 +68,16 @@ make full
 1. 下載並解壓 `dict-revised.json.xz`（產生 `moedict-data/dict-revised.json`）
 2. 準備 `dict-revised.pua.json` 與 `dict-twblg.json` / `dict-hakka.json` /
    `dict-csld.json` 等必要檔案（缺少時會自動 checkout）
-3. 重建 `a.txt`、`t.txt`、`h.txt`、`c.txt`
-4. 重建 `pack` 檔案
+3. 下載英/法/德對照資料並整併至 `translation-data/moe-translation.json` 與
+   `translation-data/csld-translation.json`，再覆蓋 `dict-revised.pua.json` /
+   `dict-csld.json`
+4. 重建 `a.txt`、`t.txt`、`h.txt`、`c.txt`
+5. 重建 `pack` 檔案（含 `English`、`francais`、`Deutsch` 欄位）
 
 > 注意：此流程資料量大，首次執行可能需要數十分鐘到數小時；在
 > `autolink.ls ... | sort > *.txt` 期間終端機長時間沒有新輸出屬正常現象。
+
+英/法/德文對照表 CC-CEDict、CFDict、HanDeDict 採用 CC BY-SA 4.0 國際授權。
 
 ## 手動逐步建置
 

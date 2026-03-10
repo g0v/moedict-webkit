@@ -64,7 +64,10 @@ offline :: $(MOEDICT_REVISED_JSON) deps
 	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
-full :: dict-revised.pua.json dict-twblg.json dict-twblg-ext.json dict-hakka.json dict-csld.json deps worker.js
+full :: dict-revised.pua.json dict-twblg.json dict-twblg-ext.json dict-hakka.json dict-csld.json deps worker.js translation
+	ln -fs translation-data/moe-translation.json dict-revised.pua.json
+	python translation-data/csld2json.py
+	cp translation-data/csld-translation.json dict-csld.json
 	$(LSC) json2prefix.ls a
 	$(LSC) autolink.ls a | perl sort-json.pl | env LC_ALL=C sort > a.txt
 	$(LSC) json2prefix.ls t

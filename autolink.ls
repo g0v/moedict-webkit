@@ -88,7 +88,6 @@ for {t:title, h:heteronyms}:entry in entries
     audio-title = title - /，/g
     audio-id = if i then audio-map["#audio-title.#b"] else audio-map["#audio-title.#b"] || (audio-map[title] if title.length > 1)
     heteronyms[i] <<< {"=": audio-id} if audio-id
-  delete! entry<[ English francais Deutsch ]>
   chunk = JSON.stringify(entry).replace(
     /.[\u20E3\u20DE\u20DF\u20DD]/g -> escape it
   )
