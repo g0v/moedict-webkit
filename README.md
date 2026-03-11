@@ -1,27 +1,91 @@
 這是 <http://moedict.tw/> 線上及離線查詢 App 的源碼庫。
 
-## Docker(此環境因Node版本過舊，已不再可用)
-
-可以從 Docker Hub 取回開發環境:
-
-```sh
-docker@boot2docker:~$ docker pull miaoski/moedict-webkit
-docker@boot2docker:~$ docker run -p 8888:8888 -t -i miaoski/moedict-webkit /bin/bash
-root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
-```
-
-
-
 ## 需求
-
 * Node.js 0.10.x+
     * npm
 * Perl 5.8.0+
-* Python
+* Python 2
     * lxml
 
+## Python 2 環境配置（pyenv）
+專案的 `.python-version` 指定使用 **Python 2.7.18**，建議透過 `pyenv` 管理。
+
+1. 安裝 pyenv（macOS 例）：
+   ```bash
+   brew install pyenv
+   ```
+
+2. 將以下程式碼加入 `~/.zshrc` 底部，讓 pyenv 在每次開殼時生效：
+   ```bash
+   # pyenv
+   export PYENV_ROOT="$HOME/.pyenv"
+   export PATH="$PYENV_ROOT/bin:$PATH"
+   eval "$(pyenv init -)"
+   ```
+
+3. 以`source ~/.zshrc` 重新載入 `~/.zshrc` 後，在專案根目錄安裝並啟用 2.7.18：
+   ```bash
+   pyenv install 2.7.18        # 若尚未安裝
+   pyenv local 2.7.18          # 會自動寫入 .python-version
+   python --version            # 確認為 Python 2.7.18
+   ```
+
+4. 接著安裝 Python 依賴（例如 lxml）：
+   ```bash
+   pip install lxml
+   ```
+
+## macOS
 在 macOS 上，目前僅支援 HFS+ 作為開發環境。High Sierra 以後的版本，
-請先用 Disk Utility 建立一個 HFS+ 分割區，再將開發目錄移至該卷宗。
+請先用Spase Image 或 Disk Utility 建立一個 HFS+ 分割區，再將開發目錄移至該卷宗。
+
+### Sparse image 
+
+#### 建立與掛載 HFS+ Sparse Image 步驟
+
+1. **建立 Sparse Image：**
+
+   可以使用 macOS 內建的 `hdiutil` 工具來建立一個 HFS+ 格式的 sparse bundle image。
+   以下例子建立一個 20GB 的 HFS+ (Journaled) 卷宗，命名為 `MoedictDev.sparseimage`，存放於主目錄：
+
+   ```bash
+   hdiutil create -size 20g -fs HFS+J -type SPARSE -volname MoedictHFS ~/MoedictDev.sparseimage
+   ```
+
+   *說明：*
+   - `-size 20g`：最大容量 20GB（可依需求調整）。
+   - `-fs HFS+J`：格式為 HFS Plus (Journaled)。
+   - `-type SPARSE`：建立可動態擴增的 sparse image。
+   - `-volname`：掛載後顯示的卷標名稱。
+   - 路徑可以自訂。
+
+2. **掛載 Sparse Image：**
+
+   執行以下指令將剛剛建立的 image 掛載至系統：
+
+   ```bash
+   hdiutil attach ~/MoedictDev.sparseimage
+   ```
+
+   預設會掛載到 `/Volumes/MoedictHFS`（或上述指定的 volname）。
+
+3. **將開發目錄移至 HFS+：**
+
+   假設原本開發資料夾在 `~/Projects/moedict-webkit`，可用以下指令搬移至新掛載的磁區：
+
+   ```bash
+   mv ~/Projects/moedict-webkit /Volumes/MoedictHFS/
+   cd /Volumes/MoedictHFS/moedict-webkit
+   ```
+
+4. **後續開發：**
+   - 每次重開機可再次用 `hdiutil attach ~/MoedictDev.sparseimage` 掛載，再進入開發資料夾即可。
+   - 若完成開發，可用 Finder 退出該磁碟，或用指令卸載：
+
+     ```bash
+     hdiutil detach /Volumes/MoedictHFS
+     ```
+
 
 ## 前置作業 (Debian/Ubuntu)
 ### Ubuntu 16.04 之前的發行版
@@ -35,6 +99,7 @@ sudo apt-get install -y python g++ make nodejs python-lxml curl npm
 sudo apt update
 sudo apt install -y python g++ make nodejs python-lxml curl npm
 ```
+
 
 ## 安裝環境
 
@@ -702,3 +767,18 @@ https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/
 實際語言代碼（zh、nan、hak）與系統資料結構未做變動，僅限於介面顯示文字。  
 本次補件亦經由 AI 協助完成（ChatGPT），由提案者手動確認與提交。  
 期盼此小幅調整，能促進語言多元性與公共工具使用上的尊重與平衡。
+
+
+---
+
+# 歷史開發環境
+
+## Docker(此環境因Node版本過舊，已不再可用)
+
+可以從 Docker Hub 取回開發環境:
+
+```sh
+docker@boot2docker:~$ docker pull miaoski/moedict-webkit
+docker@boot2docker:~$ docker run -p 8888:8888 -t -i miaoski/moedict-webkit /bin/bash
+root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
+```
