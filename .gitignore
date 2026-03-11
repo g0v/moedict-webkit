@@ -41,3 +41,4 @@ moedict-epub/
 server.js
 styles.css
 js/deps.js
+translation-data/csld-translation.json
