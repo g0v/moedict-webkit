@@ -1,4 +1,5 @@
 LSC ?= ./node_modules/.bin/lsc
+PYTHON ?= python
 
 run ::
 	gulp run
@@ -26,11 +27,16 @@ upload ::
 	rsync -avzP server.* main.* view.* styles.css about.html index.html js root@moe0:code/
 
 checkout ::
-	-git clone --depth 1 https://github.com/g0v/moedict-data.git
-	-git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
-	-git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
-	-git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
-	-git clone https://github.com/g0v/moedict-epub.git
+	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-data.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-data.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi
+	rm -rf moedict-data && git clone --depth 1 https://github.com/g0v/moedict-data.git
+	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-data-twblg.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-data-twblg.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi
+	rm -rf moedict-data-twblg && git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
+	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-data-hakka.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-data-hakka.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi
+	rm -rf moedict-data-hakka && git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
+	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-data-csld.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-data-csld.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi
+	rm -rf moedict-data-csld && git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
+	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-epub.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-epub.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi
+	rm -rf moedict-epub && git clone https://github.com/g0v/moedict-epub.git
 
 moedict-data :: checkout symlinks pinyin
 
@@ -66,7 +72,7 @@ offline :: $(MOEDICT_REVISED_JSON) deps
 
 full :: dict-revised.pua.json dict-twblg.json dict-twblg-ext.json dict-hakka.json dict-csld.json deps worker.js translation
 	ln -fs translation-data/moe-translation.json dict-revised.pua.json
-	python translation-data/csld2json.py
+	$(PYTHON) translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	$(LSC) json2prefix.ls a
 	$(LSC) autolink.ls a | perl sort-json.pl | env LC_ALL=C sort > a.txt
@@ -105,7 +111,7 @@ offline-dev :: offline moedict-data deps translation
 	$(LSC) cat2special.ls
 
 csld :: worker.js
-	python translation-data/csld2json.py
+	$(PYTHON) translation-data/csld2json.py
 	cp translation-data/csld-translation.json dict-csld.json
 	$(LSC) json2prefix.ls c
 	$(LSC) autolink.ls c | perl sort-json.pl | env LC_ALL=C sort > c.txt
@@ -121,7 +127,7 @@ twblg :: worker.js
 	$(LSC) json2prefix.ls t
 	$(LSC) autolink.ls t | perl sort-json.pl | env LC_ALL=C sort > t.txt
 	perl link2pack.pl t < t.txt
-	python twblg_index.py
+	$(PYTHON) twblg_index.py
 
 pinyin ::
 	perl build-pinyin-lookup.pl a
@@ -130,8 +136,8 @@ pinyin ::
 	perl build-pinyin-lookup.pl c
 
 translation :: translation-data
-	python translation-data/xml2txt.py
-	python translation-data/txt2json.py
+	$(PYTHON) translation-data/xml2txt.py
+	$(PYTHON) translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
 
 translation-data :: translation-data/handedict.txt translation-data/cedict.txt translation-data/cfdict.xml
