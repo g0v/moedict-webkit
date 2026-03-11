@@ -54,13 +54,16 @@ $(MOEDICT_REVISED_JSON) :: $(MOEDICT_REVISED_XZ)
 dict-revised.pua.json :: $(MOEDICT_REVISED_JSON)
 	ln -fs "$(MOEDICT_REVISED_JSON)" dict-revised.pua.json
 
-dict-twblg.json dict-twblg-ext.json :: checkout
+dict-twblg.json dict-twblg-ext.json ::
+	[ -d moedict-data-twblg ] || git clone --depth 1 https://github.com/g0v/moedict-data-twblg.git
 	ln -fs "moedict-data-twblg/$@" "$@"
 
-dict-hakka.json :: checkout
+dict-hakka.json ::
+	[ -d moedict-data-hakka ] || git clone --depth 1 https://github.com/g0v/moedict-data-hakka.git
 	ln -fs "moedict-data-hakka/$@" "$@"
 
-dict-csld.json :: checkout
+dict-csld.json ::
+	[ -d moedict-data-csld ] || git clone --depth 1 https://github.com/g0v/moedict-data-csld.git
 	ln -fs "moedict-data-csld/$@" "$@"
 
 offline :: $(MOEDICT_REVISED_JSON) deps
@@ -70,10 +73,10 @@ offline :: $(MOEDICT_REVISED_JSON) deps
 	-perl link2pack.pl c < c.txt
 	perl special2pack.pl
 
-full :: dict-revised.pua.json dict-twblg.json dict-twblg-ext.json dict-hakka.json dict-csld.json deps worker.js translation
-	ln -fs translation-data/moe-translation.json dict-revised.pua.json
+full :: translation dict-twblg.json dict-twblg-ext.json dict-hakka.json deps worker.js
+	ln -fs "moedict-data/dict-revised-translated.json" dict-revised.pua.json
 	$(PYTHON) translation-data/csld2json.py
-	cp translation-data/csld-translation.json dict-csld.json
+	ln -fs "translation-data/csld-translation.json" dict-csld.json
 	$(LSC) json2prefix.ls a
 	$(LSC) autolink.ls a | perl sort-json.pl | env LC_ALL=C sort > a.txt
 	$(LSC) json2prefix.ls t
@@ -135,7 +138,7 @@ pinyin ::
 	perl build-pinyin-lookup.pl h
 	perl build-pinyin-lookup.pl c
 
-translation :: translation-data
+translation :: $(MOEDICT_REVISED_JSON) translation-data
 	$(PYTHON) translation-data/xml2txt.py
 	$(PYTHON) translation-data/txt2json.py
 	cp translation-data/moe-translation.json moedict-data/dict-revised-translated.json
