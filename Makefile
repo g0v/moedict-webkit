@@ -146,7 +146,8 @@ translation :: $(MOEDICT_REVISED_JSON) translation-data
 translation-data :: translation-data/handedict.txt translation-data/cedict.txt translation-data/cfdict.xml
 
 translation-data/handedict.txt :
-	cd translation-data && curl -L http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
+	# cd translation-data && curl -L http://www.handedict.de/handedict/handedict-20110528.tar.bz2 | tar -Oxvj -f - handedict-20110528/handedict_nb.u8 > handedict.txt
+	cd translation-data && curl -fL https://handedict.zydeo.net/api/export/download -o handedict.u8.gz && gzip -dc handedict.u8.gz > handedict.txt && rm -f handedict.u8.gz
 
 translation-data/cedict.txt :
 	cd translation-data && curl -L https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz | gunzip > cedict.txt
