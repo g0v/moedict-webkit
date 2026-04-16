@@ -1,4 +1,5 @@
 這是 <http://moedict.tw/> 線上及離線查詢 App 的源碼庫。
+新版網站的全端專案位於：https://github.com/g0v/moedict.tw
 
 ## 需求
 * Node.js 0.10.x+
