@@ -121,7 +121,7 @@ make offline
 
 ## 以新版詞庫完整重建（`make full`）
 
-若要從新版 `moedict-data/dict-revised.json` 開始，完整重建 `a/t/h/c`
+若要從新版 `moedict-data/dict-revised.json.xz` 開始，完整重建 `a/t/h/c`
 全語系的 `*.txt` 與 pack 檔案，請執行：
 
 ```sh
