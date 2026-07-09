@@ -1,0 +1,4 @@
+project.properties
+*.keystore
+
+node_modules

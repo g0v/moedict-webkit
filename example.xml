@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/small"
+          android:icon="@drawable/small"
+          android:title="@string/small" />
+    <item android:id="@+id/large"
+          android:icon="@drawable/large"
+          android:title="@string/large" />
+    <item android:id="@+id/quit"
+          android:icon="@drawable/quit"
+          android:title="@string/quit"/>
+    <item android:id="@+id/lang"
+          android:icon="@drawable/lang"
+          android:title="@string/lang" />
+</menu>
