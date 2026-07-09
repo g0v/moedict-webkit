@@ -10,7 +10,12 @@ if task in <[ run dev ]>
     gulp.watch(it, gulp.series({run: \build, dev: \webpack:dev}[task]))
     return rv
 
+require! child_process
+git-short = child_process.execSync('git rev-parse --short HEAD').toString().trim()
+css-basename = "styles-#git-short.css"
+
 gulp.task \sass ->
+  fs = require \fs
   src(\./sass/*.scss)
     .pipe sass!
     .pipe(require('gulp-postcss')([
@@ -19,10 +24,11 @@ gulp.task \sass ->
       require('csswring')
     ]))
     .pipe gulp.dest \.
+    .on \end -> fs.copyFileSync \styles.css, css-basename
 
 gulp.task \jade ->
   src(\./*.jade)
-    .pipe jade { +pretty }
+    .pipe jade { +pretty, cssVersion: git-short }
     .pipe gulp.dest('.')
 
 gulp.task \static-here ->
