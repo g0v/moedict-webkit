@@ -305,25 +305,26 @@ body.overflow-scrolling-false {
     }
 }
 
-input.query {
+#query, input.query {
     display: block;
     border: 1px solid $border-color;
     font-size: 1.2em;
     width: 100%;
     height: 1.8em;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Biaodian Pro Serif CNS", sans-serif;
+    font-family: "MOEDICT Revised PUA", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 }
 
 .app input.query {
     padding-right: 32px;
 }
-// PUA variant-headword glyphs (piggy-back face, narrowed unicode-range) — keep the
-// Heiti/sans stack for normal CJK; "Biaodian Pro Serif CNS" sits BEFORE the generic
-// sans-serif so the 110 PUA headwords reliably reach it (a generic earlier in the
-// stack can claim PUA via platform LastResort and shadow the named fallback).
+// PUA variant-headword glyphs: a distinct narrowed alias "MOEDICT Revised PUA"
+// (revised-dict.woff, 110 headword codepoints only) placed FIRST so PUA headwords
+// render before the Heiti system stack. Webkit's "Biaodian Pro Serif CNS" is
+// overloaded with broad Han punctuation faces (Mincho), so we use the alias instead
+// to avoid hijacking normal CJK. #query beats the han-library body.app input rule.
 .ui-autocomplete li, .ui-autocomplete li a {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Biaodian Pro Serif CNS", sans-serif;
+    font-family: "MOEDICT Revised PUA", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 }
 
 ::-webkit-search-cancel-button {   /* select all "X" buttons in search inputs */
