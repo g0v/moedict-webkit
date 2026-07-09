@@ -11,8 +11,8 @@ if task in <[ run dev ]>
     return rv
 
 require! child_process
-git-short = child_process.execSync('git rev-parse --short HEAD').toString().trim()
-css-basename = "styles-#git-short.css"
+gitShort = child_process.execSync('git rev-parse --short HEAD').toString().trim()
+cssBasename = "styles-#gitShort.css"
 
 gulp.task \sass ->
   fs = require \fs
@@ -24,11 +24,11 @@ gulp.task \sass ->
       require('csswring')
     ]))
     .pipe gulp.dest \.
-    .on \end -> fs.copyFileSync \styles.css, css-basename
+    .on \end -> fs.copyFileSync \styles.css, cssBasename
 
 gulp.task \jade ->
   src(\./*.jade)
-    .pipe jade { +pretty, cssVersion: git-short }
+    .pipe jade { +pretty, locals: { cssVersion: gitShort } }
     .pipe gulp.dest('.')
 
 gulp.task \static-here ->
