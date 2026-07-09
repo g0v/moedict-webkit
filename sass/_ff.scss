@@ -14,4 +14,20 @@
   font-family: MOEDICT-IOS-KAI;
   src: url('/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/9965d7058b88c289dece8eaaaf085f46bc3c5b87.asset/AssetData/BiauKai.ttf') format('truetype');
 }
+// MOE Revised-Dict (標楷體2) PUA variant-headword glyphs (© 2021 MOE).
+// Source: dict.revised.moe.edu.tw/revised-dict.woff — hosted UNMODIFIED.
+// Font-specific license UNCONFIRMED (dictionary content is CC BY-ND 3.0 TW);
+// hosted on explicit project-owner risk acceptance. See fonts/revised-dict.LICENSE.txt.
+// Piggy-backed on "Biaodian Pro Serif CNS" (first family in the .entry .title
+// stack; its existing faces exclude plane-15 PUA) so NO font-family stack is
+// changed and non-PUA rendering is unaffected. unicode-range narrowed to the
+// exact 110 variant-headword codepoints — never hijacks ruby/romanization PUA
+// (U+F0061/F0065/F0069/F006F/F0075, U+F31B4-F31B7) and only fetches the 9.17 MiB
+// file when one of these codepoints is on the page.
+@font-face {
+  font-family: "Biaodian Pro Serif CNS";
+  src: url('fonts/revised-dict.woff') format('woff');
+  font-display: swap;
+  unicode-range: U+F0009, U+F003E, U+F00E8, U+F01F9, U+F05A2, U+F0605, U+F06EB, U+F07FF, U+F0A33, U+F0AC2, U+F0BC1, U+F0CA2, U+F0EFE, U+F0FC0, U+F1391, U+F148E, U+F15FD, U+F1657, U+F16CA, U+F17C2, U+F17F6, U+F18B5, U+F1C6C, U+F24E7, U+F25E6, U+F26ED, U+F295B, U+F3B19, U+F3E71, U+F3EF1, U+F4033, U+F448B, U+F4EA3, U+F52BC, U+F5386, U+F54BD, U+F5736, U+F585D, U+F5938, U+F59DD, U+F5E66, U+F66CA, U+F6872, U+F6C68, U+F6D47, U+F6F84, U+F7205, U+F73C4, U+F73D3, U+F7BA3, U+F7E81, U+F828D, U+F8566, U+F8720, U+F892A, U+F89FB, U+F8A56, U+F8DAD, U+F8FAE, U+F9006, U+F95B0, U+F9701, U+F977A, U+F989D, U+F991D, U+F9B33, U+F9D81, U+F9E75, U+F9F6D, U+F9F85, U+F9FAC, U+FA7D1, U+FAAFC, U+FB407, U+FB464, U+FB525, U+FB575, U+FB578, U+FB57B, U+FBFB9, U+FC05A, U+FC1BB, U+FCB51, U+FCD7A, U+FCE75, U+FCE7C, U+FD166, U+FD185, U+FD1C5, U+FD617, U+FD660, U+FD679, U+FD98E, U+FD9E8, U+FDB3F, U+FDB50, U+FDD9E, U+FDDA4, U+FDE3D, U+FDF55, U+FDFB1, U+FFBAB, U+FFBAE, U+FFBBB, U+FFC82, U+FFD36, U+FFD70, U+FFD9B, U+FFDD0, U+FFF46;
+}
 

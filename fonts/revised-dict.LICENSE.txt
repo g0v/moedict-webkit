@@ -1,0 +1,25 @@
+revised-dict.woff — MOE Revised-Dict (標楷體2) PUA variant-headword font
+=======================================================================
+
+Source: https://dict.revised.moe.edu.tw/revised-dict.woff
+Font name table: "(c) 2021 MOE", family "Revised-Dict", version 1.00.
+Hosted UNMODIFIED (byte-for-byte; no subset, no WOFF2 re-encode).
+
+Purpose: render MOE's own plane-15 PUA variant headwords (110 codepoints,
+U+F0000–FFFFF) used as dictionary titles. Engaged only for those 110
+codepoints via a narrowed `unicode-range` piggy-backed on the existing
+"Biaodian Pro Serif CNS" family, so no font-family stack is changed and
+non-PUA rendering is unaffected. The 9.17 MiB file is fetched only when a
+page actually contains one of the 110 PUA codepoints.
+
+License status — UNCONFIRMED. MOE publishes the dictionary CONTENT under
+創用CC 姓名標示—禁止改作 3.0 臺灣 (CC BY-ND 3.0 TW); MOE has NOT published a
+separate license for revised-dict.woff. Hosted on explicit project-owner
+risk acceptance, unmodified, with attribution, on a non-commercial civic
+mirror. fsType=0 is an embedding bit, not a redistribution license. If MOE
+requests removal, this file and its @font-face will be removed promptly.
+
+Attribution: 中華民國教育部（Ministry of Education, R.O.C.）。《重編國語辭典修訂本》。
+https://dict.revised.moe.edu.tw/
+
+Do NOT subset/re-encode/modify without font-specific permission from MOE.
