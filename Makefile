@@ -24,7 +24,7 @@ manifest :: js/deps.js
 	perl -pi -e 's/# [A-Z].*\n/# @{[`date`]}/m' manifest.appcache
 
 upload ::
-	rsync -avzP server.* main.* view.* styles.css about.html index.html js root@moe0:code/
+	rsync -avzP server.* main.* view.* styles.css about.html index.html manifest.appcache js search-index root@moe0:code/
 
 checkout ::
 	@if ! git ls-remote --exit-code https://github.com/g0v/moedict-data.git HEAD > /dev/null 2>&1; then echo "ERROR: 無法存取遠端 repo: https://github.com/g0v/moedict-data.git"; echo "請檢查網路連線、GitHub 可用性，或稍後重試。"; exit 1; fi

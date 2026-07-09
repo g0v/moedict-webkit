@@ -42,3 +42,6 @@ server.js
 styles.css
 js/deps.js
 translation-data/csld-translation.json
+
+# Generated full-text search index (deployed via g0v/moedict-app gh-pages)
+search-index/

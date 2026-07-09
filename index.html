@@ -59,11 +59,13 @@
         <li style="display: inline-block" class="web-inline-only"><a href="http://itunes.apple.com/app/id1434947403" target="_blank" title="App Store 下載" style="color: #ccc"><i class="icon-apple"></i></a></li>
       </ul>
     </nav>
-    <div id="gcse"><span class="lang-a-only">
-        <gcse:search webSearchQueryAddition="-&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-t-only">
-        <gcse:search webSearchQueryAddition="+&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-h-only">
-        <gcse:search webSearchQueryAddition="+&quot;臺灣客語萌典&quot; -&quot;臺灣台語萌典&quot; -&quot;兩岸萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span><span class="lang-c-only">
-        <gcse:search webSearchQueryAddition="+&quot;兩岸萌典&quot; -&quot;臺灣台語萌典&quot; -&quot;臺灣客語萌典&quot; -&quot;推特&quot; -&quot;moedict tw lab&quot; -&quot;moedict tw dodo&quot;"></gcse:search></span></div><!--[if lte IE 8]>
+    <div id="fts" class="fts">
+      <label for="fts-input" class="sr-only">全文檢索</label>
+      <input id="fts-input" type="search" autocomplete="off" spellcheck="false" placeholder="全文檢索" class="fts-input">
+      <div hidden="hidden" class="fts-panel">
+        <div class="fts-status">輸入至少 2 字開始全文檢索</div>
+      </div>
+    </div><!--[if lte IE 8]>
     <style>body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }</style>
     <div id="result" style="position: absolute; top: 10%; left: 10%; right: 10%" class="result">
       <p><br>很抱歉，我們不支援 Internet Explorer 8 和之前的版本。請您改用&nbsp;<a href="https://www.mozilla.org/firefox/" class="icon-external-link">&nbsp;Firefox</a>&nbsp;或&nbsp;<a href="https://www.google.com/chrome/browser/" class="icon-external-link">&nbsp;Chrome</a>&nbsp;瀏覽器。</p>

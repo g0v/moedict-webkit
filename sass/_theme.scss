@@ -86,7 +86,6 @@ body.lang-h {
     .iconic-circle { background: #474; }
     .iconic-color { color: #474; }
     #query-box { background-color: #EFFBEF; }
-    #gcse .lang-h-only { position: static !important; margin-top: 0 !important }
     #pref-phonetics { display: none !important; }
 
     h1 {
@@ -111,7 +110,6 @@ body.lang-t {
     .iconic-circle { background: #744; }
     .iconic-color { color: #744; }
     #query-box { background-color: #FBEFEF; }
-    #gcse .lang-t-only { position: static !important; margin-top: 0 !important }
 }
 
 body.lang-a {
@@ -119,7 +117,6 @@ body.lang-a {
     .iconic-circle { background: #400; }
     .iconic-color { color: #400; }
     #query-box { background-color: #F3F0F0; }
-    #gcse .lang-a-only { position: static !important; margin-top: 0 !important }
 }
 
 body.lang-c {
@@ -127,7 +124,6 @@ body.lang-c {
     .iconic-circle { background: #447; }
     .iconic-color { color: #447; }
     #query-box { background-color: #EFEFFB; }
-    #gcse .lang-c-only { position: static !important; margin-top: 0 !important }
 }
 
 @media only screen and (max-width: 767px) {
@@ -304,10 +300,9 @@ input.back {
 }
 
 body.overflow-scrolling-false {
-    .navbar-fixed-top, .erase-box, #query-box, .back-box, #gcse {
+    .navbar-fixed-top, .erase-box, #query-box, .back-box, #fts {
         position: absolute !important;
     }
-    // TODO: Scrolling in gcse results
 }
 
 input.query {

@@ -80,11 +80,11 @@ html(lang='zh-Hant', xml:lang='zh-Hant', manifest="manifest.appcache")
         li.web-inline-only(style='display: inline-block')
           a(href='http://itunes.apple.com/app/id1434947403', target='_blank', title='App Store 下載', style='color: #ccc')
             i.icon-apple
-    #gcse
-      span.lang-a-only: gcse:search(webSearchQueryAddition='-"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-t-only: gcse:search(webSearchQueryAddition='+"臺灣台語萌典" -"兩岸萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-h-only: gcse:search(webSearchQueryAddition='+"臺灣客語萌典" -"臺灣台語萌典" -"兩岸萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
-      span.lang-c-only: gcse:search(webSearchQueryAddition='+"兩岸萌典" -"臺灣台語萌典" -"臺灣客語萌典" -"推特" -"moedict tw lab" -"moedict tw dodo"')
+    #fts.fts
+      label.sr-only(for='fts-input') 全文檢索
+      input#fts-input.fts-input(type='search', autocomplete='off', spellcheck='false', placeholder='全文檢索')
+      .fts-panel(hidden='hidden')
+        .fts-status 輸入至少 2 字開始全文檢索
 
     | <!--[if lte IE 8]>
     style body { margin-top: -99999px; overflow: hidden } #query-box, .erase-box { display: none } html { overflow: hidden }

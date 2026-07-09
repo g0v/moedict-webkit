@@ -191,6 +191,161 @@ window.show-info = ->
 
 callLater = -> setTimeout it, if isMobile then 10ms else 1ms
 
+init-fulltext-search = ->
+  $root = $ \#fts
+  return unless $root.length
+  unless window.Worker
+    $root.hide!
+    return
+  $input = $ \#fts-input
+  $panel = $root.find \.fts-panel
+  $status = $panel.find \.fts-status
+  worker = null
+  request-id = 0
+  debounce-timer = null
+  ready-langs = {}
+  loading-langs = {}
+  failed = false
+  MIN-QUERY-LENGTH = 2
+  SEARCH-RESULT-LIMIT = 10
+  SEARCH-DEBOUNCE-MS = 180
+
+  fail-closed = (msg) ->
+    failed := true
+    try worker?terminate!
+    worker := null
+    $status.text msg or '全文檢索無法使用'
+    $panel.prop \hidden false
+    # Keep the box visible with error once; hide after a short delay so headword UI stays primary.
+    setTimeout (-> $root.fadeOut \fast), 4000ms
+
+  resolve-worker-url = ->
+    scripts = document.getElementsByTagName \script
+    for s in scripts
+      src = s.getAttribute(\src) or ''
+      if src is /deps\.js/
+        return src.replace /[^\/]*$/, 'full-text-search.worker.js'
+    'js/full-text-search.worker.js'
+
+  get-worker = ->
+    return null if failed
+    return worker if worker
+    try
+      worker := new Worker resolve-worker-url!
+    catch e
+      fail-closed '此環境不支援全文檢索'
+      return null
+    worker.onmessage = (event) ->
+      return if failed
+      data = event.data or {}
+      if data.type is \ready
+        ready-langs[data.lang] = true
+        delete loading-langs[data.lang]
+        q = "#{$input.val!}".trim!
+        run-search q if q.length >= MIN-QUERY-LENGTH and data.lang is LANG
+        return
+      if data.type is \error
+        delete loading-langs[data.lang]
+        return unless !data.requestId or data.requestId is request-id
+        # Index missing / load failure: soft error, keep UI for retry on next focus.
+        $status.text data.message or '全文索引載入失敗'
+        $panel.find \.fts-results .remove!
+        $panel.prop \hidden false
+        return
+      if data.type is \results
+        return unless data.requestId is request-id
+        render-results data.results or []
+    worker.onerror = (e) ->
+      # Syntax/load errors from modern JS worker on old engines.
+      fail-closed '全文檢索 Worker 無法啟動'
+    worker
+
+  ensure-lang = (lang) ->
+    return if failed
+    w = get-worker!
+    return unless w
+    return if ready-langs[lang] or loading-langs[lang]
+    loading-langs[lang] = true
+    try
+      w.postMessage { type: \warmup, lang }
+    catch
+      fail-closed '全文檢索初始化失敗'
+
+  render-results = (results) ->
+    $panel.find \.fts-results .remove!
+    if !results.length
+      $status.text '找不到相符結果'
+      $panel.prop \hidden false
+      return
+    $status.text ''
+    $list = $ \<ul/> class: \fts-results role: \listbox
+    for result in results
+      title = result.title or ''
+      snippet = result.snippet or ''
+      $btn = $ \<button/> type: \button class: \fts-result role: \option
+      $btn.data \title title
+      $btn.append ($ \<span/> class: \fts-result-title .text title)
+      if snippet
+        $btn.append ($ \<span/> class: \fts-result-snippet .text snippet)
+      $btn.on \mousedown (e) -> e.preventDefault!
+      $btn.on \click ->
+        clicked-title = $(@).data \title or ''
+        prefix = (HASH-OF[LANG] or \#) - /^#/
+        window.grok-val "#{prefix}#{clicked-title}"
+        $panel.prop \hidden true
+        $input.val ''
+      $list.append ($ \<li/> .append $btn)
+    $panel.append $list
+    $panel.prop \hidden false
+
+  run-search = (query) ->
+    return if failed
+    w = get-worker!
+    return unless w
+    ensure-lang LANG
+    if query.length < MIN-QUERY-LENGTH
+      $panel.find \.fts-results .remove!
+      $status.text '輸入至少 2 字開始全文檢索'
+      $panel.prop \hidden false
+      return
+    unless ready-langs[LANG]
+      $panel.find \.fts-results .remove!
+      $status.text '載入全文索引中…'
+      $panel.prop \hidden false
+      return
+    request-id := request-id + 1
+    rid = request-id
+    $status.text '搜尋中…'
+    $panel.find \.fts-results .remove!
+    $panel.prop \hidden false
+    try
+      w.postMessage { type: \search, lang: LANG, query, limit: SEARCH-RESULT-LIMIT, requestId: rid }
+    catch
+      fail-closed '全文檢索送出失敗'
+
+  schedule-search = ->
+    return if failed
+    clearTimeout debounce-timer if debounce-timer
+    debounce-timer := setTimeout (->
+      run-search "#{$input.val!}".trim!
+    ), SEARCH-DEBOUNCE-MS
+
+  $input.on \focus ->
+    return if failed
+    ensure-lang LANG
+    $panel.prop \hidden false
+    isQuery := no
+  $input.on \input schedule-search
+  $input.on \keydown (e) ->
+    if e.keyCode is 27
+      $panel.prop \hidden true
+      $input.blur!
+  $ \body .on \click (e) ->
+    return if failed
+    return if $.contains $root.0, e.target
+    $panel.prop \hidden true
+  setTimeout (-> ensure-lang LANG unless failed), 800ms
+
 window.do-load = ->
   return unless isDeviceReady
   $('body').addClass \cordova if isCordova
@@ -201,22 +356,8 @@ window.do-load = ->
   $('body').addClass \android if isDroidGap
 
   unless STANDALONE and isDroidGap
-    window.IS_GOOGLE_AFS_IFRAME_ = true
-    <- setTimeout _, 1ms
-    cx = '007966820757635393756:sasf0rnevk4';
-    gcse = document.createElement('script')
-    gcse.type = 'text/javascript'
-    gcse.async = true
-    gcse.src = "#{
-      if document.location.protocol is 'https:' then 'https:' else 'http:'
-    }//www.google.com/cse/cse.js?cx=#cx"
-    s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-    poll-gsc = ->
-      return setTimeout poll-gsc, 500ms unless $('.gsc-input').length
-      $('.gsc-input').attr \placeholder \Search
-      isQuery := no
-    setTimeout poll-gsc, 500ms
+    init-fulltext-search!
+
 
   unless isApp or width-is-xs!
     <- setTimeout _, 1ms
@@ -297,17 +438,7 @@ window.do-load = ->
       $(@).fadeIn 0ms
     $ \body .on \hidden.bs.dropdown \.navbar -> $(@).css \position \fixed
 
-    if isApp =>
-      $ \body .on \touchstart '#gcse a.gs-title' ->
-        $(@).removeAttr \href
-        val = $('#gcse input:visible').val!
-        url = $(@).data('ctorig') || ($(@).attr('href') - /^.*?q=/ - /&.*$/)
-        setTimeout (->
-          $('#gcse input:visible').val val
-          grok-val decode-hash(url -= /^.*\//)
-        ), 1ms
-        $ \.gsc-results-close-btn .click!
-        return false
+
 
     $ \body .on \click 'li.dropdown-submenu > a' ->
       $(@).next(\ul).slide-toggle \fast if width-is-xs!

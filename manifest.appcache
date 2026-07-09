@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2025年 4月 7日 週一 14時40分38秒 CST
+# 2026-07-09 FTS replaces Google CSE
 
 CACHE:
 
@@ -9,6 +9,7 @@ styles.css
 
 # js files
 js/deps.js
+js/full-text-search.worker.js
 js/es5-shim.js
 js/es5-sham.js
 
