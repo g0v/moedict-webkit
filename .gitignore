@@ -45,3 +45,9 @@ translation-data/csld-translation.json
 
 # Generated full-text search index (deployed via g0v/moedict-app gh-pages)
 search-index/
+
+# personal drafts and stale checkouts (kept out of the frozen repo)
+cci-memoir-draft.md
+cci-memoir-research-notes.md
+moedict-app/
+styles-*.css

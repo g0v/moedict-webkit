@@ -1,86 +1,25 @@
+# ⚠️ Frozen
+
+**This repository no longer builds dictionary packs.** Pack generation lives
+in [`g0v/moedict-process`](https://github.com/g0v/moedict-process); search and
+pinyin indexes plus R2 uploads live in
+[`g0v/moedict.tw`](https://github.com/g0v/moedict.tw). The files here are the
+frozen static-frontend source for <https://www.moedict.org/>, served from this
+repo's gh-pages branch. The historical Perl/Python 2 pack toolchain and the
+HFS+ requirement were retired on 2026-07-10; dictionary data is regenerated
+by `moedict-process` and synced to gh-pages and R2.
+
 This is the repository for the online and offline lookup app for <http://moedict.tw/>
-
-## Docker
-
-You can retrieve a development environment from Docker Hub:
-
-```sh
-docker@boot2docker:~$ docker pull miaoski/moedict-webkit
-docker@boot2docker:~$ docker run -p 8888:8888 -t -i miaoski/moedict-webkit /bin/bash
-root@4a7bd751fd9e:/usr/local/src/moedict-webkit# make
-```
-
-
 
 ## Requirements
 
-* Node.js 0.10.x+
-    * npm
-* Perl 5.8.0+
-* Python
-    * lxml
-
-In macOS, we currently only support HFS+ as a development environment. For versions after High Sierra, please use Disk Utility to make an HFS+ partition, and then open the development directory and place this folder in it.
-
-## Pre-Installation Instructions (Debian/Ubuntu)
-### For distributions prior to Ubuntu 16.04 
-```sh
-sudo apt-get update
-sudo apt-get install -y python g++ make nodejs python-lxml curl npm
-```
-
-### For distribution Ubuntu 16.04 or later
-```sh
-sudo apt update
-sudo apt install -y python g++ make nodejs python-lxml curl npm
-```
+* Node.js (frontend build: gulp / webpack / LiveScript)
 
 ## Installation Environment
 
 ```sh
 npm i
-pip install lxml
 sudo npm i -g gulp
-```
-
-## Setup
-
-## Setting up an offline file
-
-Set up the folder needed for offline browsing:
-
-```sh
-make offline
-```
-
-## Step-by-step installation
-
-The original JSON files `dict-revised.unicode.json` and `dict-revised.pua.json` are provided by
-<https://github.com/g0v/moedict-data>, and can be transformed into Unicode using the character encoding transformer at
-<https://github.com/g0v/moedict-epub>.
-
-```SH
-git clone --depth 1 https://github.com/g0v/moedict-data.git
-git clone --depth 1 https://github.com/g0v/moedict-epub.git
-curl -fL https://github.com/g0v/moedict-data/raw/refs/heads/master/dict-revised.json.xz -o moedict-data/dict-revised.json.xz
-xz -dc moedict-data/dict-revised.json.xz > moedict-data/dict-revised.json
-cp -v moedict-data/dict-revised.json moedict-epub/
-cd moedict-epub
-perl json2unicode.pl > dict-revised.unicode.json
-perl json2unicode.pl sym-pua.txt > dict-revised.pua.json
-```
-
-The indices `pack`, `a`, and `t` are created by `json2prefix.ls`,
-`autolink.ls`, and `link2pack.pl` :
-
-```sh
-lsc json2prefix.ls a
-lsc autolink.ls a > a.txt
-perl link2pack.pl a < a.txt
-
-lsc json2prefix.ls t
-lsc autolink.ls t > t.txt
-perl link2pack.pl t < t.txt
 ```
 
 ## Running a local instance
