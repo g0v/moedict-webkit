@@ -1,0 +1,12 @@
+# Frozen 2013 frontend. Version-update PRs already merged incompatible
+# majors (webpack-dev-server 5 onto webpack 1). Disable version updates.
+# Security PRs still require repo-level disable:
+#   gh api -X DELETE /repos/g0v/moedict-webkit/automated-security-fixes
+#   gh api -X DELETE /repos/g0v/moedict-webkit/vulnerability-alerts
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 0
