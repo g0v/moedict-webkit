@@ -1,14 +1,18 @@
-# ⚠️ Frozen
+# ⚠️ Archived (`master`)
 
-**This repository no longer builds dictionary packs.** Pack generation lives
-in [`g0v/moedict-process`](https://github.com/g0v/moedict-process) (`bun run
+**This `master` branch is archived.** It is the 2013 dump plus later
+Dependabot lockfile merges. Do not merge more dependency PRs here.
+
+Living frontend rebuilds live on the **`main`** branch (gulp / webpack 1).
+<https://www.moedict.org/> is served from this repo's **`gh-pages`**
+branch — do not archive or rename the GitHub repository.
+
+Pack generation lives in
+[`g0v/moedict-process`](https://github.com/g0v/moedict-process) (`bun run
 pack`; format spec in its `docs/pack-format-contract.md`). Search/pinyin
 indexes and R2 uploads live in [`g0v/moedict.tw`](https://github.com/g0v/moedict.tw).
-The files here are the frozen static-frontend source for
-<https://www.moedict.org/>, which is served from this repo's **gh-pages**
-branch — do not archive or rename this repo.
 
-這是舊版 <https://moedict.org/> 的源碼庫（凍結維護）。
+這是舊版 <https://moedict.org/> 的封存分支。前端重建請改用 `main`。
 新版網站 <https://moedict.tw/> 的全端專案位於：https://github.com/g0v/moedict.tw
 
 2026-07-10 起，本 repo 的 pack 產生工具鏈（`json2prefix.ls`、`autolink.ls`、
