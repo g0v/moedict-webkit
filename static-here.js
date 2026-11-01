@@ -13,7 +13,7 @@ var args = {},
 for (var i = 0; i < argv.length; i++){
   arg = argv[i];
   if (arg.match(/^\d+$/)){
-    args.port = arg;
+    args.port = Number(arg);
   } else if (arg === 'coffee'){
     args.coffee = true;
   } else if (arg === 'fix'){
@@ -65,56 +65,92 @@ function httpRespond(res, code, txt, headers) {
   res.end(txt);
 }
 
+var root = fs.realpathSync(process.cwd());
+
+function isWithinRoot(filename) {
+  var relative = path.relative(root, filename);
+  return relative !== '..' && relative.indexOf('..' + path.sep) !== 0 && !path.isAbsolute(relative);
+}
+
+function isHiddenPath(filename) {
+  return path.relative(root, filename).split(path.sep).some(function (segment) {
+    return segment[0] === '.';
+  });
+}
+
 var httpCb = function (req, res) {
   var uri = url.parse(req.url).pathname;
-  var filename;
+  var decoded;
   try {
-      filename = decodeURIComponent(path.join(process.cwd(), uri));
+    decoded = decodeURIComponent(uri);
   } catch (e) {
-      filename = path.join(process.cwd(), uri);
-  };
-
-  if (path.normalize(decodeURIComponent(uri)) !== decodeURIComponent(uri)) {
-    res.statusCode = 403;
-    res.end();
+    httpRespond(res, 400, 'Bad Request\n');
     return;
   }
 
-  (path.exists || fs.exists)(filename, function (exists) {
-    if (!exists || /manifest.appcache/.test(filename)) {
-      httpRespond(res, 404, "Page Not Found!\n");
+  // This is a local development server. Never expose hidden files, traversal,
+  // or platform-specific separators, even when an explicit public bind is used.
+  if (decoded[0] !== '/' || decoded.indexOf('\\') !== -1 || decoded.indexOf('\0') !== -1) {
+    httpRespond(res, 400, 'Bad Request\n');
+    return;
+  }
+  if (decoded.split('/').some(function (segment) { return segment[0] === '.'; })) {
+    httpRespond(res, 403, 'Forbidden\n');
+    return;
+  }
+
+  var filename = path.resolve(root, '.' + decoded);
+  if (!isWithinRoot(filename) || path.basename(filename) === 'manifest.appcache') {
+    httpRespond(res, 403, 'Forbidden\n');
+    return;
+  }
+
+  fs.realpath(filename, function (err, resolved) {
+    if (err) {
+      httpRespond(res, err.code === 'ENOENT' ? 404 : 500, err.code === 'ENOENT' ? 'Page Not Found!\n' : 'Internal Server Error\n');
       return;
     }
-    
-    if (fs.statSync(filename).isDirectory()) {
-      if (filename.slice(-1) !== '/') {
-        // Directory with out a trailing slash.
-        // redirect http://host/directory to http://host/directory/
-        httpRespond(res, 302, 'Location is a folder, redirecting..', {
-          'Location': uri + '/'
-        });
-        return;
-      } else {
-        filename = path.join(filename, 'index.html');
-      }
+    if (!isWithinRoot(resolved) || isHiddenPath(resolved)) {
+      httpRespond(res, 403, 'Forbidden\n');
+      return;
     }
-    
-    fs.readFile(filename, 'binary', function (err, file) {
-      if (err) {
-        httpRespond(res, 500, err + '\n');
+    fs.stat(resolved, function (statErr, stat) {
+      if (statErr) {
+        httpRespond(res, 500, 'Internal Server Error\n');
         return;
       }
-      var ext = path.extname(filename).slice(1);
-      res.writeHead(200, {'Content-Type': mime.lookup(ext)});
-      res.write(file, 'binary');
-      res.end();
+      if (stat.isDirectory()) {
+        if (decoded.slice(-1) !== '/') {
+          httpRespond(res, 302, 'Location is a folder, redirecting..', { 'Location': uri + '/' });
+          return;
+        }
+        resolved = path.join(resolved, 'index.html');
+      }
+      fs.realpath(resolved, function (indexErr, file) {
+        if (indexErr) {
+          httpRespond(res, indexErr.code === 'ENOENT' ? 404 : 500, indexErr.code === 'ENOENT' ? 'Page Not Found!\n' : 'Internal Server Error\n');
+          return;
+        }
+        if (!isWithinRoot(file) || isHiddenPath(file)) {
+          httpRespond(res, 403, 'Forbidden\n');
+          return;
+        }
+        fs.readFile(file, 'binary', function (readErr, contents) {
+          if (readErr) {
+            httpRespond(res, 500, 'Internal Server Error\n');
+            return;
+          }
+          res.writeHead(200, { 'Content-Type': mime.lookup(path.extname(file).slice(1)) });
+          res.end(contents, 'binary');
+        });
+      });
     });
-  }); 
+  });
 };
 
 // Assign defaults and define the start server action.
 args.port = args.port || 8888;
-args.host = args.host || '0.0.0.0';
+args.host = args.host || '127.0.0.1';
 var startServer = function () {
   http.createServer(httpCb).listen(args.port, args.host);
   console.log('Serving files from %s at http://%s:%s/', process.cwd(), args.host, args.port);

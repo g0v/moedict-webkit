@@ -10,10 +10,11 @@
   },
   "scripts": {
     "start": "gulp run",
-    "build": "gulp build"
+    "build": "gulp build",
+    "test": "node --test test/static-here.test.js"
   },
   "engines": {
-    "node": ">=0.8.0",
+    "node": ">=18.0.0",
     "npm": ">=1.1.0"
   },
   "dependencies": {
