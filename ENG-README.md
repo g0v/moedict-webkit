@@ -39,7 +39,7 @@ npm run build
 
 Please note, the API for the MOE Dictionary must be queried at `https://www.moedict.tw/`, because only this address will satisfy the CORS policy. If you query `http://moedict.org/`, it will throw a No 'Access-Control-Allow-Origin' header error.
 
-For the basic data on the API, please [consult this link](https://g0v.hackpad.com/3du.tw-ZNwaun62BP4); this section is based on that information with some reorganization and additional examples.
+For the basic data on the API, please [consult this link](https://g0v.hackpad.tw/3du.tw-ZNwaun62BP4); this section is based on that information with some reorganization and additional examples.
 
 The current API has 7 endpoints: /a/, /t/, /h/, /c/, /raw/, /uni/, /pua/
 
@@ -199,7 +199,7 @@ Like the /uni/ endpoint, /pua/ uses Unicode code points, but for dynamic composi
 
 For example, in the entry for '[淘漉](http://moedict.org/#淘漉)', there is a character whose raw codepoint is {[9ad7]}, and in uni it is a composite of ⿰扌 and 層, but in pua it has the codepoint U+F9AD7.
 
-If you would like to display PUA, you will need to use the fonts available from the MOEDict at the following links: [woff](https://www.moedict.tw/MOEDICT.woff) or [ttf](https://www.moedict.tw/MOEDICT.ttf).
+If you would like to display PUA, you will need to use the fonts available from the MOEDict at the following links: [woff](https://www.moedict.org/fonts/MOEDICT.woff) or [ttf](https://www.moedict.org/fonts/MOEDICT.ttf).
 
 Example： https://www.moedict.tw/pua/%E8%90%8C
 

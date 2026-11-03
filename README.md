@@ -205,7 +205,7 @@ API 的原始資料，請[參考連結](https://g0v.hackpad.tw/3du.tw-ZNwaun62BP
 
 以「[淘漉](http://moedict.org/#淘漉)」為例，內容有一字在 raw 是 {[9ad7]}，在 uni 是 ⿰扌層，在 pua 是 U+F9AD7。
 
-若要顯示 PUA，必須引用萌典字型 [woff](https://www.moedict.tw/MOEDICT.woff) 或 [ttf](https://www.moedict.tw/MOEDICT.ttf)。
+若要顯示 PUA，必須引用萌典字型 [woff](https://www.moedict.org/fonts/MOEDICT.woff) 或 [ttf](https://www.moedict.org/fonts/MOEDICT.ttf)。
 
 範例： https://www.moedict.tw/pua/%E8%90%8C
 
